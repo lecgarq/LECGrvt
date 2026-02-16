@@ -10,6 +10,7 @@ obj/
 build_logs/
 *.log
 build_*.txt
+build_*.log
 build_err_*.txt
 *_err_*.txt
 journal*.txt

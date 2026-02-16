@@ -43,10 +43,11 @@ Low Impact    │     Artifacts          │     Large Services    │
 
 **Current State**:
 - 13/13 Services registered ✅
-- 3/18 ViewModels registered ⚠️
-- 1/18 Views registered ⚠️
+- 16/16 feature ViewModels registered ✅
+- 18/18 Views registered ✅
+- Commands resolve registered View/ViewModel types via `ServiceLocator` ✅
 
-**Goal**: Register all ViewModels and Views in DI container
+**Goal**: Register all ViewModels and Views in DI container and remove direct `new` usage for registered UI types in commands
 
 **Implementation**:
 
@@ -73,6 +74,7 @@ private static void ConfigureViewModels(IServiceCollection services)
     services.AddTransient<SimplifyPointsViewModel>();
     services.AddTransient<FilterCopyViewModel>();
     services.AddTransient<LogViewModel>();
+    services.AddTransient<RenderAppearanceViewModel>();
 }
 ```
 
@@ -105,26 +107,19 @@ private static void ConfigureViews(IServiceCollection services)
 }
 ```
 
-**Step 3**: (Optional) Update commands to use DI:
+**Step 3**: Update commands to use ServiceLocator for registered View/ViewModel types:
 
-Currently, most commands use:
-```csharp
-var vm = SettingsManager.Load<SexyRevitViewModel>("SexyRevitSettings.json");
-var view = new SexyRevitView(vm);
-```
-
-After DI registration, can optionally change to:
+Implemented pattern:
 ```csharp
 var vm = ServiceLocator.GetRequiredService<SexyRevitViewModel>();
-// Load settings into VM
-vm.LoadSettings("SexyRevitSettings.json"); // Need to add this method
+var view = ServiceLocator.CreateWith<Views.SexyRevitView>(vm);
 
-var view = ServiceLocator.GetRequiredService<Views.SexyRevitView>();
-// Pass VM to view via property or method
-view.DataContext = vm;
+// For constructors needing runtime Revit values:
+var vm2 = ServiceLocator.CreateWith<ChangeLevelViewModel>(doc, service);
+var view2 = ServiceLocator.CreateWith<Views.ChangeLevelView>(vm2, uiDoc);
 ```
 
-**Note**: Current pattern works fine. This step is optional for consistency.
+For settings-backed commands, persisted values are loaded then copied into a DI-resolved VM instance before dialog display.
 
 **Benefits**:
 - Consistent DI usage across all components
@@ -135,50 +130,32 @@ view.DataContext = vm;
 
 ---
 
-### P2: Consolidate Interface Locations
+### P2: Consolidate Interface Locations ✅ Completed
 
 **Priority**: 🟡 Medium
 **Effort**: 1 hour
 **Impact**: Medium (consistency, clarity)
 
 **Current State**:
-- `src/Interfaces/` - 5 interfaces (old location)
-- `src/Services/Interfaces/` - 9 interfaces (new location)
+- All service interfaces are in `src/Services/Interfaces/`
+- The legacy interface folder is no longer used
+- All interface declarations use `namespace LECG.Services.Interfaces`
+- Interface consumers use `using LECG.Services.Interfaces;`
 
-**Goal**: All interfaces in `src/Services/Interfaces/`
+**Goal**: All interfaces in `src/Services/Interfaces/` with a single namespace rule
 
-**Implementation**:
-
-**Step 1**: Move files:
-```
-src/Interfaces/IAlignEdgesService.cs        → src/Services/Interfaces/
-src/Interfaces/IChangeLevelService.cs       → src/Services/Interfaces/
-src/Interfaces/IFamilyConversionService.cs  → src/Services/Interfaces/
-src/Interfaces/ISimplifyPointsService.cs    → src/Services/Interfaces/
-src/Interfaces/IToposolidService.cs         → src/Services/Interfaces/
-```
-
-**Step 2**: Update namespace in moved files:
+**Final Rule**:
 ```csharp
-// Old:
-namespace LECG.Interfaces
-
-// New:
 namespace LECG.Services.Interfaces
 ```
 
-**Step 3**: Update `using` statements in services:
+Use interfaces via:
 ```csharp
-// Old:
-using LECG.Interfaces;
-
-// New:
 using LECG.Services.Interfaces;
 ```
 
-**Step 4**: Delete empty `src/Interfaces/` directory
-
-**Step 5**: Build and verify
+**Verification**:
+- `dotnet build -c Debug` succeeds
 
 **Benefits**:
 - Clear, consistent location for all interfaces
@@ -189,18 +166,18 @@ using LECG.Services.Interfaces;
 
 ---
 
-### P3: Clean Up Build Artifacts
+### P3: Clean Up Build Artifacts ✅ Completed
 
 **Priority**: 🟡 Medium
 **Effort**: 30 minutes
 **Impact**: Medium (repository cleanliness, security)
 
 **Current State**:
-- 40+ build log files in repository root
-- Files: `build_*.txt`, `build_*.log`, `crash*.txt`, `journal*.txt`, `diag.log`, `errors.log`
-- Total size: ~15 MB
+- Build/journal/crash logs are stored in `build_logs/`
+- Root is clean of P3 artifact patterns
+- `.gitignore` blocks future commits of these artifacts
 
-**Goal**: Remove build artifacts from repository, prevent future commits
+**Goal**: Keep build artifacts out of repository root and prevent future commits
 
 **Implementation**:
 
@@ -701,7 +678,7 @@ graph TD
 | **Test Coverage** | 0% | 70% |
 | **Avg File Size** | 90 LOC | <100 LOC |
 | **Large Files (>400 LOC)** | 2 | 0 |
-| **DI Registration** | 50% | 100% |
+| **DI Registration** | 100% | 100% |
 | **Interface Consistency** | 64% | 100% |
 
 ### Process Metrics
