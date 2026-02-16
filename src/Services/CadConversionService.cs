@@ -17,6 +17,7 @@ namespace LECG.Services
         private readonly ICadLineMergeService _lineMergeService;
         private readonly ICadCurveFlattenService _curveFlattenService;
         private readonly ICadFilledRegionTypeService _filledRegionTypeService;
+        private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
 
         public CadConversionService(
             ICadPlacementViewService placementViewService,
@@ -24,7 +25,8 @@ namespace LECG.Services
             ICadLineStyleService lineStyleService,
             ICadLineMergeService lineMergeService,
             ICadCurveFlattenService curveFlattenService,
-            ICadFilledRegionTypeService filledRegionTypeService)
+            ICadFilledRegionTypeService filledRegionTypeService,
+            ICadFamilyLoadPlacementService familyLoadPlacementService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
@@ -32,6 +34,7 @@ namespace LECG.Services
             _lineMergeService = lineMergeService;
             _curveFlattenService = curveFlattenService;
             _filledRegionTypeService = filledRegionTypeService;
+            _familyLoadPlacementService = familyLoadPlacementService;
         }
 
         private class CadData
@@ -78,7 +81,7 @@ namespace LECG.Services
 
             progress?.Invoke(90, "Saving and loading family...");
             string path = SaveFamily(familyDoc, familyName);
-            return LoadAndPlace(doc, path, center, cadInstance.Id);
+            return _familyLoadPlacementService.LoadAndPlace(doc, path, center, cadInstance.Id);
         }
 
         public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
@@ -119,7 +122,7 @@ namespace LECG.Services
 
             progress?.Invoke(95, "Loading into project...");
             string path = SaveFamily(familyDoc, familyName);
-            return LoadOnly(doc, path);
+            return _familyLoadPlacementService.LoadOnly(doc, path);
         }
         
         private CadData OptimizeGeometry(CadData input)
@@ -147,72 +150,6 @@ namespace LECG.Services
             
             return output;
         }
-
-        private ElementId LoadOnly(Document doc, string path)
-        {
-            ElementId createdId = ElementId.InvalidElementId;
-            using (Transaction t = new Transaction(doc, "Load Family"))
-            {
-                t.Start();
-                Family f;
-                doc.LoadFamily(path, new FamilyOption(), out f);
-                if (f != null) 
-                { 
-                    FamilySymbol s = _familySymbolService.GetPrimarySymbol(doc, f); 
-                    if (s != null) createdId = s.Id;
-                }
-                t.Commit();
-            }
-            CleanupFile(path);
-            return createdId;
-        }
-
-        private ElementId LoadAndPlace(Document doc, string path, XYZ location, ElementId deleteId)
-        {
-            ElementId createdId = ElementId.InvalidElementId;
-            using (Transaction t = new Transaction(doc, "Load and Place Detail Item"))
-            {
-                t.Start();
-                Family family = null;
-                doc.LoadFamily(path, new FamilyOption(), out family);
-
-                if (family != null)
-                {
-                    FamilySymbol symbol = _familySymbolService.GetPrimarySymbol(doc, family);
-                    if (symbol != null)
-                    {
-                        createdId = symbol.Id;
-                        // Find a valid placement view (Detail Items MUST be in 2D)
-                        View placementView = _placementViewService.ResolvePlacementView(doc, doc.ActiveView);
-
-                        if (placementView != null)
-                        {
-                            doc.Create.NewFamilyInstance(location, symbol, placementView);
-                            
-                            if (deleteId != null && deleteId != ElementId.InvalidElementId)
-                            {
-                                Element e = doc.GetElement(deleteId);
-                                if (e != null)
-                                {
-                                    if (e.Pinned) e.Pinned = false;
-                                    doc.Delete(deleteId);
-                                }
-                            }
-                        }
-                        else
-                        {
-                             // Fallback to global creation if no view is active/valid
-                             doc.Create.NewFamilyInstance(location, symbol, StructuralType.NonStructural);
-                        }
-                    }
-                }
-                t.Commit();
-            }
-            CleanupFile(path);
-            return createdId;
-        }
-
-        private void CleanupFile(string path) { try { if (System.IO.File.Exists(path)) System.IO.File.Delete(path); } catch { } }
 
         private string SaveFamily(Document familyDoc, string name)
         {
@@ -371,10 +308,5 @@ namespace LECG.Services
             return new Color(0,0,0);
         }
 
-        class FamilyOption : IFamilyLoadOptions
-        {
-            public bool OnFamilyFound(bool familyInUse, out bool overwriteParameterValues) { overwriteParameterValues = true; return true; }
-            public bool OnSharedFamilyFound(Family sharedFamily, bool familyInUse, out FamilySource source, out bool overwriteParameterValues) { source = FamilySource.Family; overwriteParameterValues = true; return true; }
-        }
     }
 }

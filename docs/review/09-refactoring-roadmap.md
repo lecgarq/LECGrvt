@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 13 completed
+**Status**: Slice 14 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -478,6 +478,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting line-style purge logic into `IPurgeLineStyleService`.
 - Added `PurgeLineStyleService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing method complexity in `PurgeService`.
+
+**P5 Slice 14 (Completed)**:
+- Decomposed `CadConversionService` by extracting family load/place orchestration into `ICadFamilyLoadPlacementService`.
+- Added `CadFamilyLoadPlacementService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing load/place helper complexity.
 
 
 **Target Services**:

@@ -52,6 +52,7 @@ namespace LECG.Core
             services.AddSingleton<ICadLineMergeService, CadLineMergeService>();
             services.AddSingleton<ICadCurveFlattenService, CadCurveFlattenService>();
             services.AddSingleton<ICadFilledRegionTypeService, CadFilledRegionTypeService>();
+            services.AddSingleton<ICadFamilyLoadPlacementService, CadFamilyLoadPlacementService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
         }
