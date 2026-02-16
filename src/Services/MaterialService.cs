@@ -15,16 +15,18 @@ namespace LECG.Services
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialPbrService _materialPbrService;
+        private readonly IMaterialElementGroupingService _materialElementGroupingService;
 
-        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService(), new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialPbrService()) { }
+        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService(), new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialPbrService(), new MaterialElementGroupingService()) { }
 
-        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService)
+        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService, IMaterialElementGroupingService materialElementGroupingService)
         {
             _renderAppearanceService = renderAppearanceService;
             _materialTypeAssignmentService = materialTypeAssignmentService;
             _materialCreationService = materialCreationService;
             _materialColorSequenceService = materialColorSequenceService;
             _materialPbrService = materialPbrService;
+            _materialElementGroupingService = materialElementGroupingService;
         }
 
         public Color GetNextColor()
@@ -64,19 +66,7 @@ namespace LECG.Services
             logCallback?.Invoke("ANALYZING SELECTION");
             progressCallback?.Invoke(10, "Grouping by type...");
 
-            Dictionary<ElementId, List<Element>> elementsByType = new Dictionary<ElementId, List<Element>>();
-
-            foreach (Element el in elements)
-            {
-                ElementId typeId = el.GetTypeId();
-                if (typeId == ElementId.InvalidElementId) continue;
-
-                if (!elementsByType.ContainsKey(typeId))
-                {
-                    elementsByType[typeId] = new List<Element>();
-                }
-                elementsByType[typeId].Add(el);
-            }
+            Dictionary<ElementId, List<Element>> elementsByType = _materialElementGroupingService.GroupByType(elements);
 
             logCallback?.Invoke($"  Found {elementsByType.Count} unique types from {elements.Count} elements.");
 

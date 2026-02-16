@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 27 completed
+**Status**: Slice 28 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -548,6 +548,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SearchReplaceService` by extracting base element collection into `IBaseElementCollectionService`.
 - Added `BaseElementCollectionService` and wired it through DI + `SearchReplaceService` constructor injection.
 - Kept `ISearchReplaceService` API unchanged while reducing data collection complexity.
+
+**P5 Slice 28 (Completed)**:
+- Decomposed `MaterialService` by extracting element grouping-by-type into `IMaterialElementGroupingService`.
+- Added `MaterialElementGroupingService` and wired it through DI + `MaterialService` constructor injection.
+- Kept `IMaterialService` API unchanged while reducing selection grouping complexity.
 
 
 **Target Services**:
