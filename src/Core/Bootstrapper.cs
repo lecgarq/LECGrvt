@@ -41,6 +41,7 @@ namespace LECG.Core
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
+            services.AddSingleton<IRenameRulePipelineService, RenameRulePipelineService>();
             services.AddSingleton<ISearchReplaceService, SearchReplaceService>();
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();

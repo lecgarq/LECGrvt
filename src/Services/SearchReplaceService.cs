@@ -2,6 +2,7 @@ using Autodesk.Revit.DB;
 using LECG.ViewModels;
 using LECG.Configuration;
 using LECG.Views;
+using LECG.Services.Interfaces;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
@@ -21,8 +22,15 @@ namespace LECG.Services
 
     public class SearchReplaceService : ISearchReplaceService
     {
-        public SearchReplaceService()
+        private readonly IRenameRulePipelineService _renameRulePipelineService;
+
+        public SearchReplaceService() : this(new RenameRulePipelineService())
         {
+        }
+
+        public SearchReplaceService(IRenameRulePipelineService renameRulePipelineService)
+        {
+            _renameRulePipelineService = renameRulePipelineService;
         }
 
         // 1. One-time Fetch of Grid Data
@@ -127,7 +135,7 @@ namespace LECG.Services
                 }
 
                 // Transformation
-                string currentName = ApplyRules(el.Name, vm, results.Count); 
+                string currentName = _renameRulePipelineService.ApplyRules(el.Name, vm, results.Count); 
                 
                 // Add to results
                 bool changed = !string.Equals(currentName, el.Name, StringComparison.Ordinal);
@@ -143,29 +151,6 @@ namespace LECG.Services
             }
             
             return results;
-        }
-
-        private string ApplyRules(string text, SearchReplaceViewModel vm, int index)
-        {
-            string result = text;
-
-            // Pipeline
-            // 1. Remove
-            result = vm.RemoveRule.Apply(result, index);
-
-            // 2. Replace
-            result = vm.ReplaceRule.Apply(result, index);
-
-            // 3. Case
-            result = vm.CaseRule.Apply(result, index);
-
-            // 4. Add
-            result = vm.AddRule.Apply(result, index);
-
-            // 5. Numbering
-            result = vm.NumberingRule.Apply(result, index);
-
-            return result;
         }
 
         public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Services.Logging.ILogger logger, Action<double, string>? onProgress = null)
