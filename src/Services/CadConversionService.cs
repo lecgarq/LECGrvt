@@ -19,6 +19,7 @@ namespace LECG.Services
         private readonly ICadFilledRegionTypeService _filledRegionTypeService;
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadGeometryExtractionService _geometryExtractionService;
+        private readonly ICadGeometryOptimizationService _geometryOptimizationService;
         private readonly ICadDrawingViewService _drawingViewService;
         private readonly ICadFamilySaveService _familySaveService;
 
@@ -31,6 +32,7 @@ namespace LECG.Services
             ICadFilledRegionTypeService filledRegionTypeService,
             ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadGeometryExtractionService geometryExtractionService,
+            ICadGeometryOptimizationService geometryOptimizationService,
             ICadDrawingViewService drawingViewService,
             ICadFamilySaveService familySaveService)
         {
@@ -42,6 +44,7 @@ namespace LECG.Services
             _filledRegionTypeService = filledRegionTypeService;
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
+            _geometryOptimizationService = geometryOptimizationService;
             _drawingViewService = drawingViewService;
             _familySaveService = familySaveService;
         }
@@ -59,7 +62,7 @@ namespace LECG.Services
             CadData data = _geometryExtractionService.ExtractGeometry(doc, cadInstance);
             
             progress?.Invoke(30, "Optimizing geometry...");
-            CadData optimizedData = OptimizeGeometry(data);
+            CadData optimizedData = _geometryOptimizationService.Optimize(data);
 
             if (!optimizedData.Curves.Any() && !optimizedData.Hatches.Any())
                 throw new Exception("No suitable geometry found in the selected CAD.");
@@ -122,32 +125,6 @@ namespace LECG.Services
             return _familyLoadPlacementService.LoadOnly(doc, path);
         }
         
-        private CadData OptimizeGeometry(CadData input)
-        {
-            CadData output = new CadData();
-            output.Hatches.AddRange(input.Hatches); 
-
-            // 1. Flatten all curves first to ensure 2D processing
-            List<Curve> flatCurves = new List<Curve>();
-            foreach(var c in input.Curves)
-            {
-                IEnumerable<Curve>? flats = _curveFlattenService.FlattenCurve(c);
-                if (flats != null) flatCurves.AddRange(flats);
-            }
-
-            // 2. Separate Lines and Others
-            List<Line> lines = flatCurves.OfType<Line>().ToList();
-            List<Curve> others = flatCurves.Where(c => !(c is Line)).ToList();
-
-            // 3. Overkill (Merge Collinear Lines)
-            List<Line> mergedLines = _lineMergeService.MergeCollinearLines(lines);
-
-            output.Curves.AddRange(mergedLines);
-            output.Curves.AddRange(others);
-            
-            return output;
-        }
-
         private void DrawData(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
         {
             GraphicsStyle lineStyle = _lineStyleService.CreateOrUpdateDetailLineStyle(familyDoc, styleName, color, weight);
