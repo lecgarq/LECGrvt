@@ -8,6 +8,17 @@ namespace LECG.Services
 {
     public class RenderAppearanceService : IRenderAppearanceService
     {
+        private readonly IRenderSolidFillPatternService _solidFillPatternService;
+
+        public RenderAppearanceService() : this(new RenderSolidFillPatternService())
+        {
+        }
+
+        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService)
+        {
+            _solidFillPatternService = solidFillPatternService;
+        }
+
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
         {
             if (mat == null) return;
@@ -63,7 +74,7 @@ namespace LECG.Services
                     doc.Regenerate();
                 }
 
-                ElementId solidId = GetSolidFillPatternId(doc);
+                ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
 
                 foreach (Material mat in matsList)
                 {
@@ -100,21 +111,9 @@ namespace LECG.Services
             progressCallback?.Invoke(100, "Done");
         }
 
-        private ElementId GetSolidFillPatternId(Document doc)
-        {
-            FilteredElementCollector collector = new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement));
-            foreach (FillPatternElement fpe in collector.Cast<FillPatternElement>())
-            {
-                FillPattern fp = fpe.GetFillPattern();
-                if (fp != null && fp.IsSolidFill) return fpe.Id;
-            }
-            FillPattern solidPattern = new FillPattern("Solid Fill", FillPatternTarget.Drafting, FillPatternHostOrientation.ToHost);
-            return FillPatternElement.Create(doc, solidPattern).Id;
-        }
-
         private void ApplyMaterialProperties(Document doc, Material mat, Color color, Action<string>? logCallback)
         {
-            ElementId solidId = GetSolidFillPatternId(doc);
+            ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
             mat.Color = color;
             mat.SurfaceForegroundPatternId = solidId; mat.SurfaceForegroundPatternColor = color;
             mat.SurfaceBackgroundPatternId = solidId; mat.SurfaceBackgroundPatternColor = color;

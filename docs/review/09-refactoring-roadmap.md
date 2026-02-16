@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 32 completed
+**Status**: Slice 33 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -573,6 +573,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by extracting toposolid base elevation resolution into `IToposolidBaseElevationService`.
 - Added `ToposolidBaseElevationService` and wired it through DI + `AlignEdgesService` constructor injection.
 - Kept `IAlignEdgesService` API unchanged while reducing elevation-calculation complexity.
+
+**P5 Slice 33 (Completed)**:
+- Decomposed `RenderAppearanceService` by extracting solid fill pattern lookup/creation into `IRenderSolidFillPatternService`.
+- Added `RenderSolidFillPatternService` and wired it through DI + `RenderAppearanceService` constructor injection.
+- Kept `IRenderAppearanceService` API unchanged while reducing fill-pattern orchestration complexity.
 
 
 **Target Services**:

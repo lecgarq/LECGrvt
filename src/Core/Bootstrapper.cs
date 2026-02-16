@@ -30,6 +30,7 @@ namespace LECG.Core
             // Domain Services
             services.AddSingleton<ISlabService, SlabService>();
             services.AddSingleton<IOffsetService, OffsetService>();
+            services.AddSingleton<IRenderSolidFillPatternService, RenderSolidFillPatternService>();
             services.AddSingleton<IRenderAppearanceService, RenderAppearanceService>();
             services.AddSingleton<IMaterialTypeAssignmentService, MaterialTypeAssignmentService>();
             services.AddSingleton<IMaterialCreationService, MaterialCreationService>();
