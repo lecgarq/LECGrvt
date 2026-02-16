@@ -18,6 +18,7 @@ namespace LECG.Services
         private readonly ICadCurveFlattenService _curveFlattenService;
         private readonly ICadFilledRegionTypeService _filledRegionTypeService;
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
+        private readonly ICadGeometryExtractionService _geometryExtractionService;
 
         public CadConversionService(
             ICadPlacementViewService placementViewService,
@@ -26,7 +27,8 @@ namespace LECG.Services
             ICadLineMergeService lineMergeService,
             ICadCurveFlattenService curveFlattenService,
             ICadFilledRegionTypeService filledRegionTypeService,
-            ICadFamilyLoadPlacementService familyLoadPlacementService)
+            ICadFamilyLoadPlacementService familyLoadPlacementService,
+            ICadGeometryExtractionService geometryExtractionService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
@@ -35,18 +37,7 @@ namespace LECG.Services
             _curveFlattenService = curveFlattenService;
             _filledRegionTypeService = filledRegionTypeService;
             _familyLoadPlacementService = familyLoadPlacementService;
-        }
-
-        private class CadData
-        {
-            public List<Curve> Curves { get; } = new List<Curve>();
-            public List<HatchData> Hatches { get; } = new List<HatchData>();
-        }
-
-        private class HatchData
-        {
-            public Color Color { get; set; }
-            public List<CurveLoop> Loops { get; set; }
+            _geometryExtractionService = geometryExtractionService;
         }
 
         public string GetDefaultTemplatePath()
@@ -59,7 +50,7 @@ namespace LECG.Services
             if (cadInstance == null) return ElementId.InvalidElementId;
 
             progress?.Invoke(10, "Extracting geometry from CAD...");
-            CadData data = ExtractGeometry(doc, cadInstance);
+            CadData data = _geometryExtractionService.ExtractGeometry(doc, cadInstance);
             
             progress?.Invoke(30, "Optimizing geometry...");
             CadData optimizedData = OptimizeGeometry(data);
@@ -103,7 +94,7 @@ namespace LECG.Services
 
                 ImportInstance imp = tempDoc.GetElement(impId) as ImportInstance;
                 progress?.Invoke(30, "Extracting geometry...");
-                data = ExtractGeometry(tempDoc, imp);
+                data = _geometryExtractionService.ExtractGeometry(tempDoc, imp);
                 t.RollBack(); 
             }
             tempDoc.Close(false);
@@ -230,82 +221,6 @@ namespace LECG.Services
                 }
                 catch { }
             }
-        }
-
-        private CadData ExtractGeometry(Document doc, ImportInstance imp)
-        {
-            CadData data = new CadData();
-            GeometryElement geoElem = imp.get_Geometry(new Options());
-
-            if (geoElem != null)
-            {
-                foreach (GeometryObject obj in geoElem)
-                {
-                    ProcessGeometryObject(obj, data, doc, Transform.Identity);
-                }
-            }
-            return data;
-        }
-
-        private void ProcessGeometryObject(GeometryObject obj, CadData data, Document doc, Transform currentTransform)
-        {
-            if (obj is GeometryInstance geoInst)
-            {
-                Transform instTransform = currentTransform.Multiply(geoInst.Transform);
-                GeometryElement symbolGeo = geoInst.GetSymbolGeometry();
-                foreach (GeometryObject childObj in symbolGeo)
-                {
-                    ProcessGeometryObject(childObj, data, doc, instTransform);
-                }
-            }
-            else if (obj is Curve crv)
-            {
-                data.Curves.Add(crv.CreateTransformed(currentTransform));
-            }
-            else if (obj is PolyLine poly)
-            {
-                IList<XYZ> points = poly.GetCoordinates();
-                for (int i = 0; i < points.Count - 1; i++)
-                {
-                    XYZ p1 = currentTransform.OfPoint(points[i]);
-                    XYZ p2 = currentTransform.OfPoint(points[i+1]);
-                    data.Curves.Add(Line.CreateBound(p1, p2));
-                }
-            }
-            else if (obj is Solid solid && !solid.Faces.IsEmpty)
-            {
-                Color c = GetColor(doc, obj.GraphicsStyleId);
-                foreach (Face face in solid.Faces)
-                {
-                    if (face is PlanarFace pf)
-                    {
-                        XYZ normal = currentTransform.OfVector(pf.FaceNormal).Normalize();
-                        if (normal.IsAlmostEqualTo(XYZ.BasisZ) || normal.IsAlmostEqualTo(-XYZ.BasisZ))
-                        {
-                            var loops = pf.GetEdgesAsCurveLoops();
-                            List<CurveLoop> transformedLoops = new List<CurveLoop>();
-                            foreach(CurveLoop loop in loops)
-                            {
-                                CurveLoop tLoop = new CurveLoop();
-                                foreach(Curve loopCrv in loop)
-                                {
-                                    tLoop.Append(loopCrv.CreateTransformed(currentTransform));
-                                }
-                                transformedLoops.Add(tLoop);
-                            }
-                            if (transformedLoops.Count > 0)
-                               data.Hatches.Add(new HatchData { Color = c, Loops = transformedLoops });
-                        }
-                    }
-                }
-            }
-        }
-
-        private Color GetColor(Document doc, ElementId gsId)
-        {
-            if (gsId == ElementId.InvalidElementId) return new Color(0,0,0);
-            if (doc.GetElement(gsId) is GraphicsStyle gs && gs.GraphicsStyleCategory != null) return gs.GraphicsStyleCategory.LineColor;
-            return new Color(0,0,0);
         }
 
     }

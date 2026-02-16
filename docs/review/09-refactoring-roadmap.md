@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 14 completed
+**Status**: Slice 15 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -483,6 +483,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting family load/place orchestration into `ICadFamilyLoadPlacementService`.
 - Added `CadFamilyLoadPlacementService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing load/place helper complexity.
+
+**P5 Slice 15 (Completed)**:
+- Decomposed `CadConversionService` by extracting geometry parsing/extraction into `ICadGeometryExtractionService`.
+- Added `CadGeometryExtractionService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing geometry extraction helper complexity.
 
 
 **Target Services**:
