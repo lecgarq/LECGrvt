@@ -16,15 +16,17 @@ namespace LECG.Services
     {
         private readonly IPurgeReferenceScannerService _referenceScanner;
         private readonly IPurgeMaterialService _purgeMaterialService;
+        private readonly IPurgeLineStyleService _purgeLineStyleService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
+            _purgeLineStyleService = purgeLineStyleService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -94,46 +96,7 @@ namespace LECG.Services
         /// </summary>
         public int PurgeUnusedLineStyles(Document doc, Action<string>? logCallback = null)
         {
-            logCallback?.Invoke("Scanning for unused line styles...");
-            
-            Category? linesCategory = doc.Settings.Categories.get_Item(BuiltInCategory.OST_Lines);
-            if (linesCategory == null) return 0;
-
-            // 1. Collect user-created style IDs
-            var allStyles = new Dictionary<ElementId, string>();
-            foreach (Category subCat in linesCategory.SubCategories)
-            {
-                if (!RevitConstants.IsBuiltInLineStyle(subCat.Name))
-                {
-                    allStyles[subCat.Id] = subCat.Name;
-                }
-            }
-            logCallback?.Invoke($"  Found {allStyles.Count} potential candidates.");
-
-            // 2. Find usage in CurveElements
-            var usedIds = new HashSet<ElementId>();
-            var curves = new FilteredElementCollector(doc).OfClass(typeof(CurveElement));
-
-            foreach (CurveElement curve in curves)
-            {
-                if (curve.LineStyle is GraphicsStyle gs && gs.GraphicsStyleCategory != null)
-                {
-                    usedIds.Add(gs.GraphicsStyleCategory.Id);
-                }
-            }
-
-            // 3. Delete Unused
-            int deleted = 0;
-            foreach (var kvp in allStyles)
-            {
-                if (!usedIds.Contains(kvp.Key))
-                {
-                    if (DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
-                }
-            }
-
-            logCallback?.Invoke($"  Deleted {deleted} line styles.");
-            return deleted;
+            return _purgeLineStyleService.PurgeUnusedLineStyles(doc, logCallback);
         }
 
         /// <summary>

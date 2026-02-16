@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 12 completed
+**Status**: Slice 13 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -473,6 +473,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting filled region type resolution/creation into `ICadFilledRegionTypeService`.
 - Added `CadFilledRegionTypeService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing hatch/filled-region helper complexity.
+
+**P5 Slice 13 (Completed)**:
+- Decomposed `PurgeService` by extracting line-style purge logic into `IPurgeLineStyleService`.
+- Added `PurgeLineStyleService` and wired it through DI + `PurgeService` constructor injection.
+- Kept `IPurgeService` API unchanged while reducing method complexity in `PurgeService`.
 
 
 **Target Services**:
