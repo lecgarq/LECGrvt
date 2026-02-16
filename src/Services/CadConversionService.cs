@@ -19,6 +19,7 @@ namespace LECG.Services
         private readonly ICadFilledRegionTypeService _filledRegionTypeService;
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadGeometryExtractionService _geometryExtractionService;
+        private readonly ICadDrawingViewService _drawingViewService;
 
         public CadConversionService(
             ICadPlacementViewService placementViewService,
@@ -28,7 +29,8 @@ namespace LECG.Services
             ICadCurveFlattenService curveFlattenService,
             ICadFilledRegionTypeService filledRegionTypeService,
             ICadFamilyLoadPlacementService familyLoadPlacementService,
-            ICadGeometryExtractionService geometryExtractionService)
+            ICadGeometryExtractionService geometryExtractionService,
+            ICadDrawingViewService drawingViewService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
@@ -38,6 +40,7 @@ namespace LECG.Services
             _filledRegionTypeService = filledRegionTypeService;
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
+            _drawingViewService = drawingViewService;
         }
 
         public string GetDefaultTemplatePath()
@@ -155,13 +158,7 @@ namespace LECG.Services
         {
             GraphicsStyle lineStyle = _lineStyleService.CreateOrUpdateDetailLineStyle(familyDoc, styleName, color, weight);
 
-            View? planView = new FilteredElementCollector(familyDoc)
-                   .OfClass(typeof(View)).Cast<View>()
-                   .FirstOrDefault(v => !v.IsTemplate && v.ViewType == ViewType.FloorPlan) 
-                   ?? new FilteredElementCollector(familyDoc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(v => !v.IsTemplate && v.CanBePrinted);
-
-            if (planView == null)
-                throw new Exception("Could not find a valid plan view in the family template to draw geometry.");
+            View planView = _drawingViewService.ResolveFamilyDrawingView(familyDoc);
 
             Transform toOrigin = Transform.CreateTranslation(-offset);
             

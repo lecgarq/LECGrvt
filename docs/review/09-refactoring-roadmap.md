@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 28 completed
+**Status**: Slice 30 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -558,6 +558,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting family geometry element ID collection into `IFamilyGeometryCollectionService`.
 - Added `FamilyGeometryCollectionService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing geometry selection complexity.
+
+**P5 Slice 30 (Completed)**:
+- Decomposed `CadConversionService` by extracting family drawing view resolution into `ICadDrawingViewService`.
+- Added `CadDrawingViewService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing drawing orchestration complexity.
 
 
 **Target Services**:
