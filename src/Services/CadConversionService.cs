@@ -22,6 +22,7 @@ namespace LECG.Services
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
         private readonly ICadDrawingViewService _drawingViewService;
         private readonly ICadCurveRenderService _curveRenderService;
+        private readonly ICadHatchRenderService _hatchRenderService;
         private readonly ICadFamilySaveService _familySaveService;
 
         public CadConversionService(
@@ -36,6 +37,7 @@ namespace LECG.Services
             ICadGeometryOptimizationService geometryOptimizationService,
             ICadDrawingViewService drawingViewService,
             ICadCurveRenderService curveRenderService,
+            ICadHatchRenderService hatchRenderService,
             ICadFamilySaveService familySaveService)
         {
             _placementViewService = placementViewService;
@@ -49,6 +51,7 @@ namespace LECG.Services
             _geometryOptimizationService = geometryOptimizationService;
             _drawingViewService = drawingViewService;
             _curveRenderService = curveRenderService;
+            _hatchRenderService = hatchRenderService;
             _familySaveService = familySaveService;
         }
 
@@ -141,38 +144,17 @@ namespace LECG.Services
 
             current = _curveRenderService.DrawCurves(familyDoc, data.Curves, toOrigin, planView, lineStyle, progress, startPct, endPct, total, current);
 
-            foreach (var hatch in data.Hatches)
-            {
-                current++;
-                if (total > 0 && (current % Math.Max(1, total / 20) == 0 || current == total)) progress?.Invoke(startPct + (endPct - startPct) * current / total, $"Drawing hatches... ({current - data.Curves.Count}/{data.Hatches.Count})");
-                try
-                {
-                    FilledRegionType? frType = _filledRegionTypeService.GetOrCreateFilledRegionType(familyDoc, hatch.Color);
-                    if (frType == null) continue;
-                    List<CurveLoop> validLoops = new List<CurveLoop>();
-                    
-                    foreach (var loop in hatch.Loops)
-                    {
-                        CurveLoop newLoop = new CurveLoop();
-                        foreach (Curve c in loop)
-                        {
-                            Curve transCurve = c.CreateTransformed(toOrigin);
-                            IEnumerable<Curve>? flats = _curveFlattenService.FlattenCurve(transCurve);
-                            if (flats != null) 
-                            {
-                                foreach(var flat in flats) newLoop.Append(flat);
-                            }
-                        }
-                        
-                        if (!newLoop.IsOpen() && newLoop.GetExactLength() > 0.001)
-                            validLoops.Add(newLoop);
-                    }
-
-                    if (validLoops.Any())
-                        FilledRegion.Create(familyDoc, frType.Id, planView.Id, validLoops);
-                }
-                catch { }
-            }
+            current = _hatchRenderService.DrawHatches(
+                familyDoc,
+                data.Hatches,
+                toOrigin,
+                planView,
+                progress,
+                startPct,
+                endPct,
+                total,
+                current,
+                data.Curves.Count);
         }
 
     }

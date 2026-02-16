@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 39 completed
+**Status**: Slice 40 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -608,6 +608,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting curve rendering into `ICadCurveRenderService`.
 - Added `CadCurveRenderService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing curve-drawing orchestration complexity.
+
+**P5 Slice 40 (Completed)**:
+- Decomposed `CadConversionService` by extracting hatch rendering into `ICadHatchRenderService`.
+- Added `CadHatchRenderService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing hatch-drawing orchestration complexity.
 
 
 **Target Services**:
