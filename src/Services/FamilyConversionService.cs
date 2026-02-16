@@ -13,16 +13,18 @@ namespace LECG.Services
         private readonly IFamilyTemplatePathService _templatePathService;
         private readonly IFamilyGeometryCollectionService _geometryCollectionService;
         private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
+        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyLoadOptionsFactory())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyLoadOptionsFactory familyLoadOptionsFactory)
         {
             _templatePathService = templatePathService;
             _geometryCollectionService = geometryCollectionService;
             _tempFileCleanupService = tempFileCleanupService;
+            _familyLoadOptionsFactory = familyLoadOptionsFactory;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -109,7 +111,7 @@ namespace LECG.Services
                     tProject.Start();
                     
                     Family? loadedFamily = null;
-                    doc.LoadFamily(tempFamilyPath, new FamilyLoadOptions(), out loadedFamily);
+                    doc.LoadFamily(tempFamilyPath, _familyLoadOptionsFactory.Create(), out loadedFamily);
                     
                     if (loadedFamily != null)
                     {
@@ -142,20 +144,5 @@ namespace LECG.Services
             return _templatePathService.GetTargetTemplatePath(app, category);
         }
 
-        private class FamilyLoadOptions : IFamilyLoadOptions
-        {
-            public bool OnFamilyFound(bool familyInUse, out bool overwriteParameterValues)
-            {
-                overwriteParameterValues = true;
-                return true; 
-            }
-
-            public bool OnSharedFamilyFound(Family sharedFamily, bool familyInUse, out FamilySource source, out bool overwriteParameterValues)
-            {
-                source = FamilySource.Family;
-                overwriteParameterValues = true;
-                return true;
-            }
-        }
     }
 }

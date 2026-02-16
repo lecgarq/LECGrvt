@@ -55,6 +55,7 @@ namespace LECG.Core
             services.AddSingleton<IFamilyTemplatePathService, FamilyTemplatePathService>();
             services.AddSingleton<IFamilyGeometryCollectionService, FamilyGeometryCollectionService>();
             services.AddSingleton<IFamilyTempFileCleanupService, FamilyTempFileCleanupService>();
+            services.AddSingleton<IFamilyLoadOptionsFactory, FamilyLoadOptionsFactory>();
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();
             services.AddSingleton<IAlignEdgesIntersectorService, AlignEdgesIntersectorService>();
