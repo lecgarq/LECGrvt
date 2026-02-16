@@ -56,6 +56,7 @@ namespace LECG.Core
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();
             services.AddSingleton<IAlignEdgesIntersectorService, AlignEdgesIntersectorService>();
             services.AddSingleton<IAlignEdgesBoundaryPointService, AlignEdgesBoundaryPointService>();
+            services.AddSingleton<IToposolidBaseElevationService, ToposolidBaseElevationService>();
             services.AddSingleton<IAlignEdgesService, AlignEdgesService>();
             services.AddSingleton<IToposolidService, ToposolidService>();
             services.AddSingleton<IChangeLevelService, ChangeLevelService>();

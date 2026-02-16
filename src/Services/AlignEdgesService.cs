@@ -12,17 +12,19 @@ namespace LECG.Services
         private readonly IReferenceRaycastService _referenceRaycastService;
         private readonly IAlignEdgesIntersectorService _intersectorService;
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
+        private readonly IToposolidBaseElevationService _baseElevationService;
         private string debugInfo = "";
 
-        public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService())
+        public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService())
         {
         }
 
-        public AlignEdgesService(IReferenceRaycastService referenceRaycastService, IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService)
+        public AlignEdgesService(IReferenceRaycastService referenceRaycastService, IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IToposolidBaseElevationService baseElevationService)
         {
             _referenceRaycastService = referenceRaycastService;
             _intersectorService = intersectorService;
             _boundaryPointService = boundaryPointService;
+            _baseElevationService = baseElevationService;
         }
 
         public void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references)
@@ -93,17 +95,8 @@ namespace LECG.Services
                             
                             // STEP 2: Align ALL points (existing + new) to reference
                             // Get the BASE elevation: level + height offset from level
-                            double levelElevation = 0;
-                            Level? level = doc.GetElement(toposolid.LevelId) as Level;
-                            if (level != null) levelElevation = level.ProjectElevation;
-                            
-                            // Get height offset from level
-                            double heightOffset = 0;
-                            Parameter heightParam = toposolid.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
-                            if (heightParam != null) heightOffset = heightParam.AsDouble();
-                            
-                            double baseElevation = levelElevation + heightOffset;
-                            debugInfo += $"Level={levelElevation:F2} HeightOffset={heightOffset:F2} Base={baseElevation:F2}\n";
+                            (double baseElevation, string debugMessage) = _baseElevationService.Resolve(doc, toposolid);
+                            debugInfo += debugMessage;
                             
                             foreach (SlabShapeVertex v in editor.SlabShapeVertices)
                             {
