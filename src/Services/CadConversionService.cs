@@ -13,11 +13,16 @@ namespace LECG.Services
     {
         private readonly ICadPlacementViewService _placementViewService;
         private readonly ICadFamilySymbolService _familySymbolService;
+        private readonly ICadLineStyleService _lineStyleService;
 
-        public CadConversionService(ICadPlacementViewService placementViewService, ICadFamilySymbolService familySymbolService)
+        public CadConversionService(
+            ICadPlacementViewService placementViewService,
+            ICadFamilySymbolService familySymbolService,
+            ICadLineStyleService lineStyleService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
+            _lineStyleService = lineStyleService;
         }
 
         private class CadData
@@ -270,11 +275,7 @@ namespace LECG.Services
 
         private void DrawData(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
         {
-            Category detailCat = familyDoc.Settings.Categories.get_Item(BuiltInCategory.OST_DetailComponents);
-            Category subCat = detailCat.SubCategories.Contains(styleName) ? detailCat.SubCategories.get_Item(styleName) : familyDoc.Settings.Categories.NewSubcategory(detailCat, styleName);
-            subCat.LineColor = color;
-            subCat.SetLineWeight(weight, GraphicsStyleType.Projection);
-            GraphicsStyle lineStyle = subCat.GetGraphicsStyle(GraphicsStyleType.Projection);
+            GraphicsStyle lineStyle = _lineStyleService.CreateOrUpdateDetailLineStyle(familyDoc, styleName, color, weight);
 
             View? planView = new FilteredElementCollector(familyDoc)
                    .OfClass(typeof(View)).Cast<View>()
