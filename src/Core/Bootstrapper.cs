@@ -32,6 +32,7 @@ namespace LECG.Core
             services.AddSingleton<IOffsetService, OffsetService>();
             services.AddSingleton<IRenderAppearanceService, RenderAppearanceService>();
             services.AddSingleton<IMaterialTypeAssignmentService, MaterialTypeAssignmentService>();
+            services.AddSingleton<IMaterialCreationService, MaterialCreationService>();
             services.AddSingleton<IMaterialService, MaterialService>();
             services.AddSingleton<IPurgeReferenceScannerService, PurgeReferenceScannerService>();
             services.AddSingleton<IPurgeMaterialService, PurgeMaterialService>();

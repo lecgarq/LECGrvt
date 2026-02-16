@@ -12,6 +12,7 @@ namespace LECG.Services
     {
         private readonly IRenderAppearanceService _renderAppearanceService;
         private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
+        private readonly IMaterialCreationService _materialCreationService;
         private int _colorIndex = 0;
         private static readonly Color[] ColorPalette = new Color[]
         {
@@ -20,12 +21,13 @@ namespace LECG.Services
             new Color(63, 81, 181), new Color(121, 85, 72), new Color(96, 125, 139), new Color(233, 30, 99),
         };
 
-        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService()) { }
+        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService(), new MaterialCreationService()) { }
 
-        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService)
+        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService)
         {
             _renderAppearanceService = renderAppearanceService;
             _materialTypeAssignmentService = materialTypeAssignmentService;
+            _materialCreationService = materialCreationService;
         }
 
         public Color GetNextColor()
@@ -35,46 +37,9 @@ namespace LECG.Services
             return color;
         }
 
-        private ElementId GetSolidFillPatternId(Document doc)
-        {
-            FilteredElementCollector collector = new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement));
-            foreach (FillPatternElement fpe in collector.Cast<FillPatternElement>())
-            {
-                FillPattern fp = fpe.GetFillPattern();
-                if (fp != null && fp.IsSolidFill) return fpe.Id;
-            }
-            FillPattern solidPattern = new FillPattern("Solid Fill", FillPatternTarget.Drafting, FillPatternHostOrientation.ToHost);
-            return FillPatternElement.Create(doc, solidPattern).Id;
-        }
-
         public ElementId GetOrCreateMaterial(Document doc, string name, Color color, Action<string>? logCallback = null)
         {
-            Material? existing = new FilteredElementCollector(doc).OfClass(typeof(Material)).Cast<Material>()
-                .FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-            if (existing != null)
-            {
-                logCallback?.Invoke($"  ℹ Material '{name}' already exists. Updating properties...");
-                ApplyMaterialProperties(doc, existing, color, logCallback);
-                return existing.Id;
-            }
-
-            logCallback?.Invoke($"  ✓ Creating material: {name}");
-            ElementId newId = Material.Create(doc, name);
-            Material? newMat = doc.GetElement(newId) as Material;
-            if (newMat != null) ApplyMaterialProperties(doc, newMat, color, logCallback);
-            return newId;
-        }
-
-        private void ApplyMaterialProperties(Document doc, Material mat, Color color, Action<string>? logCallback)
-        {
-            ElementId solidId = GetSolidFillPatternId(doc);
-            mat.Color = color;
-            mat.SurfaceForegroundPatternId = solidId; mat.SurfaceForegroundPatternColor = color;
-            mat.SurfaceBackgroundPatternId = solidId; mat.SurfaceBackgroundPatternColor = color;
-            mat.CutForegroundPatternId = solidId; mat.CutForegroundPatternColor = color;
-            mat.CutBackgroundPatternId = solidId; mat.CutBackgroundPatternColor = color;
-            logCallback?.Invoke($"    → Color: RGB({color.Red}, {color.Green}, {color.Blue})");
+            return _materialCreationService.GetOrCreateMaterial(doc, name, color, logCallback);
         }
 
         public bool AssignMaterialToType(Document doc, ElementType type, ElementId materialId, Action<string>? logCallback = null)
