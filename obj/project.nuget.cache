@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "k13sZENGkWc=",
+  "success": true,
+  "projectFilePath": "C:\\LECG\\RevitAddins\\LECG\\LECG.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\LECG Arquitectura\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
+    "C:\\Users\\LECG Arquitectura\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\LECG Arquitectura\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\LECG Arquitectura\\.nuget\\packages\\system.windows.extensions\\8.0.0\\system.windows.extensions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

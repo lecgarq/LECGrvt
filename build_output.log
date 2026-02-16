@@ -1,0 +1,19 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\LECG\RevitAddins\LECG\src\Core\RevitCommand.cs(43,64): warning CS8604: Possible null reference argument for parameter 'dispatcher' in 'void Logger.SetDispatcher(Dispatcher dispatcher)'. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\Logging\Logger.cs(26,17): warning CS8618: Non-nullable field '_uiDispatcher' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\Logging\Logger.cs(92,20): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\Logging\Logger.cs(20,31): warning CS8618: Non-nullable field '_instance' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\ResetSlabsCommand.cs(122,43): error CS0103: The name '_log' does not exist in the current context [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+
+Build FAILED.
+
+C:\LECG\RevitAddins\LECG\src\Core\RevitCommand.cs(43,64): warning CS8604: Possible null reference argument for parameter 'dispatcher' in 'void Logger.SetDispatcher(Dispatcher dispatcher)'. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\Logging\Logger.cs(26,17): warning CS8618: Non-nullable field '_uiDispatcher' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\Logging\Logger.cs(92,20): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\Logging\Logger.cs(20,31): warning CS8618: Non-nullable field '_instance' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\ResetSlabsCommand.cs(122,43): error CS0103: The name '_log' does not exist in the current context [C:\LECG\RevitAddins\LECG\LECG_mrznn2y1_wpftmp.csproj]
+    4 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.91

@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Font Families -->
+    <FontFamily x:Key="FontFamilyGlobal">Segoe UI</FontFamily>
+    <FontFamily x:Key="FontFamilyMono">Cascadia Mono, Consolas, Courier New</FontFamily>
+
+    <!-- Font Sizes -->
+    <sys:Double x:Key="FontSizeTitle">17.0</sys:Double>
+    <sys:Double x:Key="FontSizeHeader">14.0</sys:Double>
+    <sys:Double x:Key="FontSizeBody">13.0</sys:Double>
+    <sys:Double x:Key="FontSizeSmall">11.0</sys:Double>
+    <sys:Double x:Key="FontSizeExtraLarge">18.0</sys:Double>
+
+    <!-- Font Weights -->
+    <FontWeight x:Key="WeightBold">SemiBold</FontWeight>
+    <FontWeight x:Key="WeightSemiBold">Medium</FontWeight>
+    <FontWeight x:Key="WeightNormal">Regular</FontWeight>
+
+</ResourceDictionary>

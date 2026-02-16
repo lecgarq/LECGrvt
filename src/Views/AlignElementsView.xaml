@@ -1,0 +1,59 @@
+<base:LecgWindow x:Class="LECG.Views.AlignElementsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:LECG.Views.Base"
+    xmlns:comp="clr-namespace:LECG.Views.Components"
+    xmlns:icons="clr-namespace:LECG.Utils" Title="{Binding Title}" Width="400" WindowStartupLocation="CenterScreen" SizeToContent="Height">
+
+    <base:LecgWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        </ResourceDictionary>
+    </base:LecgWindow.Resources>
+
+    <Grid Margin="{StaticResource ViewContentMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
+            <TextBlock Text="{Binding Title}" FontWeight="{StaticResource WeightBold}" FontSize="{StaticResource FontSizeTitle}" Foreground="{StaticResource TextPrimaryBrush}" Margin="{StaticResource TitleMarginSmall}"/>
+            <TextBlock Text="Modify element placement." FontSize="{StaticResource FontSizeSmall}" Foreground="{StaticResource TextSecondaryBrush}"/>
+        </StackPanel>
+
+        <!-- Reference Selection (Align Mode Only) -->
+        <Border Grid.Row="1" Style="{DynamicResource CardStyle}" Padding="16" Margin="{DynamicResource HeaderMarginSmall}" Visibility="{Binding IsAlignMode, Converter={StaticResource BoolToVis}}">
+            <StackPanel>
+                <TextBlock Text="REFERENCE" Style="{DynamicResource LabelStyle}" Margin="0,0,0,4" Opacity="0.5"/>
+                <comp:SelectionControl DataContext="{Binding ReferenceSelection}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Targets Selection -->
+        <Border Grid.Row="2" Style="{DynamicResource CardStyle}" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
+            <StackPanel>
+                <TextBlock Text="TARGETS" Style="{DynamicResource LabelStyle}" Margin="0,0,0,4" Opacity="0.5"/>
+                <comp:SelectionControl DataContext="{Binding TargetSelection}"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Actions -->
+        <Grid Grid.Row="3" Margin="{StaticResource ButtonRowMarginSmall}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Content="Cancel" Grid.Column="0" Height="{StaticResource ButtonHeightMedium}" Command="{Binding ExecuteCancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Proceed" Grid.Column="2" Height="{StaticResource ButtonHeightMedium}" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
+        </Grid>
+    </Grid>
+</base:LecgWindow>

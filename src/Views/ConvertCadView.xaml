@@ -1,0 +1,149 @@
+<base:LecgWindow x:Class="LECG.Views.ConvertCadView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:LECG.Views.Base"
+    xmlns:utils="clr-namespace:LECG.Utils"
+    xmlns:comp="clr-namespace:LECG.Views.Components" Title="Convert CAD" Height="655" Width="450" WindowStartupLocation="CenterOwner" Style="{DynamicResource LecgWindowStyle}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <utils:BoolToVisibilityConverter x:Key="BoolToVis"/>
+            <utils:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis"/>
+            <utils:InverseBoolConverter x:Key="InverseBool"/>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="{Binding Title}" FontSize="20" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <TextBlock Text="Convert CAD geometry to clean Revit Detail Items." FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}"/>
+        </StackPanel>
+
+        <!-- Configuration State (Visible when NOT finished) -->
+        <StackPanel Grid.Row="1" Visibility="{Binding IsFinished, Converter={StaticResource InverseBoolToVis}}">
+            <!-- Mode Selection -->
+            <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Padding="15" Margin="0,0,0,15" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <StackPanel IsEnabled="{Binding !IsBusy}">
+                    <Label Content="Selection Mode" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Selected CAD" IsChecked="{Binding UseSelectedImport}" Margin="0,0,20,0"/>
+                        <RadioButton Content="External DWG" IsChecked="{Binding UseSelectedImport, Converter={StaticResource InverseBool}}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- CAD Selection / File Picker -->
+            <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Padding="15" Margin="0,0,0,15" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <StackPanel IsEnabled="{Binding !IsBusy}">
+                    <Grid Visibility="{Binding UseSelectedImport, Converter={StaticResource BoolToVis}}">
+                        <comp:SelectionControl Height="60"/>
+                    </Grid>
+
+                    <Grid Visibility="{Binding UseSelectedImport, Converter={StaticResource InverseBoolToVis}}">
+                        <StackPanel>
+                            <Label Content="DWG File Path" FontWeight="SemiBold"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding DwgFilePath}" IsReadOnly="True" VerticalContentAlignment="Center" Height="32"/>
+                                <Button Grid.Column="1" Content="Browse" Command="{Binding BrowseDwgCommand}" Margin="5,0,0,0" Width="70" Height="32"/>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Settings -->
+            <Border Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Padding="15" Margin="0,0,0,15" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+                <StackPanel IsEnabled="{Binding !IsBusy}">
+                    <Label Content="Family Name" FontWeight="SemiBold"/>
+                    <TextBox Text="{Binding NewFamilyName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Height="32" VerticalContentAlignment="Center"/>
+
+                    <Label Content="Line Style Name" FontWeight="SemiBold"/>
+                    <TextBox Text="{Binding LineStyleName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Height="32" VerticalContentAlignment="Center"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,5,0">
+                            <Label Content="Line Color" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding AvailableColors}" SelectedItem="{Binding SelectedColorItem}" Height="32">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Rectangle Width="16" Height="16" Fill="{Binding Brush}" Margin="0,0,10,0" RadiusX="2" RadiusY="2"/>
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Margin="5,0,0,0">
+                            <Label Content="Line Weight" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding AvailableWeights}" SelectedItem="{Binding LineWeight}" Height="32"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- Log / Execution State -->
+        <Border Grid.Row="2" Background="{DynamicResource CardBackgroundBrush}" CornerRadius="12" Padding="15" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Operation Logs" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Background="Transparent" BorderThickness="0" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Padding" Value="0,2"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+
+                <!-- Status Overlay (Progress) -->
+                <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0,10,0,0" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
+                    <Grid Margin="0,0,2,2">
+                        <TextBlock Text="{Binding StatusMessage}" HorizontalAlignment="Left" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        <TextBlock HorizontalAlignment="Right" FontSize="10" Foreground="{DynamicResource PrimaryAccentBrush}">
+                            <Run Text="{Binding Progress, StringFormat={}{0:F0}}"/>
+                            <Run Text="%"/>
+                        </TextBlock>
+                    </Grid>
+                    <ProgressBar Value="{Binding Progress}" Height="4" BorderThickness="0" Background="{DynamicResource BorderBrush}" Foreground="{DynamicResource PrimaryAccentBrush}"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Actions -->
+        <StackPanel Grid.Row="3" Margin="0,20,0,0">
+            <Button Content="CONVERT TO FAMILY" Command="{Binding RunCommand}" Height="44" Style="{DynamicResource PrimaryButtonStyle}" Visibility="{Binding IsFinished, Converter={StaticResource InverseBoolToVis}}" IsEnabled="{Binding CanRun}"/>
+
+            <Grid Visibility="{Binding IsFinished, Converter={StaticResource BoolToVis}}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="CLOSE" Command="{Binding CloseCommand}" Height="44" Margin="0,0,5,0" Cursor="Hand"/>
+                <Button Grid.Column="1" Content="PLACE COMPONENT" Command="{Binding PlaceCommand}" Height="44" Margin="5,0,0,0" Style="{DynamicResource PrimaryButtonStyle}"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</base:LecgWindow>

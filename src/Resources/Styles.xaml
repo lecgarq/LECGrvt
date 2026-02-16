@@ -1,0 +1,17 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Level 1: Design Tokens (Primitives) -->
+        <ResourceDictionary Source="Base/Colors.xaml"/>
+        <ResourceDictionary Source="Base/Brushes.xaml"/>
+        <ResourceDictionary Source="Base/Sizes.xaml"/>
+        <ResourceDictionary Source="Base/Fonts.xaml"/>
+
+        <!-- Level 2: Component Styles (Consuming Tokens) -->
+        <ResourceDictionary Source="Buttons.xaml"/>
+        <ResourceDictionary Source="Controls.xaml"/>
+        <ResourceDictionary Source="Containers.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>

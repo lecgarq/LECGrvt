@@ -1,0 +1,300 @@
+<base:LecgWindow x:Class="LECG.Views.SearchReplaceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:base="clr-namespace:LECG.Views.Base"
+    xmlns:local="clr-namespace:LECG.Views"
+    xmlns:vm="clr-namespace:LECG.ViewModels"
+    xmlns:services="clr-namespace:LECG.Services"
+    xmlns:utils="clr-namespace:LECG.Utils"
+    xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="SEARCH &amp; REPLACE" Width="450" WindowIcon="{x:Static icons:Icons.SearchReplace}" WindowStartupLocation="CenterScreen" SizeToContent="Height">
+
+    <base:LecgWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </base:LecgWindow.Resources>
+
+    <Border Background="{StaticResource WindowBackgroundBrush}" CornerRadius="{StaticResource WindowCornerRadius}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <!-- Header -->
+                <RowDefinition Height="Auto"/>
+                <!-- Upper Controls -->
+                <RowDefinition Height="Auto"/>
+                <!-- Operations -->
+                <RowDefinition Height="*"/>
+                <!-- DataGrid -->
+                <RowDefinition Height="Auto"/>
+                <!-- Footer -->
+            </Grid.RowDefinitions>
+
+            <!-- 1. Window Chrome -->
+            <Grid Grid.Row="0" Background="Transparent">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
+                    <Path Data="{x:Static utils:Icons.SearchReplace}" Fill="{StaticResource TextPrimaryBrush}" Width="16" Height="16" Margin="0,0,10,0" Stretch="Uniform"/>
+                    <TextBlock Text="BATCH RENAME" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" FontSize="{StaticResource FontSizeBody}" VerticalAlignment="Center"/>
+                </StackPanel>
+                <Button Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Click="CloseWindow" Cursor="Hand" Background="Transparent" Width="30" Height="30"/>
+            </Grid>
+
+            <!-- 2. Scope & Filters -->
+            <Border Grid.Row="1" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="{StaticResource ButtonCornerRadius}" Margin="20,10,20,10" Padding="15">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <!-- Scope Checkboxes -->
+                        <ColumnDefinition Width="30"/>
+                        <!-- Spacer -->
+                        <ColumnDefinition Width="*"/>
+                        <!-- Filter Inputs -->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Scope -->
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Selection Scope" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <CheckBox Content="Element Type" IsChecked="{Binding ScopeTypeName}" Margin="0,0,15,0" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="View Name" IsChecked="{Binding ScopeViewName}" Margin="0,0,15,0" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Sheet Name" IsChecked="{Binding ScopeSheetName}" Margin="0,0,0,0" Style="{StaticResource ModernCheckboxStyle}"/>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <!-- Filters -->
+                    <Grid Grid.Column="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Filter by Name (Contains)" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
+                            <TextBox Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Filter by Category" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
+                            <ComboBox ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding FilterCategory}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <!-- 3. Operations Control Panel -->
+            <Border Grid.Row="2" Background="Transparent" Margin="20,0,20,15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 1. RegEx / Replace -->
+                    <Border Grid.Row="0" Grid.Column="0" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="6" Padding="10">
+                        <StackPanel>
+                            <CheckBox Content="RegEx / Replace" IsChecked="{Binding ReplaceRule.IsActive}" Style="{StaticResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{StaticResource FontSizeBody}"/>
+                            <Grid IsEnabled="{Binding ReplaceRule.IsActive}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Match:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
+                                <TextBox Grid.Column="1" Text="{Binding ReplaceRule.FindText, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Height="24" VerticalContentAlignment="Center" FontSize="{StaticResource FontSizeSmall}" Padding="2"/>
+
+                                <TextBlock Grid.Row="2" Text="Replace:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ReplaceRule.ReplaceText, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,0,0" Height="24" VerticalContentAlignment="Center" FontSize="{StaticResource FontSizeSmall}" Padding="2"/>
+
+                                <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,2,0,0">
+                                    <CheckBox Content="Case" IsChecked="{Binding ReplaceRule.MatchCase}" Style="{StaticResource ModernCheckboxStyle}" Margin="0,0,10,0" FontSize="{StaticResource FontSizeSmall}"/>
+                                    <CheckBox Content="RegEx" IsChecked="{Binding ReplaceRule.UseRegex}" Style="{StaticResource ModernCheckboxStyle}" FontSize="{StaticResource FontSizeSmall}"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 2. Case -->
+                    <Border Grid.Row="0" Grid.Column="2" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="6" Padding="10">
+                        <StackPanel>
+                            <CheckBox Content="Case" IsChecked="{Binding CaseRule.IsActive}" Style="{StaticResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{StaticResource FontSizeBody}"/>
+                            <Grid IsEnabled="{Binding CaseRule.IsActive}">
+                                <ComboBox SelectedItem="{Binding CaseRule.Mode}" ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type services:CaseMode}}}" Height="24" VerticalContentAlignment="Center" FontSize="{StaticResource FontSizeSmall}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 3. Remove -->
+                    <Border Grid.Row="0" Grid.Column="4" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="6" Padding="10">
+                        <StackPanel>
+                            <CheckBox Content="Remove" IsChecked="{Binding RemoveRule.IsActive}" Style="{StaticResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{StaticResource FontSizeBody}"/>
+                            <Grid IsEnabled="{Binding RemoveRule.IsActive}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="First n:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" Text="{Binding RemoveRule.FirstN, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+
+                                <TextBlock Grid.Column="3" Text="Last n:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="4" Text="{Binding RemoveRule.LastN, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+
+                                <TextBlock Grid.Row="2" Text="From:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RemoveRule.FromPos, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="3" Text="Count:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding RemoveRule.Count, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 4. Add -->
+                    <Border Grid.Row="2" Grid.Column="0" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="6" Padding="10">
+                        <StackPanel>
+                            <CheckBox Content="Add" IsChecked="{Binding AddRule.IsActive}" Style="{StaticResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{StaticResource FontSizeBody}"/>
+                            <Grid IsEnabled="{Binding AddRule.IsActive}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Prefix:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <TextBox Grid.Column="1" Text="{Binding AddRule.Prefix, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" Padding="2"/>
+
+                                <TextBlock Grid.Row="2" Text="Insert:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <Grid Grid.Row="2" Grid.Column="1" Margin="5,0,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="{Binding AddRule.Insert, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" FontSize="{StaticResource FontSizeSmall}" Padding="2"/>
+                                    <TextBlock Grid.Column="1" Text="at" Margin="5,0,5,0" VerticalAlignment="Center" FontSize="{StaticResource FontSizeSmall}" Foreground="{StaticResource TextSecondaryBrush}"/>
+                                    <TextBox Grid.Column="2" Text="{Binding AddRule.AtPos, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="{StaticResource FontSizeSmall}"/>
+                                </Grid>
+
+                                <TextBlock Grid.Row="4" Text="Suffix:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AddRule.Suffix, UpdateSourceTrigger=PropertyChanged}" Height="24" VerticalContentAlignment="Center" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" Padding="2"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 5. Numbering -->
+                    <Border Grid.Row="2" Grid.Column="2" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="6" Padding="10">
+                        <StackPanel>
+                            <CheckBox Content="Numbering" IsChecked="{Binding NumberingRule.IsActive}" Style="{StaticResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{StaticResource FontSizeBody}"/>
+                            <Grid IsEnabled="{Binding NumberingRule.IsActive}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="5"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Text="Mode:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Column="1" SelectedItem="{Binding NumberingRule.Mode}" ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type services:NumberingMode}}}" Height="24" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}"/>
+
+                                <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Start:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Text="{Binding NumberingRule.StartAt, UpdateSourceTrigger=PropertyChanged}" Height="24" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="Incr:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="4" Text="{Binding NumberingRule.Increment, UpdateSourceTrigger=PropertyChanged}" Height="24" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+                                </Grid>
+
+                                <Grid Grid.Row="4" Grid.ColumnSpan="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="35"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="40"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Sep:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="1" Text="{Binding NumberingRule.Separator, UpdateSourceTrigger=PropertyChanged}" Height="24" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+
+                                    <TextBlock Grid.Column="3" Text="Pad:" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" VerticalAlignment="Center"/>
+                                    <TextBox Grid.Column="4" Text="{Binding NumberingRule.Padding, UpdateSourceTrigger=PropertyChanged}" Height="24" Margin="5,0,0,0" FontSize="{StaticResource FontSizeSmall}" HorizontalContentAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 6. Extension (Placeholder) -->
+                    <Border Grid.Row="2" Grid.Column="4" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="6" Padding="10" Opacity="0.5">
+                        <StackPanel>
+                            <CheckBox Content="Extension" IsChecked="False" IsEnabled="False" Style="{StaticResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{StaticResource FontSizeBody}"/>
+                            <TextBlock Text="(Coming Soon)" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}" FontStyle="Italic"/>
+                        </StackPanel>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+            <!-- 4. DataGrid Results -->
+            <Border Grid.Row="3" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="{StaticResource ContentCornerRadius}" Margin="20,0,20,20" Padding="2" ClipToBounds="True">
+                <DataGrid ItemsSource="{Binding PreviewItems}" AutoGenerateColumns="False" CanUserAddRows="False" Background="Transparent" BorderThickness="0" HeadersVisibility="Column" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{StaticResource BorderBrush}" ColumnHeaderStyle="{StaticResource HeaderStyle}">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="Apply" Binding="{Binding IsChecked}" Width="50"/>
+                        <DataGridTextColumn Header="Old Name" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" Foreground="{StaticResource DataGridRemovedBrush}"/>
+                        <DataGridTextColumn Header="New Name" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{StaticResource DataGridAddedBrush}"/>
+                        <DataGridTextColumn Header="Element ID" Binding="{Binding ElementId}" Width="80" IsReadOnly="True" Foreground="{StaticResource DataGridMetaBrush}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Border>
+
+            <!-- 5. Footer -->
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,20">
+                <Button Content="Cancel" Click="CloseWindow" Style="{StaticResource SecondaryButtonStyle}" Width="100" Height="{StaticResource ButtonHeight}" Margin="0,0,10,0"/>
+                <Button Content="Apply Rename" Command="{Binding ReplaceCommand}" Style="{StaticResource PrimaryButtonStyle}" Width="160" Height="{StaticResource ButtonHeight}" FontSize="{StaticResource FontSizeHeader}"/>
+            </StackPanel>
+
+        </Grid>
+    </Border>
+</base:LecgWindow>

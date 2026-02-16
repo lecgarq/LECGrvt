@@ -1,0 +1,47 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(39,25): warning CS0108: 'ChangeLevelViewModel.CancelCommand' hides inherited member 'BaseViewModel.CancelCommand'. Use the new keyword if hiding was intended. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(132,22): warning CS0114: 'ChangeLevelViewModel.Cancel()' hides inherited member 'BaseViewModel.Cancel()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Views\Base\LecgWindow.cs(49,57): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\SimplifyPointsCommand.cs(22,37): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(45,16): warning CS8618: Non-nullable field '_selectedLevel' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(45,16): warning CS8618: Non-nullable field '_targetText' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(45,16): warning CS8618: Non-nullable event 'OnRequestClose' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the event as nullable. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(101,42): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(257,39): error CS0029: Cannot implicitly convert type 'Autodesk.Revit.DB.AppearanceAssetElement' to 'Autodesk.Revit.DB.ElementId' [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(311,61): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(312,20): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(323,33): error CS0029: Cannot implicitly convert type 'void' to 'Autodesk.Revit.DB.Visual.Asset' [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(320,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(335,48): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(353,40): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(105,29): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(155,49): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(250,43): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(358,20): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+
+Build FAILED.
+
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(39,25): warning CS0108: 'ChangeLevelViewModel.CancelCommand' hides inherited member 'BaseViewModel.CancelCommand'. Use the new keyword if hiding was intended. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(132,22): warning CS0114: 'ChangeLevelViewModel.Cancel()' hides inherited member 'BaseViewModel.Cancel()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Views\Base\LecgWindow.cs(49,57): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\SimplifyPointsCommand.cs(22,37): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(45,16): warning CS8618: Non-nullable field '_selectedLevel' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(45,16): warning CS8618: Non-nullable field '_targetText' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the field as nullable. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(45,16): warning CS8618: Non-nullable event 'OnRequestClose' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the event as nullable. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\ViewModels\ChangeLevelViewModel.cs(101,42): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(311,61): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(312,20): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(320,36): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(335,48): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(353,40): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(105,29): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(155,49): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(250,43): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Commands\AlignEdgesCommand.cs(358,20): warning CS8603: Possible null reference return. [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(257,39): error CS0029: Cannot implicitly convert type 'Autodesk.Revit.DB.AppearanceAssetElement' to 'Autodesk.Revit.DB.ElementId' [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+C:\LECG\RevitAddins\LECG\src\Services\MaterialService.cs(323,33): error CS0029: Cannot implicitly convert type 'void' to 'Autodesk.Revit.DB.Visual.Asset' [C:\LECG\RevitAddins\LECG\LECG_rzd0k5b3_wpftmp.csproj]
+    17 Warning(s)
+    2 Error(s)
+
+Time Elapsed 00:00:00.91

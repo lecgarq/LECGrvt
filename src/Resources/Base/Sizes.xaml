@@ -1,0 +1,66 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Simple Dimensions -->
+    <sys:Double x:Key="WindowWidth">500</sys:Double>
+    <sys:Double x:Key="WindowHeight">400</sys:Double>
+    <sys:Double x:Key="WindowHeightLarge">550</sys:Double>
+    <sys:Double x:Key="ButtonHeight">40</sys:Double>
+
+    <!-- Corner Radii -->
+    <CornerRadius x:Key="WindowCornerRadius">14</CornerRadius>
+    <CornerRadius x:Key="ContentCornerRadius">10</CornerRadius>
+    <CornerRadius x:Key="ButtonCornerRadius">8</CornerRadius>
+    <CornerRadius x:Key="CornerRadiusMedium">10</CornerRadius>
+    <CornerRadius x:Key="SmallCornerRadius">6</CornerRadius>
+
+    <!-- Margins / Padding -->
+    <Thickness x:Key="WindowPadding">12</Thickness>
+    <Thickness x:Key="ContentPadding">20</Thickness>
+
+    <Thickness x:Key="ViewContentMargin">8,0,8,8</Thickness>
+    <Thickness x:Key="ViewContentMarginLarge">16</Thickness>
+
+    <Thickness x:Key="HeaderMargin">0,0,0,20</Thickness>
+    <Thickness x:Key="TitleMargin">0,0,0,6</Thickness>
+
+    <Thickness x:Key="ButtonRowMargin">0,20,0,0</Thickness>
+
+    <!-- Grid Layout -->
+    <sys:Double x:Key="ColumnGap">12</sys:Double>
+
+    <!-- Missing Window Sizes -->
+    <sys:Double x:Key="WindowHeightSmall">320</sys:Double>
+    <sys:Double x:Key="WindowWidthSmall">400</sys:Double>
+
+    <!-- Missing Button Sizes -->
+    <sys:Double x:Key="ButtonHeightSmall">28</sys:Double>
+    <sys:Double x:Key="ButtonHeightMedium">32</sys:Double>
+    <sys:Double x:Key="ButtonHeightLarge">50</sys:Double>
+
+    <!-- Missing Icon Sizes -->
+    <sys:Double x:Key="IconSizeSmall">12</sys:Double>
+    <sys:Double x:Key="IconSizeMedium">16</sys:Double>
+    <sys:Double x:Key="IconSizeLarge">32</sys:Double>
+    <sys:Double x:Key="IconSizeExtraLarge">48</sys:Double>
+    <sys:Double x:Key="IconSizeAction">20</sys:Double>
+    <sys:Double x:Key="IconSizeButton">16</sys:Double>
+
+    <!-- Missing Margins -->
+    <Thickness x:Key="HeaderMarginSmall">0,0,0,10</Thickness>
+    <Thickness x:Key="HeaderMarginTiny">0,0,0,5</Thickness>
+    <Thickness x:Key="TitleMarginSmall">0,0,0,4</Thickness>
+    <Thickness x:Key="TitleMarginLarge">0,0,0,8</Thickness>
+    <Thickness x:Key="ButtonRowMarginSmall">0,10,0,0</Thickness>
+    <Thickness x:Key="ButtonRowMarginTiny">0,5,0,0</Thickness>
+    <Thickness x:Key="CardMarginNone">0</Thickness>
+
+    <!-- Missing Spacing -->
+    <Thickness x:Key="CheckboxSpacing">0,0,0,6</Thickness>
+    <Thickness x:Key="CheckboxSpacingMedium">0,0,0,10</Thickness>
+    <Thickness x:Key="CheckboxSpacingSmall">0,0,0,4</Thickness>
+    <Thickness x:Key="IconMarginRight">0,0,8,0</Thickness>
+    <Thickness x:Key="IconMarginBottom">0,0,0,4</Thickness>
+
+</ResourceDictionary>

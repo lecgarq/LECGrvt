@@ -1,0 +1,30 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Premium Color Palette (Source: Theme.cs) -->
+    <Color x:Key="ColorWindowBackground">#FAFAFC</Color>
+    <Color x:Key="ColorPanelBackground">#FFFFFF</Color>
+    <Color x:Key="ColorContentBackground">#F7F8FA</Color>
+    <Color x:Key="ColorBorder">#E2E4E9</Color>
+
+    <Color x:Key="ColorPrimary">#2D3748</Color>
+    <Color x:Key="ColorPrimaryHover">#1E2837</Color>
+
+    <Color x:Key="ColorTextPrimary">#1A202C</Color>
+    <Color x:Key="ColorTextSecondary">#718096</Color>
+    <Color x:Key="ColorTextMuted">#A0AEC0</Color>
+
+    <Color x:Key="ColorAlert">#C53030</Color>
+    <Color x:Key="ColorSuccess">#38A169</Color>
+    <Color x:Key="ColorLogText">#2D3748</Color>
+
+    <Color x:Key="ColorLogBackground">#FFFFFF</Color>
+    <Color x:Key="ColorGlassOverlay">#FFFFFF</Color>
+    <Color x:Key="ColorCardBackground">#FFFFFF</Color>
+
+    <!-- DataGrid Specifics -->
+    <Color x:Key="ColorDataGridAdded">#00AA00</Color>
+    <Color x:Key="ColorDataGridRemoved">#FF0000</Color>
+    <Color x:Key="ColorDataGridMeta">#999999</Color>
+
+</ResourceDictionary>

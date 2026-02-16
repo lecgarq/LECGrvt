@@ -1,0 +1,150 @@
+﻿          , 1292, 794
+'H 04-Feb-2026 22:18:50.323;   0:< 
+Jrn.Directive  _
+        "ScreenResolution"  , 293, 1080
+'H 04-Feb-2026 22:18:50.324;   0:< 
+Jrn.Directive  _
+        "ProjToPage"  , "[Project1]" , "Floor Plan: Level 1"  _
+        , 4812.12121212121201 _
+        , 4812.12121212121201, 0.00000000000000, 0.00000000000000 _
+        , 0.00000000000000, 4812.12121212121201, 0.00000000000000 _
+        , 0.00000000000000, 0.00000000000000, 4812.12121212121201 _
+        , 0.00000000000000, 0.00000000000000, 0.00000000000000
+'H 04-Feb-2026 22:18:50.324;   0:< 
+Jrn.Directive  _
+        "ProjToPage"  , "[Project1]" , "Floor Plan: Level 1"  _
+        , 4812.12121212121201 _
+        , 4812.12121212121201, 0.00000000000000, 0.00000000000000 _
+        , 0.00000000000000, 4812.12121212121201, 0.00000000000000 _
+        , 0.00000000000000, 0.00000000000000, 4812.12121212121201 _
+        , 164.78787878787927, -757.90909090909122, 0.00000000000000
+' 0:< ::97:: Delta VM: Avail 133897323 MB, Used 882 MB; RAM: Avail -16 -> 38124 MB, Used +0 -> 1197 MB 
+' 0:< GUI Resource Usage GDI: Avail 8787, Used 1213, User: Used 446 
+'Add-in component: Rvt.ProjectBrowser
+'Rvt.Attr.AddInName: Revit ProjectBrowser
+'Rvt.Attr.AdditionalBrowserArguments: --allow-file-access-from-files 
+'Rvt.Attr.BrowserVersion: 144.0.3719.93
+'Rvt.Attr.CommandVendorId: ADSK
+'Rvt.Attr.InitializationResult: succeed 
+' 0:< ::97:: Delta VM: Avail -17 -> 133897307 MB, Used +0 -> 883 MB; RAM: Avail -3 -> 38121 MB, Used +0 -> 1198 MB 
+' 0:< GUI Resource Usage GDI: Avail 8748, Used 1252, User: Used 460 
+'H 04-Feb-2026 22:18:50.409;   0:< 
+Jrn.Directive  _
+        "ProjToPage"  , "[Project1]" , "Floor Plan: Level 1"  _
+        , 4812.12121212121565 _
+        , 4812.12121212121565, 0.00000000000000, 0.00000000000000 _
+        , 0.00000000000000, 4812.12121212121565, 0.00000000000000 _
+        , 0.00000000000000, 0.00000000000000, 4812.12121212121565 _
+        , 164.78787878787927, -757.90909090909122, 0.00000000000000
+'H 04-Feb-2026 22:18:50.410;   0:< 
+Jrn.Directive  _
+        "ProjToPage"  , "[Project1]" , "Floor Plan: Level 1"  _
+        , 4812.12121212121565 _
+        , 4812.12121212121565, 0.00000000000000, 0.00000000000000 _
+        , 0.00000000000000, 4812.12121212121565, 0.00000000000000 _
+        , 0.00000000000000, 0.00000000000000, 4812.12121212121565 _
+        , 164.78787878787873, -757.90909090909076, 0.00000000000000
+' 0:< Draw Thread Id ==     4044 
+' 0:< ::97:: Delta VM: Avail -43 -> 133897264 MB, Used +49 -> 932 MB, Peak +46 -> 933 MB; RAM: Avail -32 -> 38090 MB, Used +19 -> 1218 MB, Peak +18 -> 1219 MB 
+' 0:< GUI Resource Usage GDI: Avail 8634, Used 1366, User: Used 462 
+'C 04-Feb-2026 22:18:50.476;   0:< idle0_doc 
+  'H 04-Feb-2026 22:18:50.477;   0:< 
+  Jrn.Directive  _
+          "AllowPressAndDrag"  , 1
+' 0:< API_SUCCESS { Registering FailuresProcessing event by application Environment (eccb03c4-b3c3-4c39-868e-5d65d9cebbbb). } 
+' 0:< after updateForChangedSketch : failureItems.size() == 0 , errorMsg =  
+' 1:< ::97:: Delta VM: Avail +15 -> 133897280 MB, Used 932 MB; RAM: Avail +8 -> 38098 MB, Used +2 -> 1220 MB, Peak +0 -> 1220 MB 
+' 1:< GUI Resource Usage GDI: Avail 8606, Used 1394, User: Used 474 
+'H 04-Feb-2026 22:18:50.584;   1:< 
+Jrn.Data  _
+        "Transaction Successful"  , "Dummy Toposolid" 
+' 0:< API_SUCCESS { Unregistering FailuresProcessing event by application Environment (eccb03c4-b3c3-4c39-868e-5d65d9cebbbb). } 
+'H 04-Feb-2026 22:18:50.658;   1:< 
+Jrn.Data  _
+        "Transaction Successful"  , "Create Parameter" 
+' 0:< API_SUCCESS { Registering FailuresProcessing event by application Environment (eccb03c4-b3c3-4c39-868e-5d65d9cebbbb). } 
+' 0:< after updateForChangedSketch : failureItems.size() == 0 , errorMsg =  
+'H 04-Feb-2026 22:18:50.668;   1:< 
+Jrn.Data  _
+        "Transaction Successful"  , "Dummy Toposolid" 
+' 0:< API_SUCCESS { Unregistering FailuresProcessing event by application Environment (eccb03c4-b3c3-4c39-868e-5d65d9cebbbb). } 
+' 0:< Third Party Updater 'Environment: EnvToposolidParameterUpdater' registered for all documents. 
+' 0:< Third Party Updater 'Environment: EnvToposolidAdditionOrDeletionUpdater' registered for all documents. 
+' 0:< Third Party Updater 'Environment: EnvToposolidChangeGeometryUpdater' registered for all documents. 
+' 0:< Third Party Updater 'Environment: EnvToposolidChangeCreatedPhaseUpdater' registered for all documents. 
+  'E 04-Feb-2026 22:18:50.680;   0:< 
+  ' [Jrn.ExternalEventExecution] Rvt.Attr.AddInId: eccb03c4-b3c3-4c39-868e-5d65d9cebbbb Rvt.Attr.AddInName: Environment Rvt.Attr.AddInVersion: 15.0.0.0 Rvt.Attr.ExternalEventName: EnvToposolidParameters Rvt.Attr.VendorDescription: archintelligence Rvt.Attr.VendorId: archintelligence 
+' 0:< ::98:: Delta VM: Avail -18 -> 133897263 MB, Used 932 MB, Peak +3 -> 936 MB; RAM: Avail -16 -> 38083 MB, Used +6 -> 1226 MB, Peak +6 -> 1226 MB 
+' 0:< GUI Resource Usage GDI: Avail 8615, Used 1385, User: Used 471 
+'C 04-Feb-2026 22:18:50.694;   0:< idle0_doc 
+' 1:< ::98:: Delta VM: Avail -1 -> 133897262 MB, Used 932 MB; RAM: Avail -14 -> 38070 MB, Used 1226 MB 
+' 1:< GUI Resource Usage GDI: Avail 8609, Used 1391, User: Used 478 
+' 1:< API_SUCCESS { Unregistering Idling event by application ModPlus (90e912da-4c66-4b52-aa3d-6b491f1d6772). } 
+' 0:< ::98:: Delta VM: Avail 133897262 MB, Used +4 -> 936 MB, Peak +7 -> 943 MB; RAM: Avail -41 -> 38030 MB, Used +5 -> 1232 MB, Peak +11 -> 1238 MB 
+' 0:< GUI Resource Usage GDI: Avail 8608, Used 1392, User: Used 477 
+' 0:< API_ERROR { : Assembly version conflict in some references in LECG.dll assembly
+'Addin's module Microsoft.Extensions.DependencyInjection.Abstractions of version 8.0.0.0 conflicts with same preloaded module of version 9.0.0.0
+'Addin's module Microsoft.Extensions.DependencyInjection of version 8.0.0.0 conflicts with same preloaded module of version 9.0.0.0 } 
+' 0:< API_ERROR { : Assembly version conflict in some references in LECG.dll assembly
+'Addin's module Microsoft.Extensions.DependencyInjection.Abstractions of version 8.0.0.0 conflicts with same preloaded module of version 9.0.0.0
+'Addin's module Microsoft.Extensions.DependencyInjection of version 8.0.0.0 conflicts with same preloaded module of version 9.0.0.0 } 
+  'E 04-Feb-2026 22:18:52.215;   0:< 
+  ' [Jrn.Tooltip] Rvt.Attr.Tooltip.CommandID: CustomCtrl_%CustomCtrl_%LECG%Visualization%btnRenderMatch Rvt.Attr.Tooltip.ElapsedTime: 0.2772778 Rvt.Attr.Tooltip.Enabled: True Rvt.Attr.Tooltip.IsFirst: True Rvt.Attr.Tooltip.Key: CustomCtrl_%CustomCtrl_%LECG%Visualization%btnRenderMatch Rvt.Attr.Tooltip.Progressive: True Rvt.Attr.Tooltip.Progressive.Delay: 2 
+  'E 04-Feb-2026 22:18:52.271;   0:< 
+  ' [Jrn.Tooltip] Rvt.Attr.Tooltip.ElapsedTime: 0.041158 Rvt.Attr.Tooltip.Enabled: True Rvt.Attr.Tooltip.IsFirst: True Rvt.Attr.Tooltip.Key: CustomCtrl_%CustomCtrl_%LECG%Align%btnAlignMaster Rvt.Attr.Tooltip.Progressive: True Rvt.Attr.Tooltip.Progressive.Delay: 2 
+  'E 04-Feb-2026 22:18:52.294;   0:< 
+  ' [Jrn.Tooltip] Rvt.Attr.Tooltip.CommandID: CustomCtrl_%CustomCtrl_%LECG%Standards%btnBatchRename Rvt.Attr.Tooltip.ElapsedTime: 0.0134266 Rvt.Attr.Tooltip.Enabled: True Rvt.Attr.Tooltip.IsFirst: True Rvt.Attr.Tooltip.Key: CustomCtrl_%CustomCtrl_%LECG%Standards%btnBatchRename Rvt.Attr.Tooltip.Progressive: True Rvt.Attr.Tooltip.Progressive.Delay: 2 
+  ' 0:< ::101:: Delta VM: Avail -6 -> 133897257 MB, Used +19 -> 955 MB, Peak +12 -> 955 MB; RAM: Avail -56 -> 37974 MB, Used +24 -> 1256 MB, Peak +18 -> 1257 MB 
+  ' 0:< GUI Resource Usage GDI: Avail 8609, Used 1391, User: Used 477 
+  'E 04-Feb-2026 22:18:54.824;   0:< 
+  ' [Jrn.Tooltip] Rvt.Attr.Tooltip.CommandID: CustomCtrl_%CustomCtrl_%LECG%Standards%btnConvertCad Rvt.Attr.Tooltip.ElapsedTime: 2.5214108 Rvt.Attr.Tooltip.Enabled: True Rvt.Attr.Tooltip.IsFirst: True Rvt.Attr.Tooltip.Key: CustomCtrl_%CustomCtrl_%LECG%Standards%btnConvertCad Rvt.Attr.Tooltip.Progressive: True Rvt.Attr.Tooltip.Progressive.Delay: 2 
+  'E 04-Feb-2026 22:18:54.850;   0:< 
+  ' [Jrn.Tooltip] Rvt.Attr.Tooltip.CommandID: TypeSelector Rvt.Attr.Tooltip.Enabled: True Rvt.Attr.Tooltip.IsFirst: True Rvt.Attr.Tooltip.Key: HTypeSelector Rvt.Attr.Tooltip.Progressive: True Rvt.Attr.Tooltip.Progressive.Delay: 2 
+' 0:< ::103:: Delta VM: Avail +1 -> 133897258 MB, Used -8 -> 948 MB; RAM: Avail +165 -> 38139 MB, Used -10 -> 1247 MB 
+' 0:< GUI Resource Usage GDI: Avail 8609, Used 1391, User: Used 476 
+'C 04-Feb-2026 22:19:12.866;   0:< Notify Active View. 
+  ' 0:< ::103:: Delta VM: Avail -16 -> 133897242 MB, Used 948 MB; RAM: Avail +1 -> 38140 MB, Used 1247 MB 
+  ' 0:< GUI Resource Usage GDI: Avail 8605, Used 1395, User: Used 479 
+  'E 04-Feb-2026 22:19:12.972;   0:< 
+  Jrn.MouseMove    0 ,    573 ,    788
+  'E 04-Feb-2026 22:19:12.972;   0:< 
+  Jrn.RibbonEvent "Execute external command:CustomCtrl_%CustomCtrl_%LECG%Standards%btnConvertCad:LECG.Commands.ConvertCadCommand" 
+' 1:< API_ERROR { : Assembly version conflict in some references in LECG.dll assembly
+'Addin's module Microsoft.Extensions.DependencyInjection.Abstractions of version 8.0.0.0 conflicts with same preloaded module of version 9.0.0.0
+'Addin's module Microsoft.Extensions.DependencyInjection of version 8.0.0.0 conflicts with same preloaded module of version 9.0.0.0 } 
+' 1:< ::105:: Delta VM: Avail +13 -> 133897255 MB, Used 948 MB, Peak +21 -> 977 MB; RAM: Avail -8 -> 38133 MB, Used +6 -> 1254 MB, Peak +26 -> 1283 MB 
+' 1:< GUI Resource Usage GDI: Avail 8601, Used 1399, User: Used 481 
+' 1:< ANTECEDENT:
+'editor ArrowEditor 
+' 1:< Exception occurred 
+'C 04-Feb-2026 22:19:14.817;   1:< ExceptionCode=0xe0434352 ExceptionFlags=0x00000081 ExceptionAddress=00007FF9D433A80A 
+'C 04-Feb-2026 22:19:14.817;  BC: 1,0,1 
+' 1:<   System (MB) [Available /  Total ]  [Revit Memory Usage (MB)   ] 
+' 1:< RAM Statistics:    38123 /    64617      1254=InUse     1283=Peak  
+' 1:< VM  Statistics: 133897255 / 134217727       948=InUse      977=Peak  
+'  1.847717!!! 2:!!!BIG_GAP API External Command Time 
+' 2:< ::105:: Delta VM: Avail -16 -> 133897240 MB, Used -10 -> 939 MB; RAM: Avail +346 -> 38479 MB, Used -7 -> 1247 MB 
+' 2:< GUI Resource Usage GDI: Avail 8601, Used 1399, User: Used 480 
+'C 04-Feb-2026 22:19:16.099;  Revit worker 1 closed cleanly 
+'C 04-Feb-2026 22:19:16.099;  [00009d18]DBG_INFO: The request was cancelled because the worker was not detected.: line 139 of F:\Ship26.4\2026_px64\Source\Revit\RevitDB\NOBLE\WorkerServicesExecutive.cpp. 
+'C 04-Feb-2026 22:19:16.100;  [00009d18]QueueMinder stopped 
+'C 04-Feb-2026 22:19:16.100;   2:< logging finished virtualization services  
+'C 04-Feb-2026 22:19:16.100;   2:< logging finished worker services  
+'C 04-Feb-2026 22:19:16.107;   2:< logging erased queues  
+'  1.281750    2:<<<Terminating RevitWorker Processes 
+' 1:< Undoing transaction: Create Parameter 
+  'E 04-Feb-2026 22:19:16.109;   1:< 
+' 1:< ANTECEDENT:
+'editor ArrowEditor 
+'C 04-Feb-2026 22:19:16.110;  DBG_INFO: Recent Dynamic Added but not to Dynamics, this means that this element is not dynamic anymore with RDYs removed.: line 181 of F:\Ship26.4\2026_px64\Source\Revit\RevitDB\Display\GraphicsMgr.cpp. 
+' 1:< Unconverted MessageBox "An unrecoverable error has occurred.  The program will now be terminated.  All of your data has been recently saved, so there is no need to create recovery files.
+'
+'Select Help or press F1 for more information on possible causes of unrecoverable errors." 
+' 1:< ::106:: Delta VM: Avail -11 -> 133897229 MB, Used 939 MB; RAM: Avail +2 -> 38481 MB, Used 1247 MB 
+' 1:< GUI Resource Usage GDI: Avail 8600, Used 1400, User: Used 479 
+'C 04-Feb-2026 22:19:16.162;   1:< Notify Active View. 
+' 1:< MFC MainFrame activated 
+'C 04-Feb-2026 22:19:18.949;   1:< Notify Active View. 
+'C 04-Feb-2026 22:19:18.949;   1:< License shutdown starting 
+'C 04-Feb-2026 22:19:18.976;   1:< License cleanup complete: 20, 0 
+'C 04-Feb-2026 22:19:18.976;  program terminated 

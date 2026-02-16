@@ -1,0 +1,15 @@
+﻿  Determining projects to restore...
+  All projects are up-to-date for restore.
+c:\LECG\RevitAddins\LECG\src\Services\CadConversionService.cs(217,62): error CS1503: Argument 2: cannot convert from 'Autodesk.Revit.DB.DoubleArray' to 'System.Collections.Generic.IList<double>' [c:\LECG\RevitAddins\LECG\LECG_13ugcisp_wpftmp.csproj]
+c:\LECG\RevitAddins\LECG\src\Services\CadConversionService.cs(217,79): error CS1503: Argument 4: cannot convert from 'Autodesk.Revit.DB.DoubleArray' to 'System.Collections.Generic.IList<double>' [c:\LECG\RevitAddins\LECG\LECG_13ugcisp_wpftmp.csproj]
+c:\LECG\RevitAddins\LECG\src\Services\CadConversionService.cs(222,60): error CS1061: 'HermiteSpline' does not contain a definition for 'isPeriodic' and no accessible extension method 'isPeriodic' accepting a first argument of type 'HermiteSpline' could be found (are you missing a using directive or an assembly reference?) [c:\LECG\RevitAddins\LECG\LECG_13ugcisp_wpftmp.csproj]
+
+Build FAILED.
+
+c:\LECG\RevitAddins\LECG\src\Services\CadConversionService.cs(217,62): error CS1503: Argument 2: cannot convert from 'Autodesk.Revit.DB.DoubleArray' to 'System.Collections.Generic.IList<double>' [c:\LECG\RevitAddins\LECG\LECG_13ugcisp_wpftmp.csproj]
+c:\LECG\RevitAddins\LECG\src\Services\CadConversionService.cs(217,79): error CS1503: Argument 4: cannot convert from 'Autodesk.Revit.DB.DoubleArray' to 'System.Collections.Generic.IList<double>' [c:\LECG\RevitAddins\LECG\LECG_13ugcisp_wpftmp.csproj]
+c:\LECG\RevitAddins\LECG\src\Services\CadConversionService.cs(222,60): error CS1061: 'HermiteSpline' does not contain a definition for 'isPeriodic' and no accessible extension method 'isPeriodic' accepting a first argument of type 'HermiteSpline' could be found (are you missing a using directive or an assembly reference?) [c:\LECG\RevitAddins\LECG\LECG_13ugcisp_wpftmp.csproj]
+    0 Warning(s)
+    3 Error(s)
+
+Time Elapsed 00:00:01.22
