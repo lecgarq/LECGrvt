@@ -15,14 +15,16 @@ namespace LECG.Services
     public class PurgeService : IPurgeService
     {
         private readonly IPurgeReferenceScannerService _referenceScanner;
+        private readonly IPurgeMaterialService _purgeMaterialService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService)
         {
             _referenceScanner = referenceScanner;
+            _purgeMaterialService = purgeMaterialService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -188,77 +190,7 @@ namespace LECG.Services
         /// </summary>
         public int PurgeUnusedMaterials(Document doc, Action<string>? logCallback = null)
         {
-            logCallback?.Invoke("Scanning for unused materials...");
-
-            // 1. All materials (Candidates for deletion)
-            var allMaterials = new FilteredElementCollector(doc)
-                .OfClass(typeof(Material))
-                .Cast<Material>()
-                .Where(m => !RevitConstants.IsBuiltInMaterial(m.Name))
-                .ToDictionary(m => m.Id, m => m.Name);
-
-            // 2. All valid Material IDs (for fast lookup)
-            var validMaterialIds = new HashSet<ElementId>(allMaterials.Keys);
-            var usedIds = new HashSet<ElementId>();
-
-            // Safe Classes for Parameter Scanning (HostObjects and Families are safe to scan)
-            // We avoid scanning parameters of weird internal elements which causes crashes.
-            var safeClassesForParams = new List<Type> {
-                typeof(HostObject),
-                typeof(FamilyInstance),
-                typeof(FamilySymbol)
-            };
-            var safeClassFilter = new ElementMulticlassFilter(safeClassesForParams);
-
-            // 3. Scan ALL Model Elements (Types and Instances)
-            // Combined loop for efficiency
-            var collector = new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType()
-                .WhereElementIsViewIndependent();
-
-            var typesCollector = new FilteredElementCollector(doc)
-                .WhereElementIsElementType();
-
-            // Helper to process element
-            void ProcessElement(Element e)
-            {
-                if (!e.IsValidObject) return;
-                
-                try
-                {
-                    // A. Use GetMaterialIds (Native Revit API - Fast & Stable)
-                    // This finds material used in geometry, layers, and painted faces.
-                    var mats = e.GetMaterialIds(false);
-                    foreach (var id in mats) usedIds.Add(id);
-                }
-                catch { }
-
-                try
-                {
-                    // B. Scan Parameters (Only for "Safe" classes to avoid crash)
-                    if (safeClassFilter.PassesFilter(e))
-                    {
-                        _referenceScanner.CollectUsedIds(e, validMaterialIds, usedIds);
-                    }
-                }
-                catch { }
-            }
-
-            foreach (var e in typesCollector) ProcessElement(e);
-            foreach (var e in collector) ProcessElement(e);
-
-            // 4. Delete
-            int deleted = 0;
-            foreach (var kvp in allMaterials)
-            {
-                if (!usedIds.Contains(kvp.Key))
-                {
-                    if (DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
-                }
-            }
-
-            logCallback?.Invoke($"  Deleted {deleted} materials.");
-            return deleted;
+            return _purgeMaterialService.PurgeUnusedMaterials(doc, logCallback);
         }
 
         /// <summary>

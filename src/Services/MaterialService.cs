@@ -11,6 +11,7 @@ namespace LECG.Services
     public class MaterialService : IMaterialService
     {
         private readonly IRenderAppearanceService _renderAppearanceService;
+        private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
         private int _colorIndex = 0;
         private static readonly Color[] ColorPalette = new Color[]
         {
@@ -19,11 +20,12 @@ namespace LECG.Services
             new Color(63, 81, 181), new Color(121, 85, 72), new Color(96, 125, 139), new Color(233, 30, 99),
         };
 
-        public MaterialService() : this(new RenderAppearanceService()) { }
+        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService()) { }
 
-        public MaterialService(IRenderAppearanceService renderAppearanceService)
+        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService)
         {
             _renderAppearanceService = renderAppearanceService;
+            _materialTypeAssignmentService = materialTypeAssignmentService;
         }
 
         public Color GetNextColor()
@@ -77,25 +79,7 @@ namespace LECG.Services
 
         public bool AssignMaterialToType(Document doc, ElementType type, ElementId materialId, Action<string>? logCallback = null)
         {
-            if (type is HostObjAttributes hostType)
-            {
-                CompoundStructure? cs = hostType.GetCompoundStructure();
-                if (cs == null) { logCallback?.Invoke($"  ⚠ No compound structure on: {type.Name}"); return false; }
-                IList<CompoundStructureLayer> layers = cs.GetLayers();
-                for (int i = 0; i < layers.Count; i++) cs.SetMaterialId(i, materialId);
-                hostType.SetCompoundStructure(cs);
-                logCallback?.Invoke($"  ✓ Assigned material to layers in: {type.Name}");
-                return true;
-            }
-            Parameter? structMatParam = type.get_Parameter(BuiltInParameter.STRUCTURAL_MATERIAL_PARAM);
-            if (structMatParam != null && !structMatParam.IsReadOnly)
-            {
-                structMatParam.Set(materialId);
-                logCallback?.Invoke($"  ✓ Assigned to: {type.Name} (Structural Material Param)");
-                return true;
-            }
-            logCallback?.Invoke($"  ⚠ Could not assign material to: {type.Name}");
-            return false;
+            return _materialTypeAssignmentService.AssignMaterialToType(doc, type, materialId, logCallback);
         }
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
