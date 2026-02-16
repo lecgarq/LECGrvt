@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 7 completed
+**Status**: Slice 8 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -448,6 +448,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting reference-ID scanning into `IPurgeReferenceScannerService`.
 - Added `PurgeReferenceScannerService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing `PurgeService` helper responsibilities.
+
+**P5 Slice 8 (Completed)**:
+- Decomposed `CadConversionService` by extracting collinear line merge logic into `ICadLineMergeService`.
+- Added `CadLineMergeService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing geometry optimization helper responsibilities.
 
 
 **Target Services**:

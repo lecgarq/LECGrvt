@@ -46,6 +46,7 @@ namespace LECG.Core
             services.AddSingleton<ICadPlacementViewService, CadPlacementViewService>();
             services.AddSingleton<ICadFamilySymbolService, CadFamilySymbolService>();
             services.AddSingleton<ICadLineStyleService, CadLineStyleService>();
+            services.AddSingleton<ICadLineMergeService, CadLineMergeService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
         }
