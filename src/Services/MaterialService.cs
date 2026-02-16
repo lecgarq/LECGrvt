@@ -15,18 +15,30 @@ namespace LECG.Services
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialPbrService _materialPbrService;
-        private readonly IMaterialElementGroupingService _materialElementGroupingService;
+        private readonly IMaterialAssignmentExecutionService _materialAssignmentExecutionService;
 
-        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService(), new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialPbrService(), new MaterialElementGroupingService()) { }
+        public MaterialService() : this(
+            new RenderAppearanceService(),
+            new MaterialTypeAssignmentService(),
+            new MaterialCreationService(),
+            new MaterialColorSequenceService(),
+            new MaterialPbrService(),
+            new MaterialAssignmentExecutionService(
+                new MaterialElementGroupingService(),
+                new MaterialColorSequenceService(),
+                new MaterialCreationService(),
+                new MaterialTypeAssignmentService()))
+        {
+        }
 
-        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService, IMaterialElementGroupingService materialElementGroupingService)
+        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService, IMaterialAssignmentExecutionService materialAssignmentExecutionService)
         {
             _renderAppearanceService = renderAppearanceService;
             _materialTypeAssignmentService = materialTypeAssignmentService;
             _materialCreationService = materialCreationService;
             _materialColorSequenceService = materialColorSequenceService;
             _materialPbrService = materialPbrService;
-            _materialElementGroupingService = materialElementGroupingService;
+            _materialAssignmentExecutionService = materialAssignmentExecutionService;
         }
 
         public Color GetNextColor()
@@ -61,68 +73,7 @@ namespace LECG.Services
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
         {
-            if (elements == null || !elements.Any()) return;
-
-            logCallback?.Invoke("ANALYZING SELECTION");
-            progressCallback?.Invoke(10, "Grouping by type...");
-
-            Dictionary<ElementId, List<Element>> elementsByType = _materialElementGroupingService.GroupByType(elements);
-
-            logCallback?.Invoke($"  Found {elementsByType.Count} unique types from {elements.Count} elements.");
-
-            // Process each Type
-            logCallback?.Invoke("");
-            logCallback?.Invoke("CREATING/UPDATING MATERIALS");
-
-            int processedTypes = 0;
-            int totalTypes = elementsByType.Count;
-
-            using (Transaction t = new Transaction(doc, "Assign Material by Type"))
-            {
-                t.Start();
-
-                foreach (var kvp in elementsByType)
-                {
-                    processedTypes++;
-                    double pct = 20 + (processedTypes * 70.0 / totalTypes);
-                    
-                    ElementType? elemType = doc.GetElement(kvp.Key) as ElementType;
-                    if (elemType == null) continue;
-
-                    string typeName = elemType.Name;
-                    
-                    // CHECK FOR MULTIPLE LAYERS
-                    if (elemType is HostObjAttributes hostType)
-                    {
-                        var cs = hostType.GetCompoundStructure();
-                        if (cs != null && cs.GetLayers().Count > 1)
-                        {
-                            logCallback?.Invoke($"  SKIP: {typeName} has {cs.GetLayers().Count} layers. Cannot assign single material.");
-                            continue;
-                        }
-                    }
-
-                    progressCallback?.Invoke(pct, $"Processing: {typeName}");
-                    logCallback?.Invoke($"");
-                    logCallback?.Invoke($"TYPE: {typeName} ({kvp.Value.Count} elements)");
-
-                    // Get a color for this type
-                    Color color = GetNextColor();
-
-                    // Get or create material
-                    ElementId materialId = GetOrCreateMaterial(doc, typeName, color, logCallback);
-
-                    // Assign to type
-                    AssignMaterialToType(doc, elemType, materialId, logCallback);
-                }
-
-                t.Commit();
-            }
-
-            logCallback?.Invoke("");
-            logCallback?.Invoke("COMPLETE");
-            logCallback?.Invoke($"Processed {processedTypes} types.");
-            progressCallback?.Invoke(100, "Done");
+            _materialAssignmentExecutionService.AssignMaterialsToElements(doc, elements, logCallback, progressCallback);
         }
     }
 }

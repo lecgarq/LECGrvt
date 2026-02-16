@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 34 completed
+**Status**: Slice 35 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -583,6 +583,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SchemaCleanerService` by extracting third-party schema vendor filtering into `ISchemaVendorFilterService`.
 - Added `SchemaVendorFilterService` and wired it through DI + `SchemaCleanerService` constructor injection.
 - Kept `ISchemaCleanerService` API unchanged while reducing schema-classification complexity.
+
+**P5 Slice 35 (Completed)**:
+- Decomposed `MaterialService` by extracting assignment orchestration into `IMaterialAssignmentExecutionService`.
+- Added `MaterialAssignmentExecutionService` and wired it through DI + `MaterialService` constructor injection.
+- Kept `IMaterialService` API unchanged while reducing assignment workflow complexity.
 
 
 **Target Services**:
