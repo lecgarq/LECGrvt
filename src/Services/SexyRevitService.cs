@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using LECG.Core.Graphics;
 using LECG.ViewModels;
 using LECG.Services.Interfaces;
 
@@ -111,27 +112,33 @@ namespace LECG.Services
             Action<string> log,
             Action<double, string> progress)
         {
-            if (!settings.UseConsistentColors) return;
+            var decision = SexyRevitGraphicsPolicy.Evaluate(
+                new SexyRevitGraphicsSettings(settings.UseConsistentColors, settings.UseDetailFine));
 
-            log("GRAPHICS & LIGHTING");
+            if (!decision.ShouldApply) return;
+
             progress(10, "Applying sexy graphics...");
 
             try
             {
-                view.DisplayStyle = ViewDisplayStyle.Realistic;
-                log("  Display Style: Realistic");
+                if (decision.DisplayStyle == CoreDisplayStyle.Realistic)
+                {
+                    view.DisplayStyle = ViewDisplayStyle.Realistic;
+                }
             }
             catch
             {
                 log("  Could not set display style");
             }
 
-            log("  Shadows/Lighting skipped (API limitation)");
+            foreach (var message in decision.Messages)
+            {
+                log(message);
+            }
 
-            if (settings.UseDetailFine)
+            if (decision.DetailLevel == CoreDetailLevel.Fine)
             {
                 view.DetailLevel = ViewDetailLevelFacade.Fine;
-                log("  Detail Level: Fine");
             }
         }
     }

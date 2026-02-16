@@ -1,7 +1,5 @@
 using FluentAssertions;
-using LECG.Services;
-using LECG.Tests.Helpers;
-using LECG.ViewModels;
+using LECG.Core.Graphics;
 using Xunit;
 
 namespace LECG.Tests.Services;
@@ -9,26 +7,24 @@ namespace LECG.Tests.Services;
 public class SexyRevitServiceTests
 {
     [Fact]
-    public void ApplyGraphicsAndLighting_WhenUseConsistentColorsTrue_SetsDisplayStyleToRealistic()
+    public void Evaluate_WhenUseConsistentColorsTrue_SetsRealisticAndFine()
     {
-        var facade = new FakeViewGraphicsFacade();
-        var settings = new SexyRevitViewModel { UseConsistentColors = true, UseDetailFine = true };
+        var settings = new SexyRevitGraphicsSettings(UseConsistentColors: true, UseDetailFine: true);
 
-        SexyRevitService.ApplyGraphicsAndLighting(facade, settings, _ => { }, (_, _) => { });
+        var decision = SexyRevitGraphicsPolicy.Evaluate(settings);
 
-        facade.DisplayStyle.Should().Be(LECG.Services.Interfaces.ViewDisplayStyle.Realistic);
-        facade.DetailLevel.Should().Be(LECG.Services.Interfaces.ViewDetailLevelFacade.Fine);
+        decision.ShouldApply.Should().BeTrue();
+        decision.DisplayStyle.Should().Be(CoreDisplayStyle.Realistic);
+        decision.DetailLevel.Should().Be(CoreDetailLevel.Fine);
     }
 
     [Fact]
-    public void ApplyGraphicsAndLighting_LogsExpectedHighLevelMessage()
+    public void Evaluate_ContainsExpectedHighLevelMessage()
     {
-        var facade = new FakeViewGraphicsFacade();
-        var settings = new SexyRevitViewModel { UseConsistentColors = true };
-        var logs = new List<string>();
+        var settings = new SexyRevitGraphicsSettings(UseConsistentColors: true, UseDetailFine: false);
 
-        SexyRevitService.ApplyGraphicsAndLighting(facade, settings, logs.Add, (_, _) => { });
+        var decision = SexyRevitGraphicsPolicy.Evaluate(settings);
 
-        logs.Should().Contain(m => m.Contains("GRAPHICS & LIGHTING"));
+        decision.Messages.Should().Contain(m => m.Contains("GRAPHICS & LIGHTING"));
     }
 }

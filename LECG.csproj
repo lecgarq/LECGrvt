@@ -38,6 +38,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="LECG.Core\LECG.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="LECG.Tests\**\*.cs" />
+    <Compile Remove="LECG.Core\**\*.cs" />
   </ItemGroup>
 </Project>

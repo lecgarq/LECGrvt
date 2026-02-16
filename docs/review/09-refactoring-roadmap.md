@@ -405,6 +405,19 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
+**Status**: Slice 1 completed
+
+**P5 Slice 1 (Completed)**:
+- Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
+- Moved Sexy Revit graphics decision logic into `LECG.Core.Graphics.SexyRevitGraphicsPolicy`.
+- Updated `LECG.Tests` to reference `LECG.Core` (not `LECG.csproj`).
+- Added CI workflow to build/test only `LECG.Core` + `LECG.Tests` on `windows-latest`.
+
+**CI Decision (Final)**:
+- CI runs on `windows-latest` without Revit installed.
+- CI validates core + tests only.
+- Full plugin build (`LECG.csproj`) remains local/Revit-installed or self-hosted.
+
 
 **Target Services**:
 1. **CadConversionService** (566 LOC)
