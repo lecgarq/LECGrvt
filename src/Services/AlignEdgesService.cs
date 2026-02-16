@@ -10,45 +10,24 @@ namespace LECG.Services
     public class AlignEdgesService : IAlignEdgesService
     {
         private readonly IReferenceRaycastService _referenceRaycastService;
+        private readonly IAlignEdgesIntersectorService _intersectorService;
         private string debugInfo = "";
 
-        public AlignEdgesService() : this(new ReferenceRaycastService())
+        public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService())
         {
         }
 
-        public AlignEdgesService(IReferenceRaycastService referenceRaycastService)
+        public AlignEdgesService(IReferenceRaycastService referenceRaycastService, IAlignEdgesIntersectorService intersectorService)
         {
             _referenceRaycastService = referenceRaycastService;
+            _intersectorService = intersectorService;
         }
 
         public void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references)
         {
             if (targets == null || targets.Count == 0 || references == null || references.Count == 0) return;
 
-            // Collect reference element IDs
-            ICollection<ElementId> refElementIds = references
-                .Select(r => doc.GetElement(r)?.Id)
-                .Where(id => id != null)
-                .ToList()!;
-            
-            if (refElementIds.Count == 0) return;
-
-            // Find a 3D view for ReferenceIntersector
-            View3D? view3D = new FilteredElementCollector(doc)
-                .OfClass(typeof(View3D))
-                .Cast<View3D>()
-                .FirstOrDefault(v => !v.IsTemplate && v.IsSectionBoxActive == false); 
-            
-            if (view3D == null)
-            {
-                if (doc.ActiveView is View3D v) view3D = v;
-                else 
-                {
-                    // In a service, we might prefer throwing an exception or returning a status object
-                    // For now, adhering to the logic extraction
-                    throw new InvalidOperationException("No suitable 3D view found for ray tracing.");
-                }
-            }
+            ReferenceIntersector intersector = _intersectorService.Create(doc, references);
 
             int pointCount = 0;
             int addedPoints = 0;
@@ -62,12 +41,6 @@ namespace LECG.Services
             using (Transaction t = new Transaction(doc, "Align Edges"))
             {
                 t.Start();
-                
-                // Create intersector with ALL reference element IDs
-                ReferenceIntersector intersector = new ReferenceIntersector(
-                    refElementIds, 
-                    FindReferenceTarget.Element, 
-                    view3D);
                 
                 foreach (Reference r in targets)
                 {

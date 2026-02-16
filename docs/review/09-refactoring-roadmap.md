@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 18 completed
+**Status**: Slice 19 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -503,6 +503,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by extracting reference raycast/hit-point helpers into `IReferenceRaycastService`.
 - Added `ReferenceRaycastService` and wired it through DI + `AlignEdgesService` constructor injection.
 - Kept `IAlignEdgesService` API unchanged while reducing raycast helper complexity in `AlignEdgesService`.
+
+**P5 Slice 19 (Completed)**:
+- Decomposed `AlignEdgesService` by extracting intersector creation (reference IDs + 3D view resolution) into `IAlignEdgesIntersectorService`.
+- Added `AlignEdgesIntersectorService` and wired it through DI + `AlignEdgesService` constructor injection.
+- Kept `IAlignEdgesService` API unchanged while reducing setup/orchestration complexity in `AlignEdgesService`.
 
 
 **Target Services**:
