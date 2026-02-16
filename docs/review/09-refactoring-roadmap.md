@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 38 completed
+**Status**: Slice 39 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -603,6 +603,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting geometry optimization into `ICadGeometryOptimizationService`.
 - Added `CadGeometryOptimizationService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing geometry preprocessing complexity.
+
+**P5 Slice 39 (Completed)**:
+- Decomposed `CadConversionService` by extracting curve rendering into `ICadCurveRenderService`.
+- Added `CadCurveRenderService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing curve-drawing orchestration complexity.
 
 
 **Target Services**:

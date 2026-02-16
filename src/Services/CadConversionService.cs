@@ -21,6 +21,7 @@ namespace LECG.Services
         private readonly ICadGeometryExtractionService _geometryExtractionService;
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
         private readonly ICadDrawingViewService _drawingViewService;
+        private readonly ICadCurveRenderService _curveRenderService;
         private readonly ICadFamilySaveService _familySaveService;
 
         public CadConversionService(
@@ -34,6 +35,7 @@ namespace LECG.Services
             ICadGeometryExtractionService geometryExtractionService,
             ICadGeometryOptimizationService geometryOptimizationService,
             ICadDrawingViewService drawingViewService,
+            ICadCurveRenderService curveRenderService,
             ICadFamilySaveService familySaveService)
         {
             _placementViewService = placementViewService;
@@ -46,6 +48,7 @@ namespace LECG.Services
             _geometryExtractionService = geometryExtractionService;
             _geometryOptimizationService = geometryOptimizationService;
             _drawingViewService = drawingViewService;
+            _curveRenderService = curveRenderService;
             _familySaveService = familySaveService;
         }
 
@@ -136,26 +139,7 @@ namespace LECG.Services
             int total = data.Curves.Count + data.Hatches.Count;
             int current = 0;
 
-            foreach (Curve c in data.Curves)
-            {
-                current++;
-                if (total > 0 && (current % Math.Max(1, total / 20) == 0 || current == total)) progress?.Invoke(startPct + (endPct - startPct) * current / total, $"Drawing curves... ({current}/{data.Curves.Count})");
-                try
-                {
-                    Curve transCurve = c.CreateTransformed(toOrigin);
-                    IEnumerable<Curve>? flats = _curveFlattenService.FlattenCurve(transCurve);
-                    
-                    if (flats != null)
-                    {
-                        foreach(var flat in flats)
-                        {
-                             DetailCurve dc = familyDoc.FamilyCreate.NewDetailCurve(planView, flat);
-                             if (dc != null) dc.LineStyle = lineStyle;
-                        }
-                    }
-                }
-                catch { }
-            }
+            current = _curveRenderService.DrawCurves(familyDoc, data.Curves, toOrigin, planView, lineStyle, progress, startPct, endPct, total, current);
 
             foreach (var hatch in data.Hatches)
             {

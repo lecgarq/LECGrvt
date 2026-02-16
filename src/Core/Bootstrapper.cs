@@ -76,6 +76,7 @@ namespace LECG.Core
             services.AddSingleton<ICadGeometryExtractionService, CadGeometryExtractionService>();
             services.AddSingleton<ICadGeometryOptimizationService, CadGeometryOptimizationService>();
             services.AddSingleton<ICadDrawingViewService, CadDrawingViewService>();
+            services.AddSingleton<ICadCurveRenderService, CadCurveRenderService>();
             services.AddSingleton<ICadFamilySaveService, CadFamilySaveService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
