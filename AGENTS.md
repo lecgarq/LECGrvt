@@ -8,3 +8,5 @@
 - Output markdown artifacts only under docs/review/.
 - Do not spawn parallel agents/teams.
 - Ask one question at a time only when blocked.
+- Network access: OFF (unless explicitly needed).
+- Manual approve edits (no auto-apply).
