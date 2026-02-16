@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 3 completed
+**Status**: Slice 4 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -427,6 +427,11 @@ dotnet test /p:CollectCoverage=true
 **P5 Slice 3 (Completed)**:
 - Decomposed `CadConversionService` by extracting placement-view selection into `ICadPlacementViewService`.
 - Added `CadPlacementViewService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept behavior unchanged while reducing `CadConversionService` responsibility.
+
+**P5 Slice 4 (Completed)**:
+- Decomposed `CadConversionService` by extracting family symbol selection/activation into `ICadFamilySymbolService`.
+- Added `CadFamilySymbolService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept behavior unchanged while reducing `CadConversionService` responsibility.
 
 

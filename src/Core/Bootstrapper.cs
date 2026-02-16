@@ -42,6 +42,7 @@ namespace LECG.Core
             services.AddSingleton<ISimplifyPointsService, SimplifyPointsService>();
             services.AddSingleton<IAlignElementsService, AlignElementsService>();
             services.AddSingleton<ICadPlacementViewService, CadPlacementViewService>();
+            services.AddSingleton<ICadFamilySymbolService, CadFamilySymbolService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
         }

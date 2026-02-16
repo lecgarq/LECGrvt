@@ -12,10 +12,12 @@ namespace LECG.Services
     public class CadConversionService : ICadConversionService
     {
         private readonly ICadPlacementViewService _placementViewService;
+        private readonly ICadFamilySymbolService _familySymbolService;
 
-        public CadConversionService(ICadPlacementViewService placementViewService)
+        public CadConversionService(ICadPlacementViewService placementViewService, ICadFamilySymbolService familySymbolService)
         {
             _placementViewService = placementViewService;
+            _familySymbolService = familySymbolService;
         }
 
         private class CadData
@@ -201,7 +203,7 @@ namespace LECG.Services
                 doc.LoadFamily(path, new FamilyOption(), out f);
                 if (f != null) 
                 { 
-                    FamilySymbol s = ActivateSymbol(doc, f); 
+                    FamilySymbol s = _familySymbolService.GetPrimarySymbol(doc, f); 
                     if (s != null) createdId = s.Id;
                 }
                 t.Commit();
@@ -221,7 +223,7 @@ namespace LECG.Services
 
                 if (family != null)
                 {
-                    FamilySymbol symbol = ActivateSymbol(doc, family);
+                    FamilySymbol symbol = _familySymbolService.GetPrimarySymbol(doc, family);
                     if (symbol != null)
                     {
                         createdId = symbol.Id;
@@ -253,15 +255,6 @@ namespace LECG.Services
             }
             CleanupFile(path);
             return createdId;
-        }
-
-        private FamilySymbol ActivateSymbol(Document doc, Family family)
-        {
-            ElementId id = family.GetFamilySymbolIds().FirstOrDefault();
-            if (id == null) return null;
-            FamilySymbol symbol = doc.GetElement(id) as FamilySymbol;
-            if (symbol != null && !symbol.IsActive) symbol.Activate();
-            return symbol;
         }
 
         private void CleanupFile(string path) { try { if (System.IO.File.Exists(path)) System.IO.File.Delete(path); } catch { } }
