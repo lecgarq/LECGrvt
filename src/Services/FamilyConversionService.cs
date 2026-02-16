@@ -14,17 +14,19 @@ namespace LECG.Services
         private readonly IFamilyGeometryCollectionService _geometryCollectionService;
         private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
         private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly IFamilyParameterSetupService _familyParameterSetupService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyLoadOptionsFactory())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyLoadOptionsFactory(), new FamilyParameterSetupService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyLoadOptionsFactory familyLoadOptionsFactory)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyLoadOptionsFactory familyLoadOptionsFactory, IFamilyParameterSetupService familyParameterSetupService)
         {
             _templatePathService = templatePathService;
             _geometryCollectionService = geometryCollectionService;
             _tempFileCleanupService = tempFileCleanupService;
             _familyLoadOptionsFactory = familyLoadOptionsFactory;
+            _familyParameterSetupService = familyParameterSetupService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -77,14 +79,7 @@ namespace LECG.Services
                 {
                     tTarget.Start();
 
-                    // Set Family Parameters: Work Plane Based = True
-                    Family targetFamilyRoot = targetFamilyDoc.OwnerFamily;
-                    
-                    Parameter? pWorkPlane = targetFamilyRoot.get_Parameter(BuiltInParameter.FAMILY_WORK_PLANE_BASED);
-                    if (pWorkPlane != null && !pWorkPlane.IsReadOnly) pWorkPlane.Set(1); // True
-
-                    Parameter? pAlwaysVertical = targetFamilyRoot.get_Parameter(BuiltInParameter.FAMILY_ALWAYS_VERTICAL);
-                    if (pAlwaysVertical != null && !pAlwaysVertical.IsReadOnly) pAlwaysVertical.Set(0); // False
+                    _familyParameterSetupService.ConfigureTargetFamilyParameters(targetFamilyDoc);
 
                     if (idsToCopy.Count > 0)
                     {

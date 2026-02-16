@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 40 completed
+**Status**: Slice 41 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -613,6 +613,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting hatch rendering into `ICadHatchRenderService`.
 - Added `CadHatchRenderService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing hatch-drawing orchestration complexity.
+
+**P5 Slice 41 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting target family parameter setup into `IFamilyParameterSetupService`.
+- Added `FamilyParameterSetupService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing family-parameter setup complexity.
 
 
 **Target Services**:
