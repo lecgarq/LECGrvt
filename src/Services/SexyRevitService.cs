@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.ViewModels;
+using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
@@ -24,36 +25,7 @@ namespace LECG.Services
                 t.Start();
 
                 // 1. Graphics Settings (Textures, Shadows, Lighting)
-                if (settings.UseConsistentColors)
-                {
-                    log("GRAPHICS & LIGHTING");
-                    progress(10, "Applying sexy graphics...");
-
-                    // A. Visual Style -> Realistic (Textures fallback)
-                    try
-                    {
-                        view.DisplayStyle = DisplayStyle.Realistic;
-                        log("  ✓ Display Style: Realistic");
-                    }
-                    catch { log("  ⚠ Could not set display style"); }
-
-                    // B. Graphic Display Options (Shadows & Lighting)
-                    // Note: Advanced lighting/shadows API is currently causing build issues due to type/parameter mismatches.
-                    // Implementation disabled to ensure plugin stability.
-                    try
-                    {
-                        // Placeholder for future implementation
-                        log("  ⚠ Shadows/Lighting skipped (API limitation)");
-                    }
-                    catch { }
-
-                    // C. Detail Level
-                    if (settings.UseDetailFine)
-                    {
-                        view.DetailLevel = ViewDetailLevel.Fine;
-                        log("  ✓ Detail Level: Fine");
-                    }
-                }
+                ApplyGraphicsAndLighting(new RevitViewGraphicsFacade(view), settings, log, progress);
 
                 // 2. Sun Settings (3D only)
                 if (settings.ConfigureSun && view is View3D v3d)
@@ -130,6 +102,36 @@ namespace LECG.Services
                 }
 
                 t.Commit();
+            }
+        }
+
+        internal static void ApplyGraphicsAndLighting(
+            IViewGraphicsFacade view,
+            SexyRevitViewModel settings,
+            Action<string> log,
+            Action<double, string> progress)
+        {
+            if (!settings.UseConsistentColors) return;
+
+            log("GRAPHICS & LIGHTING");
+            progress(10, "Applying sexy graphics...");
+
+            try
+            {
+                view.DisplayStyle = ViewDisplayStyle.Realistic;
+                log("  Display Style: Realistic");
+            }
+            catch
+            {
+                log("  Could not set display style");
+            }
+
+            log("  Shadows/Lighting skipped (API limitation)");
+
+            if (settings.UseDetailFine)
+            {
+                view.DetailLevel = ViewDetailLevelFacade.Fine;
+                log("  Detail Level: Fine");
             }
         }
     }

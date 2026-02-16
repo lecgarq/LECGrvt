@@ -5,6 +5,9 @@ codex/
 .vs/
 bin/
 obj/
+TestResults/
+*.user
+*.suo
 
 # Logs / journals / dumps
 build_logs/
