@@ -2,6 +2,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using LECG.Core;
+using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,13 @@ namespace LECG.Services
 {
     public class CadConversionService : ICadConversionService
     {
+        private readonly ICadPlacementViewService _placementViewService;
+
+        public CadConversionService(ICadPlacementViewService placementViewService)
+        {
+            _placementViewService = placementViewService;
+        }
+
         private class CadData
         {
             public List<Curve> Curves { get; } = new List<Curve>();
@@ -218,14 +226,7 @@ namespace LECG.Services
                     {
                         createdId = symbol.Id;
                         // Find a valid placement view (Detail Items MUST be in 2D)
-                        View placementView = doc.ActiveView;
-                        if (placementView == null || !IsViewValidForDetailItem(placementView))
-                        {
-                            placementView = new FilteredElementCollector(doc)
-                               .OfClass(typeof(View))
-                               .Cast<View>()
-                               .FirstOrDefault(v => !v.IsTemplate && IsViewValidForDetailItem(v));
-                        }
+                        View placementView = _placementViewService.ResolvePlacementView(doc, doc.ActiveView);
 
                         if (placementView != null)
                         {
@@ -252,16 +253,6 @@ namespace LECG.Services
             }
             CleanupFile(path);
             return createdId;
-        }
-
-        private bool IsViewValidForDetailItem(View v)
-        {
-            if (v == null) return false;
-            return v.ViewType == ViewType.FloorPlan || 
-                   v.ViewType == ViewType.Section || 
-                   v.ViewType == ViewType.Elevation || 
-                   v.ViewType == ViewType.DraftingView || 
-                   v.ViewType == ViewType.Detail;
         }
 
         private FamilySymbol ActivateSymbol(Document doc, Family family)

@@ -1,8 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using LECG.ViewModels;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using LECG.Services;
 using LECG.Core.Ribbon;
+using LECG.Services.Logging;
 
 namespace LECG.Core
 {
@@ -24,6 +25,7 @@ namespace LECG.Core
         {
             // Core
             services.AddSingleton<IRibbonService, RibbonService>();
+            services.AddSingleton<ILogger>(_ => Logger.Instance);
             
             // Domain Services
             services.AddSingleton<ISlabService, SlabService>();
@@ -39,6 +41,7 @@ namespace LECG.Core
             services.AddSingleton<IChangeLevelService, ChangeLevelService>();
             services.AddSingleton<ISimplifyPointsService, SimplifyPointsService>();
             services.AddSingleton<IAlignElementsService, AlignElementsService>();
+            services.AddSingleton<ICadPlacementViewService, CadPlacementViewService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
         }
@@ -48,7 +51,19 @@ namespace LECG.Core
             services.AddTransient<ResetSlabsVM>();
             services.AddTransient<ConvertFamilyViewModel>();
             services.AddTransient<ConvertCadViewModel>();
-            // Add other ViewModels here
+            services.AddTransient<SexyRevitViewModel>();
+            services.AddTransient<PurgeViewModel>();
+            services.AddTransient<SearchReplaceViewModel>();
+            services.AddTransient<AssignMaterialViewModel>();
+            services.AddTransient<OffsetElevationsVM>();
+            services.AddTransient<AlignEdgesViewModel>();
+            services.AddTransient<UpdateContoursViewModel>();
+            services.AddTransient<ChangeLevelViewModel>();
+            services.AddTransient<AlignElementsViewModel>();
+            services.AddTransient<SimplifyPointsViewModel>();
+            services.AddTransient<FilterCopyViewModel>();
+            services.AddTransient<LogViewModel>();
+            services.AddTransient<RenderAppearanceViewModel>();
         }
 
         private static void ConfigureViews(IServiceCollection services)
@@ -56,6 +71,23 @@ namespace LECG.Core
             // Views are often created by ViewModels or via a DialogService, 
             // but registering them can be useful if we use a Factory pattern.
             services.AddTransient<Views.ResetSlabsView>();
+            services.AddTransient<Views.SexyRevitView>();
+            services.AddTransient<Views.PurgeView>();
+            services.AddTransient<Views.SearchReplaceView>();
+            services.AddTransient<Views.AssignMaterialView>();
+            services.AddTransient<Views.OffsetElevationsView>();
+            services.AddTransient<Views.AlignEdgesView>();
+            services.AddTransient<Views.UpdateContoursView>();
+            services.AddTransient<Views.ChangeLevelView>();
+            services.AddTransient<Views.AlignElementsView>();
+            services.AddTransient<Views.SimplifyPointsView>();
+            services.AddTransient<Views.FilterCopyView>();
+            services.AddTransient<Views.ConvertCadView>();
+            services.AddTransient<Views.ConvertFamilyView>();
+            services.AddTransient<Views.LogView>();
+            services.AddTransient<Views.HomeView>();
+            services.AddTransient<Views.AlignDashboardView>();
+            services.AddTransient<Views.RenderAppearanceView>();
         }
     }
 }

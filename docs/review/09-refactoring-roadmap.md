@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 2 completed
+**Status**: Slice 3 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -423,6 +423,11 @@ dotnet test /p:CollectCoverage=true
 - Updated plugin `src/Services/RenameRules.cs` rule implementations to delegate compute logic to Core.
 - Added/expanded core tests in `LECG.Tests/Services/RenameRuleEngineTests.cs`.
 - `dotnet test` continues to run against `LECG.Core` + `LECG.Tests` without plugin dependency.
+
+**P5 Slice 3 (Completed)**:
+- Decomposed `CadConversionService` by extracting placement-view selection into `ICadPlacementViewService`.
+- Added `CadPlacementViewService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept behavior unchanged while reducing `CadConversionService` responsibility.
 
 
 **Target Services**:
