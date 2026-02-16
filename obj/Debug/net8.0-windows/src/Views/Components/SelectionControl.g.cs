@@ -52,7 +52,7 @@ namespace LECG.Views.Components {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/LECG;V1.0.0.0;component/src/views/components/selectioncontrol.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/LECG;component/src/views/components/selectioncontrol.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\..\src\Views\Components\SelectionControl.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

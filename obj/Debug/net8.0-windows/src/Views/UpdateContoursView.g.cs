@@ -69,7 +69,7 @@ namespace LECG.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/LECG;V1.0.0.0;component/src/views/updatecontoursview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/LECG;component/src/views/updatecontoursview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\src\Views\UpdateContoursView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

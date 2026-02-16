@@ -70,7 +70,7 @@ namespace LECG.Views {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/LECG;V1.0.0.0;component/src/views/filtercopyview.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/LECG;component/src/views/filtercopyview.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\src\Views\FilterCopyView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
