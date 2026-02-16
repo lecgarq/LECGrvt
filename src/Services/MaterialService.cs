@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
+using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
     public class MaterialService : IMaterialService
     {
+        private readonly IRenderAppearanceService _renderAppearanceService;
         private int _colorIndex = 0;
         private static readonly Color[] ColorPalette = new Color[]
         {
@@ -17,7 +19,12 @@ namespace LECG.Services
             new Color(63, 81, 181), new Color(121, 85, 72), new Color(96, 125, 139), new Color(233, 30, 99),
         };
 
-        public MaterialService() { }
+        public MaterialService() : this(new RenderAppearanceService()) { }
+
+        public MaterialService(IRenderAppearanceService renderAppearanceService)
+        {
+            _renderAppearanceService = renderAppearanceService;
+        }
 
         public Color GetNextColor()
         {
@@ -93,129 +100,12 @@ namespace LECG.Services
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
         {
-            if (mat == null) return;
-            try { mat.UseRenderAppearanceForShading = true; } catch { }
-            doc.Regenerate();
-            Color renderColor = mat.Color;
-            ApplyMaterialProperties(doc, mat, renderColor, null);
-            logCallback?.Invoke($"  ✓ Synced graphics for: {mat.Name}");
+            _renderAppearanceService.SyncWithRenderAppearance(doc, mat, logCallback);
         }
 
         public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
-            var matsList = materials.ToList();
-            if (!matsList.Any()) return;
-
-            int total = matsList.Count;
-            int processed = 0;
-            int skipped = 0;
-            int updated = 0;
-
-            logCallback?.Invoke($"Analyzing {total} materials...");
-            progressCallback?.Invoke(0, "Analyzing materials...");
-
-            // Single Transaction for the entire operation
-            using (Transaction t = new Transaction(doc, "Sync Render Appearance"))
-            {
-                t.Start();
-
-                // Phase 1: Force Update Render Appearance Logic
-                // To ensure the color is updated from the Appearance Asset, we must toggle the property:
-                // 1. Set to FALSE (if true)
-                // 2. Regenerate
-                // 3. Set to TRUE
-                // 4. Regenerate
-
-                List<Material> materialsToToggle = new List<Material>();
-                
-                foreach (var mat in matsList)
-                {
-                    // If it's already true, we need to toggle it off then on to force update
-                    if (mat.UseRenderAppearanceForShading)
-                    {
-                        mat.UseRenderAppearanceForShading = false;
-                        materialsToToggle.Add(mat);
-                    }
-                    else
-                    {
-                        // If it's false, we just need to turn it on (added to list to turn on later)
-                        materialsToToggle.Add(mat);
-                    }
-                }
-
-                if (materialsToToggle.Count > 0)
-                {
-                    // Step 1: Ensure all are OFF (for those that were on)
-                    // (They are already set to false in the loop above if they were true)
-                    doc.Regenerate(); 
-
-                    // Step 2: Set all to ON
-                    logCallback?.Invoke($"Forcing Render Appearance update on {materialsToToggle.Count} materials...");
-                    foreach(var mat in materialsToToggle)
-                    {
-                        mat.UseRenderAppearanceForShading = true;
-                    }
-
-                    // Step 3: Regenerate to calculate new colors
-                    doc.Regenerate();
-                }
-
-                // Phase 2: Sync Graphics
-                // Get or create Solid Fill (Safe inside transaction)
-                ElementId solidId = GetSolidFillPatternId(doc);
-
-                foreach (Material mat in matsList)
-                {
-                    processed++;
-                    if (processed % 10 == 0) 
-                        progressCallback?.Invoke((double)processed / total * 100, $"Processing: {mat.Name}");
-
-                    Color renderColor = mat.Color;
-
-                    if (IsMaterialSynced(mat, renderColor, solidId))
-                    {
-                        skipped++;
-                        continue;
-                    }
-                    
-                    mat.SurfaceForegroundPatternId = solidId; mat.SurfaceForegroundPatternColor = renderColor;
-                    mat.SurfaceBackgroundPatternId = solidId; mat.SurfaceBackgroundPatternColor = renderColor;
-                    mat.CutForegroundPatternId = solidId; mat.CutForegroundPatternColor = renderColor;
-                    mat.CutBackgroundPatternId = solidId; mat.CutBackgroundPatternColor = renderColor;
-                    
-                    updated++;
-                }
-
-                t.Commit();
-            }
-            
-            logCallback?.Invoke($"Sync Complete: {updated} updated, {skipped} skipped.");
-            progressCallback?.Invoke(100, "Done");
-        }
-
-        private bool IsMaterialSynced(Material mat, Color targetColor, ElementId solidId)
-        {
-            if (!ColorsEqual(mat.Color, targetColor)) return false;
-            
-            if (mat.SurfaceForegroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.SurfaceForegroundPatternColor, targetColor)) return false;
-
-            if (mat.SurfaceBackgroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.SurfaceBackgroundPatternColor, targetColor)) return false;
-
-            if (mat.CutForegroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.CutForegroundPatternColor, targetColor)) return false;
-
-            if (mat.CutBackgroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.CutBackgroundPatternColor, targetColor)) return false;
-
-            return true;
-        }
-
-        private bool ColorsEqual(Color? c1, Color? c2)
-        {
-            if (c1 == null || c2 == null) return false;
-            return c1.Red == c2.Red && c1.Green == c2.Green && c1.Blue == c2.Blue;
+            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, logCallback, progressCallback);
         }
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)

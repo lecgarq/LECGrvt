@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 5 completed
+**Status**: Slice 7 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -438,6 +438,16 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting detail line style creation/update into `ICadLineStyleService`.
 - Added `CadLineStyleService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept behavior unchanged while reducing `CadConversionService` responsibility.
+
+**P5 Slice 6 (Completed)**:
+- Decomposed `MaterialService` by extracting render-appearance sync logic into `IRenderAppearanceService`.
+- Added `RenderAppearanceService` and wired it through DI + `MaterialService` constructor injection.
+- Kept `IMaterialService` API unchanged while reducing `MaterialService` responsibility.
+
+**P5 Slice 7 (Completed)**:
+- Decomposed `PurgeService` by extracting reference-ID scanning into `IPurgeReferenceScannerService`.
+- Added `PurgeReferenceScannerService` and wired it through DI + `PurgeService` constructor injection.
+- Kept `IPurgeService` API unchanged while reducing `PurgeService` helper responsibilities.
 
 
 **Target Services**:

@@ -30,7 +30,9 @@ namespace LECG.Core
             // Domain Services
             services.AddSingleton<ISlabService, SlabService>();
             services.AddSingleton<IOffsetService, OffsetService>();
+            services.AddSingleton<IRenderAppearanceService, RenderAppearanceService>();
             services.AddSingleton<IMaterialService, MaterialService>();
+            services.AddSingleton<IPurgeReferenceScannerService, PurgeReferenceScannerService>();
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();

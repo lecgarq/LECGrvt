@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Configuration;
+using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
@@ -13,8 +14,15 @@ namespace LECG.Services
     /// </summary>
     public class PurgeService : IPurgeService
     {
-        public PurgeService()
+        private readonly IPurgeReferenceScannerService _referenceScanner;
+
+        public PurgeService() : this(new PurgeReferenceScannerService())
         {
+        }
+
+        public PurgeService(IPurgeReferenceScannerService referenceScanner)
+        {
+            _referenceScanner = referenceScanner;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -144,17 +152,17 @@ namespace LECG.Services
             var usedIds = new HashSet<ElementId>();
             foreach (Material mat in new FilteredElementCollector(doc).OfClass(typeof(Material)))
             {
-                AddIfValid(usedIds, mat.SurfaceForegroundPatternId);
-                AddIfValid(usedIds, mat.SurfaceBackgroundPatternId);
-                AddIfValid(usedIds, mat.CutForegroundPatternId);
-                AddIfValid(usedIds, mat.CutBackgroundPatternId);
+                _referenceScanner.AddIfValid(usedIds, mat.SurfaceForegroundPatternId);
+                _referenceScanner.AddIfValid(usedIds, mat.SurfaceBackgroundPatternId);
+                _referenceScanner.AddIfValid(usedIds, mat.CutForegroundPatternId);
+                _referenceScanner.AddIfValid(usedIds, mat.CutBackgroundPatternId);
             }
 
             // 3. Usage in Filled Regions
             foreach (FilledRegionType frt in new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType)))
             {
-                AddIfValid(usedIds, frt.ForegroundPatternId);
-                AddIfValid(usedIds, frt.BackgroundPatternId);
+                _referenceScanner.AddIfValid(usedIds, frt.ForegroundPatternId);
+                _referenceScanner.AddIfValid(usedIds, frt.BackgroundPatternId);
             }
 
             // 4. Delete
@@ -230,7 +238,7 @@ namespace LECG.Services
                     // B. Scan Parameters (Only for "Safe" classes to avoid crash)
                     if (safeClassFilter.PassesFilter(e))
                     {
-                        CollectUsedIds(e, validMaterialIds, usedIds);
+                        _referenceScanner.CollectUsedIds(e, validMaterialIds, usedIds);
                     }
                 }
                 catch { }
@@ -292,7 +300,7 @@ namespace LECG.Services
             // Scan Instances
             foreach (Element inst in new FilteredElementCollector(doc).WhereElementIsNotElementType())
             {
-                CollectUsedIds(inst, validLevelIds, referencedLevelIds);
+                _referenceScanner.CollectUsedIds(inst, validLevelIds, referencedLevelIds);
             }
 
             logCallback?.Invoke($"  Found {referencedLevelIds.Count} levels referenced by parameters.");
@@ -335,11 +343,6 @@ namespace LECG.Services
         // HELPERS
         // ============================================
 
-        private void AddIfValid(HashSet<ElementId> set, ElementId id)
-        {
-            if (id != ElementId.InvalidElementId) set.Add(id);
-        }
-
         private bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
         {
             try
@@ -355,30 +358,5 @@ namespace LECG.Services
             }
         }
 
-        /// <summary>
-        /// Optimized parameter scanner.
-        /// Checks all parameters of 'elem'. If a parameter value (ElementId) exists in 'validIds', adds it to 'usedIds'.
-        /// This avoids calling doc.GetElement() which is slow.
-        /// </summary>
-        private void CollectUsedIds(Element elem, HashSet<ElementId> validIds, HashSet<ElementId> usedIds)
-        {
-            try
-            {
-                // Traverse all parameters
-                foreach (Parameter param in elem.Parameters)
-                {
-                    if (param.StorageType == StorageType.ElementId)
-                    {
-                        ElementId id = param.AsElementId();
-                        // Fast lookup: is this ID in our set of "interesting" things (Materials or Levels)?
-                        if (validIds.Contains(id))
-                        {
-                            usedIds.Add(id);
-                        }
-                    }
-                }
-            }
-            catch { /* Ignore parameter access errors */ }
-        }
     }
 }
