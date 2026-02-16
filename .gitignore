@@ -1,0 +1,18 @@
+﻿# Codex working dir
+codex/
+
+# VS / build outputs
+.vs/
+bin/
+obj/
+
+# Logs / journals / dumps
+build_logs/
+*.log
+build_*.txt
+build_err_*.txt
+*_err_*.txt
+journal*.txt
+crash*.txt
+diag.log
+errors.log
