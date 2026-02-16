@@ -44,6 +44,7 @@ namespace LECG.Core
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
             services.AddSingleton<IRenameRulePipelineService, RenameRulePipelineService>();
             services.AddSingleton<ISearchReplaceService, SearchReplaceService>();
+            services.AddSingleton<IFamilyTemplatePathService, FamilyTemplatePathService>();
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();
             services.AddSingleton<IAlignEdgesIntersectorService, AlignEdgesIntersectorService>();
