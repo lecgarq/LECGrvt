@@ -11,14 +11,16 @@ namespace LECG.Services
     public class FamilyConversionService : IFamilyConversionService
     {
         private readonly IFamilyTemplatePathService _templatePathService;
+        private readonly IFamilyGeometryCollectionService _geometryCollectionService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService)
         {
             _templatePathService = templatePathService;
+            _geometryCollectionService = geometryCollectionService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -62,14 +64,7 @@ namespace LECG.Services
                 }
 
                 // 3. Collect Geometry from Source Family
-                FilteredElementCollector collector = new FilteredElementCollector(sourceFamilyDoc);
-                List<ElementId> idsToCopy = new List<ElementId>();
-                
-                // Add Forms (includes Extrusions, Revolutions, Sweeps, Blends)
-                idsToCopy.AddRange(collector.OfClass(typeof(GenericForm)).ToElementIds());
-                idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(FreeFormElement)).ToElementIds());
-                idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(GeomCombination)).ToElementIds());
-                idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(FamilyInstance)).ToElementIds());
+                List<ElementId> idsToCopy = _geometryCollectionService.CollectGeometryElementIds(sourceFamilyDoc);
 
                 Logger.Instance.Log($"Found {idsToCopy.Count} geometry elements to copy.");
 

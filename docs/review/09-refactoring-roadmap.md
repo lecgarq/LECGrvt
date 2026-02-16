@@ -554,6 +554,11 @@ dotnet test /p:CollectCoverage=true
 - Added `MaterialElementGroupingService` and wired it through DI + `MaterialService` constructor injection.
 - Kept `IMaterialService` API unchanged while reducing selection grouping complexity.
 
+**P5 Slice 29 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting family geometry element ID collection into `IFamilyGeometryCollectionService`.
+- Added `FamilyGeometryCollectionService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing geometry selection complexity.
+
 
 **Target Services**:
 1. **CadConversionService** (566 LOC)

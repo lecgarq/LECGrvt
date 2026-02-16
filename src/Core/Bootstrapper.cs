@@ -50,6 +50,7 @@ namespace LECG.Core
             services.AddSingleton<IBatchRenameExecutionService, BatchRenameExecutionService>();
             services.AddSingleton<ISearchReplaceService, SearchReplaceService>();
             services.AddSingleton<IFamilyTemplatePathService, FamilyTemplatePathService>();
+            services.AddSingleton<IFamilyGeometryCollectionService, FamilyGeometryCollectionService>();
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();
             services.AddSingleton<IAlignEdgesIntersectorService, AlignEdgesIntersectorService>();
