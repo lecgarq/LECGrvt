@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 10 completed
+**Status**: Slice 11 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -463,6 +463,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialService` by extracting type assignment logic into `IMaterialTypeAssignmentService`.
 - Added `MaterialTypeAssignmentService` and wired it through DI + `MaterialService` constructor injection.
 - Kept `IMaterialService` API unchanged while reducing `MaterialService` method complexity.
+
+**P5 Slice 11 (Completed)**:
+- Decomposed `CadConversionService` by extracting curve flatten/tessellation logic into `ICadCurveFlattenService`.
+- Added `CadCurveFlattenService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing geometry helper complexity.
 
 
 **Target Services**:
