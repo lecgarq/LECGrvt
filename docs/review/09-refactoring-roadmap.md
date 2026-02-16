@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 20 completed
+**Status**: Slice 21 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -513,6 +513,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SearchReplaceService` by extracting rename rule pipeline application into `IRenameRulePipelineService`.
 - Added `RenameRulePipelineService` and wired it through DI + `SearchReplaceService` constructor injection.
 - Kept `ISearchReplaceService` API unchanged while reducing transformation pipeline complexity.
+
+**P5 Slice 21 (Completed)**:
+- Decomposed `AlignEdgesService` by extracting boundary sampling/densification point collection into `IAlignEdgesBoundaryPointService`.
+- Added `AlignEdgesBoundaryPointService` and wired it through DI + `AlignEdgesService` constructor injection.
+- Kept `IAlignEdgesService` API unchanged while reducing boundary processing complexity.
 
 
 **Target Services**:
