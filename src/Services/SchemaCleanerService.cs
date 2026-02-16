@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.ExtensibleStorage;
+using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
@@ -11,8 +12,15 @@ namespace LECG.Services
     /// </summary>
     public class SchemaCleanerService : ISchemaCleanerService
     {
-        public SchemaCleanerService()
+        private readonly ISchemaVendorFilterService _schemaVendorFilterService;
+
+        public SchemaCleanerService() : this(new SchemaVendorFilterService())
         {
+        }
+
+        public SchemaCleanerService(ISchemaVendorFilterService schemaVendorFilterService)
+        {
+            _schemaVendorFilterService = schemaVendorFilterService;
         }
 
         /// <summary>
@@ -37,7 +45,7 @@ namespace LECG.Services
                         bool hasThirdParty = false;
                         foreach (Guid guid in schemaGuids)
                         {
-                            if (IsThirdPartySchema(guid))
+                            if (_schemaVendorFilterService.IsThirdPartySchema(guid))
                             {
                                 schemas.Add(guid);
                                 hasThirdParty = true;
@@ -71,7 +79,7 @@ namespace LECG.Services
                     IList<Guid> dsSchemaGuids = ds.GetEntitySchemaGuids();
                     foreach (Guid guid in dsSchemaGuids)
                     {
-                        if (IsThirdPartySchema(guid))
+                        if (_schemaVendorFilterService.IsThirdPartySchema(guid))
                         {
                             Schema? schema = Schema.Lookup(guid);
                             if (schema != null)
@@ -130,21 +138,5 @@ namespace LECG.Services
             return erased;
         }
 
-        /// <summary>
-        /// Check if a schema is from a third-party plugin (not Autodesk).
-        /// </summary>
-        private bool IsThirdPartySchema(Guid guid)
-        {
-            Schema? schema = Schema.Lookup(guid);
-            if (schema == null) return false;
-
-            string vendorId = schema.VendorId ?? "";
-            
-            // Protect Enscape
-            if (schema.SchemaName.IndexOf("Enscape", StringComparison.OrdinalIgnoreCase) >= 0) return false;
-            if (vendorId.IndexOf("Enscape", StringComparison.OrdinalIgnoreCase) >= 0) return false;
-
-            return string.IsNullOrEmpty(vendorId) || vendorId.ToLower() != "adsk";
-        }
     }
 }
