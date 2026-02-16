@@ -13,28 +13,21 @@ namespace LECG.Services
         private readonly IRenderAppearanceService _renderAppearanceService;
         private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
         private readonly IMaterialCreationService _materialCreationService;
-        private int _colorIndex = 0;
-        private static readonly Color[] ColorPalette = new Color[]
-        {
-            new Color(76, 175, 80), new Color(33, 150, 243), new Color(255, 193, 7), new Color(244, 67, 54),
-            new Color(156, 39, 176), new Color(0, 188, 212), new Color(255, 87, 34), new Color(139, 195, 74),
-            new Color(63, 81, 181), new Color(121, 85, 72), new Color(96, 125, 139), new Color(233, 30, 99),
-        };
+        private readonly IMaterialColorSequenceService _materialColorSequenceService;
 
-        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService(), new MaterialCreationService()) { }
+        public MaterialService() : this(new RenderAppearanceService(), new MaterialTypeAssignmentService(), new MaterialCreationService(), new MaterialColorSequenceService()) { }
 
-        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService)
+        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService)
         {
             _renderAppearanceService = renderAppearanceService;
             _materialTypeAssignmentService = materialTypeAssignmentService;
             _materialCreationService = materialCreationService;
+            _materialColorSequenceService = materialColorSequenceService;
         }
 
         public Color GetNextColor()
         {
-            Color color = ColorPalette[_colorIndex % ColorPalette.Length];
-            _colorIndex++;
-            return color;
+            return _materialColorSequenceService.GetNextColor();
         }
 
         public ElementId GetOrCreateMaterial(Document doc, string name, Color color, Action<string>? logCallback = null)
