@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 41 completed
+**Status**: Slice 42 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -618,6 +618,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting target family parameter setup into `IFamilyParameterSetupService`.
 - Added `FamilyParameterSetupService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing family-parameter setup complexity.
+
+**P5 Slice 42 (Completed)**:
+- Decomposed `RenderAppearanceService` by extracting material sync checks into `IRenderMaterialSyncCheckService`.
+- Added `RenderMaterialSyncCheckService` and wired it through DI + `RenderAppearanceService` constructor injection.
+- Kept `IRenderAppearanceService` API unchanged while reducing sync-validation complexity.
 
 
 **Target Services**:

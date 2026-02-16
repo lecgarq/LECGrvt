@@ -9,14 +9,16 @@ namespace LECG.Services
     public class RenderAppearanceService : IRenderAppearanceService
     {
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
+        private readonly IRenderMaterialSyncCheckService _syncCheckService;
 
-        public RenderAppearanceService() : this(new RenderSolidFillPatternService())
+        public RenderAppearanceService() : this(new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService())
         {
         }
 
-        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService)
+        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService, IRenderMaterialSyncCheckService syncCheckService)
         {
             _solidFillPatternService = solidFillPatternService;
+            _syncCheckService = syncCheckService;
         }
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
@@ -86,7 +88,7 @@ namespace LECG.Services
 
                     Color renderColor = mat.Color;
 
-                    if (IsMaterialSynced(mat, renderColor, solidId))
+                    if (_syncCheckService.IsMaterialSynced(mat, renderColor, solidId))
                     {
                         skipped++;
                         continue;
@@ -120,31 +122,6 @@ namespace LECG.Services
             mat.CutForegroundPatternId = solidId; mat.CutForegroundPatternColor = color;
             mat.CutBackgroundPatternId = solidId; mat.CutBackgroundPatternColor = color;
             logCallback?.Invoke($"    â†’ Color: RGB({color.Red}, {color.Green}, {color.Blue})");
-        }
-
-        private bool IsMaterialSynced(Material mat, Color targetColor, ElementId solidId)
-        {
-            if (!ColorsEqual(mat.Color, targetColor)) return false;
-
-            if (mat.SurfaceForegroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.SurfaceForegroundPatternColor, targetColor)) return false;
-
-            if (mat.SurfaceBackgroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.SurfaceBackgroundPatternColor, targetColor)) return false;
-
-            if (mat.CutForegroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.CutForegroundPatternColor, targetColor)) return false;
-
-            if (mat.CutBackgroundPatternId != solidId) return false;
-            if (!ColorsEqual(mat.CutBackgroundPatternColor, targetColor)) return false;
-
-            return true;
-        }
-
-        private bool ColorsEqual(Color? c1, Color? c2)
-        {
-            if (c1 == null || c2 == null) return false;
-            return c1.Red == c2.Red && c1.Green == c2.Green && c1.Blue == c2.Blue;
         }
     }
 }
