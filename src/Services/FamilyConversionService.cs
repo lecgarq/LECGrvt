@@ -12,15 +12,17 @@ namespace LECG.Services
     {
         private readonly IFamilyTemplatePathService _templatePathService;
         private readonly IFamilyGeometryCollectionService _geometryCollectionService;
+        private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService)
         {
             _templatePathService = templatePathService;
             _geometryCollectionService = geometryCollectionService;
+            _tempFileCleanupService = tempFileCleanupService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -131,29 +133,7 @@ namespace LECG.Services
             {
                 sourceFamilyDoc.Close(false);
                 if (targetFamilyDoc != null) targetFamilyDoc.Close(false);
-                
-                // If Temporary, delete the file
-                if (isTemporary)
-                {
-                    try 
-                    { 
-                        if (File.Exists(tempFamilyPath)) File.Delete(tempFamilyPath); 
-                        Logger.Instance.Log("Temporary file deleted.");
-                    } 
-                    catch { /* Ignore lock errors */ }
-                }
-                else
-                {
-                     Logger.Instance.Log($"Family saved at {tempFamilyPath} (Temporary=False)");
-                     // NOTE: If user wanted to save to a specific directory, we should have used that path instead of temp.
-                     // But logic says "do not save this family", meaning pure temporary. 
-                     // Checkbox "Do not save" = Temporary. 
-                     // Checkbox "Save" = ? The prompt asked for "directory of that file".
-                     // For now, keeping it simple: always save to temp to load. If !isTemporary, we might want to Move it?
-                     // Or just leave it in temp? Typically "Do not save" means delete after load. 
-                     // If they want to save, they probably want it in a folder.
-                     // I'll stick to basic temp logic for now as 'isTemporary' implies deletion.
-                }
+                _tempFileCleanupService.Cleanup(tempFamilyPath, isTemporary);
             }
         }
 
