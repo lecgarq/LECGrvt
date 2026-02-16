@@ -43,6 +43,7 @@ namespace LECG.Core
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
             services.AddSingleton<ISearchReplaceService, SearchReplaceService>();
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
+            services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();
             services.AddSingleton<IAlignEdgesService, AlignEdgesService>();
             services.AddSingleton<IToposolidService, ToposolidService>();
             services.AddSingleton<IChangeLevelService, ChangeLevelService>();

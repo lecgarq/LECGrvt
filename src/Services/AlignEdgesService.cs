@@ -1,6 +1,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,17 @@ namespace LECG.Services
 {
     public class AlignEdgesService : IAlignEdgesService
     {
+        private readonly IReferenceRaycastService _referenceRaycastService;
         private string debugInfo = "";
+
+        public AlignEdgesService() : this(new ReferenceRaycastService())
+        {
+        }
+
+        public AlignEdgesService(IReferenceRaycastService referenceRaycastService)
+        {
+            _referenceRaycastService = referenceRaycastService;
+        }
 
         public void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references)
         {
@@ -91,7 +101,7 @@ namespace LECG.Services
                                             {
                                                 double sampleT = sample / 8.0;
                                                 XYZ samplePt = curve.Evaluate(sampleT, true);
-                                                if (CheckHitsReference(intersector, samplePt))
+                                                if (_referenceRaycastService.CheckHitsReference(intersector, samplePt))
                                                 {
                                                     curveHitsReference = true;
                                                     break;
@@ -117,7 +127,7 @@ namespace LECG.Services
                                                         XYZ sketchPt = curve.Evaluate(param, true);
                                                         
                                                         // Get hit point with CORRECT Z from reference surface
-                                                        XYZ? hitPt = GetHitPoint(intersector, sketchPt);
+                                                        XYZ? hitPt = _referenceRaycastService.GetHitPoint(intersector, sketchPt);
                                                         
                                                         // If no hit, try slightly inward toward curve center (tolerance for edge cases)
                                                         if (hitPt == null)
@@ -127,7 +137,7 @@ namespace LECG.Services
                                                             for (double offset = 0.5; offset <= 1.5 && hitPt == null; offset += 0.5)
                                                             {
                                                                 XYZ testPt = sketchPt.Add(dir.Multiply(offset));
-                                                                hitPt = GetHitPoint(intersector, testPt);
+                                                                hitPt = _referenceRaycastService.GetHitPoint(intersector, testPt);
                                                                 if (hitPt != null)
                                                                 {
                                                                     // Use original XY but hit Z
@@ -239,43 +249,5 @@ namespace LECG.Services
             // For now, we assume the command handles UI feedback, so we won't show TaskDialog here.
         }
 
-        private bool CheckHitsReference(ReferenceIntersector intersector, XYZ pt)
-        {
-            // Start from very high Z to find surfaces at any elevation
-            XYZ rayStart = new XYZ(pt.X, pt.Y, 10000);
-            ReferenceWithContext hit = intersector.FindNearest(rayStart, XYZ.BasisZ.Negate());
-            if (hit != null) return true;
-            
-            // Try from below
-            rayStart = new XYZ(pt.X, pt.Y, -1000);
-            hit = intersector.FindNearest(rayStart, XYZ.BasisZ);
-            return hit != null;
-        }
-        
-        // Gets the hit point with correct Z from reference surface
-        private XYZ? GetHitPoint(ReferenceIntersector intersector, XYZ pt)
-        {
-            // Start ray from very high to ensure we hit surfaces at any elevation
-            XYZ rayStart = new XYZ(pt.X, pt.Y, 10000);
-            XYZ rayDir = XYZ.BasisZ.Negate();
-            ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);
-            
-            if (hit == null)
-            {
-                // Try from below
-                rayStart = new XYZ(pt.X, pt.Y, -1000);
-                rayDir = XYZ.BasisZ;
-                hit = intersector.FindNearest(rayStart, rayDir);
-            }
-            
-            if (hit != null)
-            {
-                // Calculate actual hit point from proximity
-                double proximity = hit.Proximity;
-                return rayStart.Add(rayDir.Multiply(proximity));
-            }
-            
-            return null;
-        }
     }
 }

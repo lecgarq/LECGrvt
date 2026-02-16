@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 17 completed
+**Status**: Slice 18 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -498,6 +498,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting fill-pattern purge logic into `IPurgeFillPatternService`.
 - Added `PurgeFillPatternService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing fill-pattern purge method complexity.
+
+**P5 Slice 18 (Completed)**:
+- Decomposed `AlignEdgesService` by extracting reference raycast/hit-point helpers into `IReferenceRaycastService`.
+- Added `ReferenceRaycastService` and wired it through DI + `AlignEdgesService` constructor injection.
+- Kept `IAlignEdgesService` API unchanged while reducing raycast helper complexity in `AlignEdgesService`.
 
 
 **Target Services**:
