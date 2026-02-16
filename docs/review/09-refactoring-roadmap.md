@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 24 completed
+**Status**: Slice 25 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -533,6 +533,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialService` by extracting PBR material creation into `IMaterialPbrService`.
 - Added `MaterialPbrService` and wired it through DI + `MaterialService` constructor injection.
 - Kept `IMaterialService` API unchanged while reducing PBR pipeline complexity.
+
+**P5 Slice 25 (Completed)**:
+- Decomposed `SearchReplaceService` by extracting batch rename execution into `IBatchRenameExecutionService`.
+- Added `BatchRenameExecutionService` and wired it through DI + `SearchReplaceService` constructor injection.
+- Kept `ISearchReplaceService` API unchanged while reducing transaction/rename execution complexity.
 
 
 **Target Services**:

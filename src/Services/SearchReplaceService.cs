@@ -23,14 +23,16 @@ namespace LECG.Services
     public class SearchReplaceService : ISearchReplaceService
     {
         private readonly IRenameRulePipelineService _renameRulePipelineService;
+        private readonly IBatchRenameExecutionService _batchRenameExecutionService;
 
-        public SearchReplaceService() : this(new RenameRulePipelineService())
+        public SearchReplaceService() : this(new RenameRulePipelineService(), new BatchRenameExecutionService())
         {
         }
 
-        public SearchReplaceService(IRenameRulePipelineService renameRulePipelineService)
+        public SearchReplaceService(IRenameRulePipelineService renameRulePipelineService, IBatchRenameExecutionService batchRenameExecutionService)
         {
             _renameRulePipelineService = renameRulePipelineService;
+            _batchRenameExecutionService = batchRenameExecutionService;
         }
 
         // 1. One-time Fetch of Grid Data
@@ -155,55 +157,7 @@ namespace LECG.Services
 
         public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Services.Logging.ILogger logger, Action<double, string>? onProgress = null)
         {
-            int count = 0;
-            int total = items.Count;
-            int current = 0;
-
-            logger.Log($"Starting batch rename for {total} items...");
-
-            using (Transaction t = new Transaction(doc, "Batch Rename"))
-            {
-                t.Start();
-
-                foreach (var item in items)
-                {
-                    current++;
-                    double percent = (double)current / total * 100;
-                    
-                    if (!item.IsChecked) continue;
-                    
-                    ElementId id = new ElementId(item.ElementId); 
-                    Element el = doc.GetElement(id);
-                    
-                    if (el != null)
-                    {
-                        try
-                        {
-                            onProgress?.Invoke(percent, $"Processing {item.ElementName}...");
-                            
-                            // Only rename if different
-                            if(string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
-
-                            el.Name = item.NewValue;
-                            count++;
-                            
-                            // Detailed log only on actual change to avoid spam
-                            logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
-                        }
-                        catch (System.Exception ex)
-                        {
-                             logger.LogError($"ERROR renaming {item.ElementName}: {ex.Message}");
-                        }
-                    }
-                }
-                
-                t.Commit();
-            }
-
-            logger.LogSuccess($"Batch rename complete. Modified {count} elements.");
-            onProgress?.Invoke(100, "Done");
-            
-            return count;
+            return _batchRenameExecutionService.ExecuteBatchRename(doc, items, logger, onProgress);
         }
     }
 }
