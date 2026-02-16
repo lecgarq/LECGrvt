@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 25 completed
+**Status**: Slice 26 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -538,6 +538,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SearchReplaceService` by extracting batch rename execution into `IBatchRenameExecutionService`.
 - Added `BatchRenameExecutionService` and wired it through DI + `SearchReplaceService` constructor injection.
 - Kept `ISearchReplaceService` API unchanged while reducing transaction/rename execution complexity.
+
+**P5 Slice 26 (Completed)**:
+- Decomposed `PurgeService` by extracting level purge logic into `IPurgeLevelService`.
+- Added `PurgeLevelService` and wired it through DI + `PurgeService` constructor injection.
+- Kept `IPurgeService` API unchanged while reducing level purge complexity.
 
 
 **Target Services**:

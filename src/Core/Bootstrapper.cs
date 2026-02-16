@@ -40,6 +40,7 @@ namespace LECG.Core
             services.AddSingleton<IPurgeMaterialService, PurgeMaterialService>();
             services.AddSingleton<IPurgeLineStyleService, PurgeLineStyleService>();
             services.AddSingleton<IPurgeFillPatternService, PurgeFillPatternService>();
+            services.AddSingleton<IPurgeLevelService, PurgeLevelService>();
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();

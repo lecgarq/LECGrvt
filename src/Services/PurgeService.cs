@@ -18,17 +18,19 @@ namespace LECG.Services
         private readonly IPurgeMaterialService _purgeMaterialService;
         private readonly IPurgeLineStyleService _purgeLineStyleService;
         private readonly IPurgeFillPatternService _purgeFillPatternService;
+        private readonly IPurgeLevelService _purgeLevelService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
             _purgeLineStyleService = purgeLineStyleService;
             _purgeFillPatternService = purgeFillPatternService;
+            _purgeLevelService = purgeLevelService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -129,74 +131,7 @@ namespace LECG.Services
         /// </summary>
         public int PurgeUnusedLevels(Document doc, Action<string>? logCallback = null)
         {
-            logCallback?.Invoke("Scanning for unused levels...");
-
-            // 1. All Levels
-            var allLevels = new FilteredElementCollector(doc)
-                .OfClass(typeof(Level))
-                .Cast<Level>()
-                .ToList();
-
-            if (allLevels.Count <= 1)
-            {
-                logCallback?.Invoke("  Skipping level purge (project has 1 or fewer levels).");
-                return 0; // Don't delete the last level
-            }
-
-            var levelIdsToRemove = new HashSet<ElementId>();
-            var validLevelIds = new HashSet<ElementId>(allLevels.Select(l => l.Id));
-
-            // 2. Check each level for placed elements
-            // We do this FIRST because it's safer.
-            // But checking parameters requires a full model scan, which is expensive.
-            // Let's do the parameter scan first for ALL levels to build a "Referenced Levels" set.
-
-            var referencedLevelIds = new HashSet<ElementId>();
-
-            // Scan ALL elements for Level references
-            // Note: We scan both Types and Instances because types might reference levels (unlikely but possible?)
-            // Usually Instances reference constraints.
-            
-            // Scan Instances
-            foreach (Element inst in new FilteredElementCollector(doc).WhereElementIsNotElementType())
-            {
-                _referenceScanner.CollectUsedIds(inst, validLevelIds, referencedLevelIds);
-            }
-
-            logCallback?.Invoke($"  Found {referencedLevelIds.Count} levels referenced by parameters.");
-
-            // 3. Check for placed elements (ElementLevelFilter)
-            foreach (var level in allLevels)
-            {
-                // If it's already referenced by a parameter, we can't delete it (it's a constraint)
-                if (referencedLevelIds.Contains(level.Id)) continue;
-                
-                // If not referenced, check if anything is hosted on it
-                ElementLevelFilter levelFilter = new ElementLevelFilter(level.Id);
-                var dependentElements = new FilteredElementCollector(doc)
-                    .WherePasses(levelFilter)
-                    .ToElementIds();
-
-                if (dependentElements.Count == 0)
-                {
-                    // No elements on this level, and not referenced -> Candidate!
-                    levelIdsToRemove.Add(level.Id);
-                }
-            }
-
-            // 4. Delete
-            int deleted = 0;
-            // Sort by elevationdescending? Doesn't matter much for deletion if they are empty.
-            foreach (var level in allLevels)
-            {
-                if (levelIdsToRemove.Contains(level.Id))
-                {
-                    if (DeleteElement(doc, level.Id, level.Name, logCallback)) deleted++;
-                }
-            }
-
-            logCallback?.Invoke($"  Deleted {deleted} levels.");
-            return deleted; 
+            return _purgeLevelService.PurgeUnusedLevels(doc, logCallback);
         }
 
         // ============================================
