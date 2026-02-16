@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 23 completed
+**Status**: Slice 24 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -528,6 +528,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting template path resolution into `IFamilyTemplatePathService`.
 - Added `FamilyTemplatePathService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing template path resolution complexity.
+
+**P5 Slice 24 (Completed)**:
+- Decomposed `MaterialService` by extracting PBR material creation into `IMaterialPbrService`.
+- Added `MaterialPbrService` and wired it through DI + `MaterialService` constructor injection.
+- Kept `IMaterialService` API unchanged while reducing PBR pipeline complexity.
 
 
 **Target Services**:
