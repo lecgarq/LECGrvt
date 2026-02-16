@@ -17,16 +17,18 @@ namespace LECG.Services
         private readonly IPurgeReferenceScannerService _referenceScanner;
         private readonly IPurgeMaterialService _purgeMaterialService;
         private readonly IPurgeLineStyleService _purgeLineStyleService;
+        private readonly IPurgeFillPatternService _purgeFillPatternService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
             _purgeLineStyleService = purgeLineStyleService;
+            _purgeFillPatternService = purgeFillPatternService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -104,44 +106,7 @@ namespace LECG.Services
         /// </summary>
         public int PurgeUnusedFillPatterns(Document doc, Action<string>? logCallback = null)
         {
-            logCallback?.Invoke("Scanning for unused fill patterns...");
-
-            // 1. All patterns
-            var allPatterns = new FilteredElementCollector(doc)
-                .OfClass(typeof(FillPatternElement))
-                .Cast<FillPatternElement>()
-                .Where(p => !RevitConstants.IsBuiltInFillPattern(p.Name))
-                .ToDictionary(p => p.Id, p => p.Name);
-
-            // 2. Usage in Materials
-            var usedIds = new HashSet<ElementId>();
-            foreach (Material mat in new FilteredElementCollector(doc).OfClass(typeof(Material)))
-            {
-                _referenceScanner.AddIfValid(usedIds, mat.SurfaceForegroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, mat.SurfaceBackgroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, mat.CutForegroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, mat.CutBackgroundPatternId);
-            }
-
-            // 3. Usage in Filled Regions
-            foreach (FilledRegionType frt in new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType)))
-            {
-                _referenceScanner.AddIfValid(usedIds, frt.ForegroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, frt.BackgroundPatternId);
-            }
-
-            // 4. Delete
-            int deleted = 0;
-            foreach (var kvp in allPatterns)
-            {
-                if (!usedIds.Contains(kvp.Key))
-                {
-                    if (DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
-                }
-            }
-
-            logCallback?.Invoke($"  Deleted {deleted} fill patterns.");
-            return deleted;
+            return _purgeFillPatternService.PurgeUnusedFillPatterns(doc, logCallback);
         }
 
         /// <summary>

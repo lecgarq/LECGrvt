@@ -37,6 +37,7 @@ namespace LECG.Core
             services.AddSingleton<IPurgeReferenceScannerService, PurgeReferenceScannerService>();
             services.AddSingleton<IPurgeMaterialService, PurgeMaterialService>();
             services.AddSingleton<IPurgeLineStyleService, PurgeLineStyleService>();
+            services.AddSingleton<IPurgeFillPatternService, PurgeFillPatternService>();
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
