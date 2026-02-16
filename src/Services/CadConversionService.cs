@@ -20,6 +20,7 @@ namespace LECG.Services
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadGeometryExtractionService _geometryExtractionService;
         private readonly ICadDrawingViewService _drawingViewService;
+        private readonly ICadFamilySaveService _familySaveService;
 
         public CadConversionService(
             ICadPlacementViewService placementViewService,
@@ -30,7 +31,8 @@ namespace LECG.Services
             ICadFilledRegionTypeService filledRegionTypeService,
             ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadGeometryExtractionService geometryExtractionService,
-            ICadDrawingViewService drawingViewService)
+            ICadDrawingViewService drawingViewService,
+            ICadFamilySaveService familySaveService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
@@ -41,6 +43,7 @@ namespace LECG.Services
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
             _drawingViewService = drawingViewService;
+            _familySaveService = familySaveService;
         }
 
         public string GetDefaultTemplatePath()
@@ -74,7 +77,7 @@ namespace LECG.Services
             }
 
             progress?.Invoke(90, "Saving and loading family...");
-            string path = SaveFamily(familyDoc, familyName);
+            string path = _familySaveService.Save(familyDoc, familyName);
             return _familyLoadPlacementService.LoadAndPlace(doc, path, center, cadInstance.Id);
         }
 
@@ -115,7 +118,7 @@ namespace LECG.Services
             }
 
             progress?.Invoke(95, "Loading into project...");
-            string path = SaveFamily(familyDoc, familyName);
+            string path = _familySaveService.Save(familyDoc, familyName);
             return _familyLoadPlacementService.LoadOnly(doc, path);
         }
         
@@ -143,15 +146,6 @@ namespace LECG.Services
             output.Curves.AddRange(others);
             
             return output;
-        }
-
-        private string SaveFamily(Document familyDoc, string name)
-        {
-            string path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), name + ".rfa");
-            SaveAsOptions opt = new SaveAsOptions { OverwriteExistingFile = true };
-            familyDoc.SaveAs(path, opt);
-            familyDoc.Close(false);
-            return path;
         }
 
         private void DrawData(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)

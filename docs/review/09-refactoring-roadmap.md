@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 36 completed
+**Status**: Slice 37 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -593,6 +593,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting family load options creation into `IFamilyLoadOptionsFactory`.
 - Added `FamilyLoadOptionsFactory` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing project-load policy wiring complexity.
+
+**P5 Slice 37 (Completed)**:
+- Decomposed `CadConversionService` by extracting family save/close behavior into `ICadFamilySaveService`.
+- Added `CadFamilySaveService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing save pipeline orchestration complexity.
 
 
 **Target Services**:
