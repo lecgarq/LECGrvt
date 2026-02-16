@@ -24,85 +24,23 @@ namespace LECG.Services
     {
         private readonly IRenameRulePipelineService _renameRulePipelineService;
         private readonly IBatchRenameExecutionService _batchRenameExecutionService;
+        private readonly IBaseElementCollectionService _baseElementCollectionService;
 
-        public SearchReplaceService() : this(new RenameRulePipelineService(), new BatchRenameExecutionService())
+        public SearchReplaceService() : this(new RenameRulePipelineService(), new BatchRenameExecutionService(), new BaseElementCollectionService())
         {
         }
 
-        public SearchReplaceService(IRenameRulePipelineService renameRulePipelineService, IBatchRenameExecutionService batchRenameExecutionService)
+        public SearchReplaceService(IRenameRulePipelineService renameRulePipelineService, IBatchRenameExecutionService batchRenameExecutionService, IBaseElementCollectionService baseElementCollectionService)
         {
             _renameRulePipelineService = renameRulePipelineService;
             _batchRenameExecutionService = batchRenameExecutionService;
+            _baseElementCollectionService = baseElementCollectionService;
         }
 
         // 1. One-time Fetch of Grid Data
         public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets)
         {
-            List<ElementData> data = new List<ElementData>();
-            
-            // Types
-            if (types)
-            {
-                 FilteredElementCollector typeCollector = new FilteredElementCollector(doc)
-                    .WhereElementIsElementType();
-                 
-                 foreach(var el in typeCollector)
-                 {
-                     if(el.Category == null) continue;
-                     data.Add(new ElementData 
-                     { 
-                         Id = el.Id.Value, 
-                         Name = el.Name, 
-                         Category = el.Category.Name,
-                         Type = "Type"
-                     });
-                 }
-            }
-
-            // Families
-            if (families)
-            {
-                 FilteredElementCollector familyCollector = new FilteredElementCollector(doc)
-                    .OfClass(typeof(Family));
-                 
-                 foreach(var el in familyCollector)
-                 {
-                     data.Add(new ElementData 
-                     { 
-                         Id = el.Id.Value, 
-                         Name = el.Name, 
-                         Category = "Families",
-                         Type = "Family"
-                     });
-                 }
-            }
-
-            // Views & Sheets
-            if (views || sheets)
-            {
-                 FilteredElementCollector viewCollector = new FilteredElementCollector(doc)
-                    .OfClass(typeof(View));
-                 
-                 foreach(var el in viewCollector)
-                 {
-                     if(el is View v && !v.IsTemplate)
-                     {
-                         bool isSheet = v.ViewType == ViewType.DrawingSheet;
-                         if(isSheet && sheets)
-                         {
-                             data.Add(new ElementData { Id = el.Id.Value, Name = v.Name, Category = "Sheets", Type = "Sheet" });
-                         }
-                         else if(!isSheet && views)
-                         {
-                             // Use ViewType for category or actual category? Views usually 'Views'
-                             string cat = v.ViewType.ToString();
-                             data.Add(new ElementData { Id = el.Id.Value, Name = v.Name, Category = cat, Type = "View" });
-                         }
-                     }
-                 }
-            }
-            
-            return data;
+            return _baseElementCollectionService.CollectBaseElements(doc, types, families, views, sheets);
         }
 
         public List<string> GetUniqueCategories(List<ElementData> elements)
