@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 11 completed
+**Status**: Slice 12 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -468,6 +468,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting curve flatten/tessellation logic into `ICadCurveFlattenService`.
 - Added `CadCurveFlattenService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing geometry helper complexity.
+
+**P5 Slice 12 (Completed)**:
+- Decomposed `CadConversionService` by extracting filled region type resolution/creation into `ICadFilledRegionTypeService`.
+- Added `CadFilledRegionTypeService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing hatch/filled-region helper complexity.
 
 
 **Target Services**:

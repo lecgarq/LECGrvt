@@ -16,19 +16,22 @@ namespace LECG.Services
         private readonly ICadLineStyleService _lineStyleService;
         private readonly ICadLineMergeService _lineMergeService;
         private readonly ICadCurveFlattenService _curveFlattenService;
+        private readonly ICadFilledRegionTypeService _filledRegionTypeService;
 
         public CadConversionService(
             ICadPlacementViewService placementViewService,
             ICadFamilySymbolService familySymbolService,
             ICadLineStyleService lineStyleService,
             ICadLineMergeService lineMergeService,
-            ICadCurveFlattenService curveFlattenService)
+            ICadCurveFlattenService curveFlattenService,
+            ICadFilledRegionTypeService filledRegionTypeService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
             _lineStyleService = lineStyleService;
             _lineMergeService = lineMergeService;
             _curveFlattenService = curveFlattenService;
+            _filledRegionTypeService = filledRegionTypeService;
         }
 
         private class CadData
@@ -264,7 +267,8 @@ namespace LECG.Services
                 if (total > 0 && (current % Math.Max(1, total / 20) == 0 || current == total)) progress?.Invoke(startPct + (endPct - startPct) * current / total, $"Drawing hatches... ({current - data.Curves.Count}/{data.Hatches.Count})");
                 try
                 {
-                    FilledRegionType frType = GetOrCreateFilledRegionType(familyDoc, hatch.Color);
+                    FilledRegionType? frType = _filledRegionTypeService.GetOrCreateFilledRegionType(familyDoc, hatch.Color);
+                    if (frType == null) continue;
                     List<CurveLoop> validLoops = new List<CurveLoop>();
                     
                     foreach (var loop in hatch.Loops)
@@ -365,32 +369,6 @@ namespace LECG.Services
             if (gsId == ElementId.InvalidElementId) return new Color(0,0,0);
             if (doc.GetElement(gsId) is GraphicsStyle gs && gs.GraphicsStyleCategory != null) return gs.GraphicsStyleCategory.LineColor;
             return new Color(0,0,0);
-        }
-
-        private FilledRegionType GetOrCreateFilledRegionType(Document doc, Color color)
-        {
-            string name = $"Solid_{color.Red}_{color.Green}_{color.Blue}";
-            FilledRegionType existing = new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType)).Cast<FilledRegionType>().FirstOrDefault(x => x.Name == name);
-            if (existing != null) return existing;
-
-            FilledRegionType newType = null;
-            var anyType = new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType)).FirstElement() as FilledRegionType;
-            if (anyType != null)
-            {
-                newType = anyType.Duplicate(name) as FilledRegionType;
-                newType.ForegroundPatternColor = color;
-                newType.BackgroundPatternColor = color; 
-
-                FillPatternElement solidPattern = FillPatternElement.GetFillPatternElementByName(doc, FillPatternTarget.Drafting, "<Solid fill>"); 
-                if (solidPattern == null) solidPattern = new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>().FirstOrDefault(p => p.GetFillPattern().IsSolidFill);
-
-                if (solidPattern != null)
-                {
-                    newType.ForegroundPatternId = solidPattern.Id;
-                    newType.BackgroundPatternId = solidPattern.Id;
-                }
-            }
-            return newType;
         }
 
         class FamilyOption : IFamilyLoadOptions
