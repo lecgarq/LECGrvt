@@ -1,6 +1,6 @@
 using System;
-using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using LECG.Core.Rename;
 
 namespace LECG.Services
 {
@@ -26,27 +26,10 @@ namespace LECG.Services
 
         public string Apply(string text, int index = 0)
         {
-            if (!IsActive || string.IsNullOrEmpty(text) || string.IsNullOrEmpty(FindText)) return text;
-
-            if (UseRegex)
-            {
-                var options = MatchCase ? RegexOptions.None : RegexOptions.IgnoreCase;
-                try
-                {
-                    return Regex.Replace(text, FindText, ReplaceText ?? "", options);
-                }
-                catch
-                {
-                    return text; // Invalid Regex
-                }
-            }
-            else
-            {
-                var comparison = MatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
-                // Simple string replace with comparison is needed.
-                // string.Replace(string, string, comparison) is .NET 6+
-                return text.Replace(FindText, ReplaceText ?? "", comparison);
-            }
+            return RenameRuleEngine.ApplyReplace(
+                text,
+                new ReplaceRuleOptions(IsActive, FindText, ReplaceText, MatchCase, UseRegex),
+                index);
         }
     }
 
@@ -66,38 +49,10 @@ namespace LECG.Services
 
         public string Apply(string text, int index = 0)
         {
-            if (!IsActive || string.IsNullOrEmpty(text)) return text;
-            string result = text;
-
-            // 1. First N
-            if (FirstN > 0)
-            {
-                if (FirstN >= result.Length) return "";
-                result = result.Substring(FirstN);
-            }
-
-            // 2. Last N
-            if (LastN > 0 && result.Length > 0)
-            {
-                if (LastN >= result.Length) return "";
-                result = result.Substring(0, result.Length - LastN);
-            }
-
-            // 3. Remove from/count
-            // FromPos is 0-based for user? UI usually 1-based. Let's assume 1-based API for user convenience, convert to 0 internally?
-            // User requested "intelligent". Let's use 0-based internally for now and label UI.
-            if (Count > 0 && result.Length > 0)
-            {
-                int start = FromPos; // 0-based
-                int len = Count;
-                if (start >= 0 && start < result.Length)
-                {
-                    if (start + len > result.Length) len = result.Length - start;
-                    result = result.Remove(start, len);
-                }
-            }
-
-            return result;
+            return RenameRuleEngine.ApplyRemove(
+                text,
+                new RemoveRuleOptions(IsActive, FirstN, LastN, FromPos, Count),
+                index);
         }
     }
 
@@ -117,31 +72,10 @@ namespace LECG.Services
 
         public string Apply(string text, int index = 0)
         {
-            if (!IsActive) return text;
-            string result = text ?? "";
-
-            // 1. Insert
-            if (!string.IsNullOrEmpty(Insert))
-            {
-                int pos = AtPos;
-                if (pos < 0) pos = 0;
-                if (pos > result.Length) pos = result.Length;
-                result = result.Insert(pos, Insert);
-            }
-
-            // 2. Prefix
-            if (!string.IsNullOrEmpty(Prefix))
-            {
-                result = Prefix + result;
-            }
-
-            // 3. Suffix
-            if (!string.IsNullOrEmpty(Suffix))
-            {
-                result = result + Suffix;
-            }
-
-            return result;
+            return RenameRuleEngine.ApplyAdd(
+                text,
+                new AddRuleOptions(IsActive, Prefix, Suffix, Insert, AtPos),
+                index);
         }
     }
 
@@ -158,18 +92,19 @@ namespace LECG.Services
 
         public string Apply(string text, int index = 0)
         {
-            if (!IsActive || string.IsNullOrEmpty(text)) return text;
-
-            switch (Mode)
+            var coreMode = Mode switch
             {
-                case CaseMode.Lower: return text.ToLowerInvariant();
-                case CaseMode.Upper: return text.ToUpperInvariant();
-                case CaseMode.Title: return System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(text.ToLower());
-                case CaseMode.Capitalize:
-                    if (text.Length > 0) return char.ToUpper(text[0]) + text.Substring(1);
-                    return text;
-                default: return text;
-            }
+                CaseMode.Lower => CoreCaseMode.Lower,
+                CaseMode.Upper => CoreCaseMode.Upper,
+                CaseMode.Title => CoreCaseMode.Title,
+                CaseMode.Capitalize => CoreCaseMode.Capitalize,
+                _ => CoreCaseMode.Lower
+            };
+
+            return RenameRuleEngine.ApplyCase(
+                text,
+                new CaseRuleOptions(IsActive, coreMode),
+                index);
         }
     }
 
@@ -191,26 +126,14 @@ namespace LECG.Services
 
         public string Apply(string text, int index = 0)
         {
-            // Note: index is the position in the list (0-based)
-            if (!IsActive) return text;
-            
-            int val = StartAt + (index * Increment);
-            string numStr = val.ToString().PadLeft(Padding, '0');
-            
-            string fullString = "";
+            var coreMode = Mode == NumberingMode.Prefix
+                ? CoreNumberingMode.Prefix
+                : CoreNumberingMode.Suffix;
 
-            if (Mode == NumberingMode.Prefix)
-            {
-                // Separator usually goes AFTER number
-                fullString = numStr + Separator; 
-                return fullString + text;
-            }
-            else // Suffix
-            {
-                // Separator usually goes BEFORE number
-                fullString = Separator + numStr;
-                return text + fullString;
-            }
+            return RenameRuleEngine.ApplyNumbering(
+                text,
+                new NumberingRuleOptions(IsActive, coreMode, StartAt, Increment, Separator, Padding),
+                index);
         }
     }
 }

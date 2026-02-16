@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 1 completed
+**Status**: Slice 2 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -417,6 +417,12 @@ dotnet test /p:CollectCoverage=true
 - CI runs on `windows-latest` without Revit installed.
 - CI validates core + tests only.
 - Full plugin build (`LECG.csproj`) remains local/Revit-installed or self-hosted.
+
+**P5 Slice 2 (Completed)**:
+- Extracted deterministic rename rule logic into `LECG.Core.Rename.RenameRuleEngine`.
+- Updated plugin `src/Services/RenameRules.cs` rule implementations to delegate compute logic to Core.
+- Added/expanded core tests in `LECG.Tests/Services/RenameRuleEngineTests.cs`.
+- `dotnet test` continues to run against `LECG.Core` + `LECG.Tests` without plugin dependency.
 
 
 **Target Services**:
