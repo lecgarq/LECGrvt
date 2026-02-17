@@ -4,7 +4,6 @@ using Autodesk.Revit.DB.Structure;
 using LECG.Core;
 using LECG.Services.Interfaces;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace LECG.Services
@@ -18,6 +17,7 @@ namespace LECG.Services
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
         private readonly ICadDataDrawService _cadDataDrawService;
         private readonly ICadFamilySaveService _familySaveService;
+        private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
 
         public CadConversionService(
             ICadPlacementViewService placementViewService,
@@ -26,7 +26,8 @@ namespace LECG.Services
             ICadGeometryExtractionService geometryExtractionService,
             ICadGeometryOptimizationService geometryOptimizationService,
             ICadDataDrawService cadDataDrawService,
-            ICadFamilySaveService familySaveService)
+            ICadFamilySaveService familySaveService,
+            ICadTempDwgExtractionService cadTempDwgExtractionService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
@@ -35,6 +36,7 @@ namespace LECG.Services
             _geometryOptimizationService = geometryOptimizationService;
             _cadDataDrawService = cadDataDrawService;
             _familySaveService = familySaveService;
+            _cadTempDwgExtractionService = cadTempDwgExtractionService;
         }
 
         public string GetDefaultTemplatePath()
@@ -74,27 +76,7 @@ namespace LECG.Services
 
         public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
         {
-            progress?.Invoke(5, "Initializing temporary document...");
-            Document tempDoc = doc.Application.NewFamilyDocument(templatePath);
-            CadData data;
-            
-            using (Transaction t = new Transaction(tempDoc, "Temp Import"))
-            {
-                t.Start();
-                DWGImportOptions opt = new DWGImportOptions { Placement = ImportPlacement.Centered, ColorMode = ImportColorMode.Preserved, Unit = ImportUnit.Default };
-                View importView = new FilteredElementCollector(tempDoc).OfClass(typeof(View)).Cast<View>().FirstOrDefault(v => v.ViewType == ViewType.FloorPlan && !v.IsTemplate);
-
-                progress?.Invoke(15, "Importing DWG file...");
-                ElementId impId;
-                bool success = tempDoc.Import(dwgPath, opt, importView, out impId);
-                if (!success || impId == ElementId.InvalidElementId) throw new Exception("DWG Import failed.");
-
-                ImportInstance imp = tempDoc.GetElement(impId) as ImportInstance;
-                progress?.Invoke(30, "Extracting geometry...");
-                data = _geometryExtractionService.ExtractGeometry(tempDoc, imp);
-                t.RollBack(); 
-            }
-            tempDoc.Close(false);
+            CadData data = _cadTempDwgExtractionService.Extract(doc, templatePath, dwgPath, progress);
 
             if (data == null || (!data.Curves.Any() && !data.Hatches.Any()))
                  throw new Exception("No geometry found in DWG.");

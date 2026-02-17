@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 70 completed
+**Status**: Slice 71 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -763,6 +763,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SearchReplaceService` by extracting preview/category compute logic into `ISearchReplacePreviewService`.
 - Added `SearchReplacePreviewService` and wired it through DI + `SearchReplaceService` constructor injection.
 - Kept `ISearchReplaceService` API unchanged while reducing in-service filtering/transformation orchestration complexity.
+
+**P5 Slice 71 (Completed)**:
+- Decomposed `CadConversionService` by extracting temporary DWG import/geometry extraction into `ICadTempDwgExtractionService`.
+- Added `CadTempDwgExtractionService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing DWG temp-document orchestration complexity.
 
 
 **Target Services**:
