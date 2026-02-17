@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 87 completed
+**Status**: Slice 88 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -847,6 +847,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignElementsService` by extracting intermediate distribution move logic into `IAlignElementsDistributionMoveService`.
 - Added `AlignElementsDistributionMoveService` and wired it through DI + `AlignElementsService` constructor injection.
 - Kept `IAlignElementsService` API unchanged while reducing in-method distribution movement orchestration complexity.
+
+**P5 Slice 88 (Completed)**:
+- Decomposed CAD curve services by extracting shared XY point-flattening into `ICadPointFlattenService`.
+- Added `CadPointFlattenService` and wired it through DI + constructor injection in `CadCurveFlattenService` and `CadCurveTessellationService`.
+- Kept CAD curve service public APIs unchanged while removing duplicated point-flatten helper logic.
 
 
 **Target Services**:

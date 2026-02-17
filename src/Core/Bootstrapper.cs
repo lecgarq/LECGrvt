@@ -104,6 +104,7 @@ namespace LECG.Core
             services.AddSingleton<ICadFamilySymbolService, CadFamilySymbolService>();
             services.AddSingleton<ICadLineStyleService, CadLineStyleService>();
             services.AddSingleton<ICadLineMergeService, CadLineMergeService>();
+            services.AddSingleton<ICadPointFlattenService, CadPointFlattenService>();
             services.AddSingleton<ICadCurveTessellationService, CadCurveTessellationService>();
             services.AddSingleton<ICadCurveFlattenService, CadCurveFlattenService>();
             services.AddSingleton<ICadFilledRegionTypeService, CadFilledRegionTypeService>();
