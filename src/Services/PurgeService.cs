@@ -20,12 +20,13 @@ namespace LECG.Services
         private readonly IPurgeFillPatternService _purgeFillPatternService;
         private readonly IPurgeLevelService _purgeLevelService;
         private readonly IPurgeSummaryService _purgeSummaryService;
+        private readonly IPurgePassMessagingService _purgePassMessagingService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService(), new PurgeSummaryService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService(), new PurgeSummaryService(), new PurgePassMessagingService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService, IPurgeSummaryService purgeSummaryService)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService, IPurgeSummaryService purgeSummaryService, IPurgePassMessagingService purgePassMessagingService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
@@ -33,6 +34,7 @@ namespace LECG.Services
             _purgeFillPatternService = purgeFillPatternService;
             _purgeLevelService = purgeLevelService;
             _purgeSummaryService = purgeSummaryService;
+            _purgePassMessagingService = purgePassMessagingService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -49,33 +51,29 @@ namespace LECG.Services
                 // Run 3 times to catch dependent elements
                 for (int i = 1; i <= 3; i++)
                 {
-                    logCallback?.Invoke($"--- PASS {i}/3 ---");
+                    _purgePassMessagingService.LogPassStart(logCallback, i);
 
                     if (lineStyles)
                     {
-                        logCallback?.Invoke("Checking Line Styles...");
-                        progressCallback?.Invoke(10 + (i * 10), $"Pass {i}: Purging line styles...");
+                        _purgePassMessagingService.LogCategoryCheck(logCallback, progressCallback, i, "Line Styles", 10 + (i * 10));
                         lineStylesDeleted += PurgeUnusedLineStyles(doc, logCallback);
                     }
 
                     if (fillPatterns)
                     {
-                        logCallback?.Invoke("Checking Fill Patterns...");
-                        progressCallback?.Invoke(20 + (i * 10), $"Pass {i}: Purging fill patterns...");
+                        _purgePassMessagingService.LogCategoryCheck(logCallback, progressCallback, i, "Fill Patterns", 20 + (i * 10));
                         fillPatternsDeleted += PurgeUnusedFillPatterns(doc, logCallback);
                     }
 
                     if (materials)
                     {
-                        logCallback?.Invoke("Checking Materials...");
-                        progressCallback?.Invoke(30 + (i * 10), $"Pass {i}: Purging materials...");
+                        _purgePassMessagingService.LogCategoryCheck(logCallback, progressCallback, i, "Materials", 30 + (i * 10));
                         materialsDeleted += PurgeUnusedMaterials(doc, logCallback);
                     }
                     
                     if (levels)
                     {
-                        logCallback?.Invoke("Checking Levels...");
-                        progressCallback?.Invoke(40 + (i * 10), $"Pass {i}: Purging levels...");
+                        _purgePassMessagingService.LogCategoryCheck(logCallback, progressCallback, i, "Levels", 40 + (i * 10));
                         levelsDeleted += PurgeUnusedLevels(doc, logCallback);
                     }
                 }

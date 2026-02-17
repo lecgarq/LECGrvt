@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 50 completed
+**Status**: Slice 51 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -663,6 +663,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SexyRevitService` by extracting section box visibility handling into `ISexySectionBoxVisibilityService`.
 - Added `SexySectionBoxVisibilityService` and wired it through DI + `SexyRevitService` constructor injection.
 - Kept `ISexyRevitService` API unchanged while reducing section-box orchestration complexity.
+
+**P5 Slice 51 (Completed)**:
+- Decomposed `PurgeService` by extracting pass/category messaging into `IPurgePassMessagingService`.
+- Added `PurgePassMessagingService` and wired it through DI + `PurgeService` constructor injection.
+- Kept `IPurgeService` API unchanged while reducing pass-loop messaging orchestration complexity.
 
 
 **Target Services**:
