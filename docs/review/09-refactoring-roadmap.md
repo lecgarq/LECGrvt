@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 73 completed
+**Status**: Slice 74 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -778,6 +778,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting geometry copy transaction into `IFamilyGeometryCopyService`.
 - Added `FamilyGeometryCopyService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing in-method copy transaction orchestration complexity.
+
+**P5 Slice 74 (Completed)**:
+- Decomposed `CadCurveFlattenService` by extracting tessellation fallback logic into `ICadCurveTessellationService`.
+- Added `CadCurveTessellationService` and wired it through DI + `CadCurveFlattenService` constructor injection.
+- Kept `ICadCurveFlattenService` API unchanged while reducing fallback line-segmentation orchestration complexity.
 
 
 **Target Services**:

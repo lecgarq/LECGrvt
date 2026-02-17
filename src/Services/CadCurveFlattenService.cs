@@ -8,6 +8,17 @@ namespace LECG.Services
 {
     public class CadCurveFlattenService : ICadCurveFlattenService
     {
+        private readonly ICadCurveTessellationService _cadCurveTessellationService;
+
+        public CadCurveFlattenService() : this(new CadCurveTessellationService())
+        {
+        }
+
+        public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService)
+        {
+            _cadCurveTessellationService = cadCurveTessellationService;
+        }
+
         public IEnumerable<Curve>? FlattenCurve(Curve c)
         {
             try
@@ -50,7 +61,7 @@ namespace LECG.Services
                     {
                         return new List<Curve> { HermiteSpline.Create(cleanPts, hs.IsPeriodic) };
                     }
-                    return Tessellate(c);
+                    return _cadCurveTessellationService.Tessellate(c);
                 }
                 else if (c is NurbSpline ns)
                 {
@@ -61,15 +72,15 @@ namespace LECG.Services
                     }
                     catch
                     {
-                        return Tessellate(c);
+                        return _cadCurveTessellationService.Tessellate(c);
                     }
                 }
 
-                return Tessellate(c);
+                return _cadCurveTessellationService.Tessellate(c);
             }
             catch
             {
-                return Tessellate(c);
+                return _cadCurveTessellationService.Tessellate(c);
             }
         }
 
@@ -81,24 +92,6 @@ namespace LECG.Services
                 list.Add(da.get_Item(i));
             }
             return list;
-        }
-
-        private IEnumerable<Curve>? Tessellate(Curve c)
-        {
-            IList<XYZ> points = c.Tessellate();
-            if (points.Count < 2) return null;
-
-            List<Curve> lines = new List<Curve>();
-            for (int i = 0; i < points.Count - 1; i++)
-            {
-                XYZ p1 = Flatten(points[i]);
-                XYZ p2 = Flatten(points[i + 1]);
-                if (!p1.IsAlmostEqualTo(p2))
-                {
-                    lines.Add(Line.CreateBound(p1, p2));
-                }
-            }
-            return lines;
         }
 
         private XYZ Flatten(XYZ p)
