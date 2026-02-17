@@ -9,17 +9,17 @@ namespace LECG.Services
 {
     public class PurgeMaterialService : IPurgeMaterialService
     {
-        private readonly IPurgeReferenceScannerService _referenceScanner;
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+        private readonly IPurgeMaterialUsageCollectorService _purgeMaterialUsageCollectorService;
 
-        public PurgeMaterialService() : this(new PurgeReferenceScannerService(), new PurgeDeleteElementService())
+        public PurgeMaterialService() : this(new PurgeDeleteElementService(), new PurgeMaterialUsageCollectorService(new PurgeReferenceScannerService()))
         {
         }
 
-        public PurgeMaterialService(IPurgeReferenceScannerService referenceScanner, IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeMaterialService(IPurgeDeleteElementService purgeDeleteElementService, IPurgeMaterialUsageCollectorService purgeMaterialUsageCollectorService)
         {
-            _referenceScanner = referenceScanner;
             _purgeDeleteElementService = purgeDeleteElementService;
+            _purgeMaterialUsageCollectorService = purgeMaterialUsageCollectorService;
         }
 
         public int PurgeUnusedMaterials(Document doc, Action<string>? logCallback = null)
@@ -33,50 +33,7 @@ namespace LECG.Services
                 .ToDictionary(m => m.Id, m => m.Name);
 
             var validMaterialIds = new HashSet<ElementId>(allMaterials.Keys);
-            var usedIds = new HashSet<ElementId>();
-
-            var safeClassesForParams = new List<Type>
-            {
-                typeof(HostObject),
-                typeof(FamilyInstance),
-                typeof(FamilySymbol)
-            };
-            var safeClassFilter = new ElementMulticlassFilter(safeClassesForParams);
-
-            var collector = new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType()
-                .WhereElementIsViewIndependent();
-
-            var typesCollector = new FilteredElementCollector(doc)
-                .WhereElementIsElementType();
-
-            void ProcessElement(Element e)
-            {
-                if (!e.IsValidObject) return;
-
-                try
-                {
-                    var mats = e.GetMaterialIds(false);
-                    foreach (var id in mats) usedIds.Add(id);
-                }
-                catch
-                {
-                }
-
-                try
-                {
-                    if (safeClassFilter.PassesFilter(e))
-                    {
-                        _referenceScanner.CollectUsedIds(e, validMaterialIds, usedIds);
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            foreach (var e in typesCollector) ProcessElement(e);
-            foreach (var e in collector) ProcessElement(e);
+            var usedIds = _purgeMaterialUsageCollectorService.CollectUsedMaterialIds(doc, validMaterialIds);
 
             int deleted = 0;
             foreach (var kvp in allMaterials)
