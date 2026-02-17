@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 46 completed
+**Status**: Slice 47 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -643,6 +643,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by extracting vertex alignment into `IAlignEdgesVertexAlignmentService`.
 - Added `AlignEdgesVertexAlignmentService` and wired it through DI + `AlignEdgesService` constructor injection.
 - Kept `IAlignEdgesService` API unchanged while reducing vertex-adjustment orchestration complexity.
+
+**P5 Slice 47 (Completed)**:
+- Decomposed `PurgeService` by extracting summary/progress reporting into `IPurgeSummaryService`.
+- Added `PurgeSummaryService` and wired it through DI + `PurgeService` constructor injection.
+- Kept `IPurgeService` API unchanged while reducing summary-reporting orchestration complexity.
 
 
 **Target Services**:

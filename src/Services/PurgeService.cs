@@ -19,18 +19,20 @@ namespace LECG.Services
         private readonly IPurgeLineStyleService _purgeLineStyleService;
         private readonly IPurgeFillPatternService _purgeFillPatternService;
         private readonly IPurgeLevelService _purgeLevelService;
+        private readonly IPurgeSummaryService _purgeSummaryService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService(), new PurgeSummaryService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService, IPurgeSummaryService purgeSummaryService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
             _purgeLineStyleService = purgeLineStyleService;
             _purgeFillPatternService = purgeFillPatternService;
             _purgeLevelService = purgeLevelService;
+            _purgeSummaryService = purgeSummaryService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -81,18 +83,7 @@ namespace LECG.Services
                 t.Commit();
             }
 
-            // Summary
-            progressCallback?.Invoke(100, "Complete!");
-            logCallback?.Invoke("");
-            logCallback?.Invoke("=== SUMMARY ===");
-            logCallback?.Invoke($"Line Styles deleted: {lineStylesDeleted}");
-            logCallback?.Invoke($"Fill Patterns deleted: {fillPatternsDeleted}");
-            logCallback?.Invoke($"Materials deleted: {materialsDeleted}");
-            logCallback?.Invoke($"Levels deleted: {levelsDeleted}");
-            logCallback?.Invoke("");
-            
-            int total = lineStylesDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted;
-            logCallback?.Invoke($"✓ Total items purged: {total}");
+            _purgeSummaryService.Report(logCallback, progressCallback, lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted);
         }
 
         /// <summary>
@@ -155,3 +146,4 @@ namespace LECG.Services
 
     }
 }
+
