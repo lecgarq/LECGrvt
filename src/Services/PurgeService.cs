@@ -14,7 +14,6 @@ namespace LECG.Services
     /// </summary>
     public class PurgeService : IPurgeService
     {
-        private readonly IPurgeReferenceScannerService _referenceScanner;
         private readonly IPurgeMaterialService _purgeMaterialService;
         private readonly IPurgeLineStyleService _purgeLineStyleService;
         private readonly IPurgeFillPatternService _purgeFillPatternService;
@@ -23,7 +22,6 @@ namespace LECG.Services
         private readonly IPurgeExecutionCoordinatorService _purgeExecutionCoordinatorService;
 
         public PurgeService() : this(
-            new PurgeReferenceScannerService(),
             new PurgeMaterialService(),
             new PurgeLineStyleService(),
             new PurgeFillPatternService(),
@@ -41,7 +39,6 @@ namespace LECG.Services
         }
 
         public PurgeService(
-            IPurgeReferenceScannerService referenceScanner,
             IPurgeMaterialService purgeMaterialService,
             IPurgeLineStyleService purgeLineStyleService,
             IPurgeFillPatternService purgeFillPatternService,
@@ -49,7 +46,6 @@ namespace LECG.Services
             IPurgeSummaryService purgeSummaryService,
             IPurgeExecutionCoordinatorService purgeExecutionCoordinatorService)
         {
-            _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
             _purgeLineStyleService = purgeLineStyleService;
             _purgeFillPatternService = purgeFillPatternService;
@@ -109,25 +105,6 @@ namespace LECG.Services
         public int PurgeUnusedLevels(Document doc, Action<string>? logCallback = null)
         {
             return _purgeLevelService.PurgeUnusedLevels(doc, logCallback);
-        }
-
-        // ============================================
-        // HELPERS
-        // ============================================
-
-        private bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
-        {
-            try
-            {
-                doc.Delete(id);
-                logCallback?.Invoke($"  Deleted: {name}");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
-                return false;
-            }
         }
 
     }

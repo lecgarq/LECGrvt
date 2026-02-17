@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 67 completed
+**Status**: Slice 68 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -748,6 +748,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed purge sub-services by extracting shared element-delete helper logic into `IPurgeDeleteElementService`.
 - Added `PurgeDeleteElementService` and wired it through DI + constructor injection in material/line-style/fill-pattern/level purge services.
 - Kept all purge service public APIs unchanged while removing duplicated delete helper implementations.
+
+**P5 Slice 68 (Completed)**:
+- Decomposed `PurgeService` by removing unused internal helper/dependency code left after prior extractions.
+- Removed dead `_referenceScanner` dependency and unused private delete helper from `PurgeService`.
+- Kept `IPurgeService` API unchanged while tightening the service to orchestration-only behavior.
 
 
 **Target Services**:
