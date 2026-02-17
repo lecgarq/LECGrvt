@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 90 completed
+**Status**: Slice 91 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -862,6 +862,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadGeometryExtractionService` by extracting solid-face hatch extraction into `ICadSolidHatchExtractionService`.
 - Added `CadSolidHatchExtractionService` and wired it through DI + `CadGeometryExtractionService` constructor injection.
 - Kept `ICadGeometryExtractionService` API unchanged while reducing solid hatch loop/color-resolution orchestration complexity.
+
+**P5 Slice 91 (Completed)**:
+- Decomposed `CadFamilyLoadPlacementService` by extracting family load + primary-symbol resolution into `ICadFamilyLoadResolveService`.
+- Added `CadFamilyLoadResolveService` and wired it through DI + `CadFamilyLoadPlacementService` constructor injection.
+- Kept `ICadFamilyLoadPlacementService` API unchanged while reducing duplicate family-load/symbol-resolve orchestration logic.
 
 
 **Target Services**:

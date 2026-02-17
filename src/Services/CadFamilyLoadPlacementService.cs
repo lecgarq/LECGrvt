@@ -6,20 +6,17 @@ namespace LECG.Services
 {
     public class CadFamilyLoadPlacementService : ICadFamilyLoadPlacementService
     {
-        private readonly ICadFamilySymbolService _familySymbolService;
         private readonly ICadPlacementViewService _placementViewService;
-        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly ICadFamilyLoadResolveService _cadFamilyLoadResolveService;
         private readonly ICadTempFileCleanupService _cadTempFileCleanupService;
 
         public CadFamilyLoadPlacementService(
-            ICadFamilySymbolService familySymbolService,
             ICadPlacementViewService placementViewService,
-            IFamilyLoadOptionsFactory familyLoadOptionsFactory,
+            ICadFamilyLoadResolveService cadFamilyLoadResolveService,
             ICadTempFileCleanupService cadTempFileCleanupService)
         {
-            _familySymbolService = familySymbolService;
             _placementViewService = placementViewService;
-            _familyLoadOptionsFactory = familyLoadOptionsFactory;
+            _cadFamilyLoadResolveService = cadFamilyLoadResolveService;
             _cadTempFileCleanupService = cadTempFileCleanupService;
         }
 
@@ -29,12 +26,10 @@ namespace LECG.Services
             using (Transaction t = new Transaction(doc, "Load Family"))
             {
                 t.Start();
-                Family? f;
-                doc.LoadFamily(path, _familyLoadOptionsFactory.Create(), out f);
-                if (f != null)
+                FamilySymbol? symbol = _cadFamilyLoadResolveService.LoadAndResolvePrimarySymbol(doc, path);
+                if (symbol != null)
                 {
-                    FamilySymbol? s = _familySymbolService.GetPrimarySymbol(doc, f);
-                    if (s != null) createdId = s.Id;
+                    createdId = symbol.Id;
                 }
                 t.Commit();
             }
@@ -48,35 +43,29 @@ namespace LECG.Services
             using (Transaction t = new Transaction(doc, "Load and Place Detail Item"))
             {
                 t.Start();
-                Family? family = null;
-                doc.LoadFamily(path, _familyLoadOptionsFactory.Create(), out family);
-
-                if (family != null)
+                FamilySymbol? symbol = _cadFamilyLoadResolveService.LoadAndResolvePrimarySymbol(doc, path);
+                if (symbol != null)
                 {
-                    FamilySymbol? symbol = _familySymbolService.GetPrimarySymbol(doc, family);
-                    if (symbol != null)
+                    createdId = symbol.Id;
+                    View? placementView = _placementViewService.ResolvePlacementView(doc, doc.ActiveView);
+
+                    if (placementView != null)
                     {
-                        createdId = symbol.Id;
-                        View? placementView = _placementViewService.ResolvePlacementView(doc, doc.ActiveView);
+                        doc.Create.NewFamilyInstance(location, symbol, placementView);
 
-                        if (placementView != null)
+                        if (deleteId != null && deleteId != ElementId.InvalidElementId)
                         {
-                            doc.Create.NewFamilyInstance(location, symbol, placementView);
-
-                            if (deleteId != null && deleteId != ElementId.InvalidElementId)
+                            Element e = doc.GetElement(deleteId);
+                            if (e != null)
                             {
-                                Element e = doc.GetElement(deleteId);
-                                if (e != null)
-                                {
-                                    if (e.Pinned) e.Pinned = false;
-                                    doc.Delete(deleteId);
-                                }
+                                if (e.Pinned) e.Pinned = false;
+                                doc.Delete(deleteId);
                             }
                         }
-                        else
-                        {
-                            doc.Create.NewFamilyInstance(location, symbol, StructuralType.NonStructural);
-                        }
+                    }
+                    else
+                    {
+                        doc.Create.NewFamilyInstance(location, symbol, StructuralType.NonStructural);
                     }
                 }
                 t.Commit();
