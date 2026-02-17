@@ -7,14 +7,16 @@ namespace LECG.Services
     public class CadGeometryExtractionService : ICadGeometryExtractionService
     {
         private readonly ICadSolidHatchExtractionService _cadSolidHatchExtractionService;
+        private readonly ICadPolylineExtractionService _cadPolylineExtractionService;
 
-        public CadGeometryExtractionService() : this(new CadSolidHatchExtractionService())
+        public CadGeometryExtractionService() : this(new CadSolidHatchExtractionService(), new CadPolylineExtractionService())
         {
         }
 
-        public CadGeometryExtractionService(ICadSolidHatchExtractionService cadSolidHatchExtractionService)
+        public CadGeometryExtractionService(ICadSolidHatchExtractionService cadSolidHatchExtractionService, ICadPolylineExtractionService cadPolylineExtractionService)
         {
             _cadSolidHatchExtractionService = cadSolidHatchExtractionService;
+            _cadPolylineExtractionService = cadPolylineExtractionService;
         }
 
         public CadData ExtractGeometry(Document doc, ImportInstance imp)
@@ -49,12 +51,10 @@ namespace LECG.Services
             }
             else if (obj is PolyLine poly)
             {
-                IList<XYZ> points = poly.GetCoordinates();
-                for (int i = 0; i < points.Count - 1; i++)
+                List<Curve> lines = _cadPolylineExtractionService.Extract(poly, currentTransform);
+                foreach (Curve line in lines)
                 {
-                    XYZ p1 = currentTransform.OfPoint(points[i]);
-                    XYZ p2 = currentTransform.OfPoint(points[i + 1]);
-                    data.Curves.Add(Line.CreateBound(p1, p2));
+                    data.Curves.Add(line);
                 }
             }
             else if (obj is Solid solid && !solid.Faces.IsEmpty)

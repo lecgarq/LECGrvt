@@ -113,6 +113,7 @@ namespace LECG.Core
             services.AddSingleton<ICadFamilyLoadPlacementService, CadFamilyLoadPlacementService>();
             services.AddSingleton<ICadTempFileCleanupService, CadTempFileCleanupService>();
             services.AddSingleton<ICadSolidHatchExtractionService, CadSolidHatchExtractionService>();
+            services.AddSingleton<ICadPolylineExtractionService, CadPolylineExtractionService>();
             services.AddSingleton<ICadGeometryExtractionService, CadGeometryExtractionService>();
             services.AddSingleton<ICadGeometryOptimizationService, CadGeometryOptimizationService>();
             services.AddSingleton<ICadDataValidationService, CadDataValidationService>();
