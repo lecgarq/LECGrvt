@@ -10,14 +10,12 @@ namespace LECG.Services
     /// </summary>
     public class SchemaCleanerService : ISchemaCleanerService
     {
-        private readonly ISchemaVendorFilterService _schemaVendorFilterService;
         private readonly ISchemaElementScanService _schemaElementScanService;
         private readonly ISchemaDataStorageScanService _schemaDataStorageScanService;
         private readonly ISchemaDataStorageDeleteService _schemaDataStorageDeleteService;
         private readonly ISchemaEraseService _schemaEraseService;
 
         public SchemaCleanerService() : this(
-            new SchemaVendorFilterService(),
             new SchemaElementScanService(new SchemaVendorFilterService()),
             new SchemaDataStorageScanService(new SchemaVendorFilterService()),
             new SchemaDataStorageDeleteService(),
@@ -26,13 +24,11 @@ namespace LECG.Services
         }
 
         public SchemaCleanerService(
-            ISchemaVendorFilterService schemaVendorFilterService,
             ISchemaElementScanService schemaElementScanService,
             ISchemaDataStorageScanService schemaDataStorageScanService,
             ISchemaDataStorageDeleteService schemaDataStorageDeleteService,
             ISchemaEraseService schemaEraseService)
         {
-            _schemaVendorFilterService = schemaVendorFilterService;
             _schemaElementScanService = schemaElementScanService;
             _schemaDataStorageScanService = schemaDataStorageScanService;
             _schemaDataStorageDeleteService = schemaDataStorageDeleteService;

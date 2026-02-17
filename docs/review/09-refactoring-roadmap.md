@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 68 completed
+**Status**: Slice 69 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -753,6 +753,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by removing unused internal helper/dependency code left after prior extractions.
 - Removed dead `_referenceScanner` dependency and unused private delete helper from `PurgeService`.
 - Kept `IPurgeService` API unchanged while tightening the service to orchestration-only behavior.
+
+**P5 Slice 69 (Completed)**:
+- Decomposed `SchemaCleanerService` by removing an unused vendor-filter dependency after prior service extractions.
+- Removed dead `_schemaVendorFilterService` constructor dependency/field from `SchemaCleanerService`.
+- Kept `ISchemaCleanerService` API unchanged while tightening the service to delegated orchestration only.
 
 
 **Target Services**:
