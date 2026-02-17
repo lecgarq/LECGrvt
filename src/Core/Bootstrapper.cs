@@ -47,6 +47,7 @@ namespace LECG.Core
             services.AddSingleton<IPurgeLevelService, PurgeLevelService>();
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaVendorFilterService, SchemaVendorFilterService>();
+            services.AddSingleton<ISchemaDataStorageScanService, SchemaDataStorageScanService>();
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
             services.AddSingleton<IBaseElementCollectionService, BaseElementCollectionService>();

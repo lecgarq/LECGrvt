@@ -13,14 +13,16 @@ namespace LECG.Services
     public class SchemaCleanerService : ISchemaCleanerService
     {
         private readonly ISchemaVendorFilterService _schemaVendorFilterService;
+        private readonly ISchemaDataStorageScanService _schemaDataStorageScanService;
 
-        public SchemaCleanerService() : this(new SchemaVendorFilterService())
+        public SchemaCleanerService() : this(new SchemaVendorFilterService(), new SchemaDataStorageScanService(new SchemaVendorFilterService()))
         {
         }
 
-        public SchemaCleanerService(ISchemaVendorFilterService schemaVendorFilterService)
+        public SchemaCleanerService(ISchemaVendorFilterService schemaVendorFilterService, ISchemaDataStorageScanService schemaDataStorageScanService)
         {
             _schemaVendorFilterService = schemaVendorFilterService;
+            _schemaDataStorageScanService = schemaDataStorageScanService;
         }
 
         /// <summary>
@@ -66,35 +68,7 @@ namespace LECG.Services
         /// </summary>
         public (HashSet<Guid> schemas, List<ElementId> dataStorageIds) ScanDataStorageElements(Document doc, Action<string>? logCallback = null)
         {
-            HashSet<Guid> schemas = new HashSet<Guid>();
-            List<ElementId> dataStorageIds = new List<ElementId>();
-
-            FilteredElementCollector collector = new FilteredElementCollector(doc)
-                .OfClass(typeof(DataStorage));
-
-            foreach (DataStorage ds in collector.ToElements().Cast<DataStorage>())
-            {
-                try
-                {
-                    IList<Guid> dsSchemaGuids = ds.GetEntitySchemaGuids();
-                    foreach (Guid guid in dsSchemaGuids)
-                    {
-                        if (_schemaVendorFilterService.IsThirdPartySchema(guid))
-                        {
-                            Schema? schema = Schema.Lookup(guid);
-                            if (schema != null)
-                            {
-                                schemas.Add(guid);
-                                dataStorageIds.Add(ds.Id);
-                                logCallback?.Invoke($"  Found DataStorage {ds.Id}: '{schema.SchemaName}'");
-                            }
-                        }
-                    }
-                }
-                catch { }
-            }
-
-            return (schemas, dataStorageIds.Distinct().ToList());
+            return _schemaDataStorageScanService.ScanDataStorageElements(doc, logCallback);
         }
 
         /// <summary>

@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 44 completed
+**Status**: Slice 45 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -633,6 +633,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting project-family loading into `IFamilyProjectLoadService`.
 - Added `FamilyProjectLoadService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing project-load transaction complexity.
+
+**P5 Slice 45 (Completed)**:
+- Decomposed `SchemaCleanerService` by extracting DataStorage schema scanning into `ISchemaDataStorageScanService`.
+- Added `SchemaDataStorageScanService` and wired it through DI + `SchemaCleanerService` constructor injection.
+- Kept `ISchemaCleanerService` API unchanged while reducing DataStorage scan orchestration complexity.
 
 
 **Target Services**:
