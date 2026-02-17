@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 56 completed
+**Status**: Slice 57 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -693,6 +693,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting per-pass execution into `IPurgePassExecutionService`.
 - Added `PurgePassExecutionService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing pass-body orchestration complexity.
+
+**P5 Slice 57 (Completed)**:
+- Decomposed `MaterialPbrService` by extracting texture file lookup into `IMaterialTextureLookupService`.
+- Added `MaterialTextureLookupService` and wired it through DI + `MaterialPbrService` constructor injection.
+- Kept `IMaterialPbrService` API unchanged while reducing texture-lookup orchestration complexity.
 
 
 **Target Services**:

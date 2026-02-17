@@ -10,15 +10,17 @@ namespace LECG.Services
     {
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
+        private readonly IMaterialTextureLookupService _materialTextureLookupService;
 
-        public MaterialPbrService() : this(new MaterialCreationService(), new MaterialColorSequenceService())
+        public MaterialPbrService() : this(new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialTextureLookupService())
         {
         }
 
-        public MaterialPbrService(IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService)
+        public MaterialPbrService(IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialTextureLookupService materialTextureLookupService)
         {
             _materialCreationService = materialCreationService;
             _materialColorSequenceService = materialColorSequenceService;
+            _materialTextureLookupService = materialTextureLookupService;
         }
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)
@@ -33,9 +35,9 @@ namespace LECG.Services
             Material? mat = doc.GetElement(matId) as Material;
             if (mat == null) return matId;
 
-            string? diffusePath = FindTextureFile(folderPath, "_Color");
-            string? normalPath = FindTextureFile(folderPath, "Normal GL");
-            string? roughPath = FindTextureFile(folderPath, "roughness");
+            string? diffusePath = _materialTextureLookupService.FindTextureFile(folderPath, "_Color");
+            string? normalPath = _materialTextureLookupService.FindTextureFile(folderPath, "Normal GL");
+            string? roughPath = _materialTextureLookupService.FindTextureFile(folderPath, "roughness");
 
             if (!string.IsNullOrEmpty(diffusePath)) logCallback?.Invoke($"  âœ“ Found diffuse: {System.IO.Path.GetFileName(diffusePath)}");
             else logCallback?.Invoke($"  âš  No diffuse texture found in {folderPath}");
@@ -79,12 +81,6 @@ namespace LECG.Services
                 }
             }
             return matId;
-        }
-
-        private string? FindTextureFile(string folder, string partialName)
-        {
-            if (!System.IO.Directory.Exists(folder)) return null;
-            return System.IO.Directory.GetFiles(folder).FirstOrDefault(f => System.IO.Path.GetFileName(f).IndexOf(partialName, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private void SetupBitmapProperty(AssetProperty? prop, string path)
