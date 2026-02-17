@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 52 completed
+**Status**: Slice 53 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -673,6 +673,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting fixed pass sequencing into `IPurgePassSequenceService`.
 - Added `PurgePassSequenceService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing pass-iteration orchestration complexity.
+
+**P5 Slice 53 (Completed)**:
+- Decomposed `CadConversionService` by extracting CAD data drawing orchestration into `ICadDataDrawService`.
+- Added `CadDataDrawService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing draw-pipeline orchestration complexity.
 
 
 **Target Services**:

@@ -16,9 +16,7 @@ namespace LECG.Services
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadGeometryExtractionService _geometryExtractionService;
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
-        private readonly ICadRenderContextService _renderContextService;
-        private readonly ICadCurveRenderService _curveRenderService;
-        private readonly ICadHatchRenderService _hatchRenderService;
+        private readonly ICadDataDrawService _cadDataDrawService;
         private readonly ICadFamilySaveService _familySaveService;
 
         public CadConversionService(
@@ -27,9 +25,7 @@ namespace LECG.Services
             ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadGeometryExtractionService geometryExtractionService,
             ICadGeometryOptimizationService geometryOptimizationService,
-            ICadRenderContextService renderContextService,
-            ICadCurveRenderService curveRenderService,
-            ICadHatchRenderService hatchRenderService,
+            ICadDataDrawService cadDataDrawService,
             ICadFamilySaveService familySaveService)
         {
             _placementViewService = placementViewService;
@@ -37,9 +33,7 @@ namespace LECG.Services
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
             _geometryOptimizationService = geometryOptimizationService;
-            _renderContextService = renderContextService;
-            _curveRenderService = curveRenderService;
-            _hatchRenderService = hatchRenderService;
+            _cadDataDrawService = cadDataDrawService;
             _familySaveService = familySaveService;
         }
 
@@ -69,7 +63,7 @@ namespace LECG.Services
             using (Transaction t = new Transaction(familyDoc, "Create Detail Item Content"))
             {
                 t.Start();
-                DrawData(familyDoc, optimizedData, center, lineStyleName, lineColor, lineWeight, progress, 50, 80);
+                _cadDataDrawService.Draw(familyDoc, optimizedData, center, lineStyleName, lineColor, lineWeight, progress, 50, 80);
                 t.Commit();
             }
 
@@ -110,7 +104,7 @@ namespace LECG.Services
             using (Transaction t = new Transaction(familyDoc, "Create Detail Item"))
             {
                 t.Start();
-                DrawData(familyDoc, data, XYZ.Zero, lineStyleName, lineColor, lineWeight, progress, 50, 90);
+                _cadDataDrawService.Draw(familyDoc, data, XYZ.Zero, lineStyleName, lineColor, lineWeight, progress, 50, 90);
                 t.Commit();
             }
 
@@ -119,27 +113,5 @@ namespace LECG.Services
             return _familyLoadPlacementService.LoadOnly(doc, path);
         }
         
-        private void DrawData(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
-        {
-            (GraphicsStyle lineStyle, View planView, Transform toOrigin) = _renderContextService.Create(familyDoc, offset, styleName, color, weight);
-            
-            int total = data.Curves.Count + data.Hatches.Count;
-            int current = 0;
-
-            current = _curveRenderService.DrawCurves(familyDoc, data.Curves, toOrigin, planView, lineStyle, progress, startPct, endPct, total, current);
-
-            current = _hatchRenderService.DrawHatches(
-                familyDoc,
-                data.Hatches,
-                toOrigin,
-                planView,
-                progress,
-                startPct,
-                endPct,
-                total,
-                current,
-                data.Curves.Count);
-        }
-
     }
 }

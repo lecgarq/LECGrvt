@@ -90,6 +90,7 @@ namespace LECG.Core
             services.AddSingleton<ICadRenderContextService, CadRenderContextService>();
             services.AddSingleton<ICadCurveRenderService, CadCurveRenderService>();
             services.AddSingleton<ICadHatchRenderService, CadHatchRenderService>();
+            services.AddSingleton<ICadDataDrawService, CadDataDrawService>();
             services.AddSingleton<ICadFamilySaveService, CadFamilySaveService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
