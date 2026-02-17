@@ -1,9 +1,6 @@
 #pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
-using LECG.Configuration;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -84,9 +81,6 @@ namespace LECG.Services
             return _purgeFillPatternService.PurgeUnusedFillPatterns(doc, logCallback);
         }
 
-        /// <summary>
-        /// Purge unused materials.
-        /// </summary>
         /// <summary>
         /// Purge unused materials.
         /// Optimized to use HashSet lookups instead of expensive doc.GetElement calls.

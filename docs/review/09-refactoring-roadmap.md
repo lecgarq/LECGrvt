@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 84 completed
+**Status**: Slice 85 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -833,6 +833,10 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SexyRevitService` by extracting graphics-policy application into `ISexyGraphicsApplyService`.
 - Added `SexyGraphicsApplyService` and wired it through DI + `SexyRevitService` constructor injection.
 - Kept `ISexyRevitService` API unchanged while reducing in-service graphics decision/application orchestration complexity.
+
+**P5 Slice 85 (Completed)**:
+- Decomposed residual `PurgeService` internals by removing stale imports and duplicated summary comment blocks left from prior extractions.
+- Kept `IPurgeService` API and runtime behavior unchanged while tightening service source to active orchestration-only code.
 
 
 **Target Services**:
