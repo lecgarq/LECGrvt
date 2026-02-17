@@ -15,19 +15,22 @@ namespace LECG.Services
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
         private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
         private readonly ICadFamilyBuildService _cadFamilyBuildService;
+        private readonly ICadDataValidationService _cadDataValidationService;
 
         public CadConversionService(
             ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadGeometryExtractionService geometryExtractionService,
             ICadGeometryOptimizationService geometryOptimizationService,
             ICadTempDwgExtractionService cadTempDwgExtractionService,
-            ICadFamilyBuildService cadFamilyBuildService)
+            ICadFamilyBuildService cadFamilyBuildService,
+            ICadDataValidationService cadDataValidationService)
         {
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
             _geometryOptimizationService = geometryOptimizationService;
             _cadTempDwgExtractionService = cadTempDwgExtractionService;
             _cadFamilyBuildService = cadFamilyBuildService;
+            _cadDataValidationService = cadDataValidationService;
         }
 
         public string GetDefaultTemplatePath()
@@ -45,8 +48,7 @@ namespace LECG.Services
             progress?.Invoke(30, "Optimizing geometry...");
             CadData optimizedData = _geometryOptimizationService.Optimize(data);
 
-            if (!optimizedData.Curves.Any() && !optimizedData.Hatches.Any())
-                throw new Exception("No suitable geometry found in the selected CAD.");
+            _cadDataValidationService.EnsureHasGeometry(optimizedData, "No suitable geometry found in the selected CAD.");
 
             BoundingBoxXYZ box = cadInstance.get_BoundingBox(null);
             XYZ center = (box.Min + box.Max) * 0.5;
@@ -74,8 +76,7 @@ namespace LECG.Services
         {
             CadData data = _cadTempDwgExtractionService.Extract(doc, templatePath, dwgPath, progress);
 
-            if (data == null || (!data.Curves.Any() && !data.Hatches.Any()))
-                 throw new Exception("No geometry found in DWG.");
+            _cadDataValidationService.EnsureHasGeometry(data, "No geometry found in DWG.");
 
             progress?.Invoke(50, "Creating final family...");
             string path = _cadFamilyBuildService.BuildAndSave(
