@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.ExtensibleStorage;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -15,22 +14,26 @@ namespace LECG.Services
         private readonly ISchemaVendorFilterService _schemaVendorFilterService;
         private readonly ISchemaDataStorageScanService _schemaDataStorageScanService;
         private readonly ISchemaDataStorageDeleteService _schemaDataStorageDeleteService;
+        private readonly ISchemaEraseService _schemaEraseService;
 
         public SchemaCleanerService() : this(
             new SchemaVendorFilterService(),
             new SchemaDataStorageScanService(new SchemaVendorFilterService()),
-            new SchemaDataStorageDeleteService())
+            new SchemaDataStorageDeleteService(),
+            new SchemaEraseService())
         {
         }
 
         public SchemaCleanerService(
             ISchemaVendorFilterService schemaVendorFilterService,
             ISchemaDataStorageScanService schemaDataStorageScanService,
-            ISchemaDataStorageDeleteService schemaDataStorageDeleteService)
+            ISchemaDataStorageDeleteService schemaDataStorageDeleteService,
+            ISchemaEraseService schemaEraseService)
         {
             _schemaVendorFilterService = schemaVendorFilterService;
             _schemaDataStorageScanService = schemaDataStorageScanService;
             _schemaDataStorageDeleteService = schemaDataStorageDeleteService;
+            _schemaEraseService = schemaEraseService;
         }
 
         /// <summary>
@@ -92,22 +95,7 @@ namespace LECG.Services
         /// </summary>
         public int EraseSchemas(Document doc, IEnumerable<Guid> guids, Action<string>? logCallback = null)
         {
-            int erased = 0;
-            foreach (Guid guid in guids)
-            {
-                Schema? schema = Schema.Lookup(guid);
-                if (schema != null)
-                {
-                    try
-                    {
-                        doc.EraseSchemaAndAllEntities(schema);
-                        erased++;
-                        logCallback?.Invoke($"  Erased: {schema.SchemaName}");
-                    }
-                    catch { }
-                }
-            }
-            return erased;
+            return _schemaEraseService.EraseSchemas(doc, guids, logCallback);
         }
 
     }
