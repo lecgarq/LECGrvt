@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 88 completed
+**Status**: Slice 89 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -852,6 +852,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed CAD curve services by extracting shared XY point-flattening into `ICadPointFlattenService`.
 - Added `CadPointFlattenService` and wired it through DI + constructor injection in `CadCurveFlattenService` and `CadCurveTessellationService`.
 - Kept CAD curve service public APIs unchanged while removing duplicated point-flatten helper logic.
+
+**P5 Slice 89 (Completed)**:
+- Decomposed `MaterialPbrService` by extracting appearance asset creation/edit/assignment into `IMaterialAppearanceAssetService`.
+- Added `MaterialAppearanceAssetService` and wired it through DI + `MaterialPbrService` constructor injection.
+- Kept `IMaterialPbrService` API unchanged while reducing in-method appearance-asset orchestration complexity.
 
 
 **Target Services**:
