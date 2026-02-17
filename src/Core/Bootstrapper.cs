@@ -71,6 +71,7 @@ namespace LECG.Core
             services.AddSingleton<IFamilyLoadOptionsFactory, FamilyLoadOptionsFactory>();
             services.AddSingleton<IFamilyParameterSetupService, FamilyParameterSetupService>();
             services.AddSingleton<IFamilySaveService, FamilySaveService>();
+            services.AddSingleton<IFamilyTargetDocumentService, FamilyTargetDocumentService>();
             services.AddSingleton<IFamilyProjectLoadService, FamilyProjectLoadService>();
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();

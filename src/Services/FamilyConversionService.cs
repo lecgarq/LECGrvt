@@ -16,12 +16,13 @@ namespace LECG.Services
         private readonly IFamilyProjectLoadService _familyProjectLoadService;
         private readonly IFamilyParameterSetupService _familyParameterSetupService;
         private readonly IFamilySaveService _familySaveService;
+        private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilyParameterSetupService(), new FamilySaveService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilyParameterSetupService(), new FamilySaveService(), new FamilyTargetDocumentService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilyParameterSetupService familyParameterSetupService, IFamilySaveService familySaveService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilyParameterSetupService familyParameterSetupService, IFamilySaveService familySaveService, IFamilyTargetDocumentService familyTargetDocumentService)
         {
             _templatePathService = templatePathService;
             _geometryCollectionService = geometryCollectionService;
@@ -29,6 +30,7 @@ namespace LECG.Services
             _familyProjectLoadService = familyProjectLoadService;
             _familyParameterSetupService = familyParameterSetupService;
             _familySaveService = familySaveService;
+            _familyTargetDocumentService = familyTargetDocumentService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -57,17 +59,9 @@ namespace LECG.Services
             try
             {
                 // 2. Create Target Family Document
-                if (!File.Exists(templatePath))
-                {
-                    Logger.Instance.Log($"Error: Template not found at {templatePath}");
-                    return;
-                }
-                
-                targetFamilyDoc = doc.Application.NewFamilyDocument(templatePath);
-                
+                targetFamilyDoc = _familyTargetDocumentService.Create(doc, templatePath);
                 if (targetFamilyDoc == null)
                 {
-                    Logger.Instance.Log("Error: Could not create new family document.");
                     return;
                 }
 
