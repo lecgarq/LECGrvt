@@ -9,19 +9,17 @@ namespace LECG.Services
 {
     public class AlignEdgesService : IAlignEdgesService
     {
-        private readonly IReferenceRaycastService _referenceRaycastService;
         private readonly IAlignEdgesIntersectorService _intersectorService;
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
         private readonly IToposolidBaseElevationService _baseElevationService;
         private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
 
-        public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService(), new AlignEdgesVertexAlignmentService())
+        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService(), new AlignEdgesVertexAlignmentService())
         {
         }
 
-        public AlignEdgesService(IReferenceRaycastService referenceRaycastService, IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IToposolidBaseElevationService baseElevationService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
+        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IToposolidBaseElevationService baseElevationService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
         {
-            _referenceRaycastService = referenceRaycastService;
             _intersectorService = intersectorService;
             _boundaryPointService = boundaryPointService;
             _baseElevationService = baseElevationService;

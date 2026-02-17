@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 74 completed
+**Status**: Slice 75 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -783,6 +783,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadCurveFlattenService` by extracting tessellation fallback logic into `ICadCurveTessellationService`.
 - Added `CadCurveTessellationService` and wired it through DI + `CadCurveFlattenService` constructor injection.
 - Kept `ICadCurveFlattenService` API unchanged while reducing fallback line-segmentation orchestration complexity.
+
+**P5 Slice 75 (Completed)**:
+- Decomposed `AlignEdgesService` by removing unused `IReferenceRaycastService` dependency after intersector extraction.
+- Removed dead constructor/field injection paths for `IReferenceRaycastService` with no behavior impact.
+- Kept `IAlignEdgesService` API unchanged while tightening constructor dependency surface.
 
 
 **Target Services**:
