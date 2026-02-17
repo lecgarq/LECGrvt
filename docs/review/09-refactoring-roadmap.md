@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 62 completed
+**Status**: Slice 63 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -723,6 +723,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignElementsService` by extracting distribution item build/sort into `IAlignElementsDistributionItemService`.
 - Added `AlignElementsDistributionItemService` and wired it through DI + `AlignElementsService` constructor injection.
 - Kept `IAlignElementsService` API unchanged while reducing distribution-prep orchestration complexity.
+
+**P5 Slice 63 (Completed)**:
+- Decomposed `SchemaCleanerService` by extracting DataStorage deletion into `ISchemaDataStorageDeleteService`.
+- Added `SchemaDataStorageDeleteService` and wired it through DI + `SchemaCleanerService` constructor injection.
+- Kept `ISchemaCleanerService` API unchanged while reducing DataStorage deletion orchestration complexity.
 
 
 **Target Services**:

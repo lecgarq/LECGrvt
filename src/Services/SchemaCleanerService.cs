@@ -14,15 +14,23 @@ namespace LECG.Services
     {
         private readonly ISchemaVendorFilterService _schemaVendorFilterService;
         private readonly ISchemaDataStorageScanService _schemaDataStorageScanService;
+        private readonly ISchemaDataStorageDeleteService _schemaDataStorageDeleteService;
 
-        public SchemaCleanerService() : this(new SchemaVendorFilterService(), new SchemaDataStorageScanService(new SchemaVendorFilterService()))
+        public SchemaCleanerService() : this(
+            new SchemaVendorFilterService(),
+            new SchemaDataStorageScanService(new SchemaVendorFilterService()),
+            new SchemaDataStorageDeleteService())
         {
         }
 
-        public SchemaCleanerService(ISchemaVendorFilterService schemaVendorFilterService, ISchemaDataStorageScanService schemaDataStorageScanService)
+        public SchemaCleanerService(
+            ISchemaVendorFilterService schemaVendorFilterService,
+            ISchemaDataStorageScanService schemaDataStorageScanService,
+            ISchemaDataStorageDeleteService schemaDataStorageDeleteService)
         {
             _schemaVendorFilterService = schemaVendorFilterService;
             _schemaDataStorageScanService = schemaDataStorageScanService;
+            _schemaDataStorageDeleteService = schemaDataStorageDeleteService;
         }
 
         /// <summary>
@@ -76,17 +84,7 @@ namespace LECG.Services
         /// </summary>
         public int DeleteDataStorageElements(Document doc, IEnumerable<ElementId> ids, Action<string>? logCallback = null)
         {
-            int deleted = 0;
-            foreach (ElementId id in ids)
-            {
-                try
-                {
-                    doc.Delete(id);
-                    deleted++;
-                }
-                catch { }
-            }
-            return deleted;
+            return _schemaDataStorageDeleteService.DeleteDataStorageElements(doc, ids, logCallback);
         }
 
         /// <summary>
