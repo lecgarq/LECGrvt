@@ -11,15 +11,17 @@ namespace LECG.Services
     {
         private readonly IAlignElementsTranslationService _translationService;
         private readonly IAlignElementsDistributionItemService _distributionItemService;
+        private readonly IAlignElementsDistributionMoveService _distributionMoveService;
 
-        public AlignElementsService() : this(new AlignElementsTranslationService(), new AlignElementsDistributionItemService())
+        public AlignElementsService() : this(new AlignElementsTranslationService(), new AlignElementsDistributionItemService(), new AlignElementsDistributionMoveService())
         {
         }
 
-        public AlignElementsService(IAlignElementsTranslationService translationService, IAlignElementsDistributionItemService distributionItemService)
+        public AlignElementsService(IAlignElementsTranslationService translationService, IAlignElementsDistributionItemService distributionItemService, IAlignElementsDistributionMoveService distributionMoveService)
         {
             _translationService = translationService;
             _distributionItemService = distributionItemService;
+            _distributionMoveService = distributionMoveService;
         }
 
         public void Align(Document doc, Element reference, List<Element> targets, AlignMode mode)
@@ -63,30 +65,7 @@ namespace LECG.Services
 
                 if (sortedItems.Count < 3) return;
 
-                // 2. Calculate Spacing
-                var first = sortedItems.First();
-                var last = sortedItems.Last();
-
-                double totalDistance = last.Position - first.Position;
-                double step = totalDistance / (sortedItems.Count - 1);
-
-                // 3. Move intermediates
-                for (int i = 1; i < sortedItems.Count - 1; i++)
-                {
-                    var item = sortedItems[i];
-                    double targetPos = first.Position + (step * i);
-                    double currentPos = item.Position;
-                    double diff = targetPos - currentPos;
-
-                    XYZ translation = (mode == AlignMode.DistributeHorizontally)
-                        ? new XYZ(diff, 0, 0)
-                        : new XYZ(0, diff, 0);
-
-                    if (!translation.IsZeroLength())
-                    {
-                        ElementTransformUtils.MoveElement(doc, item.Element.Id, translation);
-                    }
-                }
+                _distributionMoveService.MoveIntermediateElements(doc, sortedItems, mode);
 
                 t.Commit();
             }

@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 86 completed
+**Status**: Slice 87 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -842,6 +842,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesBoundaryPointService` by extracting curve-hit sampling checks into `IAlignEdgesCurveHitService`.
 - Added `AlignEdgesCurveHitService` and wired it through DI + `AlignEdgesBoundaryPointService` constructor injection.
 - Kept `IAlignEdgesBoundaryPointService` API unchanged while reducing in-method curve-hit loop orchestration complexity.
+
+**P5 Slice 87 (Completed)**:
+- Decomposed `AlignElementsService` by extracting intermediate distribution move logic into `IAlignElementsDistributionMoveService`.
+- Added `AlignElementsDistributionMoveService` and wired it through DI + `AlignElementsService` constructor injection.
+- Kept `IAlignElementsService` API unchanged while reducing in-method distribution movement orchestration complexity.
 
 
 **Target Services**:
