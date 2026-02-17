@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 83 completed
+**Status**: Slice 84 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -828,6 +828,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `RenderAppearanceService` by extracting single-material sync path into `IRenderAppearanceSingleSyncService`.
 - Added `RenderAppearanceSingleSyncService` and wired it through DI + `RenderAppearanceService` constructor injection.
 - Kept `IRenderAppearanceService` API unchanged while reducing in-service single-sync mutation orchestration complexity.
+
+**P5 Slice 84 (Completed)**:
+- Decomposed `SexyRevitService` by extracting graphics-policy application into `ISexyGraphicsApplyService`.
+- Added `SexyGraphicsApplyService` and wired it through DI + `SexyRevitService` constructor injection.
+- Kept `ISexyRevitService` API unchanged while reducing in-service graphics decision/application orchestration complexity.
 
 
 **Target Services**:

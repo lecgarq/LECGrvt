@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using Autodesk.Revit.DB;
-using LECG.Core.Graphics;
 using LECG.ViewModels;
 using LECG.Services.Interfaces;
 
@@ -12,16 +10,18 @@ namespace LECG.Services
         private readonly ISexySunSettingsService _sunSettingsService;
         private readonly ISexyCategoryVisibilityService _categoryVisibilityService;
         private readonly ISexySectionBoxVisibilityService _sectionBoxVisibilityService;
+        private readonly ISexyGraphicsApplyService _sexyGraphicsApplyService;
 
-        public SexyRevitService() : this(new SexySunSettingsService(), new SexyCategoryVisibilityService(), new SexySectionBoxVisibilityService())
+        public SexyRevitService() : this(new SexySunSettingsService(), new SexyCategoryVisibilityService(), new SexySectionBoxVisibilityService(), new SexyGraphicsApplyService())
         {
         }
 
-        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService, ISexySectionBoxVisibilityService sectionBoxVisibilityService)
+        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService, ISexySectionBoxVisibilityService sectionBoxVisibilityService, ISexyGraphicsApplyService sexyGraphicsApplyService)
         {
             _sunSettingsService = sunSettingsService;
             _categoryVisibilityService = categoryVisibilityService;
             _sectionBoxVisibilityService = sectionBoxVisibilityService;
+            _sexyGraphicsApplyService = sexyGraphicsApplyService;
         }
 
         public void ApplyBeauty(Document doc, View view, SexyRevitViewModel settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
@@ -36,7 +36,7 @@ namespace LECG.Services
             {
                 t.Start();
                 // 1. Graphics Settings (Textures, Shadows, Lighting)
-                ApplyGraphicsAndLighting(new RevitViewGraphicsFacade(view), settings, log, progress);
+                _sexyGraphicsApplyService.Apply(new RevitViewGraphicsFacade(view), settings, log, progress);
 
                 // 2. Sun Settings (3D only)
                 _sunSettingsService.Apply(view, settings, log, progress);
@@ -51,41 +51,6 @@ namespace LECG.Services
             }
         }
 
-        internal static void ApplyGraphicsAndLighting(
-            IViewGraphicsFacade view,
-            SexyRevitViewModel settings,
-            Action<string> log,
-            Action<double, string> progress)
-        {
-            var decision = SexyRevitGraphicsPolicy.Evaluate(
-                new SexyRevitGraphicsSettings(settings.UseConsistentColors, settings.UseDetailFine));
-
-            if (!decision.ShouldApply) return;
-
-            progress(10, "Applying sexy graphics...");
-
-            try
-            {
-                if (decision.DisplayStyle == CoreDisplayStyle.Realistic)
-                {
-                    view.DisplayStyle = ViewDisplayStyle.Realistic;
-                }
-            }
-            catch
-            {
-                log("  Could not set display style");
-            }
-
-            foreach (var message in decision.Messages)
-            {
-                log(message);
-            }
-
-            if (decision.DetailLevel == CoreDetailLevel.Fine)
-            {
-                view.DetailLevel = ViewDetailLevelFacade.Fine;
-            }
-        }
     }
 }
 

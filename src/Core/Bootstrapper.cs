@@ -65,6 +65,7 @@ namespace LECG.Core
             services.AddSingleton<ISchemaDataStorageDeleteService, SchemaDataStorageDeleteService>();
             services.AddSingleton<ISchemaEraseService, SchemaEraseService>();
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
+            services.AddSingleton<ISexyGraphicsApplyService, SexyGraphicsApplyService>();
             services.AddSingleton<ISexySunSettingsService, SexySunSettingsService>();
             services.AddSingleton<ISexyCategoryVisibilityService, SexyCategoryVisibilityService>();
             services.AddSingleton<ISexySectionBoxVisibilityService, SexySectionBoxVisibilityService>();
