@@ -21,12 +21,13 @@ namespace LECG.Services
         private readonly IPurgeLevelService _purgeLevelService;
         private readonly IPurgeSummaryService _purgeSummaryService;
         private readonly IPurgePassMessagingService _purgePassMessagingService;
+        private readonly IPurgePassSequenceService _purgePassSequenceService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService(), new PurgeSummaryService(), new PurgePassMessagingService())
+        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService(), new PurgeSummaryService(), new PurgePassMessagingService(), new PurgePassSequenceService())
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService, IPurgeSummaryService purgeSummaryService, IPurgePassMessagingService purgePassMessagingService)
+        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService, IPurgeSummaryService purgeSummaryService, IPurgePassMessagingService purgePassMessagingService, IPurgePassSequenceService purgePassSequenceService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
@@ -35,6 +36,7 @@ namespace LECG.Services
             _purgeLevelService = purgeLevelService;
             _purgeSummaryService = purgeSummaryService;
             _purgePassMessagingService = purgePassMessagingService;
+            _purgePassSequenceService = purgePassSequenceService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
@@ -49,7 +51,7 @@ namespace LECG.Services
                 t.Start();
 
                 // Run 3 times to catch dependent elements
-                for (int i = 1; i <= 3; i++)
+                foreach (int i in _purgePassSequenceService.GetPasses())
                 {
                     _purgePassMessagingService.LogPassStart(logCallback, i);
 
