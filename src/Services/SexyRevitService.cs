@@ -9,8 +9,15 @@ namespace LECG.Services
 {
     public class SexyRevitService : ISexyRevitService
     {
-        public SexyRevitService()
+        private readonly ISexySunSettingsService _sunSettingsService;
+
+        public SexyRevitService() : this(new SexySunSettingsService())
         {
+        }
+
+        public SexyRevitService(ISexySunSettingsService sunSettingsService)
+        {
+            _sunSettingsService = sunSettingsService;
         }
 
         public void ApplyBeauty(Document doc, View view, SexyRevitViewModel settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
@@ -24,28 +31,11 @@ namespace LECG.Services
             using (Transaction t = new Transaction(doc, "Sexy Revit"))
             {
                 t.Start();
-
                 // 1. Graphics Settings (Textures, Shadows, Lighting)
                 ApplyGraphicsAndLighting(new RevitViewGraphicsFacade(view), settings, log, progress);
 
                 // 2. Sun Settings (3D only)
-                if (settings.ConfigureSun && view is View3D v3d)
-                {
-                    log("");
-                    log("SUN SETTINGS");
-                    progress(30, "Setting sun...");
-
-                    try
-                    {
-                        SunAndShadowSettings? sunSettings = v3d.SunAndShadowSettings;
-                        if (sunSettings != null)
-                        {
-                            sunSettings.SunAndShadowType = SunAndShadowType.StillImage;
-                            log("  ✓ Sun Type: Still Image");
-                        }
-                    }
-                    catch (Exception ex) { log($"  ⚠ Sun settings: {ex.Message}"); }
-                }
+                _sunSettingsService.Apply(view, settings, log, progress);
 
                 // 3. Hide Categories
                 bool hideAnything = settings.HideLevels || settings.HideGrids || 
@@ -143,3 +133,5 @@ namespace LECG.Services
         }
     }
 }
+
+

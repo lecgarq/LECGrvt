@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 47 completed
+**Status**: Slice 48 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -648,6 +648,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting summary/progress reporting into `IPurgeSummaryService`.
 - Added `PurgeSummaryService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing summary-reporting orchestration complexity.
+
+**P5 Slice 48 (Completed)**:
+- Decomposed `SexyRevitService` by extracting sun-settings application into `ISexySunSettingsService`.
+- Added `SexySunSettingsService` and wired it through DI + `SexyRevitService` constructor injection.
+- Kept `ISexyRevitService` API unchanged while reducing sun-settings orchestration complexity.
 
 
 **Target Services**:
