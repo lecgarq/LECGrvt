@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 57 completed
+**Status**: Slice 58 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -698,6 +698,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialPbrService` by extracting texture file lookup into `IMaterialTextureLookupService`.
 - Added `MaterialTextureLookupService` and wired it through DI + `MaterialPbrService` constructor injection.
 - Kept `IMaterialPbrService` API unchanged while reducing texture-lookup orchestration complexity.
+
+**P5 Slice 58 (Completed)**:
+- Decomposed `MaterialPbrService` by extracting bitmap property setup into `IMaterialBitmapPropertyService`.
+- Added `MaterialBitmapPropertyService` and wired it through DI + `MaterialPbrService` constructor injection.
+- Kept `IMaterialPbrService` API unchanged while reducing bitmap-property orchestration complexity.
 
 
 **Target Services**:

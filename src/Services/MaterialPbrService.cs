@@ -11,16 +11,18 @@ namespace LECG.Services
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialTextureLookupService _materialTextureLookupService;
+        private readonly IMaterialBitmapPropertyService _materialBitmapPropertyService;
 
-        public MaterialPbrService() : this(new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialTextureLookupService())
+        public MaterialPbrService() : this(new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialTextureLookupService(), new MaterialBitmapPropertyService())
         {
         }
 
-        public MaterialPbrService(IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialTextureLookupService materialTextureLookupService)
+        public MaterialPbrService(IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialTextureLookupService materialTextureLookupService, IMaterialBitmapPropertyService materialBitmapPropertyService)
         {
             _materialCreationService = materialCreationService;
             _materialColorSequenceService = materialColorSequenceService;
             _materialTextureLookupService = materialTextureLookupService;
+            _materialBitmapPropertyService = materialBitmapPropertyService;
         }
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)
@@ -63,9 +65,9 @@ namespace LECG.Services
                 {
                     Asset editableAsset = editScope.Start(assetId);
 
-                    if (!string.IsNullOrEmpty(diffusePath)) SetupBitmapProperty(editableAsset.FindByName("generic_diffuse"), diffusePath!);
-                    if (!string.IsNullOrEmpty(normalPath)) SetupBitmapProperty(editableAsset.FindByName("generic_bump_map"), normalPath!);
-                    if (!string.IsNullOrEmpty(roughPath)) SetupBitmapProperty(editableAsset.FindByName("generic_reflectivity_at_0deg"), roughPath!);
+                    if (!string.IsNullOrEmpty(diffusePath)) _materialBitmapPropertyService.SetupBitmapProperty(editableAsset.FindByName("generic_diffuse"), diffusePath!);
+                    if (!string.IsNullOrEmpty(normalPath)) _materialBitmapPropertyService.SetupBitmapProperty(editableAsset.FindByName("generic_bump_map"), normalPath!);
+                    if (!string.IsNullOrEmpty(roughPath)) _materialBitmapPropertyService.SetupBitmapProperty(editableAsset.FindByName("generic_reflectivity_at_0deg"), roughPath!);
 
                     editScope.Commit(true);
 
@@ -83,42 +85,5 @@ namespace LECG.Services
             return matId;
         }
 
-        private void SetupBitmapProperty(AssetProperty? prop, string path)
-        {
-            if (prop == null) return;
-            Asset? connectedAsset = null;
-
-            if (prop.GetSingleConnectedAsset() != null)
-            {
-                connectedAsset = prop.GetSingleConnectedAsset();
-            }
-            else
-            {
-                try
-                {
-                    System.Reflection.MethodInfo? minfo = prop.GetType().GetMethod("AddConnectedAsset", new Type[] { typeof(string) });
-                    if (minfo != null)
-                    {
-                        connectedAsset = minfo.Invoke(prop, new object[] { "UnifiedBitmapSchema" }) as Asset;
-                    }
-                }
-                catch { }
-            }
-
-            if (connectedAsset != null)
-            {
-                AssetPropertyString? pathProp = connectedAsset.FindByName("unifiedbitmap_Bitmap") as AssetPropertyString;
-                if (pathProp != null) pathProp.Value = path;
-                double scale = 304.8;
-                SetAssetDouble(connectedAsset, "texture_RealWorldScaleX", scale);
-                SetAssetDouble(connectedAsset, "texture_RealWorldScaleY", scale);
-            }
-        }
-
-        private void SetAssetDouble(Asset asset, string propName, double value)
-        {
-            AssetPropertyDouble? prop = asset.FindByName(propName) as AssetPropertyDouble;
-            if (prop != null) prop.Value = value;
-        }
     }
 }
