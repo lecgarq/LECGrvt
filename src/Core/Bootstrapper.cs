@@ -68,6 +68,7 @@ namespace LECG.Core
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
             services.AddSingleton<IBaseElementCollectionService, BaseElementCollectionService>();
             services.AddSingleton<IRenameRulePipelineService, RenameRulePipelineService>();
+            services.AddSingleton<ISearchReplacePreviewService, SearchReplacePreviewService>();
             services.AddSingleton<IBatchRenameExecutionService, BatchRenameExecutionService>();
             services.AddSingleton<ISearchReplaceService, SearchReplaceService>();
             services.AddSingleton<IFamilyTemplatePathService, FamilyTemplatePathService>();

@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 69 completed
+**Status**: Slice 70 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -758,6 +758,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SchemaCleanerService` by removing an unused vendor-filter dependency after prior service extractions.
 - Removed dead `_schemaVendorFilterService` constructor dependency/field from `SchemaCleanerService`.
 - Kept `ISchemaCleanerService` API unchanged while tightening the service to delegated orchestration only.
+
+**P5 Slice 70 (Completed)**:
+- Decomposed `SearchReplaceService` by extracting preview/category compute logic into `ISearchReplacePreviewService`.
+- Added `SearchReplacePreviewService` and wired it through DI + `SearchReplaceService` constructor injection.
+- Kept `ISearchReplaceService` API unchanged while reducing in-service filtering/transformation orchestration complexity.
 
 
 **Target Services**:
