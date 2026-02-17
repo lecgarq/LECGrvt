@@ -9,15 +9,18 @@ namespace LECG.Services
         private readonly ICadPlacementViewService _placementViewService;
         private readonly ICadFamilyLoadResolveService _cadFamilyLoadResolveService;
         private readonly ICadTempFileCleanupService _cadTempFileCleanupService;
+        private readonly ICadSourceCleanupService _cadSourceCleanupService;
 
         public CadFamilyLoadPlacementService(
             ICadPlacementViewService placementViewService,
             ICadFamilyLoadResolveService cadFamilyLoadResolveService,
-            ICadTempFileCleanupService cadTempFileCleanupService)
+            ICadTempFileCleanupService cadTempFileCleanupService,
+            ICadSourceCleanupService cadSourceCleanupService)
         {
             _placementViewService = placementViewService;
             _cadFamilyLoadResolveService = cadFamilyLoadResolveService;
             _cadTempFileCleanupService = cadTempFileCleanupService;
+            _cadSourceCleanupService = cadSourceCleanupService;
         }
 
         public ElementId LoadOnly(Document doc, string path)
@@ -53,15 +56,7 @@ namespace LECG.Services
                     {
                         doc.Create.NewFamilyInstance(location, symbol, placementView);
 
-                        if (deleteId != null && deleteId != ElementId.InvalidElementId)
-                        {
-                            Element e = doc.GetElement(deleteId);
-                            if (e != null)
-                            {
-                                if (e.Pinned) e.Pinned = false;
-                                doc.Delete(deleteId);
-                            }
-                        }
+                        _cadSourceCleanupService.DeleteOriginalIfPresent(doc, deleteId);
                     }
                     else
                     {

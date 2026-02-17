@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 95 completed
+**Status**: Slice 96 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -885,6 +885,11 @@ dotnet test /p:CollectCoverage=true
 **P5 Slice 95 (Completed)**:
 - Decomposed residual `CadConversionService` internals by removing an unused `LECG.Core` import left after prior service extractions.
 - Kept `ICadConversionService` API and runtime behavior unchanged while tightening active orchestration-only source usage.
+
+**P5 Slice 96 (Completed)**:
+- Decomposed `CadFamilyLoadPlacementService` by extracting original CAD element cleanup into `ICadSourceCleanupService`.
+- Added `CadSourceCleanupService` and wired it through DI + `CadFamilyLoadPlacementService` constructor injection.
+- Kept `ICadFamilyLoadPlacementService` API unchanged while reducing in-method delete/pin-reset orchestration complexity.
 
 
 **Target Services**:
