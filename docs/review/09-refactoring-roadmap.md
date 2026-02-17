@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 76 completed
+**Status**: Slice 77 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -793,6 +793,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by removing unused placement/symbol dependencies after earlier CAD extractions.
 - Removed dead constructor/field injection paths for `ICadPlacementViewService` and `ICadFamilySymbolService`.
 - Kept `ICadConversionService` API unchanged while tightening constructor dependency surface.
+
+**P5 Slice 77 (Completed)**:
+- Decomposed `CadFamilyLoadPlacementService` by replacing private nested family load options with shared `IFamilyLoadOptionsFactory`.
+- Removed local `FamilyOption` implementation and reused existing load-options factory via constructor injection.
+- Kept `ICadFamilyLoadPlacementService` API unchanged while reducing in-class option-construction responsibility.
 
 
 **Target Services**:

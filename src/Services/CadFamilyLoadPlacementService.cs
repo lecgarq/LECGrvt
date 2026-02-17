@@ -8,13 +8,16 @@ namespace LECG.Services
     {
         private readonly ICadFamilySymbolService _familySymbolService;
         private readonly ICadPlacementViewService _placementViewService;
+        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
 
         public CadFamilyLoadPlacementService(
             ICadFamilySymbolService familySymbolService,
-            ICadPlacementViewService placementViewService)
+            ICadPlacementViewService placementViewService,
+            IFamilyLoadOptionsFactory familyLoadOptionsFactory)
         {
             _familySymbolService = familySymbolService;
             _placementViewService = placementViewService;
+            _familyLoadOptionsFactory = familyLoadOptionsFactory;
         }
 
         public ElementId LoadOnly(Document doc, string path)
@@ -24,7 +27,7 @@ namespace LECG.Services
             {
                 t.Start();
                 Family? f;
-                doc.LoadFamily(path, new FamilyOption(), out f);
+                doc.LoadFamily(path, _familyLoadOptionsFactory.Create(), out f);
                 if (f != null)
                 {
                     FamilySymbol? s = _familySymbolService.GetPrimarySymbol(doc, f);
@@ -43,7 +46,7 @@ namespace LECG.Services
             {
                 t.Start();
                 Family? family = null;
-                doc.LoadFamily(path, new FamilyOption(), out family);
+                doc.LoadFamily(path, _familyLoadOptionsFactory.Create(), out family);
 
                 if (family != null)
                 {
@@ -90,10 +93,5 @@ namespace LECG.Services
             }
         }
 
-        private class FamilyOption : IFamilyLoadOptions
-        {
-            public bool OnFamilyFound(bool familyInUse, out bool overwriteParameterValues) { overwriteParameterValues = true; return true; }
-            public bool OnSharedFamilyFound(Family sharedFamily, bool familyInUse, out FamilySource source, out bool overwriteParameterValues) { source = FamilySource.Family; overwriteParameterValues = true; return true; }
-        }
     }
 }
