@@ -10,8 +10,6 @@ namespace LECG.Services
 {
     public class CadConversionService : ICadConversionService
     {
-        private readonly ICadPlacementViewService _placementViewService;
-        private readonly ICadFamilySymbolService _familySymbolService;
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadGeometryExtractionService _geometryExtractionService;
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
@@ -20,8 +18,6 @@ namespace LECG.Services
         private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
 
         public CadConversionService(
-            ICadPlacementViewService placementViewService,
-            ICadFamilySymbolService familySymbolService,
             ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadGeometryExtractionService geometryExtractionService,
             ICadGeometryOptimizationService geometryOptimizationService,
@@ -29,8 +25,6 @@ namespace LECG.Services
             ICadFamilySaveService familySaveService,
             ICadTempDwgExtractionService cadTempDwgExtractionService)
         {
-            _placementViewService = placementViewService;
-            _familySymbolService = familySymbolService;
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
             _geometryOptimizationService = geometryOptimizationService;

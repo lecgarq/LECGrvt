@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 75 completed
+**Status**: Slice 76 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -788,6 +788,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by removing unused `IReferenceRaycastService` dependency after intersector extraction.
 - Removed dead constructor/field injection paths for `IReferenceRaycastService` with no behavior impact.
 - Kept `IAlignEdgesService` API unchanged while tightening constructor dependency surface.
+
+**P5 Slice 76 (Completed)**:
+- Decomposed `CadConversionService` by removing unused placement/symbol dependencies after earlier CAD extractions.
+- Removed dead constructor/field injection paths for `ICadPlacementViewService` and `ICadFamilySymbolService`.
+- Kept `ICadConversionService` API unchanged while tightening constructor dependency surface.
 
 
 **Target Services**:
