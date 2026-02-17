@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 53 completed
+**Status**: Slice 54 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -678,6 +678,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting CAD data drawing orchestration into `ICadDataDrawService`.
 - Added `CadDataDrawService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing draw-pipeline orchestration complexity.
+
+**P5 Slice 54 (Completed)**:
+- Decomposed `RenderAppearanceService` by extracting render-appearance refresh/toggle flow into `IRenderAppearanceRefreshService`.
+- Added `RenderAppearanceRefreshService` and wired it through DI + `RenderAppearanceService` constructor injection.
+- Kept `IRenderAppearanceService` API unchanged while reducing refresh orchestration complexity.
 
 
 **Target Services**:

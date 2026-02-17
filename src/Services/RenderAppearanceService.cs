@@ -10,15 +10,17 @@ namespace LECG.Services
     {
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialSyncCheckService _syncCheckService;
+        private readonly IRenderAppearanceRefreshService _refreshService;
 
-        public RenderAppearanceService() : this(new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService())
+        public RenderAppearanceService() : this(new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService(), new RenderAppearanceRefreshService())
         {
         }
 
-        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService, IRenderMaterialSyncCheckService syncCheckService)
+        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService, IRenderMaterialSyncCheckService syncCheckService, IRenderAppearanceRefreshService refreshService)
         {
             _solidFillPatternService = solidFillPatternService;
             _syncCheckService = syncCheckService;
+            _refreshService = refreshService;
         }
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
@@ -48,33 +50,7 @@ namespace LECG.Services
             {
                 t.Start();
 
-                List<Material> materialsToToggle = new List<Material>();
-
-                foreach (var mat in matsList)
-                {
-                    if (mat.UseRenderAppearanceForShading)
-                    {
-                        mat.UseRenderAppearanceForShading = false;
-                        materialsToToggle.Add(mat);
-                    }
-                    else
-                    {
-                        materialsToToggle.Add(mat);
-                    }
-                }
-
-                if (materialsToToggle.Count > 0)
-                {
-                    doc.Regenerate();
-
-                    logCallback?.Invoke($"Forcing Render Appearance update on {materialsToToggle.Count} materials...");
-                    foreach (var mat in materialsToToggle)
-                    {
-                        mat.UseRenderAppearanceForShading = true;
-                    }
-
-                    doc.Regenerate();
-                }
+                _refreshService.Refresh(doc, matsList, logCallback);
 
                 ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
 
