@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 93 completed
+**Status**: Slice 94 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -877,6 +877,10 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting geometry-presence validation into `ICadDataValidationService`.
 - Added `CadDataValidationService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing repeated geometry-empty validation logic.
+
+**P5 Slice 94 (Completed)**:
+- Decomposed residual `AlignEdgesService` internals by removing an unused point-add counter left after prior extraction cleanup.
+- Kept `IAlignEdgesService` API and runtime behavior unchanged while tightening active orchestration-only state.
 
 
 **Target Services**:

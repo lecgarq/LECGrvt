@@ -30,8 +30,6 @@ namespace LECG.Services
 
             ReferenceIntersector intersector = _intersectorService.Create(doc, references);
 
-            int addedPoints = 0;
-            
             // Spacing constants (in feet)
             const double MIN_SPACING = 0.0656; // 2cm
             const double MAX_SPACING = 3.28;   // 1m
@@ -77,7 +75,6 @@ namespace LECG.Services
                                 try
                                 {
                                     editor.AddPoint(pt);
-                                    addedPoints++;
                                 }
                                 catch { }
                             }
