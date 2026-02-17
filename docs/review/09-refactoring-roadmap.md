@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 59 completed
+**Status**: Slice 60 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -708,6 +708,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting temp family save behavior into `IFamilySaveService`.
 - Added `FamilySaveService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing save-stage orchestration complexity.
+
+**P5 Slice 60 (Completed)**:
+- Decomposed `AlignElementsService` by extracting alignment translation calculation into `IAlignElementsTranslationService`.
+- Added `AlignElementsTranslationService` and wired it through DI + `AlignElementsService` constructor injection.
+- Kept `IAlignElementsService` API unchanged while reducing alignment switch orchestration complexity.
 
 
 **Target Services**:

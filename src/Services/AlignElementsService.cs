@@ -1,5 +1,6 @@
 #pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.DB;
+using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,17 @@ namespace LECG.Services
 {
     public class AlignElementsService : IAlignElementsService
     {
+        private readonly IAlignElementsTranslationService _translationService;
+
+        public AlignElementsService() : this(new AlignElementsTranslationService())
+        {
+        }
+
+        public AlignElementsService(IAlignElementsTranslationService translationService)
+        {
+            _translationService = translationService;
+        }
+
         public void Align(Document doc, Element reference, List<Element> targets, AlignMode mode)
         {
             if (reference == null || targets == null || !targets.Any()) return;
@@ -25,33 +37,7 @@ namespace LECG.Services
                     BoundingBoxXYZ targetBox = target.get_BoundingBox(doc.ActiveView);
                     if (targetBox == null) continue;
 
-                    XYZ translation = XYZ.Zero;
-
-                    switch (mode)
-                    {
-                        case AlignMode.Left:
-                            translation = new XYZ(refBox.Min.X - targetBox.Min.X, 0, 0);
-                            break;
-                        case AlignMode.Center: // Horizontal Center
-                            double refCenter = (refBox.Min.X + refBox.Max.X) / 2.0;
-                            double targetCenter = (targetBox.Min.X + targetBox.Max.X) / 2.0;
-                            translation = new XYZ(refCenter - targetCenter, 0, 0);
-                            break;
-                        case AlignMode.Right:
-                            translation = new XYZ(refBox.Max.X - targetBox.Max.X, 0, 0);
-                            break;
-                        case AlignMode.Top:
-                            translation = new XYZ(0, refBox.Max.Y - targetBox.Max.Y, 0);
-                            break;
-                        case AlignMode.Middle: // Vertical Middle
-                             double refMid = (refBox.Min.Y + refBox.Max.Y) / 2.0;
-                             double targetMid = (targetBox.Min.Y + targetBox.Max.Y) / 2.0;
-                             translation = new XYZ(0, refMid - targetMid, 0);
-                            break;
-                        case AlignMode.Bottom:
-                            translation = new XYZ(0, refBox.Min.Y - targetBox.Min.Y, 0);
-                            break;
-                    }
+                    XYZ translation = _translationService.Calculate(refBox, targetBox, mode);
 
                     if (!translation.IsZeroLength())
                     {
