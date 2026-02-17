@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 58 completed
+**Status**: Slice 59 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -703,6 +703,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialPbrService` by extracting bitmap property setup into `IMaterialBitmapPropertyService`.
 - Added `MaterialBitmapPropertyService` and wired it through DI + `MaterialPbrService` constructor injection.
 - Kept `IMaterialPbrService` API unchanged while reducing bitmap-property orchestration complexity.
+
+**P5 Slice 59 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting temp family save behavior into `IFamilySaveService`.
+- Added `FamilySaveService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing save-stage orchestration complexity.
 
 
 **Target Services**:

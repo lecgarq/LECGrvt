@@ -15,18 +15,20 @@ namespace LECG.Services
         private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
         private readonly IFamilyProjectLoadService _familyProjectLoadService;
         private readonly IFamilyParameterSetupService _familyParameterSetupService;
+        private readonly IFamilySaveService _familySaveService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilyParameterSetupService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilyParameterSetupService(), new FamilySaveService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilyParameterSetupService familyParameterSetupService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilyParameterSetupService familyParameterSetupService, IFamilySaveService familySaveService)
         {
             _templatePathService = templatePathService;
             _geometryCollectionService = geometryCollectionService;
             _tempFileCleanupService = tempFileCleanupService;
             _familyProjectLoadService = familyProjectLoadService;
             _familyParameterSetupService = familyParameterSetupService;
+            _familySaveService = familySaveService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -90,15 +92,7 @@ namespace LECG.Services
                     tTarget.Commit();
                 }
 
-                // 5. Save Target Family
-                string tempDir = Path.GetTempPath();
-                tempFamilyPath = Path.Combine(tempDir, targetFamilyName + ".rfa");
-                
-                if (File.Exists(tempFamilyPath)) File.Delete(tempFamilyPath);
-                
-                SaveAsOptions saveOpts = new SaveAsOptions() { OverwriteExistingFile = true };
-                targetFamilyDoc.SaveAs(tempFamilyPath, saveOpts);
-                Logger.Instance.Log($"Saved temporary family to: {tempFamilyPath}");
+                tempFamilyPath = _familySaveService.SaveTemp(targetFamilyDoc, targetFamilyName);
 
                 _familyProjectLoadService.Load(doc, tempFamilyPath);
             }
