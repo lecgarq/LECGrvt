@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 97 completed
+**Status**: Slice 98 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -895,6 +895,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadGeometryExtractionService` by extracting polyline-to-curve conversion into `ICadPolylineExtractionService`.
 - Added `CadPolylineExtractionService` and wired it through DI + `CadGeometryExtractionService` constructor injection.
 - Kept `ICadGeometryExtractionService` API unchanged while reducing in-method polyline conversion loop orchestration complexity.
+
+**P5 Slice 98 (Completed)**:
+- Decomposed `CadCurveFlattenService` by extracting `DoubleArray` conversion into `ICadDoubleArrayConversionService`.
+- Added `CadDoubleArrayConversionService` and wired it through DI + `CadCurveFlattenService` constructor injection.
+- Kept `ICadCurveFlattenService` API unchanged while reducing local NURBS conversion helper duplication.
 
 
 **Target Services**:

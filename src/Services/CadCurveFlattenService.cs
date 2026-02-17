@@ -10,15 +10,17 @@ namespace LECG.Services
     {
         private readonly ICadCurveTessellationService _cadCurveTessellationService;
         private readonly ICadPointFlattenService _cadPointFlattenService;
+        private readonly ICadDoubleArrayConversionService _cadDoubleArrayConversionService;
 
-        public CadCurveFlattenService() : this(new CadCurveTessellationService(), new CadPointFlattenService())
+        public CadCurveFlattenService() : this(new CadCurveTessellationService(), new CadPointFlattenService(), new CadDoubleArrayConversionService())
         {
         }
 
-        public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService, ICadPointFlattenService cadPointFlattenService)
+        public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService, ICadPointFlattenService cadPointFlattenService, ICadDoubleArrayConversionService cadDoubleArrayConversionService)
         {
             _cadCurveTessellationService = cadCurveTessellationService;
             _cadPointFlattenService = cadPointFlattenService;
+            _cadDoubleArrayConversionService = cadDoubleArrayConversionService;
         }
 
         public IEnumerable<Curve>? FlattenCurve(Curve c)
@@ -70,7 +72,7 @@ namespace LECG.Services
                     IList<XYZ> ctrls = ns.CtrlPoints.Select(p => _cadPointFlattenService.Flatten(p)).ToList();
                     try
                     {
-                        return new List<Curve> { NurbSpline.CreateCurve(ns.Degree, ToList(ns.Knots), ctrls, ToList(ns.Weights)) };
+                        return new List<Curve> { NurbSpline.CreateCurve(ns.Degree, _cadDoubleArrayConversionService.ToList(ns.Knots), ctrls, _cadDoubleArrayConversionService.ToList(ns.Weights)) };
                     }
                     catch
                     {
@@ -84,16 +86,6 @@ namespace LECG.Services
             {
                 return _cadCurveTessellationService.Tessellate(c);
             }
-        }
-
-        private IList<double> ToList(DoubleArray da)
-        {
-            var list = new List<double>();
-            for (int i = 0; i < da.Size; i++)
-            {
-                list.Add(da.get_Item(i));
-            }
-            return list;
         }
 
     }
