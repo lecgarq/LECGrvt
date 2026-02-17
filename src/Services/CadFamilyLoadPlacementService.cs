@@ -9,15 +9,18 @@ namespace LECG.Services
         private readonly ICadFamilySymbolService _familySymbolService;
         private readonly ICadPlacementViewService _placementViewService;
         private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly ICadTempFileCleanupService _cadTempFileCleanupService;
 
         public CadFamilyLoadPlacementService(
             ICadFamilySymbolService familySymbolService,
             ICadPlacementViewService placementViewService,
-            IFamilyLoadOptionsFactory familyLoadOptionsFactory)
+            IFamilyLoadOptionsFactory familyLoadOptionsFactory,
+            ICadTempFileCleanupService cadTempFileCleanupService)
         {
             _familySymbolService = familySymbolService;
             _placementViewService = placementViewService;
             _familyLoadOptionsFactory = familyLoadOptionsFactory;
+            _cadTempFileCleanupService = cadTempFileCleanupService;
         }
 
         public ElementId LoadOnly(Document doc, string path)
@@ -35,7 +38,7 @@ namespace LECG.Services
                 }
                 t.Commit();
             }
-            CleanupFile(path);
+            _cadTempFileCleanupService.Cleanup(path);
             return createdId;
         }
 
@@ -78,19 +81,8 @@ namespace LECG.Services
                 }
                 t.Commit();
             }
-            CleanupFile(path);
+            _cadTempFileCleanupService.Cleanup(path);
             return createdId;
-        }
-
-        private void CleanupFile(string path)
-        {
-            try
-            {
-                if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-            }
-            catch
-            {
-            }
         }
 
     }

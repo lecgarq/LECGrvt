@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 77 completed
+**Status**: Slice 78 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -798,6 +798,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadFamilyLoadPlacementService` by replacing private nested family load options with shared `IFamilyLoadOptionsFactory`.
 - Removed local `FamilyOption` implementation and reused existing load-options factory via constructor injection.
 - Kept `ICadFamilyLoadPlacementService` API unchanged while reducing in-class option-construction responsibility.
+
+**P5 Slice 78 (Completed)**:
+- Decomposed `CadFamilyLoadPlacementService` by extracting temp-file deletion helper logic into `ICadTempFileCleanupService`.
+- Added `CadTempFileCleanupService` and wired it through DI + `CadFamilyLoadPlacementService` constructor injection.
+- Kept `ICadFamilyLoadPlacementService` API unchanged while reducing in-class cleanup helper responsibility.
 
 
 **Target Services**:
