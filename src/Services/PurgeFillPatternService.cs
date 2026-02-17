@@ -10,14 +10,16 @@ namespace LECG.Services
     public class PurgeFillPatternService : IPurgeFillPatternService
     {
         private readonly IPurgeReferenceScannerService _referenceScanner;
+        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeFillPatternService() : this(new PurgeReferenceScannerService())
+        public PurgeFillPatternService() : this(new PurgeReferenceScannerService(), new PurgeDeleteElementService())
         {
         }
 
-        public PurgeFillPatternService(IPurgeReferenceScannerService referenceScanner)
+        public PurgeFillPatternService(IPurgeReferenceScannerService referenceScanner, IPurgeDeleteElementService purgeDeleteElementService)
         {
             _referenceScanner = referenceScanner;
+            _purgeDeleteElementService = purgeDeleteElementService;
         }
 
         public int PurgeUnusedFillPatterns(Document doc, Action<string>? logCallback = null)
@@ -50,27 +52,12 @@ namespace LECG.Services
             {
                 if (!usedIds.Contains(kvp.Key))
                 {
-                    if (DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
+                    if (_purgeDeleteElementService.DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
                 }
             }
 
             logCallback?.Invoke($"  Deleted {deleted} fill patterns.");
             return deleted;
-        }
-
-        private bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
-        {
-            try
-            {
-                doc.Delete(id);
-                logCallback?.Invoke($"  Deleted: {name}");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
-                return false;
-            }
         }
     }
 }

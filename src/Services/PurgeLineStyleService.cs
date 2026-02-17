@@ -8,6 +8,17 @@ namespace LECG.Services
 {
     public class PurgeLineStyleService : IPurgeLineStyleService
     {
+        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+
+        public PurgeLineStyleService() : this(new PurgeDeleteElementService())
+        {
+        }
+
+        public PurgeLineStyleService(IPurgeDeleteElementService purgeDeleteElementService)
+        {
+            _purgeDeleteElementService = purgeDeleteElementService;
+        }
+
         public int PurgeUnusedLineStyles(Document doc, Action<string>? logCallback = null)
         {
             logCallback?.Invoke("Scanning for unused line styles...");
@@ -41,27 +52,12 @@ namespace LECG.Services
             {
                 if (!usedIds.Contains(kvp.Key))
                 {
-                    if (DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
+                    if (_purgeDeleteElementService.DeleteElement(doc, kvp.Key, kvp.Value, logCallback)) deleted++;
                 }
             }
 
             logCallback?.Invoke($"  Deleted {deleted} line styles.");
             return deleted;
-        }
-
-        private bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
-        {
-            try
-            {
-                doc.Delete(id);
-                logCallback?.Invoke($"  Deleted: {name}");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
-                return false;
-            }
         }
     }
 }

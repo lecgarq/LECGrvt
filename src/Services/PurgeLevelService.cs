@@ -9,14 +9,16 @@ namespace LECG.Services
     public class PurgeLevelService : IPurgeLevelService
     {
         private readonly IPurgeReferenceScannerService _referenceScanner;
+        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLevelService() : this(new PurgeReferenceScannerService())
+        public PurgeLevelService() : this(new PurgeReferenceScannerService(), new PurgeDeleteElementService())
         {
         }
 
-        public PurgeLevelService(IPurgeReferenceScannerService referenceScanner)
+        public PurgeLevelService(IPurgeReferenceScannerService referenceScanner, IPurgeDeleteElementService purgeDeleteElementService)
         {
             _referenceScanner = referenceScanner;
+            _purgeDeleteElementService = purgeDeleteElementService;
         }
 
         public int PurgeUnusedLevels(Document doc, Action<string>? logCallback = null)
@@ -65,27 +67,12 @@ namespace LECG.Services
             {
                 if (levelIdsToRemove.Contains(level.Id))
                 {
-                    if (DeleteElement(doc, level.Id, level.Name, logCallback)) deleted++;
+                    if (_purgeDeleteElementService.DeleteElement(doc, level.Id, level.Name, logCallback)) deleted++;
                 }
             }
 
             logCallback?.Invoke($"  Deleted {deleted} levels.");
             return deleted;
-        }
-
-        private bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
-        {
-            try
-            {
-                doc.Delete(id);
-                logCallback?.Invoke($"  Deleted: {name}");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
-                return false;
-            }
         }
     }
 }

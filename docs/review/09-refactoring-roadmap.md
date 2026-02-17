@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 66 completed
+**Status**: Slice 67 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -743,6 +743,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SchemaCleanerService` by extracting project-wide third-party schema scanning into `ISchemaElementScanService`.
 - Added `SchemaElementScanService` and wired it through DI + `SchemaCleanerService` constructor injection.
 - Kept `ISchemaCleanerService` API unchanged while reducing element-scan orchestration complexity.
+
+**P5 Slice 67 (Completed)**:
+- Decomposed purge sub-services by extracting shared element-delete helper logic into `IPurgeDeleteElementService`.
+- Added `PurgeDeleteElementService` and wired it through DI + constructor injection in material/line-style/fill-pattern/level purge services.
+- Kept all purge service public APIs unchanged while removing duplicated delete helper implementations.
 
 
 **Target Services**:
