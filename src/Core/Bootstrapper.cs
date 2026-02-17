@@ -52,6 +52,7 @@ namespace LECG.Core
             services.AddSingleton<ISchemaCleanerService, SchemaCleanerService>();
             services.AddSingleton<ISexySunSettingsService, SexySunSettingsService>();
             services.AddSingleton<ISexyCategoryVisibilityService, SexyCategoryVisibilityService>();
+            services.AddSingleton<ISexySectionBoxVisibilityService, SexySectionBoxVisibilityService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
             services.AddSingleton<IBaseElementCollectionService, BaseElementCollectionService>();
             services.AddSingleton<IRenameRulePipelineService, RenameRulePipelineService>();

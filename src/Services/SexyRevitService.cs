@@ -11,15 +11,17 @@ namespace LECG.Services
     {
         private readonly ISexySunSettingsService _sunSettingsService;
         private readonly ISexyCategoryVisibilityService _categoryVisibilityService;
+        private readonly ISexySectionBoxVisibilityService _sectionBoxVisibilityService;
 
-        public SexyRevitService() : this(new SexySunSettingsService(), new SexyCategoryVisibilityService())
+        public SexyRevitService() : this(new SexySunSettingsService(), new SexyCategoryVisibilityService(), new SexySectionBoxVisibilityService())
         {
         }
 
-        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService)
+        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService, ISexySectionBoxVisibilityService sectionBoxVisibilityService)
         {
             _sunSettingsService = sunSettingsService;
             _categoryVisibilityService = categoryVisibilityService;
+            _sectionBoxVisibilityService = sectionBoxVisibilityService;
         }
 
         public void ApplyBeauty(Document doc, View view, SexyRevitViewModel settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
@@ -38,27 +40,12 @@ namespace LECG.Services
 
                 // 2. Sun Settings (3D only)
                 _sunSettingsService.Apply(view, settings, log, progress);
+
                 // 3. Hide Categories
                 _categoryVisibilityService.Apply(doc, view, settings, log, progress);
 
                 // 4. Section Box (3D Only)
-                if (settings.HideSectionBox && view is View3D)
-                {
-                    log("");
-                    log("VIEW OPTIONS");
-                    progress(70, "Configuring view...");
-                    
-                    try
-                    {
-                        Category? sectionBoxCat = Category.GetCategory(doc, BuiltInCategory.OST_SectionBox);
-                        if (sectionBoxCat != null && view.CanCategoryBeHidden(sectionBoxCat.Id))
-                        {
-                            view.SetCategoryHidden(sectionBoxCat.Id, true);
-                            log("  ✓ Section Box: Hidden");
-                        }
-                    }
-                    catch { }
-                }
+                _sectionBoxVisibilityService.Apply(doc, view, settings, log, progress);
 
                 t.Commit();
             }
@@ -101,6 +88,7 @@ namespace LECG.Services
         }
     }
 }
+
 
 
 
