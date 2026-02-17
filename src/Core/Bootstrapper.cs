@@ -76,6 +76,7 @@ namespace LECG.Core
             services.AddSingleton<IFamilyTempFileCleanupService, FamilyTempFileCleanupService>();
             services.AddSingleton<IFamilyLoadOptionsFactory, FamilyLoadOptionsFactory>();
             services.AddSingleton<IFamilyParameterSetupService, FamilyParameterSetupService>();
+            services.AddSingleton<IFamilyGeometryCopyService, FamilyGeometryCopyService>();
             services.AddSingleton<IFamilySaveService, FamilySaveService>();
             services.AddSingleton<IFamilyTargetDocumentService, FamilyTargetDocumentService>();
             services.AddSingleton<IFamilyProjectLoadService, FamilyProjectLoadService>();

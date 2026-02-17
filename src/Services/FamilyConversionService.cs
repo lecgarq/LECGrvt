@@ -2,35 +2,31 @@ using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace LECG.Services
 {
     public class FamilyConversionService : IFamilyConversionService
     {
         private readonly IFamilyTemplatePathService _templatePathService;
-        private readonly IFamilyGeometryCollectionService _geometryCollectionService;
         private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
         private readonly IFamilyProjectLoadService _familyProjectLoadService;
-        private readonly IFamilyParameterSetupService _familyParameterSetupService;
         private readonly IFamilySaveService _familySaveService;
         private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
+        private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilyParameterSetupService(), new FamilySaveService(), new FamilyTargetDocumentService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilySaveService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()))
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilyParameterSetupService familyParameterSetupService, IFamilySaveService familySaveService, IFamilyTargetDocumentService familyTargetDocumentService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilySaveService familySaveService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService)
         {
             _templatePathService = templatePathService;
-            _geometryCollectionService = geometryCollectionService;
             _tempFileCleanupService = tempFileCleanupService;
             _familyProjectLoadService = familyProjectLoadService;
-            _familyParameterSetupService = familyParameterSetupService;
             _familySaveService = familySaveService;
             _familyTargetDocumentService = familyTargetDocumentService;
+            _familyGeometryCopyService = familyGeometryCopyService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -65,26 +61,8 @@ namespace LECG.Services
                     return;
                 }
 
-                // 3. Collect Geometry from Source Family
-                List<ElementId> idsToCopy = _geometryCollectionService.CollectGeometryElementIds(sourceFamilyDoc);
-
-                Logger.Instance.Log($"Found {idsToCopy.Count} geometry elements to copy.");
-
-                // 4. Copy Geometry to Target Family
-                using (Transaction tTarget = new Transaction(targetFamilyDoc, "Copy Geometry"))
-                {
-                    tTarget.Start();
-
-                    _familyParameterSetupService.ConfigureTargetFamilyParameters(targetFamilyDoc);
-
-                    if (idsToCopy.Count > 0)
-                    {
-                        CopyPasteOptions options = new CopyPasteOptions();
-                        ElementTransformUtils.CopyElements(sourceFamilyDoc, idsToCopy, targetFamilyDoc, Transform.Identity, options);
-                    }
-
-                    tTarget.Commit();
-                }
+                int copiedCount = _familyGeometryCopyService.CopyGeometry(sourceFamilyDoc, targetFamilyDoc);
+                Logger.Instance.Log($"Found {copiedCount} geometry elements to copy.");
 
                 tempFamilyPath = _familySaveService.SaveTemp(targetFamilyDoc, targetFamilyName);
 

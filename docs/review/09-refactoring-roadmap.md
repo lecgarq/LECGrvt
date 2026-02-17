@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 72 completed
+**Status**: Slice 73 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -773,6 +773,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by removing dead debug/counter orchestration left after prior extractions.
 - Removed unused local counters and unused debug string accumulation paths while preserving alignment flow.
 - Kept `IAlignEdgesService` API unchanged while tightening service body to active orchestration only.
+
+**P5 Slice 73 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting geometry copy transaction into `IFamilyGeometryCopyService`.
+- Added `FamilyGeometryCopyService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing in-method copy transaction orchestration complexity.
 
 
 **Target Services**:
