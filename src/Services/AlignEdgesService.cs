@@ -13,18 +13,20 @@ namespace LECG.Services
         private readonly IAlignEdgesIntersectorService _intersectorService;
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
         private readonly IToposolidBaseElevationService _baseElevationService;
+        private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
         private string debugInfo = "";
 
-        public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService())
+        public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService(), new AlignEdgesVertexAlignmentService())
         {
         }
 
-        public AlignEdgesService(IReferenceRaycastService referenceRaycastService, IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IToposolidBaseElevationService baseElevationService)
+        public AlignEdgesService(IReferenceRaycastService referenceRaycastService, IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IToposolidBaseElevationService baseElevationService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
         {
             _referenceRaycastService = referenceRaycastService;
             _intersectorService = intersectorService;
             _boundaryPointService = boundaryPointService;
             _baseElevationService = baseElevationService;
+            _vertexAlignmentService = vertexAlignmentService;
         }
 
         public void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references)
@@ -98,51 +100,10 @@ namespace LECG.Services
                             (double baseElevation, string debugMessage) = _baseElevationService.Resolve(doc, toposolid);
                             debugInfo += debugMessage;
                             
-                            foreach (SlabShapeVertex v in editor.SlabShapeVertices)
-                            {
-                                XYZ origin = v.Position;
-                                
-                                // v.Position is already in ABSOLUTE model coordinates
-                                XYZ rayStart = new XYZ(origin.X, origin.Y, origin.Z + 500);
-                                XYZ rayDir = XYZ.BasisZ.Negate();
-                                ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);
-                                
-                                if (hit == null)
-                                {
-                                    rayStart = new XYZ(origin.X, origin.Y, origin.Z - 500);
-                                    rayDir = XYZ.BasisZ;
-                                    hit = intersector.FindNearest(rayStart, rayDir);
-                                }
-
-                                if (hit != null)
-                                {
-                                    double proximity = hit.Proximity;
-                                    XYZ hitPoint = rayStart.Add(rayDir.Multiply(proximity));
-                                    
-                                    // Both origin and hitPoint are in same absolute coords
-                                    // Delta is how much to move this vertex
-                                    double delta = hitPoint.Z - origin.Z;
-                                    
-                                    // 5mm tolerance
-                                    if (Math.Abs(delta) > 0.0164)
-                                    {
-                                        try
-                                        {
-                                            editor.ModifySubElement(v, delta); 
-                                            pointCount++;
-                                        }
-                                        catch { }
-                                    }
-                                    else
-                                    {
-                                        skippedCount++;
-                                    }
-                                }
-                                else
-                                {
-                                    missCount++;
-                                }
-                            }
+                            (int movedCount, int localSkippedCount, int localMissCount) = _vertexAlignmentService.AlignVertices(editor, intersector);
+                            pointCount += movedCount;
+                            skippedCount += localSkippedCount;
+                            missCount += localMissCount;
                         }
                     }
                 }

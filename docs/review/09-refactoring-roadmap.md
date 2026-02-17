@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 45 completed
+**Status**: Slice 46 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -638,6 +638,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `SchemaCleanerService` by extracting DataStorage schema scanning into `ISchemaDataStorageScanService`.
 - Added `SchemaDataStorageScanService` and wired it through DI + `SchemaCleanerService` constructor injection.
 - Kept `ISchemaCleanerService` API unchanged while reducing DataStorage scan orchestration complexity.
+
+**P5 Slice 46 (Completed)**:
+- Decomposed `AlignEdgesService` by extracting vertex alignment into `IAlignEdgesVertexAlignmentService`.
+- Added `AlignEdgesVertexAlignmentService` and wired it through DI + `AlignEdgesService` constructor injection.
+- Kept `IAlignEdgesService` API unchanged while reducing vertex-adjustment orchestration complexity.
 
 
 **Target Services**:
