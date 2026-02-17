@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 81 completed
+**Status**: Slice 82 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -818,6 +818,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeMaterialService` by extracting material-usage scanning into `IPurgeMaterialUsageCollectorService`.
 - Added `PurgeMaterialUsageCollectorService` and wired it through DI + `PurgeMaterialService` constructor injection.
 - Kept `IPurgeMaterialService` API unchanged while reducing in-method usage-scan orchestration complexity.
+
+**P5 Slice 82 (Completed)**:
+- Decomposed `RenderAppearanceService` by extracting batch sync orchestration into `IRenderAppearanceBatchSyncService`.
+- Added `RenderAppearanceBatchSyncService` and wired it through DI + `RenderAppearanceService` constructor injection.
+- Kept `IRenderAppearanceService` API unchanged while reducing in-service batch transaction/loop orchestration complexity.
 
 
 **Target Services**:

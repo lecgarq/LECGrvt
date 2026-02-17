@@ -34,6 +34,7 @@ namespace LECG.Core
             services.AddSingleton<IRenderMaterialSyncCheckService, RenderMaterialSyncCheckService>();
             services.AddSingleton<IRenderAppearanceRefreshService, RenderAppearanceRefreshService>();
             services.AddSingleton<IRenderMaterialGraphicsApplyService, RenderMaterialGraphicsApplyService>();
+            services.AddSingleton<IRenderAppearanceBatchSyncService, RenderAppearanceBatchSyncService>();
             services.AddSingleton<IRenderAppearanceService, RenderAppearanceService>();
             services.AddSingleton<IMaterialTypeAssignmentService, MaterialTypeAssignmentService>();
             services.AddSingleton<IMaterialCreationService, MaterialCreationService>();
