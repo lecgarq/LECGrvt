@@ -10,14 +10,16 @@ namespace LECG.Services
     public class SexyRevitService : ISexyRevitService
     {
         private readonly ISexySunSettingsService _sunSettingsService;
+        private readonly ISexyCategoryVisibilityService _categoryVisibilityService;
 
-        public SexyRevitService() : this(new SexySunSettingsService())
+        public SexyRevitService() : this(new SexySunSettingsService(), new SexyCategoryVisibilityService())
         {
         }
 
-        public SexyRevitService(ISexySunSettingsService sunSettingsService)
+        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService)
         {
             _sunSettingsService = sunSettingsService;
+            _categoryVisibilityService = categoryVisibilityService;
         }
 
         public void ApplyBeauty(Document doc, View view, SexyRevitViewModel settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
@@ -36,42 +38,8 @@ namespace LECG.Services
 
                 // 2. Sun Settings (3D only)
                 _sunSettingsService.Apply(view, settings, log, progress);
-
                 // 3. Hide Categories
-                bool hideAnything = settings.HideLevels || settings.HideGrids || 
-                                    settings.HideRefPoints || settings.HideScopeBox;
-                
-                if (hideAnything)
-                {
-                    log("");
-                    log("HIDING ELEMENTS");
-                    progress(50, "Hiding reference elements...");
-
-                    List<BuiltInCategory> categoriesToHide = new List<BuiltInCategory>();
-                    
-                    if (settings.HideLevels) categoriesToHide.Add(BuiltInCategory.OST_Levels);
-                    if (settings.HideGrids) categoriesToHide.Add(BuiltInCategory.OST_Grids);
-                    if (settings.HideRefPoints)
-                    {
-                        categoriesToHide.Add(BuiltInCategory.OST_ProjectBasePoint);
-                        categoriesToHide.Add(BuiltInCategory.OST_SharedBasePoint);
-                    }
-                    if (settings.HideScopeBox) categoriesToHide.Add(BuiltInCategory.OST_VolumeOfInterest);
-
-                    foreach (BuiltInCategory bic in categoriesToHide)
-                    {
-                        try
-                        {
-                            Category? cat = Category.GetCategory(doc, bic);
-                            if (cat != null && view.CanCategoryBeHidden(cat.Id))
-                            {
-                                view.SetCategoryHidden(cat.Id, true);
-                                log($"  ✓ Hidden: {cat.Name}");
-                            }
-                        }
-                        catch { }
-                    }
-                }
+                _categoryVisibilityService.Apply(doc, view, settings, log, progress);
 
                 // 4. Section Box (3D Only)
                 if (settings.HideSectionBox && view is View3D)
@@ -133,5 +101,6 @@ namespace LECG.Services
         }
     }
 }
+
 
 
