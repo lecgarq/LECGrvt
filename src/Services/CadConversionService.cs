@@ -13,14 +13,10 @@ namespace LECG.Services
     {
         private readonly ICadPlacementViewService _placementViewService;
         private readonly ICadFamilySymbolService _familySymbolService;
-        private readonly ICadLineStyleService _lineStyleService;
-        private readonly ICadLineMergeService _lineMergeService;
-        private readonly ICadCurveFlattenService _curveFlattenService;
-        private readonly ICadFilledRegionTypeService _filledRegionTypeService;
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadGeometryExtractionService _geometryExtractionService;
         private readonly ICadGeometryOptimizationService _geometryOptimizationService;
-        private readonly ICadDrawingViewService _drawingViewService;
+        private readonly ICadRenderContextService _renderContextService;
         private readonly ICadCurveRenderService _curveRenderService;
         private readonly ICadHatchRenderService _hatchRenderService;
         private readonly ICadFamilySaveService _familySaveService;
@@ -28,28 +24,20 @@ namespace LECG.Services
         public CadConversionService(
             ICadPlacementViewService placementViewService,
             ICadFamilySymbolService familySymbolService,
-            ICadLineStyleService lineStyleService,
-            ICadLineMergeService lineMergeService,
-            ICadCurveFlattenService curveFlattenService,
-            ICadFilledRegionTypeService filledRegionTypeService,
             ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadGeometryExtractionService geometryExtractionService,
             ICadGeometryOptimizationService geometryOptimizationService,
-            ICadDrawingViewService drawingViewService,
+            ICadRenderContextService renderContextService,
             ICadCurveRenderService curveRenderService,
             ICadHatchRenderService hatchRenderService,
             ICadFamilySaveService familySaveService)
         {
             _placementViewService = placementViewService;
             _familySymbolService = familySymbolService;
-            _lineStyleService = lineStyleService;
-            _lineMergeService = lineMergeService;
-            _curveFlattenService = curveFlattenService;
-            _filledRegionTypeService = filledRegionTypeService;
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
             _geometryOptimizationService = geometryOptimizationService;
-            _drawingViewService = drawingViewService;
+            _renderContextService = renderContextService;
             _curveRenderService = curveRenderService;
             _hatchRenderService = hatchRenderService;
             _familySaveService = familySaveService;
@@ -133,11 +121,7 @@ namespace LECG.Services
         
         private void DrawData(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
         {
-            GraphicsStyle lineStyle = _lineStyleService.CreateOrUpdateDetailLineStyle(familyDoc, styleName, color, weight);
-
-            View planView = _drawingViewService.ResolveFamilyDrawingView(familyDoc);
-
-            Transform toOrigin = Transform.CreateTranslation(-offset);
+            (GraphicsStyle lineStyle, View planView, Transform toOrigin) = _renderContextService.Create(familyDoc, offset, styleName, color, weight);
             
             int total = data.Curves.Count + data.Hatches.Count;
             int current = 0;

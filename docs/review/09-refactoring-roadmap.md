@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 42 completed
+**Status**: Slice 43 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -623,6 +623,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `RenderAppearanceService` by extracting material sync checks into `IRenderMaterialSyncCheckService`.
 - Added `RenderMaterialSyncCheckService` and wired it through DI + `RenderAppearanceService` constructor injection.
 - Kept `IRenderAppearanceService` API unchanged while reducing sync-validation complexity.
+
+**P5 Slice 43 (Completed)**:
+- Decomposed `CadConversionService` by extracting draw-context creation into `ICadRenderContextService`.
+- Added `CadRenderContextService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing render-setup orchestration complexity.
 
 
 **Target Services**:
