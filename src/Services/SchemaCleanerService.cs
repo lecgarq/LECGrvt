@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 
@@ -12,12 +11,14 @@ namespace LECG.Services
     public class SchemaCleanerService : ISchemaCleanerService
     {
         private readonly ISchemaVendorFilterService _schemaVendorFilterService;
+        private readonly ISchemaElementScanService _schemaElementScanService;
         private readonly ISchemaDataStorageScanService _schemaDataStorageScanService;
         private readonly ISchemaDataStorageDeleteService _schemaDataStorageDeleteService;
         private readonly ISchemaEraseService _schemaEraseService;
 
         public SchemaCleanerService() : this(
             new SchemaVendorFilterService(),
+            new SchemaElementScanService(new SchemaVendorFilterService()),
             new SchemaDataStorageScanService(new SchemaVendorFilterService()),
             new SchemaDataStorageDeleteService(),
             new SchemaEraseService())
@@ -26,11 +27,13 @@ namespace LECG.Services
 
         public SchemaCleanerService(
             ISchemaVendorFilterService schemaVendorFilterService,
+            ISchemaElementScanService schemaElementScanService,
             ISchemaDataStorageScanService schemaDataStorageScanService,
             ISchemaDataStorageDeleteService schemaDataStorageDeleteService,
             ISchemaEraseService schemaEraseService)
         {
             _schemaVendorFilterService = schemaVendorFilterService;
+            _schemaElementScanService = schemaElementScanService;
             _schemaDataStorageScanService = schemaDataStorageScanService;
             _schemaDataStorageDeleteService = schemaDataStorageDeleteService;
             _schemaEraseService = schemaEraseService;
@@ -41,37 +44,7 @@ namespace LECG.Services
         /// </summary>
         public HashSet<Guid> ScanForThirdPartySchemas(Document doc, Action<string>? logCallback = null)
         {
-            HashSet<Guid> schemas = new HashSet<Guid>();
-            int elementsWithSchemas = 0;
-
-            // Scan all elements
-            FilteredElementCollector allElements = new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType();
-
-            foreach (Element elem in allElements)
-            {
-                try
-                {
-                    IList<Guid> schemaGuids = elem.GetEntitySchemaGuids();
-                    if (schemaGuids.Count > 0)
-                    {
-                        bool hasThirdParty = false;
-                        foreach (Guid guid in schemaGuids)
-                        {
-                            if (_schemaVendorFilterService.IsThirdPartySchema(guid))
-                            {
-                                schemas.Add(guid);
-                                hasThirdParty = true;
-                            }
-                        }
-                        if (hasThirdParty) elementsWithSchemas++;
-                    }
-                }
-                catch { }
-            }
-
-            logCallback?.Invoke($"  Found {elementsWithSchemas} elements with third-party schemas.");
-            return schemas;
+            return _schemaElementScanService.ScanForThirdPartySchemas(doc, logCallback);
         }
 
         /// <summary>

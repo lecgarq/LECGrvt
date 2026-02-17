@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 65 completed
+**Status**: Slice 66 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -738,6 +738,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeService` by extracting transaction/pass orchestration into `IPurgeExecutionCoordinatorService`.
 - Added `PurgeExecutionCoordinatorService` and wired it through DI + `PurgeService` constructor injection.
 - Kept `IPurgeService` API unchanged while reducing transaction-loop orchestration complexity.
+
+**P5 Slice 66 (Completed)**:
+- Decomposed `SchemaCleanerService` by extracting project-wide third-party schema scanning into `ISchemaElementScanService`.
+- Added `SchemaElementScanService` and wired it through DI + `SchemaCleanerService` constructor injection.
+- Kept `ISchemaCleanerService` API unchanged while reducing element-scan orchestration complexity.
 
 
 **Target Services**:
