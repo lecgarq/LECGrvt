@@ -6,6 +6,17 @@ namespace LECG.Services
 {
     public class CadGeometryExtractionService : ICadGeometryExtractionService
     {
+        private readonly ICadSolidHatchExtractionService _cadSolidHatchExtractionService;
+
+        public CadGeometryExtractionService() : this(new CadSolidHatchExtractionService())
+        {
+        }
+
+        public CadGeometryExtractionService(ICadSolidHatchExtractionService cadSolidHatchExtractionService)
+        {
+            _cadSolidHatchExtractionService = cadSolidHatchExtractionService;
+        }
+
         public CadData ExtractGeometry(Document doc, ImportInstance imp)
         {
             CadData data = new CadData();
@@ -48,38 +59,12 @@ namespace LECG.Services
             }
             else if (obj is Solid solid && !solid.Faces.IsEmpty)
             {
-                Color c = GetColor(doc, obj.GraphicsStyleId);
-                foreach (Face face in solid.Faces)
+                List<HatchData> hatches = _cadSolidHatchExtractionService.Extract(doc, obj, solid, currentTransform);
+                foreach (HatchData hatch in hatches)
                 {
-                    if (face is PlanarFace pf)
-                    {
-                        XYZ normal = currentTransform.OfVector(pf.FaceNormal).Normalize();
-                        if (normal.IsAlmostEqualTo(XYZ.BasisZ) || normal.IsAlmostEqualTo(-XYZ.BasisZ))
-                        {
-                            var loops = pf.GetEdgesAsCurveLoops();
-                            List<CurveLoop> transformedLoops = new List<CurveLoop>();
-                            foreach (CurveLoop loop in loops)
-                            {
-                                CurveLoop tLoop = new CurveLoop();
-                                foreach (Curve loopCrv in loop)
-                                {
-                                    tLoop.Append(loopCrv.CreateTransformed(currentTransform));
-                                }
-                                transformedLoops.Add(tLoop);
-                            }
-                            if (transformedLoops.Count > 0)
-                                data.Hatches.Add(new HatchData { Color = c, Loops = transformedLoops });
-                        }
-                    }
+                    data.Hatches.Add(hatch);
                 }
             }
-        }
-
-        private Color GetColor(Document doc, ElementId gsId)
-        {
-            if (gsId == ElementId.InvalidElementId) return new Color(0, 0, 0);
-            if (doc.GetElement(gsId) is GraphicsStyle gs && gs.GraphicsStyleCategory != null) return gs.GraphicsStyleCategory.LineColor;
-            return new Color(0, 0, 0);
         }
     }
 }

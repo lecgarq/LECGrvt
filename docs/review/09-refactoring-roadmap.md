@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 89 completed
+**Status**: Slice 90 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -857,6 +857,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialPbrService` by extracting appearance asset creation/edit/assignment into `IMaterialAppearanceAssetService`.
 - Added `MaterialAppearanceAssetService` and wired it through DI + `MaterialPbrService` constructor injection.
 - Kept `IMaterialPbrService` API unchanged while reducing in-method appearance-asset orchestration complexity.
+
+**P5 Slice 90 (Completed)**:
+- Decomposed `CadGeometryExtractionService` by extracting solid-face hatch extraction into `ICadSolidHatchExtractionService`.
+- Added `CadSolidHatchExtractionService` and wired it through DI + `CadGeometryExtractionService` constructor injection.
+- Kept `ICadGeometryExtractionService` API unchanged while reducing solid hatch loop/color-resolution orchestration complexity.
 
 
 **Target Services**:
