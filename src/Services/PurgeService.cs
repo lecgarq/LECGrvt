@@ -20,15 +20,34 @@ namespace LECG.Services
         private readonly IPurgeFillPatternService _purgeFillPatternService;
         private readonly IPurgeLevelService _purgeLevelService;
         private readonly IPurgeSummaryService _purgeSummaryService;
-        private readonly IPurgePassMessagingService _purgePassMessagingService;
-        private readonly IPurgePassSequenceService _purgePassSequenceService;
-        private readonly IPurgePassExecutionService _purgePassExecutionService;
+        private readonly IPurgeExecutionCoordinatorService _purgeExecutionCoordinatorService;
 
-        public PurgeService() : this(new PurgeReferenceScannerService(), new PurgeMaterialService(), new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeLevelService(), new PurgeSummaryService(), new PurgePassMessagingService(), new PurgePassSequenceService(), new PurgePassExecutionService(new PurgeLineStyleService(), new PurgeFillPatternService(), new PurgeMaterialService(), new PurgeLevelService(), new PurgePassMessagingService()))
+        public PurgeService() : this(
+            new PurgeReferenceScannerService(),
+            new PurgeMaterialService(),
+            new PurgeLineStyleService(),
+            new PurgeFillPatternService(),
+            new PurgeLevelService(),
+            new PurgeSummaryService(),
+            new PurgeExecutionCoordinatorService(
+                new PurgePassSequenceService(),
+                new PurgePassExecutionService(
+                    new PurgeLineStyleService(),
+                    new PurgeFillPatternService(),
+                    new PurgeMaterialService(),
+                    new PurgeLevelService(),
+                    new PurgePassMessagingService())))
         {
         }
 
-        public PurgeService(IPurgeReferenceScannerService referenceScanner, IPurgeMaterialService purgeMaterialService, IPurgeLineStyleService purgeLineStyleService, IPurgeFillPatternService purgeFillPatternService, IPurgeLevelService purgeLevelService, IPurgeSummaryService purgeSummaryService, IPurgePassMessagingService purgePassMessagingService, IPurgePassSequenceService purgePassSequenceService, IPurgePassExecutionService purgePassExecutionService)
+        public PurgeService(
+            IPurgeReferenceScannerService referenceScanner,
+            IPurgeMaterialService purgeMaterialService,
+            IPurgeLineStyleService purgeLineStyleService,
+            IPurgeFillPatternService purgeFillPatternService,
+            IPurgeLevelService purgeLevelService,
+            IPurgeSummaryService purgeSummaryService,
+            IPurgeExecutionCoordinatorService purgeExecutionCoordinatorService)
         {
             _referenceScanner = referenceScanner;
             _purgeMaterialService = purgeMaterialService;
@@ -36,43 +55,19 @@ namespace LECG.Services
             _purgeFillPatternService = purgeFillPatternService;
             _purgeLevelService = purgeLevelService;
             _purgeSummaryService = purgeSummaryService;
-            _purgePassMessagingService = purgePassMessagingService;
-            _purgePassSequenceService = purgePassSequenceService;
-            _purgePassExecutionService = purgePassExecutionService;
+            _purgeExecutionCoordinatorService = purgeExecutionCoordinatorService;
         }
 
         public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
         {
-            int lineStylesDeleted = 0;
-            int fillPatternsDeleted = 0;
-            int materialsDeleted = 0;
-            int levelsDeleted = 0;
-
-            using (Transaction t = new Transaction(doc, "Purge Unused Elements"))
-            {
-                t.Start();
-
-                // Run 3 times to catch dependent elements
-                foreach (int i in _purgePassSequenceService.GetPasses())
-                {
-                    (int lineStylesPass, int fillPatternsPass, int materialsPass, int levelsPass) = _purgePassExecutionService.ExecutePass(
-                        doc,
-                        i,
-                        lineStyles,
-                        fillPatterns,
-                        materials,
-                        levels,
-                        logCallback,
-                        progressCallback);
-
-                    lineStylesDeleted += lineStylesPass;
-                    fillPatternsDeleted += fillPatternsPass;
-                    materialsDeleted += materialsPass;
-                    levelsDeleted += levelsPass;
-                }
-
-                t.Commit();
-            }
+            (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted) = _purgeExecutionCoordinatorService.Execute(
+                doc,
+                lineStyles,
+                fillPatterns,
+                materials,
+                levels,
+                logCallback,
+                progressCallback);
 
             _purgeSummaryService.Report(logCallback, progressCallback, lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted);
         }

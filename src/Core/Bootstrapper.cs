@@ -53,6 +53,7 @@ namespace LECG.Core
             services.AddSingleton<IPurgePassMessagingService, PurgePassMessagingService>();
             services.AddSingleton<IPurgePassSequenceService, PurgePassSequenceService>();
             services.AddSingleton<IPurgePassExecutionService, PurgePassExecutionService>();
+            services.AddSingleton<IPurgeExecutionCoordinatorService, PurgeExecutionCoordinatorService>();
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaVendorFilterService, SchemaVendorFilterService>();
             services.AddSingleton<ISchemaDataStorageScanService, SchemaDataStorageScanService>();
