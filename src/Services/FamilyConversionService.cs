@@ -10,23 +10,21 @@ namespace LECG.Services
     {
         private readonly IFamilyTemplatePathService _templatePathService;
         private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
-        private readonly IFamilyProjectLoadService _familyProjectLoadService;
-        private readonly IFamilySaveService _familySaveService;
         private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
         private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
+        private readonly IFamilySaveLoadService _familySaveLoadService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilySaveService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()))
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTempFileCleanupService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())))
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilySaveService familySaveService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService)
         {
             _templatePathService = templatePathService;
             _tempFileCleanupService = tempFileCleanupService;
-            _familyProjectLoadService = familyProjectLoadService;
-            _familySaveService = familySaveService;
             _familyTargetDocumentService = familyTargetDocumentService;
             _familyGeometryCopyService = familyGeometryCopyService;
+            _familySaveLoadService = familySaveLoadService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -64,9 +62,7 @@ namespace LECG.Services
                 int copiedCount = _familyGeometryCopyService.CopyGeometry(sourceFamilyDoc, targetFamilyDoc);
                 Logger.Instance.Log($"Found {copiedCount} geometry elements to copy.");
 
-                tempFamilyPath = _familySaveService.SaveTemp(targetFamilyDoc, targetFamilyName);
-
-                _familyProjectLoadService.Load(doc, tempFamilyPath);
+                tempFamilyPath = _familySaveLoadService.SaveAndLoad(doc, targetFamilyDoc, targetFamilyName);
             }
             catch (Exception ex)
             {

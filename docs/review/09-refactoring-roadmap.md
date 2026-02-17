@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 78 completed
+**Status**: Slice 79 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -803,6 +803,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadFamilyLoadPlacementService` by extracting temp-file deletion helper logic into `ICadTempFileCleanupService`.
 - Added `CadTempFileCleanupService` and wired it through DI + `CadFamilyLoadPlacementService` constructor injection.
 - Kept `ICadFamilyLoadPlacementService` API unchanged while reducing in-class cleanup helper responsibility.
+
+**P5 Slice 79 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting save+project-load stage into `IFamilySaveLoadService`.
+- Added `FamilySaveLoadService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing save/load stage orchestration complexity.
 
 
 **Target Services**:
