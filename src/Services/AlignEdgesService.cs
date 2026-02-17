@@ -11,18 +11,16 @@ namespace LECG.Services
     {
         private readonly IAlignEdgesIntersectorService _intersectorService;
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
-        private readonly IToposolidBaseElevationService _baseElevationService;
         private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
 
-        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService(), new AlignEdgesVertexAlignmentService())
+        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new AlignEdgesVertexAlignmentService())
         {
         }
 
-        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IToposolidBaseElevationService baseElevationService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
+        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
         {
             _intersectorService = intersectorService;
             _boundaryPointService = boundaryPointService;
-            _baseElevationService = baseElevationService;
             _vertexAlignmentService = vertexAlignmentService;
         }
 
@@ -86,8 +84,6 @@ namespace LECG.Services
                             
                             // STEP 2: Align ALL points (existing + new) to reference
                             // Get the BASE elevation: level + height offset from level
-                            _baseElevationService.Resolve(doc, toposolid);
-                            
                             _vertexAlignmentService.AlignVertices(editor, intersector);
                         }
                     }
