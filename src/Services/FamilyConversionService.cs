@@ -13,19 +13,19 @@ namespace LECG.Services
         private readonly IFamilyTemplatePathService _templatePathService;
         private readonly IFamilyGeometryCollectionService _geometryCollectionService;
         private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
-        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly IFamilyProjectLoadService _familyProjectLoadService;
         private readonly IFamilyParameterSetupService _familyParameterSetupService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyLoadOptionsFactory(), new FamilyParameterSetupService())
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyGeometryCollectionService(), new FamilyTempFileCleanupService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()), new FamilyParameterSetupService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyLoadOptionsFactory familyLoadOptionsFactory, IFamilyParameterSetupService familyParameterSetupService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyGeometryCollectionService geometryCollectionService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyProjectLoadService familyProjectLoadService, IFamilyParameterSetupService familyParameterSetupService)
         {
             _templatePathService = templatePathService;
             _geometryCollectionService = geometryCollectionService;
             _tempFileCleanupService = tempFileCleanupService;
-            _familyLoadOptionsFactory = familyLoadOptionsFactory;
+            _familyProjectLoadService = familyProjectLoadService;
             _familyParameterSetupService = familyParameterSetupService;
         }
 
@@ -100,26 +100,7 @@ namespace LECG.Services
                 targetFamilyDoc.SaveAs(tempFamilyPath, saveOpts);
                 Logger.Instance.Log($"Saved temporary family to: {tempFamilyPath}");
 
-                // 6. Load into Project
-                using (Transaction tProject = new Transaction(doc, "Load Converted Family"))
-                {
-                    tProject.Start();
-                    
-                    Family? loadedFamily = null;
-                    doc.LoadFamily(tempFamilyPath, _familyLoadOptionsFactory.Create(), out loadedFamily);
-                    
-                    if (loadedFamily != null)
-                    {
-                        Logger.Instance.Log($"Success! Loaded family: {loadedFamily.Name}");
-                        Logger.Instance.UpdateProgress(100, "Done");
-                    }
-                    else
-                    {
-                        Logger.Instance.Log("Warning: Family loaded but returned null (already existed?).");
-                    }
-
-                    tProject.Commit();
-                }
+                _familyProjectLoadService.Load(doc, tempFamilyPath);
             }
             catch (Exception ex)
             {

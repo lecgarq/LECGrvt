@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 43 completed
+**Status**: Slice 44 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -628,6 +628,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting draw-context creation into `ICadRenderContextService`.
 - Added `CadRenderContextService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing render-setup orchestration complexity.
+
+**P5 Slice 44 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting project-family loading into `IFamilyProjectLoadService`.
+- Added `FamilyProjectLoadService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing project-load transaction complexity.
 
 
 **Target Services**:
