@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 94 completed
+**Status**: Slice 95 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -881,6 +881,10 @@ dotnet test /p:CollectCoverage=true
 **P5 Slice 94 (Completed)**:
 - Decomposed residual `AlignEdgesService` internals by removing an unused point-add counter left after prior extraction cleanup.
 - Kept `IAlignEdgesService` API and runtime behavior unchanged while tightening active orchestration-only state.
+
+**P5 Slice 95 (Completed)**:
+- Decomposed residual `CadConversionService` internals by removing an unused `LECG.Core` import left after prior service extractions.
+- Kept `ICadConversionService` API and runtime behavior unchanged while tightening active orchestration-only source usage.
 
 
 **Target Services**:
