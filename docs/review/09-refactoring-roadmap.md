@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 85 completed
+**Status**: Slice 86 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -837,6 +837,11 @@ dotnet test /p:CollectCoverage=true
 **P5 Slice 85 (Completed)**:
 - Decomposed residual `PurgeService` internals by removing stale imports and duplicated summary comment blocks left from prior extractions.
 - Kept `IPurgeService` API and runtime behavior unchanged while tightening service source to active orchestration-only code.
+
+**P5 Slice 86 (Completed)**:
+- Decomposed `AlignEdgesBoundaryPointService` by extracting curve-hit sampling checks into `IAlignEdgesCurveHitService`.
+- Added `AlignEdgesCurveHitService` and wired it through DI + `AlignEdgesBoundaryPointService` constructor injection.
+- Kept `IAlignEdgesBoundaryPointService` API unchanged while reducing in-method curve-hit loop orchestration complexity.
 
 
 **Target Services**:

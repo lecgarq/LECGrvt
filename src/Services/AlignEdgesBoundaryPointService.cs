@@ -8,14 +8,16 @@ namespace LECG.Services
     public class AlignEdgesBoundaryPointService : IAlignEdgesBoundaryPointService
     {
         private readonly IReferenceRaycastService _referenceRaycastService;
+        private readonly IAlignEdgesCurveHitService _alignEdgesCurveHitService;
 
-        public AlignEdgesBoundaryPointService() : this(new ReferenceRaycastService())
+        public AlignEdgesBoundaryPointService() : this(new ReferenceRaycastService(), new AlignEdgesCurveHitService(new ReferenceRaycastService()))
         {
         }
 
-        public AlignEdgesBoundaryPointService(IReferenceRaycastService referenceRaycastService)
+        public AlignEdgesBoundaryPointService(IReferenceRaycastService referenceRaycastService, IAlignEdgesCurveHitService alignEdgesCurveHitService)
         {
             _referenceRaycastService = referenceRaycastService;
+            _alignEdgesCurveHitService = alignEdgesCurveHitService;
         }
 
         public List<XYZ> CollectBoundaryHitPoints(
@@ -33,17 +35,7 @@ namespace LECG.Services
                 {
                     double length = curve.Length;
 
-                    bool curveHitsReference = false;
-                    for (int sample = 0; sample <= 8; sample++)
-                    {
-                        double sampleT = sample / 8.0;
-                        XYZ samplePt = curve.Evaluate(sampleT, true);
-                        if (_referenceRaycastService.CheckHitsReference(intersector, samplePt))
-                        {
-                            curveHitsReference = true;
-                            break;
-                        }
-                    }
+                    bool curveHitsReference = _alignEdgesCurveHitService.CurveHitsReference(intersector, curve);
 
                     if (curveHitsReference)
                     {
