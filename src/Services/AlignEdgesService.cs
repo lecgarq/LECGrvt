@@ -14,7 +14,6 @@ namespace LECG.Services
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
         private readonly IToposolidBaseElevationService _baseElevationService;
         private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
-        private string debugInfo = "";
 
         public AlignEdgesService() : this(new ReferenceRaycastService(), new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new ToposolidBaseElevationService(), new AlignEdgesVertexAlignmentService())
         {
@@ -35,10 +34,7 @@ namespace LECG.Services
 
             ReferenceIntersector intersector = _intersectorService.Create(doc, references);
 
-            int pointCount = 0;
             int addedPoints = 0;
-            int missCount = 0;
-            int skippedCount = 0;
             
             // Spacing constants (in feet)
             const double MIN_SPACING = 0.0656; // 2cm
@@ -72,16 +68,11 @@ namespace LECG.Services
                                         intersector,
                                         MIN_SPACING,
                                         MAX_SPACING,
-                                        msg => debugInfo += msg));
-                                }
-                                else
-                                {
-                                    debugInfo += "No sketch found\n";
+                                        _ => { }));
                                 }
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
-                                debugInfo += $"Sketch error: {ex.Message}\n";
                             }
                             
                             // Add the new points
@@ -97,24 +88,15 @@ namespace LECG.Services
                             
                             // STEP 2: Align ALL points (existing + new) to reference
                             // Get the BASE elevation: level + height offset from level
-                            (double baseElevation, string debugMessage) = _baseElevationService.Resolve(doc, toposolid);
-                            debugInfo += debugMessage;
+                            _baseElevationService.Resolve(doc, toposolid);
                             
-                            (int movedCount, int localSkippedCount, int localMissCount) = _vertexAlignmentService.AlignVertices(editor, intersector);
-                            pointCount += movedCount;
-                            skippedCount += localSkippedCount;
-                            missCount += localMissCount;
+                            _vertexAlignmentService.AlignVertices(editor, intersector);
                         }
                     }
                 }
                 
                 t.Commit();
             }
-            
-            // Logging can be injected, but for now we maintain the info string logic or return a result object.
-            // In a pure service, we should probably return a result object.
-            // But to keep constraints simple for this refactor, we will rely on exception message or separate logging mechanism later if needed.
-            // For now, we assume the command handles UI feedback, so we won't show TaskDialog here.
         }
 
     }

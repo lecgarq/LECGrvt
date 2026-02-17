@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 71 completed
+**Status**: Slice 72 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -768,6 +768,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting temporary DWG import/geometry extraction into `ICadTempDwgExtractionService`.
 - Added `CadTempDwgExtractionService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing DWG temp-document orchestration complexity.
+
+**P5 Slice 72 (Completed)**:
+- Decomposed `AlignEdgesService` by removing dead debug/counter orchestration left after prior extractions.
+- Removed unused local counters and unused debug string accumulation paths while preserving alignment flow.
+- Kept `IAlignEdgesService` API unchanged while tightening service body to active orchestration only.
 
 
 **Target Services**:
