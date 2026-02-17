@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 54 completed
+**Status**: Slice 55 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -683,6 +683,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `RenderAppearanceService` by extracting render-appearance refresh/toggle flow into `IRenderAppearanceRefreshService`.
 - Added `RenderAppearanceRefreshService` and wired it through DI + `RenderAppearanceService` constructor injection.
 - Kept `IRenderAppearanceService` API unchanged while reducing refresh orchestration complexity.
+
+**P5 Slice 55 (Completed)**:
+- Decomposed `RenderAppearanceService` by extracting material graphics assignment into `IRenderMaterialGraphicsApplyService`.
+- Added `RenderMaterialGraphicsApplyService` and wired it through DI + `RenderAppearanceService` constructor injection.
+- Kept `IRenderAppearanceService` API unchanged while reducing per-material assignment orchestration complexity.
 
 
 **Target Services**:

@@ -11,16 +11,18 @@ namespace LECG.Services
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialSyncCheckService _syncCheckService;
         private readonly IRenderAppearanceRefreshService _refreshService;
+        private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;
 
-        public RenderAppearanceService() : this(new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService(), new RenderAppearanceRefreshService())
+        public RenderAppearanceService() : this(new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService(), new RenderAppearanceRefreshService(), new RenderMaterialGraphicsApplyService())
         {
         }
 
-        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService, IRenderMaterialSyncCheckService syncCheckService, IRenderAppearanceRefreshService refreshService)
+        public RenderAppearanceService(IRenderSolidFillPatternService solidFillPatternService, IRenderMaterialSyncCheckService syncCheckService, IRenderAppearanceRefreshService refreshService, IRenderMaterialGraphicsApplyService graphicsApplyService)
         {
             _solidFillPatternService = solidFillPatternService;
             _syncCheckService = syncCheckService;
             _refreshService = refreshService;
+            _graphicsApplyService = graphicsApplyService;
         }
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
@@ -29,7 +31,8 @@ namespace LECG.Services
             try { mat.UseRenderAppearanceForShading = true; } catch { }
             doc.Regenerate();
             Color renderColor = mat.Color;
-            ApplyMaterialProperties(doc, mat, renderColor, null);
+            ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
+            _graphicsApplyService.Apply(mat, renderColor, solidId, null);
             logCallback?.Invoke($"  âœ“ Synced graphics for: {mat.Name}");
         }
 
@@ -70,14 +73,7 @@ namespace LECG.Services
                         continue;
                     }
 
-                    mat.SurfaceForegroundPatternId = solidId;
-                    mat.SurfaceForegroundPatternColor = renderColor;
-                    mat.SurfaceBackgroundPatternId = solidId;
-                    mat.SurfaceBackgroundPatternColor = renderColor;
-                    mat.CutForegroundPatternId = solidId;
-                    mat.CutForegroundPatternColor = renderColor;
-                    mat.CutBackgroundPatternId = solidId;
-                    mat.CutBackgroundPatternColor = renderColor;
+                    _graphicsApplyService.Apply(mat, renderColor, solidId);
 
                     updated++;
                 }
@@ -88,16 +84,7 @@ namespace LECG.Services
             logCallback?.Invoke($"Sync Complete: {updated} updated, {skipped} skipped.");
             progressCallback?.Invoke(100, "Done");
         }
-
-        private void ApplyMaterialProperties(Document doc, Material mat, Color color, Action<string>? logCallback)
-        {
-            ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
-            mat.Color = color;
-            mat.SurfaceForegroundPatternId = solidId; mat.SurfaceForegroundPatternColor = color;
-            mat.SurfaceBackgroundPatternId = solidId; mat.SurfaceBackgroundPatternColor = color;
-            mat.CutForegroundPatternId = solidId; mat.CutForegroundPatternColor = color;
-            mat.CutBackgroundPatternId = solidId; mat.CutBackgroundPatternColor = color;
-            logCallback?.Invoke($"    â†’ Color: RGB({color.Red}, {color.Green}, {color.Blue})");
-        }
     }
 }
+
+
