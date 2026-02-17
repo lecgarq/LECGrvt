@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 61 completed
+**Status**: Slice 62 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -718,6 +718,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting target-family document creation/validation into `IFamilyTargetDocumentService`.
 - Added `FamilyTargetDocumentService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing target-document creation orchestration complexity.
+
+**P5 Slice 62 (Completed)**:
+- Decomposed `AlignElementsService` by extracting distribution item build/sort into `IAlignElementsDistributionItemService`.
+- Added `AlignElementsDistributionItemService` and wired it through DI + `AlignElementsService` constructor injection.
+- Kept `IAlignElementsService` API unchanged while reducing distribution-prep orchestration complexity.
 
 
 **Target Services**:

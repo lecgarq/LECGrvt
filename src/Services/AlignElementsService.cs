@@ -10,14 +10,16 @@ namespace LECG.Services
     public class AlignElementsService : IAlignElementsService
     {
         private readonly IAlignElementsTranslationService _translationService;
+        private readonly IAlignElementsDistributionItemService _distributionItemService;
 
-        public AlignElementsService() : this(new AlignElementsTranslationService())
+        public AlignElementsService() : this(new AlignElementsTranslationService(), new AlignElementsDistributionItemService())
         {
         }
 
-        public AlignElementsService(IAlignElementsTranslationService translationService)
+        public AlignElementsService(IAlignElementsTranslationService translationService, IAlignElementsDistributionItemService distributionItemService)
         {
             _translationService = translationService;
+            _distributionItemService = distributionItemService;
         }
 
         public void Align(Document doc, Element reference, List<Element> targets, AlignMode mode)
@@ -57,23 +59,7 @@ namespace LECG.Services
             {
                 t.Start();
 
-                List<(Element Element, BoundingBoxXYZ Box, double Position)> sortedItems = new List<(Element, BoundingBoxXYZ, double)>();
-
-                // 1. Get Boxes and Sort
-                foreach (var el in elements)
-                {
-                    var box = el.get_BoundingBox(doc.ActiveView);
-                    if (box == null) continue;
-
-                    double pos = (mode == AlignMode.DistributeHorizontally) 
-                        ? (box.Min.X + box.Max.X) / 2.0 
-                        : (box.Min.Y + box.Max.Y) / 2.0;
-
-                    sortedItems.Add((el, box, pos));
-                }
-
-                // Sort by position
-                sortedItems = sortedItems.OrderBy(x => x.Position).ToList();
+                List<(Element Element, BoundingBoxXYZ Box, double Position)> sortedItems = _distributionItemService.BuildAndSort(doc, elements, mode);
 
                 if (sortedItems.Count < 3) return;
 
