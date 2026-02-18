@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 122 completed
+**Status**: Slice 123 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -1020,6 +1020,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadHatchRenderService` by extracting hatch loop flatten/validation preparation into `ICadHatchLoopPreparationService`.
 - Added `CadHatchLoopPreparationService` and wired it through DI + `CadHatchRenderService` constructor injection.
 - Kept `ICadHatchRenderService` API unchanged while reducing loop preparation orchestration complexity in hatch rendering.
+
+**P5 Slice 123 (Completed)**:
+- Decomposed `MaterialAssignmentExecutionService` by extracting per-type assignment execution into `IMaterialTypeAssignmentProcessService`.
+- Added `MaterialTypeAssignmentProcessService` and wired it through DI + `MaterialAssignmentExecutionService` constructor injection.
+- Kept `IMaterialAssignmentExecutionService` API unchanged while reducing in-loop assignment/skip orchestration complexity.
 
 
 **Target Services**:

@@ -9,29 +9,20 @@ namespace LECG.Services
     public class MaterialAssignmentExecutionService : IMaterialAssignmentExecutionService
     {
         private readonly IMaterialElementGroupingService _materialElementGroupingService;
-        private readonly IMaterialColorSequenceService _materialColorSequenceService;
-        private readonly IMaterialCreationService _materialCreationService;
-        private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
-        private readonly IMaterialTypeEligibilityService _materialTypeEligibilityService;
         private readonly IMaterialAssignmentProgressService _materialAssignmentProgressService;
         private readonly IMaterialElementTypeResolverService _materialElementTypeResolverService;
+        private readonly IMaterialTypeAssignmentProcessService _materialTypeAssignmentProcessService;
 
         public MaterialAssignmentExecutionService(
             IMaterialElementGroupingService materialElementGroupingService,
-            IMaterialColorSequenceService materialColorSequenceService,
-            IMaterialCreationService materialCreationService,
-            IMaterialTypeAssignmentService materialTypeAssignmentService,
-            IMaterialTypeEligibilityService materialTypeEligibilityService,
             IMaterialAssignmentProgressService materialAssignmentProgressService,
-            IMaterialElementTypeResolverService materialElementTypeResolverService)
+            IMaterialElementTypeResolverService materialElementTypeResolverService,
+            IMaterialTypeAssignmentProcessService materialTypeAssignmentProcessService)
         {
             _materialElementGroupingService = materialElementGroupingService;
-            _materialColorSequenceService = materialColorSequenceService;
-            _materialCreationService = materialCreationService;
-            _materialTypeAssignmentService = materialTypeAssignmentService;
-            _materialTypeEligibilityService = materialTypeEligibilityService;
             _materialAssignmentProgressService = materialAssignmentProgressService;
             _materialElementTypeResolverService = materialElementTypeResolverService;
+            _materialTypeAssignmentProcessService = materialTypeAssignmentProcessService;
         }
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
@@ -62,21 +53,8 @@ namespace LECG.Services
                     ElementType? elemType = _materialElementTypeResolverService.Resolve(doc, kvp.Key);
                     if (elemType == null) continue;
 
-                    string typeName = elemType.Name;
-
-                    if (_materialTypeEligibilityService.TryGetSkipReason(elemType, out string skipReason))
-                    {
-                        logCallback?.Invoke($"  SKIP: {skipReason}");
-                        continue;
-                    }
-
-                    progressCallback?.Invoke(pct, $"Processing: {typeName}");
-                    logCallback?.Invoke("");
-                    logCallback?.Invoke($"TYPE: {typeName} ({kvp.Value.Count} elements)");
-
-                    Color color = _materialColorSequenceService.GetNextColor();
-                    ElementId materialId = _materialCreationService.GetOrCreateMaterial(doc, typeName, color, logCallback);
-                    _materialTypeAssignmentService.AssignMaterialToType(doc, elemType, materialId, logCallback);
+                    progressCallback?.Invoke(pct, $"Processing: {elemType.Name}");
+                    _materialTypeAssignmentProcessService.TryProcess(doc, elemType, kvp.Value.Count, logCallback);
                 }
 
                 t.Commit();

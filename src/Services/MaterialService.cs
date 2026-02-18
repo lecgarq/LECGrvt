@@ -25,12 +25,13 @@ namespace LECG.Services
             new MaterialPbrService(),
             new MaterialAssignmentExecutionService(
                 new MaterialElementGroupingService(),
-                new MaterialColorSequenceService(),
-                new MaterialCreationService(),
-                new MaterialTypeAssignmentService(),
-                new MaterialTypeEligibilityService(),
                 new MaterialAssignmentProgressService(),
-                new MaterialElementTypeResolverService()))
+                new MaterialElementTypeResolverService(),
+                new MaterialTypeAssignmentProcessService(
+                    new MaterialColorSequenceService(),
+                    new MaterialCreationService(),
+                    new MaterialTypeAssignmentService(),
+                    new MaterialTypeEligibilityService())))
         {
         }
 
