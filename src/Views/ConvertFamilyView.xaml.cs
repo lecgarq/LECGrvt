@@ -12,6 +12,9 @@ namespace LECG.Views
 
         public ConvertFamilyView(ConvertFamilyViewModel viewModel, UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(viewModel);
+            ArgumentNullException.ThrowIfNull(uiDoc);
+
             InitializeComponent();
             DataContext = viewModel;
             _uiDoc = uiDoc;

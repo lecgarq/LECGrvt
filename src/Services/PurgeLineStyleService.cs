@@ -21,6 +21,8 @@ namespace LECG.Services
 
         public int PurgeUnusedLineStyles(Document doc, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             logCallback?.Invoke("Scanning for unused line styles...");
 
             Category? linesCategory = doc.Settings.Categories.get_Item(BuiltInCategory.OST_Lines);

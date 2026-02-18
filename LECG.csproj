@@ -26,6 +26,10 @@
   <ItemGroup>
     <PackageReference Include="System.Windows.Extensions" Version="8.0.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     <!-- Reference 8.0.0 to match Revit's loaded version -->
     <!-- Exclude runtime assets to use Revit's already loaded copy -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" ExcludeAssets="runtime" />

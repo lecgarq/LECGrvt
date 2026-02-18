@@ -16,6 +16,8 @@ namespace LECG.Core.Ribbon
         /// </summary>
         public static void CreateButton(RibbonPanel panel, RibbonButtonConfig data, string assemblyPath, string availabilityClassName = "")
         {
+            if (panel == null || data == null || assemblyPath == null) return;
+
             try
             {
                 PushButtonData buttonData = new PushButtonData(
@@ -51,6 +53,8 @@ namespace LECG.Core.Ribbon
         /// </summary>
         public static PulldownButton CreatePulldownButton(RibbonPanel panel, string name, string text, string tooltip, ImageSource? icon, ImageSource? icon16 = null)
         {
+            if (panel == null || name == null || text == null || tooltip == null) return null!;
+
             try
             {
                 PulldownButtonData data = new PulldownButtonData(name, text);
@@ -72,7 +76,7 @@ namespace LECG.Core.Ribbon
 
         public static void AddItemToPulldown(PulldownButton pulldown, RibbonButtonConfig data, string assemblyPath, string availabilityClassName = "")
         {
-            if (pulldown == null) return;
+            if (pulldown == null || data == null || assemblyPath == null) return;
 
             try
             {

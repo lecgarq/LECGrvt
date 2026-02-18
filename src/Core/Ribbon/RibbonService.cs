@@ -9,6 +9,8 @@ namespace LECG.Core.Ribbon
     {
         public void InitializeRibbon(UIControlledApplication app)
         {
+            ArgumentNullException.ThrowIfNull(app);
+
             string assemblyPath = Assembly.GetExecutingAssembly().Location;
             string tabName = AppConstants.TabName;
 

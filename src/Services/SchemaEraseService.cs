@@ -10,6 +10,9 @@ namespace LECG.Services
     {
         public int EraseSchemas(Document doc, IEnumerable<Guid> guids, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(guids);
+
             int erased = 0;
             foreach (Guid guid in guids)
             {

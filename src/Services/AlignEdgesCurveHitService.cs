@@ -14,6 +14,9 @@ namespace LECG.Services
 
         public bool CurveHitsReference(ReferenceIntersector intersector, Curve curve)
         {
+            ArgumentNullException.ThrowIfNull(intersector);
+            ArgumentNullException.ThrowIfNull(curve);
+
             for (int sample = 0; sample <= 8; sample++)
             {
                 double sampleT = sample / 8.0;

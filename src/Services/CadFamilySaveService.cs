@@ -7,6 +7,9 @@ namespace LECG.Services
     {
         public string Save(Document familyDoc, string name)
         {
+            ArgumentNullException.ThrowIfNull(familyDoc);
+            ArgumentNullException.ThrowIfNull(name);
+
             string path = System.IO.Path.Combine(System.IO.Path.GetTempPath(), name + ".rfa");
             SaveAsOptions opt = new SaveAsOptions { OverwriteExistingFile = true };
             familyDoc.SaveAs(path, opt);

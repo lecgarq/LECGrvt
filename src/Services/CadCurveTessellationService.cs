@@ -19,6 +19,8 @@ namespace LECG.Services
 
         public IEnumerable<Curve>? Tessellate(Curve c)
         {
+            ArgumentNullException.ThrowIfNull(c);
+
             IList<XYZ> points = c.Tessellate();
             if (points.Count < 2)
             {

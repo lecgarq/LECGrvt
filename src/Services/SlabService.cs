@@ -1,5 +1,6 @@
 using System.Linq;
 using Autodesk.Revit.DB;
+using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
@@ -30,6 +31,9 @@ namespace LECG.Services
 
         public Element? DuplicateElement(Document doc, Element element)
         {
+             ArgumentNullException.ThrowIfNull(doc);
+             ArgumentNullException.ThrowIfNull(element);
+
              var copiedIds = ElementTransformUtils.CopyElements(doc, new[] { element.Id }, doc, Transform.Identity, new CopyPasteOptions());
              if (copiedIds.Count > 0)
              {

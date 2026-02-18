@@ -7,6 +7,10 @@ namespace LECG.Services
     {
         public void UpdateElementLevel(Document doc, Element elem, Level newLevel)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elem);
+            ArgumentNullException.ThrowIfNull(newLevel);
+
             Parameter levelParam = elem.get_Parameter(BuiltInParameter.LEVEL_PARAM);
             if (levelParam == null || levelParam.IsReadOnly) return;
 

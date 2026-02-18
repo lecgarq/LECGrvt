@@ -50,12 +50,16 @@ namespace LECG.ViewModels
 
         public void SetTargets(IList<Reference> refs)
         {
+            ArgumentNullException.ThrowIfNull(refs);
+
             TargetRefs = refs;
             TargetsSelection.UpdateSelection(refs.Count);
         }
 
         public void SetReference(IList<Reference> refs) 
         {
+            ArgumentNullException.ThrowIfNull(refs);
+
             ReferenceRefs = refs;
             ReferenceSelection.UpdateSelection(refs.Count);
         }

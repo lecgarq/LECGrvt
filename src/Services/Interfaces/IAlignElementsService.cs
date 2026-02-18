@@ -1,7 +1,7 @@
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
 
-namespace LECG.Services
+namespace LECG.Services.Interfaces
 {
     public enum AlignMode
     {

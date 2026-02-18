@@ -1,5 +1,5 @@
 using Autodesk.Revit.DB;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,11 @@ namespace LECG.Services
     {
         public void SimplifyPoints(Document doc, IEnumerable<Element> elements, Action<double, string> progressCallback, Action<string> logCallback)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elements);
+            ArgumentNullException.ThrowIfNull(progressCallback);
+            ArgumentNullException.ThrowIfNull(logCallback);
+
             int successCount = 0;
             int totalPointsDeleted = 0;
             int current = 0;

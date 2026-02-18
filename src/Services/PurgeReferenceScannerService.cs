@@ -8,6 +8,9 @@ namespace LECG.Services
     {
         public void AddIfValid(HashSet<ElementId> set, ElementId id)
         {
+            ArgumentNullException.ThrowIfNull(set);
+            ArgumentNullException.ThrowIfNull(id);
+
             if (id != ElementId.InvalidElementId)
             {
                 set.Add(id);
@@ -16,6 +19,10 @@ namespace LECG.Services
 
         public void CollectUsedIds(Element elem, HashSet<ElementId> validIds, HashSet<ElementId> usedIds)
         {
+            ArgumentNullException.ThrowIfNull(elem);
+            ArgumentNullException.ThrowIfNull(validIds);
+            ArgumentNullException.ThrowIfNull(usedIds);
+
             try
             {
                 foreach (Parameter param in elem.Parameters)

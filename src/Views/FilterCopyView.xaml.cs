@@ -8,6 +8,8 @@ namespace LECG.Views
     {
         public FilterCopyView(FilterCopyViewModel viewModel)
         {
+            ArgumentNullException.ThrowIfNull(viewModel);
+
             InitializeComponent();
             DataContext = viewModel;
             viewModel.CloseAction = () => Close();

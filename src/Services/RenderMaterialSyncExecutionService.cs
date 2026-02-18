@@ -16,6 +16,9 @@ namespace LECG.Services
 
         public bool TrySync(Material material, ElementId solidFillPatternId)
         {
+            ArgumentNullException.ThrowIfNull(material);
+            ArgumentNullException.ThrowIfNull(solidFillPatternId);
+
             Color renderColor = material.Color;
             if (_syncCheckService.IsMaterialSynced(material, renderColor, solidFillPatternId))
             {

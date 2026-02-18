@@ -4,7 +4,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using System;
@@ -19,12 +19,15 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // 1. Resolve Service & ViewModel
             var service = ServiceLocator.GetRequiredService<IFamilyConversionService>();
             var viewModel = ServiceLocator.GetRequiredService<ConvertFamilyViewModel>();
             
             // 2. Show UI
-            var view = new ConvertFamilyView(viewModel, uiDoc);
+            var view = ServiceLocator.CreateWith<ConvertFamilyView>(viewModel, uiDoc);
             
              // Set owner to Revit window
             System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(view);

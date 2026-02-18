@@ -20,6 +20,10 @@ namespace LECG.Services
 
         public void Process(Document doc, Reference target, ReferenceIntersector intersector)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(target);
+            ArgumentNullException.ThrowIfNull(intersector);
+
             Element elem = doc.GetElement(target);
             if (elem is not Toposolid toposolid) return;
 

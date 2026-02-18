@@ -16,6 +16,10 @@ namespace LECG.Services
 
         public CadData Extract(Document doc, string templatePath, string dwgPath, Action<double, string>? progress = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(templatePath);
+            ArgumentNullException.ThrowIfNull(dwgPath);
+
             progress?.Invoke(5, "Initializing temporary document...");
             Document tempDoc = doc.Application.NewFamilyDocument(templatePath);
             CadData data;

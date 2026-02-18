@@ -4,7 +4,7 @@ using Autodesk.Revit.DB;
 using LECG.ViewModels;
 using LECG.Views;
 
-namespace LECG.Services
+namespace LECG.Services.Interfaces
 {
     public interface ISearchReplaceService
     {

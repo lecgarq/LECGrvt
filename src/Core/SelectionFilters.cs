@@ -15,6 +15,7 @@ namespace LECG.Core
         {
             public bool AllowElement(Element elem)
             {
+                ArgumentNullException.ThrowIfNull(elem);
                 return elem.GetType().Name == "Toposolid";
             }
 
@@ -28,6 +29,7 @@ namespace LECG.Core
         {
             public bool AllowElement(Element elem)
             {
+                ArgumentNullException.ThrowIfNull(elem);
                 if (elem is Floor) return true;
                 if (elem is Toposolid) return true;
                 if (elem.Category != null && elem.Category.Id.Value == (long)BuiltInCategory.OST_Toposolid) return true;
@@ -44,6 +46,7 @@ namespace LECG.Core
         {
             public bool AllowElement(Element elem)
             {
+                ArgumentNullException.ThrowIfNull(elem);
                 return elem is Floor;
             }
 
@@ -57,6 +60,7 @@ namespace LECG.Core
         {
             public bool AllowElement(Element elem)
             {
+                ArgumentNullException.ThrowIfNull(elem);
                 if (elem is HostObject) return true; // Walls, Floors, Ceilings, Roofs, Facias, Gutters, etc.
                 if (elem is FamilyInstance) return true; // Columns, Generic Models, Furniture
                 if (elem.Category != null && elem.Category.Id.Value == (long)BuiltInCategory.OST_Toposolid) return true;

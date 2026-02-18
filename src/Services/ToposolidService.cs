@@ -1,6 +1,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using System.Linq;
 
 namespace LECG.Services
@@ -9,6 +9,8 @@ namespace LECG.Services
     {
         public void UpdateContours(Document doc, ElementId toposolidTypeId, bool enablePrimary, double primaryInterval, bool enableSecondary, double secondaryInterval, bool isApplyMode)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             var type = doc.GetElement(toposolidTypeId) as ToposolidType;
             if (type == null) return;
 

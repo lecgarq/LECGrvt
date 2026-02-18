@@ -31,6 +31,11 @@ namespace LECG.Services
             int current,
             int curveCount)
         {
+            ArgumentNullException.ThrowIfNull(familyDoc);
+            ArgumentNullException.ThrowIfNull(hatches);
+            ArgumentNullException.ThrowIfNull(toOrigin);
+            ArgumentNullException.ThrowIfNull(planView);
+
             foreach (HatchData hatch in hatches)
             {
                 current++;

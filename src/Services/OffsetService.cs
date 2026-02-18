@@ -1,5 +1,6 @@
 using System;
 using Autodesk.Revit.DB;
+using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
@@ -7,6 +8,9 @@ namespace LECG.Services
     {
         public bool TryOffsetElement(Document doc, Element elem, double offset, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elem);
+
             try
             {
                 Parameter? heightParam = elem.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM) 

@@ -32,6 +32,8 @@ namespace LECG.Core
 
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            ArgumentNullException.ThrowIfNull(commandData);
+
             try
             {
                 // Setup Context
@@ -96,10 +98,10 @@ namespace LECG.Core
                 {
                     if (_logWindow == null)
                     {
-                        _logViewModel = new ViewModels.LogViewModel(Services.Logging.Logger.Instance);
+                        _logViewModel = ServiceLocator.GetRequiredService<ViewModels.LogViewModel>();
                         _logViewModel.Title = title;
                         
-                        _logWindow = new Views.LogView(_logViewModel);
+                        _logWindow = ServiceLocator.CreateWith<Views.LogView>(_logViewModel);
                         _logWindow.Topmost = true;
                         
                         // Handle window closing to release reference
@@ -123,6 +125,8 @@ namespace LECG.Core
 
         protected void RunOnUI(Action action)
         {
+            ArgumentNullException.ThrowIfNull(action);
+
             try
             {
                 if (System.Windows.Application.Current?.Dispatcher != null)

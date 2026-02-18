@@ -29,6 +29,15 @@ namespace LECG.Services
             double progressStart,
             double progressEnd)
         {
+            ArgumentNullException.ThrowIfNull(projectDoc);
+            ArgumentNullException.ThrowIfNull(templatePath);
+            ArgumentNullException.ThrowIfNull(data);
+            ArgumentNullException.ThrowIfNull(offset);
+            ArgumentNullException.ThrowIfNull(lineStyleName);
+            ArgumentNullException.ThrowIfNull(lineColor);
+            ArgumentNullException.ThrowIfNull(transactionName);
+            ArgumentNullException.ThrowIfNull(familyName);
+
             Document familyDoc = projectDoc.Application.NewFamilyDocument(templatePath);
             using (Transaction t = new Transaction(familyDoc, transactionName))
             {

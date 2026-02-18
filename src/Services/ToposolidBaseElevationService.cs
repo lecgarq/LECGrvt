@@ -8,6 +8,9 @@ namespace LECG.Services
     {
         public (double BaseElevation, string DebugMessage) Resolve(Document doc, Toposolid toposolid)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(toposolid);
+
             double levelElevation = 0;
             Level? level = doc.GetElement(toposolid.LevelId) as Level;
             if (level != null) levelElevation = level.ProjectElevation;

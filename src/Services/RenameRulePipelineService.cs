@@ -7,6 +7,9 @@ namespace LECG.Services
     {
         public string ApplyRules(string text, SearchReplaceViewModel vm, int index)
         {
+            ArgumentNullException.ThrowIfNull(text);
+            ArgumentNullException.ThrowIfNull(vm);
+
             string result = text;
             result = vm.RemoveRule.Apply(result, index);
             result = vm.ReplaceRule.Apply(result, index);

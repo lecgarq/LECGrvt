@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using LECG.Utils;
 using LECG.ViewModels;
 using LECG.Views;
@@ -22,14 +22,17 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // 1. Service
             var service = ServiceLocator.GetRequiredService<ISimplifyPointsService>();
             
             // 2. VM
-            var vm = new SimplifyPointsViewModel();
+            var vm = ServiceLocator.GetRequiredService<SimplifyPointsViewModel>();
             
             // 3. View
-            var view = new SimplifyPointsView(vm, uiDoc);
+            var view = ServiceLocator.CreateWith<SimplifyPointsView>(vm, uiDoc);
              
              // Set owner to Revit window
             WindowInteropHelper helper = new WindowInteropHelper(view);

@@ -5,6 +5,7 @@ using LECG.Core;
 using LECG.Views;
 using LECG.ViewModels;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using System.Linq;
 using CommunityToolkit.Mvvm.Input;
 
@@ -21,14 +22,17 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // Initialize Service & ViewModel
             var service = ServiceLocator.GetRequiredService<ISearchReplaceService>();
-            var vm = new SearchReplaceViewModel();
+            var vm = ServiceLocator.GetRequiredService<SearchReplaceViewModel>();
             
             // Wire up Service
             vm.Initialize(service, doc);
 
-            var view = new SearchReplaceView(vm);
+            var view = ServiceLocator.CreateWith<SearchReplaceView>(vm);
             
             // Wire Up CloseAction
             vm.CloseAction = () => 

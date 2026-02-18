@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using LECG.ViewModels.Components;
 using Autodesk.Revit.DB;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.Core;
 using Microsoft.Win32;
 using System.IO;
@@ -143,6 +144,8 @@ namespace LECG.ViewModels
 
         public void SetSelection(Element e)
         {
+            ArgumentNullException.ThrowIfNull(e);
+
             SelectedElementId = e.Id;
             Selection.UpdateSelection(1);
             

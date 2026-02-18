@@ -14,6 +14,11 @@ namespace LECG.Services
             Action<string> log,
             Action<double, string> progress)
         {
+            ArgumentNullException.ThrowIfNull(view);
+            ArgumentNullException.ThrowIfNull(settings);
+            ArgumentNullException.ThrowIfNull(log);
+            ArgumentNullException.ThrowIfNull(progress);
+
             var decision = SexyRevitGraphicsPolicy.Evaluate(
                 new SexyRevitGraphicsSettings(settings.UseConsistentColors, settings.UseDetailFine));
 

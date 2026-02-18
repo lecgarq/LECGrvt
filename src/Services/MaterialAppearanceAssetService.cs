@@ -24,6 +24,10 @@ namespace LECG.Services
             string? roughPath,
             Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(mat);
+            ArgumentNullException.ThrowIfNull(name);
+
             using (AppearanceAssetEditScope editScope = new AppearanceAssetEditScope(doc))
             {
                 ElementId assetId = mat.AppearanceAssetId;

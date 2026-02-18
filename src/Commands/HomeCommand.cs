@@ -1,6 +1,7 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using LECG.Core;
 using LECG.Views;
 
 namespace LECG.Commands
@@ -10,7 +11,7 @@ namespace LECG.Commands
     {
         public Result Execute(ExternalCommandData data, ref string message, ElementSet elements)
         {
-            var view = new HomeView();
+            var view = ServiceLocator.GetRequiredService<HomeView>();
             // owner is main window handled by base class or helper in ShowDialog if needed
             // For simple view interaction:
             System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(view);
@@ -27,7 +28,7 @@ namespace LECG.Commands
             // Handle Align Master Sub-Menu
             if (selectedTool == "AlignMaster")
             {
-                var alignView = new AlignDashboardView();
+                var alignView = ServiceLocator.GetRequiredService<AlignDashboardView>();
                 System.Windows.Interop.WindowInteropHelper alignHelper = new System.Windows.Interop.WindowInteropHelper(alignView);
                 alignHelper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
 

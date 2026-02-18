@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public (int movedCount, int skippedCount, int missCount) AlignVertices(SlabShapeEditor editor, ReferenceIntersector intersector)
         {
+            ArgumentNullException.ThrowIfNull(editor);
+            ArgumentNullException.ThrowIfNull(intersector);
+
             int movedCount = 0;
             int skippedCount = 0;
             int missCount = 0;

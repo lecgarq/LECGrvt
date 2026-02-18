@@ -2,7 +2,7 @@ using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
 
-namespace LECG.Interfaces
+namespace LECG.Services.Interfaces
 {
     public interface ISimplifyPointsService
     {

@@ -10,6 +10,8 @@ namespace LECG.Services
     {
         public List<Line> MergeCollinearLines(List<Line> sourceLines)
         {
+            ArgumentNullException.ThrowIfNull(sourceLines);
+
             if (sourceLines.Count == 0) return new List<Line>();
 
             var merged = new List<Line>();

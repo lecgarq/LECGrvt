@@ -23,6 +23,9 @@ namespace LECG.Services
 
         public List<ReplaceItem> ProcessPreview(List<ElementData> candidates, SearchReplaceViewModel vm)
         {
+            ArgumentNullException.ThrowIfNull(candidates);
+            ArgumentNullException.ThrowIfNull(vm);
+
             List<ReplaceItem> results = new List<ReplaceItem>();
 
             foreach (ElementData el in candidates)

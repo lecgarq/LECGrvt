@@ -5,7 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using LECG.Core;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 
@@ -18,8 +18,11 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             var service = ServiceLocator.GetRequiredService<IToposolidService>();
-            var vm = new UpdateContoursViewModel();
+            var vm = ServiceLocator.GetRequiredService<UpdateContoursViewModel>();
             
             // Populate ToposolidTypes from document
             var topoTypes = new FilteredElementCollector(doc)
@@ -38,7 +41,7 @@ namespace LECG.Commands
                 });
             }
 
-            var view = new UpdateContoursView(vm);
+            var view = ServiceLocator.CreateWith<UpdateContoursView>(vm);
             bool? result = view.ShowDialog();
 
             if (result == true && vm.ShouldRun)

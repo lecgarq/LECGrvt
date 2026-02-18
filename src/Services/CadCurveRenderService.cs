@@ -26,6 +26,12 @@ namespace LECG.Services
             int total,
             int current)
         {
+            ArgumentNullException.ThrowIfNull(familyDoc);
+            ArgumentNullException.ThrowIfNull(curves);
+            ArgumentNullException.ThrowIfNull(toOrigin);
+            ArgumentNullException.ThrowIfNull(planView);
+            ArgumentNullException.ThrowIfNull(lineStyle);
+
             foreach (Curve c in curves)
             {
                 current++;

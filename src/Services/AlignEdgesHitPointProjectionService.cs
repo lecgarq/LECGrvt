@@ -14,6 +14,10 @@ namespace LECG.Services
 
         public XYZ? ResolveHitPoint(ReferenceIntersector intersector, XYZ sketchPt, XYZ curveMid)
         {
+            ArgumentNullException.ThrowIfNull(intersector);
+            ArgumentNullException.ThrowIfNull(sketchPt);
+            ArgumentNullException.ThrowIfNull(curveMid);
+
             XYZ? hitPt = _referenceRaycastService.GetHitPoint(intersector, sketchPt);
             if (hitPt != null)
             {

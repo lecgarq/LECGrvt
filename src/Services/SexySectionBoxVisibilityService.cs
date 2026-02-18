@@ -9,6 +9,12 @@ namespace LECG.Services
     {
         public void Apply(Document doc, View view, SexyRevitViewModel settings, Action<string> log, Action<double, string> progress)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(view);
+            ArgumentNullException.ThrowIfNull(settings);
+            ArgumentNullException.ThrowIfNull(log);
+            ArgumentNullException.ThrowIfNull(progress);
+
             if (!(settings.HideSectionBox && view is View3D))
             {
                 return;

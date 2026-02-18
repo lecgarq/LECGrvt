@@ -19,6 +19,8 @@ namespace LECG.Services
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             if (mat == null) return;
             try { mat.UseRenderAppearanceForShading = true; } catch { }
             doc.Regenerate();

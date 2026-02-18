@@ -670,8 +670,8 @@ public void ApplyBeauty_SetsDisplayStyle_ToRealistic()
 - Consistent dependency resolution
 
 ### 2. Interface Consolidation
-- Move all interfaces to `src/Services/Interfaces/`
-- Delete `src/Interfaces/` directory
+- Keep all service interfaces in `src/Services/Interfaces/`
+- Enforce `namespace LECG.Services.Interfaces` for that folder
 
 ### 3. Service Decomposition
 - Break large services (CadConversionService 566 LOC) into smaller focused services

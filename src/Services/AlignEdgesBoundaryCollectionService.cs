@@ -16,6 +16,10 @@ namespace LECG.Services
 
         public List<XYZ> Collect(Document doc, Toposolid toposolid, ReferenceIntersector intersector, double minSpacing, double maxSpacing)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(toposolid);
+            ArgumentNullException.ThrowIfNull(intersector);
+
             List<XYZ> points = new List<XYZ>();
 
             try

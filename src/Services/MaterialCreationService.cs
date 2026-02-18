@@ -9,6 +9,10 @@ namespace LECG.Services
     {
         public ElementId GetOrCreateMaterial(Document doc, string name, Color color, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(color);
+
             Material? existing = new FilteredElementCollector(doc).OfClass(typeof(Material)).Cast<Material>()
                 .FirstOrDefault(m => m.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
 

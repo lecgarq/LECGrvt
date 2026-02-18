@@ -2,7 +2,7 @@ using System;
 using Autodesk.Revit.DB;
 using LECG.ViewModels;
 
-namespace LECG.Services
+namespace LECG.Services.Interfaces
 {
     public interface ISexyRevitService
     {

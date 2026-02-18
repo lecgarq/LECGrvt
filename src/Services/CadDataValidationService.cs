@@ -7,6 +7,9 @@ namespace LECG.Services
     {
         public void EnsureHasGeometry(CadData data, string emptyDataMessage)
         {
+            ArgumentNullException.ThrowIfNull(data);
+            ArgumentNullException.ThrowIfNull(emptyDataMessage);
+
             if (!data.Curves.Any() && !data.Hatches.Any())
             {
                 throw new Exception(emptyDataMessage);

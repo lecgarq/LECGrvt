@@ -7,6 +7,9 @@ namespace LECG.Services
     {
         public XYZ Calculate(BoundingBoxXYZ referenceBox, BoundingBoxXYZ targetBox, AlignMode mode)
         {
+            ArgumentNullException.ThrowIfNull(referenceBox);
+            ArgumentNullException.ThrowIfNull(targetBox);
+
             switch (mode)
             {
                 case AlignMode.Left:

@@ -21,6 +21,9 @@ namespace LECG.Services
 
         public CadData ExtractGeometry(Document doc, ImportInstance imp)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(imp);
+
             CadData data = new CadData();
             GeometryElement geoElem = imp.get_Geometry(new Options());
 

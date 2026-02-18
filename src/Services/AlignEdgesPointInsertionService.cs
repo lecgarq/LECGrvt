@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public void AddPoints(SlabShapeEditor editor, IEnumerable<XYZ> points)
         {
+            ArgumentNullException.ThrowIfNull(editor);
+            ArgumentNullException.ThrowIfNull(points);
+
             foreach (XYZ point in points)
             {
                 try

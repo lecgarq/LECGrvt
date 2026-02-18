@@ -8,6 +8,8 @@ namespace LECG.Views
     {
         public UpdateContoursView(UpdateContoursViewModel vm)
         {
+            ArgumentNullException.ThrowIfNull(vm);
+
             InitializeComponent();
             DataContext = vm;
             vm.CloseAction = () =>

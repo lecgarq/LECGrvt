@@ -11,6 +11,9 @@ namespace LECG.Services
             List<(Element Element, BoundingBoxXYZ Box, double Position)> sortedItems,
             AlignMode mode)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(sortedItems);
+
             var first = sortedItems[0];
             var last = sortedItems[sortedItems.Count - 1];
 

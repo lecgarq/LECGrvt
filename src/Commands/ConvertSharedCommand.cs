@@ -10,6 +10,8 @@ namespace LECG.Commands
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
+            ArgumentNullException.ThrowIfNull(commandData);
+
             UIDocument uiDoc = commandData.Application.ActiveUIDocument;
             Document doc = uiDoc.Document;
 

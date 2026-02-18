@@ -54,6 +54,7 @@ public static class RenameRuleEngine
 {
     public static string ApplyReplace(string text, ReplaceRuleOptions options, int index = 0)
     {
+        ArgumentNullException.ThrowIfNull(options);
         if (!options.IsActive || string.IsNullOrEmpty(text) || string.IsNullOrEmpty(options.FindText)) return text;
 
         if (options.UseRegex)
@@ -75,6 +76,7 @@ public static class RenameRuleEngine
 
     public static string ApplyRemove(string text, RemoveRuleOptions options, int index = 0)
     {
+        ArgumentNullException.ThrowIfNull(options);
         if (!options.IsActive || string.IsNullOrEmpty(text)) return text;
         var result = text;
 
@@ -106,6 +108,7 @@ public static class RenameRuleEngine
 
     public static string ApplyAdd(string text, AddRuleOptions options, int index = 0)
     {
+        ArgumentNullException.ThrowIfNull(options);
         if (!options.IsActive) return text;
         var result = text ?? string.Empty;
 
@@ -132,6 +135,7 @@ public static class RenameRuleEngine
 
     public static string ApplyCase(string text, CaseRuleOptions options, int index = 0)
     {
+        ArgumentNullException.ThrowIfNull(options);
         if (!options.IsActive || string.IsNullOrEmpty(text)) return text;
 
         return options.Mode switch
@@ -146,6 +150,7 @@ public static class RenameRuleEngine
 
     public static string ApplyNumbering(string text, NumberingRuleOptions options, int index = 0)
     {
+        ArgumentNullException.ThrowIfNull(options);
         if (!options.IsActive) return text;
 
         var val = options.StartAt + (index * options.Increment);

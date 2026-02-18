@@ -8,6 +8,9 @@ namespace LECG.Services
     {
         public List<Curve> Extract(PolyLine poly, Transform currentTransform)
         {
+            ArgumentNullException.ThrowIfNull(poly);
+            ArgumentNullException.ThrowIfNull(currentTransform);
+
             List<Curve> result = new List<Curve>();
             IList<XYZ> points = poly.GetCoordinates();
             for (int i = 0; i < points.Count - 1; i++)

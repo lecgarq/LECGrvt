@@ -647,29 +647,13 @@ Views (18)
 
 ---
 
-## Interface Locations (Inconsistent ⚠️)
+## Interface Locations (Standardized)
 
-### Interfaces in `src/Interfaces/` (Old Location)
+All service interfaces live in `src/Services/Interfaces/`.
 
-1. `IAlignEdgesService.cs`
-2. `IChangeLevelService.cs`
-3. `IFamilyConversionService.cs`
-4. `ISimplifyPointsService.cs`
-5. `IToposolidService.cs`
-
-### Interfaces in `src/Services/Interfaces/` (New Location)
-
-1. `IAlignElementsService.cs`
-2. `ICadConversionService.cs`
-3. `IMaterialService.cs`
-4. `IOffsetService.cs`
-5. `IPurgeService.cs`
-6. `ISchemaCleanerService.cs`
-7. `ISearchReplaceService.cs`
-8. `ISexyRevitService.cs`
-9. `ISlabService.cs`
-
-**Recommendation**: Move all interfaces to `src/Services/Interfaces/` and delete `src/Interfaces/`.
+**Namespace Rule**:
+- Every service interface in that folder uses `LECG.Services.Interfaces`.
+- Interface consumers import `using LECG.Services.Interfaces;`.
 
 ---
 
@@ -698,8 +682,8 @@ Views (18)
 ## Missing Components (Gaps)
 
 ### 1. Interfaces Not in DI
-- 5 interfaces in wrong location (`src/Interfaces/`)
-- Need to consolidate to `src/Services/Interfaces/`
+- Interface locations are consolidated under `src/Services/Interfaces/`
+- Keep new interfaces in `LECG.Services.Interfaces`
 
 ### 2. ViewModels Not Registered (15/18)
 - Most ViewModels are not in DI container

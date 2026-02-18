@@ -5,6 +5,7 @@ using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Views;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 
 namespace LECG.Commands
@@ -20,14 +21,27 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             View view = doc.ActiveView;
             if (view == null) throw new Exception("No active view.");
 
             // 1. Load Settings
-            var settings = SettingsManager.Load<SexyRevitViewModel>("SexyRevitSettings.json");
+            var loadedSettings = SettingsManager.Load<SexyRevitViewModel>("SexyRevitSettings.json");
+            var settings = ServiceLocator.GetRequiredService<SexyRevitViewModel>();
+            settings.UseConsistentColors = loadedSettings.UseConsistentColors;
+            settings.UseSmoothLines = loadedSettings.UseSmoothLines;
+            settings.UseDetailFine = loadedSettings.UseDetailFine;
+            settings.HideLevels = loadedSettings.HideLevels;
+            settings.HideGrids = loadedSettings.HideGrids;
+            settings.HideRefPoints = loadedSettings.HideRefPoints;
+            settings.HideScopeBox = loadedSettings.HideScopeBox;
+            settings.HideSectionBox = loadedSettings.HideSectionBox;
+            settings.ConfigureSun = loadedSettings.ConfigureSun;
 
             // 2. Show Dialog
-            SexyRevitView dialog = new SexyRevitView(settings);
+            SexyRevitView dialog = ServiceLocator.CreateWith<SexyRevitView>(settings);
             if (dialog.ShowDialog() != true) return;
 
             // 3. Save Settings

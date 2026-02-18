@@ -10,6 +10,8 @@ namespace LECG.Core
     {
         public bool IsCommandAvailable(UIApplication applicationData, CategorySet selectedCategories)
         {
+            ArgumentNullException.ThrowIfNull(applicationData);
+
             if (applicationData.ActiveUIDocument == null || applicationData.ActiveUIDocument.Document == null)
                 return false;
 

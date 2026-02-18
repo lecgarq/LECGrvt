@@ -16,6 +16,9 @@ namespace LECG.Services
 
         public FamilySymbol? LoadAndResolvePrimarySymbol(Document doc, string path)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(path);
+
             Family? family;
             doc.LoadFamily(path, _familyLoadOptionsFactory.Create(), out family);
             if (family == null)

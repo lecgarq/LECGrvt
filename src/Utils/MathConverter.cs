@@ -15,6 +15,8 @@ namespace LECG.Utils
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+             ArgumentNullException.ThrowIfNull(values);
+
              // For progress bar width: values[0] = progress (0-100), values[1] = total width
              if (values.Length == 2 && values[0] is double progress && values[1] is double totalWidth)
              {

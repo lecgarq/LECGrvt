@@ -9,6 +9,11 @@ namespace LECG.Services
     {
         public void Apply(View view, SexyRevitViewModel settings, Action<string> log, Action<double, string> progress)
         {
+            ArgumentNullException.ThrowIfNull(view);
+            ArgumentNullException.ThrowIfNull(settings);
+            ArgumentNullException.ThrowIfNull(log);
+            ArgumentNullException.ThrowIfNull(progress);
+
             if (!(settings.ConfigureSun && view is View3D v3d))
             {
                 return;

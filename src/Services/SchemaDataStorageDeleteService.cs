@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public int DeleteDataStorageElements(Document doc, IEnumerable<ElementId> ids, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(ids);
+
             int deleted = 0;
             foreach (ElementId id in ids)
             {

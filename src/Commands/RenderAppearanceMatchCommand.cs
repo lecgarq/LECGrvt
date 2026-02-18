@@ -5,6 +5,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.Views;
 using System;
 using System.Collections.Generic;
@@ -25,12 +26,15 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // 2. Initial Setup
             var matService = ServiceLocator.GetRequiredService<IMaterialService>();
 
             // VM & View
-            var vm = new RenderAppearanceViewModel();
-            var view = new RenderAppearanceView(vm, uiDoc);
+            var vm = ServiceLocator.GetRequiredService<RenderAppearanceViewModel>();
+            var view = ServiceLocator.CreateWith<RenderAppearanceView>(vm, uiDoc);
              
              // Set owner to Revit window
             WindowInteropHelper helper = new WindowInteropHelper(view);

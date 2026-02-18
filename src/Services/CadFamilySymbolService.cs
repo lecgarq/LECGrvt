@@ -8,6 +8,9 @@ namespace LECG.Services
     {
         public FamilySymbol? GetPrimarySymbol(Document doc, Family family)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(family);
+
             var symbolId = family.GetFamilySymbolIds().FirstOrDefault();
             if (symbolId == null) return null;
 

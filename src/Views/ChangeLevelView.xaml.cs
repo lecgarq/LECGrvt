@@ -13,6 +13,9 @@ namespace LECG.Views
 
         public ChangeLevelView(ChangeLevelViewModel vm, UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(vm);
+            ArgumentNullException.ThrowIfNull(uiDoc);
+
             InitializeComponent();
             DataContext = vm;
             _uiDoc = uiDoc;

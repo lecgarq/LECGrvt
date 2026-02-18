@@ -14,6 +14,9 @@ namespace LECG.Views
 
         public OffsetElevationsView(OffsetElevationsVM vm, UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(vm);
+            ArgumentNullException.ThrowIfNull(uiDoc);
+
             InitializeComponent();
             DataContext = vm;
             _uiDoc = uiDoc;

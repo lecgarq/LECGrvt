@@ -7,6 +7,9 @@ namespace LECG.Services
     {
         public bool CheckHitsReference(ReferenceIntersector intersector, XYZ pt)
         {
+            ArgumentNullException.ThrowIfNull(intersector);
+            ArgumentNullException.ThrowIfNull(pt);
+
             XYZ rayStart = new XYZ(pt.X, pt.Y, 10000);
             ReferenceWithContext hit = intersector.FindNearest(rayStart, XYZ.BasisZ.Negate());
             if (hit != null) return true;
@@ -18,6 +21,9 @@ namespace LECG.Services
 
         public XYZ? GetHitPoint(ReferenceIntersector intersector, XYZ pt)
         {
+            ArgumentNullException.ThrowIfNull(intersector);
+            ArgumentNullException.ThrowIfNull(pt);
+
             XYZ rayStart = new XYZ(pt.X, pt.Y, 10000);
             XYZ rayDir = XYZ.BasisZ.Negate();
             ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);

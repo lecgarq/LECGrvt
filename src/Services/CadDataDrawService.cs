@@ -23,6 +23,12 @@ namespace LECG.Services
 
         public void Draw(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
         {
+            ArgumentNullException.ThrowIfNull(familyDoc);
+            ArgumentNullException.ThrowIfNull(data);
+            ArgumentNullException.ThrowIfNull(offset);
+            ArgumentNullException.ThrowIfNull(styleName);
+            ArgumentNullException.ThrowIfNull(color);
+
             (GraphicsStyle lineStyle, View planView, Transform toOrigin) = _renderContextService.Create(familyDoc, offset, styleName, color, weight);
 
             int total = data.Curves.Count + data.Hatches.Count;

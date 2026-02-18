@@ -8,6 +8,8 @@ namespace LECG.Services
     {
         public IList<double> ToList(DoubleArray values)
         {
+            ArgumentNullException.ThrowIfNull(values);
+
             var list = new List<double>();
             for (int i = 0; i < values.Size; i++)
             {

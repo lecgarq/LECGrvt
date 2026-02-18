@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public List<(Element Element, BoundingBoxXYZ Box, double Position)> BuildAndSort(Document doc, List<Element> elements, AlignMode mode)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elements);
+
             List<(Element Element, BoundingBoxXYZ Box, double Position)> sortedItems = new List<(Element, BoundingBoxXYZ, double)>();
 
             foreach (Element el in elements)

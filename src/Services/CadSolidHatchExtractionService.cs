@@ -8,6 +8,11 @@ namespace LECG.Services
     {
         public List<HatchData> Extract(Document doc, GeometryObject sourceObject, Solid solid, Transform currentTransform)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(sourceObject);
+            ArgumentNullException.ThrowIfNull(solid);
+            ArgumentNullException.ThrowIfNull(currentTransform);
+
             List<HatchData> result = new List<HatchData>();
             Color c = GetColor(doc, sourceObject.GraphicsStyleId);
 

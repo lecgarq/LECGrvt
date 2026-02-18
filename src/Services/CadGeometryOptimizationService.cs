@@ -19,6 +19,8 @@ namespace LECG.Services
 
         public CadData Optimize(CadData input)
         {
+            ArgumentNullException.ThrowIfNull(input);
+
             CadData output = new CadData();
             output.Hatches.AddRange(input.Hatches);
 

@@ -13,6 +13,9 @@ namespace LECG.Views
 
         public RenderAppearanceView(RenderAppearanceViewModel vm, UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(vm);
+            ArgumentNullException.ThrowIfNull(uiDoc);
+
             InitializeComponent();
             DataContext = vm;
             _uiDoc = uiDoc;

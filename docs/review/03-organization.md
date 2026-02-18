@@ -19,7 +19,6 @@ LECG/
 │   ├── Configuration/             ← Constants and configuration
 │   ├── Core/                      ← Infrastructure and base classes
 │   │   └── Ribbon/                ← Ribbon UI initialization
-│   ├── Interfaces/                ← ⚠️ DEPRECATED - Move to Services/Interfaces
 │   ├── Services/                  ← Business logic and Revit API
 │   │   ├── Interfaces/            ← Service interfaces (preferred location)
 │   │   └── Logging/               ← Logging infrastructure
@@ -434,18 +433,13 @@ public static class RevitConstants
 
 ---
 
-### `src/Interfaces/` ⚠️ DEPRECATED
+### Interface Location Rule
 
-**Status**: **DEPRECATED** - Move all interfaces to `src/Services/Interfaces/`
+**Status**: **COMPLETED** - All service interfaces are in `src/Services/Interfaces/`
 
-**Current Contents** (to be moved):
-- `IAlignEdgesService.cs`
-- `IChangeLevelService.cs`
-- `IFamilyConversionService.cs`
-- `ISimplifyPointsService.cs`
-- `IToposolidService.cs`
-
-**Action**: Move these files to `src/Services/Interfaces/` and delete this directory.
+**Namespace Rule**:
+- Every interface in `src/Services/Interfaces/` must use `namespace LECG.Services.Interfaces`
+- Consume interfaces with `using LECG.Services.Interfaces;`
 
 ---
 
@@ -486,7 +480,7 @@ public static class RevitConstants
 |-----------|-----------|
 | `src/Commands/` | `LECG.Commands` |
 | `src/Services/` | `LECG.Services` |
-| `src/Services/Interfaces/` | `LECG.Services.Interfaces` (preferred) or `LECG.Interfaces` (deprecated) |
+| `src/Services/Interfaces/` | `LECG.Services.Interfaces` |
 | `src/ViewModels/` | `LECG.ViewModels` |
 | `src/Views/` | `LECG.Views` |
 | `src/Core/` | `LECG.Core` |
@@ -507,7 +501,7 @@ public static class RevitConstants
 ### Inconsistencies to Be Aware Of
 
 - **ViewModel suffix**: Some use `ViewModel`, others use `VM` (both acceptable, but inconsistent)
-- **Interface location**: Split between `src/Interfaces/` and `src/Services/Interfaces/` (consolidate to latter)
+- **Interface namespace rule**: Use `LECG.Services.Interfaces` for all service interfaces
 - **Image location**: Split between `img/` and `src/Resources/Images/` (prefer latter)
 
 ---
@@ -527,7 +521,7 @@ public static class RevitConstants
 - `src/Services/Interfaces/IRenumberService.cs`
 
 **Steps**:
-1. Define interface in `Interfaces/IRenumberService.cs`
+1. Define interface in `src/Services/Interfaces/IRenumberService.cs`
 2. Implement in `RenumberService.cs`
 3. Register in `Bootstrapper.ConfigureServices()`:
    ```csharp

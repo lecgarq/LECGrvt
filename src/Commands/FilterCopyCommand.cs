@@ -14,8 +14,11 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
-            var viewModel = new FilterCopyViewModel(doc);
-            var view = new FilterCopyView(viewModel);
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
+            var viewModel = ServiceLocator.CreateWith<FilterCopyViewModel>(doc);
+            var view = ServiceLocator.CreateWith<FilterCopyView>(viewModel);
             view.ShowDialog();
         }
     }

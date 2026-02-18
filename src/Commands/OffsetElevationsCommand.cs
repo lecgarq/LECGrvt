@@ -9,6 +9,7 @@ using LECG.Core;
 using LECG.Views;
 using LECG.ViewModels;
 using LECG.Services;
+using LECG.Services.Interfaces;
 
 namespace LECG.Commands
 {
@@ -22,20 +23,18 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             var offsetService = ServiceLocator.GetRequiredService<IOffsetService>();
 
             // 1. Settings & Dialog
-            var settings = SettingsManager.Load<OffsetElevationsVM>("OffsetSettings.json");
-            // Ensure Selection is clean if loaded
-            if (settings.Selection == null)
-            {
-                var freshVm = new OffsetElevationsVM();
-                freshVm.OffsetValue = settings.OffsetValue;
-                freshVm.IsAddition = settings.IsAddition;
-                settings = freshVm;
-            }
+            var loadedSettings = SettingsManager.Load<OffsetElevationsVM>("OffsetSettings.json");
+            var settings = ServiceLocator.GetRequiredService<OffsetElevationsVM>();
+            settings.OffsetValue = loadedSettings.OffsetValue;
+            settings.IsAddition = loadedSettings.IsAddition;
             
-            OffsetElevationsView view = new OffsetElevationsView(settings, uiDoc);
+            OffsetElevationsView view = ServiceLocator.CreateWith<OffsetElevationsView>(settings, uiDoc);
              
              // Set owner to Revit window
             WindowInteropHelper helper = new WindowInteropHelper(view);

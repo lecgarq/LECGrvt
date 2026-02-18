@@ -1127,49 +1127,53 @@ MaterialService (deprecated, backward compatibility wrapper)
 **Priority**: 🟡 Medium
 **Effort**: 4 hours
 **Impact**: Medium (automation, quality)
+**Status**: Completed
 
-**Goal**: Automated builds, tests, and deployment
+**Goal**: Automated Revit-free builds/tests on hosted CI
 
 **Platform Options**:
 - GitHub Actions (if public repo)
 - Azure DevOps
 - GitLab CI
 
-**Workflow** (GitHub Actions example):
+**Implemented Workflow**:
 
-**`.github/workflows/build.yml`**:
+**`.github/workflows/ci.yml`**:
 ```yaml
-name: Build and Test
+name: ci
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
-  build:
+  core-tests:
     runs-on: windows-latest
+    timeout-minutes: 20
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        cache: true
 
     - name: Restore dependencies
       run: dotnet restore
 
-    - name: Build
-      run: dotnet build --no-restore --configuration Release
+    - name: Build core
+      run: dotnet build LECG.Core/LECG.Core.csproj -c Release --no-restore
 
     - name: Run tests
-      run: dotnet test --no-build --configuration Release --verbosity normal
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: LECG-Release
-        path: bin/Release/net8.0-windows/
+      run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-build
 ```
+
+**Final CI Decision**:
+- CI runs on `windows-latest` without Revit installed.
+- CI validates `LECG.Core` + `LECG.Tests` only.
+- Plugin build remains local/Revit-installed or self-hosted.
 
 **Benefits**:
 - Automated testing on every commit
@@ -1185,11 +1189,12 @@ jobs:
 **Priority**: 🟢 Low
 **Effort**: 2 hours
 **Impact**: Medium (code quality)
+**Status**: Completed
 
 **Tools**:
 - **SonarQube** or **SonarCloud** (comprehensive)
 - **Roslyn Analyzers** (built into Visual Studio)
-- **StyleCop** (code style)
+- **StyleCop** (deferred to future rollout)
 
 **Implementation** (Roslyn Analyzers):
 
@@ -1197,11 +1202,6 @@ Add to `LECG.csproj`:
 ```xml
 <ItemGroup>
   <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
-    <PrivateAssets>all</PrivateAssets>
-    <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-  </PackageReference>
-
-  <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.507">
     <PrivateAssets>all</PrivateAssets>
     <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
   </PackageReference>
@@ -1213,7 +1213,22 @@ Configure in `.editorconfig`:
 [*.cs]
 # Enforce code style
 dotnet_diagnostic.IDE0055.severity = warning
+
+# Soft rollout for quality analyzers
+dotnet_diagnostic.CA1062.severity = suggestion
+dotnet_diagnostic.CA2000.severity = suggestion
+dotnet_diagnostic.CA2016.severity = suggestion
+
+[LECG.Core/**/*.cs]
+dotnet_diagnostic.CA1062.severity = warning
+dotnet_diagnostic.CA2000.severity = warning
+dotnet_diagnostic.CA2016.severity = warning
 ```
+
+**Verification**:
+- `dotnet build -c Debug -p:WarningsAsErrors=CA1062`
+- `dotnet build -c Debug -p:WarningsAsErrors=CA2000`
+- `dotnet build -c Debug -p:WarningsAsErrors=CA2016`
 
 **Benefits**:
 - Catch code smells early
@@ -1229,6 +1244,7 @@ dotnet_diagnostic.IDE0055.severity = warning
 **Priority**: 🟢 Low
 **Effort**: 4 hours
 **Impact**: Low (onboarding)
+**Status**: Completed
 
 **Goal**: Visual architecture diagrams
 
@@ -1259,7 +1275,13 @@ graph TD
     Service --> RevitAPI[Revit API]
 ```
 
-**Location**: `docs/diagrams/`
+**Location**: `docs/review/diagrams/`
+
+**Implemented Files**:
+- `docs/review/diagrams/component-dependency.md`
+- `docs/review/diagrams/startup-sequence.md`
+- `docs/review/diagrams/command-execution-flow.md`
+- `docs/review/diagrams/service-interaction.md`
 
 **Benefits**:
 - Easier onboarding for new developers

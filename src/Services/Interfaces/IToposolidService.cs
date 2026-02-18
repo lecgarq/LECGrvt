@@ -1,6 +1,6 @@
 using Autodesk.Revit.DB;
 
-namespace LECG.Interfaces
+namespace LECG.Services.Interfaces
 {
     public interface IToposolidService
     {

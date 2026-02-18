@@ -6,6 +6,8 @@ namespace LECG.Views
     {
         public PurgeView(PurgeViewModel vm)
         {
+            ArgumentNullException.ThrowIfNull(vm);
+
             InitializeComponent();
             DataContext = vm;
             vm.CloseAction = () =>

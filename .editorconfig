@@ -1,0 +1,18 @@
+root = true
+
+[*.cs]
+# Controlled analyzer rollout: opt in rule-by-rule.
+dotnet_analyzer_diagnostic.severity = none
+
+# Formatting consistency.
+dotnet_diagnostic.IDE0055.severity = warning
+
+# Initial quality gate set (soft rollout).
+dotnet_diagnostic.CA1062.severity = warning
+dotnet_diagnostic.CA2000.severity = suggestion
+dotnet_diagnostic.CA2016.severity = suggestion
+
+[LECG.Core/**/*.cs]
+dotnet_diagnostic.CA1062.severity = warning
+dotnet_diagnostic.CA2000.severity = warning
+dotnet_diagnostic.CA2016.severity = warning

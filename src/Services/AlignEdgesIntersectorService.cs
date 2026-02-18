@@ -10,6 +10,9 @@ namespace LECG.Services
     {
         public ReferenceIntersector Create(Document doc, IList<Reference> references)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(references);
+
             ICollection<ElementId> refElementIds = references
                 .Select(r => doc.GetElement(r)?.Id)
                 .Where(id => id != null)

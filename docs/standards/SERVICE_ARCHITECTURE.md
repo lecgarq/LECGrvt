@@ -19,10 +19,12 @@ The LECG project uses **Dependency Injection (DI)** (via `Microsoft.Extensions.D
 
 ### Step 1: Define Interface
 
-Create an interface in `src/Interfaces`. This contracts *what* the service does, not *how*.
+Create an interface in `src/Services/Interfaces`. This contracts *what* the service does, not *how*.
 
 ```csharp
-// src/Interfaces/IMyService.cs
+// src/Services/Interfaces/IMyService.cs
+namespace LECG.Services.Interfaces;
+
 public interface IMyService
 {
     void DoWork(Document doc);

@@ -4,6 +4,7 @@ using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Views;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
@@ -21,12 +22,15 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // 1. Resolve Service
             var service = ServiceLocator.GetRequiredService<IMaterialService>();
 
             // 2. Initialize VM & View
-            var vm = new AssignMaterialViewModel(service);
-            var view = new AssignMaterialView(vm, uiDoc);
+            var vm = ServiceLocator.GetRequiredService<AssignMaterialViewModel>();
+            var view = ServiceLocator.CreateWith<AssignMaterialView>(vm, uiDoc);
 
             WindowInteropHelper helper = new WindowInteropHelper(view);
             helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;

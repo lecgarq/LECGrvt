@@ -15,6 +15,10 @@ namespace LECG.Services
 
         public void Place(Document doc, FamilySymbol symbol, XYZ location)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(symbol);
+            ArgumentNullException.ThrowIfNull(location);
+
             View? placementView = _placementViewService.ResolvePlacementView(doc, doc.ActiveView);
             if (placementView != null)
             {

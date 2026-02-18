@@ -1,6 +1,6 @@
 using Autodesk.Revit.DB;
 using LECG.Utils;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
@@ -55,6 +55,8 @@ namespace LECG.ViewModels
 
         public void SetSelectedElements(List<Element> elements)
         {
+            ArgumentNullException.ThrowIfNull(elements);
+
             _selectedElements = elements;
             Selection.UpdateSelection(elements.Count);
         }

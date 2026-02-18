@@ -7,6 +7,10 @@ namespace LECG.Services
     {
         public GraphicsStyle CreateOrUpdateDetailLineStyle(Document familyDoc, string styleName, Color color, int weight)
         {
+            ArgumentNullException.ThrowIfNull(familyDoc);
+            ArgumentNullException.ThrowIfNull(styleName);
+            ArgumentNullException.ThrowIfNull(color);
+
             Category detailCategory = familyDoc.Settings.Categories.get_Item(BuiltInCategory.OST_DetailComponents);
             Category subCategory = detailCategory.SubCategories.Contains(styleName)
                 ? detailCategory.SubCategories.get_Item(styleName)

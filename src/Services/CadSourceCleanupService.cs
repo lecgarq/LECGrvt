@@ -7,6 +7,9 @@ namespace LECG.Services
     {
         public void DeleteOriginalIfPresent(Document doc, ElementId deleteId)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(deleteId);
+
             if (deleteId == null || deleteId == ElementId.InvalidElementId)
             {
                 return;

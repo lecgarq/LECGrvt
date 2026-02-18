@@ -25,6 +25,10 @@ namespace LECG.Services
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(name);
+            ArgumentNullException.ThrowIfNull(folderPath);
+
             ElementId matId = ElementId.InvalidElementId;
             using (Transaction t = new Transaction(doc, "Create Material"))
             {

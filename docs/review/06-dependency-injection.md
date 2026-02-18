@@ -107,6 +107,7 @@ public static class Bootstrapper
     {
         // Core
         services.AddSingleton<IRibbonService, RibbonService>();
+        services.AddSingleton<ILogger>(_ => Logger.Instance);
 
         // Domain Services (all Singletons)
         services.AddSingleton<ISlabService, SlabService>();
@@ -127,26 +128,44 @@ public static class Bootstrapper
 
     private static void ConfigureViewModels(IServiceCollection services)
     {
-        // ⚠️ Currently only 3/18 registered (incomplete)
         services.AddTransient<ResetSlabsVM>();
         services.AddTransient<ConvertFamilyViewModel>();
         services.AddTransient<ConvertCadViewModel>();
-
-        // TODO: Register remaining ViewModels
-        // services.AddTransient<SexyRevitViewModel>();
-        // services.AddTransient<PurgeViewModel>();
-        // ... (15 more)
+        services.AddTransient<SexyRevitViewModel>();
+        services.AddTransient<PurgeViewModel>();
+        services.AddTransient<SearchReplaceViewModel>();
+        services.AddTransient<AssignMaterialViewModel>();
+        services.AddTransient<OffsetElevationsVM>();
+        services.AddTransient<AlignEdgesViewModel>();
+        services.AddTransient<UpdateContoursViewModel>();
+        services.AddTransient<ChangeLevelViewModel>();
+        services.AddTransient<AlignElementsViewModel>();
+        services.AddTransient<SimplifyPointsViewModel>();
+        services.AddTransient<FilterCopyViewModel>();
+        services.AddTransient<LogViewModel>();
+        services.AddTransient<RenderAppearanceViewModel>();
     }
 
     private static void ConfigureViews(IServiceCollection services)
     {
-        // ⚠️ Currently only 1/18 registered (incomplete)
         services.AddTransient<Views.ResetSlabsView>();
-
-        // TODO: Register remaining Views
-        // services.AddTransient<Views.SexyRevitView>();
-        // services.AddTransient<Views.PurgeView>();
-        // ... (17 more)
+        services.AddTransient<Views.SexyRevitView>();
+        services.AddTransient<Views.PurgeView>();
+        services.AddTransient<Views.SearchReplaceView>();
+        services.AddTransient<Views.AssignMaterialView>();
+        services.AddTransient<Views.OffsetElevationsView>();
+        services.AddTransient<Views.AlignEdgesView>();
+        services.AddTransient<Views.UpdateContoursView>();
+        services.AddTransient<Views.ChangeLevelView>();
+        services.AddTransient<Views.AlignElementsView>();
+        services.AddTransient<Views.SimplifyPointsView>();
+        services.AddTransient<Views.FilterCopyView>();
+        services.AddTransient<Views.ConvertCadView>();
+        services.AddTransient<Views.ConvertFamilyView>();
+        services.AddTransient<Views.LogView>();
+        services.AddTransient<Views.HomeView>();
+        services.AddTransient<Views.AlignDashboardView>();
+        services.AddTransient<Views.RenderAppearanceView>();
     }
 }
 ```
@@ -172,8 +191,8 @@ public static class ServiceLocator
         return (T?)ServiceProvider?.GetService(typeof(T));
     }
 
-    public static T GetRequiredService<T>() where T : notnull
-    {
+public static T GetRequiredService<T>() where T : notnull
+{
         if (ServiceProvider == null)
         {
             throw new InvalidOperationException("ServiceLocator has not been initialized.");
@@ -186,14 +205,25 @@ public static class ServiceLocator
             throw new InvalidOperationException($"Service of type {typeof(T).Name} could not be resolved.");
         }
 
-        return (T)service;
+    return (T)service;
+}
+
+public static T CreateWith<T>(params object[] args) where T : notnull
+{
+    if (ServiceProvider == null)
+    {
+        throw new InvalidOperationException("ServiceLocator has not been initialized.");
     }
+
+    return ActivatorUtilities.CreateInstance<T>(ServiceProvider, args);
+}
 }
 ```
 
 **Key Methods**:
 - `GetService<T>()` - Returns `null` if service not found
 - `GetRequiredService<T>()` - Throws exception if service not found (prefer this)
+- `CreateWith<T>(args...)` - Creates registered types that require runtime arguments (e.g., `UIDocument`, `Document`, mode)
 
 ---
 
@@ -311,18 +341,13 @@ private static void ConfigureViewModels(IServiceCollection services)
 
 **3. Resolve in Command**:
 ```csharp
-// Option A: Resolve from DI (after registration)
+// Resolve from DI
 var vm = ServiceLocator.GetRequiredService<MyFeatureViewModel>();
 
-// Option B: Create manually + load settings (current pattern)
-var vm = SettingsManager.Load<MyFeatureViewModel>("MyFeatureSettings.json");
-
-// Option C (future): Resolve + inject settings
-var vm = ServiceLocator.GetRequiredService<MyFeatureViewModel>();
-vm.LoadSettings("MyFeatureSettings.json");
+// Optional: load persisted settings and copy into DI instance
+var saved = SettingsManager.Load<MyFeatureViewModel>("MyFeatureSettings.json");
+vm.SomeOption = saved.SomeOption;
 ```
-
-**Current State**: Most commands use Option B (`new` or `SettingsManager.Load`)
 
 ---
 
@@ -357,21 +382,9 @@ private static void ConfigureViews(IServiceCollection services)
 
 **3. Use in Command**:
 ```csharp
-// Option A: Resolve from DI (after registration)
-var vm = new MyFeatureViewModel();
-var view = ServiceLocator.GetRequiredService<Views.MyFeatureView>();
-// Note: Must pass VM to constructor, so this doesn't work well
-
-// Option B: Create manually (current pattern)
-var vm = new MyFeatureViewModel();
-var view = new MyFeatureView(vm);
-
-// Option C (future): Factory pattern
-var viewFactory = ServiceLocator.GetRequiredService<IViewFactory>();
-var view = viewFactory.Create<MyFeatureView, MyFeatureViewModel>(vm);
+var vm = ServiceLocator.GetRequiredService<MyFeatureViewModel>();
+var view = ServiceLocator.CreateWith<Views.MyFeatureView>(vm, uiDoc);
 ```
-
-**Current State**: Most commands use Option B (`new` keyword)
 
 ---
 
@@ -574,24 +587,24 @@ services.AddTransient<MyViewModel>(); // ✅ Fresh instance per dialog
 
 ## Future Improvements
 
-### 1. Complete ViewModel/View Registration
+### 1. Runtime-Argument Creation Helper
 
-**Current**: Only 3/18 ViewModels and 1/18 Views registered
+**Current**: Implemented via `ServiceLocator.CreateWith<T>(params object[] args)`
 
-**Goal**: Register all ViewModels and Views
+**Goal**: Keep command code consistent when constructors need runtime values (`UIDocument`, `Document`, modes)
 
 **Benefits**:
-- Consistent DI usage
-- Easier to add dependencies to VMs/Views (if needed)
-- Better testability
+- No `new` for registered View/ViewModel types in commands
+- Constructor dependencies still resolved by DI
+- Runtime Revit context values can be passed explicitly
 
 ---
 
-### 2. Factory Pattern for Views
+### 2. Optional Factory Pattern for Views
 
-**Current**: Commands create views with `new` keyword
+**Current**: Commands use `ServiceLocator.CreateWith<T>()`
 
-**Goal**: Use factory to create views with dependencies
+**Goal**: Optionally wrap `CreateWith` in a dedicated view factory for stricter abstraction
 
 **Pattern**:
 ```csharp
@@ -651,7 +664,6 @@ The LECG plugin uses Service Locator pattern to bridge Revit's reflection-based 
 **Cons**:
 - ❌ Service Locator is an anti-pattern (but necessary here)
 - ❌ Dependencies not visible in constructor (hidden)
-- ⚠️ Incomplete registration (VMs/Views)
 
 **Next Steps**:
 - Complete ViewModel/View registration

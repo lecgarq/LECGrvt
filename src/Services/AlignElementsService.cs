@@ -26,6 +26,8 @@ namespace LECG.Services
 
         public void Align(Document doc, Element reference, List<Element> targets, AlignMode mode)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             if (reference == null || targets == null || !targets.Any()) return;
 
             using (Transaction t = new Transaction(doc, $"Align {mode}"))
@@ -55,6 +57,8 @@ namespace LECG.Services
 
         public void Distribute(Document doc, List<Element> elements, AlignMode mode)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             if (elements == null || elements.Count < 3) return; // Need at least 3 items to distribute meaningfully
 
             using (Transaction t = new Transaction(doc, $"Distribute {mode}"))

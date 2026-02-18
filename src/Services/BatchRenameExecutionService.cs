@@ -10,6 +10,10 @@ namespace LECG.Services
     {
         public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, Action<double, string>? onProgress = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(items);
+            ArgumentNullException.ThrowIfNull(logger);
+
             int count = 0;
             int total = items.Count;
             int current = 0;

@@ -1,7 +1,7 @@
 using System;
 using Autodesk.Revit.DB;
 
-namespace LECG.Services
+namespace LECG.Services.Interfaces
 {
     public interface IPurgeService
     {

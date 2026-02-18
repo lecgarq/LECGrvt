@@ -13,6 +13,9 @@ namespace LECG.Views
 
         public ResetSlabsView(ResetSlabsVM vm, UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(vm);
+            ArgumentNullException.ThrowIfNull(uiDoc);
+
             InitializeComponent();
             DataContext = vm;
             _uiDoc = uiDoc;

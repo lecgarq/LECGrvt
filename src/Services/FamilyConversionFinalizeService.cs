@@ -14,6 +14,9 @@ namespace LECG.Services
 
         public void Finalize(Document sourceFamilyDoc, Document? targetFamilyDoc, string tempFamilyPath, bool isTemporary)
         {
+            ArgumentNullException.ThrowIfNull(sourceFamilyDoc);
+            ArgumentNullException.ThrowIfNull(tempFamilyPath);
+
             sourceFamilyDoc.Close(false);
             if (targetFamilyDoc != null)
             {

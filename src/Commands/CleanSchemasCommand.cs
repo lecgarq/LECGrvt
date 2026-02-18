@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
+using LECG.Services.Interfaces;
 
 namespace LECG.Commands
 {
@@ -20,6 +21,9 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // Show Log Window
             ShowLogWindow("Schema Cleaner");
 

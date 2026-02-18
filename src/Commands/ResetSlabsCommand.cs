@@ -10,6 +10,7 @@ using LECG.Core;
 using LECG.Views;
 using LECG.ViewModels;
 using LECG.Services;
+using LECG.Services.Interfaces;
 
 namespace LECG.Commands
 {
@@ -23,21 +24,19 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             var slabService = ServiceLocator.GetRequiredService<ISlabService>();
 
             Log($"[{DateTime.Now}] Starting Reset Slabs Command...");
 
             // 1. Load Settings & UI
-            var settings = SettingsManager.Load<ResetSlabsVM>("ResetSlabsSettings.json");
-            // Ensure clean state if reloaded
-            if (settings.Selection == null)
-            {
-                 var freshVm = new ResetSlabsVM();
-                 freshVm.DuplicateElements = settings.DuplicateElements;
-                 settings = freshVm;
-            }
+            var loadedSettings = SettingsManager.Load<ResetSlabsVM>("ResetSlabsSettings.json");
+            var settings = ServiceLocator.GetRequiredService<ResetSlabsVM>();
+            settings.DuplicateElements = loadedSettings.DuplicateElements;
             
-            ResetSlabsView view = new ResetSlabsView(settings, uiDoc);
+            ResetSlabsView view = ServiceLocator.CreateWith<ResetSlabsView>(settings, uiDoc);
              
              // Set owner to Revit window
             WindowInteropHelper helper = new WindowInteropHelper(view);

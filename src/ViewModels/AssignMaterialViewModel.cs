@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.ViewModels.Components;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace LECG.ViewModels
 
         public void SetSelection(IList<Reference> refs)
         {
+            ArgumentNullException.ThrowIfNull(refs);
+
             SelectedRefs = refs.ToList();
             Selection.UpdateSelection(refs.Count);
         }

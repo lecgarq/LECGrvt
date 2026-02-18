@@ -12,6 +12,8 @@ namespace LECG.Services
 
         public void LogCategoryCheck(Action<string> logCallback, Action<double, string> progressCallback, int passIndex, string categoryLabel, double progressValue)
         {
+            ArgumentNullException.ThrowIfNull(categoryLabel);
+
             logCallback?.Invoke($"Checking {categoryLabel}...");
             progressCallback?.Invoke(progressValue, $"Pass {passIndex}: Purging {categoryLabel.ToLower()}...");
         }

@@ -29,6 +29,8 @@ namespace LECG.ViewModels
 
         public void SetSelection(IList<Reference> refs)
         {
+            ArgumentNullException.ThrowIfNull(refs);
+
             SelectedRefs = refs;
             Selection.UpdateSelection(refs.Count);
         }

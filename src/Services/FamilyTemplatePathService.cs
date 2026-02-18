@@ -11,6 +11,9 @@ namespace LECG.Services
     {
         public string GetTargetTemplatePath(Application app, Category category)
         {
+            ArgumentNullException.ThrowIfNull(app);
+            ArgumentNullException.ThrowIfNull(category);
+
             string appVersion = app.VersionNumber;
             string templateName = "";
 

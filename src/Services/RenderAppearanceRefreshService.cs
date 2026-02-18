@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public void Refresh(Document doc, IList<Material> materials, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(materials);
+
             List<Material> materialsToToggle = new List<Material>();
 
             foreach (Material mat in materials)

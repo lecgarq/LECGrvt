@@ -4,6 +4,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using System;
@@ -21,6 +22,9 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             try
             {
                 var service = ServiceLocator.GetRequiredService<ICadConversionService>();
@@ -57,7 +61,7 @@ namespace LECG.Commands
                 };
 
                 // STEP 1: CONFIGURATION (Non-modal)
-                var view = new ConvertCadView(viewModel, uiDoc);
+                var view = ServiceLocator.CreateWith<ConvertCadView>(viewModel, uiDoc);
                 new System.Windows.Interop.WindowInteropHelper(view).Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
                 
                 view.Show();
@@ -87,6 +91,8 @@ namespace LECG.Commands
 
         public void Execute(UIApplication app)
         {
+            ArgumentNullException.ThrowIfNull(app);
+
             if (_viewModel == null || _requestedOp == CadOpType.None) return;
 
             UIDocument uiDoc = app.ActiveUIDocument;

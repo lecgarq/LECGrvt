@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.Views;
 using LECG.ViewModels;
 
@@ -19,11 +20,19 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // 1. Load Settings
-            var settings = SettingsManager.Load<PurgeViewModel>("PurgeSettings.json");
+            var loadedSettings = SettingsManager.Load<PurgeViewModel>("PurgeSettings.json");
+            var settings = ServiceLocator.GetRequiredService<PurgeViewModel>();
+            settings.PurgeLineStyles = loadedSettings.PurgeLineStyles;
+            settings.PurgeFillPatterns = loadedSettings.PurgeFillPatterns;
+            settings.PurgeMaterials = loadedSettings.PurgeMaterials;
+            settings.PurgeLevels = loadedSettings.PurgeLevels;
 
             // 2. Show options dialog
-            PurgeView view = new PurgeView(settings);
+            PurgeView view = ServiceLocator.CreateWith<PurgeView>(settings);
             if (view.ShowDialog() != true) return;
 
             // 3. Save Settings

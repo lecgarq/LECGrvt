@@ -29,6 +29,9 @@ namespace LECG.Services
             double maxSpacing,
             Action<string>? debugLog = null)
         {
+            ArgumentNullException.ThrowIfNull(sketch);
+            ArgumentNullException.ThrowIfNull(intersector);
+
             List<XYZ> newPoints = new List<XYZ>();
 
             foreach (CurveArray curveArr in sketch.Profile)

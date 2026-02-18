@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using System.Linq;
@@ -73,9 +74,12 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             var service = ServiceLocator.GetRequiredService<IAlignElementsService>();
-            var vm = new AlignElementsViewModel(service, Mode);
-            var view = new AlignElementsView(vm, uiDoc);
+            var vm = ServiceLocator.CreateWith<AlignElementsViewModel>(service, Mode);
+            var view = ServiceLocator.CreateWith<AlignElementsView>(vm, uiDoc);
 
             WindowInteropHelper helper = new WindowInteropHelper(view);
             helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;

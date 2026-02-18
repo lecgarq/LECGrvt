@@ -7,6 +7,10 @@ namespace LECG.Services
     {
         public bool IsMaterialSynced(Material mat, Color targetColor, ElementId solidId)
         {
+            ArgumentNullException.ThrowIfNull(mat);
+            ArgumentNullException.ThrowIfNull(targetColor);
+            ArgumentNullException.ThrowIfNull(solidId);
+
             if (!ColorsEqual(mat.Color, targetColor)) return false;
 
             if (mat.SurfaceForegroundPatternId != solidId) return false;

@@ -8,6 +8,10 @@ namespace LECG.Services
     {
         public void Apply(Material mat, Color color, ElementId solidId, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(mat);
+            ArgumentNullException.ThrowIfNull(color);
+            ArgumentNullException.ThrowIfNull(solidId);
+
             mat.Color = color;
             mat.SurfaceForegroundPatternId = solidId;
             mat.SurfaceForegroundPatternColor = color;

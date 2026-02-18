@@ -1,7 +1,7 @@
 using Autodesk.Revit.DB;
 using System.Threading.Tasks;
 
-namespace LECG.Interfaces
+namespace LECG.Services.Interfaces
 {
     public interface IFamilyConversionService
     {

@@ -26,6 +26,8 @@ public static class SexyRevitGraphicsPolicy
 {
     public static SexyRevitGraphicsDecision Evaluate(SexyRevitGraphicsSettings settings)
     {
+        ArgumentNullException.ThrowIfNull(settings);
+
         if (!settings.UseConsistentColors)
         {
             return new SexyRevitGraphicsDecision(false, null, null, Array.Empty<string>());

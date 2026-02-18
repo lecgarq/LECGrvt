@@ -7,7 +7,7 @@ using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.ViewModels;
 using LECG.Views;
-using LECG.Interfaces;
+using LECG.Services.Interfaces;
 
 namespace LECG.Commands
 {
@@ -18,14 +18,17 @@ namespace LECG.Commands
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             // 1. Service
             var service = ServiceLocator.GetRequiredService<IAlignEdgesService>();
             
             // 2. VM
-            var vm = new AlignEdgesViewModel(); // Service is stateless, but we need refs from VM.
+            var vm = ServiceLocator.GetRequiredService<AlignEdgesViewModel>(); // Service is stateless, but we need refs from VM.
             
             // 3. View
-            var view = new AlignEdgesView(vm, uiDoc);
+            var view = ServiceLocator.CreateWith<AlignEdgesView>(vm, uiDoc);
             
             // 4. Show
             bool? result = view.ShowDialog();

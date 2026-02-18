@@ -15,6 +15,9 @@ namespace LECG.Services
 
         public List<CurveLoop> PrepareLoops(HatchData hatch, Transform toOrigin)
         {
+            ArgumentNullException.ThrowIfNull(hatch);
+            ArgumentNullException.ThrowIfNull(toOrigin);
+
             List<CurveLoop> validLoops = new List<CurveLoop>();
 
             foreach (CurveLoop loop in hatch.Loops)
