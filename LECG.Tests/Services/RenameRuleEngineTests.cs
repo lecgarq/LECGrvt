@@ -75,4 +75,64 @@ public class RenameRuleEngineTests
 
         result.Should().Be("Item");
     }
+
+    [Fact]
+    public void ApplyCase_WhenTitle_ConvertsToTitleCase()
+    {
+        var options = new CaseRuleOptions(true, CoreCaseMode.Title);
+
+        var result = RenameRuleEngine.ApplyCase("mIXed nAME", options);
+
+        result.Should().Be("Mixed Name");
+    }
+
+    [Fact]
+    public void ApplyCase_WhenCapitalize_UppercasesOnlyFirstCharacter()
+    {
+        var options = new CaseRuleOptions(true, CoreCaseMode.Capitalize);
+
+        var result = RenameRuleEngine.ApplyCase("mixed NAME", options);
+
+        result.Should().Be("Mixed NAME");
+    }
+
+    [Fact]
+    public void ApplyRemove_WhenFirstNExceedsLength_ReturnsEmpty()
+    {
+        var options = new RemoveRuleOptions(true, FirstN: 10, LastN: 0, FromPos: 0, Count: 0);
+
+        var result = RenameRuleEngine.ApplyRemove("ABC", options);
+
+        result.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ApplyAdd_WhenInactive_ReturnsOriginalText()
+    {
+        var options = new AddRuleOptions(false, Prefix: "P_", Suffix: "_S", Insert: "-", AtPos: 2);
+
+        var result = RenameRuleEngine.ApplyAdd("NAME", options);
+
+        result.Should().Be("NAME");
+    }
+
+    [Fact]
+    public void ApplyAdd_WhenTextIsNull_UsesEmptyStringWithPrefixSuffix()
+    {
+        var options = new AddRuleOptions(true, Prefix: "P_", Suffix: "_S", Insert: string.Empty, AtPos: 0);
+
+        var result = RenameRuleEngine.ApplyAdd(null!, options);
+
+        result.Should().Be("P__S");
+    }
+
+    [Fact]
+    public void ApplyNumbering_WhenSuffix_AppendsFormattedNumber()
+    {
+        var options = new NumberingRuleOptions(true, CoreNumberingMode.Suffix, StartAt: 10, Increment: 5, Separator: "_", Padding: 4);
+
+        var result = RenameRuleEngine.ApplyNumbering("Item", options, index: 2);
+
+        result.Should().Be("Item_0020");
+    }
 }
