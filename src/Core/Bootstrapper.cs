@@ -144,6 +144,7 @@ namespace LECG.Core
             services.AddSingleton<ICadFamilySaveService, CadFamilySaveService>();
             services.AddSingleton<ICadTempDwgExtractionService, CadTempDwgExtractionService>();
             services.AddSingleton<ICadFamilyBuildService, CadFamilyBuildService>();
+            services.AddSingleton<ICadDwgFamilyCreationService, CadDwgFamilyCreationService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             // Add other services here as we refactor
         }

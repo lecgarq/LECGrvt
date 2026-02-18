@@ -12,6 +12,7 @@ namespace LECG.Services
         private readonly ICadImportDataPreparationService _cadImportDataPreparationService;
         private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
         private readonly ICadFamilyBuildService _cadFamilyBuildService;
+        private readonly ICadDwgFamilyCreationService _cadDwgFamilyCreationService;
         private readonly ICadDataValidationService _cadDataValidationService;
         private readonly ICadImportInstanceCenterService _cadImportInstanceCenterService;
 
@@ -20,6 +21,7 @@ namespace LECG.Services
             ICadImportDataPreparationService cadImportDataPreparationService,
             ICadTempDwgExtractionService cadTempDwgExtractionService,
             ICadFamilyBuildService cadFamilyBuildService,
+            ICadDwgFamilyCreationService cadDwgFamilyCreationService,
             ICadDataValidationService cadDataValidationService,
             ICadImportInstanceCenterService cadImportInstanceCenterService)
         {
@@ -27,6 +29,7 @@ namespace LECG.Services
             _cadImportDataPreparationService = cadImportDataPreparationService;
             _cadTempDwgExtractionService = cadTempDwgExtractionService;
             _cadFamilyBuildService = cadFamilyBuildService;
+            _cadDwgFamilyCreationService = cadDwgFamilyCreationService;
             _cadDataValidationService = cadDataValidationService;
             _cadImportInstanceCenterService = cadImportInstanceCenterService;
         }
@@ -69,23 +72,15 @@ namespace LECG.Services
 
             _cadDataValidationService.EnsureHasGeometry(data, "No geometry found in DWG.");
 
-            progress?.Invoke(50, "Creating final family...");
-            string path = _cadFamilyBuildService.BuildAndSave(
+            return _cadDwgFamilyCreationService.CreateAndLoad(
                 doc,
-                templatePath,
                 data,
-                XYZ.Zero,
+                familyName,
+                templatePath,
                 lineStyleName,
                 lineColor,
                 lineWeight,
-                "Create Detail Item",
-                familyName,
-                progress,
-                50,
-                90);
-
-            progress?.Invoke(95, "Loading into project...");
-            return _familyLoadPlacementService.LoadOnly(doc, path);
+                progress);
         }
         
     }
