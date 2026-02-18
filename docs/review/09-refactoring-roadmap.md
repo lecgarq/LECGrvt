@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 120 completed
+**Status**: Slice 121 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -1010,6 +1010,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialAssignmentExecutionService` by extracting `ElementType` resolution into `IMaterialElementTypeResolverService`.
 - Added `MaterialElementTypeResolverService` and wired it through DI + `MaterialAssignmentExecutionService` constructor injection.
 - Kept `IMaterialAssignmentExecutionService` API unchanged while reducing in-loop type-resolution orchestration complexity.
+
+**P5 Slice 121 (Completed)**:
+- Decomposed `CadHatchRenderService` by extracting hatch progress cadence/percent calculation into `ICadHatchProgressService`.
+- Added `CadHatchProgressService` and wired it through DI + `CadHatchRenderService` constructor injection.
+- Kept `ICadHatchRenderService` API unchanged while reducing in-loop progress reporting orchestration complexity.
 
 
 **Target Services**:

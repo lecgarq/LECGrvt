@@ -10,11 +10,13 @@ namespace LECG.Services
     {
         private readonly ICadFilledRegionTypeService _filledRegionTypeService;
         private readonly ICadCurveFlattenService _curveFlattenService;
+        private readonly ICadHatchProgressService _cadHatchProgressService;
 
-        public CadHatchRenderService(ICadFilledRegionTypeService filledRegionTypeService, ICadCurveFlattenService curveFlattenService)
+        public CadHatchRenderService(ICadFilledRegionTypeService filledRegionTypeService, ICadCurveFlattenService curveFlattenService, ICadHatchProgressService cadHatchProgressService)
         {
             _filledRegionTypeService = filledRegionTypeService;
             _curveFlattenService = curveFlattenService;
+            _cadHatchProgressService = cadHatchProgressService;
         }
 
         public int DrawHatches(
@@ -32,9 +34,9 @@ namespace LECG.Services
             foreach (HatchData hatch in hatches)
             {
                 current++;
-                if (total > 0 && (current % Math.Max(1, total / 20) == 0 || current == total))
+                if (_cadHatchProgressService.ShouldReport(total, current))
                 {
-                    progress?.Invoke(startPct + (endPct - startPct) * current / total, $"Drawing hatches... ({current - curveCount}/{hatches.Count})");
+                    progress?.Invoke(_cadHatchProgressService.ToPercent(startPct, endPct, current, total), $"Drawing hatches... ({current - curveCount}/{hatches.Count})");
                 }
 
                 try
