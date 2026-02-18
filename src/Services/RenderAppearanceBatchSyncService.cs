@@ -10,21 +10,18 @@ namespace LECG.Services
     {
         private readonly IRenderAppearanceRefreshService _refreshService;
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
-        private readonly IRenderMaterialSyncCheckService _syncCheckService;
-        private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;
+        private readonly IRenderMaterialSyncExecutionService _syncExecutionService;
         private readonly IRenderBatchProgressService _renderBatchProgressService;
 
         public RenderAppearanceBatchSyncService(
             IRenderAppearanceRefreshService refreshService,
             IRenderSolidFillPatternService solidFillPatternService,
-            IRenderMaterialSyncCheckService syncCheckService,
-            IRenderMaterialGraphicsApplyService graphicsApplyService,
+            IRenderMaterialSyncExecutionService syncExecutionService,
             IRenderBatchProgressService renderBatchProgressService)
         {
             _refreshService = refreshService;
             _solidFillPatternService = solidFillPatternService;
-            _syncCheckService = syncCheckService;
-            _graphicsApplyService = graphicsApplyService;
+            _syncExecutionService = syncExecutionService;
             _renderBatchProgressService = renderBatchProgressService;
         }
 
@@ -61,15 +58,12 @@ namespace LECG.Services
                         progressCallback?.Invoke(_renderBatchProgressService.ToPercent(processed, total), $"Processing: {mat.Name}");
                     }
 
-                    Color renderColor = mat.Color;
-
-                    if (_syncCheckService.IsMaterialSynced(mat, renderColor, solidId))
+                    if (!_syncExecutionService.TrySync(mat, solidId))
                     {
                         skipped++;
                         continue;
                     }
 
-                    _graphicsApplyService.Apply(mat, renderColor, solidId);
                     updated++;
                 }
 

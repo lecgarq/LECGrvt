@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 112 completed
+**Status**: Slice 113 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -970,6 +970,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `ChangeLevelService` by extracting per-element level/offset update logic into `IChangeLevelElementUpdateService`.
 - Added `ChangeLevelElementUpdateService` and wired it through DI + `ChangeLevelService` constructor injection.
 - Kept `IChangeLevelService` API unchanged while reducing per-element parameter update complexity in the transaction loop.
+
+**P5 Slice 113 (Completed)**:
+- Decomposed `RenderAppearanceBatchSyncService` by extracting per-material sync/apply execution into `IRenderMaterialSyncExecutionService`.
+- Added `RenderMaterialSyncExecutionService` and wired it through DI + `RenderAppearanceBatchSyncService` constructor injection.
+- Kept `IRenderAppearanceBatchSyncService` API unchanged while reducing in-loop sync-check/apply branching complexity.
 
 
 **Target Services**:
