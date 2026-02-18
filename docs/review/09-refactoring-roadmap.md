@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 106 completed
+**Status**: Slice 107 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -940,6 +940,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by extracting per-target toposolid processing into `IAlignEdgesToposolidProcessingService`.
 - Added `AlignEdgesToposolidProcessingService` and wired it through DI + `AlignEdgesService` constructor injection.
 - Kept `IAlignEdgesService` API unchanged while reducing transaction-loop orchestration complexity.
+
+**P5 Slice 107 (Completed)**:
+- Decomposed `AlignEdgesBoundaryPointService` by extracting curve-division parameter calculation into `IAlignEdgesCurveDivisionService`.
+- Added `AlignEdgesCurveDivisionService` and wired it through DI + `AlignEdgesBoundaryPointService` constructor injection.
+- Kept `IAlignEdgesBoundaryPointService` API unchanged while reducing per-curve parameter-generation complexity.
 
 
 **Target Services**:

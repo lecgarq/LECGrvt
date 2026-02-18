@@ -9,15 +9,17 @@ namespace LECG.Services
     {
         private readonly IAlignEdgesCurveHitService _alignEdgesCurveHitService;
         private readonly IAlignEdgesHitPointProjectionService _alignEdgesHitPointProjectionService;
+        private readonly IAlignEdgesCurveDivisionService _alignEdgesCurveDivisionService;
 
-        public AlignEdgesBoundaryPointService() : this(new AlignEdgesCurveHitService(new ReferenceRaycastService()), new AlignEdgesHitPointProjectionService(new ReferenceRaycastService()))
+        public AlignEdgesBoundaryPointService() : this(new AlignEdgesCurveHitService(new ReferenceRaycastService()), new AlignEdgesHitPointProjectionService(new ReferenceRaycastService()), new AlignEdgesCurveDivisionService())
         {
         }
 
-        public AlignEdgesBoundaryPointService(IAlignEdgesCurveHitService alignEdgesCurveHitService, IAlignEdgesHitPointProjectionService alignEdgesHitPointProjectionService)
+        public AlignEdgesBoundaryPointService(IAlignEdgesCurveHitService alignEdgesCurveHitService, IAlignEdgesHitPointProjectionService alignEdgesHitPointProjectionService, IAlignEdgesCurveDivisionService alignEdgesCurveDivisionService)
         {
             _alignEdgesCurveHitService = alignEdgesCurveHitService;
             _alignEdgesHitPointProjectionService = alignEdgesHitPointProjectionService;
+            _alignEdgesCurveDivisionService = alignEdgesCurveDivisionService;
         }
 
         public List<XYZ> CollectBoundaryHitPoints(
@@ -41,16 +43,13 @@ namespace LECG.Services
                     {
                         debugLog?.Invoke($"Curve len={length:F1}ft (arc/line)\n");
 
-                        if (length > minSpacing)
+                        IReadOnlyList<double> parameters = _alignEdgesCurveDivisionService.GetInteriorParameters(length, minSpacing, maxSpacing);
+                        if (parameters.Count > 0)
                         {
-                            int divisions = (int)Math.Ceiling(length / maxSpacing);
-                            divisions = Math.Max(divisions, 2);
-
                             XYZ curveMid = curve.Evaluate(0.5, true);
 
-                            for (int j = 1; j < divisions; j++)
+                            foreach (double param in parameters)
                             {
-                                double param = (double)j / divisions;
                                 XYZ sketchPt = curve.Evaluate(param, true);
 
                                 XYZ? hitPt = _alignEdgesHitPointProjectionService.ResolveHitPoint(intersector, sketchPt, curveMid);
