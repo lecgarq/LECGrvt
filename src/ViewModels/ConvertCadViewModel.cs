@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.Core;
+using LECG.Core.Naming;
 using Microsoft.Win32;
 using System.IO;
 
@@ -157,7 +158,7 @@ namespace LECG.ViewModels
                     Element? type = e.Document.GetElement(typeId);
                     if (type != null)
                     {
-                        NewFamilyName = type.Name.Replace(".dwg", "").Replace(".pdf", "") + "_Detail";
+                        NewFamilyName = DetailFamilyNamePolicy.FromTypeName(type.Name);
                     }
                 }
             }

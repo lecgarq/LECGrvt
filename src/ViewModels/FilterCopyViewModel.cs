@@ -6,6 +6,7 @@ using System.Windows.Data;
 using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LECG.Core.Filtering;
 using LECG.Services; // Assuming Logger is here or similar
 
 namespace LECG.ViewModels
@@ -148,9 +149,7 @@ namespace LECG.ViewModels
 
         private void ApplyFilter(ObservableCollection<ViewContainer> items, string filterText)
         {
-            var searchTerms = filterText?.Split(';', StringSplitOptions.RemoveEmptyEntries)
-                                        .Select(s => s.Trim())
-                                        .ToList() ?? new List<string>();
+            var searchTerms = SearchTermPolicy.ParseTerms(filterText);
 
             if (!searchTerms.Any())
             {
@@ -167,12 +166,12 @@ namespace LECG.ViewModels
 
             foreach (var view in items)
             {
-                bool viewMatches = searchTerms.Any(term => view.Name.Contains(term, StringComparison.OrdinalIgnoreCase));
+                bool viewMatches = SearchTermPolicy.MatchesAny(view.Name, searchTerms);
                 bool hasMatchingChildren = false;
 
                 foreach (var filter in view.Filters)
                 {
-                    bool filterMatches = searchTerms.Any(term => filter.Name.Contains(term, StringComparison.OrdinalIgnoreCase));
+                    bool filterMatches = SearchTermPolicy.MatchesAny(filter.Name, searchTerms);
                     filter.IsVisible = filterMatches || viewMatches;
                     if (filterMatches) hasMatchingChildren = true;
                 }
