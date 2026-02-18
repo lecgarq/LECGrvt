@@ -76,6 +76,12 @@ This directory contains a comprehensive architecture review and documentation of
    - Migration strategies
    - **Plan** for future work
 
+10. **[Release Checklist](10-release-checklist.md)** (8 min read)
+   - Version bump and tagging flow
+   - CI gate requirements before release
+   - Release validation and rollback
+   - **Runbook** for production releases
+
 ---
 
 ## Quick Start
