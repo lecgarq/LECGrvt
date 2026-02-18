@@ -14,6 +14,7 @@ namespace LECG.Services
         private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
         private readonly IMaterialTypeEligibilityService _materialTypeEligibilityService;
         private readonly IMaterialAssignmentProgressService _materialAssignmentProgressService;
+        private readonly IMaterialElementTypeResolverService _materialElementTypeResolverService;
 
         public MaterialAssignmentExecutionService(
             IMaterialElementGroupingService materialElementGroupingService,
@@ -21,7 +22,8 @@ namespace LECG.Services
             IMaterialCreationService materialCreationService,
             IMaterialTypeAssignmentService materialTypeAssignmentService,
             IMaterialTypeEligibilityService materialTypeEligibilityService,
-            IMaterialAssignmentProgressService materialAssignmentProgressService)
+            IMaterialAssignmentProgressService materialAssignmentProgressService,
+            IMaterialElementTypeResolverService materialElementTypeResolverService)
         {
             _materialElementGroupingService = materialElementGroupingService;
             _materialColorSequenceService = materialColorSequenceService;
@@ -29,6 +31,7 @@ namespace LECG.Services
             _materialTypeAssignmentService = materialTypeAssignmentService;
             _materialTypeEligibilityService = materialTypeEligibilityService;
             _materialAssignmentProgressService = materialAssignmentProgressService;
+            _materialElementTypeResolverService = materialElementTypeResolverService;
         }
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
@@ -56,7 +59,7 @@ namespace LECG.Services
                     processedTypes++;
                     double pct = _materialAssignmentProgressService.ToProgressPercent(processedTypes, totalTypes);
 
-                    ElementType? elemType = doc.GetElement(kvp.Key) as ElementType;
+                    ElementType? elemType = _materialElementTypeResolverService.Resolve(doc, kvp.Key);
                     if (elemType == null) continue;
 
                     string typeName = elemType.Name;
