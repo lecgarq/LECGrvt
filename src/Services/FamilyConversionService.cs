@@ -9,20 +9,22 @@ namespace LECG.Services
     {
         private readonly IFamilyTemplatePathService _templatePathService;
         private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
+        private readonly IFamilySourceDocumentService _familySourceDocumentService;
         private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
         private readonly IFamilySaveLoadService _familySaveLoadService;
         private readonly IFamilyConversionNamingService _familyConversionNamingService;
         private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
         private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())), new FamilyConversionNamingService(), new FamilyConversionLoggingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTargetDocumentService(), new FamilySourceDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())), new FamilyConversionNamingService(), new FamilyConversionLoggingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionLoggingService familyConversionLoggingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilySourceDocumentService familySourceDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionLoggingService familyConversionLoggingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
         {
             _templatePathService = templatePathService;
             _familyTargetDocumentService = familyTargetDocumentService;
+            _familySourceDocumentService = familySourceDocumentService;
             _familyGeometryCopyService = familyGeometryCopyService;
             _familySaveLoadService = familySaveLoadService;
             _familyConversionNamingService = familyConversionNamingService;
@@ -40,11 +42,9 @@ namespace LECG.Services
 
             _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
 
-            // 1. Open Source Family Document
-            Document sourceFamilyDoc = doc.EditFamily(sourceFamily);
+            Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
             if (sourceFamilyDoc == null)
             {
-                Logger.Instance.Log("Error: Could not open source family for editing.");
                 return;
             }
 
