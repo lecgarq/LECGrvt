@@ -8,6 +8,8 @@ jobs:
   core-tests:
     runs-on: windows-latest
     timeout-minutes: 20
+    env:
+      COVERAGE_MIN: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,7 +34,7 @@ jobs:
       - name: Publish coverage summary
         shell: pwsh
         run: |
-          $coverage = Get-ChildItem -Path "LECG.Tests/TestResults" -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
+          $coverage = Get-ChildItem -Path "." -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
           if (-not $coverage) {
             "## Coverage`nCoverage file not found." | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             exit 0
@@ -42,3 +44,20 @@ jobs:
           $lineRate = [double]$xml.coverage.'line-rate'
           $linePct = [math]::Round($lineRate * 100, 2)
           "## Coverage`nLine coverage: $linePct%" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+
+      - name: Enforce coverage threshold
+        shell: pwsh
+        run: |
+          $coverage = Get-ChildItem -Path "." -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
+          if (-not $coverage) {
+            Write-Error "Coverage file not found."
+            exit 1
+          }
+
+          [xml]$xml = Get-Content $coverage.FullName
+          $lineRate = [double]$xml.coverage.'line-rate'
+          $linePct = [math]::Round($lineRate * 100, 2)
+          if ($linePct -lt [double]$env:COVERAGE_MIN) {
+            Write-Error \"Line coverage $linePct% is below threshold $env:COVERAGE_MIN%.\"
+            exit 1
+          }
