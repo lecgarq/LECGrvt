@@ -55,4 +55,24 @@ public class RenameRuleEngineTests
 
         result.Should().Be("003-Item");
     }
+
+    [Fact]
+    public void ApplyReplace_WhenRegexIsInvalid_ReturnsOriginalText()
+    {
+        var options = new ReplaceRuleOptions(true, "[", "x", MatchCase: false, UseRegex: true);
+
+        var result = RenameRuleEngine.ApplyReplace("Wall-01", options);
+
+        result.Should().Be("Wall-01");
+    }
+
+    [Fact]
+    public void ApplyNumbering_WhenInactive_ReturnsOriginalText()
+    {
+        var options = new NumberingRuleOptions(false, CoreNumberingMode.Suffix, StartAt: 1, Increment: 1, Separator: "-", Padding: 2);
+
+        var result = RenameRuleEngine.ApplyNumbering("Item", options, index: 5);
+
+        result.Should().Be("Item");
+    }
 }
