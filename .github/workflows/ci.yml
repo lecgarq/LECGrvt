@@ -26,6 +26,19 @@ jobs:
       - name: Test core-dependent tests
         run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release
 
-      - name: Collect coverage (non-blocking)
-        continue-on-error: true
+      - name: Collect coverage
         run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --collect:"XPlat Code Coverage"
+
+      - name: Publish coverage summary
+        shell: pwsh
+        run: |
+          $coverage = Get-ChildItem -Path "LECG.Tests/TestResults" -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
+          if (-not $coverage) {
+            "## Coverage`nCoverage file not found." | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
+            exit 0
+          }
+
+          [xml]$xml = Get-Content $coverage.FullName
+          $lineRate = [double]$xml.coverage.'line-rate'
+          $linePct = [math]::Round($lineRate * 100, 2)
+          "## Coverage`nLine coverage: $linePct%" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
