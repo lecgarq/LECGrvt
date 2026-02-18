@@ -132,6 +132,7 @@ namespace LECG.Core
             services.AddSingleton<ICadPolylineExtractionService, CadPolylineExtractionService>();
             services.AddSingleton<ICadGeometryExtractionService, CadGeometryExtractionService>();
             services.AddSingleton<ICadGeometryOptimizationService, CadGeometryOptimizationService>();
+            services.AddSingleton<ICadImportDataPreparationService, CadImportDataPreparationService>();
             services.AddSingleton<ICadDataValidationService, CadDataValidationService>();
             services.AddSingleton<ICadImportInstanceCenterService, CadImportInstanceCenterService>();
             services.AddSingleton<ICadDrawingViewService, CadDrawingViewService>();

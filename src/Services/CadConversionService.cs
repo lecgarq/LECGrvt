@@ -9,8 +9,7 @@ namespace LECG.Services
     public class CadConversionService : ICadConversionService
     {
         private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
-        private readonly ICadGeometryExtractionService _geometryExtractionService;
-        private readonly ICadGeometryOptimizationService _geometryOptimizationService;
+        private readonly ICadImportDataPreparationService _cadImportDataPreparationService;
         private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
         private readonly ICadFamilyBuildService _cadFamilyBuildService;
         private readonly ICadDataValidationService _cadDataValidationService;
@@ -18,16 +17,14 @@ namespace LECG.Services
 
         public CadConversionService(
             ICadFamilyLoadPlacementService familyLoadPlacementService,
-            ICadGeometryExtractionService geometryExtractionService,
-            ICadGeometryOptimizationService geometryOptimizationService,
+            ICadImportDataPreparationService cadImportDataPreparationService,
             ICadTempDwgExtractionService cadTempDwgExtractionService,
             ICadFamilyBuildService cadFamilyBuildService,
             ICadDataValidationService cadDataValidationService,
             ICadImportInstanceCenterService cadImportInstanceCenterService)
         {
             _familyLoadPlacementService = familyLoadPlacementService;
-            _geometryExtractionService = geometryExtractionService;
-            _geometryOptimizationService = geometryOptimizationService;
+            _cadImportDataPreparationService = cadImportDataPreparationService;
             _cadTempDwgExtractionService = cadTempDwgExtractionService;
             _cadFamilyBuildService = cadFamilyBuildService;
             _cadDataValidationService = cadDataValidationService;
@@ -43,13 +40,7 @@ namespace LECG.Services
         {
             if (cadInstance == null) return ElementId.InvalidElementId;
 
-            progress?.Invoke(10, "Extracting geometry from CAD...");
-            CadData data = _geometryExtractionService.ExtractGeometry(doc, cadInstance);
-            
-            progress?.Invoke(30, "Optimizing geometry...");
-            CadData optimizedData = _geometryOptimizationService.Optimize(data);
-
-            _cadDataValidationService.EnsureHasGeometry(optimizedData, "No suitable geometry found in the selected CAD.");
+            CadData optimizedData = _cadImportDataPreparationService.Prepare(doc, cadInstance, progress);
 
             XYZ center = _cadImportInstanceCenterService.GetCenter(cadInstance);
 

@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 114 completed
+**Status**: Slice 115 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -980,6 +980,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialAssignmentExecutionService` by extracting progress-percent calculation into `IMaterialAssignmentProgressService`.
 - Added `MaterialAssignmentProgressService` and wired it through DI + `MaterialAssignmentExecutionService` constructor injection.
 - Kept `IMaterialAssignmentExecutionService` API unchanged while reducing in-loop progress computation logic.
+
+**P5 Slice 115 (Completed)**:
+- Decomposed `CadConversionService` by extracting CAD import data preparation (extract + optimize + validate) into `ICadImportDataPreparationService`.
+- Added `CadImportDataPreparationService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing pre-build CAD data preparation complexity in `ConvertCadToFamily`.
 
 
 **Target Services**:
