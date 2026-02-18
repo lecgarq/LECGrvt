@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 111 completed
+**Status**: Slice 112 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -965,6 +965,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadCurveFlattenService` by extracting spline-specific flattening into `ICadSplineFlattenService`.
 - Added `CadSplineFlattenService` and wired it through DI + `CadCurveFlattenService` constructor injection.
 - Kept `ICadCurveFlattenService` API unchanged while reducing spline-branch flattening complexity in the main curve dispatcher.
+
+**P5 Slice 112 (Completed)**:
+- Decomposed `ChangeLevelService` by extracting per-element level/offset update logic into `IChangeLevelElementUpdateService`.
+- Added `ChangeLevelElementUpdateService` and wired it through DI + `ChangeLevelService` constructor injection.
+- Kept `IChangeLevelService` API unchanged while reducing per-element parameter update complexity in the transaction loop.
 
 
 **Target Services**:
