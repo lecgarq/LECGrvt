@@ -3,7 +3,6 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using LECG.Services.Interfaces;
 using System;
-using System.Linq;
 
 namespace LECG.Services
 {
@@ -15,6 +14,7 @@ namespace LECG.Services
         private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
         private readonly ICadFamilyBuildService _cadFamilyBuildService;
         private readonly ICadDataValidationService _cadDataValidationService;
+        private readonly ICadImportInstanceCenterService _cadImportInstanceCenterService;
 
         public CadConversionService(
             ICadFamilyLoadPlacementService familyLoadPlacementService,
@@ -22,7 +22,8 @@ namespace LECG.Services
             ICadGeometryOptimizationService geometryOptimizationService,
             ICadTempDwgExtractionService cadTempDwgExtractionService,
             ICadFamilyBuildService cadFamilyBuildService,
-            ICadDataValidationService cadDataValidationService)
+            ICadDataValidationService cadDataValidationService,
+            ICadImportInstanceCenterService cadImportInstanceCenterService)
         {
             _familyLoadPlacementService = familyLoadPlacementService;
             _geometryExtractionService = geometryExtractionService;
@@ -30,6 +31,7 @@ namespace LECG.Services
             _cadTempDwgExtractionService = cadTempDwgExtractionService;
             _cadFamilyBuildService = cadFamilyBuildService;
             _cadDataValidationService = cadDataValidationService;
+            _cadImportInstanceCenterService = cadImportInstanceCenterService;
         }
 
         public string GetDefaultTemplatePath()
@@ -49,8 +51,7 @@ namespace LECG.Services
 
             _cadDataValidationService.EnsureHasGeometry(optimizedData, "No suitable geometry found in the selected CAD.");
 
-            BoundingBoxXYZ box = cadInstance.get_BoundingBox(null);
-            XYZ center = (box.Min + box.Max) * 0.5;
+            XYZ center = _cadImportInstanceCenterService.GetCenter(cadInstance);
 
             progress?.Invoke(50, "Creating family document...");
             string path = _cadFamilyBuildService.BuildAndSave(
