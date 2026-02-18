@@ -28,7 +28,8 @@ namespace LECG.Services
                 new MaterialColorSequenceService(),
                 new MaterialCreationService(),
                 new MaterialTypeAssignmentService(),
-                new MaterialTypeEligibilityService()))
+                new MaterialTypeEligibilityService(),
+                new MaterialAssignmentProgressService()))
         {
         }
 

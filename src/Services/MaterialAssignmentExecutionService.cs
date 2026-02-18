@@ -13,19 +13,22 @@ namespace LECG.Services
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
         private readonly IMaterialTypeEligibilityService _materialTypeEligibilityService;
+        private readonly IMaterialAssignmentProgressService _materialAssignmentProgressService;
 
         public MaterialAssignmentExecutionService(
             IMaterialElementGroupingService materialElementGroupingService,
             IMaterialColorSequenceService materialColorSequenceService,
             IMaterialCreationService materialCreationService,
             IMaterialTypeAssignmentService materialTypeAssignmentService,
-            IMaterialTypeEligibilityService materialTypeEligibilityService)
+            IMaterialTypeEligibilityService materialTypeEligibilityService,
+            IMaterialAssignmentProgressService materialAssignmentProgressService)
         {
             _materialElementGroupingService = materialElementGroupingService;
             _materialColorSequenceService = materialColorSequenceService;
             _materialCreationService = materialCreationService;
             _materialTypeAssignmentService = materialTypeAssignmentService;
             _materialTypeEligibilityService = materialTypeEligibilityService;
+            _materialAssignmentProgressService = materialAssignmentProgressService;
         }
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
@@ -51,7 +54,7 @@ namespace LECG.Services
                 foreach (var kvp in elementsByType)
                 {
                     processedTypes++;
-                    double pct = 20 + (processedTypes * 70.0 / totalTypes);
+                    double pct = _materialAssignmentProgressService.ToProgressPercent(processedTypes, totalTypes);
 
                     ElementType? elemType = doc.GetElement(kvp.Key) as ElementType;
                     if (elemType == null) continue;
