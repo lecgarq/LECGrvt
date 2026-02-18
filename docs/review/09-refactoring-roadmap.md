@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 103 completed
+**Status**: Slice 104 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -925,6 +925,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting finalization/close+cleanup into `IFamilyConversionFinalizeService`.
 - Added `FamilyConversionFinalizeService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing finally-block document lifecycle orchestration complexity.
+
+**P5 Slice 104 (Completed)**:
+- Decomposed `AlignEdgesService` by extracting slab shape point insertion loop into `IAlignEdgesPointInsertionService`.
+- Added `AlignEdgesPointInsertionService` and wired it through DI + `AlignEdgesService` constructor injection.
+- Kept `IAlignEdgesService` API unchanged while reducing in-method point insertion orchestration complexity.
 
 
 **Target Services**:

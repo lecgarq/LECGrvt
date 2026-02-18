@@ -12,16 +12,18 @@ namespace LECG.Services
         private readonly IAlignEdgesIntersectorService _intersectorService;
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
         private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
+        private readonly IAlignEdgesPointInsertionService _pointInsertionService;
 
-        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new AlignEdgesVertexAlignmentService())
+        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new AlignEdgesVertexAlignmentService(), new AlignEdgesPointInsertionService())
         {
         }
 
-        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
+        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IAlignEdgesVertexAlignmentService vertexAlignmentService, IAlignEdgesPointInsertionService pointInsertionService)
         {
             _intersectorService = intersectorService;
             _boundaryPointService = boundaryPointService;
             _vertexAlignmentService = vertexAlignmentService;
+            _pointInsertionService = pointInsertionService;
         }
 
         public void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references)
@@ -70,14 +72,7 @@ namespace LECG.Services
                             }
                             
                             // Add the new points
-                            foreach (XYZ pt in newPoints)
-                            {
-                                try
-                                {
-                                    editor.AddPoint(pt);
-                                }
-                                catch { }
-                            }
+                            _pointInsertionService.AddPoints(editor, newPoints);
                             
                             // STEP 2: Align ALL points (existing + new) to reference
                             // Get the BASE elevation: level + height offset from level
