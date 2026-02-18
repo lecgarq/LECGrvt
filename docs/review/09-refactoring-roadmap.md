@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 109 completed
+**Status**: Slice 110 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -955,6 +955,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `RenderAppearanceBatchSyncService` by extracting batch progress calculation/reporting cadence into `IRenderBatchProgressService`.
 - Added `RenderBatchProgressService` and wired it through DI + `RenderAppearanceBatchSyncService` constructor injection.
 - Kept `IRenderAppearanceBatchSyncService` API unchanged while reducing per-material loop progress orchestration complexity.
+
+**P5 Slice 110 (Completed)**:
+- Decomposed `PurgeLevelService` by extracting referenced-level scanning into `IPurgeReferencedLevelService`.
+- Added `PurgeReferencedLevelService` and wired it through DI + `PurgeLevelService` constructor injection.
+- Kept `IPurgeLevelService` API unchanged while reducing in-method parameter-reference scanning orchestration complexity.
 
 
 **Target Services**:

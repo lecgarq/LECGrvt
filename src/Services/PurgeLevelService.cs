@@ -8,16 +8,16 @@ namespace LECG.Services
 {
     public class PurgeLevelService : IPurgeLevelService
     {
-        private readonly IPurgeReferenceScannerService _referenceScanner;
+        private readonly IPurgeReferencedLevelService _purgeReferencedLevelService;
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLevelService() : this(new PurgeReferenceScannerService(), new PurgeDeleteElementService())
+        public PurgeLevelService() : this(new PurgeReferencedLevelService(new PurgeReferenceScannerService()), new PurgeDeleteElementService())
         {
         }
 
-        public PurgeLevelService(IPurgeReferenceScannerService referenceScanner, IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeLevelService(IPurgeReferencedLevelService purgeReferencedLevelService, IPurgeDeleteElementService purgeDeleteElementService)
         {
-            _referenceScanner = referenceScanner;
+            _purgeReferencedLevelService = purgeReferencedLevelService;
             _purgeDeleteElementService = purgeDeleteElementService;
         }
 
@@ -38,12 +38,7 @@ namespace LECG.Services
 
             var levelIdsToRemove = new HashSet<ElementId>();
             var validLevelIds = new HashSet<ElementId>(allLevels.Select(l => l.Id));
-            var referencedLevelIds = new HashSet<ElementId>();
-
-            foreach (Element inst in new FilteredElementCollector(doc).WhereElementIsNotElementType())
-            {
-                _referenceScanner.CollectUsedIds(inst, validLevelIds, referencedLevelIds);
-            }
+            var referencedLevelIds = _purgeReferencedLevelService.CollectReferencedLevelIds(doc, validLevelIds);
 
             logCallback?.Invoke($"  Found {referencedLevelIds.Count} levels referenced by parameters.");
 

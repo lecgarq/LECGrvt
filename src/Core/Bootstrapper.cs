@@ -50,6 +50,7 @@ namespace LECG.Core
             services.AddSingleton<IMaterialAssignmentExecutionService, MaterialAssignmentExecutionService>();
             services.AddSingleton<IMaterialService, MaterialService>();
             services.AddSingleton<IPurgeReferenceScannerService, PurgeReferenceScannerService>();
+            services.AddSingleton<IPurgeReferencedLevelService, PurgeReferencedLevelService>();
             services.AddSingleton<IPurgeDeleteElementService, PurgeDeleteElementService>();
             services.AddSingleton<IPurgeMaterialUsageCollectorService, PurgeMaterialUsageCollectorService>();
             services.AddSingleton<IPurgeMaterialService, PurgeMaterialService>();
