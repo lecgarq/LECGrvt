@@ -2,7 +2,6 @@ using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using System;
-using System.IO;
 
 namespace LECG.Services
 {
@@ -13,19 +12,21 @@ namespace LECG.Services
         private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
         private readonly IFamilySaveLoadService _familySaveLoadService;
         private readonly IFamilyConversionNamingService _familyConversionNamingService;
+        private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
         private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())), new FamilyConversionNamingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())), new FamilyConversionNamingService(), new FamilyConversionLoggingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionLoggingService familyConversionLoggingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
         {
             _templatePathService = templatePathService;
             _familyTargetDocumentService = familyTargetDocumentService;
             _familyGeometryCopyService = familyGeometryCopyService;
             _familySaveLoadService = familySaveLoadService;
             _familyConversionNamingService = familyConversionNamingService;
+            _familyConversionLoggingService = familyConversionLoggingService;
             _familyConversionFinalizeService = familyConversionFinalizeService;
         }
 
@@ -37,9 +38,7 @@ namespace LECG.Services
             string sourceFamilyName = sourceFamily.Name;
             string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(sourceFamilyName, customName);
 
-            Logger.Instance.Log($"Converting Family: {sourceFamilyName} -> {targetFamilyName}");
-            Logger.Instance.Log($"Template: {Path.GetFileName(templatePath)}");
-            Logger.Instance.Log($"Temporary Mode: {isTemporary}");
+            _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
 
             // 1. Open Source Family Document
             Document sourceFamilyDoc = doc.EditFamily(sourceFamily);
@@ -68,8 +67,7 @@ namespace LECG.Services
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log($"Critical Error: {ex.Message}");
-                Logger.Instance.Log(ex.StackTrace ?? "");
+                _familyConversionLoggingService.LogCriticalError(ex.Message, ex.StackTrace ?? "");
             }
             finally
             {
