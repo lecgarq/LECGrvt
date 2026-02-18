@@ -1,6 +1,5 @@
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
-using LECG.Services.Logging;
 using System;
 
 namespace LECG.Services
@@ -8,25 +7,21 @@ namespace LECG.Services
     public class FamilyConversionService : IFamilyConversionService
     {
         private readonly IFamilyTemplatePathService _templatePathService;
-        private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
         private readonly IFamilySourceDocumentService _familySourceDocumentService;
-        private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
-        private readonly IFamilySaveLoadService _familySaveLoadService;
+        private readonly IFamilyConversionExecutionService _familyConversionExecutionService;
         private readonly IFamilyConversionNamingService _familyConversionNamingService;
         private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
         private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTargetDocumentService(), new FamilySourceDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())), new FamilyConversionNamingService(), new FamilyConversionLoggingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilySourceDocumentService(), new FamilyConversionExecutionService(new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()))), new FamilyConversionNamingService(), new FamilyConversionLoggingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilySourceDocumentService familySourceDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionLoggingService familyConversionLoggingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilySourceDocumentService familySourceDocumentService, IFamilyConversionExecutionService familyConversionExecutionService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionLoggingService familyConversionLoggingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
         {
             _templatePathService = templatePathService;
-            _familyTargetDocumentService = familyTargetDocumentService;
             _familySourceDocumentService = familySourceDocumentService;
-            _familyGeometryCopyService = familyGeometryCopyService;
-            _familySaveLoadService = familySaveLoadService;
+            _familyConversionExecutionService = familyConversionExecutionService;
             _familyConversionNamingService = familyConversionNamingService;
             _familyConversionLoggingService = familyConversionLoggingService;
             _familyConversionFinalizeService = familyConversionFinalizeService;
@@ -53,17 +48,11 @@ namespace LECG.Services
 
             try
             {
-                // 2. Create Target Family Document
-                targetFamilyDoc = _familyTargetDocumentService.Create(doc, templatePath);
+                (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamilyDoc, templatePath, targetFamilyName);
                 if (targetFamilyDoc == null)
                 {
                     return;
                 }
-
-                int copiedCount = _familyGeometryCopyService.CopyGeometry(sourceFamilyDoc, targetFamilyDoc);
-                Logger.Instance.Log($"Found {copiedCount} geometry elements to copy.");
-
-                tempFamilyPath = _familySaveLoadService.SaveAndLoad(doc, targetFamilyDoc, targetFamilyName);
             }
             catch (Exception ex)
             {

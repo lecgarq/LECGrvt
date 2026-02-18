@@ -92,6 +92,7 @@ namespace LECG.Core
             services.AddSingleton<IFamilyConversionNamingService, FamilyConversionNamingService>();
             services.AddSingleton<IFamilyConversionLoggingService, FamilyConversionLoggingService>();
             services.AddSingleton<IFamilySourceDocumentService, FamilySourceDocumentService>();
+            services.AddSingleton<IFamilyConversionExecutionService, FamilyConversionExecutionService>();
             services.AddSingleton<IFamilyGeometryCopyService, FamilyGeometryCopyService>();
             services.AddSingleton<IFamilySaveService, FamilySaveService>();
             services.AddSingleton<IFamilySaveLoadService, FamilySaveLoadService>();

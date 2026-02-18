@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 123 completed
+**Status**: Slice 124 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -1025,6 +1025,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialAssignmentExecutionService` by extracting per-type assignment execution into `IMaterialTypeAssignmentProcessService`.
 - Added `MaterialTypeAssignmentProcessService` and wired it through DI + `MaterialAssignmentExecutionService` constructor injection.
 - Kept `IMaterialAssignmentExecutionService` API unchanged while reducing in-loop assignment/skip orchestration complexity.
+
+**P5 Slice 124 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting target-doc create/copy/save execution into `IFamilyConversionExecutionService`.
+- Added `FamilyConversionExecutionService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing inline conversion execution orchestration complexity.
 
 
 **Target Services**:
