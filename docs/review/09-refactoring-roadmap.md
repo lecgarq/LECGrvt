@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 101 completed
+**Status**: Slice 102 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -915,6 +915,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesBoundaryPointService` by extracting hit-point retry/projection into `IAlignEdgesHitPointProjectionService`.
 - Added `AlignEdgesHitPointProjectionService` and wired it through DI + `AlignEdgesBoundaryPointService` constructor injection.
 - Kept `IAlignEdgesBoundaryPointService` API unchanged while reducing in-method hit-point retry loop orchestration complexity.
+
+**P5 Slice 102 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting target-family naming into `IFamilyConversionNamingService`.
+- Added `FamilyConversionNamingService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing in-method naming rule orchestration.
 
 
 **Target Services**:

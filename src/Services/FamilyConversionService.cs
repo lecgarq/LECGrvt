@@ -13,18 +13,20 @@ namespace LECG.Services
         private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
         private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
         private readonly IFamilySaveLoadService _familySaveLoadService;
+        private readonly IFamilyConversionNamingService _familyConversionNamingService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTempFileCleanupService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())))
+        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilyTempFileCleanupService(), new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory())), new FamilyConversionNamingService())
         {
         }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService)
+        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilyTempFileCleanupService tempFileCleanupService, IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService, IFamilyConversionNamingService familyConversionNamingService)
         {
             _templatePathService = templatePathService;
             _tempFileCleanupService = tempFileCleanupService;
             _familyTargetDocumentService = familyTargetDocumentService;
             _familyGeometryCopyService = familyGeometryCopyService;
             _familySaveLoadService = familySaveLoadService;
+            _familyConversionNamingService = familyConversionNamingService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -33,7 +35,7 @@ namespace LECG.Services
 
             Family sourceFamily = instance.Symbol.Family;
             string sourceFamilyName = sourceFamily.Name;
-            string targetFamilyName = string.IsNullOrWhiteSpace(customName) ? $"{sourceFamilyName}_Converted" : customName;
+            string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(sourceFamilyName, customName);
 
             Logger.Instance.Log($"Converting Family: {sourceFamilyName} -> {targetFamilyName}");
             Logger.Instance.Log($"Template: {Path.GetFileName(templatePath)}");
