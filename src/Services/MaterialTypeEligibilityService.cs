@@ -7,6 +7,8 @@ namespace LECG.Services
     {
         public bool TryGetSkipReason(ElementType elemType, out string reason)
         {
+            ArgumentNullException.ThrowIfNull(elemType);
+
             reason = string.Empty;
 
             if (elemType is not HostObjAttributes hostType)

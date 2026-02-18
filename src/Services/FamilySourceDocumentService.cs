@@ -8,6 +8,9 @@ namespace LECG.Services
     {
         public Document? Open(Document doc, Family sourceFamily)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(sourceFamily);
+
             Document sourceFamilyDoc = doc.EditFamily(sourceFamily);
             if (sourceFamilyDoc == null)
             {

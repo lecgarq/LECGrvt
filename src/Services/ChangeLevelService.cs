@@ -29,6 +29,9 @@ namespace LECG.Services
 
         public void ChangeLevel(Document doc, IEnumerable<Element> elements, Level newLevel)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elements);
+
             if (newLevel == null) return;
 
             using (Transaction t = new Transaction(doc, "Change Element Level"))

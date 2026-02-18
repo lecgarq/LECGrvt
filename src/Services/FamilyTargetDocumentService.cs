@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public Document? Create(Document doc, string templatePath)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(templatePath);
+
             if (!File.Exists(templatePath))
             {
                 Logger.Instance.Log($"Error: Template not found at {templatePath}");

@@ -9,6 +9,9 @@ namespace LECG.Services
     {
         public string SaveTemp(Document targetFamilyDoc, string targetFamilyName)
         {
+            ArgumentNullException.ThrowIfNull(targetFamilyDoc);
+            ArgumentNullException.ThrowIfNull(targetFamilyName);
+
             string tempDir = Path.GetTempPath();
             string tempFamilyPath = Path.Combine(tempDir, targetFamilyName + ".rfa");
 

@@ -15,6 +15,9 @@ namespace LECG.Services
 
         public void Load(Document doc, string tempFamilyPath)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(tempFamilyPath);
+
             using (Transaction tProject = new Transaction(doc, "Load Converted Family"))
             {
                 tProject.Start();

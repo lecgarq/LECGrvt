@@ -7,6 +7,8 @@ namespace LECG.Services
     {
         public ElementType? Resolve(Document doc, ElementId typeId)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             return doc.GetElement(typeId) as ElementType;
         }
     }

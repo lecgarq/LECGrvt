@@ -8,6 +8,9 @@ namespace LECG.Services
     {
         public FilledRegionType? GetOrCreateFilledRegionType(Document doc, Color color)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(color);
+
             string name = $"Solid_{color.Red}_{color.Green}_{color.Blue}";
             FilledRegionType? existing = new FilteredElementCollector(doc)
                 .OfClass(typeof(FilledRegionType))

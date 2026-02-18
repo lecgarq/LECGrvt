@@ -8,6 +8,10 @@ namespace LECG.Services
     {
         public bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(id);
+            ArgumentNullException.ThrowIfNull(name);
+
             try
             {
                 doc.Delete(id);

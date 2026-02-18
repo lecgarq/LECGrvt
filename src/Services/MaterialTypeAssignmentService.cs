@@ -9,6 +9,10 @@ namespace LECG.Services
     {
         public bool AssignMaterialToType(Document doc, ElementType type, ElementId materialId, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(type);
+            ArgumentNullException.ThrowIfNull(materialId);
+
             if (type is HostObjAttributes hostType)
             {
                 CompoundStructure? cs = hostType.GetCompoundStructure();

@@ -8,6 +8,8 @@ namespace LECG.Services
     {
         public Dictionary<ElementId, List<Element>> GroupByType(IList<Element> elements)
         {
+            ArgumentNullException.ThrowIfNull(elements);
+
             Dictionary<ElementId, List<Element>> elementsByType = new Dictionary<ElementId, List<Element>>();
 
             foreach (Element el in elements)

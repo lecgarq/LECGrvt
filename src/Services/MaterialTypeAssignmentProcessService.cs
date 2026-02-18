@@ -21,6 +21,9 @@ namespace LECG.Services
 
         public bool TryProcess(Document doc, ElementType elemType, int elementCount, Action<string>? logCallback)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elemType);
+
             if (_materialTypeEligibilityService.TryGetSkipReason(elemType, out string skipReason))
             {
                 logCallback?.Invoke($"  SKIP: {skipReason}");

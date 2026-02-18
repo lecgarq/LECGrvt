@@ -7,6 +7,8 @@ namespace LECG.Services
     {
         public void ConfigureTargetFamilyParameters(Document targetFamilyDoc)
         {
+            ArgumentNullException.ThrowIfNull(targetFamilyDoc);
+
             Family targetFamilyRoot = targetFamilyDoc.OwnerFamily;
 
             Parameter? pWorkPlane = targetFamilyRoot.get_Parameter(BuiltInParameter.FAMILY_WORK_PLANE_BASED);
