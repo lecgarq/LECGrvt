@@ -34,7 +34,7 @@ jobs:
       - name: Publish coverage summary
         shell: pwsh
         run: |
-          $coverage = Get-ChildItem -Path "LECG.Tests/TestResults" -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
+          $coverage = Get-ChildItem -Path "." -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
           if (-not $coverage) {
             "## Coverage`nCoverage file not found." | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Append
             exit 0
@@ -48,7 +48,7 @@ jobs:
       - name: Enforce coverage threshold
         shell: pwsh
         run: |
-          $coverage = Get-ChildItem -Path "LECG.Tests/TestResults" -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
+          $coverage = Get-ChildItem -Path "." -Recurse -Filter "coverage.cobertura.xml" | Select-Object -First 1
           if (-not $coverage) {
             Write-Error "Coverage file not found."
             exit 1
