@@ -35,4 +35,22 @@ public class SexyRevitGraphicsPolicyTests
         decision.DetailLevel.Should().Be(CoreDetailLevel.Fine);
         decision.Messages.Should().Contain(m => m.Contains("Detail Level: Fine"));
     }
+
+    [Fact]
+    public void Evaluate_WhenSettingsIsNull_ThrowsArgumentNullException()
+    {
+        Action act = () => SexyRevitGraphicsPolicy.Evaluate(null!);
+
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void Evaluate_WhenConsistentColorsEnabledWithoutFineDetail_UsesDefaultMessageSet()
+    {
+        var decision = SexyRevitGraphicsPolicy.Evaluate(new SexyRevitGraphicsSettings(true, false));
+
+        decision.DetailLevel.Should().BeNull();
+        decision.Messages.Should().HaveCount(3);
+        decision.Messages.Should().Contain(m => m.Contains("Display Style: Realistic"));
+    }
 }

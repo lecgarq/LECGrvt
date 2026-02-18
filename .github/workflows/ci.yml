@@ -25,3 +25,7 @@ jobs:
 
       - name: Test core-dependent tests
         run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release
+
+      - name: Collect coverage (non-blocking)
+        continue-on-error: true
+        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --collect:"XPlat Code Coverage"
