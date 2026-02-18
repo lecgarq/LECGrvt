@@ -12,17 +12,20 @@ namespace LECG.Services
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
+        private readonly IMaterialTypeEligibilityService _materialTypeEligibilityService;
 
         public MaterialAssignmentExecutionService(
             IMaterialElementGroupingService materialElementGroupingService,
             IMaterialColorSequenceService materialColorSequenceService,
             IMaterialCreationService materialCreationService,
-            IMaterialTypeAssignmentService materialTypeAssignmentService)
+            IMaterialTypeAssignmentService materialTypeAssignmentService,
+            IMaterialTypeEligibilityService materialTypeEligibilityService)
         {
             _materialElementGroupingService = materialElementGroupingService;
             _materialColorSequenceService = materialColorSequenceService;
             _materialCreationService = materialCreationService;
             _materialTypeAssignmentService = materialTypeAssignmentService;
+            _materialTypeEligibilityService = materialTypeEligibilityService;
         }
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
@@ -55,14 +58,10 @@ namespace LECG.Services
 
                     string typeName = elemType.Name;
 
-                    if (elemType is HostObjAttributes hostType)
+                    if (_materialTypeEligibilityService.TryGetSkipReason(elemType, out string skipReason))
                     {
-                        CompoundStructure? cs = hostType.GetCompoundStructure();
-                        if (cs != null && cs.GetLayers().Count > 1)
-                        {
-                            logCallback?.Invoke($"  SKIP: {typeName} has {cs.GetLayers().Count} layers. Cannot assign single material.");
-                            continue;
-                        }
+                        logCallback?.Invoke($"  SKIP: {skipReason}");
+                        continue;
                     }
 
                     progressCallback?.Invoke(pct, $"Processing: {typeName}");

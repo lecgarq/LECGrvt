@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 107 completed
+**Status**: Slice 108 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -945,6 +945,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesBoundaryPointService` by extracting curve-division parameter calculation into `IAlignEdgesCurveDivisionService`.
 - Added `AlignEdgesCurveDivisionService` and wired it through DI + `AlignEdgesBoundaryPointService` constructor injection.
 - Kept `IAlignEdgesBoundaryPointService` API unchanged while reducing per-curve parameter-generation complexity.
+
+**P5 Slice 108 (Completed)**:
+- Decomposed `MaterialAssignmentExecutionService` by extracting material-type eligibility checks into `IMaterialTypeEligibilityService`.
+- Added `MaterialTypeEligibilityService` and wired it through DI + `MaterialAssignmentExecutionService` constructor injection.
+- Kept `IMaterialAssignmentExecutionService` API unchanged while reducing in-loop host-layer validation logic complexity.
 
 
 **Target Services**:
