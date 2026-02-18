@@ -1,26 +1,25 @@
 using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Structure;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
     public class CadFamilyLoadPlacementService : ICadFamilyLoadPlacementService
     {
-        private readonly ICadPlacementViewService _placementViewService;
         private readonly ICadFamilyLoadResolveService _cadFamilyLoadResolveService;
         private readonly ICadTempFileCleanupService _cadTempFileCleanupService;
         private readonly ICadSourceCleanupService _cadSourceCleanupService;
+        private readonly ICadFamilyInstancePlacementService _cadFamilyInstancePlacementService;
 
         public CadFamilyLoadPlacementService(
-            ICadPlacementViewService placementViewService,
             ICadFamilyLoadResolveService cadFamilyLoadResolveService,
             ICadTempFileCleanupService cadTempFileCleanupService,
-            ICadSourceCleanupService cadSourceCleanupService)
+            ICadSourceCleanupService cadSourceCleanupService,
+            ICadFamilyInstancePlacementService cadFamilyInstancePlacementService)
         {
-            _placementViewService = placementViewService;
             _cadFamilyLoadResolveService = cadFamilyLoadResolveService;
             _cadTempFileCleanupService = cadTempFileCleanupService;
             _cadSourceCleanupService = cadSourceCleanupService;
+            _cadFamilyInstancePlacementService = cadFamilyInstancePlacementService;
         }
 
         public ElementId LoadOnly(Document doc, string path)
@@ -50,18 +49,8 @@ namespace LECG.Services
                 if (symbol != null)
                 {
                     createdId = symbol.Id;
-                    View? placementView = _placementViewService.ResolvePlacementView(doc, doc.ActiveView);
-
-                    if (placementView != null)
-                    {
-                        doc.Create.NewFamilyInstance(location, symbol, placementView);
-
-                        _cadSourceCleanupService.DeleteOriginalIfPresent(doc, deleteId);
-                    }
-                    else
-                    {
-                        doc.Create.NewFamilyInstance(location, symbol, StructuralType.NonStructural);
-                    }
+                    _cadFamilyInstancePlacementService.Place(doc, symbol, location);
+                    _cadSourceCleanupService.DeleteOriginalIfPresent(doc, deleteId);
                 }
                 t.Commit();
             }

@@ -104,6 +104,7 @@ namespace LECG.Core
             services.AddSingleton<ICadPlacementViewService, CadPlacementViewService>();
             services.AddSingleton<ICadFamilySymbolService, CadFamilySymbolService>();
             services.AddSingleton<ICadFamilyLoadResolveService, CadFamilyLoadResolveService>();
+            services.AddSingleton<ICadFamilyInstancePlacementService, CadFamilyInstancePlacementService>();
             services.AddSingleton<ICadLineStyleService, CadLineStyleService>();
             services.AddSingleton<ICadLineMergeService, CadLineMergeService>();
             services.AddSingleton<ICadPointFlattenService, CadPointFlattenService>();

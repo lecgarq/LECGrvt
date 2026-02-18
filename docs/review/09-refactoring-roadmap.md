@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 98 completed
+**Status**: Slice 99 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -900,6 +900,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadCurveFlattenService` by extracting `DoubleArray` conversion into `ICadDoubleArrayConversionService`.
 - Added `CadDoubleArrayConversionService` and wired it through DI + `CadCurveFlattenService` constructor injection.
 - Kept `ICadCurveFlattenService` API unchanged while reducing local NURBS conversion helper duplication.
+
+**P5 Slice 99 (Completed)**:
+- Decomposed `CadFamilyLoadPlacementService` by extracting family instance placement branching into `ICadFamilyInstancePlacementService`.
+- Added `CadFamilyInstancePlacementService` and wired it through DI + `CadFamilyLoadPlacementService` constructor injection.
+- Kept `ICadFamilyLoadPlacementService` API unchanged while reducing placement-view branching orchestration complexity.
 
 
 **Target Services**:
