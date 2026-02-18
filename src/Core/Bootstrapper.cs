@@ -79,6 +79,7 @@ namespace LECG.Core
             services.AddSingleton<IFamilyTemplatePathService, FamilyTemplatePathService>();
             services.AddSingleton<IFamilyGeometryCollectionService, FamilyGeometryCollectionService>();
             services.AddSingleton<IFamilyTempFileCleanupService, FamilyTempFileCleanupService>();
+            services.AddSingleton<IFamilyConversionFinalizeService, FamilyConversionFinalizeService>();
             services.AddSingleton<IFamilyLoadOptionsFactory, FamilyLoadOptionsFactory>();
             services.AddSingleton<IFamilyParameterSetupService, FamilyParameterSetupService>();
             services.AddSingleton<IFamilyConversionNamingService, FamilyConversionNamingService>();

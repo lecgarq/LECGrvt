@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 102 completed
+**Status**: Slice 103 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -920,6 +920,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `FamilyConversionService` by extracting target-family naming into `IFamilyConversionNamingService`.
 - Added `FamilyConversionNamingService` and wired it through DI + `FamilyConversionService` constructor injection.
 - Kept `IFamilyConversionService` API unchanged while reducing in-method naming rule orchestration.
+
+**P5 Slice 103 (Completed)**:
+- Decomposed `FamilyConversionService` by extracting finalization/close+cleanup into `IFamilyConversionFinalizeService`.
+- Added `FamilyConversionFinalizeService` and wired it through DI + `FamilyConversionService` constructor injection.
+- Kept `IFamilyConversionService` API unchanged while reducing finally-block document lifecycle orchestration complexity.
 
 
 **Target Services**:
