@@ -120,6 +120,7 @@ namespace LECG.Core
             services.AddSingleton<ICadPointFlattenService, CadPointFlattenService>();
             services.AddSingleton<ICadDoubleArrayConversionService, CadDoubleArrayConversionService>();
             services.AddSingleton<ICadCurveTessellationService, CadCurveTessellationService>();
+            services.AddSingleton<ICadSplineFlattenService, CadSplineFlattenService>();
             services.AddSingleton<ICadCurveFlattenService, CadCurveFlattenService>();
             services.AddSingleton<ICadFilledRegionTypeService, CadFilledRegionTypeService>();
             services.AddSingleton<ICadFamilyLoadPlacementService, CadFamilyLoadPlacementService>();

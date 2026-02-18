@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 110 completed
+**Status**: Slice 111 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -960,6 +960,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `PurgeLevelService` by extracting referenced-level scanning into `IPurgeReferencedLevelService`.
 - Added `PurgeReferencedLevelService` and wired it through DI + `PurgeLevelService` constructor injection.
 - Kept `IPurgeLevelService` API unchanged while reducing in-method parameter-reference scanning orchestration complexity.
+
+**P5 Slice 111 (Completed)**:
+- Decomposed `CadCurveFlattenService` by extracting spline-specific flattening into `ICadSplineFlattenService`.
+- Added `CadSplineFlattenService` and wired it through DI + `CadCurveFlattenService` constructor injection.
+- Kept `ICadCurveFlattenService` API unchanged while reducing spline-branch flattening complexity in the main curve dispatcher.
 
 
 **Target Services**:

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 
@@ -11,16 +10,18 @@ namespace LECG.Services
         private readonly ICadCurveTessellationService _cadCurveTessellationService;
         private readonly ICadPointFlattenService _cadPointFlattenService;
         private readonly ICadDoubleArrayConversionService _cadDoubleArrayConversionService;
+        private readonly ICadSplineFlattenService _cadSplineFlattenService;
 
-        public CadCurveFlattenService() : this(new CadCurveTessellationService(), new CadPointFlattenService(), new CadDoubleArrayConversionService())
+        public CadCurveFlattenService() : this(new CadCurveTessellationService(), new CadPointFlattenService(), new CadDoubleArrayConversionService(), new CadSplineFlattenService(new CadCurveTessellationService(), new CadPointFlattenService(), new CadDoubleArrayConversionService()))
         {
         }
 
-        public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService, ICadPointFlattenService cadPointFlattenService, ICadDoubleArrayConversionService cadDoubleArrayConversionService)
+        public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService, ICadPointFlattenService cadPointFlattenService, ICadDoubleArrayConversionService cadDoubleArrayConversionService, ICadSplineFlattenService cadSplineFlattenService)
         {
             _cadCurveTessellationService = cadCurveTessellationService;
             _cadPointFlattenService = cadPointFlattenService;
             _cadDoubleArrayConversionService = cadDoubleArrayConversionService;
+            _cadSplineFlattenService = cadSplineFlattenService;
         }
 
         public IEnumerable<Curve>? FlattenCurve(Curve c)
@@ -53,31 +54,9 @@ namespace LECG.Services
                 {
                     return new List<Curve> { Ellipse.CreateCurve(_cadPointFlattenService.Flatten(e.Center), e.RadiusX, e.RadiusY, XYZ.BasisX, XYZ.BasisY, e.GetEndParameter(0), e.GetEndParameter(1)) };
                 }
-                else if (c is HermiteSpline hs)
+                else if (c is HermiteSpline || c is NurbSpline)
                 {
-                    IList<XYZ> pts = hs.ControlPoints.Select(p => _cadPointFlattenService.Flatten(p)).ToList();
-                    var cleanPts = new List<XYZ> { pts[0] };
-                    for (int i = 1; i < pts.Count; i++)
-                    {
-                        if (!pts[i].IsAlmostEqualTo(cleanPts.Last(), 0.001)) cleanPts.Add(pts[i]);
-                    }
-                    if (cleanPts.Count >= 2)
-                    {
-                        return new List<Curve> { HermiteSpline.Create(cleanPts, hs.IsPeriodic) };
-                    }
-                    return _cadCurveTessellationService.Tessellate(c);
-                }
-                else if (c is NurbSpline ns)
-                {
-                    IList<XYZ> ctrls = ns.CtrlPoints.Select(p => _cadPointFlattenService.Flatten(p)).ToList();
-                    try
-                    {
-                        return new List<Curve> { NurbSpline.CreateCurve(ns.Degree, _cadDoubleArrayConversionService.ToList(ns.Knots), ctrls, _cadDoubleArrayConversionService.ToList(ns.Weights)) };
-                    }
-                    catch
-                    {
-                        return _cadCurveTessellationService.Tessellate(c);
-                    }
+                    return _cadSplineFlattenService.Flatten(c);
                 }
 
                 return _cadCurveTessellationService.Tessellate(c);
