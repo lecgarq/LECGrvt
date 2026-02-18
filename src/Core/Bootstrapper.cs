@@ -144,6 +144,7 @@ namespace LECG.Core
             services.AddSingleton<ICadRenderContextService, CadRenderContextService>();
             services.AddSingleton<ICadCurveRenderService, CadCurveRenderService>();
             services.AddSingleton<ICadHatchProgressService, CadHatchProgressService>();
+            services.AddSingleton<ICadHatchLoopPreparationService, CadHatchLoopPreparationService>();
             services.AddSingleton<ICadHatchRenderService, CadHatchRenderService>();
             services.AddSingleton<ICadDataDrawService, CadDataDrawService>();
             services.AddSingleton<ICadFamilySaveService, CadFamilySaveService>();

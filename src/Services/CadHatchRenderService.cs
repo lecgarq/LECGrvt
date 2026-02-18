@@ -9,14 +9,14 @@ namespace LECG.Services
     public class CadHatchRenderService : ICadHatchRenderService
     {
         private readonly ICadFilledRegionTypeService _filledRegionTypeService;
-        private readonly ICadCurveFlattenService _curveFlattenService;
         private readonly ICadHatchProgressService _cadHatchProgressService;
+        private readonly ICadHatchLoopPreparationService _cadHatchLoopPreparationService;
 
-        public CadHatchRenderService(ICadFilledRegionTypeService filledRegionTypeService, ICadCurveFlattenService curveFlattenService, ICadHatchProgressService cadHatchProgressService)
+        public CadHatchRenderService(ICadFilledRegionTypeService filledRegionTypeService, ICadHatchProgressService cadHatchProgressService, ICadHatchLoopPreparationService cadHatchLoopPreparationService)
         {
             _filledRegionTypeService = filledRegionTypeService;
-            _curveFlattenService = curveFlattenService;
             _cadHatchProgressService = cadHatchProgressService;
+            _cadHatchLoopPreparationService = cadHatchLoopPreparationService;
         }
 
         public int DrawHatches(
@@ -43,26 +43,7 @@ namespace LECG.Services
                 {
                     FilledRegionType? frType = _filledRegionTypeService.GetOrCreateFilledRegionType(familyDoc, hatch.Color);
                     if (frType == null) continue;
-                    List<CurveLoop> validLoops = new List<CurveLoop>();
-
-                    foreach (CurveLoop loop in hatch.Loops)
-                    {
-                        CurveLoop newLoop = new CurveLoop();
-                        foreach (Curve c in loop)
-                        {
-                            Curve transCurve = c.CreateTransformed(toOrigin);
-                            IEnumerable<Curve>? flats = _curveFlattenService.FlattenCurve(transCurve);
-                            if (flats != null)
-                            {
-                                foreach (Curve flat in flats) newLoop.Append(flat);
-                            }
-                        }
-
-                        if (!newLoop.IsOpen() && newLoop.GetExactLength() > 0.001)
-                        {
-                            validLoops.Add(newLoop);
-                        }
-                    }
+                    List<CurveLoop> validLoops = _cadHatchLoopPreparationService.PrepareLoops(hatch, toOrigin);
 
                     if (validLoops.Any())
                     {
