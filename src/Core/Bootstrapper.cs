@@ -94,6 +94,7 @@ namespace LECG.Core
             services.AddSingleton<IAlignEdgesHitPointProjectionService, AlignEdgesHitPointProjectionService>();
             services.AddSingleton<IAlignEdgesIntersectorService, AlignEdgesIntersectorService>();
             services.AddSingleton<IAlignEdgesBoundaryPointService, AlignEdgesBoundaryPointService>();
+            services.AddSingleton<IAlignEdgesBoundaryCollectionService, AlignEdgesBoundaryCollectionService>();
             services.AddSingleton<IAlignEdgesPointInsertionService, AlignEdgesPointInsertionService>();
             services.AddSingleton<IToposolidBaseElevationService, ToposolidBaseElevationService>();
             services.AddSingleton<IAlignEdgesVertexAlignmentService, AlignEdgesVertexAlignmentService>();

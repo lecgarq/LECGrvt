@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 104 completed
+**Status**: Slice 105 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -930,6 +930,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `AlignEdgesService` by extracting slab shape point insertion loop into `IAlignEdgesPointInsertionService`.
 - Added `AlignEdgesPointInsertionService` and wired it through DI + `AlignEdgesService` constructor injection.
 - Kept `IAlignEdgesService` API unchanged while reducing in-method point insertion orchestration complexity.
+
+**P5 Slice 105 (Completed)**:
+- Decomposed `AlignEdgesService` by extracting boundary hit-point collection orchestration into `IAlignEdgesBoundaryCollectionService`.
+- Added `AlignEdgesBoundaryCollectionService` and wired it through DI + `AlignEdgesService` constructor injection.
+- Kept `IAlignEdgesService` API unchanged while reducing sketch lookup and boundary-point collection orchestration complexity.
 
 
 **Target Services**:

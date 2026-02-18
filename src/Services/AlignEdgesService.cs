@@ -1,7 +1,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using LECG.Services.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,18 +9,18 @@ namespace LECG.Services
     public class AlignEdgesService : IAlignEdgesService
     {
         private readonly IAlignEdgesIntersectorService _intersectorService;
-        private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
+        private readonly IAlignEdgesBoundaryCollectionService _boundaryCollectionService;
         private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
         private readonly IAlignEdgesPointInsertionService _pointInsertionService;
 
-        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryPointService(), new AlignEdgesVertexAlignmentService(), new AlignEdgesPointInsertionService())
+        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesBoundaryCollectionService(new AlignEdgesBoundaryPointService()), new AlignEdgesVertexAlignmentService(), new AlignEdgesPointInsertionService())
         {
         }
 
-        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryPointService boundaryPointService, IAlignEdgesVertexAlignmentService vertexAlignmentService, IAlignEdgesPointInsertionService pointInsertionService)
+        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesBoundaryCollectionService boundaryCollectionService, IAlignEdgesVertexAlignmentService vertexAlignmentService, IAlignEdgesPointInsertionService pointInsertionService)
         {
             _intersectorService = intersectorService;
-            _boundaryPointService = boundaryPointService;
+            _boundaryCollectionService = boundaryCollectionService;
             _vertexAlignmentService = vertexAlignmentService;
             _pointInsertionService = pointInsertionService;
         }
@@ -51,25 +50,12 @@ namespace LECG.Services
                             if (!editor.IsEnabled) editor.Enable();
                             
                             // STEP 1: Add intermediate points along boundary curves that hit reference
-                            List<XYZ> newPoints = new List<XYZ>();
-                            
-                            // Get the sketch boundary curves
-                            try
-                            {
-                                Sketch? sketch = doc.GetElement(toposolid.SketchId) as Sketch;
-                                if (sketch != null)
-                                {
-                                    newPoints.AddRange(_boundaryPointService.CollectBoundaryHitPoints(
-                                        sketch,
-                                        intersector,
-                                        MIN_SPACING,
-                                        MAX_SPACING,
-                                        _ => { }));
-                                }
-                            }
-                            catch (Exception)
-                            {
-                            }
+                            List<XYZ> newPoints = _boundaryCollectionService.Collect(
+                                doc,
+                                toposolid,
+                                intersector,
+                                MIN_SPACING,
+                                MAX_SPACING);
                             
                             // Add the new points
                             _pointInsertionService.AddPoints(editor, newPoints);
