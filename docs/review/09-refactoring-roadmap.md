@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 108 completed
+**Status**: Slice 109 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -950,6 +950,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `MaterialAssignmentExecutionService` by extracting material-type eligibility checks into `IMaterialTypeEligibilityService`.
 - Added `MaterialTypeEligibilityService` and wired it through DI + `MaterialAssignmentExecutionService` constructor injection.
 - Kept `IMaterialAssignmentExecutionService` API unchanged while reducing in-loop host-layer validation logic complexity.
+
+**P5 Slice 109 (Completed)**:
+- Decomposed `RenderAppearanceBatchSyncService` by extracting batch progress calculation/reporting cadence into `IRenderBatchProgressService`.
+- Added `RenderBatchProgressService` and wired it through DI + `RenderAppearanceBatchSyncService` constructor injection.
+- Kept `IRenderAppearanceBatchSyncService` API unchanged while reducing per-material loop progress orchestration complexity.
 
 
 **Target Services**:

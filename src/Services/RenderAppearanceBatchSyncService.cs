@@ -12,17 +12,20 @@ namespace LECG.Services
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialSyncCheckService _syncCheckService;
         private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;
+        private readonly IRenderBatchProgressService _renderBatchProgressService;
 
         public RenderAppearanceBatchSyncService(
             IRenderAppearanceRefreshService refreshService,
             IRenderSolidFillPatternService solidFillPatternService,
             IRenderMaterialSyncCheckService syncCheckService,
-            IRenderMaterialGraphicsApplyService graphicsApplyService)
+            IRenderMaterialGraphicsApplyService graphicsApplyService,
+            IRenderBatchProgressService renderBatchProgressService)
         {
             _refreshService = refreshService;
             _solidFillPatternService = solidFillPatternService;
             _syncCheckService = syncCheckService;
             _graphicsApplyService = graphicsApplyService;
+            _renderBatchProgressService = renderBatchProgressService;
         }
 
         public void BatchSync(
@@ -53,9 +56,9 @@ namespace LECG.Services
                 foreach (Material mat in matsList)
                 {
                     processed++;
-                    if (processed % 10 == 0)
+                    if (_renderBatchProgressService.ShouldReport(processed))
                     {
-                        progressCallback?.Invoke((double)processed / total * 100, $"Processing: {mat.Name}");
+                        progressCallback?.Invoke(_renderBatchProgressService.ToPercent(processed, total), $"Processing: {mat.Name}");
                     }
 
                     Color renderColor = mat.Color;

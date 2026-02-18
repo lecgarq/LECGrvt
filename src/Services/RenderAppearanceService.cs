@@ -12,7 +12,7 @@ namespace LECG.Services
 
         public RenderAppearanceService() : this(
             new RenderAppearanceSingleSyncService(new RenderSolidFillPatternService(), new RenderMaterialGraphicsApplyService()),
-            new RenderAppearanceBatchSyncService(new RenderAppearanceRefreshService(), new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService(), new RenderMaterialGraphicsApplyService()))
+            new RenderAppearanceBatchSyncService(new RenderAppearanceRefreshService(), new RenderSolidFillPatternService(), new RenderMaterialSyncCheckService(), new RenderMaterialGraphicsApplyService(), new RenderBatchProgressService()))
         {
         }
 
