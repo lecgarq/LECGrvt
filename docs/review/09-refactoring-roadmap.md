@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 100 completed
+**Status**: Slice 101 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -910,6 +910,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting import-instance center calculation into `ICadImportInstanceCenterService`.
 - Added `CadImportInstanceCenterService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing in-method bounding-box center calculation orchestration logic.
+
+**P5 Slice 101 (Completed)**:
+- Decomposed `AlignEdgesBoundaryPointService` by extracting hit-point retry/projection into `IAlignEdgesHitPointProjectionService`.
+- Added `AlignEdgesHitPointProjectionService` and wired it through DI + `AlignEdgesBoundaryPointService` constructor injection.
+- Kept `IAlignEdgesBoundaryPointService` API unchanged while reducing in-method hit-point retry loop orchestration complexity.
 
 
 **Target Services**:

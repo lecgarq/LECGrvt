@@ -7,17 +7,17 @@ namespace LECG.Services
 {
     public class AlignEdgesBoundaryPointService : IAlignEdgesBoundaryPointService
     {
-        private readonly IReferenceRaycastService _referenceRaycastService;
         private readonly IAlignEdgesCurveHitService _alignEdgesCurveHitService;
+        private readonly IAlignEdgesHitPointProjectionService _alignEdgesHitPointProjectionService;
 
-        public AlignEdgesBoundaryPointService() : this(new ReferenceRaycastService(), new AlignEdgesCurveHitService(new ReferenceRaycastService()))
+        public AlignEdgesBoundaryPointService() : this(new AlignEdgesCurveHitService(new ReferenceRaycastService()), new AlignEdgesHitPointProjectionService(new ReferenceRaycastService()))
         {
         }
 
-        public AlignEdgesBoundaryPointService(IReferenceRaycastService referenceRaycastService, IAlignEdgesCurveHitService alignEdgesCurveHitService)
+        public AlignEdgesBoundaryPointService(IAlignEdgesCurveHitService alignEdgesCurveHitService, IAlignEdgesHitPointProjectionService alignEdgesHitPointProjectionService)
         {
-            _referenceRaycastService = referenceRaycastService;
             _alignEdgesCurveHitService = alignEdgesCurveHitService;
+            _alignEdgesHitPointProjectionService = alignEdgesHitPointProjectionService;
         }
 
         public List<XYZ> CollectBoundaryHitPoints(
@@ -53,21 +53,7 @@ namespace LECG.Services
                                 double param = (double)j / divisions;
                                 XYZ sketchPt = curve.Evaluate(param, true);
 
-                                XYZ? hitPt = _referenceRaycastService.GetHitPoint(intersector, sketchPt);
-
-                                if (hitPt == null)
-                                {
-                                    XYZ dir = (curveMid - sketchPt).Normalize();
-                                    for (double offset = 0.5; offset <= 1.5 && hitPt == null; offset += 0.5)
-                                    {
-                                        XYZ testPt = sketchPt.Add(dir.Multiply(offset));
-                                        hitPt = _referenceRaycastService.GetHitPoint(intersector, testPt);
-                                        if (hitPt != null)
-                                        {
-                                            hitPt = new XYZ(sketchPt.X, sketchPt.Y, hitPt.Z);
-                                        }
-                                    }
-                                }
+                                XYZ? hitPt = _alignEdgesHitPointProjectionService.ResolveHitPoint(intersector, sketchPt, curveMid);
 
                                 if (hitPt != null)
                                 {
