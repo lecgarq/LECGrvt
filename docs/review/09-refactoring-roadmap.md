@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 116 completed
+**Status**: Slice 117 completed
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -990,6 +990,11 @@ dotnet test /p:CollectCoverage=true
 - Decomposed `CadConversionService` by extracting DWG family build/load orchestration into `ICadDwgFamilyCreationService`.
 - Added `CadDwgFamilyCreationService` and wired it through DI + `CadConversionService` constructor injection.
 - Kept `ICadConversionService` API unchanged while reducing `ConvertDwgToFamily` build/load orchestration complexity.
+
+**P5 Slice 117 (Completed)**:
+- Decomposed `CadConversionService` by extracting CAD-import family build/load orchestration into `ICadImportFamilyCreationService`.
+- Added `CadImportFamilyCreationService` and wired it through DI + `CadConversionService` constructor injection.
+- Kept `ICadConversionService` API unchanged while reducing `ConvertCadToFamily` build/load orchestration complexity.
 
 
 **Target Services**:

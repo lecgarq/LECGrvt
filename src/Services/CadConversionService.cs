@@ -8,27 +8,24 @@ namespace LECG.Services
 {
     public class CadConversionService : ICadConversionService
     {
-        private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
         private readonly ICadImportDataPreparationService _cadImportDataPreparationService;
+        private readonly ICadImportFamilyCreationService _cadImportFamilyCreationService;
         private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
-        private readonly ICadFamilyBuildService _cadFamilyBuildService;
         private readonly ICadDwgFamilyCreationService _cadDwgFamilyCreationService;
         private readonly ICadDataValidationService _cadDataValidationService;
         private readonly ICadImportInstanceCenterService _cadImportInstanceCenterService;
 
         public CadConversionService(
-            ICadFamilyLoadPlacementService familyLoadPlacementService,
             ICadImportDataPreparationService cadImportDataPreparationService,
+            ICadImportFamilyCreationService cadImportFamilyCreationService,
             ICadTempDwgExtractionService cadTempDwgExtractionService,
-            ICadFamilyBuildService cadFamilyBuildService,
             ICadDwgFamilyCreationService cadDwgFamilyCreationService,
             ICadDataValidationService cadDataValidationService,
             ICadImportInstanceCenterService cadImportInstanceCenterService)
         {
-            _familyLoadPlacementService = familyLoadPlacementService;
             _cadImportDataPreparationService = cadImportDataPreparationService;
+            _cadImportFamilyCreationService = cadImportFamilyCreationService;
             _cadTempDwgExtractionService = cadTempDwgExtractionService;
-            _cadFamilyBuildService = cadFamilyBuildService;
             _cadDwgFamilyCreationService = cadDwgFamilyCreationService;
             _cadDataValidationService = cadDataValidationService;
             _cadImportInstanceCenterService = cadImportInstanceCenterService;
@@ -47,23 +44,17 @@ namespace LECG.Services
 
             XYZ center = _cadImportInstanceCenterService.GetCenter(cadInstance);
 
-            progress?.Invoke(50, "Creating family document...");
-            string path = _cadFamilyBuildService.BuildAndSave(
+            return _cadImportFamilyCreationService.CreateAndLoad(
                 doc,
-                templatePath,
                 optimizedData,
                 center,
+                cadInstance.Id,
+                familyName,
+                templatePath,
                 lineStyleName,
                 lineColor,
                 lineWeight,
-                "Create Detail Item Content",
-                familyName,
-                progress,
-                50,
-                80);
-
-            progress?.Invoke(90, "Saving and loading family...");
-            return _familyLoadPlacementService.LoadAndPlace(doc, path, center, cadInstance.Id);
+                progress);
         }
 
         public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
