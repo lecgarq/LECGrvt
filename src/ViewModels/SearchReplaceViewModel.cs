@@ -12,6 +12,14 @@ using System;
 
 namespace LECG.ViewModels
 {
+    public enum SearchFilterType
+    {
+        Contains,
+        BeginsWith,
+        EndsWith,
+        DoesNotContain
+    }
+
     public partial class ReplaceItem : ObservableObject
     {
         [ObservableProperty] private bool _isChecked = true;
@@ -47,6 +55,18 @@ namespace LECG.ViewModels
         // Selection Filters
         [ObservableProperty] private string _filterName = "";
         [ObservableProperty] private string _filterCategory = "All"; // Default to All
+        [ObservableProperty] private SearchFilterType _selectedFilterType = SearchFilterType.Contains;
+
+        [ObservableProperty] private bool _scopeFamilyParameterName; // New Scope
+
+        [RelayCommand]
+        private void ReplaceSpaces()
+        {
+             if (!string.IsNullOrEmpty(FilterName))
+             {
+                 FilterName = FilterName.Replace(" ", "_");
+             }
+        }
 
         [ObservableProperty] private ObservableCollection<ReplaceItem> _previewItems = new ObservableCollection<ReplaceItem>();
         [ObservableProperty] private ObservableCollection<string> _availableCategories = new ObservableCollection<string>();
@@ -79,6 +99,9 @@ namespace LECG.ViewModels
         partial void OnScopeObjectStyleNameChanged(bool value) => RefreshScope();
         partial void OnScopeLineStyleNameChanged(bool value) => RefreshScope();
         partial void OnScopeFillPatternNameChanged(bool value) => RefreshScope();
+        partial void OnScopeFamilyParameterNameChanged(bool value) => RefreshScope();
+
+        partial void OnSelectedFilterTypeChanged(SearchFilterType value) => UpdatePreview();
 
         // Filter Change Handlers
         partial void OnFilterNameChanged(string value) => UpdatePreview();
@@ -98,7 +121,7 @@ namespace LECG.ViewModels
             // 1. Fetch Data
             _cachedElements = _service.CollectBaseElements(_doc, 
                 ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName,
-                ScopeMaterialName, ScopeObjectStyleName, ScopeLineStyleName, ScopeFillPatternName);
+                ScopeMaterialName, ScopeObjectStyleName, ScopeLineStyleName, ScopeFillPatternName, ScopeFamilyParameterName);
             
             // 2. Update Categories
             var cats = _service.GetUniqueCategories(_cachedElements);

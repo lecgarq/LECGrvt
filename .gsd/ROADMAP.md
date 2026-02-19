@@ -57,3 +57,15 @@
 - Verify triple purge effectiveness.
 - Verify selection restriction in project environment.
 - Update `ARCHITECTURE.md` if services are significantly refactored.
+
+### Phase 5: Advanced Search & Parameter Renaming
+
+**Status**: ⬜ Not Started
+**Objective**: Implement advanced parameter filtering, enhanced string operations, and advanced search logic.
+
+**Tasks**:
+
+- Implement `Family Parameter` collection and renaming (filtering out shared/system params).
+- Add "Replace Spaces" utility command relative to input fields.
+- Implement advanced filter rules: "Contains", "Doesn't Contain", "Begins With", "Ends With".
+- Update `SearchReplaceVM` and View to support new filter logic and parameter scope.

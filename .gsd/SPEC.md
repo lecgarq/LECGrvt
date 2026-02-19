@@ -12,6 +12,8 @@ Enhance the LECG Revit toolkit with robust administrative and conversion feature
 2. **Triple Purge**: Add functionality to execute the "Purge Unused" logic three consecutive times to clear nested dependencies, mirroring Revit's native "Purge" behavior.
 3. **Restricted Family Selection**: Update the "Convert Family" tool to filter out work plane-based families, allowing only element-based/host-based families for selection.
 4. **Constraint Safety**: Ensure all renaming and conversion operations maintain existing element IDs and parameters to avoid breaking model constraints or hosted elements.
+5. **Advanced Parameter Renaming**: Implement renaming for Family Parameters across all families, filtering out shared/project/built-in parameters.
+6. **Enhanced Search Capabilities**: Add advanced text filters (Contains, Begins/Ends With) and utility functions (Replace Spaces).
 
 ## Non-Goals (Out of Scope)
 

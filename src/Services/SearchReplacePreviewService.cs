@@ -34,9 +34,32 @@ namespace LECG.Services
                 if (el.Type == "View" && !vm.ScopeViewName) continue;
                 if (el.Type == "Sheet" && !vm.ScopeSheetName) continue;
 
+                if (el.Type == "Family" && !vm.ScopeFamilyName) continue;
+                if (el.Type == "Material" && !vm.ScopeMaterialName) continue;
+                if (el.Type == "ObjectStyle" && !vm.ScopeObjectStyleName) continue;
+                if (el.Type == "LineStyle" && !vm.ScopeLineStyleName) continue;
+                if (el.Type == "FillPattern" && !vm.ScopeFillPatternName) continue;
+                if (el.Type == "FamilyParameter" && !vm.ScopeFamilyParameterName) continue;
+
                 if (!string.IsNullOrWhiteSpace(vm.FilterName))
                 {
-                    if (el.Name.IndexOf(vm.FilterName, StringComparison.OrdinalIgnoreCase) < 0) continue;
+                    bool match = false;
+                    switch (vm.SelectedFilterType)
+                    {
+                        case SearchFilterType.Contains:
+                            match = el.Name.IndexOf(vm.FilterName, StringComparison.OrdinalIgnoreCase) >= 0;
+                            break;
+                        case SearchFilterType.BeginsWith:
+                            match = el.Name.StartsWith(vm.FilterName, StringComparison.OrdinalIgnoreCase);
+                            break;
+                        case SearchFilterType.EndsWith:
+                            match = el.Name.EndsWith(vm.FilterName, StringComparison.OrdinalIgnoreCase);
+                            break;
+                        case SearchFilterType.DoesNotContain:
+                            match = el.Name.IndexOf(vm.FilterName, StringComparison.OrdinalIgnoreCase) < 0;
+                            break;
+                    }
+                    if (!match) continue;
                 }
 
                 if (!string.IsNullOrWhiteSpace(vm.FilterCategory) && !vm.FilterCategory.Equals("All", StringComparison.OrdinalIgnoreCase))

@@ -6,7 +6,7 @@ namespace LECG.Services
 {
     public class BaseElementCollectionService : IBaseElementCollectionService
     {
-        public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns)
+        public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters)
         {
             List<ElementData> data = new List<ElementData>();
 
@@ -144,6 +144,46 @@ namespace LECG.Services
                                 OriginalValue = cat.Name
                             });
                         }
+                    }
+                }
+            }
+
+            if (familyParameters)
+            {
+                // Track processed families to avoid processing same family multiple times via different types.
+                HashSet<ElementId> processedFamilies = new HashSet<ElementId>();
+                
+                FilteredElementCollector symbolCollector = new FilteredElementCollector(doc)
+                    .WhereElementIsElementType()
+                    .OfClass(typeof(FamilySymbol));
+                    
+                foreach (FamilySymbol fs in symbolCollector)
+                {
+                    if (fs.Family == null || processedFamilies.Contains(fs.Family.Id)) continue;
+                    
+                    processedFamilies.Add(fs.Family.Id);
+                    
+                    foreach (Parameter p in fs.Parameters)
+                    {
+                         // Filter logic:
+                         // - Must not be Shared (user req)
+                         // - Must not be BuiltIn (Id > -1 is usually custom, but explicit check is safer)
+                         // - Must not be ReadOnly (usually, though some formulas make it read only, but definition is what matters. Rename usually okay.)
+                         
+                         bool isShared = p.IsShared;
+                         bool isBuiltIn = p.Id.Value < 0; 
+                         
+                         if (!isShared && !isBuiltIn && !p.IsReadOnly)
+                         {
+                             data.Add(new ElementData
+                             {
+                                 Id = fs.Family.Id.Value, // Store Family ID
+                                 Name = p.Definition.Name, // Parameter Name
+                                 Category = fs.FamilyName, // Group by Family Name
+                                 Type = "FamilyParameter",
+                                 OriginalValue = p.Definition.Name
+                             });
+                         }
                     }
                 }
             }
