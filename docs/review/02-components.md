@@ -15,11 +15,11 @@ This document provides a complete inventory of all components in the LECG Revit 
 | Component Type | Count | Total LOC | Avg LOC/File |
 |----------------|-------|-----------|--------------|
 | **Commands** | 19 | ~1,400 | ~74 |
-| **Services** | 16 | ~3,200 | ~200 |
+| **Services** | 130 | ~7,200 | ~55 |
 | **ViewModels** | 18 | ~1,900 | ~106 |
 | **Views** | 18 | ~900 (code-behind) | ~50 |
 | **Core Infrastructure** | 6 | ~650 | ~108 |
-| **Total** | **77** | **~8,695** | **~113** |
+| **Total (src)** | **191** | **~11,437** | **~60** |
 
 ---
 
@@ -644,6 +644,24 @@ Views (18)
 | - (no VM) | HomeView | Main launcher | Low |
 | - (no VM) | AlignDashboardView | Align sub-menu | Low |
 | - (no VM) | RenderAppearanceView | Render appearance matching | Low |
+
+### Conversion & Safety (v1.1)
+
+#### 1. Triple Purge (Phase 2)
+- **Coordinator**: `PurgeService`
+- **Logic**: `PurgePassSequenceService` (Iterates 3 passes)
+- **Collectors**: `PurgeMaterialUsageCollectorService`, `PurgeReferenceScannerService`
+- **Execution**: `PurgePassExecutionService`, `PurgeDeleteElementService`
+
+#### 2. Selection Safety (Phase 3)
+- **Constraint**: `FamilyInstanceFilter`
+- **Policy**: `FamilySelectionPolicy` (Blocks work-plane based families)
+- **Verification**: `FamilyConversionService` pre-flight hosting check.
+
+#### 3. Naming Protection (Phase 3)
+- **Service**: `FamilyConversionNamingService`
+- **Algorithm**: `FamilyNamePolicy` (Incremental suffix `_n` for collisions)
+- **Scope**: Extended to Material, Object Style, Line Style, Fill Pattern.
 
 ---
 

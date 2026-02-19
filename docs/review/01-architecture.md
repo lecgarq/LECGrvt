@@ -12,7 +12,7 @@ This document provides a comprehensive overview of the LECG Revit 2026 plugin ar
 
 ## Executive Summary
 
-The LECG plugin is a modern Revit 2026 add-in built with .NET 8.0 and WPF, following MVVM architectural patterns. The codebase comprises ~8,695 lines of C# code across 112 source files, organized into a clean layered architecture with clear separation of concerns.
+The LECG plugin is a modern Revit 2026 add-in built with .NET 8.0 and WPF, following MVVM architectural patterns. The codebase comprises ~11,437 lines of C# code across 340+ source files, organized into a clean layered architecture with clear separation of concerns.
 
 **Key Characteristics**:
 - **Pattern**: MVVM with Dependency Injection
@@ -98,6 +98,22 @@ ViewModels  Logging/Progress Callbacks
 - Business logic is testable (mock Revit API interactions)
 - Reusable across multiple commands
 - Consistent error handling and logging
+
+### 3. Service Atomic Decomposition
+As of v1.1, the project has transitioned from monolithic services to an **Atomic Decomposition** pattern. Each major feature is managed by a **Coordinator Service** that orchestrates multiple single-responsibility **Sub-Services**.
+
+**Example (Family Conversion)**:
+`FamilyConversionService` (Coordinator) →
+- `FamilyConversionNamingService`
+- `FamilyGeometryCopyService`
+- `FamilyParameterSetupService`
+- `FamilySaveLoadService`
+- `FamilyTempFileCleanupService`
+
+**Benefits**:
+- Higher testability (individual logical units can be unit-tested in `LECG.Core`)
+- Reduced file lock contention during development
+- Clearer logic flow per component
 
 ### 3. Dependency Injection with Service Locator
 
