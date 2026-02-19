@@ -14,6 +14,7 @@ namespace LECG.Services
         public string Name { get; set; } = "";
         public string Category { get; set; } = "";
         public string Type { get; set; } = ""; // "Type", "View", "Sheet"
+        public string OriginalValue { get; set; } = "";
     }
 
     public class SearchReplaceService : ISearchReplaceService

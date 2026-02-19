@@ -1,33 +1,40 @@
-# Debug Session: Force Rename of Object Styles / Subcategories
+# Debug Session: Filter Built-in Object Styles from Batch Rename
 
 ## Symptom
-User insists on renaming `GraphicsStyle` elements like `RD_...` which fail with `InvalidOperationException: This element does not support assignment of a user-specified name.`
+The Batch Rename tool lists built-in Revit object styles (e.g., "Lines", "Thin Lines") which the user does not want to see or rename. Rationale: Users only care about user-created subcategories (e.g., "A-WALL-DEMO" or imported styles).
 
-**When:** Batch Renaming specific styles (likely imported or system-locked).
-**Expected:** The styles MUST be renamed.
-**Actual:** API blocks direct renaming.
+**When:** Opening the Batch Rename tool with "Object Styles" scope selected.
+**Expected:** Only user-created subcategories/styles should appear in the list.
+**Actual:** All built-in styles are listed.
 
-## New Strategy: "Swap & Replace"
-Since direct property setting is blocked, we will implement a destructive workaround:
-1.  **Create New Subcategory**: Create a new subcategory under the same parent with the desired name.
-2.  **Clone Properties**: Copy LineWeight, LineColor, LinePattern from old to new.
-3.  **Migrate Elements**: Find all `CurveElement` (lines) and potentially other elements using the old style and reassign them to the new style.
-4.  **Delete Old Style**: Remove the original style if possible.
+## Evidence
 
-## Risks
--   **Limited Scope**: Only safe for `CurveElement` (Model/Detail Lines). Might miss complex usages (Filled Regions, Imports).
--   **Destructive**: Deleting a category might break external references or view templates if not perfectly mapped.
--   **Imported Categories**: Creating subcategories under "Imports in Families" is generally restricted. If `RD_` are imported CAD layers, we might fail to create the *exact* same structure.
+### Code Check
+- Need to check `SearchReplaceService.cs` or `BaseElementCollectionService.cs` (where elements are collected).
+- `GraphicsStyle` elements often have a mapped `Category`.
+- `Category` has an `Id` property. Built-in categories have integer IDs corresponding to `BuiltInCategory` enum.
+- User-created subcategories usually have positive IDs that don't map to `BuiltInCategory`, but the best check is `Category.IsTag` (not relevant) or checking if the ID corresponds to a built-in category.
+- **Key Check**: `Category.BuiltInCategory` property returns `BuiltInCategory.INVALID` for custom subcategories? Or we check if the ID is within a certain range?
+- Better check: `Category.Parent != null` implies a subcategory, but some built-in subcategories exist.
+- Standard approach: Filter out categories where `Enum.IsDefined(typeof(BuiltInCategory), cat.Id.IntegerValue)` is true? No, because `Category.Id` is an `ElementId`.
+- Correct check: `Category.IsCuttable`, `Category.CanAddSubcategory`?
+- **Hypothesis**: We can check if the underlying `Category` returns a valid `BuiltInCategory` other than `INVALID`. Custom subcategories might return `INVALID`.
 
 ## Hypotheses
 
 | # | Hypothesis | Likelihood | Status |
 |---|------------|------------|--------|
-| 1 | "Swap & Replace" works for standard Line Styles (Subcategories of Lines). | 80% | UNTESTED |
-| 2 | "Swap & Replace" fails for Imported Categories (cannot create subcat under Import). | 60% | UNTESTED |
-| 3 | User accepts partial success (lines migrated) even if original imported category remains (empty). | 50% | UNTESTED |
+| 1 | `GraphicsStyle.GraphicsStyleCategory.BuiltInCategory` is `INVALID` (-1) for user-created styles. | 90% | UNTESTED |
+| 2 | We need to filter by `Category.Parent != null` AND checks on the parent. | 50% | UNTESTED |
 
 ## Approach
-1.  Extend `BatchRenameExecutionService` to attempt "Swap & Replace" when direct rename fails.
-2.  Implement `SwapStyle` helper method.
-3.  Focus on `CurveElement` migration first.
+1.  Locate the collection logic (`CollectBaseElements` or similar).
+2.  Implement a filter to exclude `GraphicsStyle` elements that map to a valid `BuiltInCategory`.
+3.  Specifically, we want to KEEP:
+    *   Imported styles (Imports in Families).
+    *   User-created subcategories.
+4.  We want to EXCLUDE:
+    *   Standard system Categories (Walls, Doors, etc. - usually not `GraphicsStyle` but their Object Style representation).
+    *   Standard Line Styles (Thin Lines, Medium Lines, etc. might be built-in).
+
+Let's check the code to see how they are currently collected.
