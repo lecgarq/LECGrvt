@@ -51,10 +51,11 @@ namespace LECG.Services
             _purgeExecutionCoordinatorService = purgeExecutionCoordinatorService;
         }
 
-        public void PurgeAll(Document doc, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
+        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
         {
             (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted) = _purgeExecutionCoordinatorService.Execute(
                 doc,
+                passCount,
                 lineStyles,
                 fillPatterns,
                 materials,
@@ -103,4 +104,3 @@ namespace LECG.Services
 
     }
 }
-

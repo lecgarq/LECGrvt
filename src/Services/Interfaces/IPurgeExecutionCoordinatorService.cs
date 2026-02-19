@@ -7,6 +7,7 @@ namespace LECG.Services.Interfaces
     {
         (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted) Execute(
             Document doc,
+            int passCount,
             bool lineStyles,
             bool fillPatterns,
             bool materials,

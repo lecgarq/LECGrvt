@@ -4,6 +4,6 @@ namespace LECG.Services.Interfaces
 {
     public interface IPurgePassSequenceService
     {
-        IEnumerable<int> GetPasses();
+        IEnumerable<int> GetPasses(int passCount);
     }
 }

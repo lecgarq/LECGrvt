@@ -19,6 +19,7 @@ namespace LECG.Services
 
         public (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted) Execute(
             Document doc,
+            int passCount,
             bool lineStyles,
             bool fillPatterns,
             bool materials,
@@ -35,7 +36,7 @@ namespace LECG.Services
             {
                 t.Start();
 
-                foreach (int i in _purgePassSequenceService.GetPasses())
+                foreach (int i in _purgePassSequenceService.GetPasses(passCount))
                 {
                     (int lineStylesPass, int fillPatternsPass, int materialsPass, int levelsPass) = _purgePassExecutionService.ExecutePass(
                         doc,
@@ -51,6 +52,8 @@ namespace LECG.Services
                     fillPatternsDeleted += fillPatternsPass;
                     materialsDeleted += materialsPass;
                     levelsDeleted += levelsPass;
+
+                    doc.Regenerate();
                 }
 
                 t.Commit();
