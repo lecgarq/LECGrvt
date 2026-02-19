@@ -10,7 +10,7 @@ namespace LECG.Utils
             if (elem is FamilyInstance instance)
             {
                 Family family = instance.Symbol.Family;
-                return !family.IsWorkPlaneBased;
+                return LECG.Core.Naming.FamilySelectionPolicy.IsSafeToConvert(family.IsWorkPlaneBased);
             }
             return false;
         }

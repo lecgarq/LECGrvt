@@ -7,10 +7,7 @@ namespace LECG.Services
     {
         public IEnumerable<int> GetPasses(int passCount)
         {
-            for (int i = 1; i <= passCount; i++)
-            {
-                yield return i;
-            }
+            return LECG.Core.Purge.PurgeSequence.GetPasses(passCount);
         }
     }
 }
