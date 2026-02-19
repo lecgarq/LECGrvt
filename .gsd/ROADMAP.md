@@ -69,3 +69,13 @@
 - Add "Replace Spaces" utility command relative to input fields.
 - Implement advanced filter rules: "Contains", "Doesn't Contain", "Begins With", "Ends With".
 - Update `SearchReplaceVM` and View to support new filter logic and parameter scope.
+
+### Phase 6: Stability & Bug Fixes
+
+**Status**: ⬜ Not Started
+**Objective**: Fix family renaming transaction errors, restore Object/Line Styles collection, and improve "Replace Spaces" visibility.
+
+**Tasks**:
+- Refactor `BatchRenameExecutionService` to separate family renaming from main transaction.
+- Fix logic filtering Object Styles / Line Styles (ensure user-created ones display).
+- Add explicit "Replace Spaces" buttons/tooltips to both filter and replace inputs.
