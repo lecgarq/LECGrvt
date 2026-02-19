@@ -25,10 +25,5 @@ namespace LECG.ViewModels
             Title = "PURGE UNUSED";
         }
 
-        [RelayCommand]
-        private void Apply()
-        {
-            CloseAction?.Invoke();
-        }
     }
 }
