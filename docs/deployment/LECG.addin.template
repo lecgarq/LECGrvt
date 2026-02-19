@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>LECG</Name>
+    <Assembly>LECG.dll</Assembly>
+    <AddInId>YOUR-GUID-HERE</AddInId>
+    <FullClassName>LECG.App</FullClassName>
+    <VendorId>LECG</VendorId>
+    <VendorDescription>LECG, https://lecg.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
