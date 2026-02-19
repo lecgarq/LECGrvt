@@ -33,7 +33,7 @@ namespace LECG.Services
 
             Family sourceFamily = instance.Symbol.Family;
             string sourceFamilyName = sourceFamily.Name;
-            string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(sourceFamilyName, customName);
+            string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(doc, sourceFamilyName, customName);
 
             _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
 
