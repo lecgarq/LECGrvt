@@ -8,6 +8,7 @@ using LECG.Services;
 using LECG.Services.Interfaces;
 using Autodesk.Revit.DB;
 using System.Linq;
+using System;
 
 namespace LECG.ViewModels
 {
@@ -38,6 +39,10 @@ namespace LECG.ViewModels
         [ObservableProperty] private bool _scopeFamilyName;
         [ObservableProperty] private bool _scopeViewName;
         [ObservableProperty] private bool _scopeSheetName;
+        [ObservableProperty] private bool _scopeMaterialName;
+        [ObservableProperty] private bool _scopeObjectStyleName;
+        [ObservableProperty] private bool _scopeLineStyleName;
+        [ObservableProperty] private bool _scopeFillPatternName;
 
         // Selection Filters
         [ObservableProperty] private string _filterName = "";
@@ -48,7 +53,7 @@ namespace LECG.ViewModels
 
         public bool ShouldRun { get; private set; }
 
-        public SearchReplaceViewModel() // Default constructor for design time? Or usually we inject service in code.
+        public SearchReplaceViewModel()
         {
              // Hook up rule changes
              ReplaceRule.PropertyChanged += RuleChanged;
@@ -70,6 +75,10 @@ namespace LECG.ViewModels
         partial void OnScopeFamilyNameChanged(bool value) => RefreshScope();
         partial void OnScopeViewNameChanged(bool value) => RefreshScope();
         partial void OnScopeSheetNameChanged(bool value) => RefreshScope();
+        partial void OnScopeMaterialNameChanged(bool value) => RefreshScope();
+        partial void OnScopeObjectStyleNameChanged(bool value) => RefreshScope();
+        partial void OnScopeLineStyleNameChanged(bool value) => RefreshScope();
+        partial void OnScopeFillPatternNameChanged(bool value) => RefreshScope();
 
         // Filter Change Handlers
         partial void OnFilterNameChanged(string value) => UpdatePreview();
@@ -87,7 +96,9 @@ namespace LECG.ViewModels
             if (_service == null || _doc == null) return;
             
             // 1. Fetch Data
-            _cachedElements = _service.CollectBaseElements(_doc, ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName);
+            _cachedElements = _service.CollectBaseElements(_doc, 
+                ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName,
+                ScopeMaterialName, ScopeObjectStyleName, ScopeLineStyleName, ScopeFillPatternName);
             
             // 2. Update Categories
             var cats = _service.GetUniqueCategories(_cachedElements);
@@ -115,9 +126,6 @@ namespace LECG.ViewModels
         {
              if (PreviewItems == null || !PreviewItems.Any(i => i.IsChecked))
              {
-                 // We can use a service or event for simple message, or just return.
-                 // Ideally TaskDialog or MessageBox. For VM purity, we might use a dialog service, 
-                 // but System.Windows.MessageBox is often used in Revit Addins for simple stuff.
                  System.Windows.MessageBox.Show("No items selected to rename.", "Batch Rename");
                  return;
              }
