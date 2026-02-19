@@ -75,7 +75,8 @@ namespace LECG.Services
                     ElementName = el.Name,
                     OriginalValue = el.Name,
                     NewValue = currentName,
-                    IsChecked = true
+                    IsChecked = true,
+                    Type = el.Type
                 });
             }
 

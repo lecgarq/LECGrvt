@@ -27,6 +27,7 @@ namespace LECG.ViewModels
         public string OriginalValue { get; set; } = "";
         public string NewValue { get; set; } = "";
         public long ElementId { get; set; }
+        public string Type { get; set; } = ""; // Added for disambiguation
     }
 
     public partial class SearchReplaceViewModel : BaseViewModel
