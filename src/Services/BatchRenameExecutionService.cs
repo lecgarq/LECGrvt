@@ -116,65 +116,104 @@ namespace LECG.Services
             }
 
             // 2. Process Family Parameters (No Main Transaction - Uses EditFamily)
+            // CRITICAL: Group by Family ID so we call EditFamily+LoadFamily ONCE per family.
+            // Calling LoadFamily on a family invalidates the Family element reference — 
+            // if we process items one-by-one, subsequent items for the SAME family will
+            // crash with "referenced object is not valid" because the handle is stale.
             if (familyItems.Count > 0)
             {
+                // Group all checked rename items by their family element ID
+                var byFamily = new Dictionary<long, List<ReplaceItem>>();
                 foreach (var item in familyItems)
                 {
-                    current++;
-                    double percent = (double)current / total * 100;
-
                     if (!item.IsChecked) continue;
+                    if (!byFamily.ContainsKey(item.ElementId))
+                        byFamily[item.ElementId] = new List<ReplaceItem>();
+                    byFamily[item.ElementId].Add(item);
+                }
 
-                    ElementId id = new ElementId(item.ElementId);
-                    Element el = doc.GetElement(id);
+                int familyIndex = 0;
+                foreach (var kvp in byFamily)
+                {
+                    familyIndex++;
+                    double percent = (double)familyIndex / byFamily.Count * 100;
 
-                    if (el is Family family)
+                    ElementId familyId = new ElementId(kvp.Key);
+                    Element el = doc.GetElement(familyId);
+
+                    if (el is not Family family)
                     {
-                        try
+                        foreach (var item in kvp.Value)
+                            logger.LogError($"Skipped: Element {kvp.Key} is not a Family (type={el?.GetType().Name ?? "null"}).");
+                        continue;
+                    }
+
+                    onProgress?.Invoke(percent, $"Processing Family '{family.Name}'...");
+
+                    try
+                    {
+                        Document? famDoc = doc.EditFamily(family);
+                        if (famDoc == null)
                         {
-                            onProgress?.Invoke(percent, $"Processing Family {family.Name}...");
+                            logger.LogError($"Could not open family document for '{family.Name}'.");
+                            continue;
+                        }
 
-                            Document famDoc = doc.EditFamily(family);
-                            if (famDoc != null)
+                        int renamedInFamily = 0;
+                        using (Transaction tFam = new Transaction(famDoc, "Rename Parameters"))
+                        {
+                            tFam.Start();
+
+                            FamilyManager mgr = famDoc.FamilyManager;
+
+                            foreach (var item in kvp.Value)
                             {
-                                using (Transaction tFam = new Transaction(famDoc, "Rename Parameter"))
+                                // Find the parameter by its current (original) name in the family doc
+                                FamilyParameter? paramToRename = null;
+                                foreach (FamilyParameter fp in mgr.Parameters)
                                 {
-                                    tFam.Start();
-                                    
-                                    FamilyManager mgr = famDoc.FamilyManager;
-                                    FamilyParameter? paramToRename = null;
-                                    foreach (FamilyParameter fp in mgr.Parameters)
+                                    if (fp.Definition.Name.Equals(item.OriginalValue, StringComparison.Ordinal))
                                     {
-                                        if (fp.Definition.Name.Equals(item.OriginalValue))
-                                        {
-                                            paramToRename = fp;
-                                             break;
-                                        }
-                                    }
-
-                                    if (paramToRename != null)
-                                    {
-                                        mgr.RenameParameter(paramToRename, item.NewValue);
-                                        tFam.Commit();
-                                        
-                                        famDoc.LoadFamily(doc, new OverwriteFamilyOption());
-                                        famDoc.Close(false);
-                                        count++;
-                                        logger.LogSuccess($"Renamed Parameter '{item.OriginalValue}' to '{item.NewValue}' in Family '{family.Name}'");
-                                    }
-                                    else
-                                    {
-                                        tFam.RollBack();
-                                        famDoc.Close(false);
-                                        logger.Log($"Skipped: Parameter '{item.OriginalValue}' not found in Family '{family.Name}'.");
+                                        paramToRename = fp;
+                                        break;
                                     }
                                 }
+
+                                if (paramToRename != null)
+                                {
+                                    try
+                                    {
+                                        mgr.RenameParameter(paramToRename, item.NewValue);
+                                        renamedInFamily++;
+                                        count++;
+                                        logger.LogSuccess($"Renamed param '{item.OriginalValue}' → '{item.NewValue}' in '{family.Name}'");
+                                    }
+                                    catch (Exception renameEx)
+                                    {
+                                        logger.LogError($"Could not rename param '{item.OriginalValue}' in '{family.Name}': {renameEx.Message}");
+                                    }
+                                }
+                                else
+                                {
+                                    logger.Log($"Skipped: Param '{item.OriginalValue}' not found in family '{family.Name}'.");
+                                }
                             }
+
+                            if (renamedInFamily > 0)
+                                tFam.Commit();
+                            else
+                                tFam.RollBack();
                         }
-                        catch (Exception ex)
-                        {
-                             logger.LogError($"Failed to rename parameter in family {family.Name}: {ex.Message}");
-                        }
+
+                        // Reload ONCE after all parameters are renamed in this family
+                        if (renamedInFamily > 0)
+                            famDoc.LoadFamily(doc, new OverwriteFamilyOption());
+
+                        famDoc.Close(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError($"Failed processing family '{family.Name}': {ex.Message}");
                     }
                 }
             }

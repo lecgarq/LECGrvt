@@ -1,40 +1,44 @@
-# Debug Session: Filter Built-in Object Styles from Batch Rename
+# Debug Session: Family Parameter Rename Crash
 
 ## Symptom
-The Batch Rename tool lists built-in Revit object styles (e.g., "Lines", "Thin Lines") which the user does not want to see or rename. Rationale: Users only care about user-created subcategories (e.g., "A-WALL-DEMO" or imported styles).
+Batch rename crashes with "CRITICAL ERROR: The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone."
 
-**When:** Opening the Batch Rename tool with "Object Styles" scope selected.
-**Expected:** Only user-created subcategories/styles should appear in the list.
-**Actual:** All built-in styles are listed.
+**When:** Applying batch rename with 1850 family parameters selected.
+**Expected:** All family parameters are renamed successfully.
+**Actual:** Crashes on the first operation.
 
 ## Evidence
 
-### Code Check
-- Need to check `SearchReplaceService.cs` or `BaseElementCollectionService.cs` (where elements are collected).
-- `GraphicsStyle` elements often have a mapped `Category`.
-- `Category` has an `Id` property. Built-in categories have integer IDs corresponding to `BuiltInCategory` enum.
-- User-created subcategories usually have positive IDs that don't map to `BuiltInCategory`, but the best check is `Category.IsTag` (not relevant) or checking if the ID corresponds to a built-in category.
-- **Key Check**: `Category.BuiltInCategory` property returns `BuiltInCategory.INVALID` for custom subcategories? Or we check if the ID is within a certain range?
-- Better check: `Category.Parent != null` implies a subcategory, but some built-in subcategories exist.
-- Standard approach: Filter out categories where `Enum.IsDefined(typeof(BuiltInCategory), cat.Id.IntegerValue)` is true? No, because `Category.Id` is an `ElementId`.
-- Correct check: `Category.IsCuttable`, `Category.CanAddSubcategory`?
-- **Hypothesis**: We can check if the underlying `Category` returns a valid `BuiltInCategory` other than `INVALID`. Custom subcategories might return `INVALID`.
+- 1850 items, 0 standard — all family parameters.
+- Error occurs only ~1 second after start (fails on first family or immediately).
+- The Revit error "referenced object is not valid" typically means an API handle to an element is no longer valid.
 
 ## Hypotheses
 
 | # | Hypothesis | Likelihood | Status |
 |---|------------|------------|--------|
-| 1 | `GraphicsStyle.GraphicsStyleCategory.BuiltInCategory` is `INVALID` (-1) for user-created styles. | 90% | UNTESTED |
-| 2 | We need to filter by `Category.Parent != null` AND checks on the parent. | 50% | UNTESTED |
+| 1 | `famDoc.LoadFamily(doc, ...)` invalidates existing `Family` element references, causing subsequent iterations to crash | 85% | CONFIRMED |
+| 2 | Multiple items per family cause `EditFamily` to be called again on an already-open/reloaded family | 85% | CONFIRMED |
+| 3 | `fs.Parameters` on FamilySymbol returns project-context params that don't exist in the family doc | 20% | PARTIALLY |
 
-## Approach
-1.  Locate the collection logic (`CollectBaseElements` or similar).
-2.  Implement a filter to exclude `GraphicsStyle` elements that map to a valid `BuiltInCategory`.
-3.  Specifically, we want to KEEP:
-    *   Imported styles (Imports in Families).
-    *   User-created subcategories.
-4.  We want to EXCLUDE:
-    *   Standard system Categories (Walls, Doors, etc. - usually not `GraphicsStyle` but their Object Style representation).
-    *   Standard Line Styles (Thin Lines, Medium Lines, etc. might be built-in).
+## Root Cause
 
-Let's check the code to see how they are currently collected.
+`BatchRenameExecutionService` calls `doc.EditFamily(family)` → renames → `famDoc.LoadFamily(doc, ...)` → `famDoc.Close(false)`.
+
+When `LoadFamily` is called, Revit **replaces** the `Family` element in the project document with a new version. Any previously-fetched references (like `family` held by a prior loop iteration) become **invalid**. If the next item in the loop targets the same family (which is likely with 1850 params across a limited number of families), the element reference is stale.
+
+Additionally, calling `EditFamily` on the same family multiple times (once per parameter) is very expensive and fragile. It should be called once per unique family, renaming all target parameters in one session.
+
+## Fix
+
+Group `familyItems` by `ElementId` (Family ID). For each unique family:
+1. Call `doc.EditFamily(family)` **once**.
+2. Iterate all parameters to rename in that family.
+3. Call `famDoc.LoadFamily(doc, ...)` **once** after all renames.
+4. Call `famDoc.Close(false)` **once**.
+
+## Resolution
+
+**Root Cause:** Calling `EditFamily + LoadFamily + Close` once per parameter item (instead of once per family) causes element invalidation on reloads.
+**Fix:** Group items by family ID, process all parameters per family in a single `EditFamily` session.
+**File:** `BatchRenameExecutionService.cs`
