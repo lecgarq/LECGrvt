@@ -1,33 +1,33 @@
-# Debug Session: Batch Rename Failure on Object Styles
+# Debug Session: Force Rename of Object Styles / Subcategories
 
 ## Symptom
-When renaming elements, specifically Object Styles (GraphicsStyle), the operation fails with "This element does not support assignment of a user-specified name."
+User insists on renaming `GraphicsStyle` elements like `RD_...` which fail with `InvalidOperationException: This element does not support assignment of a user-specified name.`
 
-**When:** Batch Rename tool processes `GraphicsStyle` elements (Object Styles).
-**Expected:** The subcategory/object style should be renamed successfully.
-**Actual:** Error "This element does not support assignment of a user-specified name" is logged for each item.
+**When:** Batch Renaming specific styles (likely imported or system-locked).
+**Expected:** The styles MUST be renamed.
+**Actual:** API blocks direct renaming.
 
-## Evidence
+## New Strategy: "Swap & Replace"
+Since direct property setting is blocked, we will implement a destructive workaround:
+1.  **Create New Subcategory**: Create a new subcategory under the same parent with the desired name.
+2.  **Clone Properties**: Copy LineWeight, LineColor, LinePattern from old to new.
+3.  **Migrate Elements**: Find all `CurveElement` (lines) and potentially other elements using the old style and reassign them to the new style.
+4.  **Delete Old Style**: Remove the original style if possible.
 
-### Log Output
-```
-[00:05:53] Error: ERROR renaming RD_Circulation Zone: This element does not support assignment of a user-specified name.
-```
-
-### Previous Changes
-- I simplified `BatchRenameExecutionService.cs` to set `el.Name` directly.
-- Previously tried `GraphicsStyle.GraphicsStyleCategory.Name` which failed (read-only).
+## Risks
+-   **Limited Scope**: Only safe for `CurveElement` (Model/Detail Lines). Might miss complex usages (Filled Regions, Imports).
+-   **Destructive**: Deleting a category might break external references or view templates if not perfectly mapped.
+-   **Imported Categories**: Creating subcategories under "Imports in Families" is generally restricted. If `RD_` are imported CAD layers, we might fail to create the *exact* same structure.
 
 ## Hypotheses
 
 | # | Hypothesis | Likelihood | Status |
 |---|------------|------------|--------|
-| 1 | `GraphicsStyle.Name` is read-only or not user-assignable. | 90% | UNTESTED |
-| 2 | Must rename the underlying `Category` (Subcategory) but `Category.Name` is read-only. | 80% | CONFIRMED (Previous Attempt) |
-| 3 | Workaround required: Create new subcategory, move elements, delete old. | 70% | UNTESTED |
-| 4 | Special handling for `GraphicsStyle` required (e.g. valid name checks). | 20% | UNTESTED |
+| 1 | "Swap & Replace" works for standard Line Styles (Subcategories of Lines). | 80% | UNTESTED |
+| 2 | "Swap & Replace" fails for Imported Categories (cannot create subcat under Import). | 60% | UNTESTED |
+| 3 | User accepts partial success (lines migrated) even if original imported category remains (empty). | 50% | UNTESTED |
 
 ## Approach
-1. Confirm behavior of `Element.Name` on `GraphicsStyle`.
-2. Research exact method to rename Subcategories in modern Revit APIs.
-3. Implement robust renaming strategy for this type.
+1.  Extend `BatchRenameExecutionService` to attempt "Swap & Replace" when direct rename fails.
+2.  Implement `SwapStyle` helper method.
+3.  Focus on `CurveElement` migration first.

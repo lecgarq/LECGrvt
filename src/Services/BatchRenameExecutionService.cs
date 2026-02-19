@@ -55,8 +55,24 @@ namespace LECG.Services
                                 catch (Autodesk.Revit.Exceptions.InvalidOperationException)
                                 {
                                     // Known Revit API limitation: cannot rename some subcategories directly
-                                    // Fallback: Check if it's a subcategory and if we can utilize a workaround (simplified text for user)
-                                    logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                    // Fallback: Attempt destructive "Swap & Delete" strategy
+                                    if (gs.GraphicsStyleCategory != null)
+                                    {
+                                        bool swapped = SwapStyle(doc, gs, item.NewValue, logger);
+                                        if (swapped)
+                                        {
+                                            count++;
+                                            logger.LogSuccess($"Renamed (via Swap) '{item.OriginalValue}' to '{item.NewValue}'");
+                                        }
+                                        else
+                                        {
+                                            logger.LogError($"Skipped '{item.OriginalValue}': API restricted & Swap failed.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                         logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                    }
                                     continue;
                                 }
                                 catch (Exception innerEx)
@@ -88,6 +104,78 @@ namespace LECG.Services
             onProgress?.Invoke(100, "Done");
 
             return count;
+        }
+
+        private bool SwapStyle(Document doc, GraphicsStyle oldStyle, string newName, Logging.ILogger logger)
+        {
+            try
+            {
+                Category oldCat = oldStyle.GraphicsStyleCategory;
+                if (oldCat == null || oldCat.Parent == null) return false;
+
+                // 1. Create New Subcategory
+                Category parentCat = oldCat.Parent;
+                Category newCat;
+                try
+                {
+                    newCat = doc.Settings.Categories.NewSubcategory(parentCat, newName);
+                }
+                catch (Autodesk.Revit.Exceptions.ArgumentException)
+                {
+                    // Name might already exist, try to find it
+                    if (parentCat.SubCategories.Contains(newName))
+                        newCat = parentCat.SubCategories.get_Item(newName);
+                    else
+                        return false;
+                }
+
+                // 2. Copy Properties
+                newCat.LineColor = oldCat.LineColor;
+                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Projection); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Projection); } catch { }
+                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Cut); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Cut); } catch { }
+                
+                // 3. Find Elements using the OLD style (CurveElements mostly)
+                // Note: This is simplified and mainly targets Line Styles (Model/Detail Lines)
+                var collector = new FilteredElementCollector(doc)
+                    .OfClass(typeof(CurveElement));
+                
+                int movedCount = 0;
+                foreach (Element e in collector)
+                {
+                    if (e is CurveElement curve)
+                    {
+                         // CurveElement uses LineStyle property which is the GraphicsStyle element
+                         if (curve.LineStyle.Id == oldStyle.Id)
+                         {
+                             // Find the GraphicsStyle element corresponding to the NEW Category
+                             // We need to find the correct GraphicsStyle (Projection usually for lines)
+                             GraphicsStyle? newGs = newCat.GetGraphicsStyle(GraphicsStyleType.Projection);
+                             if (newGs != null)
+                             {
+                                 curve.LineStyle = newGs;
+                                 movedCount++;
+                             }
+                         }
+                    }
+                }
+
+                // 4. Try Delete Old (Might fail if used elsewhere)
+                try
+                {
+                    doc.Delete(oldStyle.GraphicsStyleCategory.Id);
+                }
+                catch
+                {
+                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Swap failed for {oldStyle.Name}: {ex.Message}");
+                return false;
+            }
         }
     }
 }
