@@ -14,7 +14,7 @@
 
 ### Phase 1: Naming System Extension
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Extend `SearchReplaceService` to handle new element types.
 
 **Tasks**:
