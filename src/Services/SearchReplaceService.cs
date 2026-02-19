@@ -35,9 +35,9 @@ namespace LECG.Services
         }
 
         // 1. One-time Fetch of Grid Data
-        public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns)
+        public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters)
         {
-            return _baseElementCollectionService.CollectBaseElements(doc, types, families, views, sheets, materials, objectStyles, lineStyles, fillPatterns);
+            return _baseElementCollectionService.CollectBaseElements(doc, types, families, views, sheets, materials, objectStyles, lineStyles, fillPatterns, familyParameters);
         }
 
         public List<string> GetUniqueCategories(List<ElementData> elements)
