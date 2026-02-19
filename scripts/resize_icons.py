@@ -1,8 +1,11 @@
 import os
 from PIL import Image
 
-source_dir = r"C:\LECG\RevitAddins\LECG\img\Full size images"
-dest_dir = r"C:\LECG\RevitAddins\LECG\src\Resources\Images"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+repo_root = os.path.dirname(script_dir)
+
+source_dir = os.path.join(repo_root, "design", "full-size")
+dest_dir = os.path.join(repo_root, "src", "Resources", "Images")
 
 if not os.path.exists(dest_dir):
     os.makedirs(dest_dir)

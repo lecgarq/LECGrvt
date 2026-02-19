@@ -20,3 +20,42 @@ journal*.txt
 crash*.txt
 diag.log
 errors.log
+errors.txt
+current_warnings.txt
+full_warnings.txt
+full_build.log
+latest_journal.txt
+log.txt
+
+# Revit journals & crash dumps
+journals/
+*.dmp
+*.pb
+
+# AI agent artifacts
+.gemini/
+
+# Stale code artifacts
+*.snippet
+*.backup
+README_ICONS.txt
+
+# Legacy debug scripts
+build_check.py
+read_log.py
+
+# Legacy img/ folder (source art moved to design/)
+img/
+
+# Temp analysis
+docs/review/tmp/
+
+# Design source art (not needed in build)
+design/
+
+# Archive
+_archive/
+
+# Python bytecode
+__pycache__/
+*.pyc

@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="img\**" />
     <Resource Include="src\Resources\Images\**" />
   </ItemGroup>
 
