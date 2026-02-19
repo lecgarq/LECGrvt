@@ -33,7 +33,9 @@
                 <CheckBox Content="Unused Line Styles" IsChecked="{Binding PurgeLineStyles, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{StaticResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Fill Patterns" IsChecked="{Binding PurgeFillPatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{StaticResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Materials" IsChecked="{Binding PurgeMaterials, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{StaticResource CheckboxSpacing}"/>
-                <CheckBox Content="Unused Levels" IsChecked="{Binding PurgeLevels, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}"/>
+                <CheckBox Content="Unused Levels" IsChecked="{Binding PurgeLevels, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{StaticResource CheckboxSpacing}"/>
+                <Separator Margin="0,5,0,10" Background="{StaticResource BorderBrush}"/>
+                <CheckBox Content="Deep Purge (3 Passes)" IsChecked="{Binding IsDeepPurge, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}"/>
             </StackPanel>
         </Border>
 
