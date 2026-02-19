@@ -5,6 +5,6 @@ namespace LECG.Services.Interfaces
 {
     public interface IBaseElementCollectionService
     {
-        List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets);
+        List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns);
     }
 }
