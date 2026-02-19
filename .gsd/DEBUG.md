@@ -1,21 +1,33 @@
-# Debug Session: Batch Rename No-Op
+# Debug Session: Batch Rename Failure on Object Styles
 
 ## Symptom
-Clicking "RUN" in the Batch Rename dialog results in no action being taken.
+When renaming elements, specifically Object Styles (GraphicsStyle), the operation fails with "This element does not support assignment of a user-specified name."
 
-**When:** User clicks the primary "RUN" or "Apply" button in the Batch Rename UI.
-**Expected:** The batch rename logic should execute, renaming the selected items.
-**Actual:** Nothing happens. No logs, no UI changes, no errors shown in UI.
+**When:** Batch Rename tool processes `GraphicsStyle` elements (Object Styles).
+**Expected:** The subcategory/object style should be renamed successfully.
+**Actual:** Error "This element does not support assignment of a user-specified name" is logged for each item.
 
-## Resolution
+## Evidence
 
-**Root Cause:** The "Apply Rename" button in `SearchReplaceView.xaml` was bound to `ReplaceCommand`, but the ViewModel (`SearchReplaceViewModel`) did not define such a command. It only provided an `ApplyCommand` inherited from `BaseViewModel` (via `[RelayCommand] Apply()`).
+### Log Output
+```
+[00:05:53] Error: ERROR renaming RD_Circulation Zone: This element does not support assignment of a user-specified name.
+```
 
-**Fix:** Updated `SearchReplaceView.xaml` to bind the button to `ApplyCommand`.
+### Previous Changes
+- I simplified `BatchRenameExecutionService.cs` to set `el.Name` directly.
+- Previously tried `GraphicsStyle.GraphicsStyleCategory.Name` which failed (read-only).
 
-**Verified:** 
-- [x] Code inspection confirms the binding mismatch.
-- [x] Correct command name identified in `BaseViewModel` and overridden in `SearchReplaceViewModel`.
-- [x] Build successfully includes the fix.
+## Hypotheses
 
-**Regression Check:** Verified other views (`PurgeView`, `ResetSlabsView`, etc.) for similar mismatches. None found; other views use consistent naming (mostly `ApplyCommand` or specifically defined `RunCommand`).
+| # | Hypothesis | Likelihood | Status |
+|---|------------|------------|--------|
+| 1 | `GraphicsStyle.Name` is read-only or not user-assignable. | 90% | UNTESTED |
+| 2 | Must rename the underlying `Category` (Subcategory) but `Category.Name` is read-only. | 80% | CONFIRMED (Previous Attempt) |
+| 3 | Workaround required: Create new subcategory, move elements, delete old. | 70% | UNTESTED |
+| 4 | Special handling for `GraphicsStyle` required (e.g. valid name checks). | 20% | UNTESTED |
+
+## Approach
+1. Confirm behavior of `Element.Name` on `GraphicsStyle`.
+2. Research exact method to rename Subcategories in modern Revit APIs.
+3. Implement robust renaming strategy for this type.

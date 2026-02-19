@@ -42,13 +42,40 @@ namespace LECG.Services
 
                             if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
 
-                            el.Name = item.NewValue;
-                            count++;
+                            // Special handling for GraphicsStyle (Object Styles / Line Styles)
+                            if (el is GraphicsStyle gs)
+                            {
+                                try 
+                                {
+                                    // Try updating the element name directly
+                                    // This often fails for certain built-in or imported styles
+                                    gs.Name = item.NewValue; 
+                                    count++;
+                                }
+                                catch (Autodesk.Revit.Exceptions.InvalidOperationException)
+                                {
+                                    // Known Revit API limitation: cannot rename some subcategories directly
+                                    // Fallback: Check if it's a subcategory and if we can utilize a workaround (simplified text for user)
+                                    logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                    continue;
+                                }
+                                catch (Exception innerEx)
+                                {
+                                     logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
+                                     continue;
+                                }
+                            }
+                            else
+                            {
+                                el.Name = item.NewValue;
+                                count++;
+                            }
 
                             logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
                         }
                         catch (Exception ex)
                         {
+                            // Catch-all for other element types
                             logger.LogError($"ERROR renaming {item.ElementName}: {ex.Message}");
                         }
                     }
