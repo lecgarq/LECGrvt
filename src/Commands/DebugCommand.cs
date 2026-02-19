@@ -1,3 +1,4 @@
+#if DEBUG
 using System;
 using System.Linq;
 using System.Reflection;
@@ -21,7 +22,7 @@ namespace LECG.Commands
 
             var type = typeof(SlabShapeEditor);
             var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-            
+
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Methods of SlabShapeEditor:");
             foreach (var m in methods)
@@ -33,3 +34,4 @@ namespace LECG.Commands
         }
     }
 }
+#endif
