@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:LECG.ViewModels"
     xmlns:services="clr-namespace:LECG.Services"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="SEARCH &amp; REPLACE" Width="450" WindowIcon="{x:Static icons:Icons.SearchReplace}" WindowStartupLocation="CenterScreen" SizeToContent="Height">
+    xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="SEARCH &amp; REPLACE" Width="600" WindowIcon="{x:Static icons:Icons.SearchReplace}" WindowStartupLocation="CenterScreen" SizeToContent="Height">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -66,7 +66,8 @@
                             <CheckBox Content="Materials" IsChecked="{Binding ScopeMaterialName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
                             <CheckBox Content="Object Styles" IsChecked="{Binding ScopeObjectStyleName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
                             <CheckBox Content="Line Styles" IsChecked="{Binding ScopeLineStyleName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
-                            <CheckBox Content="Patterns" IsChecked="{Binding ScopeFillPatternName}" Margin="0,0,0,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Patterns" IsChecked="{Binding ScopeFillPatternName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Parameters" IsChecked="{Binding ScopeFamilyParameterName}" Margin="0,0,0,5" Style="{StaticResource ModernCheckboxStyle}"/>
                         </WrapPanel>
                     </StackPanel>
 
@@ -80,7 +81,19 @@
 
                         <StackPanel Grid.Column="0">
                             <TextBlock Text="Filter by Name (Contains)" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
-                            <TextBox Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
+                            <Grid Height="30">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFilterType}" ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type vm:SearchFilterType}}}" Height="30" Width="110" VerticalContentAlignment="Center" Margin="0,0,5,0" Padding="5,0"/>
+                                
+                                <TextBox Grid.Column="1" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
+                                
+                                <Button Grid.Column="2" Content="_" ToolTip="Replace Spaces with Underscore" Command="{Binding ReplaceSpacesCommand}" Width="25" Height="30" Margin="5,0,0,0" Style="{StaticResource SecondaryButtonStyle}" Padding="0" VerticalContentAlignment="Center"/>
+                            </Grid>
                         </StackPanel>
 
                         <StackPanel Grid.Column="2">

@@ -40,7 +40,65 @@ namespace LECG.Services
                         {
                             onProgress?.Invoke(percent, $"Processing {item.ElementName}...");
 
-                            if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
+                            if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal) && item.Type != "FamilyParameter") continue; // For params, name check is diff
+
+                            if (item.Type == "FamilyParameter" && el is Family family)
+                            {
+                                // Handle Family Parameter Rename
+                                try
+                                {
+                                    Document famDoc = doc.EditFamily(family);
+                                    if (famDoc != null)
+                                    {
+                                        using (Transaction tFam = new Transaction(famDoc, "Rename Parameter"))
+                                        {
+                                            tFam.Start();
+                                            
+                                            // Find parameter by name (OriginalValue)
+                                            // Need to check FamilyManager
+                                            FamilyManager mgr = famDoc.FamilyManager;
+                                            FamilyParameter? paramToRename = null;
+                                            foreach (FamilyParameter fp in mgr.Parameters)
+                                            {
+                                                if (fp.Definition.Name.Equals(item.OriginalValue))
+                                                {
+                                                    paramToRename = fp;
+                                                     break;
+                                                }
+                                            }
+
+                                            if (paramToRename != null)
+                                            {
+                                                mgr.RenameParameter(paramToRename, item.NewValue);
+                                                tFam.Commit();
+
+                                                // Load back
+                                                // We need an IFamilyLoadOptions to handle "Overwrite"
+                                                // Implementing interface inline is hard in C# 7.3/8.0 without class, 
+                                                // but we can define a private class or use a simple overload if available.
+                                                // LoadFamily(doc) default usually prompts.
+                                                // We need LoadFamily(doc, IFamilyLoadOptions).
+                                                
+                                                famDoc.LoadFamily(doc, new OverwriteFamilyOption());
+                                                famDoc.Close(false);
+                                                count++;
+                                                logger.LogSuccess($"Renamed Parameter '{item.OriginalValue}' to '{item.NewValue}' in Family '{family.Name}'");
+                                            }
+                                            else
+                                            {
+                                                tFam.RollBack();
+                                                famDoc.Close(false);
+                                                logger.Log($"Skipped: Parameter '{item.OriginalValue}' not found in Family '{family.Name}'.");
+                                            }
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                     logger.LogError($"Failed to rename parameter in family {family.Name}: {ex.Message}");
+                                }
+                                continue;
+                            }
 
                             // Special handling for GraphicsStyle (Object Styles / Line Styles)
                             if (el is GraphicsStyle gs)
@@ -176,6 +234,29 @@ namespace LECG.Services
                 logger.LogError($"Swap failed for {oldStyle.Name}: {ex.Message}");
                 return false;
             }
+        }
+    }
+
+    public class OverwriteFamilyOption : IFamilyLoadOptions
+    {
+        public bool OnFamilyFound(bool familyInUse, out bool overwriteParameterValues)
+        {
+            overwriteParameterValues = true;
+            return true;
+        }
+
+        public bool OnSharedFamilyFound(Family sharedFamily, bool familyInUse, out FamilySource source, out bool overwriteParameterValues)
+        {
+            source = FamilySource.Family;
+            overwriteParameterValues = true;
+            return true;
+        }
+
+        public bool OnSharedFamilyFound(bool sharedFamilyInUse, out FamilySource source, out bool overwriteParameterValues)
+        {
+            source = FamilySource.Family;
+            overwriteParameterValues = true;
+            return true;
         }
     }
 }
