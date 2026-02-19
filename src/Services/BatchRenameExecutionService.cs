@@ -42,8 +42,20 @@ namespace LECG.Services
 
                             if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
 
-                            el.Name = item.NewValue;
-                            count++;
+                            if (el is GraphicsStyle gs)
+                            {
+                                if (gs.GraphicsStyleCategory != null)
+                                {
+                                    gs.GraphicsStyleCategory.Name = item.NewValue;
+                                    count++;
+                                }
+                            }
+                            else
+                            {
+                                el.Name = item.NewValue;
+                                count++;
+                            }
+
                             logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
                         }
                         catch (Exception ex)
