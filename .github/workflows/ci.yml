@@ -22,8 +22,8 @@ jobs:
       - name: Restore
         run: dotnet restore
 
-      - name: Build core
-        run: dotnet build LECG.Core/LECG.Core.csproj -c Release --no-restore
+      - name: Build core with code analysis
+        run: dotnet build LECG.Core/LECG.Core.csproj -c Release --no-restore /p:TreatWarningsAsErrors=true
 
       - name: Test core-dependent tests
         run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release

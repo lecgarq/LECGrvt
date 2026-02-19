@@ -9,6 +9,9 @@
     <AssemblyName>LECG</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <NoWarn>MSB3277;CS0436</NoWarn>
+    <!-- Code analysis for dead code detection -->
+    <AnalysisLevel>latest</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <ItemGroup>
