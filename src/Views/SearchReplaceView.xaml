@@ -58,11 +58,16 @@
                     <!-- Scope -->
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="Selection Scope" FontWeight="SemiBold" Margin="0,0,0,10" Foreground="{StaticResource TextSecondaryBrush}" FontSize="{StaticResource FontSizeSmall}"/>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="Element Type" IsChecked="{Binding ScopeTypeName}" Margin="0,0,15,0" Style="{StaticResource ModernCheckboxStyle}"/>
-                            <CheckBox Content="View Name" IsChecked="{Binding ScopeViewName}" Margin="0,0,15,0" Style="{StaticResource ModernCheckboxStyle}"/>
-                            <CheckBox Content="Sheet Name" IsChecked="{Binding ScopeSheetName}" Margin="0,0,0,0" Style="{StaticResource ModernCheckboxStyle}"/>
-                        </StackPanel>
+                        <WrapPanel Orientation="Horizontal" MaxWidth="300">
+                            <CheckBox Content="Types" IsChecked="{Binding ScopeTypeName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Families" IsChecked="{Binding ScopeFamilyName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Views" IsChecked="{Binding ScopeViewName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Sheets" IsChecked="{Binding ScopeSheetName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Materials" IsChecked="{Binding ScopeMaterialName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Object Styles" IsChecked="{Binding ScopeObjectStyleName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Line Styles" IsChecked="{Binding ScopeLineStyleName}" Margin="0,0,10,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                            <CheckBox Content="Patterns" IsChecked="{Binding ScopeFillPatternName}" Margin="0,0,0,5" Style="{StaticResource ModernCheckboxStyle}"/>
+                        </WrapPanel>
                     </StackPanel>
 
                     <!-- Filters -->
