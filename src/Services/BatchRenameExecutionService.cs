@@ -18,13 +18,107 @@ namespace LECG.Services
             int total = items.Count;
             int current = 0;
 
-            logger.Log($"Starting batch rename for {total} items...");
+            List<ReplaceItem> standardItems = new List<ReplaceItem>();
+            List<ReplaceItem> familyItems = new List<ReplaceItem>();
 
-            using (Transaction t = new Transaction(doc, "Batch Rename"))
+            foreach (var item in items)
             {
-                t.Start();
+                if (item.Type == "FamilyParameter")
+                    familyItems.Add(item);
+                else
+                    standardItems.Add(item);
+            }
 
-                foreach (var item in items)
+            logger.Log($"Starting batch rename for {total} items ({standardItems.Count} standard, {familyItems.Count} family parameters)...");
+
+            // 1. Process Standard Items (Transaction Required)
+            if (standardItems.Count > 0)
+            {
+                using (Transaction t = new Transaction(doc, "Batch Rename"))
+                {
+                    t.Start();
+
+                    foreach (var item in standardItems)
+                    {
+                        current++;
+                        double percent = (double)current / total * 100;
+
+                        if (!item.IsChecked) continue;
+
+                        ElementId id = new ElementId(item.ElementId);
+                        Element el = doc.GetElement(id);
+
+                        if (el != null)
+                        {
+                            try
+                            {
+                                onProgress?.Invoke(percent, $"Processing {item.ElementName}...");
+
+                                if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
+
+                                // Special handling for GraphicsStyle (Object Styles / Line Styles)
+                                if (el is GraphicsStyle gs)
+                                {
+                                    try 
+                                    {
+                                        // Try updating the element name directly
+                                        // This often fails for certain built-in or imported styles
+                                        gs.Name = item.NewValue; 
+                                        count++;
+                                    }
+                                    catch (Autodesk.Revit.Exceptions.InvalidOperationException)
+                                    {
+                                        // Known Revit API limitation: cannot rename some subcategories directly
+                                        // Fallback: Attempt destructive "Swap & Delete" strategy
+                                        if (gs.GraphicsStyleCategory != null)
+                                        {
+                                            bool swapped = SwapStyle(doc, gs, item.NewValue, logger);
+                                            if (swapped)
+                                            {
+                                                count++;
+                                                logger.LogSuccess($"Renamed (via Swap) '{item.OriginalValue}' to '{item.NewValue}'");
+                                            }
+                                            else
+                                            {
+                                                logger.LogError($"Skipped '{item.OriginalValue}': API restricted & Swap failed.");
+                                            }
+                                        }
+                                        else
+                                        {
+                                             logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                        }
+                                        continue;
+                                    }
+                                    catch (Exception innerEx)
+                                    {
+                                         logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
+                                         continue;
+                                    }
+                                }
+                                else
+                                {
+                                    el.Name = item.NewValue;
+                                    count++;
+                                }
+
+                                logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
+                            }
+                            catch (Exception ex)
+                            {
+                                // Catch-all for other element types
+                                logger.LogError($"ERROR renaming {item.ElementName}: {ex.Message}");
+                            }
+                        }
+                    }
+
+                    t.Commit();
+                }
+            }
+
+            // 2. Process Family Parameters (No Main Transaction - Uses EditFamily)
+            if (familyItems.Count > 0)
+            {
+                foreach (var item in familyItems)
                 {
                     current++;
                     double percent = (double)current / total * 100;
@@ -34,128 +128,55 @@ namespace LECG.Services
                     ElementId id = new ElementId(item.ElementId);
                     Element el = doc.GetElement(id);
 
-                    if (el != null)
+                    if (el is Family family)
                     {
                         try
                         {
-                            onProgress?.Invoke(percent, $"Processing {item.ElementName}...");
+                            onProgress?.Invoke(percent, $"Processing Family {family.Name}...");
 
-                            if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal) && item.Type != "FamilyParameter") continue; // For params, name check is diff
-
-                            if (item.Type == "FamilyParameter" && el is Family family)
+                            Document famDoc = doc.EditFamily(family);
+                            if (famDoc != null)
                             {
-                                // Handle Family Parameter Rename
-                                try
+                                using (Transaction tFam = new Transaction(famDoc, "Rename Parameter"))
                                 {
-                                    Document famDoc = doc.EditFamily(family);
-                                    if (famDoc != null)
+                                    tFam.Start();
+                                    
+                                    FamilyManager mgr = famDoc.FamilyManager;
+                                    FamilyParameter? paramToRename = null;
+                                    foreach (FamilyParameter fp in mgr.Parameters)
                                     {
-                                        using (Transaction tFam = new Transaction(famDoc, "Rename Parameter"))
+                                        if (fp.Definition.Name.Equals(item.OriginalValue))
                                         {
-                                            tFam.Start();
-                                            
-                                            // Find parameter by name (OriginalValue)
-                                            // Need to check FamilyManager
-                                            FamilyManager mgr = famDoc.FamilyManager;
-                                            FamilyParameter? paramToRename = null;
-                                            foreach (FamilyParameter fp in mgr.Parameters)
-                                            {
-                                                if (fp.Definition.Name.Equals(item.OriginalValue))
-                                                {
-                                                    paramToRename = fp;
-                                                     break;
-                                                }
-                                            }
-
-                                            if (paramToRename != null)
-                                            {
-                                                mgr.RenameParameter(paramToRename, item.NewValue);
-                                                tFam.Commit();
-
-                                                // Load back
-                                                // We need an IFamilyLoadOptions to handle "Overwrite"
-                                                // Implementing interface inline is hard in C# 7.3/8.0 without class, 
-                                                // but we can define a private class or use a simple overload if available.
-                                                // LoadFamily(doc) default usually prompts.
-                                                // We need LoadFamily(doc, IFamilyLoadOptions).
-                                                
-                                                famDoc.LoadFamily(doc, new OverwriteFamilyOption());
-                                                famDoc.Close(false);
-                                                count++;
-                                                logger.LogSuccess($"Renamed Parameter '{item.OriginalValue}' to '{item.NewValue}' in Family '{family.Name}'");
-                                            }
-                                            else
-                                            {
-                                                tFam.RollBack();
-                                                famDoc.Close(false);
-                                                logger.Log($"Skipped: Parameter '{item.OriginalValue}' not found in Family '{family.Name}'.");
-                                            }
+                                            paramToRename = fp;
+                                             break;
                                         }
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                     logger.LogError($"Failed to rename parameter in family {family.Name}: {ex.Message}");
-                                }
-                                continue;
-                            }
 
-                            // Special handling for GraphicsStyle (Object Styles / Line Styles)
-                            if (el is GraphicsStyle gs)
-                            {
-                                try 
-                                {
-                                    // Try updating the element name directly
-                                    // This often fails for certain built-in or imported styles
-                                    gs.Name = item.NewValue; 
-                                    count++;
-                                }
-                                catch (Autodesk.Revit.Exceptions.InvalidOperationException)
-                                {
-                                    // Known Revit API limitation: cannot rename some subcategories directly
-                                    // Fallback: Attempt destructive "Swap & Delete" strategy
-                                    if (gs.GraphicsStyleCategory != null)
+                                    if (paramToRename != null)
                                     {
-                                        bool swapped = SwapStyle(doc, gs, item.NewValue, logger);
-                                        if (swapped)
-                                        {
-                                            count++;
-                                            logger.LogSuccess($"Renamed (via Swap) '{item.OriginalValue}' to '{item.NewValue}'");
-                                        }
-                                        else
-                                        {
-                                            logger.LogError($"Skipped '{item.OriginalValue}': API restricted & Swap failed.");
-                                        }
+                                        mgr.RenameParameter(paramToRename, item.NewValue);
+                                        tFam.Commit();
+                                        
+                                        famDoc.LoadFamily(doc, new OverwriteFamilyOption());
+                                        famDoc.Close(false);
+                                        count++;
+                                        logger.LogSuccess($"Renamed Parameter '{item.OriginalValue}' to '{item.NewValue}' in Family '{family.Name}'");
                                     }
                                     else
                                     {
-                                         logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                        tFam.RollBack();
+                                        famDoc.Close(false);
+                                        logger.Log($"Skipped: Parameter '{item.OriginalValue}' not found in Family '{family.Name}'.");
                                     }
-                                    continue;
-                                }
-                                catch (Exception innerEx)
-                                {
-                                     logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
-                                     continue;
                                 }
                             }
-                            else
-                            {
-                                el.Name = item.NewValue;
-                                count++;
-                            }
-
-                            logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
                         }
                         catch (Exception ex)
                         {
-                            // Catch-all for other element types
-                            logger.LogError($"ERROR renaming {item.ElementName}: {ex.Message}");
+                             logger.LogError($"Failed to rename parameter in family {family.Name}: {ex.Message}");
                         }
                     }
                 }
-
-                t.Commit();
             }
 
             logger.LogSuccess($"Batch rename complete. Modified {count} elements.");
