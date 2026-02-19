@@ -4,7 +4,17 @@
       "Bash(done)",
       "Bash(ls:*)",
       "Bash(grep:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git -C /c/LECG/RevitAddins/LECG ls-files:*)",
+      "Bash(git -C /c/LECG/RevitAddins/LECG branch -a)",
+      "Bash(git rm:*)",
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git log:*)",
+      "Bash(git check-ignore:*)"
     ]
   }
 }
