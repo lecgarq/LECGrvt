@@ -6,6 +6,7 @@ using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.Views;
 using LECG.ViewModels;
+using System;
 
 namespace LECG.Commands
 {
@@ -30,6 +31,7 @@ namespace LECG.Commands
             settings.PurgeFillPatterns = loadedSettings.PurgeFillPatterns;
             settings.PurgeMaterials = loadedSettings.PurgeMaterials;
             settings.PurgeLevels = loadedSettings.PurgeLevels;
+            settings.IsDeepPurge = loadedSettings.IsDeepPurge;
 
             // 2. Show options dialog
             PurgeView view = ServiceLocator.CreateWith<PurgeView>(settings);
@@ -39,7 +41,7 @@ namespace LECG.Commands
             SettingsManager.Save(settings, "PurgeSettings.json");
 
             // Check if anything selected
-            if (!settings.PurgeLineStyles && !settings.PurgeFillPatterns && !settings.PurgeMaterials) return;
+            if (!settings.PurgeLineStyles && !settings.PurgeFillPatterns && !settings.PurgeMaterials && !settings.PurgeLevels) return;
 
             // Show log window
             ShowLogWindow("Purge Unused");
@@ -49,9 +51,11 @@ namespace LECG.Commands
             Log("");
 
             var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
+            int passCount = settings.IsDeepPurge ? 3 : 1;
             
             purgeService.PurgeAll(
                 doc, 
+                passCount,
                 settings.PurgeLineStyles, 
                 settings.PurgeFillPatterns, 
                 settings.PurgeMaterials, 

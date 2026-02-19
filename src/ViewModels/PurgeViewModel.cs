@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace LECG.ViewModels
 {
@@ -14,11 +15,20 @@ namespace LECG.ViewModels
         private bool _purgeMaterials = true;
 
         [ObservableProperty]
-        private bool _purgeLevels = false; // Default to false for safety
+        private bool _purgeLevels = false; 
+
+        [ObservableProperty]
+        private bool _isDeepPurge = true;
 
         public PurgeViewModel()
         {
             Title = "PURGE UNUSED";
+        }
+
+        [RelayCommand]
+        private void Apply()
+        {
+            CloseAction?.Invoke();
         }
     }
 }
