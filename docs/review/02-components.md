@@ -699,10 +699,10 @@ All service interfaces live in `src/Services/Interfaces/`.
 - Required for Revit to load the plugin
 - Should be added for deployment
 
-### 5. Missing Tests
-- No unit tests found
-- Service layer is highly testable (interface-based)
-- Recommended: Add xUnit or NUnit test project
+### 5. Test Scope Boundaries
+- Unit tests exist in `LECG.Tests` for Revit-free logic.
+- Service seams remain interface-based and testable via core/facade patterns.
+- Keep Revit-host integration checks in self-hosted/local validation.
 
 ---
 

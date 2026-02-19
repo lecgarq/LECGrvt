@@ -573,33 +573,16 @@ AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
 
 ## Testing Strategy
 
-**Current State**: No unit tests found in repository.
+**Current State**: `LECG.Tests` is active and runs through `dotnet test`.
 
 **Recommended Testing Approach**:
 
 ### 1. Service Layer Testing (High Value)
 - Services are interface-based → easy to mock
 - Test business logic independently of Revit API
-- Use Moq or NSubstitute to mock `Document`, `View`, etc.
+- Avoid direct mocking of Autodesk Revit classes; prefer facade/policy seams with deterministic core tests.
 
-**Example**:
-```csharp
-[Fact]
-public void ApplyBeauty_SetsDisplayStyle_ToRealistic()
-{
-    // Arrange
-    var mockDoc = new Mock<Document>();
-    var mockView = new Mock<View>();
-    var settings = new SexyRevitViewModel { UseConsistentColors = true };
-    var service = new SexyRevitService();
-
-    // Act
-    service.ApplyBeauty(mockDoc.Object, mockView.Object, settings);
-
-    // Assert
-    mockView.VerifySet(v => v.DisplayStyle = DisplayStyle.Realistic);
-}
-```
+Use small adapters/facades around Revit runtime types and unit-test the deterministic policy logic in `LECG.Core`.
 
 ### 2. ViewModel Testing (Medium Value)
 - ViewModels extend `ObservableObject` → testable without WPF
