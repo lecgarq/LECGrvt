@@ -297,7 +297,7 @@
             <!-- 5. Footer -->
             <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,20,20">
                 <Button Content="Cancel" Click="CloseWindow" Style="{StaticResource SecondaryButtonStyle}" Width="100" Height="{StaticResource ButtonHeight}" Margin="0,0,10,0"/>
-                <Button Content="Apply Rename" Command="{Binding ReplaceCommand}" Style="{StaticResource PrimaryButtonStyle}" Width="160" Height="{StaticResource ButtonHeight}" FontSize="{StaticResource FontSizeHeader}"/>
+                <Button Content="Apply Rename" Command="{Binding ApplyCommand}" Style="{StaticResource PrimaryButtonStyle}" Width="160" Height="{StaticResource ButtonHeight}" FontSize="{StaticResource FontSizeHeader}"/>
             </StackPanel>
 
         </Grid>
