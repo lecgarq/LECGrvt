@@ -82,6 +82,12 @@ This directory contains a comprehensive architecture review and documentation of
    - Release validation and rollback
    - **Runbook** for production releases
 
+11. **[Runner Operations](11-runner-operations.md)** (8 min read)
+   - Self-hosted runner operations
+   - Token rotation and reconfiguration
+   - Queue/debug troubleshooting
+   - **Runbook** for CI operations
+
 ---
 
 ## Quick Start
