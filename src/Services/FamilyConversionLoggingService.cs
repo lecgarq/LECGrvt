@@ -12,6 +12,10 @@ namespace LECG.Services
             Logger.Instance.Log($"Template: {Path.GetFileName(templatePath)}");
             Logger.Instance.Log($"Temporary Mode: {isTemporary}");
         }
+        public void LogWarning(string message)
+        {
+            Logger.Instance.Log($"Warning: {message}");
+        }
 
         public void LogCriticalError(string message, string stackTrace)
         {

@@ -37,6 +37,11 @@ namespace LECG.Services
 
             _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
 
+            if (instance.Host != null)
+            {
+                _familyConversionLoggingService.LogWarning($"The selected family is hosted on {instance.Host.Name}. Hosting may be lost depending on the target template.");
+            }
+
             Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
             if (sourceFamilyDoc == null)
             {
