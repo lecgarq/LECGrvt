@@ -20,12 +20,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Verify .NET
+        shell: cmd
         run: dotnet --info
 
       - name: Restore
+        shell: cmd
         run: dotnet restore
 
       - name: Build plugin
+        shell: cmd
         run: dotnet build LECG.csproj -c Release --no-restore
 
       - name: Upload plugin artifact
