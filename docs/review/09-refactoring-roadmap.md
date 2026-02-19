@@ -394,7 +394,7 @@ dotnet test /p:CollectCoverage=true
 **Estimated Coverage Targets**:
 - Phase 1: 40% (core services)
 - Phase 2: 70% (all services + critical ViewModels)
-- Phase 3: 85% (comprehensive)
+- Phase 3: 100% (comprehensive)
 
 ---
 
@@ -405,7 +405,7 @@ dotnet test /p:CollectCoverage=true
 **Priority**: 🟡 Medium
 **Effort**: 8 hours
 **Impact**: Medium (maintainability, testability)
-**Status**: Slice 124 completed
+**Status**: Completed (Slices 1-124)
 
 **P5 Slice 1 (Completed)**:
 - Added `LECG.Core` (`net8.0`) as a Revit/WPF-free core layer.
@@ -1401,7 +1401,7 @@ This roadmap provides a clear path to improve the LECG plugin while maintaining 
 **Recommended Approach**:
 1. Start with **Phase 1** (Quick Wins) - Immediate value, low risk
 2. Prioritize **P4** (Unit Tests) - Highest long-term value
-3. Tackle **P5** (Decompose Services) only after tests are in place
+3. Sustain **P5** outcomes with CI and targeted regression tests
 
 **Expected Outcome**:
 - Zero build warnings
