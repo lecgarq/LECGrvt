@@ -72,10 +72,10 @@
 
 ### Phase 6: Stability & Bug Fixes
 
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Fix family renaming transaction errors, restore Object/Line Styles collection, and improve "Replace Spaces" visibility.
 
 **Tasks**:
-- Refactor `BatchRenameExecutionService` to separate family renaming from main transaction.
-- Fix logic filtering Object Styles / Line Styles (ensure user-created ones display).
-- Add explicit "Replace Spaces" buttons/tooltips to both filter and replace inputs.
+- [x] Refactor `BatchRenameExecutionService` to separate family renaming from main transaction.
+- [x] Fix logic filtering Object Styles / Line Styles (ensure user-created ones display).
+- [x] Add explicit "Replace Spaces" buttons/tooltips to both filter and replace inputs.
