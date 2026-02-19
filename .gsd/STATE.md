@@ -9,6 +9,19 @@ Phase 5 (Advanced Search & Parameter Renaming) executed successfully.
 - Updated UI with new scope options and filter controls.
 - Verified build compatibility with Revit 2026 API (`IFamilyLoadOptions`).
 
+### Phase 6: Stability & Bug Fixes
+
+**Status**: ✅ Complete
+**Current Plan**: None (All done)
+**Tasks**:
+- [x] Refactor `BatchRenameExecutionService` to separate family renaming from main transaction. (Completed in Plan 6.1)
+- [x] Fix logic filtering Object Styles / Line Styles (ensure user-created ones display). (Completed in Plan 6.1)
+- [x] Add explicit "Replace Spaces" buttons/tooltips to both filter and replace inputs. (Completed in Plan 6.2)
+
+### Phase 7: Final Polish & Release (Future)
+
+**Status**: ⬜ Not Started
+
 ## Current Position
 
 - **Phase**: 5 (completed)

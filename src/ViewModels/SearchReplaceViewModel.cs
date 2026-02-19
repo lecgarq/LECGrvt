@@ -69,6 +69,15 @@ namespace LECG.ViewModels
              }
         }
 
+        [RelayCommand]
+        private void ReplaceSpacesInReplaceText()
+        {
+             if (ReplaceRule != null && !string.IsNullOrEmpty(ReplaceRule.ReplaceText))
+             {
+                 ReplaceRule.ReplaceText = ReplaceRule.ReplaceText.Replace(" ", "_");
+             }
+        }
+
         [ObservableProperty] private ObservableCollection<ReplaceItem> _previewItems = new ObservableCollection<ReplaceItem>();
         [ObservableProperty] private ObservableCollection<string> _availableCategories = new ObservableCollection<string>();
 

@@ -105,18 +105,20 @@ namespace LECG.Services
                         if (cat == null) continue;
 
                         // Identify if this is a built-in category/subcategory
-                        bool isBuiltIn = System.Enum.IsDefined(typeof(BuiltInCategory), (int)cat.Id.Value);
+                        // SAFE CHECK: BuiltInCategories have negative integer IDs.
+                        // User-created subcategories have positive integer IDs.
+                        bool isBuiltIn = cat.Id.Value < 0; 
                         
-                        // Special case: Some user-created styles might map accidentally, but usually negative IDs are built-in.
-                        // However, we want to SHOW user created styles.
-                        // Filter logic:
-                        // If it is built-in (Enum defined) -> SKIP
-                        // Unless it is part of Imports (which we want to rename)
+                        // We want to SHOW user created styles (which are not built-in).
+                        // So if it IS built-in, we generally skip it...
+                        // ...UNLESS it's an Import (which also has positive keys sometimes, but often negative if standard).
+                        // Actually, Imports in Object Styles usually appear as subcategories of "Imports in Families".
                         
-                        // Imports often have IDs that are not standard BuiltInCategories or are specific Import categories
-                        // A safer check for "User Created" is usually positive ID, but let's stick to the Enum check for now as requested.
-                        // Actually, many built-in subcategories (like "Cut", "Hidden Lines") are built-in.
-                        
+                        // For now, the user goal is to see styles that AREN'T showing up.
+                        // The previous logic skipped if Enum.IsDefined, which might have been too aggressive 
+                        // or coincidentally matching user IDs if they were large/small enough (unlikely but possible).
+                        // The reliable check is IsBuiltIn -> Id < 0.
+
                         if (isBuiltIn) continue;
 
                         // Additional Check: If it is a subcategory of Lines, it is a Line Style
@@ -130,7 +132,7 @@ namespace LECG.Services
                                 Name = cat.Name, 
                                 Category = "Line Styles", 
                                 Type = "LineStyle",
-                                OriginalValue = cat.Name // Ensure original value is captured
+                                OriginalValue = cat.Name
                             });
                         }
                         else if (!isLineStyle && objectStyles)
