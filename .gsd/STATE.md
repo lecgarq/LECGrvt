@@ -33,14 +33,13 @@ Phase 8 (Parameter Fix & Premium UI) executed successfully.
 
 ## Current Position
 
-- **Phase**: 8 (completed)
-- **Task**: All tasks complete
-- **Status**: Parameter Fix & Premium UI deployed
+- **Phase**: 9 (planned)
+- **Task**: Planning complete
+- **Status**: Ready for execution
 
 ## Next Steps
 
-1. Verify runtime behavior in Revit (manual testing).
-2. Ready for deployment.
+1. `/execute 9` — Run Plan 9.1 (scope exclusivity + instance params) then Plan 9.2 (per-scope filters)
 
 ## Historical Context
 
