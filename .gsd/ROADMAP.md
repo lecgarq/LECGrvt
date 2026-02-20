@@ -101,3 +101,13 @@
 - [x] Fix parameter collection to iterate ALL FamilySymbols per family, deduplicating by name (Plan 8.1)
 - [x] Premium UI redesign: section headers with accent bars, pill badges, polished DataGrid, status bar, branded accents, better typography (Plan 8.2)
 
+### Phase 9: Scope Exclusivity, Instance Params & Per-Scope Filters
+
+**Status**: 🔲 Planned
+**Objective**: Fix instance parameter collection, make scopes mutually exclusive (radio behavior), and add per-scope advanced filters.
+
+**Tasks**:
+
+- [ ] Mutual exclusivity: selecting one scope deactivates all others (radio-group behavior in VM and UI) (Plan 9.1)
+- [ ] Fix instance parameter collection by also scanning FamilyInstances to capture instance-only params (Plan 9.1)
+- [ ] Per-scope advanced filters: each scope gets its own contextual filters (View Type, Sheet Number, etc.) (Plan 9.2)
