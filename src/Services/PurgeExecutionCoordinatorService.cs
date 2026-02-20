@@ -8,22 +8,26 @@ namespace LECG.Services
     {
         private readonly IPurgePassSequenceService _purgePassSequenceService;
         private readonly IPurgePassExecutionService _purgePassExecutionService;
+        private readonly IPurgeParameterService _purgeParameterService;
 
         public PurgeExecutionCoordinatorService(
             IPurgePassSequenceService purgePassSequenceService,
-            IPurgePassExecutionService purgePassExecutionService)
+            IPurgePassExecutionService purgePassExecutionService,
+            IPurgeParameterService purgeParameterService)
         {
             _purgePassSequenceService = purgePassSequenceService;
             _purgePassExecutionService = purgePassExecutionService;
+            _purgeParameterService = purgeParameterService;
         }
 
-        public (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted) Execute(
+        public (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) Execute(
             Document doc,
             int passCount,
             bool lineStyles,
             bool fillPatterns,
             bool materials,
             bool levels,
+            bool parameters,
             Action<string> logCallback,
             Action<double, string> progressCallback)
         {
@@ -31,7 +35,9 @@ namespace LECG.Services
             int fillPatternsDeleted = 0;
             int materialsDeleted = 0;
             int levelsDeleted = 0;
+            int parametersDeleted = 0;
 
+            // Multi-pass purge for line styles, fill patterns, materials, levels
             using (Transaction t = new Transaction(doc, "Purge Unused Elements"))
             {
                 t.Start();
@@ -59,7 +65,16 @@ namespace LECG.Services
                 t.Commit();
             }
 
-            return (lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted);
+            // Parameter purge runs ONCE after multi-pass (EditFamily handles its own transactions)
+            if (parameters)
+            {
+                logCallback?.Invoke("");
+                logCallback?.Invoke("--- FAMILY PARAMETERS ---");
+                progressCallback?.Invoke(80, "Purging unused family parameters...");
+                parametersDeleted = _purgeParameterService.PurgeUnusedParameters(doc, logCallback);
+            }
+
+            return (lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace LECG.Services
 {
     public class PurgeSummaryService : IPurgeSummaryService
     {
-        public void Report(Action<string> logCallback, Action<double, string> progressCallback, int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted)
+        public void Report(Action<string> logCallback, Action<double, string> progressCallback, int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted)
         {
             progressCallback?.Invoke(100, "Complete!");
             logCallback?.Invoke("");
@@ -14,9 +14,10 @@ namespace LECG.Services
             logCallback?.Invoke($"Fill Patterns deleted: {fillPatternsDeleted}");
             logCallback?.Invoke($"Materials deleted: {materialsDeleted}");
             logCallback?.Invoke($"Levels deleted: {levelsDeleted}");
+            logCallback?.Invoke($"Family Parameters deleted: {parametersDeleted}");
             logCallback?.Invoke("");
 
-            int total = lineStylesDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted;
+            int total = lineStylesDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted + parametersDeleted;
             logCallback?.Invoke($"✓ Total items purged: {total}");
         }
     }
