@@ -16,7 +16,9 @@ namespace LECG.Services
     ///   3. It has NO formula (Formula is null/empty)
     ///   4. It is NOT referenced by ANY other parameter's formula
     ///   5. It is NOT a dimension label (no Dimension.FamilyLabel points to it)
-    ///   6. It is NOT associated to any nested family instance parameter
+    ///   6. It is NOT associated to ANY element property (material, visibility, geometry, nested families)
+    ///   7. It does NOT have meaningful values set across family types
+    ///   8. It is NOT a shared parameter (shared params may be used in schedules/tags)
     /// </summary>
     public class PurgeParameterService : IPurgeParameterService
     {
@@ -88,13 +90,14 @@ namespace LECG.Services
                 // Build safety sets
                 var formulaReferencedParams = BuildFormulaReferencedSet(fm);
                 var dimensionLabelParams = BuildDimensionLabelSet(famDoc);
-                var nestedAssociatedParams = BuildNestedAssociationSet(famDoc, fm);
+                var elementAssociatedParams = BuildElementAssociationSet(famDoc, fm);
+                var valueInUseParams = BuildValueInUseSet(fm);
 
                 // Find parameters safe to delete
                 var paramsToDelete = new List<FamilyParameter>();
                 foreach (FamilyParameter fp in fm.Parameters)
                 {
-                    string reason = GetSkipReason(fp, formulaReferencedParams, dimensionLabelParams, nestedAssociatedParams);
+                    string reason = GetSkipReason(fp, formulaReferencedParams, dimensionLabelParams, elementAssociatedParams, valueInUseParams);
                     if (reason != null)
                     {
                         // Parameter is in use — skip
@@ -159,7 +162,8 @@ namespace LECG.Services
             FamilyParameter fp,
             HashSet<ElementId> formulaReferencedParams,
             HashSet<ElementId> dimensionLabelParams,
-            HashSet<ElementId> nestedAssociatedParams)
+            HashSet<ElementId> elementAssociatedParams,
+            HashSet<ElementId> valueInUseParams)
         {
             // 1. Built-in parameter
             if (fp.Id.Value < 0)
@@ -181,9 +185,17 @@ namespace LECG.Services
             if (dimensionLabelParams.Contains(fp.Id))
                 return "dimension label";
 
-            // 6. Associated with nested family parameter
-            if (nestedAssociatedParams.Contains(fp.Id))
-                return "nested family association";
+            // 6. Associated with ANY element property (material, visibility, geometry, nested families)
+            if (elementAssociatedParams.Contains(fp.Id))
+                return "element association (material/visibility/geometry)";
+
+            // 7. Has non-default values across family types
+            if (valueInUseParams.Contains(fp.Id))
+                return "has values set across types";
+
+            // 8. Shared parameter (may be used in schedules, tags, filters in the project)
+            if (fp.IsShared)
+                return "shared parameter";
 
             return null; // Safe to delete
         }
@@ -258,21 +270,26 @@ namespace LECG.Services
         }
 
         /// <summary>
-        /// Build set of parameter IDs that are associated with nested family instance parameters.
-        /// For each FamilyInstance in the family doc, check each of its parameters
-        /// for an associated FamilyParameter in the host family.
+        /// Build set of parameter IDs that are associated with ANY element's properties.
+        /// This scans ALL elements in the family document — not just nested FamilyInstances.
+        /// Catches: material assignments, visibility toggles, geometry-driving params,
+        /// reference plane associations, and nested family parameter mappings.
         /// </summary>
-        private HashSet<ElementId> BuildNestedAssociationSet(Document famDoc, FamilyManager fm)
+        private HashSet<ElementId> BuildElementAssociationSet(Document famDoc, FamilyManager fm)
         {
             var associated = new HashSet<ElementId>();
 
-            var instances = new FilteredElementCollector(famDoc)
-                .OfClass(typeof(FamilyInstance))
-                .Cast<FamilyInstance>();
+            // Scan ALL elements in the family document
+            var allElements = new FilteredElementCollector(famDoc)
+                .WhereElementIsNotElementType()
+                .ToList();
 
-            foreach (FamilyInstance fi in instances)
+            foreach (Element el in allElements)
             {
-                foreach (Parameter p in fi.Parameters)
+                // Skip elements without parameters
+                if (el.Parameters == null) continue;
+
+                foreach (Parameter p in el.Parameters)
                 {
                     try
                     {
@@ -284,12 +301,50 @@ namespace LECG.Services
                     }
                     catch
                     {
-                        // Some parameters may not support association — skip
+                        // Some parameters/elements may not support association query — skip
                     }
                 }
             }
 
             return associated;
+        }
+
+        /// <summary>
+        /// Build set of parameter IDs that have non-default values set across family types.
+        /// If a parameter has any meaningful value in any type, it's considered in-use.
+        /// </summary>
+        private HashSet<ElementId> BuildValueInUseSet(FamilyManager fm)
+        {
+            var inUse = new HashSet<ElementId>();
+
+            // Get all family types
+            var types = fm.Types;
+            if (types == null) return inUse;
+
+            foreach (FamilyParameter fp in fm.Parameters)
+            {
+                // Skip built-in, they're already handled
+                if (fp.Id.Value < 0) continue;
+
+                foreach (FamilyType ft in types)
+                {
+                    try
+                    {
+                        if (ft.HasValue(fp))
+                        {
+                            // Parameter has a value set in this type — it's in use
+                            inUse.Add(fp.Id);
+                            break; // No need to check more types
+                        }
+                    }
+                    catch
+                    {
+                        // Some type/param combos may throw — skip
+                    }
+                }
+            }
+
+            return inUse;
         }
     }
 }
