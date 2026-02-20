@@ -90,3 +90,12 @@
 - [x] Enable Multi-Selection Scopes (Plan 7.1)
 - [x] Add "Select All / Select None" functionality (Plan 7.1)
 - [x] Implement Advanced Parameter Filtering (Group, Type/Instance, Formula) (Plan 7.1)
+
+### Phase 8: Parameter Fix & Premium UI
+
+**Status**: 🔲 Planned
+**Objective**: Fix incomplete parameter listing (not all family parameters are being collected) and redesign the Batch Rename UI to a premium, polished level.
+
+**Tasks**:
+- [ ] Fix parameter collection to iterate ALL FamilySymbols per family, deduplicating by name (Plan 8.1)
+- [ ] Premium UI redesign: section headers with accent bars, pill badges, polished DataGrid, status bar, branded accents, better typography (Plan 8.2)
