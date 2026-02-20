@@ -30,4 +30,23 @@
 
     <SolidColorBrush x:Key="TransparentBrush" Color="Transparent"/>
 
+    <!-- Premium Accent Brushes -->
+    <SolidColorBrush x:Key="AccentBrush" Color="{DynamicResource ColorAccent}"/>
+    <SolidColorBrush x:Key="AccentLightBrush" Color="{DynamicResource ColorAccentLight}"/>
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{DynamicResource ColorAccentHover}"/>
+    <SolidColorBrush x:Key="AccentMutedBrush" Color="{DynamicResource ColorAccentMuted}"/>
+
+    <!-- Elevated Surfaces & Rows -->
+    <SolidColorBrush x:Key="SurfaceElevatedBrush" Color="{DynamicResource ColorSurfaceElevated}"/>
+    <SolidColorBrush x:Key="DataGridRowAltBrush" Color="{DynamicResource ColorDataGridRowAlt}"/>
+    <SolidColorBrush x:Key="DataGridRowHoverBrush" Color="{DynamicResource ColorDataGridRowHover}"/>
+
+    <!-- Scope Badge Brushes -->
+    <SolidColorBrush x:Key="ScopeActiveBrush" Color="{DynamicResource ColorScopeActive}"/>
+    <SolidColorBrush x:Key="ScopeActiveTextBrush" Color="{DynamicResource ColorScopeActiveText}"/>
+    <SolidColorBrush x:Key="ScopeActiveBorderBrush" Color="{DynamicResource ColorScopeActiveBorder}"/>
+    <SolidColorBrush x:Key="ScopeInactiveBrush" Color="{DynamicResource ColorScopeInactive}"/>
+    <SolidColorBrush x:Key="ScopeInactiveTextBrush" Color="{DynamicResource ColorScopeInactiveText}"/>
+    <SolidColorBrush x:Key="ScopeInactiveBorderBrush" Color="{DynamicResource ColorScopeInactiveBorder}"/>
+
 </ResourceDictionary>
