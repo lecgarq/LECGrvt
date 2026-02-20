@@ -171,11 +171,12 @@ namespace LECG.Services
                          // - Must not be Shared (user req)
                          // - Must not be BuiltIn (Id > -1 is usually custom, but explicit check is safer)
                          // - Must not be ReadOnly (usually, though some formulas make it read only, but definition is what matters. Rename usually okay.)
+                         // UPDATE: We allow ReadOnly because formula-driven parameters are ReadOnly in project, but their *definition* can still be renamed in the Family doc.
                          
                          bool isShared = p.IsShared;
                          bool isBuiltIn = p.Id.Value < 0; 
                          
-                         if (!isShared && !isBuiltIn && !p.IsReadOnly)
+                         if (!isShared && !isBuiltIn) // Removed !p.IsReadOnly to include formula params
                          {
                              data.Add(new ElementData
                              {
@@ -183,7 +184,11 @@ namespace LECG.Services
                                  Name = p.Definition.Name, // Parameter Name
                                  Category = fs.FamilyName, // Group by Family Name
                                  Type = "FamilyParameter",
-                                 OriginalValue = p.Definition.Name
+                                 OriginalValue = p.Definition.Name,
+                                 // Populate Advanced Properties
+                                 ParamGroup = LabelUtils.GetLabelFor(p.Definition.ParameterGroup),
+                                 IsInstance = p.IsInstance,
+                                 IsReadOnly = p.IsReadOnly
                              });
                          }
                     }

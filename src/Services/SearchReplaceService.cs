@@ -15,6 +15,11 @@ namespace LECG.Services
         public string Category { get; set; } = "";
         public string Type { get; set; } = ""; // "Type", "View", "Sheet"
         public string OriginalValue { get; set; } = "";
+        
+        // Advanced Filter Properties (for Family Parameters)
+        public string ParamGroup { get; set; } = "";
+        public bool IsInstance { get; set; }
+        public bool IsReadOnly { get; set; } // Tracks if it has formula or is read-only
     }
 
     public class SearchReplaceService : ISearchReplaceService
