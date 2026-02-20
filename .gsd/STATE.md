@@ -2,12 +2,12 @@
 
 ## Last Session Summary
 
-Phase 8 (Parameter Fix & Premium UI) executed successfully.
+Phase 9 (Scope Exclusivity, Instance Params & Per-Scope Filters) executed successfully.
 
-- Fixed parameter collection: iterate ALL FamilySymbols per family, deduplicate by name.
-- Premium UI redesign: pill badges, accent section headers, gradient Apply button.
-- Added alternating DataGrid rows with hover, type tag column, status bar.
-- New design tokens: indigo accent system, elevated surfaces, scope badge colors.
+- Implemented radio-group exclusivity for scope pills (only one active at a time).
+- Fixed instance parameter collection: scans FamilyInstances per family for instance-only params.
+- Added per-scope advanced filters: ViewType dropdown for Views, ParamGroup/Instance/Editable for Parameters.
+- Contextual filter UI: expander sections show/hide based on active scope.
 
 ### Phase 6: Stability & Bug Fixes
 
@@ -33,13 +33,14 @@ Phase 8 (Parameter Fix & Premium UI) executed successfully.
 
 ## Current Position
 
-- **Phase**: 9 (planned)
-- **Task**: Planning complete
-- **Status**: Ready for execution
+- **Phase**: 9 (completed)
+- **Task**: All tasks complete
+- **Status**: Scope exclusivity, instance params, per-scope filters deployed
 
 ## Next Steps
 
-1. `/execute 9` — Run Plan 9.1 (scope exclusivity + instance params) then Plan 9.2 (per-scope filters)
+1. Verify runtime behavior in Revit (manual testing).
+2. Ready for deployment.
 
 ## Historical Context
 
