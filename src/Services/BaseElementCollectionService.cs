@@ -152,6 +152,17 @@ namespace LECG.Services
 
             if (familyParameters)
             {
+                // Build a lookup: definition -> isInstance, using the document's ParameterBindings
+                // This is the ONLY way to know if a param is Instance or Type in project context.
+                var instanceDefs = new HashSet<Definition>();
+                BindingMap bindingMap = doc.ParameterBindings;
+                DefinitionBindingMapIterator it = bindingMap.ForwardIterator();
+                while (it.MoveNext())
+                {
+                    if (it.Current is InstanceBinding)
+                        instanceDefs.Add(it.Key);
+                }
+
                 // Track processed families to avoid processing same family multiple times via different types.
                 HashSet<ElementId> processedFamilies = new HashSet<ElementId>();
                 
@@ -169,8 +180,7 @@ namespace LECG.Services
                     {
                          // Filter logic:
                          // - Must not be Shared (user req)
-                         // - Must not be BuiltIn (Id > -1 is usually custom, but explicit check is safer)
-                         // - Must not be ReadOnly (usually, though some formulas make it read only, but definition is what matters. Rename usually okay.)
+                         // - Must not be BuiltIn (Id < 0 is usually built-in)
                          // UPDATE: We allow ReadOnly because formula-driven parameters are ReadOnly in project, but their *definition* can still be renamed in the Family doc.
                          
                          bool isShared = p.IsShared;
@@ -178,6 +188,22 @@ namespace LECG.Services
                          
                          if (!isShared && !isBuiltIn) // Removed !p.IsReadOnly to include formula params
                          {
+                             // Determine instance/type from binding map
+                             bool isInstanceParam = instanceDefs.Contains(p.Definition);
+                             
+                             // Get param group label safely
+                             string paramGroupLabel = "";
+                             try
+                             {
+                                 // Use GetGroupTypeId() for Revit 2023+ API; fall back if needed
+                                 var groupTypeId = p.Definition.GetGroupTypeId();
+                                 paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
+                             }
+                             catch
+                             {
+                                 paramGroupLabel = ""; // Fallback: group not available
+                             }
+                             
                              data.Add(new ElementData
                              {
                                  Id = fs.Family.Id.Value, // Store Family ID
@@ -186,8 +212,8 @@ namespace LECG.Services
                                  Type = "FamilyParameter",
                                  OriginalValue = p.Definition.Name,
                                  // Populate Advanced Properties
-                                 ParamGroup = LabelUtils.GetLabelFor(p.Definition.ParameterGroup),
-                                 IsInstance = p.IsInstance,
+                                 ParamGroup = paramGroupLabel,
+                                 IsInstance = isInstanceParam,
                                  IsReadOnly = p.IsReadOnly
                              });
                          }
