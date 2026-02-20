@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
@@ -134,8 +135,8 @@
                                 <ComboBox ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding FilterCategory}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
                             </StackPanel>
 
-                            <!-- Advanced Filters -->
-                            <Expander Grid.Row="1" Grid.ColumnSpan="3" IsEnabled="{Binding ScopeFamilyParameterName}" Margin="0,10,0,0">
+                            <!-- Advanced Filters — Parameters (only visible when Parameters scope active) -->
+                            <Expander Grid.Row="1" Grid.ColumnSpan="3" Visibility="{Binding IsParameterScope, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock Text="▸" Foreground="{StaticResource AccentBrush}" FontSize="11" Margin="0,0,6,0" VerticalAlignment="Center"/>
@@ -175,6 +176,27 @@
                                                 <ComboBoxItem Content="Yes (Formula/ReadOnly)"/>
                                                 <ComboBoxItem Content="No (Editable)"/>
                                         </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                            </Expander>
+
+                            <!-- Advanced Filters — Views (only visible when Views scope active) -->
+                            <Expander Grid.Row="1" Grid.ColumnSpan="3" Visibility="{Binding IsViewScope, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="▸" Foreground="{StaticResource AccentBrush}" FontSize="11" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Advanced View Filters" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <Grid Margin="0,8,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="View Type" Style="{StaticResource LabelStyle}"/>
+                                        <ComboBox ItemsSource="{Binding AvailableViewTypes}" SelectedItem="{Binding FilterViewType}" Height="26" Padding="5,0"/>
                                     </StackPanel>
                                 </Grid>
                             </Expander>
