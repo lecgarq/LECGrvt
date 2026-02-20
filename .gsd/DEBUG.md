@@ -1,44 +1,34 @@
-# Debug Session: Family Parameter Rename Crash
+# Debug Session: Missing Parameters with Formulas
 
 ## Symptom
-Batch rename crashes with "CRITICAL ERROR: The referenced object is not valid, possibly because it has been deleted from the database, or its creation was undone."
+User reports that parameters with formulas are being skipped during the batch rename/search replace process.
 
-**When:** Applying batch rename with 1850 family parameters selected.
-**Expected:** All family parameters are renamed successfully.
-**Actual:** Crashes on the first operation.
+**When:** During collection of Family Parameters in `SearchReplaceCommand`.
+**Expected:** Parameters with formulas should be listed for renaming.
+**Actual:** Parameters with formulas are excluded.
 
 ## Evidence
-
-- 1850 items, 0 standard — all family parameters.
-- Error occurs only ~1 second after start (fails on first family or immediately).
-- The Revit error "referenced object is not valid" typically means an API handle to an element is no longer valid.
+- Code review of `BaseElementCollectionService.cs` shows explicit filtering of `IsReadOnly` parameters.
+- Usually `IsReadOnly` parameters (built-in) cannot be renamed or modified.
+- However, Family Parameters driven by formulas are *also marked IsReadOnly* in the project context (FamilySymbol parameters).
+- The `BatchRenameExecutionService` renames parameters by opening the family document and using `FamilyManager.RenameParameter`, which allows renaming definition even if it has a formula.
 
 ## Hypotheses
 
 | # | Hypothesis | Likelihood | Status |
 |---|------------|------------|--------|
-| 1 | `famDoc.LoadFamily(doc, ...)` invalidates existing `Family` element references, causing subsequent iterations to crash | 85% | CONFIRMED |
-| 2 | Multiple items per family cause `EditFamily` to be called again on an already-open/reloaded family | 85% | CONFIRMED |
-| 3 | `fs.Parameters` on FamilySymbol returns project-context params that don't exist in the family doc | 20% | PARTIALLY |
+| 1 | `BaseElementCollectionService` filters out `IsReadOnly` parameters, excluding formula-driven parameters. | 95% | CONFIRMED |
 
-## Root Cause
+## Attempts
 
-`BatchRenameExecutionService` calls `doc.EditFamily(family)` → renames → `famDoc.LoadFamily(doc, ...)` → `famDoc.Close(false)`.
-
-When `LoadFamily` is called, Revit **replaces** the `Family` element in the project document with a new version. Any previously-fetched references (like `family` held by a prior loop iteration) become **invalid**. If the next item in the loop targets the same family (which is likely with 1850 params across a limited number of families), the element reference is stale.
-
-Additionally, calling `EditFamily` on the same family multiple times (once per parameter) is very expensive and fragile. It should be called once per unique family, renaming all target parameters in one session.
-
-## Fix
-
-Group `familyItems` by `ElementId` (Family ID). For each unique family:
-1. Call `doc.EditFamily(family)` **once**.
-2. Iterate all parameters to rename in that family.
-3. Call `famDoc.LoadFamily(doc, ...)` **once** after all renames.
-4. Call `famDoc.Close(false)` **once**.
+### Attempt 1
+**Testing:** H1 — Code review.
+**Action:** Checked `src/Services/BaseElementCollectionService.cs`.
+**Result:** Found `!p.IsReadOnly` check at line 178.
+**Conclusion:** CONFIRMED. This check is too aggressive for Family Parameters where we intend to rename definitions.
 
 ## Resolution
 
-**Root Cause:** Calling `EditFamily + LoadFamily + Close` once per parameter item (instead of once per family) causes element invalidation on reloads.
-**Fix:** Group items by family ID, process all parameters per family in a single `EditFamily` session.
-**File:** `BatchRenameExecutionService.cs`
+**Root Cause:** `BaseElementCollectionService` filters out all read-only parameters.
+**Fix:** Removed `!p.IsReadOnly` check for Family Parameters in `BaseElementCollectionService.cs`.
+**File:** `src/Services/BaseElementCollectionService.cs`

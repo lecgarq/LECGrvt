@@ -58,6 +58,31 @@ namespace LECG.ViewModels
         [ObservableProperty] private string _filterCategory = "All"; // Default to All
         [ObservableProperty] private SearchFilterType _selectedFilterType = SearchFilterType.Contains;
 
+        // Advanced Filters
+        [ObservableProperty] private string _filterParamGroup = "All";
+        [ObservableProperty] private ObservableCollection<string> _availableParamGroups = new ObservableCollection<string>();
+        
+        [ObservableProperty] private int _filterIsInstanceIndex = 0; // 0=All, 1=Instance, 2=Type
+        [ObservableProperty] private int _filterIsReadOnlyIndex = 0; // 0=All, 1=Yes, 2=No
+
+        public bool? FilterIsInstance => _filterIsInstanceIndex == 1 ? true : (_filterIsInstanceIndex == 2 ? false : (bool?)null);
+        public bool? FilterIsReadOnly => _filterIsReadOnlyIndex == 1 ? true : (_filterIsReadOnlyIndex == 2 ? false : (bool?)null);
+
+        [RelayCommand]
+        private void SelectAll()
+        {
+            if (PreviewItems == null) return;
+            foreach (var item in PreviewItems) item.IsChecked = true;
+        }
+
+        [RelayCommand]
+        private void SelectNone()
+        {
+            if (PreviewItems == null) return;
+            foreach (var item in PreviewItems) item.IsChecked = false;
+        }
+
+
         [ObservableProperty] private bool _scopeFamilyParameterName; // New Scope
 
         [RelayCommand]
@@ -116,6 +141,9 @@ namespace LECG.ViewModels
         // Filter Change Handlers
         partial void OnFilterNameChanged(string value) => UpdatePreview();
         partial void OnFilterCategoryChanged(string value) => UpdatePreview();
+        partial void OnFilterParamGroupChanged(string value) => UpdatePreview();
+        partial void OnFilterIsInstanceIndexChanged(int value) => UpdatePreview();
+        partial void OnFilterIsReadOnlyIndexChanged(int value) => UpdatePreview();
 
         public void Initialize(ISearchReplaceService service, Document doc)
         {
@@ -140,6 +168,20 @@ namespace LECG.ViewModels
             foreach (var c in cats) AvailableCategories.Add(c);
             
             FilterCategory = "All";
+
+            // 3. Update Available Parameter Groups (from cached elements)
+            // Extract distinct ParamGroups from elements of type "FamilyParameter"
+            var groups = _cachedElements
+                .Where(e => e.Type == "FamilyParameter" && !string.IsNullOrEmpty(e.ParamGroup))
+                .Select(e => e.ParamGroup)
+                .Distinct()
+                .OrderBy(g => g);
+
+            AvailableParamGroups.Clear();
+            AvailableParamGroups.Add("All");
+            foreach (var g in groups) AvailableParamGroups.Add(g);
+            
+            FilterParamGroup = "All";
 
             // 3. Update Preview
             UpdatePreview();

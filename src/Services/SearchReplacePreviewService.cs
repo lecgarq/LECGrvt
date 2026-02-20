@@ -67,6 +67,25 @@ namespace LECG.Services
                     if (el.Category.IndexOf(vm.FilterCategory, StringComparison.OrdinalIgnoreCase) < 0) continue;
                 }
 
+                // Advanced Filtering
+                if (el.Type == "FamilyParameter")
+                {
+                    if (!string.IsNullOrEmpty(vm.FilterParamGroup) && !vm.FilterParamGroup.Equals("All", StringComparison.OrdinalIgnoreCase))
+                    {
+                        if (!string.Equals(el.ParamGroup, vm.FilterParamGroup, StringComparison.OrdinalIgnoreCase)) continue;
+                    }
+
+                    if (vm.FilterIsInstance.HasValue)
+                    {
+                        if (el.IsInstance != vm.FilterIsInstance.Value) continue;
+                    }
+
+                    if (vm.FilterIsReadOnly.HasValue)
+                    {
+                        if (el.IsReadOnly != vm.FilterIsReadOnly.Value) continue;
+                    }
+                }
+
                 string currentName = _renameRulePipelineService.ApplyRules(el.Name, vm, results.Count);
 
                 results.Add(new ReplaceItem
