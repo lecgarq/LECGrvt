@@ -33,14 +33,13 @@ Phase 9 (Scope Exclusivity, Instance Params & Per-Scope Filters) executed succes
 
 ## Current Position
 
-- **Phase**: 9 (completed)
-- **Task**: All tasks complete
-- **Status**: Scope exclusivity, instance params, per-scope filters deployed
+- **Phase**: 10 (planned)
+- **Task**: Planning complete
+- **Status**: Ready for execution
 
 ## Next Steps
 
-1. Verify runtime behavior in Revit (manual testing).
-2. Ready for deployment.
+1. `/execute 10` — Run Plan 10.1 (core service) then Plan 10.2 (pipeline integration)
 
 ## Historical Context
 

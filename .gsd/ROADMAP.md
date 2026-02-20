@@ -112,3 +112,15 @@
 - [x] Fix instance parameter collection by also scanning FamilyInstances to capture instance-only params (Plan 9.1)
 - [x] Per-scope advanced filters: each scope gets its own contextual filters (View Type, Sheet Number, etc.) (Plan 9.2)
 
+### Phase 10: Purge Unused Family Parameters
+
+**Status**: 🔲 Planned
+**Objective**: Add a "Purge Unused Parameters" capability to the Purge command that opens each family in the project, identifies truly unused parameters (no formula, no dimension label, no constraint, not referenced by nested families), and safely removes them.
+
+**Tasks**:
+
+- [ ] Create `IPurgeParameterService` / `PurgeParameterService` following existing purge service pattern (Plan 10.1)
+- [ ] Implement safety scanner: check Formula, dimension labels, nested family references, and other param references (Plan 10.1)
+- [ ] Wire into purge pipeline: add `_purgeParameters` toggle to ViewModel, UI checkbox, pass execution flow (Plan 10.2)
+- [ ] Add `PurgeParameterService` to DI, `PurgePassExecutionService`, `PurgeService`, and `PurgeExecutionCoordinatorService` (Plan 10.2)
+- [ ] Test with build verification (Plan 10.2)
