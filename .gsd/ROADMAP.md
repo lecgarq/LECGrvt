@@ -79,3 +79,14 @@
 - [x] Refactor `BatchRenameExecutionService` to separate family renaming from main transaction.
 - [x] Fix logic filtering Object Styles / Line Styles (ensure user-created ones display).
 - [x] Add explicit "Replace Spaces" buttons/tooltips to both filter and replace inputs.
+- [x] Includes Formula Parameters in Renaming (See Plan 6.3)
+
+### Phase 7: UI/UX & Advanced Filtering
+
+**Status**: 🟠 In Progress
+**Objective**: Enable multi-selection scopes, fix list updates, add bulk selection, and implement advanced parameter filtering.
+
+**Tasks**:
+- [ ] Enable Multi-Selection Scopes (Plan 7.1)
+- [ ] Add "Select All / Select None" functionality (Plan 7.1)
+- [ ] Implement Advanced Parameter Filtering (Group, Type/Instance, Formula) (Plan 7.1)

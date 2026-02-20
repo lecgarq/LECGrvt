@@ -13,10 +13,13 @@ Phase 5 (Advanced Search & Parameter Renaming) executed successfully.
 
 **Status**: ✅ Complete
 **Current Plan**: None (All done)
+
 **Tasks**:
+
 - [x] Refactor `BatchRenameExecutionService` to separate family renaming from main transaction. (Completed in Plan 6.1)
 - [x] Fix logic filtering Object Styles / Line Styles (ensure user-created ones display). (Completed in Plan 6.1)
 - [x] Add explicit "Replace Spaces" buttons/tooltips to both filter and replace inputs. (Completed in Plan 6.2)
+- [x] Include Formula Parameters in Renaming. (Completed in Plan 6.3)
 
 ### Phase 7: Final Polish & Release (Future)
 
