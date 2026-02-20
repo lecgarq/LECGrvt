@@ -163,60 +163,75 @@ namespace LECG.Services
                         instanceDefs.Add(it.Key);
                 }
 
-                // Track processed families to avoid processing same family multiple times via different types.
-                HashSet<ElementId> processedFamilies = new HashSet<ElementId>();
-                
+                // Group ALL FamilySymbols by their parent Family to ensure we collect
+                // parameters from EVERY symbol, not just the first one encountered.
                 FilteredElementCollector symbolCollector = new FilteredElementCollector(doc)
                     .WhereElementIsElementType()
                     .OfClass(typeof(FamilySymbol));
-                    
+
+                // Group by Family.Id so we process each family once but scan ALL its symbols
+                var symbolsByFamily = new Dictionary<long, List<FamilySymbol>>();
                 foreach (FamilySymbol fs in symbolCollector)
                 {
-                    if (fs.Family == null || processedFamilies.Contains(fs.Family.Id)) continue;
-                    
-                    processedFamilies.Add(fs.Family.Id);
-                    
-                    foreach (Parameter p in fs.Parameters)
+                    if (fs.Family == null) continue;
+                    long familyId = fs.Family.Id.Value;
+                    if (!symbolsByFamily.ContainsKey(familyId))
+                        symbolsByFamily[familyId] = new List<FamilySymbol>();
+                    symbolsByFamily[familyId].Add(fs);
+                }
+
+                foreach (var kvp in symbolsByFamily)
+                {
+                    List<FamilySymbol> symbols = kvp.Value;
+                    string familyName = symbols[0].FamilyName;
+                    long familyId = kvp.Key;
+
+                    // Deduplicate parameters by Definition.Name across ALL symbols of this family
+                    var seenParamNames = new HashSet<string>();
+
+                    foreach (FamilySymbol fs in symbols)
                     {
-                         // Filter logic:
-                         // - Must not be Shared (user req)
-                         // - Must not be BuiltIn (Id < 0 is usually built-in)
-                         // UPDATE: We allow ReadOnly because formula-driven parameters are ReadOnly in project, but their *definition* can still be renamed in the Family doc.
-                         
-                         bool isShared = p.IsShared;
-                         bool isBuiltIn = p.Id.Value < 0; 
-                         
-                         if (!isShared && !isBuiltIn) // Removed !p.IsReadOnly to include formula params
-                         {
-                             // Determine instance/type from binding map
-                             bool isInstanceParam = instanceDefs.Contains(p.Definition);
-                             
-                             // Get param group label safely
-                             string paramGroupLabel = "";
-                             try
+                        foreach (Parameter p in fs.Parameters)
+                        {
+                             // Filter logic:
+                             // - Must not be Shared (user req)
+                             // - Must not be BuiltIn (Id < 0 is usually built-in)
+                             // UPDATE: We allow ReadOnly because formula-driven parameters are ReadOnly
+                             // in project, but their *definition* can still be renamed in the Family doc.
+
+                             bool isShared = p.IsShared;
+                             bool isBuiltIn = p.Id.Value < 0;
+
+                             if (!isShared && !isBuiltIn && seenParamNames.Add(p.Definition.Name))
                              {
-                                 // Use GetGroupTypeId() for Revit 2023+ API; fall back if needed
-                                 var groupTypeId = p.Definition.GetGroupTypeId();
-                                 paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
+                                 // Determine instance/type from binding map
+                                 bool isInstanceParam = instanceDefs.Contains(p.Definition);
+
+                                 // Get param group label safely
+                                 string paramGroupLabel = "";
+                                 try
+                                 {
+                                     var groupTypeId = p.Definition.GetGroupTypeId();
+                                     paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
+                                 }
+                                 catch
+                                 {
+                                     paramGroupLabel = "";
+                                 }
+
+                                 data.Add(new ElementData
+                                 {
+                                     Id = familyId, // Store Family ID
+                                     Name = p.Definition.Name, // Parameter Name
+                                     Category = familyName, // Group by Family Name
+                                     Type = "FamilyParameter",
+                                     OriginalValue = p.Definition.Name,
+                                     ParamGroup = paramGroupLabel,
+                                     IsInstance = isInstanceParam,
+                                     IsReadOnly = p.IsReadOnly
+                                 });
                              }
-                             catch
-                             {
-                                 paramGroupLabel = ""; // Fallback: group not available
-                             }
-                             
-                             data.Add(new ElementData
-                             {
-                                 Id = fs.Family.Id.Value, // Store Family ID
-                                 Name = p.Definition.Name, // Parameter Name
-                                 Category = fs.FamilyName, // Group by Family Name
-                                 Type = "FamilyParameter",
-                                 OriginalValue = p.Definition.Name,
-                                 // Populate Advanced Properties
-                                 ParamGroup = paramGroupLabel,
-                                 IsInstance = isInstanceParam,
-                                 IsReadOnly = p.IsReadOnly
-                             });
-                         }
+                        }
                     }
                 }
             }
