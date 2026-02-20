@@ -59,7 +59,7 @@ namespace LECG.ViewModels
         [ObservableProperty] private string _filterCategory = "All"; // Default to All
         [ObservableProperty] private SearchFilterType _selectedFilterType = SearchFilterType.Contains;
 
-        // Advanced Filters
+        // Advanced Filters (Parameters)
         [ObservableProperty] private string _filterParamGroup = "All";
         [ObservableProperty] private ObservableCollection<string> _availableParamGroups = new ObservableCollection<string>();
         
@@ -68,6 +68,10 @@ namespace LECG.ViewModels
 
         public bool? FilterIsInstance => _filterIsInstanceIndex == 1 ? true : (_filterIsInstanceIndex == 2 ? false : (bool?)null);
         public bool? FilterIsReadOnly => _filterIsReadOnlyIndex == 1 ? true : (_filterIsReadOnlyIndex == 2 ? false : (bool?)null);
+
+        // Advanced Filters (Views)
+        [ObservableProperty] private string _filterViewType = "All";
+        [ObservableProperty] private ObservableCollection<string> _availableViewTypes = new ObservableCollection<string>();
 
         [RelayCommand]
         private void SelectAll()
@@ -178,6 +182,7 @@ namespace LECG.ViewModels
         partial void OnFilterParamGroupChanged(string value) => UpdatePreview();
         partial void OnFilterIsInstanceIndexChanged(int value) => UpdatePreview();
         partial void OnFilterIsReadOnlyIndexChanged(int value) => UpdatePreview();
+        partial void OnFilterViewTypeChanged(string value) => UpdatePreview();
 
         public void Initialize(ISearchReplaceService service, Document doc)
         {
@@ -203,21 +208,38 @@ namespace LECG.ViewModels
             
             FilterCategory = "All";
 
-            // 3. Update Available Parameter Groups (from cached elements)
-            // Extract distinct ParamGroups from elements of type "FamilyParameter"
-            var groups = _cachedElements
-                .Where(e => e.Type == "FamilyParameter" && !string.IsNullOrEmpty(e.ParamGroup))
-                .Select(e => e.ParamGroup)
-                .Distinct()
-                .OrderBy(g => g);
+            // 3. Update scope-specific filters
+            if (ScopeFamilyParameterName)
+            {
+                // Parameter Groups
+                var groups = _cachedElements
+                    .Where(e => e.Type == "FamilyParameter" && !string.IsNullOrEmpty(e.ParamGroup))
+                    .Select(e => e.ParamGroup)
+                    .Distinct()
+                    .OrderBy(g => g);
 
-            AvailableParamGroups.Clear();
-            AvailableParamGroups.Add("All");
-            foreach (var g in groups) AvailableParamGroups.Add(g);
-            
-            FilterParamGroup = "All";
+                AvailableParamGroups.Clear();
+                AvailableParamGroups.Add("All");
+                foreach (var g in groups) AvailableParamGroups.Add(g);
+                FilterParamGroup = "All";
+            }
 
-            // 3. Update Preview
+            if (ScopeViewName)
+            {
+                // View Types (Category field holds ViewType.ToString() for views)
+                var viewTypes = _cachedElements
+                    .Where(e => e.Type == "View" && !string.IsNullOrEmpty(e.Category))
+                    .Select(e => e.Category)
+                    .Distinct()
+                    .OrderBy(v => v);
+
+                AvailableViewTypes.Clear();
+                AvailableViewTypes.Add("All");
+                foreach (var vt in viewTypes) AvailableViewTypes.Add(vt);
+                FilterViewType = "All";
+            }
+
+            // 4. Update Preview
             UpdatePreview();
         }
 
