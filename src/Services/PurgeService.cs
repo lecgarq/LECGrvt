@@ -15,6 +15,7 @@ namespace LECG.Services
         private readonly IPurgeLineStyleService _purgeLineStyleService;
         private readonly IPurgeFillPatternService _purgeFillPatternService;
         private readonly IPurgeLevelService _purgeLevelService;
+        private readonly IPurgeParameterService _purgeParameterService;
         private readonly IPurgeSummaryService _purgeSummaryService;
         private readonly IPurgeExecutionCoordinatorService _purgeExecutionCoordinatorService;
 
@@ -23,6 +24,7 @@ namespace LECG.Services
             new PurgeLineStyleService(),
             new PurgeFillPatternService(),
             new PurgeLevelService(),
+            new PurgeParameterService(),
             new PurgeSummaryService(),
             new PurgeExecutionCoordinatorService(
                 new PurgePassSequenceService(),
@@ -31,7 +33,8 @@ namespace LECG.Services
                     new PurgeFillPatternService(),
                     new PurgeMaterialService(),
                     new PurgeLevelService(),
-                    new PurgePassMessagingService())))
+                    new PurgePassMessagingService()),
+                new PurgeParameterService()))
         {
         }
 
@@ -40,6 +43,7 @@ namespace LECG.Services
             IPurgeLineStyleService purgeLineStyleService,
             IPurgeFillPatternService purgeFillPatternService,
             IPurgeLevelService purgeLevelService,
+            IPurgeParameterService purgeParameterService,
             IPurgeSummaryService purgeSummaryService,
             IPurgeExecutionCoordinatorService purgeExecutionCoordinatorService)
         {
@@ -47,23 +51,25 @@ namespace LECG.Services
             _purgeLineStyleService = purgeLineStyleService;
             _purgeFillPatternService = purgeFillPatternService;
             _purgeLevelService = purgeLevelService;
+            _purgeParameterService = purgeParameterService;
             _purgeSummaryService = purgeSummaryService;
             _purgeExecutionCoordinatorService = purgeExecutionCoordinatorService;
         }
 
-        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool fillPatterns, bool materials, bool levels, Action<string> logCallback, Action<double, string> progressCallback)
+        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool fillPatterns, bool materials, bool levels, bool parameters, Action<string> logCallback, Action<double, string> progressCallback)
         {
-            (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted) = _purgeExecutionCoordinatorService.Execute(
+            (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) = _purgeExecutionCoordinatorService.Execute(
                 doc,
                 passCount,
                 lineStyles,
                 fillPatterns,
                 materials,
                 levels,
+                parameters,
                 logCallback,
                 progressCallback);
 
-            _purgeSummaryService.Report(logCallback, progressCallback, lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted);
+            _purgeSummaryService.Report(logCallback, progressCallback, lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
         }
 
         /// <summary>
@@ -100,6 +106,14 @@ namespace LECG.Services
         public int PurgeUnusedLevels(Document doc, Action<string>? logCallback = null)
         {
             return _purgeLevelService.PurgeUnusedLevels(doc, logCallback);
+        }
+
+        /// <summary>
+        /// Purge unused family parameters across all editable families.
+        /// </summary>
+        public int PurgeUnusedParameters(Document doc, Action<string>? logCallback = null)
+        {
+            return _purgeParameterService.PurgeUnusedParameters(doc, logCallback);
         }
 
     }

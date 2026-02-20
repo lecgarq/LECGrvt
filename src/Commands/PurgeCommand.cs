@@ -31,6 +31,7 @@ namespace LECG.Commands
             settings.PurgeFillPatterns = loadedSettings.PurgeFillPatterns;
             settings.PurgeMaterials = loadedSettings.PurgeMaterials;
             settings.PurgeLevels = loadedSettings.PurgeLevels;
+            settings.PurgeParameters = loadedSettings.PurgeParameters;
             settings.IsDeepPurge = loadedSettings.IsDeepPurge;
 
             // 2. Show options dialog
@@ -41,7 +42,7 @@ namespace LECG.Commands
             SettingsManager.Save(settings, "PurgeSettings.json");
 
             // Check if anything selected
-            if (!settings.PurgeLineStyles && !settings.PurgeFillPatterns && !settings.PurgeMaterials && !settings.PurgeLevels) return;
+            if (!settings.PurgeLineStyles && !settings.PurgeFillPatterns && !settings.PurgeMaterials && !settings.PurgeLevels && !settings.PurgeParameters) return;
 
             // Show log window
             ShowLogWindow("Purge Unused");
@@ -60,6 +61,7 @@ namespace LECG.Commands
                 settings.PurgeFillPatterns, 
                 settings.PurgeMaterials, 
                 settings.PurgeLevels, 
+                settings.PurgeParameters,
                 Log, 
                 UpdateProgress);
         }

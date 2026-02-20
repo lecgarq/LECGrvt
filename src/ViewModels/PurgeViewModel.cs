@@ -20,6 +20,9 @@ namespace LECG.ViewModels
         [ObservableProperty]
         private bool _isDeepPurge = true;
 
+        [ObservableProperty]
+        private bool _purgeParameters = false;
+
         public PurgeViewModel()
         {
             Title = "PURGE UNUSED";

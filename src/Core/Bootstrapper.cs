@@ -61,6 +61,7 @@ namespace LECG.Core
             services.AddSingleton<IPurgeLineStyleService, PurgeLineStyleService>();
             services.AddSingleton<IPurgeFillPatternService, PurgeFillPatternService>();
             services.AddSingleton<IPurgeLevelService, PurgeLevelService>();
+            services.AddSingleton<IPurgeParameterService, PurgeParameterService>();
             services.AddSingleton<IPurgeSummaryService, PurgeSummaryService>();
             services.AddSingleton<IPurgePassMessagingService, PurgePassMessagingService>();
             services.AddSingleton<IPurgePassSequenceService, PurgePassSequenceService>();
