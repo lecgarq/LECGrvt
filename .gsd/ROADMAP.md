@@ -114,13 +114,13 @@
 
 ### Phase 10: Purge Unused Family Parameters
 
-**Status**: 🔲 Planned
+**Status**: ✅ Complete
 **Objective**: Add a "Purge Unused Parameters" capability to the Purge command that opens each family in the project, identifies truly unused parameters (no formula, no dimension label, no constraint, not referenced by nested families), and safely removes them.
 
 **Tasks**:
 
-- [ ] Create `IPurgeParameterService` / `PurgeParameterService` following existing purge service pattern (Plan 10.1)
-- [ ] Implement safety scanner: check Formula, dimension labels, nested family references, and other param references (Plan 10.1)
-- [ ] Wire into purge pipeline: add `_purgeParameters` toggle to ViewModel, UI checkbox, pass execution flow (Plan 10.2)
-- [ ] Add `PurgeParameterService` to DI, `PurgePassExecutionService`, `PurgeService`, and `PurgeExecutionCoordinatorService` (Plan 10.2)
-- [ ] Test with build verification (Plan 10.2)
+- [x] Create `IPurgeParameterService` / `PurgeParameterService` following existing purge service pattern (Plan 10.1)
+- [x] Implement safety scanner: check Formula, dimension labels, nested family references, and other param references (Plan 10.1)
+- [x] Wire into purge pipeline: add `_purgeParameters` toggle to ViewModel, UI checkbox, pass execution flow (Plan 10.2)
+- [x] Add `PurgeParameterService` to DI, Coordinator, PurgeService (Plan 10.2)
+- [x] Test with build verification (Plan 10.2)
