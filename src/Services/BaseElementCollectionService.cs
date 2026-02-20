@@ -180,34 +180,30 @@ namespace LECG.Services
                     symbolsByFamily[familyId].Add(fs);
                 }
 
+                // Track seen param names PER FAMILY across both type and instance scans
+                var seenParamsByFamily = new Dictionary<long, HashSet<string>>();
+
+                // --- Phase A: Scan FamilySymbols (type parameters) ---
                 foreach (var kvp in symbolsByFamily)
                 {
                     List<FamilySymbol> symbols = kvp.Value;
                     string familyName = symbols[0].FamilyName;
                     long familyId = kvp.Key;
 
-                    // Deduplicate parameters by Definition.Name across ALL symbols of this family
                     var seenParamNames = new HashSet<string>();
+                    seenParamsByFamily[familyId] = seenParamNames;
 
                     foreach (FamilySymbol fs in symbols)
                     {
                         foreach (Parameter p in fs.Parameters)
                         {
-                             // Filter logic:
-                             // - Must not be Shared (user req)
-                             // - Must not be BuiltIn (Id < 0 is usually built-in)
-                             // UPDATE: We allow ReadOnly because formula-driven parameters are ReadOnly
-                             // in project, but their *definition* can still be renamed in the Family doc.
-
                              bool isShared = p.IsShared;
                              bool isBuiltIn = p.Id.Value < 0;
 
                              if (!isShared && !isBuiltIn && seenParamNames.Add(p.Definition.Name))
                              {
-                                 // Determine instance/type from binding map
                                  bool isInstanceParam = instanceDefs.Contains(p.Definition);
 
-                                 // Get param group label safely
                                  string paramGroupLabel = "";
                                  try
                                  {
@@ -221,9 +217,9 @@ namespace LECG.Services
 
                                  data.Add(new ElementData
                                  {
-                                     Id = familyId, // Store Family ID
-                                     Name = p.Definition.Name, // Parameter Name
-                                     Category = familyName, // Group by Family Name
+                                     Id = familyId,
+                                     Name = p.Definition.Name,
+                                     Category = familyName,
                                      Type = "FamilyParameter",
                                      OriginalValue = p.Definition.Name,
                                      ParamGroup = paramGroupLabel,
@@ -231,6 +227,66 @@ namespace LECG.Services
                                      IsReadOnly = p.IsReadOnly
                                  });
                              }
+                        }
+                    }
+                }
+
+                // --- Phase B: Scan FamilyInstances for instance-only parameters ---
+                // Some parameters only appear on placed instances, not on the FamilySymbol.
+                FilteredElementCollector instanceCollector = new FilteredElementCollector(doc)
+                    .WhereElementIsNotElementType()
+                    .OfClass(typeof(FamilyInstance));
+
+                // We only need ONE instance per family to discover instance params
+                var processedInstanceFamilies = new HashSet<long>();
+
+                foreach (FamilyInstance fi in instanceCollector)
+                {
+                    if (fi.Symbol?.Family == null) continue;
+                    long familyId = fi.Symbol.Family.Id.Value;
+                    
+                    // Skip if we already scanned an instance of this family
+                    if (!processedInstanceFamilies.Add(familyId)) continue;
+
+                    string familyName = fi.Symbol.FamilyName;
+
+                    // Get or create the seen set for this family
+                    if (!seenParamsByFamily.TryGetValue(familyId, out var seenParamNames))
+                    {
+                        seenParamNames = new HashSet<string>();
+                        seenParamsByFamily[familyId] = seenParamNames;
+                    }
+
+                    foreach (Parameter p in fi.Parameters)
+                    {
+                        bool isShared = p.IsShared;
+                        bool isBuiltIn = p.Id.Value < 0;
+
+                        if (!isShared && !isBuiltIn && seenParamNames.Add(p.Definition.Name))
+                        {
+                            // This param was NOT found on the FamilySymbol — it's instance-only
+                            string paramGroupLabel = "";
+                            try
+                            {
+                                var groupTypeId = p.Definition.GetGroupTypeId();
+                                paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
+                            }
+                            catch
+                            {
+                                paramGroupLabel = "";
+                            }
+
+                            data.Add(new ElementData
+                            {
+                                Id = familyId,
+                                Name = p.Definition.Name,
+                                Category = familyName,
+                                Type = "FamilyParameter",
+                                OriginalValue = p.Definition.Name,
+                                ParamGroup = paramGroupLabel,
+                                IsInstance = true, // Found on instance, so it's instance
+                                IsReadOnly = p.IsReadOnly
+                            });
                         }
                     }
                 }
