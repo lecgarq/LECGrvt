@@ -27,4 +27,23 @@
     <Color x:Key="ColorDataGridRemoved">#FF0000</Color>
     <Color x:Key="ColorDataGridMeta">#999999</Color>
 
+    <!-- Premium Accent System (Indigo) -->
+    <Color x:Key="ColorAccent">#4F46E5</Color>
+    <Color x:Key="ColorAccentLight">#EEF2FF</Color>
+    <Color x:Key="ColorAccentHover">#4338CA</Color>
+    <Color x:Key="ColorAccentMuted">#818CF8</Color>
+
+    <!-- Elevated Surfaces & Rows -->
+    <Color x:Key="ColorSurfaceElevated">#F8FAFC</Color>
+    <Color x:Key="ColorDataGridRowAlt">#F9FAFB</Color>
+    <Color x:Key="ColorDataGridRowHover">#F1F5F9</Color>
+
+    <!-- Scope Badge Colors -->
+    <Color x:Key="ColorScopeActive">#EEF2FF</Color>
+    <Color x:Key="ColorScopeActiveText">#4F46E5</Color>
+    <Color x:Key="ColorScopeActiveBorder">#C7D2FE</Color>
+    <Color x:Key="ColorScopeInactive">#F1F5F9</Color>
+    <Color x:Key="ColorScopeInactiveText">#94A3B8</Color>
+    <Color x:Key="ColorScopeInactiveBorder">#E2E8F0</Color>
+
 </ResourceDictionary>
