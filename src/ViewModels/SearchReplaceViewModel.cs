@@ -35,6 +35,7 @@ namespace LECG.ViewModels
         private ISearchReplaceService _service = null!;
         private Document _doc = null!;
         private List<ElementData> _cachedElements = new List<ElementData>();
+        private bool _isSettingScope; // Guard for radio-group exclusivity
 
         // Rules
         public ReplaceRule ReplaceRule { get; } = new ReplaceRule();
@@ -125,16 +126,49 @@ namespace LECG.ViewModels
             UpdatePreview();
         }
         
-        // Scope Change Handlers
-        partial void OnScopeTypeNameChanged(bool value) => RefreshScope();
-        partial void OnScopeFamilyNameChanged(bool value) => RefreshScope();
-        partial void OnScopeViewNameChanged(bool value) => RefreshScope();
-        partial void OnScopeSheetNameChanged(bool value) => RefreshScope();
-        partial void OnScopeMaterialNameChanged(bool value) => RefreshScope();
-        partial void OnScopeObjectStyleNameChanged(bool value) => RefreshScope();
-        partial void OnScopeLineStyleNameChanged(bool value) => RefreshScope();
-        partial void OnScopeFillPatternNameChanged(bool value) => RefreshScope();
-        partial void OnScopeFamilyParameterNameChanged(bool value) => RefreshScope();
+        // Scope Change Handlers — radio-group exclusivity
+        // When one scope is checked, all others are unchecked.
+        private void SetExclusiveScope(Action activator)
+        {
+            if (_isSettingScope) return;
+            _isSettingScope = true;
+
+            // Turn all off
+            ScopeTypeName = false;
+            ScopeFamilyName = false;
+            ScopeViewName = false;
+            ScopeSheetName = false;
+            ScopeMaterialName = false;
+            ScopeObjectStyleName = false;
+            ScopeLineStyleName = false;
+            ScopeFillPatternName = false;
+            ScopeFamilyParameterName = false;
+
+            // Turn on the selected one
+            activator();
+
+            _isSettingScope = false;
+
+            // Notify scope-dependent properties
+            OnPropertyChanged(nameof(IsParameterScope));
+            OnPropertyChanged(nameof(IsViewScope));
+
+            RefreshScope();
+        }
+
+        partial void OnScopeTypeNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeTypeName = true); }
+        partial void OnScopeFamilyNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeFamilyName = true); }
+        partial void OnScopeViewNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeViewName = true); }
+        partial void OnScopeSheetNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeSheetName = true); }
+        partial void OnScopeMaterialNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeMaterialName = true); }
+        partial void OnScopeObjectStyleNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeObjectStyleName = true); }
+        partial void OnScopeLineStyleNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeLineStyleName = true); }
+        partial void OnScopeFillPatternNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeFillPatternName = true); }
+        partial void OnScopeFamilyParameterNameChanged(bool value) { if (value) SetExclusiveScope(() => ScopeFamilyParameterName = true); }
+
+        // Computed scope flags for UI visibility
+        public bool IsParameterScope => ScopeFamilyParameterName;
+        public bool IsViewScope => ScopeViewName;
 
         partial void OnSelectedFilterTypeChanged(SearchFilterType value) => UpdatePreview();
 
