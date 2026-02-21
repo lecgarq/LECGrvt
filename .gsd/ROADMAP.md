@@ -144,5 +144,25 @@
 **Objective**: Add micro-animations and interaction polish (hover states, transitions).
 
 ### Phase 15: Verification & Stress Testing
-**Status**: 🚧 In Progress
+**Status**: ✅ Complete
 **Objective**: Verify DPI scaling and resizing stability across various resolutions.
+
+## Milestone v1.3: Advanced Family Automation & Performance
+
+> **Goal**: Super-responsive family processing and batch conversion tools.
+
+### Phase 16: Background Family Editor Engine
+**Status**: ⬜ Not Started
+**Objective**: Implement a high-performance "Silent Family Editor" service to modify family-level properties without manual intervention.
+
+### Phase 17: Category Changer Plugin
+**Status**: ⬜ Not Started
+**Objective**: Create a tool to quickly switch instance categories by modifying the family definition on-the-fly in the project.
+
+### Phase 18: Convert Family V2 (Replace & Batch)
+**Status**: ⬜ Not Started
+**Objective**: Enhance `ConvertFamily` with multi-selection support and an "In-Place Replace" mode that preserves model data.
+
+### Phase 19: Performance Validation
+**Status**: ⬜ Not Started
+**Objective**: Benchmark batch processing and optimize transaction overhead for high responsiveness.
