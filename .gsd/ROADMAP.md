@@ -152,11 +152,11 @@
 > **Goal**: Super-responsive family processing and batch conversion tools.
 
 ### Phase 16: Background Family Editor Engine
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Implement a high-performance "Silent Family Editor" service to modify family-level properties without manual intervention.
 
 ### Phase 17: Category Changer Plugin
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Create a tool to quickly switch instance categories by modifying the family definition on-the-fly in the project.
 
 ### Phase 18: Convert Family V2 (Replace & Batch)
