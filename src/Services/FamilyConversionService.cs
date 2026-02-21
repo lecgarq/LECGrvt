@@ -1,6 +1,9 @@
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LECG.Services
 {
@@ -69,10 +72,84 @@ namespace LECG.Services
             }
         }
 
+        public void ConvertFamilyBatch(Document doc, IEnumerable<FamilyInstance> instances, string customName, string templatePath, bool isTemporary, bool replaceInPlace)
+        {
+            if (instances == null || !instances.Any()) return;
+
+            // Group by family to minimize redundant family document conversions
+            var instancesByFamily = instances.GroupBy(i => i.Symbol.Family.Id);
+
+            foreach (var group in instancesByFamily)
+            {
+                var firstInstance = group.First();
+                Family sourceFamily = firstInstance.Symbol.Family;
+                string sourceFamilyName = sourceFamily.Name;
+                string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(doc, sourceFamilyName, customName);
+
+                _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
+
+                Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
+                if (sourceFamilyDoc == null) continue;
+
+                Document? targetFamilyDoc = null;
+                string tempFamilyPath = "";
+
+                try
+                {
+                    (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamilyDoc, templatePath, targetFamilyName);
+                    if (targetFamilyDoc == null) continue;
+
+                    // All conversion logic happens here. Now we handle the placement if Replace is true.
+                    if (replaceInPlace)
+                    {
+                        // Get the newly loaded family from the project
+                        Family? newFamily = new FilteredElementCollector(doc)
+                            .OfClass(typeof(Family))
+                            .Cast<Family>()
+                            .FirstOrDefault(f => f.Name == targetFamilyName);
+
+                        if (newFamily != null)
+                        {
+                            FamilySymbol? newSymbol = doc.GetElement(newFamily.GetFamilySymbolIds().First()) as FamilySymbol;
+                            if (newSymbol != null)
+                            {
+                                if (!newSymbol.IsActive) newSymbol.Activate();
+
+                                foreach (var oldInstance in group)
+                                {
+                                    // Capture
+                                    var data = FamilyInstanceData.Capture(oldInstance);
+
+                                    // Place
+                                    FamilyInstance newInstance = doc.Create.NewFamilyInstance(
+                                        data.LocationPoint,
+                                        newSymbol,
+                                        oldInstance.StructuralType);
+
+                                    // Restore
+                                    data.Apply(newInstance);
+
+                                    // Delete old
+                                    doc.Delete(oldInstance.Id);
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _familyConversionLoggingService.LogCriticalError(ex.Message, ex.StackTrace ?? "");
+                }
+                finally
+                {
+                    _familyConversionFinalizeService.Finalize(sourceFamilyDoc, targetFamilyDoc, tempFamilyPath, isTemporary);
+                }
+            }
+        }
+
         public string GetTargetTemplatePath(Autodesk.Revit.ApplicationServices.Application app, Category category)
         {
             return _templatePathService.GetTargetTemplatePath(app, category);
         }
-
     }
 }
