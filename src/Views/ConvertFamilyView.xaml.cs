@@ -3,6 +3,8 @@ using LECG.Views.Base;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using LECG.Utils;
+using System;
+using System.Collections.Generic;
 
 namespace LECG.Views
 {
@@ -39,15 +41,23 @@ namespace LECG.Views
                 {
                     Autodesk.Revit.UI.Selection.ISelectionFilter filter = new LECG.Utils.FamilyInstanceFilter();
                     
-                    Reference r = _uiDoc.Selection.PickObject(
+                    var refs = _uiDoc.Selection.PickObjects(
                         Autodesk.Revit.UI.Selection.ObjectType.Element, 
                         filter, 
-                        "Select a hosted family instance to convert.");
+                        "Select hosted family instances to convert.");
                     
-                    viewModel.SetSelection(r, _uiDoc.Document);
+                    viewModel.SetSelection(refs, _uiDoc.Document);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally { ShowDialog(); }
+                finally
+                {
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
+                }
             };
         }
     }
