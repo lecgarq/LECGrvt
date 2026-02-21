@@ -7,6 +7,7 @@
         <ResourceDictionary Source="Base/Brushes.xaml"/>
         <ResourceDictionary Source="Base/Sizes.xaml"/>
         <ResourceDictionary Source="Base/Fonts.xaml"/>
+        <ResourceDictionary Source="Animations.xaml"/>
 
         <!-- Level 2: Component Styles (Consuming Tokens) -->
         <ResourceDictionary Source="Buttons.xaml"/>

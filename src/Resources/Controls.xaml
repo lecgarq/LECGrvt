@@ -10,6 +10,36 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
+    <!-- Modern TextBox Style -->
+    <Style x:Key="ModernTextBoxStyle" TargetType="TextBox">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{DynamicResource SmallCornerRadius}" SnapsToDevicePixels="True">
+                        <Grid>
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource AccentMutedBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Modern Checkbox Style -->
     <Style x:Key="ModernCheckboxStyle" TargetType="CheckBox">
         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
@@ -20,7 +50,11 @@
                 <ControlTemplate TargetType="CheckBox">
                     <StackPanel Orientation="Horizontal">
                         <Border x:Name="checkBorder" Width="18" Height="18" CornerRadius="5" BorderThickness="1.5" BorderBrush="{DynamicResource BorderBrush}" Background="White" VerticalAlignment="Center">
-                            <Path x:Name="checkMark" Data="{x:Static icons:Icons.Check}" Stroke="White" StrokeThickness="2" Width="10" Height="10" Stretch="Uniform" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Path x:Name="checkMark" Data="{x:Static icons:Icons.Check}" Stroke="White" StrokeThickness="2" Width="10" Height="10" Stretch="Uniform" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleX="0.5" ScaleY="0.5" CenterX="5" CenterY="5"/>
+                                </Path.RenderTransform>
+                            </Path>
                         </Border>
                         <ContentPresenter Margin="10,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
@@ -30,6 +64,15 @@
                             <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
                             <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
                         </Trigger>
+                        <EventTrigger RoutedEvent="CheckBox.Checked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="Opacity" To="1" Duration="{StaticResource QuickDuration}"/>
+                                    <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource ElasticEase}"/>
+                                    <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource ElasticEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
                         </Trigger>
@@ -82,6 +125,20 @@
                             <Setter TargetName="pillBorder" Property="BorderBrush" Value="{DynamicResource ScopeActiveBorderBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ScopeActiveTextBrush}"/>
                         </Trigger>
+                        <EventTrigger RoutedEvent="CheckBox.Checked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorScopeActive}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorScopeInactive}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="pillBorder" Property="BorderBrush" Value="{DynamicResource AccentMutedBrush}"/>
                         </Trigger>

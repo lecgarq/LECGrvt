@@ -36,9 +36,20 @@
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource PrimaryHoverBrush}"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorPrimaryHover}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorPrimary}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
@@ -59,13 +70,30 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="{DynamicResource ButtonCornerRadius}" Padding="18,10">
+                        <Border.RenderTransform>
+                            <TranslateTransform Y="0"/>
+                        </Border.RenderTransform>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ContentBackgroundBrush}"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource TextMutedBrush}"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorContentBackground}" Duration="{StaticResource QuickDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="{StaticResource ColorTextMuted}" Duration="{StaticResource QuickDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.RenderTransform).(TranslateTransform.Y)" To="-1" Duration="{StaticResource QuickDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="Transparent" Duration="{StaticResource QuickDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="{StaticResource ColorBorder}" Duration="{StaticResource QuickDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.RenderTransform).(TranslateTransform.Y)" To="0" Duration="{StaticResource QuickDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -88,9 +116,24 @@
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource AccentGradientHoverBrush}"/>
-                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.Opacity)" To="0.5" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.BlurRadius)" To="20" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].Color" To="#4F46E5" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.Opacity)" To="0.25" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <DoubleAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Effect).(DropShadowEffect.BlurRadius)" To="12" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                    <ColorAnimation Storyboard.TargetName="border" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].Color" To="{StaticResource ColorAccentHover}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.5"/>
                         </Trigger>
