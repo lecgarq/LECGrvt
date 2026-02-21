@@ -6,6 +6,9 @@ using CommunityToolkit.Mvvm.Input;
 using LECG.Services.Interfaces;
 using Microsoft.Win32;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace LECG.ViewModels
 {
@@ -22,11 +25,14 @@ namespace LECG.ViewModels
         [ObservableProperty]
         private bool _isTemporary = true;
 
+        [ObservableProperty]
+        private bool _replaceInPlace = false;
+
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
-        public Reference? SelectedRef { get; private set; }
+        public IList<Reference> SelectedRefs { get; private set; } = new List<Reference>();
         
         public bool ShouldRun { get; private set; }
-        public bool CanRun => Selection.HasSelection && !string.IsNullOrWhiteSpace(NewFamilyName) && !string.IsNullOrWhiteSpace(TemplatePath);
+        public bool CanRun => Selection.HasSelection && !string.IsNullOrWhiteSpace(TemplatePath);
 
         public ConvertFamilyViewModel(IFamilyConversionService service)
         {
@@ -41,19 +47,25 @@ namespace LECG.ViewModels
             };
         }
 
-        public void SetSelection(Reference r, Document doc)
+        public void SetSelection(IList<Reference> refs, Document doc)
         {
-            ArgumentNullException.ThrowIfNull(r);
+            ArgumentNullException.ThrowIfNull(refs);
             ArgumentNullException.ThrowIfNull(doc);
 
-            SelectedRef = r;
-            Selection.UpdateSelection(1);
+            SelectedRefs = refs;
+            Selection.UpdateSelection(refs.Count);
             
-            FamilyInstance? instance = doc.GetElement(r) as FamilyInstance;
-            if (instance != null)
+            if (refs.Any())
             {
-                NewFamilyName = $"{instance.Symbol.Family.Name}_Converted";
-                TemplatePath = _service.GetTargetTemplatePath(doc.Application, instance.Category);
+                FamilyInstance? instance = doc.GetElement(refs.First()) as FamilyInstance;
+                if (instance != null)
+                {
+                    if (string.IsNullOrWhiteSpace(NewFamilyName))
+                        NewFamilyName = $"{instance.Symbol.Family.Name}_Converted";
+                    
+                    if (string.IsNullOrWhiteSpace(TemplatePath))
+                        TemplatePath = _service.GetTargetTemplatePath(doc.Application, instance.Category);
+                }
             }
         }
 
