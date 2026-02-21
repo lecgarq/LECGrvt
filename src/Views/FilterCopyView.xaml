@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:vm="clr-namespace:LECG.ViewModels" Title="{Binding Title}" Height="750" Width="1050" WindowStartupLocation="CenterScreen" Style="{DynamicResource LecgWindowStyle}">
+    xmlns:vm="clr-namespace:LECG.ViewModels" Title="{Binding Title}" Height="750" Width="1050" WindowIcon="{x:Static icons:Icons.Copy}">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -60,20 +60,13 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Margin="25">
+    <Grid Margin="{StaticResource ViewContentMarginLarge}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header Area -->
-        <Grid Grid.Row="0" Margin="0,0,0,25">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock Text="Filter Copy" FontSize="26" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
-                <TextBlock Text="Synchronize view filters across your project templates and views." FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,4,0,0"/>
-            </StackPanel>
-        </Grid>
 
         <!-- Main Workspace -->
         <Grid Grid.Row="1">
