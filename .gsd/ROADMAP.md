@@ -160,9 +160,17 @@
 **Objective**: Create a tool to quickly switch instance categories by modifying the family definition on-the-fly in the project.
 
 ### Phase 18: Convert Family V2 (Replace & Batch)
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Enhance `ConvertFamily` with multi-selection support and an "In-Place Replace" mode that preserves model data.
 
 ### Phase 19: Performance Validation
 **Status**: ✅ Complete
 **Objective**: Benchmark batch processing and optimize transaction overhead for high responsiveness.
+
+## Milestone v1.4: Design-to-Model Automation
+
+> **Goal**: Automate Revit model generation from CAD and external design data.
+
+### Phase 20: CAD Component Mapper (Point-Based)
+**Status**: ? Not Started
+**Objective**: Create a tool to map CAD blocks/points to Revit Families and automate their placement at design coordinates.
