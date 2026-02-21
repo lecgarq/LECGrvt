@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="LECG HOME" Height="650" Width="900" WindowStartupLocation="CenterScreen">
+    xmlns:icons="clr-namespace:LECG.Utils" Title="LECG TOOLKIT" Height="650" Width="900" WindowIcon="{x:Static icons:Icons.Home}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
