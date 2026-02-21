@@ -14,6 +14,7 @@ Enhance the LECG Revit toolkit with robust administrative and conversion feature
 4. **Constraint Safety**: Ensure all renaming and conversion operations maintain existing element IDs and parameters to avoid breaking model constraints or hosted elements.
 5. **Advanced Parameter Renaming**: Implement renaming for Family Parameters across all families, filtering out shared/project/built-in parameters.
 6. **Enhanced Search Capabilities**: Add advanced text filters (Contains, Begins/Ends With) and utility functions (Replace Spaces).
+17. **Full UI Consistency & Stability**: Standardize all command interfaces to the "Premium Liquid Glass" design system and fix window resizing/DPI scaling bugs.
 
 ## Non-Goals (Out of Scope)
 
@@ -37,3 +38,4 @@ BIM Managers and Power Users who need to clean, standardize, and migrate project
 - [ ] Purge Unused can be run 3 times in a single operation, resulting in 0 or fewer purgable items than a single pass.
 - [ ] Convert Family selection filter prevents selecting work plane-based families via `ISelectionFilter`.
 - [ ] No hosted elements (e.g., dimensions, tags) are lost during renaming/conversion.
+- [ ] 100% of command views follow the Premium Design System with zero layout collapse on resize.

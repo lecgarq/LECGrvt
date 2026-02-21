@@ -1,7 +1,7 @@
 # ROADMAP.md
 
-> **Current Phase**: Finalized
-> **Milestone**: v1.1 - Admin & Safety Update
+> **Current Phase**: Phase 11
+> **Milestone**: v1.2 - Aesthetic Unity & Window Stability
 
 ## Must-Haves (from SPEC)
 
@@ -124,3 +124,25 @@
 - [x] Wire into purge pipeline: add `_purgeParameters` toggle to ViewModel, UI checkbox, pass execution flow (Plan 10.2)
 - [x] Add `PurgeParameterService` to DI, Coordinator, PurgeService (Plan 10.2)
 - [x] Test with build verification (Plan 10.2)
+
+## Milestone v1.2: Aesthetic Unity & Window Stability
+
+### Phase 11: UI Baseline & Design System Audit
+**Status**: ✅ Complete
+**Objective**: Audit all 19+ XAML files, consolidate ad-hoc styles into `src/Resources/Styles.xaml`, and standardize layout spacing.
+
+### Phase 12: Window Management Engine
+**Status**: ⬜ Not Started
+**Objective**: Enhance `LecgWindow.cs` to handle DPI scaling, persistence, and responsive resizing.
+
+### Phase 13: Bulk Aesthetic Conversion
+**Status**: ⬜ Not Started
+**Objective**: Systematically update every View to the "Premium Liquid Glass" style.
+
+### Phase 14: Interaction & Animation Polish
+**Status**: ⬜ Not Started
+**Objective**: Add micro-animations and interaction polish (hover states, transitions).
+
+### Phase 15: Verification & Stress Testing
+**Status**: ⬜ Not Started
+**Objective**: Verify DPI scaling and resizing stability across various resolutions.

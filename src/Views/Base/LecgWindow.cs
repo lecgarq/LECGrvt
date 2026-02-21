@@ -34,6 +34,24 @@ namespace LECG.Views.Base
             // Init Commands
             CloseCommand = new RelayCommand(() => Close());
             MinimizeCommand = new RelayCommand(() => WindowState = WindowState.Minimized);
+
+            // Behavior fixes for WindowStyle=None
+            this.Loaded += (s, e) => CenterOnParent();
+        }
+
+        private void CenterOnParent()
+        {
+            // If we have an owner, center on it
+            if (this.Owner != null)
+            {
+                this.Left = this.Owner.Left + (this.Owner.Width - this.ActualWidth) / 2;
+                this.Top = this.Owner.Top + (this.Owner.Height - this.ActualHeight) / 2;
+            }
+            else
+            {
+                // Fallback to primary screen center if no owner set
+                this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
         }
     }
 }
