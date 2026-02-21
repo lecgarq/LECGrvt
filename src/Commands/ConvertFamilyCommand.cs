@@ -2,20 +2,20 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using System;
-using System.IO;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LECG.Commands
 {
     [Transaction(TransactionMode.Manual)]
     public class ConvertFamilyCommand : RevitCommand
     {
-        protected override string? TransactionName => null;
+        protected override string? TransactionName => "Convert Family (Batch)";
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
@@ -35,21 +35,36 @@ namespace LECG.Commands
 
             bool? result = view.ShowDialog();
 
-            if (result == true && viewModel.ShouldRun && viewModel.SelectedRef != null)
+            if (result == true && viewModel.ShouldRun && viewModel.SelectedRefs.Any())
             {
                 // 3. Execute Conversion via Service
-                ShowLogWindow("Converting Family...");
+                ShowLogWindow("Converting Families...");
                 
-                FamilyInstance? instance = doc.GetElement(viewModel.SelectedRef!) as FamilyInstance;
-                if (instance != null)
+                var instances = viewModel.SelectedRefs
+                    .Select(r => doc.GetElement(r) as FamilyInstance)
+                    .Where(i => i != null)
+                    .Cast<FamilyInstance>()
+                    .ToList();
+
+                if (instances.Any())
                 {
-                    service.ConvertFamily(
-                        doc, 
-                        instance, 
-                        viewModel.NewFamilyName, 
-                        viewModel.TemplatePath, 
-                        viewModel.IsTemporary
-                    );
+                    // Execute within a single command transaction if service doesn't manage its own for batching
+                    // Current service handles family document transactions, but project document edits (placement) 
+                    // need to be wrapped. However, RevitCommand provides a transaction if TransactionName is not null.
+                    
+                    using (Transaction t = new Transaction(doc, "Convert Families (Replace)"))
+                    {
+                        t.Start();
+                        service.ConvertFamilyBatch(
+                            doc, 
+                            instances, 
+                            viewModel.NewFamilyName, 
+                            viewModel.TemplatePath, 
+                            viewModel.IsTemporary,
+                            viewModel.ReplaceInPlace
+                        );
+                        t.Commit();
+                    }
                 }
             }
         }
