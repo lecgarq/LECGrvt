@@ -1,10 +1,9 @@
-<base:LecgWindow x:Class="LECG.Views.ConvertFamilyView"
+﻿<base:LecgWindow x:Class="LECG.Views.ConvertFamilyView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
-    xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="CONVERT FAMILY" Height="600" Width="900" WindowIcon="{x:Static icons:Icons.Circle}" WindowStartupLocation="CenterScreen">
+    xmlns:icons="clr-namespace:LECG.Utils" Title="CONVERT FAMILY" Height="600" Width="900" WindowIcon="{x:Static icons:Icons.Circle}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -14,9 +13,8 @@
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
-    <Grid Margin="{StaticResource ViewContentMargin}">
+    <Grid Margin="{DynamicResource ViewContentMargin}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -25,8 +23,8 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Convert Family" FontWeight="{StaticResource WeightBold}" FontSize="{StaticResource FontSizeTitle}" Foreground="{StaticResource TextPrimaryBrush}" Margin="{StaticResource TitleMarginSmall}"/>
-            <TextBlock Text="Convert hosted family to work plane based generic model." FontSize="{StaticResource FontSizeSmall}" Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Text="Convert Family" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Convert hosted family to work plane based generic model." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
         </StackPanel>
 
         <!-- Selection -->
@@ -63,26 +61,28 @@
                 </StackPanel>
             </Border>
 
-            <!-- Temporary Option -->
-            <Border Style="{DynamicResource CardStyle}" Margin="{StaticResource CardMarginNone}">
+            <!-- Options -->
+            <Border Style="{DynamicResource CardStyle}" Margin="{DynamicResource CardMarginNone}">
                 <StackPanel>
                     <TextBlock Text="OPTIONS" Style="{DynamicResource CardHeaderStyle}"/>
-                    <CheckBox Content="Do not save (Temporary Load)" IsChecked="{Binding IsTemporary, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}"/>
+                    <CheckBox Content="Do not save (Temporary Load)" IsChecked="{Binding IsTemporary, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="0,0,0,8"/>
+                    <CheckBox Content="Replace Existing Instances In-Place" IsChecked="{Binding ReplaceInPlace, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}"/>
                 </StackPanel>
             </Border>
         </StackPanel>
 
         <!-- Buttons -->
-        <Grid Grid.Row="3" Margin="{StaticResource ButtonRowMarginSmall}">
+        <Grid Grid.Row="3" Margin="{DynamicResource ButtonRowMarginSmall}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Command="{Binding ExecuteCancelCommand}" Height="{StaticResource ButtonHeightMedium}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Command="{Binding ExecuteCancelCommand}" Height="{DynamicResource ButtonHeightMedium}" Style="{DynamicResource SecondaryButtonStyle}"/>
 
-            <Button Content="Convert" Grid.Column="2" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Height="{StaticResource ButtonHeightMedium}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Convert" Grid.Column="2" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Height="{DynamicResource ButtonHeightMedium}" Style="{DynamicResource PrimaryButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>
+
