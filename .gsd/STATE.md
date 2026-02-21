@@ -9,9 +9,9 @@ Milestone 1.2 (Aesthetic Unity & Window Stability) completed and verified.
 
 ## Current Position
 
-- **Milestone**: v1.3 - Advanced Family Automation & Performance
-- **Phase**: 19 (Completed)
-- **Status**: Milestone 1.3 successfully verified. High-performance batch conversion engine live.
+- **Milestone**: v1.4 - Design-to-Model Automation
+- **Phase**: 20
+- **Status**: Planning complete for CAD Mapping. Researching DWG geometry extraction.
 
 ## Next Steps
 
