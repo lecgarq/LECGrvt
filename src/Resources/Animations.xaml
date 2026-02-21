@@ -1,0 +1,17 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Timing Constants -->
+    <Duration x:Key="AnimationDuration">0:0:0.25</Duration>
+    <Duration x:Key="QuickDuration">0:0:0.15</Duration>
+    <Duration x:Key="SlowDuration">0:0:0.45</Duration>
+
+    <!-- Easing Functions -->
+    <QuarticEase x:Key="StandardEase" EasingMode="EaseInOut"/>
+    <QuarticEase x:Key="ExitingEase" EasingMode="EaseIn"/>
+    <QuarticEase x:Key="EnteringEase" EasingMode="EaseOut"/>
+    <BackEase x:Key="ElasticEase" EasingMode="EaseOut" Amplitude="0.3"/>
+
+    <!-- Common Animation Templates -->
+    
+</ResourceDictionary>
