@@ -4,7 +4,7 @@
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:icons="clr-namespace:LECG.Utils"
-    xmlns:comp="clr-namespace:LECG.Views.Components" Title="OFFSET ELEVATIONS" SizeToContent="Height" Width="420" WindowIcon="{x:Static icons:Icons.ArrowUpDown}" WindowStartupLocation="CenterScreen">
+    xmlns:comp="clr-namespace:LECG.Views.Components" Title="OFFSET ELEVATIONS" Width="420" WindowIcon="{x:Static icons:Icons.ArrowUpDown}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>

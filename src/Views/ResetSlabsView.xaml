@@ -4,7 +4,7 @@
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="RESET SLABS" Height="320" Width="400" WindowIcon="{x:Static icons:Icons.ResetSlabs}" WindowStartupLocation="CenterScreen">
+    xmlns:icons="clr-namespace:LECG.Utils" Title="RESET SLABS" Width="400" WindowIcon="{x:Static icons:Icons.ResetSlabs}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
