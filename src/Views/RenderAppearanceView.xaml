@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="Sync Render Appearance" Width="400" WindowStartupLocation="CenterScreen" SizeToContent="Height" WindowIcon="{x:Static icons:Icons.ArrowUpDown}">
+    xmlns:icons="clr-namespace:LECG.Utils" Title="RENDER MATCH" Width="380" WindowIcon="{x:Static icons:Icons.Palette}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
