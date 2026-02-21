@@ -15,6 +15,9 @@ Enhance the LECG Revit toolkit with robust administrative and conversion feature
 5. **Advanced Parameter Renaming**: Implement renaming for Family Parameters across all families, filtering out shared/project/built-in parameters.
 6. **Enhanced Search Capabilities**: Add advanced text filters (Contains, Begins/Ends With) and utility functions (Replace Spaces).
 17. **Full UI Consistency & Stability**: Standardize all command interfaces to the "Premium Liquid Glass" design system and fix window resizing/DPI scaling bugs.
+18. **Category Changer**: Background category overrides for family-based elements, bypassing the manual Family Editor.
+19. **Convert Family V2**: Support for multi-selection and "In-Place Replacement" mode to preserve model location and parameter data during conversion.
+20. **Super-Responsive Batch Processing**: Implement a high-performance background processing engine for multi-family modifications.
 
 ## Non-Goals (Out of Scope)
 
