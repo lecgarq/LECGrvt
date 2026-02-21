@@ -11,14 +11,19 @@ Phase 10 (Purge Unused Family Parameters) executed successfully.
 
 ## Current Position
 
-- **Phase**: 10 (completed)
+- **Milestone**: v1.2 - Aesthetic Unity & Window Stability
+- **Phase**: 11 (completed)
 - **Task**: All tasks complete
-- **Status**: Verified, deployed
+- **Status**: Verified, Baseline established
 
-## Next Steps
+## Last Session Summary
 
-1. Test in Revit — verify the "Unused Family Parameters" checkbox appears and works.
-2. Ready for next phase.
+Phase 11 (UI Baseline & Audit) executed successfully.
+- Consolidated Premium design tokens (gradients, brushes) into core resource dictionaries.
+- Standardized `LecgWindowStyle` as the default template for all command windows.
+- Refactored `SearchReplaceView.xaml` as the flagship target for the new style.
+- Enhanced `LecgWindow.cs` with auto-centering logic on the Revit parent window.
+- Build passing with 0 errors.
 
 ## Historical Context
 

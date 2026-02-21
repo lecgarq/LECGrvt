@@ -49,4 +49,21 @@
     <SolidColorBrush x:Key="ScopeInactiveTextBrush" Color="{DynamicResource ColorScopeInactiveText}"/>
     <SolidColorBrush x:Key="ScopeInactiveBorderBrush" Color="{DynamicResource ColorScopeInactiveBorder}"/>
 
+    <!-- Premium Gradients -->
+    <LinearGradientBrush x:Key="AccentGradientBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{DynamicResource ColorAccent}" Offset="0"/>
+        <GradientStop Color="{DynamicResource ColorAccentHover}" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="AccentGradientHoverBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="{DynamicResource ColorAccentHover}" Offset="0"/>
+        <GradientStop Color="#3730A3" Offset="1"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HeaderAccentGradientBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Color="{DynamicResource ColorAccent}" Offset="0"/>
+        <GradientStop Color="{DynamicResource ColorAccentMuted}" Offset="0.5"/>
+        <GradientStop Color="Transparent" Offset="1"/>
+    </LinearGradientBrush>
+
 </ResourceDictionary>

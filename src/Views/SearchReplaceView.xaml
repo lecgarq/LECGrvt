@@ -19,48 +19,22 @@
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
-    <Border Background="{StaticResource WindowBackgroundBrush}" CornerRadius="{StaticResource WindowCornerRadius}" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
-
-        <Grid Margin="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <!-- Header -->
-                <RowDefinition Height="Auto"/>
-                <!-- Scope & Filters -->
-                <RowDefinition Height="Auto"/>
-                <!-- Operations -->
-                <RowDefinition Height="*"/>
-                <!-- DataGrid -->
-                <RowDefinition Height="Auto"/>
-                <!-- Footer -->
-            </Grid.RowDefinitions>
-
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <!-- 1. WINDOW CHROME                                       -->
-            <!-- ═══════════════════════════════════════════════════════ -->
-            <Grid Grid.Row="0" Background="Transparent">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
-                    <Path Data="{x:Static utils:Icons.SearchReplace}" Fill="{StaticResource AccentBrush}" Width="16" Height="16" Margin="0,0,10,0" Stretch="Uniform"/>
-                    <TextBlock Text="BATCH RENAME" FontWeight="Bold" Foreground="{StaticResource TextPrimaryBrush}" FontSize="{StaticResource FontSizeBody}" VerticalAlignment="Center"/>
-                </StackPanel>
-                <Button Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Click="CloseWindow" Cursor="Hand" Background="Transparent" Width="30" Height="30"/>
-            </Grid>
-
-            <!-- Accent Line under header -->
-            <Border Grid.Row="0" VerticalAlignment="Bottom" Height="1" Margin="15,0,15,0">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                        <GradientStop Color="{StaticResource ColorAccent}" Offset="0"/>
-                        <GradientStop Color="{StaticResource ColorAccentMuted}" Offset="0.5"/>
-                        <GradientStop Color="Transparent" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
+    <Grid>
+        <Grid.RowDefinitions>
+            <!-- Scope & Filters -->
+            <RowDefinition Height="Auto"/>
+            <!-- Operations -->
+            <RowDefinition Height="Auto"/>
+            <!-- DataGrid -->
+            <RowDefinition Height="*"/>
+            <!-- Footer -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
             <!-- ═══════════════════════════════════════════════════════ -->
             <!-- 2. SCOPE & FILTERS                                     -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <Border Grid.Row="1" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="{StaticResource ButtonCornerRadius}" Margin="16,10,16,8" Padding="16,14,16,14">
+            <Border Grid.Row="0" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="{StaticResource ButtonCornerRadius}" Margin="16,10,16,8" Padding="16,14,16,14">
                 <Border.Effect>
                     <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="1" Opacity="0.03" Direction="270"/>
                 </Border.Effect>
@@ -208,7 +182,7 @@
             <!-- ═══════════════════════════════════════════════════════ -->
             <!-- 3. OPERATIONS                                          -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <Border Grid.Row="2" Background="Transparent" Margin="16,0,16,10">
+            <Border Grid.Row="1" Background="Transparent" Margin="16,0,16,10">
                 <StackPanel>
                     <!-- Section Header -->
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
@@ -415,7 +389,7 @@
             <!-- ═══════════════════════════════════════════════════════ -->
             <!-- 4. PREVIEW / DATAGRID                                  -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <Border Grid.Row="3" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="{StaticResource ContentCornerRadius}" Margin="16,0,16,10" Padding="12" ClipToBounds="True">
+            <Border Grid.Row="2" Background="{StaticResource PanelBackgroundBrush}" CornerRadius="{StaticResource ContentCornerRadius}" Margin="16,0,16,10" Padding="12" ClipToBounds="True">
                 <Border.Effect>
                     <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="1" Opacity="0.03" Direction="270"/>
                 </Border.Effect>
@@ -481,11 +455,10 @@
             <!-- ═══════════════════════════════════════════════════════ -->
             <!-- 5. FOOTER                                              -->
             <!-- ═══════════════════════════════════════════════════════ -->
-            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,16">
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,16">
                 <Button Content="Cancel" Click="CloseWindow" Style="{StaticResource SecondaryButtonStyle}" Width="100" Height="{StaticResource ButtonHeight}" Margin="0,0,10,0"/>
                 <Button Content="⚡ Apply Rename" Command="{Binding ApplyCommand}" Style="{StaticResource AccentButtonStyle}" Width="170" Height="{StaticResource ButtonHeight}"/>
             </StackPanel>
 
         </Grid>
-    </Border>
 </base:LecgWindow>
