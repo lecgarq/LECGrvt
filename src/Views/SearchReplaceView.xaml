@@ -8,7 +8,7 @@
     xmlns:vm="clr-namespace:LECG.ViewModels"
     xmlns:services="clr-namespace:LECG.Services"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="BATCH RENAME" Width="650" WindowIcon="{x:Static icons:Icons.SearchReplace}" WindowStartupLocation="CenterScreen" SizeToContent="Height">
+    xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="BATCH RENAME" Width="680" Height="600" WindowIcon="{x:Static icons:Icons.SearchReplace}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -421,7 +421,7 @@
                     </Grid>
 
                     <!-- DataGrid -->
-                    <DataGrid Grid.Row="1" ItemsSource="{Binding PreviewItems}" AutoGenerateColumns="False" CanUserAddRows="False" Background="Transparent" BorderThickness="0" HeadersVisibility="Column" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{StaticResource BorderBrush}" ColumnHeaderStyle="{StaticResource HeaderStyle}" AlternatingRowBackground="{StaticResource DataGridRowAltBrush}" RowBackground="Transparent" MaxHeight="300" MinHeight="120">
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding PreviewItems}" AutoGenerateColumns="False" CanUserAddRows="False" Background="Transparent" BorderThickness="0" HeadersVisibility="Column" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{StaticResource BorderBrush}" ColumnHeaderStyle="{StaticResource HeaderStyle}" AlternatingRowBackground="{StaticResource DataGridRowAltBrush}" RowBackground="Transparent">
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
                                 <Setter Property="Background" Value="Transparent"/>
