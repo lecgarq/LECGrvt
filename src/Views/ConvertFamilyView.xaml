@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:comp="clr-namespace:LECG.Views.Components" Title="CONVERT FAMILY" Width="450" WindowStartupLocation="CenterScreen" SizeToContent="Height">
+    xmlns:comp="clr-namespace:LECG.Views.Components"
+    xmlns:icons="clr-namespace:LECG.Utils" Title="CONVERT FAMILY" Height="600" Width="900" WindowIcon="{x:Static icons:Icons.Circle}" WindowStartupLocation="CenterScreen">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
