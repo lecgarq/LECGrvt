@@ -48,10 +48,11 @@ namespace LECG.Commands
 
                 if (instances.Any())
                 {
-                    // Execute within a single command transaction if service doesn't manage its own for batching
-                    // Current service handles family document transactions, but project document edits (placement) 
-                    // need to be wrapped. However, RevitCommand provides a transaction if TransactionName is not null.
-                    
+                    var reporter = new SimpleProgressReporter((report) => 
+                    {
+                        ShowLogWindow(report.Message);
+                    });
+
                     using (Transaction t = new Transaction(doc, "Convert Families (Replace)"))
                     {
                         t.Start();
@@ -61,7 +62,8 @@ namespace LECG.Commands
                             viewModel.NewFamilyName, 
                             viewModel.TemplatePath, 
                             viewModel.IsTemporary,
-                            viewModel.ReplaceInPlace
+                            viewModel.ReplaceInPlace,
+                            reporter
                         );
                         t.Commit();
                     }
