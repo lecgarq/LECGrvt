@@ -61,7 +61,8 @@
         <Setter Property="ResizeMode" Value="CanResizeWithGrip"/>
         <Setter Property="AllowsTransparency" Value="True"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="SizeToContent" Value="Height"/>
+        <Setter Property="MinWidth" Value="350"/>
+        <Setter Property="MinHeight" Value="200"/>
         <Setter Property="WindowChrome.WindowChrome">
             <Setter.Value>
                 <WindowChrome CaptionHeight="44" ResizeBorderThickness="6" GlassFrameThickness="1" CornerRadius="0"/>
@@ -136,10 +137,8 @@
                                 </Grid>
                             </Border>
 
-                            <!-- Content -->
-                            <Grid Grid.Row="1" Margin="{DynamicResource WindowPadding}">
-                                <ContentPresenter />
-                            </Grid>
+                            <!-- Content Area -->
+                            <ContentPresenter Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="{DynamicResource WindowPadding}"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>
