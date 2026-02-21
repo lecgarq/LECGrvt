@@ -10,14 +10,14 @@ Milestone 1.2 (Aesthetic Unity & Window Stability) completed and verified.
 ## Current Position
 
 - **Milestone**: v1.3 - Advanced Family Automation & Performance
-- **Phase**: 16 (Not Started)
-- **Status**: Milestone planned and phases defined
+- **Phase**: 18
+- **Status**: Planning complete. Ready for execution of Convert Family V2.
 
 ## Next Steps
 
-1. /plan 16 — Design the "Background Family Editor" engine.
-2. Implement Category Changer core logic.
-3. Enhance Convert Family with multi-select and "Replace" mode.
+1. /plan 18 — Enhance Convert Family with multi-select and "Replace" mode.
+2. /verify 17 — Technical audit of Category Changer.
+3. Optimize transaction overhead for batch operations.
 
 ## Historical Context
 
