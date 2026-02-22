@@ -37,8 +37,6 @@
 
         <!-- Options -->
         <StackPanel Grid.Row="2">
-
-            <!-- Family Name -->
             <Border Style="{DynamicResource CardStyle}">
                 <StackPanel>
                     <TextBlock Text="NEW FAMILY NAME" Style="{DynamicResource CardHeaderStyle}"/>
@@ -46,7 +44,6 @@
                 </StackPanel>
             </Border>
 
-            <!-- Template -->
             <Border Style="{DynamicResource CardStyle}">
                 <StackPanel>
                     <TextBlock Text="TEMPLATE" Style="{DynamicResource CardHeaderStyle}"/>
@@ -61,7 +58,6 @@
                 </StackPanel>
             </Border>
 
-            <!-- Options -->
             <Border Style="{DynamicResource CardStyle}" Margin="{DynamicResource CardMarginNone}">
                 <StackPanel>
                     <TextBlock Text="OPTIONS" Style="{DynamicResource CardHeaderStyle}"/>
@@ -79,10 +75,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Command="{Binding ExecuteCancelCommand}" Height="{DynamicResource ButtonHeightMedium}" Style="{DynamicResource SecondaryButtonStyle}"/>
-
-            <Button Content="Convert" Grid.Column="2" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Height="{DynamicResource ButtonHeightMedium}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Command="{Binding CancelCommand}" Height="{DynamicResource ButtonHeightMedium}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Convert" Grid.Column="2" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Height="{DynamicResource ButtonHeightMedium}" Style="{DynamicResource PrimaryButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>
-

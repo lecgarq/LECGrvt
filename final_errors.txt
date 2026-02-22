@@ -1,0 +1,106 @@
+﻿
+  errors.txt:5:C:\LECG\RevitA
+ddins\LECG\src\Models\FamilyI
+nstanceData.cs(12,20): 
+warning CS8618: Non-nullable 
+property 'LocationPoint' 
+must contain a non-null 
+value when exiting 
+constructor. Consider adding 
+the 'required' modifier or 
+declaring the property as 
+nullable. [C:\LECG\RevitAddin
+s\LECG\LECG_bnvbgbbu_wpftmp.c
+sproj]
+  errors.txt:6:C:\LECG\RevitA
+ddins\LECG\src\Models\FamilyI
+nstanceData.cs(17,26): 
+warning CS8618: Non-nullable 
+property 'LevelId' must 
+contain a non-null value 
+when exiting constructor. 
+Consider adding the 
+'required' modifier or 
+declaring the property as 
+nullable. [C:\LECG\RevitAddin
+s\LECG\LECG_bnvbgbbu_wpftmp.c
+sproj]
+> errors.txt:7:C:\LECG\RevitA
+ddins\LECG\src\Services\Famil
+yEditorService.cs(24,139): 
+error CS1061: 'ElementId' 
+does not contain a 
+definition for 
+'IntegerValue' and no 
+accessible extension method 
+'IntegerValue' accepting a 
+first argument of type 
+'ElementId' could be found 
+(are you missing a using 
+directive or an assembly 
+reference?) [C:\LECG\RevitAdd
+ins\LECG\LECG_bnvbgbbu_wpftmp
+.csproj]
+  errors.txt:8:C:\LECG\RevitA
+ddins\LECG\src\Commands\Align
+Commands.cs(16,1): warning 
+IDE0055: Fix formatting (http
+s://learn.microsoft.com/dotne
+t/fundamentals/code-analysis/
+style-rules/ide0055) [C:\LECG
+\RevitAddins\LECG\LECG_bnvbgb
+bu_wpftmp.csproj]
+  errors.txt:9:C:\LECG\RevitA
+ddins\LECG\src\Commands\Align
+Commands.cs(93,21): warning 
+IDE0055: Fix formatting (http
+s://learn.microsoft.com/dotne
+t/fundamentals/code-analysis/
+style-rules/ide0055) [C:\LECG
+\RevitAddins\LECG\LECG_bnvbgb
+bu_wpftmp.csproj]
+  errors.txt:923:C:\LECG\Revi
+tAddins\LECG\src\Views\Simpli
+fyPointsView.xaml.cs(42,72): 
+warning IDE0055: Fix 
+formatting (https://learn.mic
+rosoft.com/dotnet/fundamental
+s/code-analysis/style-rules/i
+de0055) [C:\LECG\RevitAddins\
+LECG\LECG_bnvbgbbu_wpftmp.csp
+roj]
+  errors.txt:924:C:\LECG\Revi
+tAddins\LECG\src\Views\Simpli
+fyPointsView.xaml.cs(45,1): 
+warning IDE0055: Fix 
+formatting (https://learn.mic
+rosoft.com/dotnet/fundamental
+s/code-analysis/style-rules/i
+de0055) [C:\LECG\RevitAddins\
+LECG\LECG_bnvbgbbu_wpftmp.csp
+roj]
+> errors.txt:925:C:\LECG\Revi
+tAddins\LECG\src\Services\Fam
+ilyEditorService.cs(24,139): 
+error CS1061: 'ElementId' 
+does not contain a 
+definition for 
+'IntegerValue' and no 
+accessible extension method 
+'IntegerValue' accepting a 
+first argument of type 
+'ElementId' could be found 
+(are you missing a using 
+directive or an assembly 
+reference?) [C:\LECG\RevitAdd
+ins\LECG\LECG_bnvbgbbu_wpftmp
+.csproj]
+  errors.txt:926:    458 
+Warning(s)
+> errors.txt:927:    1 
+Error(s)
+  errors.txt:928:
+  errors.txt:929:Time 
+Elapsed 00:00:01.56
+
+

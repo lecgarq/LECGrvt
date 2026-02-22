@@ -17,7 +17,11 @@ namespace LECG.Services
             {
                 XYZ p1 = currentTransform.OfPoint(points[i]);
                 XYZ p2 = currentTransform.OfPoint(points[i + 1]);
-                result.Add(Line.CreateBound(p1, p2));
+                
+                if (p1.DistanceTo(p2) >= 0.005)
+                {
+                    try { result.Add(Line.CreateBound(p1, p2)); } catch { }
+                }
             }
 
             return result;

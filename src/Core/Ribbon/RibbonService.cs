@@ -258,6 +258,15 @@ namespace LECG.Core.Ribbon
                 AppImages.ConvertShared
             ), assemblyPath, familyAvailability);
 
+            // Category Changer
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonCategoryChanger_Name,
+                UIConstants.ButtonCategoryChanger_Text,
+                "LECG.Commands.CategoryChangerCommand",
+                UIConstants.ButtonCategoryChanger_Tooltip,
+                AppImages.Sparkles // Using Sparkles for now
+            ), assemblyPath, projectAvailability);
+
             // Filter Copy
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonFilterCopy_Name,

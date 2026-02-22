@@ -13,5 +13,8 @@
     <BackEase x:Key="ElasticEase" EasingMode="EaseOut" Amplitude="0.3"/>
 
     <!-- Common Animation Templates -->
-    
+    <Storyboard x:Key="PulseAnimation">
+        <DoubleAnimation Storyboard.TargetProperty="ScaleX" From="1" To="1.05" Duration="0:0:0.4" AutoReverse="True" RepeatBehavior="Forever"/>
+        <DoubleAnimation Storyboard.TargetProperty="ScaleY" From="1" To="1.05" Duration="0:0:0.4" AutoReverse="True" RepeatBehavior="Forever"/>
+    </Storyboard>
 </ResourceDictionary>

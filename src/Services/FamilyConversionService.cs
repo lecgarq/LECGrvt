@@ -75,11 +75,14 @@ namespace LECG.Services
             }
         }
 
-        public void ConvertFamilyBatch(Document doc, IEnumerable<FamilyInstance> instances, string customName, string templatePath, bool isTemporary, bool replaceInPlace)
+        public void ConvertFamilyBatch(Document doc, IEnumerable<FamilyInstance> instances, string customName, string templatePath, bool isTemporary, bool replaceInPlace, IProgressReporter? reporter = null)
         {
             if (instances == null || !instances.Any()) return;
 
-            using (new ExecutionTimer($"Batch Conversion: {instances.Count()} instances"))
+            int totalCount = instances.Count();
+            int currentCount = 0;
+
+            using (new ExecutionTimer($"Batch Conversion: {totalCount} instances"))
             {
                 // Group by family to minimize redundant family document conversions
                 var instancesByFamily = instances.GroupBy(i => i.Symbol.Family.Id);
@@ -93,10 +96,15 @@ namespace LECG.Services
 
                     using (new ExecutionTimer($"Family Group: {sourceFamilyName}"))
                     {
+                        reporter?.Report($"Converting Family: {sourceFamilyName}...", (double)currentCount / totalCount * 100);
                         _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
 
                         Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
-                        if (sourceFamilyDoc == null) continue;
+                        if (sourceFamilyDoc == null)
+                        {
+                            currentCount += group.Count();
+                            continue;
+                        }
 
                         Document? targetFamilyDoc = null;
                         string tempFamilyPath = "";
@@ -104,7 +112,11 @@ namespace LECG.Services
                         try
                         {
                             (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamilyDoc, templatePath, targetFamilyName);
-                            if (targetFamilyDoc == null) continue;
+                            if (targetFamilyDoc == null)
+                            {
+                                currentCount += group.Count();
+                                continue;
+                            }
 
                             if (replaceInPlace)
                             {
@@ -120,27 +132,48 @@ namespace LECG.Services
                                         FamilySymbol? newSymbol = doc.GetElement(newFamily.GetFamilySymbolIds().First()) as FamilySymbol;
                                         if (newSymbol != null)
                                         {
-                                            if (!newSymbol.IsActive) newSymbol.Activate();
-
-                                            foreach (var oldInstance in group)
+                                            using (Transaction t = new Transaction(doc, "Replace Instances"))
                                             {
-                                                var data = FamilyInstanceData.Capture(oldInstance);
-                                                FamilyInstance newInstance = doc.Create.NewFamilyInstance(
-                                                    data.LocationPoint,
-                                                    newSymbol,
-                                                    oldInstance.StructuralType);
+                                                t.Start();
+                                                if (!newSymbol.IsActive) newSymbol.Activate();
 
-                                                data.Apply(newInstance);
-                                                doc.Delete(oldInstance.Id);
+                                                foreach (var oldInstance in group)
+                                                {
+                                                    currentCount++;
+                                                    reporter?.Report($"Replacing Instance {currentCount} of {totalCount}...", (double)currentCount / totalCount * 100);
+
+                                                    var data = FamilyInstanceData.Capture(oldInstance);
+                                                    FamilyInstance newInstance = doc.Create.NewFamilyInstance(
+                                                        data.LocationPoint,
+                                                        newSymbol,
+                                                        oldInstance.StructuralType);
+
+                                                    data.Apply(newInstance);
+                                                    doc.Delete(oldInstance.Id);
+                                                }
+                                                t.Commit();
                                             }
                                         }
+                                        else
+                                        {
+                                            currentCount += group.Count();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        currentCount += group.Count();
                                     }
                                 }
+                            }
+                            else
+                            {
+                                currentCount += group.Count();
                             }
                         }
                         catch (Exception ex)
                         {
                             _familyConversionLoggingService.LogCriticalError(ex.Message, ex.StackTrace ?? "");
+                            currentCount += group.Count();
                         }
                         finally
                         {
@@ -148,6 +181,7 @@ namespace LECG.Services
                         }
                     }
                 }
+                reporter?.Report("Batch Conversion Complete.", 100);
             }
         }
 

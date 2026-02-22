@@ -43,7 +43,15 @@ namespace LECG.Views
                     vm.SetReference(r, _uiDoc.Document);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally { ShowDialog(); }
+                finally
+                {
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
+                }
             };
 
             // 3. Target Selection Request
@@ -55,7 +63,15 @@ namespace LECG.Views
                     vm.SetTargets(refs, _uiDoc.Document);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally { ShowDialog(); }
+                finally
+                {
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
+                }
             };
         }
     }

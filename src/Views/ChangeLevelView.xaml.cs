@@ -59,7 +59,12 @@ namespace LECG.Views
                 }
                 finally
                 {
-                    ShowDialog(); // Re-show as dialog
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
                 }
             };
         }

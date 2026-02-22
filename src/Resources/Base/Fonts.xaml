@@ -9,6 +9,7 @@
     <!-- Font Sizes -->
     <sys:Double x:Key="FontSizeTitle">17.0</sys:Double>
     <sys:Double x:Key="FontSizeHeader">14.0</sys:Double>
+    <sys:Double x:Key="FontSizeMedium">13.0</sys:Double>
     <sys:Double x:Key="FontSizeBody">13.0</sys:Double>
     <sys:Double x:Key="FontSizeSmall">11.0</sys:Double>
     <sys:Double x:Key="FontSizeExtraLarge">18.0</sys:Double>

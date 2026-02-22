@@ -8,6 +8,9 @@ using LECG.Core;
 using LECG.Core.Naming;
 using Microsoft.Win32;
 using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace LECG.ViewModels
 {
@@ -93,6 +96,7 @@ namespace LECG.ViewModels
         public Action? RunOperation { get; set; }
         public Action? PlaceOperation { get; set; }
 
+        public bool ShouldRun { get; private set; }
         public bool ShouldPlace { get; private set; }
         public ElementId? CreatedFamilySymbolId { get; set; }
 
@@ -171,7 +175,7 @@ namespace LECG.ViewModels
             {
                 Filter = "Revit Family Template (*.rft)|*.rft",
                 Title = "Select Detail Item Template",
-                InitialDirectory = Path.GetDirectoryName(TemplatePath)
+                InitialDirectory = Path.GetDirectoryName(TemplatePath) ?? ""
             };
 
             if (openFileDialog.ShowDialog() == true)
@@ -180,11 +184,11 @@ namespace LECG.ViewModels
             }
         }
 
-        [RelayCommand]
-        private void Run()
+        protected override void Apply()
         {
              if (CanRun)
              {
+                 ShouldRun = true;
                  IsBusy = true;
                  OnPropertyChanged(nameof(CanRun));
                  RunOperation?.Invoke();
@@ -200,8 +204,7 @@ namespace LECG.ViewModels
             }
         }
 
-        [RelayCommand]
-        private void Close()
+        protected override void Cancel()
         {
             CloseAction?.Invoke();
         }

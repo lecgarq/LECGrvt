@@ -37,13 +37,14 @@ namespace LECG.Services
             int levelsDeleted = 0;
             int parametersDeleted = 0;
 
-            // Multi-pass purge for line styles, fill patterns, materials, levels
-            using (Transaction t = new Transaction(doc, "Purge Unused Elements"))
+            // Multi-pass purge for line styles, fill patterns, materials, levels.
+            // Use one transaction per pass to reduce memory pressure on large models.
+            foreach (int i in _purgePassSequenceService.GetPasses(passCount))
             {
-                t.Start();
-
-                foreach (int i in _purgePassSequenceService.GetPasses(passCount))
+                using (Transaction t = new Transaction(doc, $"Purge Unused Elements - Pass {i + 1}"))
                 {
+                    t.Start();
+
                     (int lineStylesPass, int fillPatternsPass, int materialsPass, int levelsPass) = _purgePassExecutionService.ExecutePass(
                         doc,
                         i,
@@ -60,9 +61,8 @@ namespace LECG.Services
                     levelsDeleted += levelsPass;
 
                     doc.Regenerate();
+                    t.Commit();
                 }
-
-                t.Commit();
             }
 
             // Parameter purge runs ONCE after multi-pass (EditFamily handles its own transactions)

@@ -46,7 +46,15 @@ namespace LECG.Views
                     vm.SetSelection(refs);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally { ShowDialog(); }
+                finally
+                {
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
+                }
             };
         }
     }

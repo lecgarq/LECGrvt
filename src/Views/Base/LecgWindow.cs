@@ -69,17 +69,48 @@ namespace LECG.Views.Base
                 var settings = SettingsManager.Load<WindowSettings>(GetSettingsFileName());
                 if (settings != null && settings.IsInitialized)
                 {
+                    if (!TryNormalizeWindowSettings(settings, out WindowSettings normalized))
+                    {
+                        return;
+                    }
+
                     this.WindowStartupLocation = WindowStartupLocation.Manual;
-                    this.Left = settings.Left;
-                    this.Top = settings.Top;
-                    this.Width = settings.Width;
-                    this.Height = settings.Height;
-                    this.WindowState = settings.State;
+                    this.Left = normalized.Left;
+                    this.Top = normalized.Top;
+                    this.Width = normalized.Width;
+                    this.Height = normalized.Height;
+                    this.WindowState = normalized.State;
 
                     EnsureVisible();
                 }
             }
             catch { }
+        }
+
+        private bool TryNormalizeWindowSettings(WindowSettings settings, out WindowSettings normalized)
+        {
+            normalized = settings;
+
+            double minWidth = Math.Max(this.MinWidth, 300);
+            double minHeight = Math.Max(this.MinHeight, 180);
+            double maxWidth = Math.Max(minWidth, SystemParameters.VirtualScreenWidth);
+            double maxHeight = Math.Max(minHeight, SystemParameters.VirtualScreenHeight);
+
+            if (!double.IsFinite(settings.Width) || !double.IsFinite(settings.Height))
+            {
+                return false;
+            }
+
+            normalized.Width = Math.Min(Math.Max(settings.Width, minWidth), maxWidth);
+            normalized.Height = Math.Min(Math.Max(settings.Height, minHeight), maxHeight);
+
+            if (!double.IsFinite(settings.Left) || !double.IsFinite(settings.Top))
+            {
+                normalized.Left = (SystemParameters.VirtualScreenLeft + (SystemParameters.VirtualScreenWidth - normalized.Width) / 2);
+                normalized.Top = (SystemParameters.VirtualScreenTop + (SystemParameters.VirtualScreenHeight - normalized.Height) / 2);
+            }
+
+            return true;
         }
 
         private void SaveWindowState()

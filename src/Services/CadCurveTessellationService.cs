@@ -32,9 +32,9 @@ namespace LECG.Services
             {
                 XYZ p1 = _cadPointFlattenService.Flatten(points[i]);
                 XYZ p2 = _cadPointFlattenService.Flatten(points[i + 1]);
-                if (!p1.IsAlmostEqualTo(p2))
+                if (p1.DistanceTo(p2) >= 0.005)
                 {
-                    lines.Add(Line.CreateBound(p1, p2));
+                    try { lines.Add(Line.CreateBound(p1, p2)); } catch { }
                 }
             }
 

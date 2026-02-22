@@ -1,4 +1,4 @@
-<base:LecgWindow x:Class="LECG.Views.AssignMaterialView"
+﻿<base:LecgWindow x:Class="LECG.Views.AssignMaterialView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
@@ -13,7 +13,7 @@
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
-    <Grid Margin="{StaticResource ViewContentMargin}">
+    <Grid Margin="{DynamicResource ViewContentMargin}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -22,8 +22,8 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Assign Material" FontWeight="{StaticResource WeightBold}" FontSize="{StaticResource FontSizeTitle}" Foreground="{StaticResource TextPrimaryBrush}" Margin="{StaticResource TitleMarginSmall}"/>
-            <TextBlock Text="Create and assign materials based on Type Name." FontSize="{StaticResource FontSizeSmall}" Foreground="{StaticResource TextSecondaryBrush}"/>
+            <TextBlock Text="Assign Material" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Create and assign materials based on Type Name." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
         </StackPanel>
 
         <!-- Selection -->
@@ -35,15 +35,16 @@
         </Border>
 
         <!-- Actions -->
-        <Grid Grid.Row="2" Margin="{StaticResource ButtonRowMarginSmall}">
+        <Grid Grid.Row="2" Margin="{DynamicResource ButtonRowMarginSmall}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Height="{StaticResource ButtonHeightMedium}" Command="{Binding ExecuteCancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
-            <Button Content="Assign" Grid.Column="2" Height="{StaticResource ButtonHeightMedium}" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ExecuteCancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Assign" Grid.Column="2" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>
+

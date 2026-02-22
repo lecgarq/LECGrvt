@@ -123,5 +123,10 @@ namespace LECG.Configuration
         public const string ButtonFilterCopy_Name = "btnFilterCopy";
         public const string ButtonFilterCopy_Text = "Filter\nCopy";
         public const string ButtonFilterCopy_Tooltip = "Copy View Filters between Views and Templates.";
+
+        // Standards (Category Changer)
+        public const string ButtonCategoryChanger_Name = "btnCategoryChanger";
+        public const string ButtonCategoryChanger_Text = "Category\nChanger";
+        public const string ButtonCategoryChanger_Tooltip = "Quickly switch instance categories by modifying the family definition silently.";
     }
 }

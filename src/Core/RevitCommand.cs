@@ -64,8 +64,9 @@ namespace LECG.Core
             }
             catch (Exception ex)
             {
-                message = ex.Message;
-                Log($"ERROR: {ex.Message}");
+                string detailed = BuildExceptionMessage(ex);
+                message = detailed;
+                Log($"ERROR: {detailed}");
                 // Ensure log window is visible on error
                 if (_logWindow == null) ShowLogWindow("Error Detected");
                 return Result.Failed;
@@ -138,6 +139,23 @@ namespace LECG.Core
             {
                  System.Windows.MessageBox.Show($"UI Dispatch Error: {ex.Message}", "LECG Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private static string BuildExceptionMessage(Exception ex)
+        {
+            var sb = new StringBuilder();
+            int depth = 0;
+            Exception? current = ex;
+
+            while (current != null && depth < 5)
+            {
+                if (depth > 0) sb.Append(" | Inner: ");
+                sb.Append(current.Message);
+                current = current.InnerException;
+                depth++;
+            }
+
+            return sb.ToString();
         }
 
         protected void ClearLog() => Services.Logging.Logger.Instance.Clear();

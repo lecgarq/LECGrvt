@@ -50,23 +50,18 @@ namespace LECG.Commands
                 {
                     var reporter = new SimpleProgressReporter((report) => 
                     {
-                        ShowLogWindow(report.Message);
+                        Log(report.Message);
                     });
 
-                    using (Transaction t = new Transaction(doc, "Convert Families (Replace)"))
-                    {
-                        t.Start();
-                        service.ConvertFamilyBatch(
-                            doc, 
-                            instances, 
-                            viewModel.NewFamilyName, 
-                            viewModel.TemplatePath, 
-                            viewModel.IsTemporary,
-                            viewModel.ReplaceInPlace,
-                            reporter
-                        );
-                        t.Commit();
-                    }
+                    service.ConvertFamilyBatch(
+                        doc, 
+                        instances, 
+                        viewModel.NewFamilyName, 
+                        viewModel.TemplatePath, 
+                        viewModel.IsTemporary,
+                        viewModel.ReplaceInPlace,
+                        reporter
+                    );
                 }
             }
         }

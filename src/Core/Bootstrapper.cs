@@ -155,6 +155,7 @@ namespace LECG.Core
             services.AddSingleton<ICadFamilyBuildService, CadFamilyBuildService>();
             services.AddSingleton<ICadDwgFamilyCreationService, CadDwgFamilyCreationService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
+            services.AddSingleton<IFamilyEditorService, FamilyEditorService>();
             // Add other services here as we refactor
         }
 
@@ -175,6 +176,7 @@ namespace LECG.Core
             services.AddTransient<SimplifyPointsViewModel>();
             services.AddTransient<FilterCopyViewModel>();
             services.AddTransient<LogViewModel>();
+            services.AddTransient<CategoryChangerViewModel>();
             services.AddTransient<RenderAppearanceViewModel>();
         }
 
@@ -196,6 +198,7 @@ namespace LECG.Core
             services.AddTransient<Views.FilterCopyView>();
             services.AddTransient<Views.ConvertCadView>();
             services.AddTransient<Views.ConvertFamilyView>();
+            services.AddTransient<Views.CategoryChangerView>();
             services.AddTransient<Views.LogView>();
             services.AddTransient<Views.HomeView>();
             services.AddTransient<Views.AlignDashboardView>();

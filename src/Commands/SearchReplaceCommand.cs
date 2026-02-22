@@ -8,6 +8,7 @@ using LECG.Services;
 using LECG.Services.Interfaces;
 using System.Linq;
 using CommunityToolkit.Mvvm.Input;
+using LECG.Services.Logging;
 
 namespace LECG.Commands
 {
@@ -25,42 +26,19 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            // Initialize Service & ViewModel
             var service = ServiceLocator.GetRequiredService<ISearchReplaceService>();
             var vm = ServiceLocator.GetRequiredService<SearchReplaceViewModel>();
             
-            // Wire up Service
             vm.Initialize(service, doc);
 
-            var view = ServiceLocator.CreateWith<SearchReplaceView>(vm);
-            
-            // Wire Up CloseAction
-            vm.CloseAction = () => 
-            {
-                view.DialogResult = vm.ShouldRun;
-                view.Close();
-            };
-
-            // Show UI
+            var view = new SearchReplaceView(vm);
             bool? result = view.ShowDialog();
-            
-            // If user confirmed logic
+
             if (result == true && vm.ShouldRun)
             {
-                // Show Log Window
                 ShowLogWindow("Batch Rename");
-                
-                try
-                {
-                    if (_logWindow != null)
-                    {
-                        int count = service.ExecuteBatchRename(doc, vm.PreviewItems.ToList(), Services.Logging.Logger.Instance, UpdateProgress);
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    Log($"CRITICAL ERROR: {ex.Message}");
-                }
+                service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), Logger.Instance, UpdateProgress);
+                Log("Rename complete.");
             }
         }
     }

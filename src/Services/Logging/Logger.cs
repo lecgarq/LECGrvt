@@ -44,28 +44,24 @@ namespace LECG.Services.Logging
         {
             if (_uiDispatcher != null && !_uiDispatcher.CheckAccess())
             {
-                _uiDispatcher.Invoke(() => OnProgressUpdate?.Invoke(percent, status));
+                _uiDispatcher.BeginInvoke(() => OnProgressUpdate?.Invoke(percent, status));
             }
             else
             {
                 OnProgressUpdate?.Invoke(percent, status);
             }
-            DoEvents();
         }
 
         private void AddEntry(LogEntry entry)
         {
             if (_uiDispatcher != null && !_uiDispatcher.CheckAccess())
             {
-                _uiDispatcher.Invoke(() => Entries.Add(entry));
+                _uiDispatcher.BeginInvoke(() => Entries.Add(entry));
             }
             else
             {
                 Entries.Add(entry);
             }
-            
-            // Force UI update for real-time feel if on valid thread
-            DoEvents(); 
         }
 
         public void Log(string message) => AddEntry(new LogEntry(message, LogLevel.Info));
@@ -85,27 +81,5 @@ namespace LECG.Services.Logging
             }
         }
 
-        private void DoEvents()
-        {
-            if (_uiDispatcher == null) return;
-            
-            try 
-            {
-                if (_uiDispatcher.CheckAccess())
-                {
-                    DispatcherFrame frame = new DispatcherFrame();
-                    _uiDispatcher.BeginInvoke(DispatcherPriority.Background,
-                        new DispatcherOperationCallback(ExitFrame), frame);
-                    Dispatcher.PushFrame(frame);
-                }
-            }
-            catch { }
-        }
-
-        private object? ExitFrame(object f)
-        {
-            ((DispatcherFrame)f).Continue = false;
-            return null;
-        }
     }
 }

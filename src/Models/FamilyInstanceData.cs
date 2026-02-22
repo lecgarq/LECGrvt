@@ -26,8 +26,8 @@ namespace LECG.Models
             {
                 LevelId = instance.LevelId,
                 HostId = instance.Host?.Id,
-                IsHandFlipped = instance.CanHandFlip && instance.HandFlipped,
-                IsFacingFlipped = instance.CanFacingFlip && instance.FacingFlipped
+                IsHandFlipped = instance.CanFlipHand && instance.HandFlipped,
+                IsFacingFlipped = instance.CanFlipFacing && instance.FacingFlipped
             };
 
             // Location
@@ -71,8 +71,8 @@ namespace LECG.Models
             ArgumentNullException.ThrowIfNull(target);
 
             // Apply Flips (if possible)
-            if (target.CanHandFlip && target.HandFlipped != IsHandFlipped) target.flipHand();
-            if (target.CanFacingFlip && target.FacingFlipped != IsFacingFlipped) target.flipFacing();
+            if (target.CanFlipHand && target.HandFlipped != IsHandFlipped) target.flipHand();
+            if (target.CanFlipFacing && target.FacingFlipped != IsFacingFlipped) target.flipFacing();
 
             // Apply Rotation
             if (target.Location is LocationPoint lp && Math.Abs(Rotation) > 0.0001)
