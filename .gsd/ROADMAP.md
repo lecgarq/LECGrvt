@@ -1,7 +1,7 @@
 # ROADMAP.md
 
-> **Current Phase**: Final Verification
-> **Milestone**: v1.2 - Aesthetic Unity & Window Stability (COMPLETE)
+> **Current Phase**: Phase 20: CAD Component Mapper
+> **Milestone**: v1.4 - Design-to-Model Automation (IN PROGRESS)
 
 ## Must-Haves (from SPEC)
 
@@ -125,7 +125,7 @@
 - [x] Add `PurgeParameterService` to DI, Coordinator, PurgeService (Plan 10.2)
 - [x] Test with build verification (Plan 10.2)
 
-## Milestone v1.2: Aesthetic Unity & Window Stability
+## Milestone v1.2: Aesthetic Unity & Window Stability (COMPLETE)
 
 ### Phase 11: UI Baseline & Design System Audit
 **Status**: ✅ Complete
@@ -147,30 +147,26 @@
 **Status**: ✅ Complete
 **Objective**: Verify DPI scaling and resizing stability across various resolutions.
 
-## Milestone v1.3: Advanced Family Automation & Performance
-
-> **Goal**: Super-responsive family processing and batch conversion tools.
+## Milestone v1.3: Advanced Family Automation & Performance (COMPLETE)
 
 ### Phase 16: Background Family Editor Engine
 **Status**: ✅ Complete
-**Objective**: Implement a high-performance "Silent Family Editor" service to modify family-level properties without manual intervention.
 
 ### Phase 17: Category Changer Plugin
 **Status**: ✅ Complete
-**Objective**: Create a tool to quickly switch instance categories by modifying the family definition on-the-fly in the project.
 
 ### Phase 18: Convert Family V2 (Replace & Batch)
 **Status**: ✅ Complete
-**Objective**: Enhance `ConvertFamily` with multi-selection support and an "In-Place Replace" mode that preserves model data.
-
-### Phase 19: Performance Validation
-**Status**: ✅ Complete
-**Objective**: Benchmark batch processing and optimize transaction overhead for high responsiveness.
-
-## Milestone v1.4: Design-to-Model Automation
-
-> **Goal**: Automate Revit model generation from CAD and external design data.
+**Objective**: Enable batch conversion of families with in-place replacement.
 
 ### Phase 20: CAD Component Mapper (Point-Based)
 **Status**: ? Not Started
 **Objective**: Create a tool to map CAD blocks/points to Revit Families and automate their placement at design coordinates.
+### Phase 21: Category Creator Engine (Transplantation)
+**Status**: ✅ Complete
+**Objective**: Build an automated engine to bypass Revit category limits by re-creating families through geometry harvesting and transplantation.
+
+**Tasks**:
+- [x] Implement `RecreateAs` in `FamilyEditorService`.
+- [x] Add 2D-to-3D geometry harvesting logic.
+- [x] Wire the engine into the `CategoryChanger` tool.

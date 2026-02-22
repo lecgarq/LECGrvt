@@ -18,4 +18,10 @@ namespace LECG.Utils
         }
         public bool AllowReference(Reference reference, XYZ position) => true;
     }
+
+    public class AnyFamilyInstanceFilter : ISelectionFilter
+    {
+        public bool AllowElement(Element elem) => elem is FamilyInstance;
+        public bool AllowReference(Reference reference, XYZ position) => true;
+    }
 }

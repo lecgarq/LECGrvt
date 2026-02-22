@@ -36,15 +36,13 @@ namespace LECG.ViewModels
             Selection.UpdateSelection(refs.Count);
         }
 
-        [RelayCommand]
-        private void Run()
+        protected override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        [RelayCommand]
-        private void DoCancel()
+        protected override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

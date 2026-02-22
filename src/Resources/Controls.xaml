@@ -60,19 +60,28 @@
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15"/>
+                                        <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
                             <Setter TargetName="checkBorder" Property="Background" Value="{DynamicResource PrimaryAccentBrush}"/>
                             <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
                             <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
                         </Trigger>
-                        <EventTrigger RoutedEvent="CheckBox.Checked">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="Opacity" To="1" Duration="{StaticResource QuickDuration}"/>
-                                    <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource ElasticEase}"/>
-                                    <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource ElasticEase}"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="checkMark" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
                         </Trigger>
@@ -82,9 +91,56 @@
         </Setter>
     </Style>
 
-    <!-- Toggle Switch Style (using checkbox look for now but distinct logic) -->
-    <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox" BasedOn="{StaticResource ModernCheckboxStyle}">
+    <!-- Toggle Switch Style -->
+    <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
         <Setter Property="FontWeight" Value="{DynamicResource WeightSemiBold}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal">
+                        <Border x:Name="checkBorder" Width="18" Height="18" CornerRadius="5" BorderThickness="1.5" BorderBrush="{DynamicResource BorderBrush}" Background="White" VerticalAlignment="Center">
+                            <Path x:Name="toggleMark" Data="{x:Static icons:Icons.Check}" Stroke="White" StrokeThickness="2" Width="10" Height="10" Stretch="Uniform" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0">
+                                <Path.RenderTransform>
+                                    <ScaleTransform ScaleX="0.5" ScaleY="0.5" CenterX="5" CenterY="5"/>
+                                </Path.RenderTransform>
+                            </Path>
+                        </Border>
+                        <ContentPresenter Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="toggleMark" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.15"/>
+                                        <DoubleAnimation Storyboard.TargetName="toggleMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="toggleMark" Storyboard.TargetProperty="(Path.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Setter TargetName="checkBorder" Property="Background" Value="{DynamicResource PrimaryAccentBrush}"/>
+                            <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                            <Setter TargetName="toggleMark" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="toggleMark" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.1"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource PrimaryAccentBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Header Style -->
@@ -117,28 +173,35 @@
             <Setter.Value>
                 <ControlTemplate TargetType="CheckBox">
                     <Border x:Name="pillBorder" Background="{DynamicResource ScopeInactiveBrush}" BorderBrush="{DynamicResource ScopeInactiveBorderBrush}" BorderThickness="1" CornerRadius="12" Padding="10,5,10,5" SnapsToDevicePixels="True">
+                        <Border.RenderTransform>
+                            <ScaleTransform ScaleX="1" ScaleY="1" CenterX="20" CenterY="10"/>
+                        </Border.RenderTransform>
                         <ContentPresenter x:Name="pillContent" HorizontalAlignment="Center" VerticalAlignment="Center" RecognizesAccessKey="True"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#EEF2FF" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleX)" From="1" To="1.05" Duration="0:0:0.2" AutoReverse="True"/>
+                                        <DoubleAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.RenderTransform).(ScaleTransform.ScaleY)" From="1" To="1.05" Duration="0:0:0.2" AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
                             <Setter TargetName="pillBorder" Property="Background" Value="{DynamicResource ScopeActiveBrush}"/>
                             <Setter TargetName="pillBorder" Property="BorderBrush" Value="{DynamicResource ScopeActiveBorderBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ScopeActiveTextBrush}"/>
                         </Trigger>
-                        <EventTrigger RoutedEvent="CheckBox.Checked">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorScopeActive}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                        <EventTrigger RoutedEvent="CheckBox.Unchecked">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <ColorAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="{StaticResource ColorScopeInactive}" Duration="{StaticResource AnimationDuration}" EasingFunction="{StaticResource StandardEase}"/>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="pillBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#F1F5F9" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="pillBorder" Property="BorderBrush" Value="{DynamicResource AccentMutedBrush}"/>
                         </Trigger>
@@ -185,6 +248,27 @@
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Modern Progress Bar Style -->
+    <Style x:Key="ModernProgressStyle" TargetType="ProgressBar">
+        <Setter Property="Height" Value="6"/>
+        <Setter Property="Background" Value="{DynamicResource ContentBackgroundBrush}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ProgressBar">
+                    <Grid x:Name="TemplateRoot">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3"/>
+                        <Border x:Name="PART_Indicator" Background="{DynamicResource AccentGradientBrush}" CornerRadius="3" HorizontalAlignment="Left">
+                            <Border.Effect>
+                                <DropShadowEffect Color="{DynamicResource ColorAccent}" BlurRadius="8" Opacity="0.3" ShadowDepth="0"/>
+                            </Border.Effect>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

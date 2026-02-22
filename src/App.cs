@@ -1,44 +1,29 @@
-using System.Reflection;
 using Autodesk.Revit.UI;
 using LECG.Configuration;
 using LECG.Core.Ribbon;
 using LECG.Utils;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace LECG
 {
     public class App : IExternalApplication
     {
+        private static bool _globalHandlersRegistered;
+
         public Result OnStartup(UIControlledApplication application)
         {
-            // Resolve Dependency Conflicts
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-            {
-                if (string.IsNullOrEmpty(args.Name)) return null;
-                
-                var requestedName = new AssemblyName(args.Name);
-                if (requestedName.Name != null && requestedName.Name.StartsWith("Microsoft.Extensions.DependencyInjection"))
-                {
-                    // 1. Check if ANY version is already loaded
-                    foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
-                    {
-                        if (asm.GetName().Name == requestedName.Name) return asm;
-                    }
-                    
-                    // 2. Try to load from our own directory
-                    string? folderPath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                    if (string.IsNullOrEmpty(folderPath)) return null;
-                    
-                    string assemblyPath = System.IO.Path.Combine(folderPath, requestedName.Name + ".dll");
-                    if (System.IO.File.Exists(assemblyPath))
-                    {
-                        return Assembly.LoadFrom(assemblyPath);
-                    }
-                }
-                return null;
-            };
-
             try
             {
+                // Ensure pack URI scheme is registered (Fixes "The URI prefix is not recognized" in .NET 8 / Revit 2026)
+                if (!System.UriParser.IsKnownScheme("pack"))
+                {
+                    // This static access triggers the registration of the pack:// scheme
+                    _ = System.IO.Packaging.PackUriHelper.UriSchemePack;
+                }
+
+                RegisterGlobalExceptionHandlers();
+
                 // 0. Initialize Services
                 Core.Bootstrapper.Initialize();
 
@@ -58,6 +43,53 @@ namespace LECG
         public Result OnShutdown(UIControlledApplication application)
         {
             return Result.Succeeded;
+        }
+
+        private static void RegisterGlobalExceptionHandlers()
+        {
+            if (_globalHandlersRegistered) return;
+            _globalHandlersRegistered = true;
+
+            Dispatcher.CurrentDispatcher.UnhandledException += (_, e) =>
+            {
+                try
+                {
+                    Services.Logging.Logger.Instance.Log($"Unhandled dispatcher exception: {e.Exception}");
+                    TaskDialog.Show("LECG Error", e.Exception.Message);
+                }
+                catch
+                {
+                }
+
+                e.Handled = true;
+            };
+
+            AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            {
+                try
+                {
+                    if (e.ExceptionObject is Exception ex)
+                    {
+                        Services.Logging.Logger.Instance.Log($"Unhandled domain exception: {ex}");
+                    }
+                }
+                catch
+                {
+                }
+            };
+
+            TaskScheduler.UnobservedTaskException += (_, e) =>
+            {
+                try
+                {
+                    Services.Logging.Logger.Instance.Log($"Unobserved task exception: {e.Exception}");
+                }
+                catch
+                {
+                }
+
+                e.SetObserved();
+            };
         }
     }
 }

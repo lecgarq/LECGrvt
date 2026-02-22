@@ -45,6 +45,7 @@ namespace LECG.Utils
         public static Geometry Material { get; } = Geometry.Parse("M2 22 22 2"); // Diagonal
         public static Geometry CircleCheck { get; } = Geometry.Parse("M22 11.08V12a10 10 0 1 1-5.93-9.14 M22 4L12 14.01l-3-3");
         public static Geometry Circle { get; } = Geometry.Parse("M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z");
+        public static Geometry Category { get; } = Geometry.Parse("M3 3h7v7H3V3z M14 3h7v7h-7V3z M3 14h7v7H3v-7z M14 14h7v7h-7v-7z");
 
         static Icons()
         {
@@ -75,6 +76,7 @@ namespace LECG.Utils
             Material.Freeze();
             CircleCheck.Freeze();
             Circle.Freeze();
+            Category.Freeze();
         }
     }
 }

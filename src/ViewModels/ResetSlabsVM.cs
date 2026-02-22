@@ -4,6 +4,7 @@ using LECG.ViewModels.Components;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Core;
+using System;
 
 namespace LECG.ViewModels
 {
@@ -35,15 +36,13 @@ namespace LECG.ViewModels
             Selection.UpdateSelection(refs.Count);
         }
 
-        [RelayCommand]
-        private void ExecuteRun()
+        protected override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        [RelayCommand]
-        private void ExecuteCancel()
+        protected override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

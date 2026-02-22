@@ -84,8 +84,7 @@ namespace LECG.ViewModels
             }
         }
 
-        [RelayCommand]
-        private void ExecuteRun()
+        protected override void Apply()
         {
             if (string.IsNullOrWhiteSpace(TemplatePath) || !File.Exists(TemplatePath))
             {
@@ -96,8 +95,7 @@ namespace LECG.ViewModels
             CloseAction?.Invoke();
         }
 
-        [RelayCommand]
-        private void ExecuteCancel()
+        protected override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

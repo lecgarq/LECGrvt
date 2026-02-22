@@ -14,6 +14,20 @@ namespace LECG.Services
 
             try
             {
+                // Never attempt deletion of invalid/system ids.
+                if (id.Value <= 0)
+                {
+                    logCallback?.Invoke($"  Skipped system/invalid id for '{name}'.");
+                    return false;
+                }
+
+                Element? element = doc.GetElement(id);
+                if (element == null || !element.IsValidObject)
+                {
+                    logCallback?.Invoke($"  Skipped '{name}' (element not found or invalid).");
+                    return false;
+                }
+
                 doc.Delete(id);
                 logCallback?.Invoke($"  Deleted: {name}");
                 return true;

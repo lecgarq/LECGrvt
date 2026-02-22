@@ -17,6 +17,6 @@
             <TextBlock Text="Click to add or change" Style="{DynamicResource BaseTextBlockStyle}" FontSize="10" Foreground="{DynamicResource TextMutedBrush}"/>
         </StackPanel>
 
-        <Button Grid.Column="1" Content="Select..." Command="{Binding SelectCommand}" Style="{DynamicResource SecondaryButtonStyle}" Width="80"/>
+        <Button Grid.Column="1" Content="Select..." Command="{Binding SelectCommand}" Width="80"/>
     </Grid>
 </UserControl>

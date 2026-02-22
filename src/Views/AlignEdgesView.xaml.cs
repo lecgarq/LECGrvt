@@ -4,6 +4,8 @@ using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using LECG.ViewModels;
 using LECG.Views.Base;
+using System;
+using System.Linq;
 
 namespace LECG.Views
 {
@@ -46,7 +48,15 @@ namespace LECG.Views
                     vm.SetTargets(refs);
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally { ShowDialog(); }
+                finally
+                {
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
+                }
             };
 
             // Reference Selection
@@ -54,17 +64,26 @@ namespace LECG.Views
                 Hide();
                 try 
                 {
-                     // Assuming we pick multiple references or single? Original code allowed multiple references?
-                     // Loop in original code said "Select Reference Toposolids (can be multiple)"
                     IList<Reference> refs = _uiDoc.Selection.PickObjects(
                         Autodesk.Revit.UI.Selection.ObjectType.Element, 
                         new LECG.Core.SelectionFilters.ToposolidFilter(), 
-                        "Select Reference Toposolids");
+                        "Select Reference Toposolid");
                     
-                    vm.SetReference(refs);
+                    if (refs != null && refs.Count > 0)
+                    {
+                        vm.SetReference(refs.First());
+                    }
                 }
                 catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally { ShowDialog(); }
+                finally
+                {
+                    try
+                    {
+                        this.Visibility = System.Windows.Visibility.Visible;
+                        Activate();
+                    }
+                    catch { }
+                }
             };
         }
     }

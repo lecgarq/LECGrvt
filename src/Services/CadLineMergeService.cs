@@ -46,24 +46,28 @@ namespace LECG.Services
                         }
                         else
                         {
-                            merged.Add(CreateLineFromProjection(dir, normal, interceptGroup.Key, currentStart, currentEnd));
+                            var line = CreateLineFromProjection(dir, normal, interceptGroup.Key, currentStart, currentEnd);
+                            if (line != null) merged.Add(line);
                             currentStart = intervals[i].Start;
                             currentEnd = intervals[i].End;
                         }
                     }
 
-                    merged.Add(CreateLineFromProjection(dir, normal, interceptGroup.Key, currentStart, currentEnd));
+                    var lastLine = CreateLineFromProjection(dir, normal, interceptGroup.Key, currentStart, currentEnd);
+                    if (lastLine != null) merged.Add(lastLine);
                 }
             }
 
             return merged;
         }
 
-        private Line CreateLineFromProjection(XYZ dir, XYZ normal, double intercept, double startProj, double endProj)
+        private Line? CreateLineFromProjection(XYZ dir, XYZ normal, double intercept, double startProj, double endProj)
         {
+            if (Math.Abs(endProj - startProj) < 0.005) return null;
+
             XYZ p1 = (normal * intercept) + (dir * startProj);
             XYZ p2 = (normal * intercept) + (dir * endProj);
-            return Line.CreateBound(p1, p2);
+            try { return Line.CreateBound(p1, p2); } catch { return null; }
         }
 
         private XYZ RoundVector(XYZ v)

@@ -11,6 +11,10 @@ namespace LECG.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+
+            viewModel.CloseAction = () => {
+                try { DialogResult = viewModel.ShouldRun; } catch { Close(); }
+            };
         }
 
         private void CloseWindow(object sender, RoutedEventArgs e)

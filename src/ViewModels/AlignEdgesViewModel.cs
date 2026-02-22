@@ -1,11 +1,9 @@
 using System;
-using System.Windows.Input;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LECG.ViewModels.Components;
-using System.ComponentModel;
 
 namespace LECG.ViewModels
 {
@@ -30,15 +28,13 @@ namespace LECG.ViewModels
             ReferenceSelection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 
-        [RelayCommand]
-        private void Run()
+        protected override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        [RelayCommand]
-        private void DoCancel()
+        protected override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();
@@ -51,19 +47,15 @@ namespace LECG.ViewModels
         public void SetTargets(IList<Reference> refs)
         {
             ArgumentNullException.ThrowIfNull(refs);
-
             TargetRefs = refs;
             TargetsSelection.UpdateSelection(refs.Count);
         }
 
-        public void SetReference(IList<Reference> refs) 
+        public void SetReference(Reference r)
         {
-            ArgumentNullException.ThrowIfNull(refs);
-
-            ReferenceRefs = refs;
-            ReferenceSelection.UpdateSelection(refs.Count);
+            ArgumentNullException.ThrowIfNull(r);
+            ReferenceRefs = new List<Reference> { r };
+            ReferenceSelection.UpdateSelection(1);
         }
-
-
     }
 }

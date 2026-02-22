@@ -1,7 +1,8 @@
-<base:LecgWindow x:Class="LECG.Views.FilterCopyView"
+﻿<base:LecgWindow x:Class="LECG.Views.FilterCopyView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
+    xmlns:icons="clr-namespace:LECG.Utils"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:vm="clr-namespace:LECG.ViewModels" Title="{Binding Title}" Height="750" Width="1050" WindowIcon="{x:Static icons:Icons.Copy}">
 
@@ -44,7 +45,6 @@
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Padding" Value="0,2"/>
                 <Style.Resources>
-                    <!-- Fix selection backgrounds to white/transparent but keep text dark -->
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
                     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource ColorTextPrimary}" />
@@ -52,7 +52,6 @@
                 <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
                         <Setter Property="FontWeight" Value="SemiBold"/>
-                        <!-- Force Foreground to stay dark when selected -->
                         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
                     </Trigger>
                 </Style.Triggers>
@@ -60,16 +59,14 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Margin="{StaticResource ViewContentMarginLarge}">
+    <Grid Margin="{DynamicResource ViewContentMarginLarge}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
         <!-- Main Workspace -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="80"/>
@@ -103,23 +100,22 @@
                         <Button Grid.Column="1" Content="ACTIVE VIEW" Command="{Binding SetActiveViewCommand}" CommandParameter="Left" Margin="8,0,0,0" Width="90" Height="36" Style="{DynamicResource TertiaryButtonStyle}" FontSize="10" FontWeight="Bold"/>
                     </Grid>
 
-                    <!-- Bulk Buttons Left -->
                     <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Top">
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Collapse" ToolTip="Collapse All">
-                            <Path Data="{x:Static utils:Icons.Minimize}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Collapse" ToolTip="Collapse All">
+                            <Path Data="{x:Static icons:Icons.Minimize}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
                         </Button>
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Expand" ToolTip="Expand All">
-                            <Path Data="{x:Static utils:Icons.Plus}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Expand" ToolTip="Expand All">
+                            <Path Data="{x:Static icons:Icons.Plus}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
                         </Button>
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Check" ToolTip="Select All Filters" Margin="0,15,0,2">
-                            <Path Data="{x:Static utils:Icons.CircleCheck}" Fill="{DynamicResource PrimaryAccentBrush}" Stretch="Uniform" Width="16"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Check" ToolTip="Select All Filters" Margin="0,15,0,2">
+                            <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource PrimaryAccentBrush}" Stretch="Uniform" Width="16"/>
                         </Button>
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Uncheck" ToolTip="Unselect All">
-                            <Path Data="{x:Static utils:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Uncheck" ToolTip="Unselect All">
+                            <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
                         </Button>
                     </StackPanel>
 
-                    <TreeView Grid.Row="3" Grid.Column="1" ItemsSource="{Binding LeftItems}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{StaticResource FilterTreeViewItemStyle}" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <TreeView Grid.Row="3" Grid.Column="1" ItemsSource="{Binding LeftItems}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource FilterTreeViewItemStyle}" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <TreeView.Resources>
                             <HierarchicalDataTemplate DataType="{x:Type vm:ViewContainer}" ItemsSource="{Binding Filters}">
                                 <Border Background="Transparent" Padding="4">
@@ -145,14 +141,12 @@
                 </Grid>
             </Border>
 
-            <!-- Transfer Area -->
             <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Button Command="{Binding TransferCommand}" Width="48" Height="48" Style="{DynamicResource PrimaryButtonStyle}" ToolTip="Transfer selected filters" Cursor="Hand">
-                    <Path Data="{x:Static utils:Icons.Copy}" Fill="White" Stretch="Uniform" Width="20" Height="20"/>
+                    <Path Data="{x:Static icons:Icons.Copy}" Fill="White" Stretch="Uniform" Width="20" Height="20"/>
                 </Button>
             </StackPanel>
 
-            <!-- Target Panel -->
             <Border Grid.Column="2" Background="{DynamicResource CardBackgroundBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="20">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -179,7 +173,7 @@
                         <Button Grid.Column="1" Content="ACTIVE VIEW" Command="{Binding SetActiveViewCommand}" CommandParameter="Right" Margin="8,0,0,0" Width="90" Height="36" Style="{DynamicResource TertiaryButtonStyle}" FontSize="10" FontWeight="Bold"/>
                     </Grid>
 
-                    <TreeView Grid.Row="3" Grid.Column="0" ItemsSource="{Binding RightItems}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{StaticResource FilterTreeViewItemStyle}" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <TreeView Grid.Row="3" Grid.Column="0" ItemsSource="{Binding RightItems}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource FilterTreeViewItemStyle}" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <TreeView.Resources>
                             <HierarchicalDataTemplate DataType="{x:Type vm:ViewContainer}" ItemsSource="{Binding Filters}">
                                 <Border Background="Transparent" Padding="4">
@@ -197,18 +191,16 @@
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"/>
-
                                         <Button Grid.Column="1" Command="{Binding DataContext.ToggleRemoveCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Width="28" Height="28" Cursor="Hand">
                                             <Path Stretch="Uniform" Width="12" Height="12">
                                                 <Path.Style>
                                                     <Style TargetType="Path">
-                                                        <Setter Property="Data" Value="{x:Static utils:Icons.X}"/>
+                                                        <Setter Property="Data" Value="{x:Static icons:Icons.X}"/>
                                                         <Setter Property="Fill" Value="{DynamicResource AlertBrush}"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Status}" Value="Removable">
-                                                                <Setter Property="Data" Value="{x:Static utils:Icons.ResetSlabs}"/>
+                                                                <Setter Property="Data" Value="{x:Static icons:Icons.ResetSlabs}"/>
                                                                 <Setter Property="Fill" Value="{DynamicResource TextSecondaryBrush}"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -222,19 +214,18 @@
                         </TreeView.Resources>
                     </TreeView>
 
-                    <!-- Bulk Buttons Right -->
                     <StackPanel Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Top">
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Collapse" ToolTip="Collapse All">
-                            <Path Data="{x:Static utils:Icons.Minimize}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Collapse" ToolTip="Collapse All">
+                            <Path Data="{x:Static icons:Icons.Minimize}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
                         </Button>
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Expand" ToolTip="Expand All">
-                            <Path Data="{x:Static utils:Icons.Plus}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Expand" ToolTip="Expand All">
+                            <Path Data="{x:Static icons:Icons.Plus}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
                         </Button>
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Check" ToolTip="Select All Views" Margin="0,15,0,2">
-                            <Path Data="{x:Static utils:Icons.CircleCheck}" Fill="{DynamicResource PrimaryAccentBrush}" Stretch="Uniform" Width="16"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Check" ToolTip="Select All Views" Margin="0,15,0,2">
+                            <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource PrimaryAccentBrush}" Stretch="Uniform" Width="16"/>
                         </Button>
-                        <Button Style="{StaticResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Uncheck" ToolTip="Unselect All">
-                            <Path Data="{x:Static utils:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
+                        <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Uncheck" ToolTip="Unselect All">
+                            <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -242,9 +233,8 @@
         </Grid>
 
         <!-- Footer Actions -->
-        <Grid Grid.Row="2" Margin="0,30,0,0">
+        <Grid Grid.Row="1" Margin="0,30,0,0">
             <TextBlock Text="Modified filters Blue. New filters Green. Deleted Red." VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="{DynamicResource TextMutedBrush}"/>
-
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="CANCEL" Command="{Binding CancelCommand}" Width="110" Height="44" Margin="0,0,12,0" FontWeight="SemiBold"/>
                 <Button Content="APPLY CHANGES" Command="{Binding ApplyCommand}" Width="190" Height="44" Style="{DynamicResource PrimaryButtonStyle}" FontSize="12" FontWeight="Black"/>
@@ -252,3 +242,5 @@
         </Grid>
     </Grid>
 </base:LecgWindow>
+
+

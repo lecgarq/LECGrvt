@@ -30,7 +30,7 @@ namespace LECG.Services
 
                 for (int i = 1; i < points.Count; i++)
                 {
-                    if (!points[i].IsAlmostEqualTo(cleanPoints.Last(), 0.001))
+                    if (points[i].DistanceTo(cleanPoints.Last()) >= 0.005)
                     {
                         cleanPoints.Add(points[i]);
                     }
@@ -38,7 +38,8 @@ namespace LECG.Services
 
                 if (cleanPoints.Count >= 2)
                 {
-                    return new List<Curve> { HermiteSpline.Create(cleanPoints, hermiteSpline.IsPeriodic) };
+                    var newSpline = HermiteSpline.Create(cleanPoints, hermiteSpline.IsPeriodic);
+                    if (newSpline.Length >= 0.005) return new List<Curve> { newSpline };
                 }
 
                 return _cadCurveTessellationService.Tessellate(curve);
@@ -50,14 +51,15 @@ namespace LECG.Services
 
                 try
                 {
-                    return new List<Curve>
-                    {
-                        NurbSpline.CreateCurve(
+                    var newSpline = NurbSpline.CreateCurve(
                             nurbSpline.Degree,
                             _cadDoubleArrayConversionService.ToList(nurbSpline.Knots),
                             controlPoints,
-                            _cadDoubleArrayConversionService.ToList(nurbSpline.Weights))
-                    };
+                            _cadDoubleArrayConversionService.ToList(nurbSpline.Weights));
+                    
+                    if (newSpline.Length < 0.005) return _cadCurveTessellationService.Tessellate(curve);
+                    
+                    return new List<Curve> { newSpline };
                 }
                 catch
                 {

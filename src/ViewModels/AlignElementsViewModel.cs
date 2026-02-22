@@ -79,10 +79,6 @@ namespace LECG.ViewModels
 
             SelectedReference = r;
             ReferenceSelection.UpdateSelection(1);
-            
-            // Auto-exclude if already in targets? Or just warn? 
-            // Logic requirement: "If user uses crossing window that includes Reference, exclude it."
-            // We handle this when setting Targets.
         }
 
         public void SetTargets(IList<Reference> refs, Document doc)
@@ -106,15 +102,13 @@ namespace LECG.ViewModels
             TargetSelection.UpdateSelection(validRefs.Count);
         }
 
-        [RelayCommand]
-        private void ExecuteRun()
+        protected override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        [RelayCommand]
-        private void ExecuteCancel()
+        protected override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();
