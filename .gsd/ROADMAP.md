@@ -19,11 +19,11 @@
 **Requirements**: REQ-01, REQ-02, REQ-03
 
 ### Phase 1a: Gap Closure (UI Library Breadth)
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Address gaps from milestone audit regarding missing standard controls.
 **Gaps to Close:**
-- [ ] Implement `LecgButton` and `LecgTextBox` standard styles.
-- [ ] Ensure focus/hover states align with professional aesthetics.
+- [x] Implement `LecgButton` and `LecgTextBox` standard styles.
+- [x] Ensure focus/hover states align with professional aesthetics.
 
 
 ### Phase 2: Refactoring Core Operations (Performance & Modularity)
