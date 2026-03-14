@@ -1,11 +1,12 @@
 # REQUIREMENTS.md
 
+## Format
 | ID | Requirement | Source | Status |
-| --- | --- | --- | --- |
-| REQ-01 | Rename Materials matching search pattern | SPEC Goal 1 | Pending |
-| REQ-02 | Rename Line Styles (subcategories of Lines) | SPEC Goal 1 | Pending |
-| REQ-03 | Rename Fill Patterns | SPEC Goal 1 | Pending |
-| REQ-04 | Rename Custom Object Styles | SPEC Goal 1 | Pending |
-| REQ-05 | Execute Purge logic 3 times in one command | SPEC Goal 2 | Pending |
-| REQ-06 | Filter `ConvertFamily` selection to `IsWorkPlaneBased == false` | SPEC Goal 3 | Pending |
-| REQ-07 | Ensure Transaction rolled back on constraint error | SPEC Goal 4 | Pending |
+|----|-------------|--------|--------|
+| REQ-01 | A unified UI Component package comprising Button, TextBox, ComboBox, DataGrid, Tree/Collapsible elements. | SPEC goal 1 | Pending |
+| REQ-02 | All components exclusively use the 9-color HEX LECG identity palette. | SPEC goal 1 | Pending |
+| REQ-03 | Component definitions explicitly forbid heavy opacity effects/glassmorphism rendering. | SPEC Constraints | Pending |
+| REQ-04 | Core ViewModels refactored to optimize ultra-fast filtering for real-time search functionality. | SPEC goal 2 | Pending |
+| REQ-05 | Batch expansion/collapsing features implemented flawlessly on multi-select enabled components. | SPEC goal 2 | Pending |
+| REQ-06 | Responsive sizing implemented, disabling static width/height constraints causing scale clipping. | SPEC goal 2 | Pending |
+| REQ-07 | Backend services refactoring to explicitly decouple generic logic from UI wrappers. | SPEC goal 3 | Pending |

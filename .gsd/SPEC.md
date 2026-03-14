@@ -3,42 +3,27 @@
 > **Status**: `FINALIZED`
 
 ## Vision
-
-Enhance the LECG Revit toolkit with robust administrative and conversion features, focusing on systematic renaming of core Revit elements, deeper purging capabilities, and safer family conversion workflows.
+To elevate the LECG Revit 2026 Addin from a functional utility into a premium, state-of-the-art enterprise product by creating a unified, lightning-fast, and deeply branded UI/UX, while simultaneously continuing rigorous backend refactoring for maximum performance and modularity.
 
 ## Goals
-
-1. **Extended Search & Replace**: Implement renaming logic for Materials, Object Styles, Line Styles, and Fill Patterns.
-2. **Triple Purge**: Add functionality to execute the "Purge Unused" logic three consecutive times to clear nested dependencies, mirroring Revit's native "Purge" behavior.
-3. **Restricted Family Selection**: Update the "Convert Family" tool to filter out work plane-based families, allowing only element-based/host-based families for selection.
-4. **Constraint Safety**: Ensure all renaming and conversion operations maintain existing element IDs and parameters to avoid breaking model constraints or hosted elements.
-5. **Advanced Parameter Renaming**: Implement renaming for Family Parameters across all families, filtering out shared/project/built-in parameters.
-6. **Enhanced Search Capabilities**: Add advanced text filters (Contains, Begins/Ends With) and utility functions (Replace Spaces).
-17. **Full UI Consistency & Stability**: Standardize all command interfaces to the "Premium Liquid Glass" design system and fix window resizing/DPI scaling bugs.
-18. **Category Changer**: Background category overrides for family-based elements, bypassing the manual Family Editor.
-19. **Convert Family V2**: Support for multi-selection and "In-Place Replacement" mode to preserve model location and parameter data during conversion.
-20. **Super-Responsive Batch Processing**: Implement a high-performance background processing engine for multi-family modifications.
+1. **Design System Standardization:** Build and deploy a centralized, reusable WPF component library enforcing the LECG brand identity (custom earth-toned palette, minimalism) across all 36 views.
+2. **Premium UX Features:** Ensure absolute consistency in professional interactions, including hover effects, ultra-fast real-time searching, batch selection/expansion/collapsing, and fluid layout scaling across all window sizes.
+3. **Architectural Refactoring:** Continue the backend performance and modularity refactoring (guided by prior architectural plans) to perfectly decouple the heavy Services from the refined MVVM UI layer.
 
 ## Non-Goals (Out of Scope)
-
-- Global renaming of Revit Categories or Subcategories (beyond Custom Object Styles).
-- Modification of built-in/hardcoded Revit Line Styles or Fill Patterns that cannot be renamed via API.
-- Automated merging of materials with identical names during rename.
+- No glassmorphism styling or complex translucency (strictly avoided due to Revit rendering crashes).
+- No new features outside of the existing mapped utilities—this effort strictly focuses on standardizing the UI/UX and backend modularization of *existing* tools.
 
 ## Users
-
-BIM Managers and Power Users who need to clean, standardize, and migrate project data without manually repeating operations or selecting invalid family types.
+Architects and structural engineers utilizing the LECG Revit Addin who require extremely responsive, reliable, and visually cohesive tooling that feels distinctly "LECG" while operating within Revit 2026.
 
 ## Constraints
-
-- **Revit API**: Must comply with Revit 2026 API limitations regarding renaming system elements.
-- **Performance**: Triple purge must be optimized to avoid long UI hangs during large model cleanups.
-- **Architecture**: Must follow the existing MVVM + Service Layer patterns documented in `ARCHITECTURE.md`.
+- **Technical Restrictions:** Must strictly avoid WPF features known to crash the Revit 2026 rendering engine pipeline (e.g., intensive glassmorphism).
+- **Architecture:** Must rigidly adhere to the MVVM pattern utilizing `CommunityToolkit.Mvvm`, keeping Views strictly XAML-based and logic in ViewModels.
+- **Palette:** Must build around the defined 9-color HEX system: `#E6E3DA`, `#C8C0B4`, `#A89D8E`, `#7A634F`, `#E9E9E6`, `#96938C`, `#4E4B44`, `#323130`, `#708452`.
 
 ## Success Criteria
-
-- [ ] Search & Replace successfully renames Materials, Object Styles, Line Styles, and Fill Patterns without losing data.
-- [ ] Purge Unused can be run 3 times in a single operation, resulting in 0 or fewer purgable items than a single pass.
-- [ ] Convert Family selection filter prevents selecting work plane-based families via `ISelectionFilter`.
-- [ ] No hosted elements (e.g., dimensions, tags) are lost during renaming/conversion.
-- [ ] 100% of command views follow the Premium Design System with zero layout collapse on resize.
+- [ ] A proprietary `LecgUI` component library is built and replaces ad-hoc XAML in at least 3 core views.
+- [ ] UI correctly scales to various monitor sizes without element clipping or distortion.
+- [ ] Batch selection and real-time search execute responsively without blocking the Revit main thread.
+- [ ] Codebase structure and modularity reflect the desired performance architecture, eliminating duplicated UI logic.
