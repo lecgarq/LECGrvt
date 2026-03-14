@@ -31,9 +31,9 @@
 **Objective**: Decouple monolithic code behind existing views and properly structure `ViewModels` to deliver the ultra-fast real-time searching constraints against their correlated `Services`. Clean dependency boundaries based on the architectural plan.
 **Requirements**: REQ-04, REQ-07
 
-### Phase 3: Core UI Integration (Implementation Base)
-**Status**: ⬜ Not Started
-**Objective**: Implement the generic WPF components from Phase 1 back into the primary tools (e.g., SearchReplaceView, CategorChangerView), replacing all ad-hoc UI XAML elements simultaneously enforcing batch selection logic.
+### Phase 3: Global UI Standardization (Unified Identity)
+**Status**: ⚡ In Progress
+**Objective**: Roll out the `LecgUI` standard to all application windows. Replace legacy styles with global resources, ensuring a unified professional identity across the entire add-in. Implementation of `LecgTreeView` with batch expansion logic.
 **Requirements**: REQ-05
 
 ### Phase 4: Polish & Responsive Layout
