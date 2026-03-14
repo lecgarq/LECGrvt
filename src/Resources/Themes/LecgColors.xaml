@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- 
+        LECG Brand 9-Color Palette 
+        1. #E6E3DA (Warm White / Surface)
+        2. #C8C0B4 (Light Grey-Brown)
+        3. #A89D8E (Mid Grey-Brown)
+        4. #7A634F (Dark Earth)
+        5. #E9E9E6 (Cool White / Base)
+        6. #96938C (Neutral Mid Grey)
+        7. #4E4B44 (Dark Charcoal Grey)
+        8. #323130 (Near Black)
+        9. #708452 (Muted Green / Accent)
+    -->
+
+    <!-- Colors -->
+    <Color x:Key="LecgBaseBackgroundColor">#E9E9E6</Color>
+    <Color x:Key="LecgSurfaceBackgroundColor">#E6E3DA</Color>
+    <Color x:Key="LecgBorderLightColor">#C8C0B4</Color>
+    <Color x:Key="LecgBorderDarkColor">#A89D8E</Color>
+    <Color x:Key="LecgControlBackgroundColor">#7A634F</Color>
+    <Color x:Key="LecgTextMutedColor">#96938C</Color>
+    <Color x:Key="LecgTextSecondaryColor">#4E4B44</Color>
+    <Color x:Key="LecgTextPrimaryColor">#323130</Color>
+    <Color x:Key="LecgAccentColor">#708452</Color>
+
+    <!-- SolidColorBrushes -->
+    <SolidColorBrush x:Key="LecgBaseBackground" Color="{StaticResource LecgBaseBackgroundColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgSurfaceBackground" Color="{StaticResource LecgSurfaceBackgroundColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgBorderLight" Color="{StaticResource LecgBorderLightColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgBorderDark" Color="{StaticResource LecgBorderDarkColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgControlBackground" Color="{StaticResource LecgControlBackgroundColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgTextMuted" Color="{StaticResource LecgTextMutedColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgTextSecondary" Color="{StaticResource LecgTextSecondaryColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgTextPrimary" Color="{StaticResource LecgTextPrimaryColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgAccent" Color="{StaticResource LecgAccentColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+
+</ResourceDictionary>

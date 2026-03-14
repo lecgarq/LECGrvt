@@ -22,6 +22,8 @@ namespace LECG
                     _ = System.IO.Packaging.PackUriHelper.UriSchemePack;
                 }
 
+                InitializeGlobalWpfDictionaries();
+
                 RegisterGlobalExceptionHandlers();
 
                 // 0. Initialize Services
@@ -90,6 +92,39 @@ namespace LECG
 
                 e.SetObserved();
             };
+        }
+
+        private static void InitializeGlobalWpfDictionaries()
+        {
+            try
+            {
+                if (System.Windows.Application.Current == null)
+                {
+                    _ = new System.Windows.Application();
+                }
+
+                var uri = new Uri("pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml", UriKind.Absolute);
+                var dict = new System.Windows.ResourceDictionary { Source = uri };
+                
+                // Add or merge dictionary to global application resources
+                bool exists = false;
+                foreach (var md in System.Windows.Application.Current.Resources.MergedDictionaries)
+                {
+                    if (md.Source == uri)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                {
+                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(dict);
+                }
+            }
+            catch (Exception ex)
+            {
+                Services.Logging.Logger.Instance.Log($"Failed to load global WPF resources: {ex.Message}");
+            }
         }
     }
 }
