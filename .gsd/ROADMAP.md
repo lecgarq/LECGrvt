@@ -14,9 +14,17 @@
 ## Phases
 
 ### Phase 1: Foundation (Generic Component Framework)
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Build a set of decoupled, generic standard WPF UI controls (Buttons, TextBoxes, DataGrids, TreeViews) that exclusively adopt the new LECG minimalist palette and professional interactions (hover states, click responses).
 **Requirements**: REQ-01, REQ-02, REQ-03
+
+### Phase 1a: Gap Closure (UI Library Breadth)
+**Status**: ⬜ Not Started
+**Objective**: Address gaps from milestone audit regarding missing standard controls.
+**Gaps to Close:**
+- [ ] Implement `LecgButton` and `LecgTextBox` standard styles.
+- [ ] Ensure focus/hover states align with professional aesthetics.
+
 
 ### Phase 2: Refactoring Core Operations (Performance & Modularity)
 **Status**: ⬜ Not Started
