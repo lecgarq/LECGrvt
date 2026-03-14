@@ -4,6 +4,6 @@ namespace LECG.Services.Interfaces
 {
     public interface IFamilyParameterSetupService
     {
-        void ConfigureTargetFamilyParameters(Document targetFamilyDoc);
+        void ConfigureTargetFamilyParameters(Document targetFamilyDoc, Document sourceFamilyDoc);
     }
 }

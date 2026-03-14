@@ -6,5 +6,6 @@ namespace LECG.Services.Interfaces
     public interface IPurgeLevelService
     {
         int PurgeUnusedLevels(Document doc, Action<string>? logCallback = null);
+        int PurgeUnusedLevels(Document doc, PurgeContext context, Action<string>? logCallback = null);
     }
 }

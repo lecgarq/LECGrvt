@@ -2,10 +2,10 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Events;
 using LECG.Core;
+using LECG.Services;
 using LECG.Services.Interfaces;
-using LECG.ViewModels;
-using LECG.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,54 +15,91 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class ConvertFamilyCommand : RevitCommand
     {
-        protected override string? TransactionName => "Convert Family (Batch)";
+        protected override string? TransactionName => null;
+
+        /// <summary>
+        /// Auto-dismiss any Revit dialog during conversion (e.g. "Parameter 'Thickness' cannot be added")
+        /// </summary>
+        private static void OnDialogShowing(object? sender, DialogBoxShowingEventArgs e)
+        {
+            // Always accept/OK — never cancel/close (which would roll back transactions)
+            if (e is TaskDialogShowingEventArgs taskArgs)
+                taskArgs.OverrideResult(1); // 1 = IDOK
+            else
+                e.OverrideResult(1);
+        }
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            UIApplication uiApp = uiDoc.Application;
+
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            // 1. Resolve Service & ViewModel
-            var service = ServiceLocator.GetRequiredService<IFamilyConversionService>();
-            var viewModel = ServiceLocator.GetRequiredService<ConvertFamilyViewModel>();
-            
-            // 2. Show UI
-            var view = ServiceLocator.CreateWith<ConvertFamilyView>(viewModel, uiDoc);
-            
-             // Set owner to Revit window
-            System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
-
-            bool? result = view.ShowDialog();
-
-            if (result == true && viewModel.ShouldRun && viewModel.SelectedRefs.Any())
+            try
             {
-                // 3. Execute Conversion via Service
-                ShowLogWindow("Converting Families...");
-                
-                var instances = viewModel.SelectedRefs
+                // Subscribe to auto-dismiss ALL Revit dialogs during conversion
+                uiApp.DialogBoxShowing += OnDialogShowing;
+
+                var service = ServiceLocator.GetRequiredService<IFamilyConversionService>();
+
+                // 1. Get Selection
+                var selectedRefs = new List<Reference>();
+                var preSelectionIds = uiDoc.Selection.GetElementIds();
+
+                if (preSelectionIds.Any())
+                {
+                    selectedRefs = preSelectionIds.Select(id => new Reference(doc.GetElement(id))).ToList();
+                }
+                else
+                {
+                    // Unsubscribe temporarily so the pick dialog works
+                    uiApp.DialogBoxShowing -= OnDialogShowing;
+                    try
+                    {
+                        var filter = new LECG.Utils.FamilyInstanceFilter();
+                        var refs = uiDoc.Selection.PickObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, filter, "Select hosted family instances to convert.");
+                        selectedRefs.AddRange(refs);
+                    }
+                    catch (Autodesk.Revit.Exceptions.OperationCanceledException)
+                    {
+                        return;
+                    }
+                    finally
+                    {
+                        // Re-subscribe after picking
+                        uiApp.DialogBoxShowing += OnDialogShowing;
+                    }
+                }
+
+                if (!selectedRefs.Any())
+                {
+                    Log("No valid FamilyInstance elements selected.");
+                    return;
+                }
+
+                // 2. Prepare instances
+                var instances = selectedRefs
                     .Select(r => doc.GetElement(r) as FamilyInstance)
                     .Where(i => i != null)
                     .Cast<FamilyInstance>()
                     .ToList();
 
-                if (instances.Any())
-                {
-                    var reporter = new SimpleProgressReporter((report) => 
-                    {
-                        Log(report.Message);
-                    });
+                ShowLogWindow("Converting Families...");
+                Log("--- 1-Click Seamless Conversion Started ---");
+                Log($"Processing {instances.Count} selected instances.");
 
-                    service.ConvertFamilyBatch(
-                        doc, 
-                        instances, 
-                        viewModel.NewFamilyName, 
-                        viewModel.TemplatePath, 
-                        viewModel.IsTemporary,
-                        viewModel.ReplaceInPlace,
-                        reporter
-                    );
-                }
+                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+
+                // 3. Execute Batch
+                service.ConvertFamilyBatch(doc, instances, customName: "", templatePath: "", isTemporary: false, replaceInPlace: true, reporter);
+
+                Log("--- Conversion Sequence Completed ---");
+            }
+            finally
+            {
+                // ALWAYS unsubscribe
+                uiApp.DialogBoxShowing -= OnDialogShowing;
             }
         }
     }

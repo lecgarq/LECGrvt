@@ -17,24 +17,6 @@ namespace LECG.Services
         private readonly IMaterialPbrService _materialPbrService;
         private readonly IMaterialAssignmentExecutionService _materialAssignmentExecutionService;
 
-        public MaterialService() : this(
-            new RenderAppearanceService(),
-            new MaterialTypeAssignmentService(),
-            new MaterialCreationService(),
-            new MaterialColorSequenceService(),
-            new MaterialPbrService(),
-            new MaterialAssignmentExecutionService(
-                new MaterialElementGroupingService(),
-                new MaterialAssignmentProgressService(),
-                new MaterialElementTypeResolverService(),
-                new MaterialTypeAssignmentProcessService(
-                    new MaterialColorSequenceService(),
-                    new MaterialCreationService(),
-                    new MaterialTypeAssignmentService(),
-                    new MaterialTypeEligibilityService())))
-        {
-        }
-
         public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService, IMaterialAssignmentExecutionService materialAssignmentExecutionService)
         {
             _renderAppearanceService = renderAppearanceService;
@@ -60,14 +42,24 @@ namespace LECG.Services
             return _materialTypeAssignmentService.AssignMaterialToType(doc, type, materialId, logCallback);
         }
 
+        public void SyncWithRenderAppearance(Document doc, Material mat, IProgressReporter reporter)
+        {
+            _renderAppearanceService.SyncWithRenderAppearance(doc, mat, reporter);
+        }
+
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
         {
-            _renderAppearanceService.SyncWithRenderAppearance(doc, mat, logCallback);
+            _renderAppearanceService.SyncWithRenderAppearance(doc, mat, new LegacyProgressReporter(logCallback: logCallback));
+        }
+
+        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, IProgressReporter reporter)
+        {
+            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, reporter);
         }
 
         public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
-            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, logCallback, progressCallback);
+            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, new LegacyProgressReporter(progressCallback, logCallback));
         }
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)
@@ -75,9 +67,14 @@ namespace LECG.Services
             return _materialPbrService.CreatePBRMaterial(doc, name, folderPath, logCallback);
         }
 
+        public void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter)
+        {
+            _materialAssignmentExecutionService.AssignMaterialsToElements(doc, elements, reporter);
+        }
+
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
         {
-            _materialAssignmentExecutionService.AssignMaterialsToElements(doc, elements, logCallback, progressCallback);
+            _materialAssignmentExecutionService.AssignMaterialsToElements(doc, elements, new LegacyProgressReporter(progressCallback, logCallback));
         }
     }
 }

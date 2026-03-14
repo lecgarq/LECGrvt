@@ -4,24 +4,26 @@ using LECG.ViewModels.Components;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Core;
-using System;
 
 namespace LECG.ViewModels
 {
-    public partial class ResetSlabsVM : BaseViewModel
+    public partial class OffsetElevationsViewModel : BaseViewModel
     {
         [ObservableProperty]
-        private bool _duplicateElements;
+        [NotifyPropertyChangedFor(nameof(CanRun))]
+        private double _offsetValue = 0.0;
+        
+        [ObservableProperty]
+        private bool _isAddition = true;
 
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public IList<Reference> SelectedRefs { get; private set; } = new List<Reference>();
         
-        public bool ShouldRun { get; private set; }
-        public bool CanRun => Selection.HasSelection;
+        public bool CanRun => Selection.HasSelection && OffsetValue >= 0;
 
-        public ResetSlabsVM()
+        public OffsetElevationsViewModel()
         {
-            Title = "RESET SLABS";
+            Title = "OFFSET ELEVATIONS";
             Selection.ElementName = "Elements";
             Selection.Filter = new SelectionFilters.SlabFilter();
             
@@ -36,16 +38,23 @@ namespace LECG.ViewModels
             Selection.UpdateSelection(refs.Count);
         }
 
-        protected override void Apply()
+        [RelayCommand]
+        private void ExecuteAdd()
         {
-            ShouldRun = true;
-            CloseAction?.Invoke();
+            IsAddition = true;
+            Run();
         }
 
-        protected override void Cancel()
+        [RelayCommand]
+        private void ExecuteSubtract()
         {
-            ShouldRun = false;
-            CloseAction?.Invoke();
+            IsAddition = false;
+            Run();
+        }
+
+        private void Run()
+        {
+            Apply();
         }
     }
 }

@@ -8,10 +8,6 @@ namespace LECG.Services
     {
         private readonly ICadPointFlattenService _cadPointFlattenService;
 
-        public CadCurveTessellationService() : this(new CadPointFlattenService())
-        {
-        }
-
         public CadCurveTessellationService(ICadPointFlattenService cadPointFlattenService)
         {
             _cadPointFlattenService = cadPointFlattenService;
@@ -34,7 +30,8 @@ namespace LECG.Services
                 XYZ p2 = _cadPointFlattenService.Flatten(points[i + 1]);
                 if (p1.DistanceTo(p2) >= 0.005)
                 {
-                    try { lines.Add(Line.CreateBound(p1, p2)); } catch { }
+                    try { lines.Add(Line.CreateBound(p1, p2)); } 
+                    catch (Exception ex) { Logging.Logger.Instance.LogWarning($"[CadCurveTessellationService] Line creation failed: {ex.Message}"); }
                 }
             }
 

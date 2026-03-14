@@ -1,11 +1,10 @@
-using System;
 using Autodesk.Revit.DB;
-using LECG.ViewModels;
+using LECG.Models;
 
 namespace LECG.Services.Interfaces
 {
     public interface ISexySunSettingsService
     {
-        void Apply(View view, SexyRevitViewModel settings, Action<string> log, Action<double, string> progress);
+        void Apply(View view, SexyRevitSettings settings, IProgressReporter reporter);
     }
 }

@@ -15,6 +15,21 @@ namespace LECG.Services
             idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(FreeFormElement)).ToElementIds());
             idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(GeomCombination)).ToElementIds());
             idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(FamilyInstance)).ToElementIds());
+            idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(ReferencePlane)).ToElementIds());
+
+            // Collect dimensions (parametric constraints linking geometry to reference planes)
+            idsToCopy.AddRange(new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(Dimension)).ToElementIds());
+
+            // Safely collect curves, explicitly avoiding internal SketchLines which crash geometry transfer
+            var curves = new FilteredElementCollector(sourceFamilyDoc).OfClass(typeof(CurveElement)).ToElements();
+            foreach (var element in curves)
+            {
+                if (element.Category != null && element.Category.Id.Value == (long)BuiltInCategory.OST_SketchLines)
+                {
+                    continue; // Skip sketch lines belonging to extrusions/sweeps
+                }
+                idsToCopy.Add(element.Id);
+            }
 
             return idsToCopy;
         }

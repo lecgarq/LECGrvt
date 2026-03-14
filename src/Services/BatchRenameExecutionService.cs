@@ -8,11 +8,24 @@ namespace LECG.Services
 {
     public class BatchRenameExecutionService : IBatchRenameExecutionService
     {
+        private readonly ITransactionService _transactionService;
+
+        public BatchRenameExecutionService(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
+
         public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, Action<double, string>? onProgress = null)
+        {
+            return ExecuteBatchRename(doc, items, logger, new LegacyProgressReporter(onProgress, logger.Log));
+        }
+
+        public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(items);
             ArgumentNullException.ThrowIfNull(logger);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             int count = 0;
             int total = items.Count;
@@ -34,10 +47,8 @@ namespace LECG.Services
             // 1. Process Standard Items (Transaction Required)
             if (standardItems.Count > 0)
             {
-                using (Transaction t = new Transaction(doc, "Batch Rename"))
+                _transactionService.Run(doc, "Batch Rename", currentDoc =>
                 {
-                    t.Start();
-
                     foreach (var item in standardItems)
                     {
                         current++;
@@ -46,13 +57,13 @@ namespace LECG.Services
                         if (!item.IsChecked) continue;
 
                         ElementId id = new ElementId(item.ElementId);
-                        Element el = doc.GetElement(id);
+                        Element el = currentDoc.GetElement(id);
 
                         if (el != null)
                         {
                             try
                             {
-                                onProgress?.Invoke(percent, $"Processing {item.ElementName}...");
+                                reporter.Report($"Processing {item.ElementName}...", percent);
 
                                 if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
 
@@ -72,7 +83,7 @@ namespace LECG.Services
                                         // Fallback: Attempt destructive "Swap & Delete" strategy
                                         if (gs.GraphicsStyleCategory != null)
                                         {
-                                            bool swapped = SwapStyle(doc, gs, item.NewValue, logger);
+                                            bool swapped = SwapStyle(currentDoc, gs, item.NewValue, logger);
                                             if (swapped)
                                             {
                                                 count++;
@@ -110,9 +121,7 @@ namespace LECG.Services
                             }
                         }
                     }
-
-                    t.Commit();
-                }
+                });
             }
 
             // 2. Process Family Parameters (No Main Transaction - Uses EditFamily)
@@ -148,7 +157,7 @@ namespace LECG.Services
                         continue;
                     }
 
-                    onProgress?.Invoke(percent, $"Processing Family '{family.Name}'...");
+                    reporter.Report($"Processing Family '{family.Name}'...", percent);
 
                     try
                     {
@@ -160,10 +169,8 @@ namespace LECG.Services
                         }
 
                         int renamedInFamily = 0;
-                        using (Transaction tFam = new Transaction(famDoc, "Rename Parameters"))
+                        bool committed = _transactionService.RunConditional(famDoc, "Rename Parameters", _ =>
                         {
-                            tFam.Start();
-
                             FamilyManager mgr = famDoc.FamilyManager;
 
                             foreach (var item in kvp.Value)
@@ -198,15 +205,11 @@ namespace LECG.Services
                                     logger.Log($"Skipped: Param '{item.OriginalValue}' not found in family '{family.Name}'.");
                                 }
                             }
-
-                            if (renamedInFamily > 0)
-                                tFam.Commit();
-                            else
-                                tFam.RollBack();
-                        }
+                            return renamedInFamily > 0;
+                        });
 
                         // Reload ONCE after all parameters are renamed in this family
-                        if (renamedInFamily > 0)
+                        if (committed)
                             famDoc.LoadFamily(doc, new OverwriteFamilyOption());
 
                         famDoc.Close(false);
@@ -219,7 +222,7 @@ namespace LECG.Services
             }
 
             logger.LogSuccess($"Batch rename complete. Modified {count} elements.");
-            onProgress?.Invoke(100, "Done");
+            reporter.Report("Done", 100);
 
             return count;
         }
@@ -249,8 +252,8 @@ namespace LECG.Services
 
                 // 2. Copy Properties
                 newCat.LineColor = oldCat.LineColor;
-                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Projection); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Projection); } catch { }
-                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Cut); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Cut); } catch { }
+                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Projection); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Projection); } catch (Exception ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set projection line weight: {ex.Message}"); }
+                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Cut); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Cut); } catch (Exception ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set cut line weight: {ex.Message}"); }
                 
                 // 3. Find Elements using the OLD style (CurveElements mostly)
                 // Note: This is simplified and mainly targets Line Styles (Model/Detail Lines)

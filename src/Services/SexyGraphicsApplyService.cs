@@ -1,8 +1,7 @@
-using System;
 using Autodesk.Revit.DB;
 using LECG.Core.Graphics;
+using LECG.Models;
 using LECG.Services.Interfaces;
-using LECG.ViewModels;
 
 namespace LECG.Services
 {
@@ -10,21 +9,19 @@ namespace LECG.Services
     {
         public void Apply(
             IViewGraphicsFacade view,
-            SexyRevitViewModel settings,
-            Action<string> log,
-            Action<double, string> progress)
+            SexyRevitSettings settings,
+            IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(settings);
-            ArgumentNullException.ThrowIfNull(log);
-            ArgumentNullException.ThrowIfNull(progress);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             var decision = SexyRevitGraphicsPolicy.Evaluate(
                 new SexyRevitGraphicsSettings(settings.UseConsistentColors, settings.UseDetailFine));
 
             if (!decision.ShouldApply) return;
 
-            progress(10, "Applying sexy graphics...");
+            reporter.Report("Applying sexy graphics...", 10);
 
             try
             {
@@ -35,12 +32,12 @@ namespace LECG.Services
             }
             catch
             {
-                log("  Could not set display style");
+                reporter.LogWarning("  Could not set display style");
             }
 
             foreach (var message in decision.Messages)
             {
-                log(message);
+                reporter.Log(message);
             }
 
             if (decision.DetailLevel == CoreDetailLevel.Fine)

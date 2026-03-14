@@ -30,7 +30,7 @@ namespace LECG.Configuration
         public static bool IsBuiltInLineStyle(string name)
         {
             ArgumentNullException.ThrowIfNull(name);
-            return name.StartsWith("<") || name.EndsWith(">") || BuiltInLineStyles.Contains(name);
+            return (name.StartsWith("<") && name.EndsWith(">")) || BuiltInLineStyles.Contains(name);
         }
 
         public static bool IsBuiltInMaterial(string name)

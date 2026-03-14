@@ -16,6 +16,11 @@ namespace LECG.Configuration
         public const string ButtonClean_Text = "Clean\nSchemas";
         public const string ButtonClean_Tooltip = "Remove third-party plugin schemas from the project";
 
+        // Compacting Styles
+        public const string ButtonCompactingStyles_Name = "cmdCompactingStyles";
+        public const string ButtonCompactingStyles_Text = "Compact\nStyles";
+        public const string ButtonCompactingStyles_Tooltip = "Normalize duplicated line, fill, and text styles into new canonical definitions.";
+
         // Home
         public const string ButtonHome_Name = "cmdHome";
         public const string ButtonHome_Text = "Home";
@@ -29,7 +34,7 @@ namespace LECG.Configuration
         // Purge
         public const string ButtonPurge_Name = "cmdPurge";
         public const string ButtonPurge_Text = "Purge\nUnused";
-        public const string ButtonPurge_Tooltip = "Purge unused line styles, fill patterns, and materials";
+        public const string ButtonPurge_Tooltip = "Purge unused line styles, line patterns, fill patterns, and materials";
 
         // Render Appearance Match
         public const string ButtonRenderMatch_Name = "btnRenderMatch";

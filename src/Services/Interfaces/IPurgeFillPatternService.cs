@@ -6,5 +6,6 @@ namespace LECG.Services.Interfaces
     public interface IPurgeFillPatternService
     {
         int PurgeUnusedFillPatterns(Document doc, Action<string>? logCallback = null);
+        int PurgeUnusedFillPatterns(Document doc, PurgeContext context, Action<string>? logCallback = null);
     }
 }

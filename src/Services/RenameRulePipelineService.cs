@@ -1,21 +1,21 @@
 using LECG.Services.Interfaces;
-using LECG.ViewModels;
+using LECG.Models;
 
 namespace LECG.Services
 {
     public class RenameRulePipelineService : IRenameRulePipelineService
     {
-        public string ApplyRules(string text, SearchReplaceViewModel vm, int index)
+        public string ApplyRules(string text, RenameRuleContext context, int index)
         {
             ArgumentNullException.ThrowIfNull(text);
-            ArgumentNullException.ThrowIfNull(vm);
+            ArgumentNullException.ThrowIfNull(context);
 
             string result = text;
-            result = vm.RemoveRule.Apply(result, index);
-            result = vm.ReplaceRule.Apply(result, index);
-            result = vm.CaseRule.Apply(result, index);
-            result = vm.AddRule.Apply(result, index);
-            result = vm.NumberingRule.Apply(result, index);
+            result = context.RemoveRule.Apply(result, index);
+            result = context.ReplaceRule.Apply(result, index);
+            result = context.CaseRule.Apply(result, index);
+            result = context.AddRule.Apply(result, index);
+            result = context.NumberingRule.Apply(result, index);
             return result;
         }
     }

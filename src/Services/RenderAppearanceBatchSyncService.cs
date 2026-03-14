@@ -12,17 +12,20 @@ namespace LECG.Services
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialSyncExecutionService _syncExecutionService;
         private readonly IRenderBatchProgressService _renderBatchProgressService;
+        private readonly ITransactionService _transactionService;
 
         public RenderAppearanceBatchSyncService(
             IRenderAppearanceRefreshService refreshService,
             IRenderSolidFillPatternService solidFillPatternService,
             IRenderMaterialSyncExecutionService syncExecutionService,
-            IRenderBatchProgressService renderBatchProgressService)
+            IRenderBatchProgressService renderBatchProgressService,
+            ITransactionService transactionService)
         {
             _refreshService = refreshService;
             _solidFillPatternService = solidFillPatternService;
             _syncExecutionService = syncExecutionService;
             _renderBatchProgressService = renderBatchProgressService;
+            _transactionService = transactionService;
         }
 
         public void BatchSync(
@@ -30,6 +33,14 @@ namespace LECG.Services
             IEnumerable<Material> materials,
             Action<string>? logCallback = null,
             Action<double, string>? progressCallback = null)
+        {
+            BatchSync(doc, materials, new LegacyProgressReporter(progressCallback, logCallback));
+        }
+
+        public void BatchSync(
+            Document doc,
+            IEnumerable<Material> materials,
+            IProgressReporter reporter)
         {
             var matsList = materials.ToList();
             if (!matsList.Any()) return;
@@ -39,14 +50,12 @@ namespace LECG.Services
             int skipped = 0;
             int updated = 0;
 
-            logCallback?.Invoke($"Analyzing {total} materials...");
-            progressCallback?.Invoke(0, "Analyzing materials...");
+            reporter.Log($"Analyzing {total} materials...");
+            reporter.Report("Analyzing materials...", 0);
 
-            using (Transaction t = new Transaction(doc, "Sync Render Appearance"))
+            _transactionService.Run(doc, "Sync Render Appearance", _ =>
             {
-                t.Start();
-
-                _refreshService.Refresh(doc, matsList, logCallback);
+                _refreshService.Refresh(doc, matsList, reporter.Log);
 
                 ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
 
@@ -55,7 +64,7 @@ namespace LECG.Services
                     processed++;
                     if (_renderBatchProgressService.ShouldReport(processed))
                     {
-                        progressCallback?.Invoke(_renderBatchProgressService.ToPercent(processed, total), $"Processing: {mat.Name}");
+                        reporter.Report($"Processing: {mat.Name}", _renderBatchProgressService.ToPercent(processed, total));
                     }
 
                     if (!_syncExecutionService.TrySync(mat, solidId))
@@ -66,12 +75,10 @@ namespace LECG.Services
 
                     updated++;
                 }
+            });
 
-                t.Commit();
-            }
-
-            logCallback?.Invoke($"Sync Complete: {updated} updated, {skipped} skipped.");
-            progressCallback?.Invoke(100, "Done");
+            reporter.Log($"Sync Complete: {updated} updated, {skipped} skipped.");
+            reporter.Report("Done", 100);
         }
     }
 }

@@ -29,15 +29,13 @@ namespace LECG.ViewModels
         public Action<string>? OnLog { get; set; }
         public Action? OnShowLog { get; set; }
         public Document? Doc { get; set; }
-        public LECG.Services.Interfaces.IFamilyEditorService? FamilyService { get; set; }
-
+        public LECG.Services.Interfaces.IFamilyEditorService FamilyService { get; }
         public Action? RequestRun { get; set; }
-
-        public bool ShouldRun { get; private set; }
         public bool CanRun => Selection.HasSelection && SelectedCategory != null;
 
-        public CategoryChangerViewModel()
+        public CategoryChangerViewModel(LECG.Services.Interfaces.IFamilyEditorService familyService)
         {
+            FamilyService = familyService ?? throw new ArgumentNullException(nameof(familyService));
             Title = "CATEGORY CHANGER [V6-EVENT]";
             Selection.ElementName = "Family Instances";
 
@@ -48,7 +46,7 @@ namespace LECG.ViewModels
             };
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
             try
             {
@@ -100,7 +98,7 @@ namespace LECG.ViewModels
             OnPropertyChanged(nameof(CanRun));
         }
 
-        protected override void Cancel()
+        public override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

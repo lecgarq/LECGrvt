@@ -13,63 +13,47 @@ using System.Linq;
 namespace LECG.Commands
 {
     [Transaction(TransactionMode.Manual)]
-    public class ConvertCadCommand : RevitCommand
+    public class ConvertCadCommand : ExternalEventCommand<ConvertCadEventHandler>
     {
         protected override string? TransactionName => null; // Internal transactions used
-
-        private static ExternalEvent _externalEvent;
-        private static ConvertCadEventHandler _handler;
 
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            try
+            var service = ServiceLocator.GetRequiredService<ICadConversionService>();
+            var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
+            var viewModel = ServiceLocator.GetRequiredService<ConvertCadViewModel>();
+
+            ConvertCadEventHandler handler = GetOrCreateHandler();
+            handler.Initialize(viewModel, service, transactionService);
+
+            // Initialize ViewModel with Selection
+            var selId = uiDoc.Selection.GetElementIds();
+            if (selId.Count == 1)
             {
-                var service = ServiceLocator.GetRequiredService<ICadConversionService>();
-                var viewModel = ServiceLocator.GetRequiredService<ConvertCadViewModel>();
-
-                // Setup Handler and Event (Ensuring they persist)
-                if (_handler == null)
-                {
-                    _handler = new ConvertCadEventHandler();
-                    _externalEvent = ExternalEvent.Create(_handler);
-                }
-
-                _handler.Initialize(viewModel, service);
-
-                // Initialize ViewModel with Selection
-                var selId = uiDoc.Selection.GetElementIds();
-                if (selId.Count == 1)
-                {
-                    Element e = doc.GetElement(selId.First());
-                    if (e is ImportInstance) viewModel.SetSelection(e);
-                }
-
-                // Attach Event triggers to ViewModel
-                viewModel.RunOperation = () => 
-                {
-                    _handler.RequestOperation(CadOpType.Convert);
-                    _externalEvent.Raise();
-                };
-
-                viewModel.PlaceOperation = () =>
-                {
-                    _handler.RequestOperation(CadOpType.Place);
-                    _externalEvent.Raise();
-                };
-
-                // STEP 1: CONFIGURATION (Non-modal)
-                var view = ServiceLocator.CreateWith<ConvertCadView>(viewModel, uiDoc);
-                new System.Windows.Interop.WindowInteropHelper(view).Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
-                
-                view.Show();
+                Element e = doc.GetElement(selId.First());
+                if (e is ImportInstance) viewModel.SetSelection(e);
             }
-            catch (Exception ex)
+
+            // Attach Event triggers to ViewModel
+            viewModel.RunOperation = () =>
             {
-                System.Windows.MessageBox.Show($"Critical Error: {ex.Message}");
-            }
+                handler.RequestOperation(CadOpType.Convert);
+                RaiseExternalEvent();
+            };
+
+            viewModel.PlaceOperation = () =>
+            {
+                handler.RequestOperation(CadOpType.Place);
+                RaiseExternalEvent();
+            };
+
+            // STEP 1: CONFIGURATION (Non-modal)
+            var view = ServiceLocator.GetRequiredService<ConvertCadView>();
+            view.Initialize(uiDoc);
+            view.Show();
         }
     }
 
@@ -79,12 +63,14 @@ namespace LECG.Commands
     {
         private ConvertCadViewModel _viewModel;
         private ICadConversionService _service;
+        private ITransactionService _transactionService;
         private CadOpType _requestedOp = CadOpType.None;
 
-        public void Initialize(ConvertCadViewModel vm, ICadConversionService svc)
+        public void Initialize(ConvertCadViewModel vm, ICadConversionService svc, ITransactionService transactionService)
         {
             _viewModel = vm;
             _service = svc;
+            _transactionService = transactionService;
         }
 
         public void RequestOperation(CadOpType op) => _requestedOp = op;
@@ -113,7 +99,7 @@ namespace LECG.Commands
             {
                 _viewModel.AddLog($"FATAL ERROR [{ex.GetType().Name}]: {ex.Message}");
                 _viewModel.IsBusy = false;
-                TaskDialog.Show("LECG - Operation Failed", "An internal error occurred: " + ex.Message + "\n\nPlease check the logs for details.");
+                _viewModel.AddLog("Operation failed. Review the log for details.");
             }
             finally
             {
@@ -130,21 +116,23 @@ namespace LECG.Commands
             var mColor = _viewModel.LineColor;
             var rColor = new Autodesk.Revit.DB.Color(mColor.R, mColor.G, mColor.B);
             ElementId createdId = ElementId.InvalidElementId;
-
-            Action<double, string> progressCallback = (pct, msg) => 
+            var reporter = new SimpleProgressReporter(report =>
             {
-                _viewModel.Progress = pct;
-                _viewModel.AddLog(msg);
-            };
+                _viewModel.Progress = report.Percentage;
+                if (!string.IsNullOrWhiteSpace(report.Message))
+                {
+                    _viewModel.AddLog(report.Message);
+                }
+            });
 
             if (_viewModel.UseSelectedImport)
             {
                 Element e = doc.GetElement(_viewModel.SelectedElementId);
-                createdId = _service.ConvertCadToFamily(doc, (ImportInstance)e, _viewModel.NewFamilyName, _viewModel.TemplatePath, _viewModel.LineStyleName, rColor, _viewModel.LineWeight, progressCallback);
+                createdId = _service.ConvertCadToFamily(doc, (ImportInstance)e, _viewModel.NewFamilyName, _viewModel.TemplatePath, _viewModel.LineStyleName, rColor, _viewModel.LineWeight, reporter);
             }
             else
             {
-                createdId = _service.ConvertDwgToFamily(doc, _viewModel.DwgFilePath, _viewModel.NewFamilyName, _viewModel.TemplatePath, _viewModel.LineStyleName, rColor, _viewModel.LineWeight, progressCallback);
+                createdId = _service.ConvertDwgToFamily(doc, _viewModel.DwgFilePath, _viewModel.NewFamilyName, _viewModel.TemplatePath, _viewModel.LineStyleName, rColor, _viewModel.LineWeight, reporter);
             }
 
             _viewModel.CreatedFamilySymbolId = createdId;
@@ -165,19 +153,14 @@ namespace LECG.Commands
             // Detail items (2D) cannot be placed in 3D views.
             if (uiDoc.ActiveView.ViewType == ViewType.ThreeD)
             {
-                TaskDialog.Show("Placement Error", "Detail items can only be placed in 2D views.");
+                _viewModel.AddLog("Placement failed: detail items can only be placed in 2D views.");
                 return;
             }
 
             // Ensure symbol is active
             if (!symbol.IsActive)
             {
-                using (Transaction t = new Transaction(doc, "Activate Symbol"))
-                {
-                    t.Start();
-                    symbol.Activate();
-                    t.Commit();
-                }
+                _transactionService.Run(doc, "Activate Symbol", _ => symbol.Activate());
             }
 
             try 
@@ -188,7 +171,7 @@ namespace LECG.Commands
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Placement Failed", ex.Message);
+                _viewModel.AddLog($"Placement failed: {ex.Message}");
             }
         }
 

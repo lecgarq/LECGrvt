@@ -12,8 +12,6 @@ namespace LECG.ViewModels
     {
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         
-        public bool ShouldRun { get; private set; }
-
         // Helper for View to inject results
         public IList<Reference> SelectedRefs { get; private set; } = new List<Reference>();
 
@@ -36,13 +34,13 @@ namespace LECG.ViewModels
             Selection.UpdateSelection(refs.Count);
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        protected override void Cancel()
+        public override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

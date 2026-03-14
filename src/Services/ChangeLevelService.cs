@@ -8,14 +8,12 @@ namespace LECG.Services
     public class ChangeLevelService : IChangeLevelService
     {
         private readonly IChangeLevelElementUpdateService _changeLevelElementUpdateService;
+        private readonly ITransactionService _transactionService;
 
-        public ChangeLevelService() : this(new ChangeLevelElementUpdateService())
-        {
-        }
-
-        public ChangeLevelService(IChangeLevelElementUpdateService changeLevelElementUpdateService)
+        public ChangeLevelService(IChangeLevelElementUpdateService changeLevelElementUpdateService, ITransactionService transactionService)
         {
             _changeLevelElementUpdateService = changeLevelElementUpdateService;
+            _transactionService = transactionService;
         }
 
         public List<Level> GetLevels(Document doc)
@@ -34,17 +32,13 @@ namespace LECG.Services
 
             if (newLevel == null) return;
 
-            using (Transaction t = new Transaction(doc, "Change Element Level"))
+            _transactionService.Run(doc, "Change Element Level", currentDoc =>
             {
-                t.Start();
-                
                 foreach (var elem in elements)
                 {
-                    _changeLevelElementUpdateService.UpdateElementLevel(doc, elem, newLevel);
+                    _changeLevelElementUpdateService.UpdateElementLevel(currentDoc, elem, newLevel);
                 }
-
-                t.Commit();
-            }
+            });
         }
     }
 }

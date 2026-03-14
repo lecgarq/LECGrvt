@@ -20,7 +20,8 @@ namespace LECG.Services
                 
                 if (p1.DistanceTo(p2) >= 0.005)
                 {
-                    try { result.Add(Line.CreateBound(p1, p2)); } catch { }
+                    try { result.Add(Line.CreateBound(p1, p2)); } 
+                    catch (Exception ex) { Logging.Logger.Instance.LogWarning($"[CadPolylineExtractionService] Line creation failed: {ex.Message}"); }
                 }
             }
 

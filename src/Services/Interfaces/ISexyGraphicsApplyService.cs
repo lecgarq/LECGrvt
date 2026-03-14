@@ -1,5 +1,4 @@
-using System;
-using LECG.ViewModels;
+using LECG.Models;
 
 namespace LECG.Services.Interfaces
 {
@@ -7,8 +6,7 @@ namespace LECG.Services.Interfaces
     {
         void Apply(
             IViewGraphicsFacade view,
-            SexyRevitViewModel settings,
-            Action<string> log,
-            Action<double, string> progress);
+            SexyRevitSettings settings,
+            IProgressReporter reporter);
     }
 }

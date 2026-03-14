@@ -7,7 +7,6 @@ using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using System.Linq;
-using System.Windows.Interop;
 using System.Collections.Generic;
 
 namespace LECG.Commands
@@ -78,11 +77,11 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             var service = ServiceLocator.GetRequiredService<IAlignElementsService>();
-            var vm = ServiceLocator.CreateWith<AlignElementsViewModel>(service, Mode);
-            var view = ServiceLocator.CreateWith<AlignElementsView>(vm, uiDoc);
+            var vm = ServiceLocator.GetRequiredService<AlignElementsViewModel>();
+            vm.Initialize(Mode);
 
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            var view = ServiceLocator.GetRequiredService<AlignElementsView>();
+            view.Initialize(uiDoc);
 
             bool? result = view.ShowDialog();
 

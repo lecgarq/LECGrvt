@@ -12,58 +12,62 @@ namespace LECG.Services
         private readonly IMaterialAssignmentProgressService _materialAssignmentProgressService;
         private readonly IMaterialElementTypeResolverService _materialElementTypeResolverService;
         private readonly IMaterialTypeAssignmentProcessService _materialTypeAssignmentProcessService;
+        private readonly ITransactionService _transactionService;
 
         public MaterialAssignmentExecutionService(
             IMaterialElementGroupingService materialElementGroupingService,
             IMaterialAssignmentProgressService materialAssignmentProgressService,
             IMaterialElementTypeResolverService materialElementTypeResolverService,
-            IMaterialTypeAssignmentProcessService materialTypeAssignmentProcessService)
+            IMaterialTypeAssignmentProcessService materialTypeAssignmentProcessService,
+            ITransactionService transactionService)
         {
             _materialElementGroupingService = materialElementGroupingService;
             _materialAssignmentProgressService = materialAssignmentProgressService;
             _materialElementTypeResolverService = materialElementTypeResolverService;
             _materialTypeAssignmentProcessService = materialTypeAssignmentProcessService;
+            _transactionService = transactionService;
         }
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
         {
+            AssignMaterialsToElements(doc, elements, new LegacyProgressReporter(progressCallback, logCallback));
+        }
+
+        public void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter)
+        {
             if (elements == null || !elements.Any()) return;
 
-            logCallback?.Invoke("ANALYZING SELECTION");
-            progressCallback?.Invoke(10, "Grouping by type...");
+            reporter.Log("ANALYZING SELECTION");
+            reporter.Report("Grouping by type...", 10);
 
             Dictionary<ElementId, List<Element>> elementsByType = _materialElementGroupingService.GroupByType(elements);
 
-            logCallback?.Invoke($"  Found {elementsByType.Count} unique types from {elements.Count} elements.");
-            logCallback?.Invoke("");
-            logCallback?.Invoke("CREATING/UPDATING MATERIALS");
+            reporter.Log($"Found {elementsByType.Count} unique types from {elements.Count} elements.");
+            reporter.Log("");
+            reporter.Log("CREATING/UPDATING MATERIALS");
 
             int processedTypes = 0;
             int totalTypes = elementsByType.Count;
 
-            using (Transaction t = new Transaction(doc, "Assign Material by Type"))
+            _transactionService.Run(doc, "Assign Material by Type", currentDoc =>
             {
-                t.Start();
-
                 foreach (var kvp in elementsByType)
                 {
                     processedTypes++;
                     double pct = _materialAssignmentProgressService.ToProgressPercent(processedTypes, totalTypes);
 
-                    ElementType? elemType = _materialElementTypeResolverService.Resolve(doc, kvp.Key);
+                    ElementType? elemType = _materialElementTypeResolverService.Resolve(currentDoc, kvp.Key);
                     if (elemType == null) continue;
 
-                    progressCallback?.Invoke(pct, $"Processing: {elemType.Name}");
-                    _materialTypeAssignmentProcessService.TryProcess(doc, elemType, kvp.Value.Count, logCallback);
+                    reporter.Report($"Processing: {elemType.Name}", pct);
+                    _materialTypeAssignmentProcessService.TryProcess(currentDoc, elemType, kvp.Value.Count, reporter.Log);
                 }
+            });
 
-                t.Commit();
-            }
-
-            logCallback?.Invoke("");
-            logCallback?.Invoke("COMPLETE");
-            logCallback?.Invoke($"Processed {processedTypes} types.");
-            progressCallback?.Invoke(100, "Done");
+            reporter.Log("");
+            reporter.Log("COMPLETE");
+            reporter.Log($"Processed {processedTypes} types.");
+            reporter.Report("Done", 100);
         }
     }
 }

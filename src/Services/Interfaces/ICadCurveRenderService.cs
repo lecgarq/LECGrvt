@@ -12,6 +12,18 @@ namespace LECG.Services.Interfaces
             Transform toOrigin,
             View planView,
             GraphicsStyle lineStyle,
+            IProgressReporter reporter,
+            double startPct,
+            double endPct,
+            int total,
+            int current);
+
+        int DrawCurves(
+            Document familyDoc,
+            IList<Curve> curves,
+            Transform toOrigin,
+            View planView,
+            GraphicsStyle lineStyle,
             Action<double, string>? progress,
             double startPct,
             double endPct,

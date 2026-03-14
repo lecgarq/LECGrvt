@@ -6,20 +6,27 @@ namespace LECG.Services
 {
     public class PurgeReferencedLevelService : IPurgeReferencedLevelService
     {
-        private readonly IPurgeReferenceScannerService _referenceScanner;
-
         public PurgeReferencedLevelService(IPurgeReferenceScannerService referenceScanner)
         {
-            _referenceScanner = referenceScanner;
         }
 
         public HashSet<ElementId> CollectReferencedLevelIds(Document doc, HashSet<ElementId> validLevelIds)
         {
-            var referencedLevelIds = new HashSet<ElementId>();
+            return CollectReferencedLevelIds(PurgeContext.Create(doc), validLevelIds);
+        }
 
-            foreach (Element inst in new FilteredElementCollector(doc).WhereElementIsNotElementType())
+        public HashSet<ElementId> CollectReferencedLevelIds(PurgeContext context, HashSet<ElementId> validLevelIds)
+        {
+            ArgumentNullException.ThrowIfNull(context);
+            ArgumentNullException.ThrowIfNull(validLevelIds);
+
+            var referencedLevelIds = new HashSet<ElementId>();
+            foreach (ElementId referencedId in context.ParameterReferencedIds)
             {
-                _referenceScanner.CollectUsedIds(inst, validLevelIds, referencedLevelIds);
+                if (validLevelIds.Contains(referencedId))
+                {
+                    referencedLevelIds.Add(referencedId);
+                }
             }
 
             return referencedLevelIds;

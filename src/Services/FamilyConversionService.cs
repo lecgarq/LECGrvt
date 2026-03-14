@@ -1,4 +1,5 @@
 using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using LECG.Services.Interfaces;
 using LECG.Models;
 using LECG.Utils;
@@ -16,12 +17,17 @@ namespace LECG.Services
         private readonly IFamilyConversionNamingService _familyConversionNamingService;
         private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
         private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
+        private readonly ITransactionService _transactionService;
 
-        public FamilyConversionService() : this(new FamilyTemplatePathService(), new FamilySourceDocumentService(), new FamilyConversionExecutionService(new FamilyTargetDocumentService(), new FamilyGeometryCopyService(new FamilyGeometryCollectionService(), new FamilyParameterSetupService()), new FamilySaveLoadService(new FamilySaveService(), new FamilyProjectLoadService(new FamilyLoadOptionsFactory()))), new FamilyConversionNamingService(), new FamilyConversionLoggingService(), new FamilyConversionFinalizeService(new FamilyTempFileCleanupService()))
-        {
-        }
 
-        public FamilyConversionService(IFamilyTemplatePathService templatePathService, IFamilySourceDocumentService familySourceDocumentService, IFamilyConversionExecutionService familyConversionExecutionService, IFamilyConversionNamingService familyConversionNamingService, IFamilyConversionLoggingService familyConversionLoggingService, IFamilyConversionFinalizeService familyConversionFinalizeService)
+        public FamilyConversionService(
+            IFamilyTemplatePathService templatePathService,
+            IFamilySourceDocumentService familySourceDocumentService,
+            IFamilyConversionExecutionService familyConversionExecutionService,
+            IFamilyConversionNamingService familyConversionNamingService,
+            IFamilyConversionLoggingService familyConversionLoggingService,
+            IFamilyConversionFinalizeService familyConversionFinalizeService,
+            ITransactionService transactionService)
         {
             _templatePathService = templatePathService;
             _familySourceDocumentService = familySourceDocumentService;
@@ -29,50 +35,13 @@ namespace LECG.Services
             _familyConversionNamingService = familyConversionNamingService;
             _familyConversionLoggingService = familyConversionLoggingService;
             _familyConversionFinalizeService = familyConversionFinalizeService;
+            _transactionService = transactionService;
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
         {
             if (instance == null) return;
-            using (new ExecutionTimer($"Single Conversion: {instance.Symbol.Family.Name}"))
-            {
-                Family sourceFamily = instance.Symbol.Family;
-                string sourceFamilyName = sourceFamily.Name;
-                string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(doc, sourceFamilyName, customName);
-
-                _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
-
-                if (instance.Host != null)
-                {
-                    _familyConversionLoggingService.LogWarning($"The selected family is hosted on {instance.Host.Name}. Hosting may be lost depending on the target template.");
-                }
-
-                Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
-                if (sourceFamilyDoc == null)
-                {
-                    return;
-                }
-
-                Document? targetFamilyDoc = null;
-                string tempFamilyPath = "";
-
-                try
-                {
-                    (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamilyDoc, templatePath, targetFamilyName);
-                    if (targetFamilyDoc == null)
-                    {
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _familyConversionLoggingService.LogCriticalError(ex.Message, ex.StackTrace ?? "");
-                }
-                finally
-                {
-                    _familyConversionFinalizeService.Finalize(sourceFamilyDoc, targetFamilyDoc, tempFamilyPath, isTemporary);
-                }
-            }
+            ConvertFamilyBatch(doc, new[] { instance }, customName, templatePath, isTemporary, true);
         }
 
         public void ConvertFamilyBatch(Document doc, IEnumerable<FamilyInstance> instances, string customName, string templatePath, bool isTemporary, bool replaceInPlace, IProgressReporter? reporter = null)
@@ -84,7 +53,6 @@ namespace LECG.Services
 
             using (new ExecutionTimer($"Batch Conversion: {totalCount} instances"))
             {
-                // Group by family to minimize redundant family document conversions
                 var instancesByFamily = instances.GroupBy(i => i.Symbol.Family.Id);
 
                 foreach (var group in instancesByFamily)
@@ -92,81 +60,103 @@ namespace LECG.Services
                     var firstInstance = group.First();
                     Family sourceFamily = firstInstance.Symbol.Family;
                     string sourceFamilyName = sourceFamily.Name;
-                    string targetFamilyName = _familyConversionNamingService.ResolveTargetFamilyName(doc, sourceFamilyName, customName);
+                    
+                    // Force the name to matching exactly to overwrite existing family definition
+                    string targetFamilyName = sourceFamilyName;
+
+                    string resolvedTemplatePath = templatePath;
+                    if (string.IsNullOrEmpty(resolvedTemplatePath))
+                    {
+                        resolvedTemplatePath = @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English\LECG\-\LECG_070_GENERIC-MODELS.rft";
+                    }
 
                     using (new ExecutionTimer($"Family Group: {sourceFamilyName}"))
                     {
                         reporter?.Report($"Converting Family: {sourceFamilyName}...", (double)currentCount / totalCount * 100);
-                        _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, templatePath, isTemporary);
+                        _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, resolvedTemplatePath, isTemporary: false);
 
+                        // 1. CAPTURE ALL INSTANCES OF THIS FAMILY IN THE ENTIRE PROJECT
+                        var allInstancesOfFamily = new FilteredElementCollector(doc)
+                            .OfClass(typeof(FamilyInstance))
+                            .Cast<FamilyInstance>()
+                            .Where(i => i.Symbol != null && i.Symbol.Family.Id == sourceFamily.Id)
+                            .ToList();
+
+                        var capturedDataList = allInstancesOfFamily.Select(FamilyInstanceData.Capture).ToList();
+                        var oldInstanceIds = allInstancesOfFamily.Select(i => i.Id).ToList();
+                        
+                        // 2. OPEN SOURCE DOCUMENT
                         Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
-                        if (sourceFamilyDoc == null)
-                        {
-                            currentCount += group.Count();
-                            continue;
-                        }
+                        if (sourceFamilyDoc == null) { currentCount += group.Count(); continue; }
 
                         Document? targetFamilyDoc = null;
                         string tempFamilyPath = "";
 
                         try
                         {
-                            (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamilyDoc, templatePath, targetFamilyName);
-                            if (targetFamilyDoc == null)
-                            {
-                                currentCount += group.Count();
-                                continue;
-                            }
-
+                            // 3. DELETE OLD INSTANCES BEFORE EXECUTION
                             if (replaceInPlace)
                             {
-                                using (new ExecutionTimer($"Instance Placement: {group.Count()} items"))
+                                _transactionService.Run(doc, "Delete Old Instances for Conversion", _ =>
                                 {
-                                    Family? newFamily = new FilteredElementCollector(doc)
-                                        .OfClass(typeof(Family))
-                                        .Cast<Family>()
-                                        .FirstOrDefault(f => f.Name == targetFamilyName);
+                                    foreach (var id in oldInstanceIds) { try { doc.Delete(id); } catch (Exception ex) { LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to delete instance {id}: {ex.Message}"); } }
+                                });
+                                LECG.Services.Logging.Logger.Instance.Log($"Cleared {oldInstanceIds.Count} instances from project to unlock native conversion.");
+                            }
 
-                                    if (newFamily != null)
+                            // 4. EXECUTE CONVERSION
+                            (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamily, sourceFamilyDoc, resolvedTemplatePath, targetFamilyName);
+                            
+                            if (targetFamilyDoc != null && replaceInPlace)
+                            {
+                                // 5. FIND NEW SYMBOL
+                                Family? newFamily = new FilteredElementCollector(doc).OfClass(typeof(Family)).Cast<Family>().FirstOrDefault(f => f.Name == targetFamilyName);
+                                if (newFamily != null)
+                                {
+                                    var symbolIds = newFamily.GetFamilySymbolIds();
+                                    FamilySymbol? newSymbol = symbolIds.Any() ? doc.GetElement(symbolIds.First()) as FamilySymbol : null;
+
+                                    if (newSymbol != null)
                                     {
-                                        FamilySymbol? newSymbol = doc.GetElement(newFamily.GetFamilySymbolIds().First()) as FamilySymbol;
-                                        if (newSymbol != null)
+                                        // 6. PLACE NEW UNHOSTED INSTANCES
+                                        _transactionService.RunWithOptions(doc, "Replace Instances", _ =>
                                         {
-                                            using (Transaction t = new Transaction(doc, "Replace Instances"))
+                                            if (!newSymbol.IsActive) newSymbol.Activate();
+
+                                            foreach (var data in capturedDataList)
                                             {
-                                                t.Start();
-                                                if (!newSymbol.IsActive) newSymbol.Activate();
+                                                currentCount++;
+                                                reporter?.Report($"Placing Instance {currentCount} of {totalCount}...", (double)currentCount / totalCount * 100);
+                                                
+                                                try {
+                                                    XYZ loc = data.LocationPoint ?? XYZ.Zero;
+                                                    Level lev = doc.GetElement(data.LevelId) as Level ?? doc.ActiveView?.GenLevel ?? new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();
+                                                    
+                                                    FamilyInstance ni = null;
+                                                    // Strategy A: Standard Level-based placement (Revit handles Work Plane auto-association for unhosted families)
+                                                    try {
+                                                        ni = doc.Create.NewFamilyInstance(loc, newSymbol, lev, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                                                    } 
+                                                    catch {
+                                                    // Strategy B: Pure Point-based fallback
+                                                        try { ni = doc.Create.NewFamilyInstance(loc, newSymbol, Autodesk.Revit.DB.Structure.StructuralType.NonStructural); } 
+                                                        catch (Exception ex2) { LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Placement Strategy B failed: {ex2.Message}"); }
+                                                    }
 
-                                                foreach (var oldInstance in group)
-                                                {
-                                                    currentCount++;
-                                                    reporter?.Report($"Replacing Instance {currentCount} of {totalCount}...", (double)currentCount / totalCount * 100);
-
-                                                    var data = FamilyInstanceData.Capture(oldInstance);
-                                                    FamilyInstance newInstance = doc.Create.NewFamilyInstance(
-                                                        data.LocationPoint,
-                                                        newSymbol,
-                                                        oldInstance.StructuralType);
-
-                                                    data.Apply(newInstance);
-                                                    doc.Delete(oldInstance.Id);
-                                                }
-                                                t.Commit();
+                                                    if (ni != null) 
+                                                    { 
+                                                        data.Apply(ni); 
+                                                        LECG.Services.Logging.Logger.Instance.Log($"  ✓ Instance placed at ({loc.X:F2}, {loc.Y:F2}, {loc.Z:F2})");
+                                                    }
+                                                } catch (Exception ex) { LECG.Services.Logging.Logger.Instance.Log($"  Placement error: {ex.Message}"); }
                                             }
-                                        }
-                                        else
-                                        {
-                                            currentCount += group.Count();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        currentCount += group.Count();
+                                        }, options => options.SetForcedModalHandling(false));
                                     }
                                 }
                             }
-                            else
+                            else if (targetFamilyDoc == null)
                             {
+                                LECG.Services.Logging.Logger.Instance.Log("ERROR: targetFamilyDoc was null. Conversion failed internally.");
                                 currentCount += group.Count();
                             }
                         }
@@ -177,7 +167,7 @@ namespace LECG.Services
                         }
                         finally
                         {
-                            _familyConversionFinalizeService.Finalize(sourceFamilyDoc, targetFamilyDoc, tempFamilyPath, isTemporary);
+                            _familyConversionFinalizeService.Finalize(sourceFamilyDoc, targetFamilyDoc, tempFamilyPath, isTemporary: false);
                         }
                     }
                 }

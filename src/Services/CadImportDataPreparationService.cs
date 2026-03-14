@@ -20,10 +20,15 @@ namespace LECG.Services
 
         public CadData Prepare(Document doc, ImportInstance cadInstance, Action<double, string>? progress = null)
         {
-            progress?.Invoke(10, "Extracting geometry from CAD...");
+            return Prepare(doc, cadInstance, new LegacyProgressReporter(progress));
+        }
+
+        public CadData Prepare(Document doc, ImportInstance cadInstance, IProgressReporter reporter)
+        {
+            reporter.Report("Extracting geometry from CAD...", 10);
             CadData data = _geometryExtractionService.ExtractGeometry(doc, cadInstance);
 
-            progress?.Invoke(30, "Optimizing geometry...");
+            reporter.Report("Optimizing geometry...", 30);
             CadData optimizedData = _geometryOptimizationService.Optimize(data);
 
             _cadDataValidationService.EnsureHasGeometry(optimizedData, "No suitable geometry found in the selected CAD.");

@@ -24,6 +24,7 @@ namespace LECG.Services
             else if (category.Id.Value == (long)BuiltInCategory.OST_Furniture)
                 templateName = "Metric Generic Model.rft";
 
+            // 1. Try LECG Specific
             if (!string.IsNullOrEmpty(templateName) && !templateName.Contains("Generic"))
             {
                 string customPath = $@"C:\ProgramData\Autodesk\RVT {appVersion}\Family Templates\English\LECG\-\{templateName}";
@@ -33,27 +34,47 @@ namespace LECG.Services
                 if (File.Exists(specificPath2026)) return specificPath2026;
             }
 
+            // 2. Try Standard Revit Paths
             string rootPath = app.FamilyTemplatePath;
-            string[] possibleNames = new[] { "Metric Generic Model.rft", "Generic Model.rft" };
-
-            foreach (var name in possibleNames)
+            string[] possibleFiles = new[] { "Metric Generic Model.rft", "Generic Model.rft", "Generic Model.rft" };
+            
+            // Check in root
+            if (Directory.Exists(rootPath))
             {
-                string fullPath = Path.Combine(rootPath, name);
-                if (File.Exists(fullPath)) return fullPath;
-            }
+                foreach (var name in possibleFiles)
+                {
+                    string fullPath = Path.Combine(rootPath, name);
+                    if (File.Exists(fullPath)) return fullPath;
+                }
 
-            try
-            {
-                if (Directory.Exists(rootPath))
+                // Check in subfolders (recursive search)
+                try
                 {
                     var files = Directory.GetFiles(rootPath, "*Generic Model.rft", SearchOption.AllDirectories);
-                    var match = files.FirstOrDefault(f => Path.GetFileName(f).Equals("Metric Generic Model.rft", StringComparison.OrdinalIgnoreCase))
-                                ?? files.FirstOrDefault(f => Path.GetFileName(f).Equals("Generic Model.rft", StringComparison.OrdinalIgnoreCase));
-                    if (match != null) return match;
+                    if (files.Any()) return files.First();
+                }
+                catch (Exception ex)
+                {
+                    Logging.Logger.Instance.LogWarning($"[FamilyTemplatePathService] Generic template search failed in {rootPath}: {ex.Message}");
                 }
             }
-            catch
+
+            // 3. Try Hardcoded Default Paths as absolute fallback
+            string[] fallbackRoots = new[] 
             {
+                $@"C:\ProgramData\Autodesk\RVT {appVersion}\Family Templates\English",
+                $@"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English",
+                $@"C:\ProgramData\Autodesk\RVT {appVersion}\Family Templates\English-Imperial"
+            };
+
+            foreach (var fr in fallbackRoots)
+            {
+                if (!Directory.Exists(fr)) continue;
+                foreach (var name in possibleFiles)
+                {
+                    string fullPath = Path.Combine(fr, name);
+                    if (File.Exists(fullPath)) return fullPath;
+                }
             }
 
             return string.Empty;

@@ -12,44 +12,33 @@ using System.Linq;
 namespace LECG.Commands
 {
     [Transaction(TransactionMode.Manual)]
-    public class CategoryChangerCommand : RevitCommand
+    public class CategoryChangerCommand : ExternalEventCommand<CategoryChangerEventHandler>
     {
-        private static ExternalEvent? _externalEvent;
-        private static CategoryChangerEventHandler? _handler;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
             var service = ServiceLocator.GetRequiredService<IFamilyEditorService>();
+            var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
             var viewModel = ServiceLocator.GetRequiredService<CategoryChangerViewModel>();
-            
-            // Setup External Event Handler
-            if (_handler == null)
-            {
-                _handler = new CategoryChangerEventHandler();
-                _externalEvent = ExternalEvent.Create(_handler);
-            }
 
-            _handler.Initialize(viewModel, service);
+            CategoryChangerEventHandler handler = GetOrCreateHandler();
+            handler.Initialize(viewModel, service, transactionService);
 
             // Inject dependencies and callbacks
             viewModel.Doc = doc;
-            viewModel.FamilyService = service;
             viewModel.OnLog = (msg) => Log(msg);
             viewModel.OnShowLog = () => ShowLogWindow("Category Changer");
             
             // This is the key: ViewModel requests the operation, we raise the event
-            viewModel.RequestRun = () => 
+            viewModel.RequestRun = () =>
             {
-                _externalEvent?.Raise();
+                RaiseExternalEvent();
             };
 
-            var view = new CategoryChangerView(viewModel, uiDoc);
-            
-            System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            var view = ServiceLocator.GetRequiredService<CategoryChangerView>();
+            view.Initialize(uiDoc);
 
             view.Show();
         }
@@ -59,11 +48,13 @@ namespace LECG.Commands
     {
         private CategoryChangerViewModel? _viewModel;
         private IFamilyEditorService? _service;
+        private ITransactionService? _transactionService;
 
-        public void Initialize(CategoryChangerViewModel vm, IFamilyEditorService svc)
+        public void Initialize(CategoryChangerViewModel vm, IFamilyEditorService svc, ITransactionService transactionService)
         {
             _viewModel = vm;
             _service = svc;
+            _transactionService = transactionService;
         }
 
         public void Execute(UIApplication app)
@@ -159,6 +150,8 @@ namespace LECG.Commands
         private void SwapInstances(Family oldFamily, Family newFamily)
         {
             if (_viewModel?.Doc == null) return;
+            if (_transactionService == null) return;
+
             Document doc = _viewModel.Doc;
 
             // 1. Get a symbol from the new family
@@ -178,10 +171,8 @@ namespace LECG.Commands
 
             _viewModel.OnLog?.Invoke($"  [SWAPPING] Found {oldInstances.Count} instances to update...");
 
-            using (Transaction t = new Transaction(doc, "Swap Transplanted Instances"))
+            _transactionService.Run(doc, "Swap Transplanted Instances", _ =>
             {
-                t.Start();
-
                 if (!newSymbol.IsActive) newSymbol.Activate();
 
                 foreach (var oldFi in oldInstances)
@@ -213,9 +204,7 @@ namespace LECG.Commands
                         _viewModel.OnLog?.Invoke($"    [ERROR] Failed to swap instance {oldFi.Id}: {ex.Message}");
                     }
                 }
-
-                t.Commit();
-            }
+            });
         }
 
         public string GetName() => "LECG Category Changer Handler";

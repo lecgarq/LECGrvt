@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Interop;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -28,19 +27,17 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             var slabService = ServiceLocator.GetRequiredService<ISlabService>();
+            var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
 
             Log($"[{DateTime.Now}] Starting Reset Slabs Command...");
 
             // 1. Load Settings & UI
-            var loadedSettings = SettingsManager.Load<ResetSlabsVM>("ResetSlabsSettings.json");
-            var settings = ServiceLocator.GetRequiredService<ResetSlabsVM>();
+            var loadedSettings = SettingsManager.Load<ResetSlabsViewModel>("ResetSlabsSettings.json");
+            var settings = ServiceLocator.GetRequiredService<ResetSlabsViewModel>();
             settings.DuplicateElements = loadedSettings.DuplicateElements;
             
-            ResetSlabsView view = ServiceLocator.CreateWith<ResetSlabsView>(settings, uiDoc);
-             
-             // Set owner to Revit window
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            ResetSlabsView view = ServiceLocator.GetRequiredService<ResetSlabsView>();
+            view.Initialize(uiDoc);
 
             if (view.ShowDialog() != true || !settings.ShouldRun) return;
 
@@ -58,13 +55,11 @@ namespace LECG.Commands
             int successCount = 0;
             List<ElementId> processedIds = new List<ElementId>();
 
-            using (Transaction t = new Transaction(doc, "Reset Slab Shapes"))
+            transactionService.Run(doc, "Reset Slab Shapes", currentDoc =>
             {
-                t.Start();
-
                 foreach (Reference r in refs)
                 {
-                    Element elem = doc.GetElement(r);
+                    Element elem = currentDoc.GetElement(r);
                     if (elem == null) continue;
 
                     Element targetElement = elem;
@@ -74,7 +69,7 @@ namespace LECG.Commands
                     {
                         try
                         {
-                            var newElem = slabService.DuplicateElement(doc, elem);
+                            var newElem = slabService.DuplicateElement(currentDoc, elem);
                             if (newElem != null)
                             {
                                 targetElement = newElem;
@@ -104,11 +99,11 @@ namespace LECG.Commands
                          Log($"  -> {msg}");
                     }
                 }
+            });
 
-                t.Commit();
-
-                if (duplicate && processedIds.Count > 0)
-                    uiDoc.Selection.SetElementIds(processedIds);
+            if (duplicate && processedIds.Count > 0)
+            {
+                uiDoc.Selection.SetElementIds(processedIds);
             }
 
             Log($"Finished. Successfully reset {successCount} slabs.");

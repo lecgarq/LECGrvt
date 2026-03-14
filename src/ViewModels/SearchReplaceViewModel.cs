@@ -2,13 +2,20 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.Collections.Generic;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LECG.Models;
 using LECG.Services;
 using LECG.Services.Interfaces;
 using Autodesk.Revit.DB;
 using System.Linq;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace LECG.ViewModels
 {
@@ -36,6 +43,7 @@ namespace LECG.ViewModels
         private Document _doc = null!;
         private List<ElementData> _cachedElements = new List<ElementData>();
         private bool _isSettingScope; // Guard for radio-group exclusivity
+        private CancellationTokenSource? _searchCts;
 
         // Rules
         public ReplaceRule ReplaceRule { get; } = new ReplaceRule();
@@ -72,6 +80,11 @@ namespace LECG.ViewModels
         // Advanced Filters (Views)
         [ObservableProperty] private string _filterViewType = "All";
         [ObservableProperty] private ObservableCollection<string> _availableViewTypes = new ObservableCollection<string>();
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasValidationMessage))]
+        private string _validationMessage = string.Empty;
+
+        public bool HasValidationMessage => !string.IsNullOrWhiteSpace(ValidationMessage);
 
         [RelayCommand]
         private void SelectAll()
@@ -111,8 +124,6 @@ namespace LECG.ViewModels
         [ObservableProperty] private ObservableCollection<ReplaceItem> _previewItems = new ObservableCollection<ReplaceItem>();
         [ObservableProperty] private ObservableCollection<string> _availableCategories = new ObservableCollection<string>();
 
-        public bool ShouldRun { get; private set; }
-
         public SearchReplaceViewModel()
         {
              // Hook up rule changes
@@ -125,9 +136,58 @@ namespace LECG.ViewModels
              Title = "Batch Rename";
         }
 
+        public RenameRuleContext ToContext()
+        {
+            return new RenameRuleContext(
+                ReplaceRule,
+                RemoveRule,
+                AddRule,
+                NumberingRule,
+                CaseRule,
+                ScopeTypeName,
+                ScopeFamilyName,
+                ScopeViewName,
+                ScopeSheetName,
+                ScopeMaterialName,
+                ScopeObjectStyleName,
+                ScopeLineStyleName,
+                ScopeFillPatternName,
+                ScopeFamilyParameterName,
+                FilterName,
+                FilterCategory,
+                SelectedFilterType,
+                FilterParamGroup,
+                FilterIsInstance,
+                FilterIsReadOnly,
+                FilterViewType);
+        }
+
+        public SearchCriteria ToCriteria()
+        {
+            return new SearchCriteria
+            {
+                FilterName = FilterName,
+                FilterCategory = FilterCategory,
+                SelectedFilterType = SelectedFilterType,
+                FilterParamGroup = FilterParamGroup,
+                FilterIsInstance = FilterIsInstance,
+                FilterIsReadOnly = FilterIsReadOnly,
+                FilterViewType = FilterViewType,
+                ScopeTypeName = ScopeTypeName,
+                ScopeFamilyName = ScopeFamilyName,
+                ScopeViewName = ScopeViewName,
+                ScopeSheetName = ScopeSheetName,
+                ScopeMaterialName = ScopeMaterialName,
+                ScopeObjectStyleName = ScopeObjectStyleName,
+                ScopeLineStyleName = ScopeLineStyleName,
+                ScopeFillPatternName = ScopeFillPatternName,
+                ScopeFamilyParameterName = ScopeFamilyParameterName
+            };
+        }
+
         private void RuleChanged(object? sender, PropertyChangedEventArgs e)
         {
-            UpdatePreview();
+            _ = UpdatePreviewAsync();
         }
         
         // Scope Change Handlers — radio-group exclusivity
@@ -174,15 +234,15 @@ namespace LECG.ViewModels
         public bool IsParameterScope => ScopeFamilyParameterName;
         public bool IsViewScope => ScopeViewName;
 
-        partial void OnSelectedFilterTypeChanged(SearchFilterType value) => UpdatePreview();
+        partial void OnSelectedFilterTypeChanged(SearchFilterType value) => _ = UpdatePreviewAsync();
 
         // Filter Change Handlers
-        partial void OnFilterNameChanged(string value) => UpdatePreview();
-        partial void OnFilterCategoryChanged(string value) => UpdatePreview();
-        partial void OnFilterParamGroupChanged(string value) => UpdatePreview();
-        partial void OnFilterIsInstanceIndexChanged(int value) => UpdatePreview();
-        partial void OnFilterIsReadOnlyIndexChanged(int value) => UpdatePreview();
-        partial void OnFilterViewTypeChanged(string value) => UpdatePreview();
+        partial void OnFilterNameChanged(string value) => _ = UpdatePreviewAsync();
+        partial void OnFilterCategoryChanged(string value) => _ = UpdatePreviewAsync();
+        partial void OnFilterParamGroupChanged(string value) => _ = UpdatePreviewAsync();
+        partial void OnFilterIsInstanceIndexChanged(int value) => _ = UpdatePreviewAsync();
+        partial void OnFilterIsReadOnlyIndexChanged(int value) => _ = UpdatePreviewAsync();
+        partial void OnFilterViewTypeChanged(string value) => _ = UpdatePreviewAsync();
 
         public void Initialize(ISearchReplaceService service, Document doc)
         {
@@ -240,29 +300,63 @@ namespace LECG.ViewModels
             }
 
             // 4. Update Preview
-            UpdatePreview();
+            _ = UpdatePreviewAsync();
         }
 
-        private void UpdatePreview()
+        private async Task UpdatePreviewAsync()
         {
             if (_service == null || _cachedElements == null) return;
 
-            var results = _service.ProcessPreview(_cachedElements, this);
-            
-            PreviewItems.Clear();
-            foreach (var r in results) PreviewItems.Add(r);
+            // 1. Cancel previous search
+            _searchCts?.Cancel();
+            _searchCts = new CancellationTokenSource();
+            var ct = _searchCts.Token;
+
+            try
+            {
+                // 2. Debounce (150ms)
+                await Task.Delay(150, ct);
+
+                // 3. Prepare DTOs (Safe to capture state here before Task.Run)
+                var criteria = ToCriteria();
+                var context = ToContext();
+
+                // 4. Execute heavy filtering on background thread
+                var results = await Task.Run(() => 
+                    _service.ProcessPreview(_cachedElements, criteria, context, ct), ct);
+
+                // 5. Update UI (ObservableCollection must be updated on UI thread)
+                // CommunityToolkit.Mvvm usually handles this if current thread is UI, 
+                // but we await Tas.Run so we are on a ThreadPool thread here.
+                System.Windows.Application.Current.Dispatcher.Invoke(() => 
+                {
+                    if (ct.IsCancellationRequested) return;
+                    ValidationMessage = string.Empty;
+                    PreviewItems.Clear();
+                    foreach (var r in results) PreviewItems.Add(r);
+                });
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected when user types fast
+            }
+            catch (Exception ex)
+            {
+                ValidationMessage = $"Error loading preview: {ex.Message}";
+            }
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
-             if (PreviewItems == null || !PreviewItems.Any(i => i.IsChecked))
-             {
-                 System.Windows.MessageBox.Show("No items selected to rename.", "Batch Rename");
-                 return;
-             }
-             
-             ShouldRun = true;
-             CloseAction?.Invoke();
+            if (PreviewItems == null || !PreviewItems.Any(i => i.IsChecked))
+            {
+                ValidationMessage = "Select at least one item to rename.";
+                return;
+            }
+
+            ValidationMessage = string.Empty;
+            ShouldRun = true;
+            CloseAction?.Invoke();
         }
     }
 }

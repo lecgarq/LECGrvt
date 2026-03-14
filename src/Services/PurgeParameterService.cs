@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +21,13 @@ namespace LECG.Services
     /// </summary>
     public class PurgeParameterService : IPurgeParameterService
     {
+        private readonly ITransactionService _transactionService;
+
+        public PurgeParameterService(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
+
         public int PurgeUnusedParameters(Document doc, Action<string>? logCallback = null)
         {
             logCallback?.Invoke("Scanning families for unused parameters...");
@@ -115,10 +121,8 @@ namespace LECG.Services
 
                 // Delete unused parameters
                 int deleted = 0;
-                using (Transaction t = new Transaction(famDoc, "Purge Unused Parameters"))
+                bool committed = _transactionService.RunConditional(famDoc, "Purge Unused Parameters", _ =>
                 {
-                    t.Start();
-
                     foreach (FamilyParameter fp in paramsToDelete)
                     {
                         try
@@ -133,15 +137,11 @@ namespace LECG.Services
                             logCallback?.Invoke($"  Could not delete param '{fp.Definition.Name}' from '{family.Name}': {ex.Message}");
                         }
                     }
-
-                    if (deleted > 0)
-                        t.Commit();
-                    else
-                        t.RollBack();
-                }
+                    return deleted > 0;
+                });
 
                 // Reload family back into project if changes were made
-                if (deleted > 0)
+                if (committed)
                     famDoc.LoadFamily(projectDoc, new OverwriteFamilyOption());
 
                 famDoc.Close(false);

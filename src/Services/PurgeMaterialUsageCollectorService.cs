@@ -7,59 +7,37 @@ namespace LECG.Services
 {
     public class PurgeMaterialUsageCollectorService : IPurgeMaterialUsageCollectorService
     {
-        private readonly IPurgeReferenceScannerService _referenceScanner;
-
         public PurgeMaterialUsageCollectorService(IPurgeReferenceScannerService referenceScanner)
         {
-            _referenceScanner = referenceScanner;
         }
 
         public HashSet<ElementId> CollectUsedMaterialIds(Document doc, HashSet<ElementId> validMaterialIds)
         {
+            return CollectUsedMaterialIds(PurgeContext.Create(doc), validMaterialIds);
+        }
+
+        public HashSet<ElementId> CollectUsedMaterialIds(PurgeContext context, HashSet<ElementId> validMaterialIds)
+        {
+            ArgumentNullException.ThrowIfNull(context);
+            ArgumentNullException.ThrowIfNull(validMaterialIds);
+
             var usedIds = new HashSet<ElementId>();
 
-            var safeClassesForParams = new List<Type>
+            foreach (ElementId usedMaterialId in context.UsedMaterialIds)
             {
-                typeof(HostObject),
-                typeof(FamilyInstance),
-                typeof(FamilySymbol)
-            };
-            var safeClassFilter = new ElementMulticlassFilter(safeClassesForParams);
-
-            var collector = new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType()
-                .WhereElementIsViewIndependent();
-
-            var typesCollector = new FilteredElementCollector(doc)
-                .WhereElementIsElementType();
-
-            void ProcessElement(Element e)
-            {
-                if (!e.IsValidObject) return;
-
-                try
+                if (validMaterialIds.Contains(usedMaterialId))
                 {
-                    var mats = e.GetMaterialIds(false);
-                    foreach (var id in mats) usedIds.Add(id);
-                }
-                catch
-                {
-                }
-
-                try
-                {
-                    if (safeClassFilter.PassesFilter(e))
-                    {
-                        _referenceScanner.CollectUsedIds(e, validMaterialIds, usedIds);
-                    }
-                }
-                catch
-                {
+                    usedIds.Add(usedMaterialId);
                 }
             }
 
-            foreach (var e in typesCollector) ProcessElement(e);
-            foreach (var e in collector) ProcessElement(e);
+            foreach (ElementId referencedId in context.ParameterReferencedIds)
+            {
+                if (validMaterialIds.Contains(referencedId))
+                {
+                    usedIds.Add(referencedId);
+                }
+            }
 
             return usedIds;
         }

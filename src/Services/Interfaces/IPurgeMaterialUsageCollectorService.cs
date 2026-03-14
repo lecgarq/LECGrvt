@@ -6,5 +6,6 @@ namespace LECG.Services.Interfaces
     public interface IPurgeMaterialUsageCollectorService
     {
         HashSet<ElementId> CollectUsedMaterialIds(Document doc, HashSet<ElementId> validMaterialIds);
+        HashSet<ElementId> CollectUsedMaterialIds(PurgeContext context, HashSet<ElementId> validMaterialIds);
     }
 }

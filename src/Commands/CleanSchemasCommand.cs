@@ -23,6 +23,7 @@ namespace LECG.Commands
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
+            var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
 
             // Show Log Window
             ShowLogWindow("Schema Cleaner");
@@ -69,13 +70,11 @@ namespace LECG.Commands
             UpdateProgress(50, "Deleting DataStorage...");
 
             int dataStoragesDeleted = 0;
-            using (Transaction t1 = new Transaction(doc, "Delete DataStorage"))
+            transactionService.Run(doc, "Delete DataStorage", currentDoc =>
             {
-                t1.Start();
-                dataStoragesDeleted = cleaner.DeleteDataStorageElements(doc, dataStorageIds);
-                t1.Commit();
+                dataStoragesDeleted = cleaner.DeleteDataStorageElements(currentDoc, dataStorageIds);
                 Log($"  Deleted {dataStoragesDeleted} DataStorage elements.");
-            }
+            });
 
             // STEP 4: Erase schemas
             Log("");
@@ -83,12 +82,10 @@ namespace LECG.Commands
             UpdateProgress(70, "Erasing schemas...");
 
             int schemasErased = 0;
-            using (Transaction t2 = new Transaction(doc, "Erase Schemas"))
+            transactionService.Run(doc, "Erase Schemas", currentDoc =>
             {
-                t2.Start();
-                schemasErased = cleaner.EraseSchemas(doc, elementSchemas, Log);
-                t2.Commit();
-            }
+                schemasErased = cleaner.EraseSchemas(currentDoc, elementSchemas, Log);
+            });
 
             // Done
             UpdateProgress(100, "Complete!");

@@ -8,28 +8,37 @@ namespace LECG.Services
 {
     public class SimplifyPointsService : ISimplifyPointsService
     {
+        private readonly ITransactionService _transactionService;
+
+        public SimplifyPointsService(ITransactionService transactionService)
+        {
+            _transactionService = transactionService;
+        }
+
         public void SimplifyPoints(Document doc, IEnumerable<Element> elements, Action<double, string> progressCallback, Action<string> logCallback)
+        {
+            SimplifyPoints(doc, elements, new LegacyProgressReporter(progressCallback, logCallback));
+        }
+
+        public void SimplifyPoints(Document doc, IEnumerable<Element> elements, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(elements);
-            ArgumentNullException.ThrowIfNull(progressCallback);
-            ArgumentNullException.ThrowIfNull(logCallback);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             int successCount = 0;
             int totalPointsDeleted = 0;
             int current = 0;
             int total = elements.Count();
 
-            using (Transaction t = new Transaction(doc, "Simplify Toposolid Points"))
+            _transactionService.Run(doc, "Simplify Toposolid Points", currentDoc =>
             {
-                t.Start();
-                
                 foreach (Element elem in elements)
                 {
                     current++;
                     if (elem is Toposolid toposolid)
                     {
-                        progressCallback?.Invoke((double)current / total * 100, $"Processing {elem.Id}...");
+                        reporter.Report($"Processing {elem.Id}...", (double)current / total * 100);
                         
                         SlabShapeEditor editor = toposolid.GetSlabShapeEditor();
                         if (editor != null)
@@ -50,23 +59,24 @@ namespace LECG.Services
                                         deletedForThis++;
                                         totalPointsDeleted++;
                                     }
-                                    catch { }
+                                    catch (Exception ex)
+                                    {
+                                        reporter.LogWarning($"  Warning: Failed to delete point in ID {elem.Id}: {ex.Message}");
+                                    }
                                 }
                                 
                                 successCount++;
-                                logCallback?.Invoke($"  ID {elem.Id}: Removed {deletedForThis} of {initialCount} points.");
+                                reporter.Log($"  ID {elem.Id}: Removed {deletedForThis} of {initialCount} points.");
                             }
                         }
                     }
                 }
+            });
 
-                t.Commit();
-            }
-
-            logCallback?.Invoke("");
-            logCallback?.Invoke("=== SUMMARY ===");
-            logCallback?.Invoke($"Toposolids processed: {successCount}");
-            logCallback?.Invoke($"Total points removed: {totalPointsDeleted}");
+            reporter.Log("");
+            reporter.Log("=== SUMMARY ===");
+            reporter.Log($"Toposolids processed: {successCount}");
+            reporter.Log($"Total points removed: {totalPointsDeleted}");
         }
     }
 }

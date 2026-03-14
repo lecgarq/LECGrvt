@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 using System;
@@ -12,16 +11,14 @@ namespace LECG.Services
         private readonly IAlignElementsTranslationService _translationService;
         private readonly IAlignElementsDistributionItemService _distributionItemService;
         private readonly IAlignElementsDistributionMoveService _distributionMoveService;
+        private readonly ITransactionService _transactionService;
 
-        public AlignElementsService() : this(new AlignElementsTranslationService(), new AlignElementsDistributionItemService(), new AlignElementsDistributionMoveService())
-        {
-        }
-
-        public AlignElementsService(IAlignElementsTranslationService translationService, IAlignElementsDistributionItemService distributionItemService, IAlignElementsDistributionMoveService distributionMoveService)
+        public AlignElementsService(IAlignElementsTranslationService translationService, IAlignElementsDistributionItemService distributionItemService, IAlignElementsDistributionMoveService distributionMoveService, ITransactionService transactionService)
         {
             _translationService = translationService;
             _distributionItemService = distributionItemService;
             _distributionMoveService = distributionMoveService;
+            _transactionService = transactionService;
         }
 
         public void Align(Document doc, Element reference, List<Element> targets, AlignMode mode)
@@ -30,29 +27,25 @@ namespace LECG.Services
 
             if (reference == null || targets == null || !targets.Any()) return;
 
-            using (Transaction t = new Transaction(doc, $"Align {mode}"))
+            _transactionService.Run(doc, $"Align {mode}", currentDoc =>
             {
-                t.Start();
-
                 // Get Reference BoundingBox
-                BoundingBoxXYZ refBox = reference.get_BoundingBox(doc.ActiveView);
+                BoundingBoxXYZ refBox = reference.get_BoundingBox(currentDoc.ActiveView);
                 if (refBox == null) return;
 
                 foreach (Element target in targets)
                 {
-                    BoundingBoxXYZ targetBox = target.get_BoundingBox(doc.ActiveView);
+                    BoundingBoxXYZ targetBox = target.get_BoundingBox(currentDoc.ActiveView);
                     if (targetBox == null) continue;
 
                     XYZ translation = _translationService.Calculate(refBox, targetBox, mode);
 
                     if (!translation.IsZeroLength())
                     {
-                        ElementTransformUtils.MoveElement(doc, target.Id, translation);
+                        ElementTransformUtils.MoveElement(currentDoc, target.Id, translation);
                     }
                 }
-
-                t.Commit();
-            }
+            });
         }
 
         public void Distribute(Document doc, List<Element> elements, AlignMode mode)
@@ -61,18 +54,14 @@ namespace LECG.Services
 
             if (elements == null || elements.Count < 3) return; // Need at least 3 items to distribute meaningfully
 
-            using (Transaction t = new Transaction(doc, $"Distribute {mode}"))
+            _transactionService.Run(doc, $"Distribute {mode}", currentDoc =>
             {
-                t.Start();
-
-                List<(Element Element, BoundingBoxXYZ Box, double Position)> sortedItems = _distributionItemService.BuildAndSort(doc, elements, mode);
+                List<(Element Element, BoundingBoxXYZ Box, double Position)> sortedItems = _distributionItemService.BuildAndSort(currentDoc, elements, mode);
 
                 if (sortedItems.Count < 3) return;
 
-                _distributionMoveService.MoveIntermediateElements(doc, sortedItems, mode);
-
-                t.Commit();
-            }
+                _distributionMoveService.MoveIntermediateElements(currentDoc, sortedItems, mode);
+            });
         }
     }
 }

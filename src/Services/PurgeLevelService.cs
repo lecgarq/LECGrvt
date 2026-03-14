@@ -11,10 +11,6 @@ namespace LECG.Services
         private readonly IPurgeReferencedLevelService _purgeReferencedLevelService;
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLevelService() : this(new PurgeReferencedLevelService(new PurgeReferenceScannerService()), new PurgeDeleteElementService())
-        {
-        }
-
         public PurgeLevelService(IPurgeReferencedLevelService purgeReferencedLevelService, IPurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeReferencedLevelService = purgeReferencedLevelService;
@@ -23,11 +19,18 @@ namespace LECG.Services
 
         public int PurgeUnusedLevels(Document doc, Action<string>? logCallback = null)
         {
+            return PurgeUnusedLevels(doc, PurgeContext.Create(doc), logCallback);
+        }
+
+        public int PurgeUnusedLevels(Document doc, PurgeContext context, Action<string>? logCallback = null)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(context);
+
             logCallback?.Invoke("Scanning for unused levels...");
 
-            var allLevels = new FilteredElementCollector(doc)
-                .OfClass(typeof(Level))
-                .Cast<Level>()
+            var allLevels = context.Levels
+                .Where(level => level != null && level.IsValidObject)
                 .ToList();
 
             if (allLevels.Count <= 1)
@@ -38,13 +41,13 @@ namespace LECG.Services
 
             var levelIdsToRemove = new HashSet<ElementId>();
             var validLevelIds = new HashSet<ElementId>(allLevels.Select(l => l.Id));
-            var referencedLevelIds = _purgeReferencedLevelService.CollectReferencedLevelIds(doc, validLevelIds);
+            var referencedLevelIds = _purgeReferencedLevelService.CollectReferencedLevelIds(context, validLevelIds);
 
             logCallback?.Invoke($"  Found {referencedLevelIds.Count} levels referenced by parameters.");
 
             foreach (var level in allLevels)
             {
-                if (referencedLevelIds.Contains(level.Id)) continue;
+                if (referencedLevelIds.Contains(level.Id) || context.PlacedLevelIds.Contains(level.Id)) continue;
 
                 ElementLevelFilter levelFilter = new ElementLevelFilter(level.Id);
                 var dependentElements = new FilteredElementCollector(doc)

@@ -96,7 +96,6 @@ namespace LECG.ViewModels
         public Action? RunOperation { get; set; }
         public Action? PlaceOperation { get; set; }
 
-        public bool ShouldRun { get; private set; }
         public bool ShouldPlace { get; private set; }
         public ElementId? CreatedFamilySymbolId { get; set; }
 
@@ -184,7 +183,7 @@ namespace LECG.ViewModels
             }
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
              if (CanRun)
              {
@@ -204,9 +203,9 @@ namespace LECG.ViewModels
             }
         }
 
-        protected override void Cancel()
+        public override void Cancel()
         {
-            CloseAction?.Invoke();
+            base.Cancel();
         }
     }
 

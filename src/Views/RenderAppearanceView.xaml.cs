@@ -20,18 +20,7 @@ namespace LECG.Views
             DataContext = vm;
             _uiDoc = uiDoc;
             
-            // Listen to VM events to handle window behavior
-            vm.CloseAction = () => 
-            {
-                if (IsLoaded)
-                {
-                    try { DialogResult = vm.ShouldRun; } catch { Close(); }
-                }
-                else
-                {
-                    Close();
-                }
-            };
+            BindDialogClose(vm, () => vm.ShouldRun);
         }
     }
 }

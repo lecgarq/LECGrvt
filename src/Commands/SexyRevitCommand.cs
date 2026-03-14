@@ -41,7 +41,8 @@ namespace LECG.Commands
             settings.ConfigureSun = loadedSettings.ConfigureSun;
 
             // 2. Show Dialog
-            SexyRevitView dialog = ServiceLocator.CreateWith<SexyRevitView>(settings);
+            SexyRevitView dialog = ServiceLocator.GetRequiredService<SexyRevitView>();
+            dialog.DataContext = settings;
             if (dialog.ShowDialog() != true) return;
 
             // 3. Save Settings
@@ -56,7 +57,8 @@ namespace LECG.Commands
             Log("");
 
             var service = ServiceLocator.GetRequiredService<ISexyRevitService>();
-            service.ApplyBeauty(doc, view, settings, Log, UpdateProgress);
+            var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+            service.ApplyBeauty(doc, view, settings.ToSettings(), reporter);
 
             UpdateProgress(100, "Complete!");
             Log("");

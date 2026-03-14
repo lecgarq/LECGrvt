@@ -22,6 +22,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             var service = ServiceLocator.GetRequiredService<IToposolidService>();
+            var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
             var vm = ServiceLocator.GetRequiredService<UpdateContoursViewModel>();
             
             // Populate ToposolidTypes from document
@@ -41,23 +42,22 @@ namespace LECG.Commands
                 });
             }
 
-            var view = ServiceLocator.CreateWith<UpdateContoursView>(vm);
+            var view = ServiceLocator.GetRequiredService<UpdateContoursView>();
+            view.DataContext = vm;
             bool? result = view.ShowDialog();
 
             if (result == true && vm.ShouldRun)
             {
                 int processed = 0;
-                
-                using (Transaction t = new Transaction(doc, "Update Contours"))
-                {
-                    t.Start();
 
+                transactionService.Run(doc, "Update Contours", currentDoc =>
+                {
                     foreach (var typeItem in vm.ToposolidTypes.Where(t => t.IsSelected))
                     {
                         try
                         {
                             service.UpdateContours(
-                                doc, 
+                                currentDoc,
                                 new ElementId(typeItem.ElementId), 
                                 vm.EnablePrimary, 
                                 vm.PrimaryInterval, 
@@ -67,11 +67,12 @@ namespace LECG.Commands
                             
                             processed++;
                         }
-                        catch { }
+                        catch (Exception ex)
+                        {
+                            Log($"Failed to update contours for Toposolid type '{typeItem.Name}' ({typeItem.ElementId}): {ex.Message}");
+                        }
                     }
-
-                    t.Commit();
-                }
+                });
 
                 string mode = vm.IsApplyMode ? "Applied" : "Removed";
                 TaskDialog.Show("Update Contours", $"{mode} contours on {processed} Toposolid type(s).");

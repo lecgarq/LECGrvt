@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using LECG.Services.Interfaces;
@@ -38,9 +37,14 @@ namespace LECG.Services
 
         public ElementId ConvertCadToFamily(Document doc, ImportInstance cadInstance, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
         {
+            return ConvertCadToFamily(doc, cadInstance, familyName, templatePath, lineStyleName, lineColor, lineWeight, new LegacyProgressReporter(progress));
+        }
+
+        public ElementId ConvertCadToFamily(Document doc, ImportInstance cadInstance, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)
+        {
             if (cadInstance == null) return ElementId.InvalidElementId;
 
-            CadData optimizedData = _cadImportDataPreparationService.Prepare(doc, cadInstance, progress);
+            CadData optimizedData = _cadImportDataPreparationService.Prepare(doc, cadInstance, reporter);
 
             XYZ center = _cadImportInstanceCenterService.GetCenter(cadInstance);
 
@@ -54,12 +58,17 @@ namespace LECG.Services
                 lineStyleName,
                 lineColor,
                 lineWeight,
-                progress);
+                reporter);
         }
 
         public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
         {
-            CadData data = _cadTempDwgExtractionService.Extract(doc, templatePath, dwgPath, progress);
+            return ConvertDwgToFamily(doc, dwgPath, familyName, templatePath, lineStyleName, lineColor, lineWeight, new LegacyProgressReporter(progress));
+        }
+
+        public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)
+        {
+            CadData data = _cadTempDwgExtractionService.Extract(doc, templatePath, dwgPath, reporter);
 
             _cadDataValidationService.EnsureHasGeometry(data, "No geometry found in DWG.");
 
@@ -71,7 +80,7 @@ namespace LECG.Services
                 lineStyleName,
                 lineColor,
                 lineWeight,
-                progress);
+                reporter);
         }
         
     }

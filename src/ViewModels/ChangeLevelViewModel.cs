@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using LECG.ViewModels.Components;
 using LECG.Core;
 
@@ -13,7 +12,7 @@ namespace LECG.ViewModels
 {
     public partial class ChangeLevelViewModel : BaseViewModel
     {
-        private readonly Document _doc;
+        private Document? _doc;
         private readonly IChangeLevelService _service;
         
         // Internal storage for elements to be processed
@@ -28,24 +27,33 @@ namespace LECG.ViewModels
         [ObservableProperty]
         private string _targetText = "";
 
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(HasValidationMessage))]
+        private string _validationMessage = string.Empty;
+
         public ObservableCollection<Level> Levels { get; } = new ObservableCollection<Level>();
 
         public bool CanRun => SelectedLevel != null && Selection.HasSelection;
+        public bool HasValidationMessage => !string.IsNullOrWhiteSpace(ValidationMessage);
 
-        public ChangeLevelViewModel(Document doc, IChangeLevelService service)
+        public ChangeLevelViewModel(IChangeLevelService service)
         {
-            _doc = doc;
             _service = service;
             Title = "CHANGE LEVEL";
             
             Selection.ElementName = "Toposolids";
             Selection.Filter = new SelectionFilters.ToposolidFilter(); // Depends on if this filter class is accessible
-            
+        }
+
+        public void Initialize(Document doc)
+        {
+            _doc = doc;
             LoadLevels();
         }
 
         private void LoadLevels()
         {
+            if (_doc == null) return;
             var levels = _service.GetLevels(_doc);
             foreach (var level in levels)
             {
@@ -59,21 +67,22 @@ namespace LECG.ViewModels
 
             _selectedElements = elements;
             Selection.UpdateSelection(elements.Count);
+            ValidationMessage = string.Empty;
         }
 
-        [RelayCommand]
-        private void Run()
+        public override void Apply()
         {
-            if (SelectedLevel == null || !_selectedElements.Any()) return;
+            if (_doc == null || SelectedLevel == null || !_selectedElements.Any()) return;
 
             try
             {
+                ValidationMessage = string.Empty;
                 _service.ChangeLevel(_doc, _selectedElements, SelectedLevel);
-                CloseAction?.Invoke();
+                base.Apply();
             }
             catch (System.Exception ex)
             {
-                Autodesk.Revit.UI.TaskDialog.Show("Error", $"Failed to change level: {ex.Message}");
+                ValidationMessage = $"Failed to change level: {ex.Message}";
             }
         }
     }

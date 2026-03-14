@@ -12,7 +12,7 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = viewModel;
-            viewModel.CloseAction = () => Close();
+            BindClose(viewModel);
         }
     }
 }

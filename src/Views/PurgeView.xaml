@@ -31,10 +31,11 @@
             <StackPanel>
                 <TextBlock Text="OPTIONS" Style="{DynamicResource CardHeaderStyle}"/>
                 <CheckBox Content="Unused Line Styles" IsChecked="{Binding PurgeLineStyles, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
+                <CheckBox Content="Unused Line Patterns" IsChecked="{Binding PurgeLinePatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Fill Patterns" IsChecked="{Binding PurgeFillPatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Materials" IsChecked="{Binding PurgeMaterials, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Levels" IsChecked="{Binding PurgeLevels, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
-                <CheckBox Content="Unused Family Parameters âš " IsChecked="{Binding PurgeParameters, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}" ToolTip="Opens each family and removes parameters with no formula, no constraint, and no association. This is destructive and slow."/>
+                <CheckBox Content="Unused Family Parameters (Warning)" IsChecked="{Binding PurgeParameters, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}" ToolTip="Opens each family and removes parameters with no formula, no constraint, and no association. This is destructive and slow."/>
                 <Separator Margin="0,5,0,10" Background="{DynamicResource BorderBrush}"/>
                 <CheckBox Content="Deep Purge (3 Passes)" IsChecked="{Binding IsDeepPurge, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}"/>
             </StackPanel>

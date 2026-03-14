@@ -5,20 +5,41 @@ namespace LECG.Services
 {
     public class PurgeSummaryService : IPurgeSummaryService
     {
-        public void Report(Action<string> logCallback, Action<double, string> progressCallback, int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted)
+        public void Report(
+            IProgressReporter reporter,
+            int lineStylesDeleted,
+            int linePatternsDeleted,
+            int fillPatternsDeleted,
+            int materialsDeleted,
+            int levelsDeleted,
+            int parametersDeleted)
         {
-            progressCallback?.Invoke(100, "Complete!");
-            logCallback?.Invoke("");
-            logCallback?.Invoke("=== SUMMARY ===");
-            logCallback?.Invoke($"Line Styles deleted: {lineStylesDeleted}");
-            logCallback?.Invoke($"Fill Patterns deleted: {fillPatternsDeleted}");
-            logCallback?.Invoke($"Materials deleted: {materialsDeleted}");
-            logCallback?.Invoke($"Levels deleted: {levelsDeleted}");
-            logCallback?.Invoke($"Family Parameters deleted: {parametersDeleted}");
-            logCallback?.Invoke("");
+            reporter.Report("Complete!", 100);
+            reporter.Log("");
+            reporter.Log("=== SUMMARY ===");
+            reporter.Log($"Line Styles deleted: {lineStylesDeleted}");
+            reporter.Log($"Line Patterns deleted: {linePatternsDeleted}");
+            reporter.Log($"Fill Patterns deleted: {fillPatternsDeleted}");
+            reporter.Log($"Materials deleted: {materialsDeleted}");
+            reporter.Log($"Levels deleted: {levelsDeleted}");
+            reporter.Log($"Family Parameters deleted: {parametersDeleted}");
+            reporter.Log("");
 
-            int total = lineStylesDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted + parametersDeleted;
-            logCallback?.Invoke($"✓ Total items purged: {total}");
+            int total = lineStylesDeleted + linePatternsDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted + parametersDeleted;
+            reporter.Log($"Total items purged: {total}");
+        }
+
+        public void Report(
+            Action<string> logCallback,
+            Action<double, string> progressCallback,
+            int lineStylesDeleted,
+            int linePatternsDeleted,
+            int fillPatternsDeleted,
+            int materialsDeleted,
+            int levelsDeleted,
+            int parametersDeleted)
+        {
+            Report(new LegacyProgressReporter(progressCallback, logCallback), lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
         }
     }
 }

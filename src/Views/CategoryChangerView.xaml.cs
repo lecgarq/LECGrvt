@@ -1,5 +1,6 @@
 using LECG.ViewModels;
 using LECG.Views.Base;
+using LECG.Core;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using LECG.Utils;
@@ -10,56 +11,39 @@ namespace LECG.Views
 {
     public partial class CategoryChangerView : LecgWindow
     {
-        private readonly UIDocument _uiDoc;
+        private readonly CategoryChangerViewModel _viewModel;
+        private readonly ISelectionCoordinator _selectionCoordinator;
 
-        public CategoryChangerView(CategoryChangerViewModel viewModel, UIDocument uiDoc)
+        public CategoryChangerView(CategoryChangerViewModel viewModel, ISelectionCoordinator selectionCoordinator)
         {
-            ArgumentNullException.ThrowIfNull(viewModel);
-            ArgumentNullException.ThrowIfNull(uiDoc);
+            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            _selectionCoordinator = selectionCoordinator;
 
             InitializeComponent();
             DataContext = viewModel;
-            _uiDoc = uiDoc;
 
-            viewModel.LoadCategories(uiDoc.Document);
-
-            viewModel.CloseAction = () =>
-            {
-                if (IsLoaded)
-                {
-                    try { DialogResult = viewModel.ShouldRun; } catch { Close(); }
-                }
-                else
-                {
-                    Close();
-                }
-            };
+            BindDialogClose(viewModel, () => viewModel.ShouldRun);
 
             viewModel.Selection.OnRequestSelect += (s, e) =>
             {
-                Hide();
-                try
+                if (UiDocument == null) return;
+                IList<Reference> refs = _selectionCoordinator.PickObjects(
+                    this,
+                    UiDocument,
+                    Autodesk.Revit.UI.Selection.ObjectType.Element,
+                    new AnyFamilyInstanceFilter(),
+                    "Select family instances to change category.");
+                if (refs.Count > 0)
                 {
-                    Autodesk.Revit.UI.Selection.ISelectionFilter filter = new AnyFamilyInstanceFilter();
-
-                    IList<Reference> refs = _uiDoc.Selection.PickObjects(
-                        Autodesk.Revit.UI.Selection.ObjectType.Element,
-                        filter,
-                        "Select family instances to change category.");
-
-                    viewModel.SetSelection(refs, _uiDoc.Document);
-                }
-                catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally
-                {
-                    try
-                    {
-                        this.Visibility = System.Windows.Visibility.Visible;
-                        Activate();
-                    }
-                    catch { }
+                    viewModel.SetSelection(refs, UiDocument.Document);
                 }
             };
+        }
+
+        public override void Initialize(UIDocument uiDoc)
+        {
+            base.Initialize(uiDoc);
+            _viewModel.LoadCategories(uiDoc.Document);
         }
     }
 }

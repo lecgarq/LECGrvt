@@ -7,6 +7,7 @@ namespace LECG.Services.Interfaces
 {
     public interface IBatchRenameExecutionService
     {
+        int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, IProgressReporter reporter);
         int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, Action<double, string>? onProgress = null);
     }
 }

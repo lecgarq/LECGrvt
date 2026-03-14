@@ -31,6 +31,7 @@ namespace LECG.Commands
 
             if (TryGetOptionsFromCustomDialog(
                 out bool purgeLineStyles,
+                out bool purgeLinePatterns,
                 out bool purgeFillPatterns,
                 out bool purgeMaterials,
                 out bool purgeLevels,
@@ -39,17 +40,35 @@ namespace LECG.Commands
                 out bool cancelled))
             {
                 if (cancelled) return;
-
-                var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
-                
-                ShowLogWindow("Purge Unused");
-                purgeService.PurgeAll(doc, passCount, purgeLineStyles, purgeFillPatterns, purgeMaterials, purgeLevels, purgeParameters, Log, UpdateProgress);
-                Log("Purge Complete.");
             }
+            else
+            {
+                if (cancelled) return;
+
+                if (!TryGetOptionsFromFallbackDialog(
+                    out purgeLineStyles,
+                    out purgeLinePatterns,
+                    out purgeFillPatterns,
+                    out purgeMaterials,
+                    out purgeLevels,
+                    out purgeParameters,
+                    out passCount))
+                {
+                    return;
+                }
+            }
+
+            var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
+            var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+
+            ShowLogWindow("Purge Unused");
+            purgeService.PurgeAll(doc, passCount, purgeLineStyles, purgeLinePatterns, purgeFillPatterns, purgeMaterials, purgeLevels, purgeParameters, reporter);
+            Log("Purge Complete.");
         }
 
         private bool TryGetOptionsFromCustomDialog(
             out bool purgeLineStyles,
+            out bool purgeLinePatterns,
             out bool purgeFillPatterns,
             out bool purgeMaterials,
             out bool purgeLevels,
@@ -58,6 +77,7 @@ namespace LECG.Commands
             out bool cancelled)
         {
             purgeLineStyles = true;
+            purgeLinePatterns = true;
             purgeFillPatterns = true;
             purgeMaterials = true;
             purgeLevels = false;
@@ -68,16 +88,17 @@ namespace LECG.Commands
             try
             {
                 var loaded = SettingsManager.Load<PurgeDialogSettings>(PurgeSettingsFile) ?? new PurgeDialogSettings();
-                var settings = new PurgeViewModel();
-
+                var settings = ServiceLocator.GetRequiredService<PurgeViewModel>();
                 settings.PurgeLineStyles = loaded.PurgeLineStyles;
+                settings.PurgeLinePatterns = loaded.PurgeLinePatterns;
                 settings.PurgeFillPatterns = loaded.PurgeFillPatterns;
                 settings.PurgeMaterials = loaded.PurgeMaterials;
                 settings.PurgeLevels = loaded.PurgeLevels;
                 settings.PurgeParameters = loaded.PurgeParameters;
                 settings.IsDeepPurge = loaded.IsDeepPurge;
 
-                var view = new PurgeView(settings);
+                var view = ServiceLocator.GetRequiredService<PurgeView>();
+                view.DataContext = settings; 
                 bool? result = view.ShowDialog();
                 if (result != true)
                 {
@@ -88,6 +109,7 @@ namespace LECG.Commands
                 SettingsManager.Save(new PurgeDialogSettings
                 {
                     PurgeLineStyles = settings.PurgeLineStyles,
+                    PurgeLinePatterns = settings.PurgeLinePatterns,
                     PurgeFillPatterns = settings.PurgeFillPatterns,
                     PurgeMaterials = settings.PurgeMaterials,
                     PurgeLevels = settings.PurgeLevels,
@@ -96,6 +118,7 @@ namespace LECG.Commands
                 }, PurgeSettingsFile);
 
                 purgeLineStyles = settings.PurgeLineStyles;
+                purgeLinePatterns = settings.PurgeLinePatterns;
                 purgeFillPatterns = settings.PurgeFillPatterns;
                 purgeMaterials = settings.PurgeMaterials;
                 purgeLevels = settings.PurgeLevels;
@@ -112,6 +135,7 @@ namespace LECG.Commands
 
         private static bool TryGetOptionsFromFallbackDialog(
             out bool purgeLineStyles,
+            out bool purgeLinePatterns,
             out bool purgeFillPatterns,
             out bool purgeMaterials,
             out bool purgeLevels,
@@ -119,6 +143,7 @@ namespace LECG.Commands
             out int passCount)
         {
             purgeLineStyles = true;
+            purgeLinePatterns = true;
             purgeFillPatterns = true;
             purgeMaterials = true;
             purgeLevels = false;
@@ -133,7 +158,7 @@ namespace LECG.Commands
                 AllowCancellation = true
             };
 
-            dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Safe Purge (Line Styles, Fill Patterns, Materials)");
+            dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Safe Purge (Line Styles, Line Patterns, Fill Patterns, Materials)");
             dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Deep Purge (+Levels, 3 passes)");
 
             TaskDialogResult dialogResult = dialog.Show();

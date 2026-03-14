@@ -15,14 +15,6 @@ namespace LECG.Services
         private readonly ISchemaDataStorageDeleteService _schemaDataStorageDeleteService;
         private readonly ISchemaEraseService _schemaEraseService;
 
-        public SchemaCleanerService() : this(
-            new SchemaElementScanService(new SchemaVendorFilterService()),
-            new SchemaDataStorageScanService(new SchemaVendorFilterService()),
-            new SchemaDataStorageDeleteService(),
-            new SchemaEraseService())
-        {
-        }
-
         public SchemaCleanerService(
             ISchemaElementScanService schemaElementScanService,
             ISchemaDataStorageScanService schemaDataStorageScanService,

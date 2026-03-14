@@ -10,7 +10,6 @@ using LECG.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Interop;
 using LECG.ViewModels;
 
 namespace LECG.Commands
@@ -35,10 +34,6 @@ namespace LECG.Commands
             // VM & View
             var vm = ServiceLocator.GetRequiredService<RenderAppearanceViewModel>();
             var view = ServiceLocator.CreateWith<RenderAppearanceView>(vm, uiDoc);
-             
-             // Set owner to Revit window
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
 
             bool? result = view.ShowDialog();
 
@@ -66,7 +61,8 @@ namespace LECG.Commands
                 }
 
                 // 4. Process Materials (Batch)
-                matService.BatchSyncWithRenderAppearance(doc, materialsList, Log, UpdateProgress);
+                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                matService.BatchSyncWithRenderAppearance(doc, materialsList, reporter);
 
                 Log("");
                 Log("COMPLETE");

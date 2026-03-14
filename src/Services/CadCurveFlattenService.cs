@@ -12,10 +12,6 @@ namespace LECG.Services
         private readonly ICadDoubleArrayConversionService _cadDoubleArrayConversionService;
         private readonly ICadSplineFlattenService _cadSplineFlattenService;
 
-        public CadCurveFlattenService() : this(new CadCurveTessellationService(), new CadPointFlattenService(), new CadDoubleArrayConversionService(), new CadSplineFlattenService(new CadCurveTessellationService(), new CadPointFlattenService(), new CadDoubleArrayConversionService()))
-        {
-        }
-
         public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService, ICadPointFlattenService cadPointFlattenService, ICadDoubleArrayConversionService cadDoubleArrayConversionService, ICadSplineFlattenService cadSplineFlattenService)
         {
             _cadCurveTessellationService = cadCurveTessellationService;

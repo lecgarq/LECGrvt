@@ -12,8 +12,6 @@ namespace LECG.ViewModels
         public SelectionViewModel TargetsSelection { get; } = new SelectionViewModel();
         public SelectionViewModel ReferenceSelection { get; } = new SelectionViewModel();
 
-        public bool ShouldRun { get; private set; }
-
         public bool CanRun => TargetsSelection.HasSelection && ReferenceSelection.HasSelection;
 
         public AlignEdgesViewModel()
@@ -28,13 +26,13 @@ namespace LECG.ViewModels
             ReferenceSelection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        protected override void Cancel()
+        public override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

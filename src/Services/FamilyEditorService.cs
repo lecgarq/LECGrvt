@@ -10,10 +10,14 @@ namespace LECG.Services
     public class FamilyEditorService : IFamilyEditorService
     {
         private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
+        private readonly ITransactionService _transactionService;
 
-        public FamilyEditorService(IFamilyLoadOptionsFactory loadOptionsFactory)
+        public FamilyEditorService(
+            IFamilyLoadOptionsFactory loadOptionsFactory,
+            ITransactionService transactionService)
         {
             _loadOptionsFactory = loadOptionsFactory;
+            _transactionService = transactionService;
         }
 
         public bool ChangeCategory(Autodesk.Revit.DB.Family family, Autodesk.Revit.DB.Category newCategory)
@@ -116,21 +120,14 @@ namespace LECG.Services
                     return false;
                 }
 
-                using (Autodesk.Revit.DB.Transaction t = new Autodesk.Revit.DB.Transaction(familyDoc, "Silent Family Edit"))
+                _transactionService.Run(familyDoc, "Silent Family Edit", _ =>
                 {
-                    t.Start();
                     action(familyDoc);
-                    t.Commit();
-                }
+                });
 
-                // Load back into project
-                using (Autodesk.Revit.DB.Transaction projectT = new Autodesk.Revit.DB.Transaction(projectDoc, "Load Family"))
-                {
-                    projectT.Start();
-                    var options = _loadOptionsFactory.Create();
-                    familyDoc.LoadFamily(projectDoc, options);
-                    projectT.Commit();
-                }
+                // Load back into project (LoadFamily manages its own transaction internally)
+                var options = _loadOptionsFactory.Create();
+                familyDoc.LoadFamily(projectDoc, options);
                 
                 return true;
             }
@@ -181,10 +178,8 @@ namespace LECG.Services
                     sourceDoc.SaveAs(tempPath, saveOptions);
                     sourceDoc.Close(false); // Close so we don't have locking issues
 
-                    using (Transaction t = new Transaction(targetDoc, "Nest Source Family"))
+                    _transactionService.Run(targetDoc, "Nest Source Family", _ =>
                     {
-                        t.Start();
-                        
                         // Load the Detail Item into the new 3D family
                         Family nestedFamily;
                         bool loadSuccess = targetDoc.LoadFamily(tempPath, _loadOptionsFactory.Create(), out nestedFamily);
@@ -203,9 +198,7 @@ namespace LECG.Services
                                 targetDoc.FamilyCreate.NewFamilyInstance(XYZ.Zero, symbol, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
                             }
                         }
-                        
-                        t.Commit();
-                    }
+                    });
                 }
                 catch (Exception nestEx)
                 {
@@ -220,17 +213,15 @@ namespace LECG.Services
                 }
 
                 // 4. Set the Category in the new family
-                using (Transaction t = new Transaction(targetDoc, "Set Category"))
+                _transactionService.Run(targetDoc, "Set Category", _ =>
                 {
-                    t.Start();
                     BuiltInCategory bic = (BuiltInCategory)targetCategory.Id.Value;
                     Category docCat = targetDoc.Settings.Categories.get_Item(bic);
                     if (docCat != null && targetDoc.OwnerFamily != null)
                     {
                         targetDoc.OwnerFamily.FamilyCategory = docCat;
                     }
-                    t.Commit();
-                }
+                });
 
                 // 5. Load into project with new name
                 string suffix = "-TRANSPLANTED";
@@ -238,12 +229,10 @@ namespace LECG.Services
                 Family newFamily = targetDoc.LoadFamily(projectDoc, _loadOptionsFactory.Create());
                 
                 // Rename in project context
-                using (Transaction t = new Transaction(projectDoc, "Rename Transplanted Family"))
+                _transactionService.Run(projectDoc, "Rename Transplanted Family", _ =>
                 {
-                    t.Start();
                     newFamily.Name = newName;
-                    t.Commit();
-                }
+                });
 
                 return newFamily;
             }

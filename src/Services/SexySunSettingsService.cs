@@ -1,27 +1,25 @@
-using System;
 using Autodesk.Revit.DB;
+using LECG.Models;
 using LECG.Services.Interfaces;
-using LECG.ViewModels;
 
 namespace LECG.Services
 {
     public class SexySunSettingsService : ISexySunSettingsService
     {
-        public void Apply(View view, SexyRevitViewModel settings, Action<string> log, Action<double, string> progress)
+        public void Apply(View view, SexyRevitSettings settings, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(settings);
-            ArgumentNullException.ThrowIfNull(log);
-            ArgumentNullException.ThrowIfNull(progress);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             if (!(settings.ConfigureSun && view is View3D v3d))
             {
                 return;
             }
 
-            log("");
-            log("SUN SETTINGS");
-            progress(30, "Setting sun...");
+            reporter.Log("");
+            reporter.Log("SUN SETTINGS");
+            reporter.Report("Setting sun...", 30);
 
             try
             {
@@ -29,12 +27,12 @@ namespace LECG.Services
                 if (sunSettings != null)
                 {
                     sunSettings.SunAndShadowType = SunAndShadowType.StillImage;
-                    log("  ✓ Sun Type: Still Image");
+                    reporter.Log("Sun Type: Still Image");
                 }
             }
             catch (Exception ex)
             {
-                log($"  ⚠ Sun settings: {ex.Message}");
+                reporter.LogWarning($"Sun settings: {ex.Message}");
             }
         }
     }

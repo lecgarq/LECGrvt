@@ -9,7 +9,6 @@ using LECG.ViewModels;
 using LECG.Views;
 using System;
 using System.Collections.Generic;
-using System.Windows.Interop;
 
 namespace LECG.Commands
 {
@@ -22,16 +21,14 @@ namespace LECG.Commands
             var service = ServiceLocator.GetRequiredService<IChangeLevelService>();
 
             // 2. ViewModel
-            var vm = ServiceLocator.CreateWith<ChangeLevelViewModel>(doc, service);
+            var vm = ServiceLocator.GetRequiredService<ChangeLevelViewModel>();
+            vm.Initialize(doc);
 
             // 3. View
             // Pass UIDocument to view for selection handling
-            var view = ServiceLocator.CreateWith<ChangeLevelView>(vm, uidoc);
-            
-            // Set owner to Revit window
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
-            
+            var view = ServiceLocator.GetRequiredService<ChangeLevelView>();
+            view.Initialize(uidoc);
+
             view.ShowDialog();
         }
     }

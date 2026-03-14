@@ -1,17 +1,22 @@
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.Input;
+using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Utils;
 using LECG.Models;
 using LECG.Services;
+using LECG.ViewModels;
 
 namespace LECG.Views.Base
 {
     public class LecgWindow : Window
     {
+        protected UIDocument? UiDocument { get; private set; }
+
         public ICommand CloseCommand { get; }
         public ICommand MinimizeCommand { get; }
 
@@ -51,6 +56,11 @@ namespace LECG.Views.Base
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            if (helper.Owner == IntPtr.Zero)
+            {
+                helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            }
             LoadWindowState();
         }
 
@@ -58,6 +68,47 @@ namespace LECG.Views.Base
         {
             SaveWindowState();
             base.OnClosing(e);
+        }
+
+        public virtual void Initialize(UIDocument uiDoc)
+        {
+            UiDocument = uiDoc ?? throw new ArgumentNullException(nameof(uiDoc));
+        }
+
+        protected void BindDialogClose(BaseViewModel viewModel, Func<bool> shouldRun)
+        {
+            ArgumentNullException.ThrowIfNull(viewModel);
+            ArgumentNullException.ThrowIfNull(shouldRun);
+
+            viewModel.CloseAction = () =>
+            {
+                if (IsLoaded)
+                {
+                    try
+                    {
+                        DialogResult = shouldRun();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Close();
+                    }
+                }
+                else
+                {
+                    Close();
+                }
+            };
+        }
+
+        protected void BindAcceptedClose(BaseViewModel viewModel)
+        {
+            BindDialogClose(viewModel, static () => true);
+        }
+
+        protected void BindClose(BaseViewModel viewModel)
+        {
+            ArgumentNullException.ThrowIfNull(viewModel);
+            viewModel.CloseAction = () => Close();
         }
 
         private string GetSettingsFileName() => $"{this.GetType().Name}_Settings.json";

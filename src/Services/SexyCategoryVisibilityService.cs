@@ -1,20 +1,18 @@
-using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using LECG.Models;
 using LECG.Services.Interfaces;
-using LECG.ViewModels;
 
 namespace LECG.Services
 {
     public class SexyCategoryVisibilityService : ISexyCategoryVisibilityService
     {
-        public void Apply(Document doc, View view, SexyRevitViewModel settings, Action<string> log, Action<double, string> progress)
+        public void Apply(Document doc, View view, SexyRevitSettings settings, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(settings);
-            ArgumentNullException.ThrowIfNull(log);
-            ArgumentNullException.ThrowIfNull(progress);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             bool hideAnything = settings.HideLevels || settings.HideGrids ||
                                 settings.HideRefPoints || settings.HideScopeBox;
@@ -24,9 +22,9 @@ namespace LECG.Services
                 return;
             }
 
-            log("");
-            log("HIDING ELEMENTS");
-            progress(50, "Hiding reference elements...");
+            reporter.Log("");
+            reporter.Log("HIDING ELEMENTS");
+            reporter.Report("Hiding reference elements...", 50);
 
             List<BuiltInCategory> categoriesToHide = new List<BuiltInCategory>();
 
@@ -37,6 +35,7 @@ namespace LECG.Services
                 categoriesToHide.Add(BuiltInCategory.OST_ProjectBasePoint);
                 categoriesToHide.Add(BuiltInCategory.OST_SharedBasePoint);
             }
+
             if (settings.HideScopeBox) categoriesToHide.Add(BuiltInCategory.OST_VolumeOfInterest);
 
             foreach (BuiltInCategory bic in categoriesToHide)
@@ -47,7 +46,7 @@ namespace LECG.Services
                     if (cat != null && view.CanCategoryBeHidden(cat.Id))
                     {
                         view.SetCategoryHidden(cat.Id, true);
-                        log($"  ✓ Hidden: {cat.Name}");
+                        reporter.Log($"Hidden: {cat.Name}");
                     }
                 }
                 catch

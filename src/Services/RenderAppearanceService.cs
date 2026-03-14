@@ -10,12 +10,6 @@ namespace LECG.Services
         private readonly IRenderAppearanceSingleSyncService _singleSyncService;
         private readonly IRenderAppearanceBatchSyncService _batchSyncService;
 
-        public RenderAppearanceService() : this(
-            new RenderAppearanceSingleSyncService(new RenderSolidFillPatternService(), new RenderMaterialGraphicsApplyService()),
-            new RenderAppearanceBatchSyncService(new RenderAppearanceRefreshService(), new RenderSolidFillPatternService(), new RenderMaterialSyncExecutionService(new RenderMaterialSyncCheckService(), new RenderMaterialGraphicsApplyService()), new RenderBatchProgressService()))
-        {
-        }
-
         public RenderAppearanceService(
             IRenderAppearanceSingleSyncService singleSyncService,
             IRenderAppearanceBatchSyncService batchSyncService)
@@ -24,14 +18,24 @@ namespace LECG.Services
             _batchSyncService = batchSyncService;
         }
 
+        public void SyncWithRenderAppearance(Document doc, Material mat, IProgressReporter reporter)
+        {
+            _singleSyncService.SyncWithRenderAppearance(doc, mat, reporter);
+        }
+
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
         {
-            _singleSyncService.SyncWithRenderAppearance(doc, mat, logCallback);
+            _singleSyncService.SyncWithRenderAppearance(doc, mat, new LegacyProgressReporter(logCallback: logCallback));
+        }
+
+        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, IProgressReporter reporter)
+        {
+            _batchSyncService.BatchSync(doc, materials, reporter);
         }
 
         public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
-            _batchSyncService.BatchSync(doc, materials, logCallback, progressCallback);
+            _batchSyncService.BatchSync(doc, materials, new LegacyProgressReporter(progressCallback, logCallback));
         }
     }
 }

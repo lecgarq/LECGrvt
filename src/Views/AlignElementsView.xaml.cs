@@ -2,77 +2,62 @@ using System.Windows;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
+using LECG.Core;
 using LECG.ViewModels;
 using LECG.Views.Base;
 using Autodesk.Revit.UI.Selection;
+using System;
 
 namespace LECG.Views
 {
     public partial class AlignElementsView : LecgWindow
     {
-        private readonly UIDocument _uiDoc;
+        private readonly ISelectionCoordinator _selectionCoordinator;
 
-        public AlignElementsView(AlignElementsViewModel vm, UIDocument uiDoc)
+        public AlignElementsView(AlignElementsViewModel vm, ISelectionCoordinator selectionCoordinator)
         {
             ArgumentNullException.ThrowIfNull(vm);
-            ArgumentNullException.ThrowIfNull(uiDoc);
+            _selectionCoordinator = selectionCoordinator;
 
             InitializeComponent();
             DataContext = vm;
-            _uiDoc = uiDoc;
             
-            // 1. VM Close Interaction
-            vm.CloseAction = () => 
-            {
-                if (IsLoaded)
-                {
-                    try { DialogResult = vm.ShouldRun; } catch { Close(); }
-                }
-                else
-                {
-                    Close();
-                }
-            };
+            BindDialogClose(vm, () => vm.ShouldRun);
 
             // 2. Reference Selection Request
             vm.ReferenceSelection.OnRequestSelect += (s, e) => {
-                Hide();
-                try 
+                if (UiDocument == null) return;
+                Reference? r = _selectionCoordinator.PickObject(
+                    this,
+                    UiDocument,
+                    ObjectType.Element,
+                    null,
+                    "Select Reference Element");
+                if (r != null)
                 {
-                    Reference r = _uiDoc.Selection.PickObject(ObjectType.Element, "Select Reference Element");
-                    vm.SetReference(r, _uiDoc.Document);
-                }
-                catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally
-                {
-                    try
-                    {
-                        this.Visibility = System.Windows.Visibility.Visible;
-                        Activate();
-                    }
-                    catch { }
+                    vm.SetReference(r, UiDocument.Document);
                 }
             };
 
             // 3. Target Selection Request
             vm.TargetSelection.OnRequestSelect += (s, e) => {
-                Hide();
-                try 
+                if (UiDocument == null) return;
+                IList<Reference> refs = _selectionCoordinator.PickObjects(
+                    this,
+                    UiDocument,
+                    ObjectType.Element,
+                    null,
+                    "Select Target Elements");
+                if (refs.Count > 0)
                 {
-                    IList<Reference> refs = _uiDoc.Selection.PickObjects(ObjectType.Element, "Select Target Elements");
-                    vm.SetTargets(refs, _uiDoc.Document);
-                }
-                catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally
-                {
-                    try
-                    {
-                        this.Visibility = System.Windows.Visibility.Visible;
-                        Activate();
-                    }
-                    catch { }
+                    vm.SetTargets(refs, UiDocument.Document);
                 }
             };
+        }
+
+        public override void Initialize(UIDocument uiDoc)
+        {
+            base.Initialize(uiDoc);
         }
     }
 }
