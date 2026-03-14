@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using LECG.Models;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
@@ -21,78 +23,89 @@ namespace LECG.Services
             return elements.Select(x => x.Category).Distinct().OrderBy(x => x).ToList();
         }
 
-        public List<ReplaceItem> ProcessPreview(List<ElementData> candidates, SearchReplaceViewModel vm)
+        public List<ReplaceItem> ProcessPreview(
+            List<ElementData> candidates, 
+            SearchCriteria criteria, 
+            RenameRuleContext context,
+            CancellationToken ct = default)
         {
             ArgumentNullException.ThrowIfNull(candidates);
-            ArgumentNullException.ThrowIfNull(vm);
+            ArgumentNullException.ThrowIfNull(criteria);
+            ArgumentNullException.ThrowIfNull(context);
 
             List<ReplaceItem> results = new List<ReplaceItem>();
 
             foreach (ElementData el in candidates)
             {
-                if (el.Type == "Type" && !vm.ScopeTypeName) continue;
-                if (el.Type == "View" && !vm.ScopeViewName) continue;
-                if (el.Type == "Sheet" && !vm.ScopeSheetName) continue;
+                // Support cooperative cancellation
+                ct.ThrowIfCancellationRequested();
 
-                if (el.Type == "Family" && !vm.ScopeFamilyName) continue;
-                if (el.Type == "Material" && !vm.ScopeMaterialName) continue;
-                if (el.Type == "ObjectStyle" && !vm.ScopeObjectStyleName) continue;
-                if (el.Type == "LineStyle" && !vm.ScopeLineStyleName) continue;
-                if (el.Type == "FillPattern" && !vm.ScopeFillPatternName) continue;
-                if (el.Type == "FamilyParameter" && !vm.ScopeFamilyParameterName) continue;
+                // 1. Scope Filtering
+                if (el.Type == "Type" && !criteria.ScopeTypeName) continue;
+                if (el.Type == "View" && !criteria.ScopeViewName) continue;
+                if (el.Type == "Sheet" && !criteria.ScopeSheetName) continue;
+                if (el.Type == "Family" && !criteria.ScopeFamilyName) continue;
+                if (el.Type == "Material" && !criteria.ScopeMaterialName) continue;
+                if (el.Type == "ObjectStyle" && !criteria.ScopeObjectStyleName) continue;
+                if (el.Type == "LineStyle" && !criteria.ScopeLineStyleName) continue;
+                if (el.Type == "FillPattern" && !criteria.ScopeFillPatternName) continue;
+                if (el.Type == "FamilyParameter" && !criteria.ScopeFamilyParameterName) continue;
 
-                if (!string.IsNullOrWhiteSpace(vm.FilterName))
+                // 2. Name Filtering
+                if (!string.IsNullOrWhiteSpace(criteria.FilterName))
                 {
                     bool match = false;
-                    switch (vm.SelectedFilterType)
+                    switch (criteria.SelectedFilterType)
                     {
                         case SearchFilterType.Contains:
-                            match = el.Name.IndexOf(vm.FilterName, StringComparison.OrdinalIgnoreCase) >= 0;
+                            match = el.Name.Contains(criteria.FilterName, StringComparison.OrdinalIgnoreCase);
                             break;
                         case SearchFilterType.BeginsWith:
-                            match = el.Name.StartsWith(vm.FilterName, StringComparison.OrdinalIgnoreCase);
+                            match = el.Name.StartsWith(criteria.FilterName, StringComparison.OrdinalIgnoreCase);
                             break;
                         case SearchFilterType.EndsWith:
-                            match = el.Name.EndsWith(vm.FilterName, StringComparison.OrdinalIgnoreCase);
+                            match = el.Name.EndsWith(criteria.FilterName, StringComparison.OrdinalIgnoreCase);
                             break;
                         case SearchFilterType.DoesNotContain:
-                            match = el.Name.IndexOf(vm.FilterName, StringComparison.OrdinalIgnoreCase) < 0;
+                            match = !el.Name.Contains(criteria.FilterName, StringComparison.OrdinalIgnoreCase);
                             break;
                     }
                     if (!match) continue;
                 }
 
-                if (!string.IsNullOrWhiteSpace(vm.FilterCategory) && !vm.FilterCategory.Equals("All", StringComparison.OrdinalIgnoreCase))
+                // 3. Category Filtering
+                if (!string.IsNullOrWhiteSpace(criteria.FilterCategory) && !criteria.FilterCategory.Equals("All", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (el.Category.IndexOf(vm.FilterCategory, StringComparison.OrdinalIgnoreCase) < 0) continue;
+                    if (!el.Category.Contains(criteria.FilterCategory, StringComparison.OrdinalIgnoreCase)) continue;
                 }
 
-                // Advanced Filtering — Parameters
+                // 4. Advanced Filtering — Parameters
                 if (el.Type == "FamilyParameter")
                 {
-                    if (!string.IsNullOrEmpty(vm.FilterParamGroup) && !vm.FilterParamGroup.Equals("All", StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(criteria.FilterParamGroup) && !criteria.FilterParamGroup.Equals("All", StringComparison.OrdinalIgnoreCase))
                     {
-                        if (!string.Equals(el.ParamGroup, vm.FilterParamGroup, StringComparison.OrdinalIgnoreCase)) continue;
+                        if (!string.Equals(el.ParamGroup, criteria.FilterParamGroup, StringComparison.OrdinalIgnoreCase)) continue;
                     }
 
-                    if (vm.FilterIsInstance.HasValue)
+                    if (criteria.FilterIsInstance.HasValue)
                     {
-                        if (el.IsInstance != vm.FilterIsInstance.Value) continue;
+                        if (el.IsInstance != criteria.FilterIsInstance.Value) continue;
                     }
 
-                    if (vm.FilterIsReadOnly.HasValue)
+                    if (criteria.FilterIsReadOnly.HasValue)
                     {
-                        if (el.IsReadOnly != vm.FilterIsReadOnly.Value) continue;
+                        if (el.IsReadOnly != criteria.FilterIsReadOnly.Value) continue;
                     }
                 }
 
-                // Advanced Filtering — Views (filter by ViewType)
-                if (el.Type == "View" && !string.IsNullOrEmpty(vm.FilterViewType) && !vm.FilterViewType.Equals("All", StringComparison.OrdinalIgnoreCase))
+                // 5. Advanced Filtering — Views
+                if (el.Type == "View" && !string.IsNullOrEmpty(criteria.FilterViewType) && !criteria.FilterViewType.Equals("All", StringComparison.OrdinalIgnoreCase))
                 {
-                    if (!string.Equals(el.Category, vm.FilterViewType, StringComparison.OrdinalIgnoreCase)) continue;
+                    if (!string.Equals(el.Category, criteria.FilterViewType, StringComparison.OrdinalIgnoreCase)) continue;
                 }
 
-                string currentName = _renameRulePipelineService.ApplyRules(el.Name, vm, results.Count);
+                // 6. Apply Rename Rules
+                string currentName = _renameRulePipelineService.ApplyRules(el.Name, context, results.Count);
 
                 results.Add(new ReplaceItem
                 {

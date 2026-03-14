@@ -12,11 +12,7 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            vm.CloseAction = () =>
-            {
-                DialogResult = vm.ShouldRun;
-                Close();
-            };
+            BindDialogClose(vm, () => vm.ShouldRun);
         }
     }
 }

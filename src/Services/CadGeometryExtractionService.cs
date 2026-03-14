@@ -9,10 +9,6 @@ namespace LECG.Services
         private readonly ICadSolidHatchExtractionService _cadSolidHatchExtractionService;
         private readonly ICadPolylineExtractionService _cadPolylineExtractionService;
 
-        public CadGeometryExtractionService() : this(new CadSolidHatchExtractionService(), new CadPolylineExtractionService())
-        {
-        }
-
         public CadGeometryExtractionService(ICadSolidHatchExtractionService cadSolidHatchExtractionService, ICadPolylineExtractionService cadPolylineExtractionService)
         {
             _cadSolidHatchExtractionService = cadSolidHatchExtractionService;

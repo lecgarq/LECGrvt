@@ -101,6 +101,6 @@
         </Grid>
 
         <!-- Cancel Button -->
-        <Button Content="Cancel" Grid.Row="4" Height="{DynamicResource ButtonHeight}" Command="{Binding ExecuteCancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+        <Button Content="Cancel" Grid.Row="4" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
     </Grid>
 </base:LecgWindow>

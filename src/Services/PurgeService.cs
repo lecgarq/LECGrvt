@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using System;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
@@ -13,34 +12,17 @@ namespace LECG.Services
     {
         private readonly IPurgeMaterialService _purgeMaterialService;
         private readonly IPurgeLineStyleService _purgeLineStyleService;
+        private readonly IPurgeLinePatternService _purgeLinePatternService;
         private readonly IPurgeFillPatternService _purgeFillPatternService;
         private readonly IPurgeLevelService _purgeLevelService;
         private readonly IPurgeParameterService _purgeParameterService;
         private readonly IPurgeSummaryService _purgeSummaryService;
         private readonly IPurgeExecutionCoordinatorService _purgeExecutionCoordinatorService;
 
-        public PurgeService() : this(
-            new PurgeMaterialService(),
-            new PurgeLineStyleService(),
-            new PurgeFillPatternService(),
-            new PurgeLevelService(),
-            new PurgeParameterService(),
-            new PurgeSummaryService(),
-            new PurgeExecutionCoordinatorService(
-                new PurgePassSequenceService(),
-                new PurgePassExecutionService(
-                    new PurgeLineStyleService(),
-                    new PurgeFillPatternService(),
-                    new PurgeMaterialService(),
-                    new PurgeLevelService(),
-                    new PurgePassMessagingService()),
-                new PurgeParameterService()))
-        {
-        }
-
         public PurgeService(
             IPurgeMaterialService purgeMaterialService,
             IPurgeLineStyleService purgeLineStyleService,
+            IPurgeLinePatternService purgeLinePatternService,
             IPurgeFillPatternService purgeFillPatternService,
             IPurgeLevelService purgeLevelService,
             IPurgeParameterService purgeParameterService,
@@ -49,6 +31,7 @@ namespace LECG.Services
         {
             _purgeMaterialService = purgeMaterialService;
             _purgeLineStyleService = purgeLineStyleService;
+            _purgeLinePatternService = purgeLinePatternService;
             _purgeFillPatternService = purgeFillPatternService;
             _purgeLevelService = purgeLevelService;
             _purgeParameterService = purgeParameterService;
@@ -56,20 +39,25 @@ namespace LECG.Services
             _purgeExecutionCoordinatorService = purgeExecutionCoordinatorService;
         }
 
-        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool fillPatterns, bool materials, bool levels, bool parameters, Action<string> logCallback, Action<double, string> progressCallback)
+        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, Action<string> logCallback, Action<double, string> progressCallback)
         {
-            (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) = _purgeExecutionCoordinatorService.Execute(
+            PurgeAll(doc, passCount, lineStyles, linePatterns, fillPatterns, materials, levels, parameters, new LegacyProgressReporter(progressCallback, logCallback));
+        }
+
+        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, IProgressReporter reporter)
+        {
+            (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) = _purgeExecutionCoordinatorService.Execute(
                 doc,
                 passCount,
                 lineStyles,
+                linePatterns,
                 fillPatterns,
                 materials,
                 levels,
                 parameters,
-                logCallback,
-                progressCallback);
+                reporter);
 
-            _purgeSummaryService.Report(logCallback, progressCallback, lineStylesDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
+            _purgeSummaryService.Report(reporter, lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
         }
 
         /// <summary>
@@ -78,6 +66,14 @@ namespace LECG.Services
         public int PurgeUnusedLineStyles(Document doc, Action<string>? logCallback = null)
         {
             return _purgeLineStyleService.PurgeUnusedLineStyles(doc, logCallback);
+        }
+
+        /// <summary>
+        /// Purge unused line patterns.
+        /// </summary>
+        public int PurgeUnusedLinePatterns(Document doc, Action<string>? logCallback = null)
+        {
+            return _purgeLinePatternService.PurgeUnusedLinePatterns(doc, logCallback);
         }
 
         /// <summary>

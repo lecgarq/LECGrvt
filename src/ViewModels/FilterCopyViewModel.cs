@@ -7,6 +7,8 @@ using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LECG.Core.Filtering;
+using LECG.Models;
+using LECG.Services.Interfaces;
 using LECG.Services; // Assuming Logger is here or similar
 
 namespace LECG.ViewModels
@@ -20,6 +22,7 @@ namespace LECG.ViewModels
     public partial class FilterCopyViewModel : BaseViewModel
     {
         private readonly Document _doc;
+        private readonly IFilterCopyService _filterCopyService;
 
         [ObservableProperty]
         private ObservableCollection<ViewContainer> _leftItems = new();
@@ -44,9 +47,10 @@ namespace LECG.ViewModels
 
         public List<ViewSourceType> SourceTypes { get; } = new() { ViewSourceType.Views, ViewSourceType.ViewTemplates };
 
-        public FilterCopyViewModel(Document doc)
+        public FilterCopyViewModel(Document doc, IFilterCopyService filterCopyService)
         {
             _doc = doc;
+            _filterCopyService = filterCopyService;
             Title = "Filter Copy";
             LeftSourceType = ViewSourceType.Views;
             RightSourceType = ViewSourceType.Views;
@@ -302,45 +306,28 @@ namespace LECG.ViewModels
             }
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
-            using (Transaction t = new Transaction(_doc, "Filter Copy"))
+            var viewStates = RightItems
+                .Select(viewContainer => new FilterCopyViewState(
+                    viewContainer.Id,
+                    viewContainer.Filters
+                        .Select(filter => new FilterCopyFilterState(
+                            filter.Id,
+                            filter.GraphicsSettings,
+                            filter.IsVisible,
+                            filter.Status == FilterStatus.Removable))
+                        .ToList()))
+                .ToList();
+
+            var result = _filterCopyService.Apply(_doc, viewStates);
+            if (result.IsSuccess)
             {
-                t.Start();
-                try
-                {
-                    foreach (var viewContainer in RightItems)
-                    {
-                        var view = _doc.GetElement(viewContainer.Id) as View;
-                        if (view == null) continue;
-
-                        // Identify filters to process
-                        var filtersToKeep = viewContainer.Filters.Where(f => f.Status != FilterStatus.Removable).ToList();
-                        var filtersToRemove = viewContainer.Filters.Where(f => f.Status == FilterStatus.Removable).ToList();
-
-                        // 1. Remove markers
-                        foreach (var filter in filtersToRemove)
-                        {
-                            if (view.IsFilterApplied(filter.Id)) view.RemoveFilter(filter.Id);
-                        }
-
-                        // 2. Re-add in order
-                        foreach (var filter in filtersToKeep)
-                        {
-                            if (view.IsFilterApplied(filter.Id)) view.RemoveFilter(filter.Id);
-                            view.AddFilter(filter.Id);
-                            view.SetFilterOverrides(filter.Id, filter.GraphicsSettings);
-                            view.SetFilterVisibility(filter.Id, filter.IsVisible);
-                        }
-                    }
-                    t.Commit();
-                    CloseAction?.Invoke();
-                }
-                catch (Exception)
-                {
-                    t.RollBack();
-                }
+                base.Apply();
+                return;
             }
+
+            LECG.Services.Logging.Logger.Instance.Log($"Filter Copy failed: {result.Error}");
         }
     }
 }

@@ -52,15 +52,12 @@
     <PropertyGroup>
       <RevitAddinsDir>C:\ProgramData\Autodesk\Revit\Addins\2026\LECG</RevitAddinsDir>
     </PropertyGroup>
-    <ItemGroup>
-      <StaleDiFiles Include="$(RevitAddinsDir)\Microsoft.Extensions.DependencyInjection.dll" />
-      <StaleDiFiles Include="$(RevitAddinsDir)\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
-    </ItemGroup>
     <Message Text="Deploying to Revit addins: $(RevitAddinsDir)" Importance="high" />
-    <Delete Files="@(StaleDiFiles)" />
-    <Copy SourceFiles="$(OutputPath)LECG.dll" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutputPath)LECG.pdb" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutputPath)LECG.Core.dll" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="$(OutputPath)LECG.Core.pdb" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <DeployFiles Include="$(OutputPath)*.dll" />
+      <DeployFiles Include="$(OutputPath)*.pdb" />
+      <DeployFiles Include="$(OutputPath)*.deps.json" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="false" />
   </Target>
 </Project>

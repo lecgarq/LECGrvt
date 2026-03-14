@@ -3,6 +3,7 @@ namespace LECG.Models
     public class PurgeDialogSettings
     {
         public bool PurgeLineStyles { get; set; } = true;
+        public bool PurgeLinePatterns { get; set; } = true;
         public bool PurgeFillPatterns { get; set; } = true;
         public bool PurgeMaterials { get; set; } = true;
         public bool PurgeLevels { get; set; } = false;

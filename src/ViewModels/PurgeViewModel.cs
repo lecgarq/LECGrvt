@@ -9,6 +9,9 @@ namespace LECG.ViewModels
         private bool _purgeLineStyles = true;
 
         [ObservableProperty]
+        private bool _purgeLinePatterns = true;
+
+        [ObservableProperty]
         private bool _purgeFillPatterns = true;
 
         [ObservableProperty]

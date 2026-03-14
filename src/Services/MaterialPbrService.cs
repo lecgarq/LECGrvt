@@ -10,17 +10,20 @@ namespace LECG.Services
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialTextureLookupService _materialTextureLookupService;
         private readonly IMaterialAppearanceAssetService _materialAppearanceAssetService;
+        private readonly ITransactionService _transactionService;
 
-        public MaterialPbrService() : this(new MaterialCreationService(), new MaterialColorSequenceService(), new MaterialTextureLookupService(), new MaterialAppearanceAssetService(new MaterialBitmapPropertyService()))
-        {
-        }
-
-        public MaterialPbrService(IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialTextureLookupService materialTextureLookupService, IMaterialAppearanceAssetService materialAppearanceAssetService)
+        public MaterialPbrService(
+            IMaterialCreationService materialCreationService,
+            IMaterialColorSequenceService materialColorSequenceService,
+            IMaterialTextureLookupService materialTextureLookupService,
+            IMaterialAppearanceAssetService materialAppearanceAssetService,
+            ITransactionService transactionService)
         {
             _materialCreationService = materialCreationService;
             _materialColorSequenceService = materialColorSequenceService;
             _materialTextureLookupService = materialTextureLookupService;
             _materialAppearanceAssetService = materialAppearanceAssetService;
+            _transactionService = transactionService;
         }
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)
@@ -29,13 +32,10 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(name);
             ArgumentNullException.ThrowIfNull(folderPath);
 
-            ElementId matId = ElementId.InvalidElementId;
-            using (Transaction t = new Transaction(doc, "Create Material"))
-            {
-                t.Start();
-                matId = _materialCreationService.GetOrCreateMaterial(doc, name, _materialColorSequenceService.GetNextColor(), logCallback);
-                t.Commit();
-            }
+            ElementId matId = _transactionService.Run(
+                doc,
+                "Create Material",
+                _ => _materialCreationService.GetOrCreateMaterial(doc, name, _materialColorSequenceService.GetNextColor(), logCallback));
             Material? mat = doc.GetElement(matId) as Material;
             if (mat == null) return matId;
 

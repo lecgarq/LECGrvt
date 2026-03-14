@@ -6,58 +6,43 @@ using LECG.ViewModels;
 using LECG.Views.Base;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
+using System;
 
 namespace LECG.Views
 {
     public partial class AssignMaterialView : LecgWindow
     {
-        private readonly UIDocument _uiDoc;
+        private readonly ISelectionCoordinator _selectionCoordinator;
 
-        public AssignMaterialView(AssignMaterialViewModel vm, UIDocument uiDoc)
+        public AssignMaterialView(AssignMaterialViewModel vm, ISelectionCoordinator selectionCoordinator)
         {
             ArgumentNullException.ThrowIfNull(vm);
-            ArgumentNullException.ThrowIfNull(uiDoc);
+            _selectionCoordinator = selectionCoordinator;
 
             InitializeComponent();
             DataContext = vm;
-            _uiDoc = uiDoc;
             
-            // VM Interaction
-            vm.CloseAction = () => 
-            {
-                if (IsLoaded)
-                {
-                    try { DialogResult = vm.ShouldRun; } catch { Close(); }
-                }
-                else
-                {
-                    Close();
-                }
-            };
+            BindDialogClose(vm, () => vm.ShouldRun);
 
             // Selection Request
             vm.Selection.OnRequestSelect += (s, e) => {
-                Hide();
-                try 
+                if (UiDocument == null) return;
+                IList<Reference> refs = _selectionCoordinator.PickObjects(
+                    this,
+                    UiDocument,
+                    ObjectType.Element,
+                    new SelectionFilters.MaterialHostFilter(),
+                    "Select elements to assign materials");
+                if (refs.Count > 0)
                 {
-                    IList<Reference> refs = _uiDoc.Selection.PickObjects(
-                        ObjectType.Element, 
-                        new SelectionFilters.MaterialHostFilter(), 
-                        "Select elements to assign materials");
-                    
                     vm.SetSelection(refs);
                 }
-                catch (Autodesk.Revit.Exceptions.OperationCanceledException) { }
-                finally
-                {
-                    try
-                    {
-                        this.Visibility = System.Windows.Visibility.Visible;
-                        Activate();
-                    }
-                    catch { }
-                }
             };
+        }
+
+        public override void Initialize(UIDocument uiDoc)
+        {
+            base.Initialize(uiDoc);
         }
     }
 }

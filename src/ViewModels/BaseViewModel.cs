@@ -18,19 +18,24 @@ namespace LECG.ViewModels
         [ObservableProperty]
         private bool _isBusy;
 
+        [ObservableProperty]
+        private bool _shouldRun;
+
         private IRelayCommand? _applyCommand;
         public IRelayCommand ApplyCommand => _applyCommand ??= new RelayCommand(Apply);
 
         private IRelayCommand? _cancelCommand;
         public IRelayCommand CancelCommand => _cancelCommand ??= new RelayCommand(Cancel);
 
-        protected virtual void Apply()
+        public virtual void Apply()
         {
+            ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        protected virtual void Cancel()
+        public virtual void Cancel()
         {
+            ShouldRun = false;
             CloseAction?.Invoke();
         }
     }

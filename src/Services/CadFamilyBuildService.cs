@@ -8,11 +8,16 @@ namespace LECG.Services
     {
         private readonly ICadDataDrawService _cadDataDrawService;
         private readonly ICadFamilySaveService _familySaveService;
+        private readonly ITransactionService _transactionService;
 
-        public CadFamilyBuildService(ICadDataDrawService cadDataDrawService, ICadFamilySaveService familySaveService)
+        public CadFamilyBuildService(
+            ICadDataDrawService cadDataDrawService,
+            ICadFamilySaveService familySaveService,
+            ITransactionService transactionService)
         {
             _cadDataDrawService = cadDataDrawService;
             _familySaveService = familySaveService;
+            _transactionService = transactionService;
         }
 
         public string BuildAndSave(
@@ -29,6 +34,23 @@ namespace LECG.Services
             double progressStart,
             double progressEnd)
         {
+            return BuildAndSave(projectDoc, templatePath, data, offset, lineStyleName, lineColor, lineWeight, transactionName, familyName, new LegacyProgressReporter(progress), progressStart, progressEnd);
+        }
+
+        public string BuildAndSave(
+            Document projectDoc,
+            string templatePath,
+            CadData data,
+            XYZ offset,
+            string lineStyleName,
+            Color lineColor,
+            int lineWeight,
+            string transactionName,
+            string familyName,
+            IProgressReporter reporter,
+            double progressStart,
+            double progressEnd)
+        {
             ArgumentNullException.ThrowIfNull(projectDoc);
             ArgumentNullException.ThrowIfNull(templatePath);
             ArgumentNullException.ThrowIfNull(data);
@@ -39,9 +61,8 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(familyName);
 
             Document familyDoc = projectDoc.Application.NewFamilyDocument(templatePath);
-            using (Transaction t = new Transaction(familyDoc, transactionName))
+            _transactionService.Run(familyDoc, transactionName, _ =>
             {
-                t.Start();
                 _cadDataDrawService.Draw(
                     familyDoc,
                     data,
@@ -49,11 +70,10 @@ namespace LECG.Services
                     lineStyleName,
                     lineColor,
                     lineWeight,
-                    progress,
+                    reporter,
                     progressStart,
                     progressEnd);
-                t.Commit();
-            }
+            });
 
             return _familySaveService.Save(familyDoc, familyName);
         }

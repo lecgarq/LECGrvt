@@ -37,8 +37,9 @@ namespace LECG.Services
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Logging.Logger.Instance.LogWarning($"[PurgeReferenceScannerService] Failed to collect used IDs for element {elem.Id}: {ex.Message}");
             }
         }
     }

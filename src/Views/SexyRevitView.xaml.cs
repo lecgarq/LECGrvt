@@ -10,11 +10,7 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            vm.CloseAction = () =>
-            {
-                DialogResult = true;
-                Close();
-            };
+            BindAcceptedClose(vm);
         }
 
         // Keep event handlers for buttons if strictly necessary or map them to commands in XAML

@@ -10,11 +10,7 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            vm.CloseAction = () =>
-            {
-                DialogResult = true;
-                Close();
-            };
+            BindAcceptedClose(vm);
         }
 
         private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -1,28 +1,26 @@
-using System;
 using Autodesk.Revit.DB;
+using LECG.Models;
 using LECG.Services.Interfaces;
-using LECG.ViewModels;
 
 namespace LECG.Services
 {
     public class SexySectionBoxVisibilityService : ISexySectionBoxVisibilityService
     {
-        public void Apply(Document doc, View view, SexyRevitViewModel settings, Action<string> log, Action<double, string> progress)
+        public void Apply(Document doc, View view, SexyRevitSettings settings, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(view);
             ArgumentNullException.ThrowIfNull(settings);
-            ArgumentNullException.ThrowIfNull(log);
-            ArgumentNullException.ThrowIfNull(progress);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             if (!(settings.HideSectionBox && view is View3D))
             {
                 return;
             }
 
-            log("");
-            log("VIEW OPTIONS");
-            progress(70, "Configuring view...");
+            reporter.Log("");
+            reporter.Log("VIEW OPTIONS");
+            reporter.Report("Configuring view...", 70);
 
             try
             {
@@ -30,7 +28,7 @@ namespace LECG.Services
                 if (sectionBoxCat != null && view.CanCategoryBeHidden(sectionBoxCat.Id))
                 {
                     view.SetCategoryHidden(sectionBoxCat.Id, true);
-                    log("  ✓ Section Box: Hidden");
+                    reporter.Log("Section Box: Hidden");
                 }
             }
             catch

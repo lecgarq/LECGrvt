@@ -11,10 +11,6 @@ namespace LECG.Services
         private readonly IAlignEdgesHitPointProjectionService _alignEdgesHitPointProjectionService;
         private readonly IAlignEdgesCurveDivisionService _alignEdgesCurveDivisionService;
 
-        public AlignEdgesBoundaryPointService() : this(new AlignEdgesCurveHitService(new ReferenceRaycastService()), new AlignEdgesHitPointProjectionService(new ReferenceRaycastService()), new AlignEdgesCurveDivisionService())
-        {
-        }
-
         public AlignEdgesBoundaryPointService(IAlignEdgesCurveHitService alignEdgesCurveHitService, IAlignEdgesHitPointProjectionService alignEdgesHitPointProjectionService, IAlignEdgesCurveDivisionService alignEdgesCurveDivisionService)
         {
             _alignEdgesCurveHitService = alignEdgesCurveHitService;

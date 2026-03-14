@@ -17,7 +17,12 @@ namespace LECG.Services
 
         public ElementId CreateAndLoad(Document doc, CadData data, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
         {
-            progress?.Invoke(50, "Creating final family...");
+            return CreateAndLoad(doc, data, familyName, templatePath, lineStyleName, lineColor, lineWeight, new LegacyProgressReporter(progress));
+        }
+
+        public ElementId CreateAndLoad(Document doc, CadData data, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)
+        {
+            reporter.Report("Creating final family...", 50);
             string path = _cadFamilyBuildService.BuildAndSave(
                 doc,
                 templatePath,
@@ -28,11 +33,11 @@ namespace LECG.Services
                 lineWeight,
                 "Create Detail Item",
                 familyName,
-                progress,
+                reporter,
                 50,
                 90);
 
-            progress?.Invoke(95, "Loading into project...");
+            reporter.Report("Loading into project...", 95);
             return _familyLoadPlacementService.LoadOnly(doc, path);
         }
     }

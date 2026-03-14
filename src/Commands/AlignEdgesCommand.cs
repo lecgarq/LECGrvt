@@ -28,7 +28,8 @@ namespace LECG.Commands
             var vm = ServiceLocator.GetRequiredService<AlignEdgesViewModel>(); // Service is stateless, but we need refs from VM.
             
             // 3. View
-            var view = ServiceLocator.CreateWith<AlignEdgesView>(vm, uiDoc);
+            var view = ServiceLocator.GetRequiredService<AlignEdgesView>();
+            view.Initialize(uiDoc);
             
             // 4. Show
             bool? result = view.ShowDialog();
@@ -36,15 +37,8 @@ namespace LECG.Commands
             // 5. Run if confirmed
             if (result == true && vm.ShouldRun)
             {
-                try 
-                {
-                    service.AlignEdges(doc, vm.TargetRefs, vm.ReferenceRefs);
-                    TaskDialog.Show("Align Edges", "Alignment completed successfully.");
-                }
-                catch (Exception ex)
-                {
-                    TaskDialog.Show("Error", $"Alignment failed: {ex.Message}");
-                }
+                service.AlignEdges(doc, vm.TargetRefs, vm.ReferenceRefs);
+                TaskDialog.Show("Align Edges", "Alignment completed successfully.");
             }
         }
     }

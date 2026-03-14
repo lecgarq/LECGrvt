@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Text;
 using System.Windows;
 using Autodesk.Revit.DB;
@@ -15,6 +16,9 @@ namespace LECG.Core
         // Internal fields
         protected Views.LogView? _logWindow;
         protected ViewModels.LogViewModel? _logViewModel;
+        private readonly Stopwatch _progressUpdateTimer = new Stopwatch();
+        private double _lastProgressPercent = double.NaN;
+        private string? _lastProgressStatus;
         
         protected Document Doc { get; private set; } = null!;
         protected UIDocument UIDoc { get; private set; } = null!;
@@ -25,8 +29,8 @@ namespace LECG.Core
         public abstract void Execute(UIDocument uiDoc, Document doc);
 
         /// <summary>
-        /// Optional: Override to provide a transaction name. 
-        /// If not null, a Transaction will be automatically started and committed.
+        /// Legacy compatibility hook kept so existing commands compile.
+        /// Automatic transactions are no longer started by the base class.
         /// </summary>
         protected virtual string? TransactionName => null;
 
@@ -43,22 +47,9 @@ namespace LECG.Core
                 // Reset Logger for new command execution
                 Services.Logging.Logger.Instance.Clear();
                 Services.Logging.Logger.Instance.SetDispatcher(System.Windows.Application.Current?.Dispatcher);
+                ResetProgressTracking();
 
-                // Auto-Transaction Wrapper
-                if (!string.IsNullOrEmpty(TransactionName))
-                {
-                    using (Transaction t = new Transaction(Doc, TransactionName))
-                    {
-                        t.Start();
-                        Execute(UIDoc, Doc);
-                        t.Commit();
-                    }
-                }
-                else
-                {
-                    // No automatic transaction, let the command handle it OR read-only
-                    Execute(UIDoc, Doc);
-                }
+                Execute(UIDoc, Doc);
 
                 return Result.Succeeded;
             }
@@ -85,6 +76,11 @@ namespace LECG.Core
 
         protected void UpdateProgress(double percent, string status)
         {
+            if (!ShouldPublishProgress(percent, status))
+            {
+                return;
+            }
+
             RunOnUI(() => 
             {
                 _logViewModel?.UpdateProgress(percent, status);
@@ -130,15 +126,58 @@ namespace LECG.Core
 
             try
             {
-                if (System.Windows.Application.Current?.Dispatcher != null)
-                    System.Windows.Application.Current.Dispatcher.Invoke(action);
+                var dispatcher = System.Windows.Application.Current?.Dispatcher;
+                if (dispatcher != null)
+                {
+                    if (dispatcher.CheckAccess())
+                    {
+                        action();
+                    }
+                    else
+                    {
+                        dispatcher.Invoke(action);
+                    }
+                }
                 else
                     action();
             }
             catch (Exception ex)
             {
-                 System.Windows.MessageBox.Show($"UI Dispatch Error: {ex.Message}", "LECG Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                 // Avoid showing too many popups during a loop
+                 System.Diagnostics.Debug.WriteLine($"UI Dispatch Error: {ex.Message}");
             }
+        }
+
+        private void ResetProgressTracking()
+        {
+            _lastProgressPercent = double.NaN;
+            _lastProgressStatus = null;
+            _progressUpdateTimer.Restart();
+        }
+
+        private bool ShouldPublishProgress(double percent, string status)
+        {
+            if (double.IsNaN(_lastProgressPercent) || percent >= 100)
+            {
+                _lastProgressPercent = percent;
+                _lastProgressStatus = status;
+                _progressUpdateTimer.Restart();
+                return true;
+            }
+
+            bool statusChanged = !string.Equals(_lastProgressStatus, status, StringComparison.Ordinal);
+            bool percentAdvanced = Math.Abs(percent - _lastProgressPercent) >= 1d;
+            bool timeElapsed = _progressUpdateTimer.ElapsedMilliseconds >= 250;
+
+            if (!statusChanged && !percentAdvanced && !timeElapsed)
+            {
+                return false;
+            }
+
+            _lastProgressPercent = percent;
+            _lastProgressStatus = status;
+            _progressUpdateTimer.Restart();
+            return true;
         }
 
         private static string BuildExceptionMessage(Exception ex)

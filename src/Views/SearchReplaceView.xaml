@@ -113,7 +113,7 @@
                             <Expander Grid.Row="1" Grid.ColumnSpan="3" Visibility="{Binding IsParameterScope, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="â–¸" Foreground="{DynamicResource AccentBrush}" FontSize="11" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text=">" Foreground="{DynamicResource AccentBrush}" FontSize="11" Margin="0,0,6,0" VerticalAlignment="Center"/>
                                         <TextBlock Text="Advanced Parameter Filters" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Expander.Header>
@@ -158,7 +158,7 @@
                             <Expander Grid.Row="1" Grid.ColumnSpan="3" Visibility="{Binding IsViewScope, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="â–¸" Foreground="{DynamicResource AccentBrush}" FontSize="11" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text=">" Foreground="{DynamicResource AccentBrush}" FontSize="11" Margin="0,0,6,0" VerticalAlignment="Center"/>
                                         <TextBlock Text="Advanced View Filters" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
                                     </StackPanel>
                                 </Expander.Header>
@@ -433,7 +433,7 @@
                             </Style>
                         </DataGrid.RowStyle>
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="âœ“" Binding="{Binding IsChecked}" Width="35"/>
+                            <DataGridCheckBoxColumn Header="Sel" Binding="{Binding IsChecked}" Width="35"/>
                             <DataGridTextColumn Header="Old Name" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource DataGridRemovedBrush}"/>
                             <DataGridTextColumn Header="New Name" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource DataGridAddedBrush}"/>
                             <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True" Foreground="{DynamicResource AccentMutedBrush}"/>
@@ -455,10 +455,19 @@
             <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
             <!-- 5. FOOTER                                              -->
             <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,16,16">
-                <Button Content="Cancel" Click="CloseWindow" Style="{DynamicResource SecondaryButtonStyle}" Width="100" Height="{DynamicResource ButtonHeight}" Margin="0,0,10,0"/>
-                <Button Content="âš¡ Apply Rename" Command="{Binding ApplyCommand}" Style="{DynamicResource AccentButtonStyle}" Width="170" Height="{DynamicResource ButtonHeight}"/>
-            </StackPanel>
+            <Grid Grid.Row="3" Margin="16,0,16,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="{Binding ValidationMessage}" VerticalAlignment="Center" Foreground="#B42318" TextWrapping="Wrap" Visibility="{Binding HasValidationMessage, Converter={StaticResource BoolToVis}}"/>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Cancel" Click="CloseWindow" Style="{DynamicResource SecondaryButtonStyle}" Width="100" Height="{DynamicResource ButtonHeight}" Margin="0,0,10,0"/>
+                    <Button Content="Apply Rename" Command="{Binding ApplyCommand}" Style="{DynamicResource AccentButtonStyle}" Width="170" Height="{DynamicResource ButtonHeight}"/>
+                </StackPanel>
+            </Grid>
 
         </Grid>
 </base:LecgWindow>

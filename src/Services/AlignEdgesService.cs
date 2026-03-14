@@ -9,15 +9,13 @@ namespace LECG.Services
         {
         private readonly IAlignEdgesIntersectorService _intersectorService;
         private readonly IAlignEdgesToposolidProcessingService _toposolidProcessingService;
+        private readonly ITransactionService _transactionService;
 
-        public AlignEdgesService() : this(new AlignEdgesIntersectorService(), new AlignEdgesToposolidProcessingService(new AlignEdgesBoundaryCollectionService(new AlignEdgesBoundaryPointService()), new AlignEdgesPointInsertionService(), new AlignEdgesVertexAlignmentService()))
-        {
-        }
-
-        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesToposolidProcessingService toposolidProcessingService)
+        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesToposolidProcessingService toposolidProcessingService, ITransactionService transactionService)
         {
             _intersectorService = intersectorService;
             _toposolidProcessingService = toposolidProcessingService;
+            _transactionService = transactionService;
         }
 
         public void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references)
@@ -26,17 +24,13 @@ namespace LECG.Services
 
             ReferenceIntersector intersector = _intersectorService.Create(doc, references);
 
-            using (Transaction t = new Transaction(doc, "Align Edges"))
+            _transactionService.Run(doc, "Align Edges", currentDoc =>
             {
-                t.Start();
-                
                 foreach (Reference r in targets)
                 {
-                    _toposolidProcessingService.Process(doc, r, intersector);
+                    _toposolidProcessingService.Process(currentDoc, r, intersector);
                 }
-                
-                t.Commit();
-            }
+            });
         }
 
     }

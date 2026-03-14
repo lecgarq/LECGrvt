@@ -1,6 +1,7 @@
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
+using System;
 
 namespace LECG.Services
 {
@@ -10,26 +11,33 @@ namespace LECG.Services
         private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
         private readonly IFamilySaveLoadService _familySaveLoadService;
 
-        public FamilyConversionExecutionService(IFamilyTargetDocumentService familyTargetDocumentService, IFamilyGeometryCopyService familyGeometryCopyService, IFamilySaveLoadService familySaveLoadService)
-        {
-            _familyTargetDocumentService = familyTargetDocumentService;
-            _familyGeometryCopyService = familyGeometryCopyService;
-            _familySaveLoadService = familySaveLoadService;
-        }
-
-        public (Document? targetFamilyDoc, string tempFamilyPath) Execute(Document doc, Document sourceFamilyDoc, string templatePath, string targetFamilyName)
-        {
-            Document? targetFamilyDoc = _familyTargetDocumentService.Create(doc, templatePath);
-            if (targetFamilyDoc == null)
+        public FamilyConversionExecutionService(
+            IFamilyTargetDocumentService familyTargetDocumentService,
+            IFamilyGeometryCopyService familyGeometryCopyService,
+            IFamilySaveLoadService familySaveLoadService)
             {
-                return (null, string.Empty);
+                _familyTargetDocumentService = familyTargetDocumentService;
+                _familyGeometryCopyService = familyGeometryCopyService;
+                _familySaveLoadService = familySaveLoadService;
             }
 
-            int copiedCount = _familyGeometryCopyService.CopyGeometry(sourceFamilyDoc, targetFamilyDoc);
-            Logger.Instance.Log($"Found {copiedCount} geometry elements to copy.");
+        public (Document? targetFamilyDoc, string tempFamilyPath) Execute(Document projectDoc, Family sourceFamily, Document sourceFamilyDoc, string templatePath, string targetFamilyName)
+        {
+            LECG.Services.Logging.Logger.Instance.Log($"--- Starting Template-Based Conversion for: {targetFamilyName} ---");
 
-            string tempFamilyPath = _familySaveLoadService.SaveAndLoad(doc, targetFamilyDoc, targetFamilyName);
-            return (targetFamilyDoc, tempFamilyPath);
+            Document? targetFamilyDoc = _familyTargetDocumentService.Create(projectDoc, templatePath);
+            if (targetFamilyDoc != null)
+            {
+                try
+                {
+                    _familyGeometryCopyService.CopyGeometry(sourceFamilyDoc, targetFamilyDoc);
+                    string path = _familySaveLoadService.SaveAndLoad(projectDoc, targetFamilyDoc, targetFamilyName);
+                    return (targetFamilyDoc, path);
+                }
+                catch { return (null, string.Empty); }
+            }
+
+            return (null, string.Empty);
         }
     }
 }

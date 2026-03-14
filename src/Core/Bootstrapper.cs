@@ -26,6 +26,8 @@ namespace LECG.Core
             // Core
             services.AddSingleton<IRibbonService, RibbonService>();
             services.AddSingleton<ILogger>(_ => Logger.Instance);
+            services.AddSingleton<ISelectionCoordinator, SelectionCoordinator>();
+            services.AddSingleton<ITransactionService, TransactionService>();
             
             // Domain Services
             services.AddSingleton<ISlabService, SlabService>();
@@ -56,9 +58,14 @@ namespace LECG.Core
             services.AddSingleton<IPurgeReferenceScannerService, PurgeReferenceScannerService>();
             services.AddSingleton<IPurgeReferencedLevelService, PurgeReferencedLevelService>();
             services.AddSingleton<IPurgeDeleteElementService, PurgeDeleteElementService>();
+            services.AddSingleton<ILinePatternCompactionService, LinePatternCompactionService>();
+            services.AddSingleton<IFillPatternCompactionService, FillPatternCompactionService>();
+            services.AddSingleton<ITextStyleCompactionService, TextStyleCompactionService>();
+            services.AddSingleton<ILineStyleCompactionService, LineStyleCompactionService>();
             services.AddSingleton<IPurgeMaterialUsageCollectorService, PurgeMaterialUsageCollectorService>();
             services.AddSingleton<IPurgeMaterialService, PurgeMaterialService>();
             services.AddSingleton<IPurgeLineStyleService, PurgeLineStyleService>();
+            services.AddSingleton<IPurgeLinePatternService, PurgeLinePatternService>();
             services.AddSingleton<IPurgeFillPatternService, PurgeFillPatternService>();
             services.AddSingleton<IPurgeLevelService, PurgeLevelService>();
             services.AddSingleton<IPurgeParameterService, PurgeParameterService>();
@@ -79,6 +86,7 @@ namespace LECG.Core
             services.AddSingleton<ISexyCategoryVisibilityService, SexyCategoryVisibilityService>();
             services.AddSingleton<ISexySectionBoxVisibilityService, SexySectionBoxVisibilityService>();
             services.AddSingleton<ISexyRevitService, SexyRevitService>();
+            services.AddSingleton<IFilterCopyService, FilterCopyService>();
             services.AddSingleton<IBaseElementCollectionService, BaseElementCollectionService>();
             services.AddSingleton<IRenameRulePipelineService, RenameRulePipelineService>();
             services.AddSingleton<ISearchReplacePreviewService, SearchReplacePreviewService>();
@@ -161,14 +169,13 @@ namespace LECG.Core
 
         private static void ConfigureViewModels(IServiceCollection services)
         {
-            services.AddTransient<ResetSlabsVM>();
-            services.AddTransient<ConvertFamilyViewModel>();
+            services.AddTransient<ResetSlabsViewModel>();
             services.AddTransient<ConvertCadViewModel>();
             services.AddTransient<SexyRevitViewModel>();
             services.AddTransient<PurgeViewModel>();
             services.AddTransient<SearchReplaceViewModel>();
             services.AddTransient<AssignMaterialViewModel>();
-            services.AddTransient<OffsetElevationsVM>();
+            services.AddTransient<OffsetElevationsViewModel>();
             services.AddTransient<AlignEdgesViewModel>();
             services.AddTransient<UpdateContoursViewModel>();
             services.AddTransient<ChangeLevelViewModel>();
@@ -197,7 +204,6 @@ namespace LECG.Core
             services.AddTransient<Views.SimplifyPointsView>();
             services.AddTransient<Views.FilterCopyView>();
             services.AddTransient<Views.ConvertCadView>();
-            services.AddTransient<Views.ConvertFamilyView>();
             services.AddTransient<Views.CategoryChangerView>();
             services.AddTransient<Views.LogView>();
             services.AddTransient<Views.HomeView>();

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Threading;
+using LECG.Models;
 using LECG.ViewModels;
 using LECG.Views;
 
@@ -7,6 +9,15 @@ namespace LECG.Services.Interfaces
     public interface ISearchReplacePreviewService
     {
         List<string> GetUniqueCategories(List<ElementData> elements);
-        List<ReplaceItem> ProcessPreview(List<ElementData> candidates, SearchReplaceViewModel vm);
+        
+        /// <summary>
+        /// Processes the preview items based on criteria and context. 
+        /// Supports cancellation for real-time background execution.
+        /// </summary>
+        List<ReplaceItem> ProcessPreview(
+            List<ElementData> candidates, 
+            SearchCriteria criteria, 
+            RenameRuleContext context,
+            CancellationToken ct = default);
     }
 }

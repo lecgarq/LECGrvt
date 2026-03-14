@@ -15,6 +15,9 @@ namespace LECG.Services.Interfaces
     public interface IProgressReporter
     {
         void Report(string message, double percentage);
+        void Log(string message);
+        void LogWarning(string message);
+        void LogError(string message);
     }
 
     /// <summary>
@@ -32,6 +35,21 @@ namespace LECG.Services.Interfaces
         public void Report(string message, double percentage)
         {
             _onReport?.Invoke(new ProgressReport { Message = message, Percentage = percentage });
+        }
+
+        public void Log(string message)
+        {
+            _onReport?.Invoke(new ProgressReport { Message = message });
+        }
+
+        public void LogWarning(string message)
+        {
+            _onReport?.Invoke(new ProgressReport { Message = message });
+        }
+
+        public void LogError(string message)
+        {
+            _onReport?.Invoke(new ProgressReport { Message = message });
         }
     }
 }

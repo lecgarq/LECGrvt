@@ -9,21 +9,23 @@ namespace LECG.Services
 {
     public class PurgeFillPatternService : IPurgeFillPatternService
     {
-        private readonly IPurgeReferenceScannerService _referenceScanner;
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
-
-        public PurgeFillPatternService() : this(new PurgeReferenceScannerService(), new PurgeDeleteElementService())
-        {
-        }
 
         public PurgeFillPatternService(IPurgeReferenceScannerService referenceScanner, IPurgeDeleteElementService purgeDeleteElementService)
         {
-            _referenceScanner = referenceScanner;
             _purgeDeleteElementService = purgeDeleteElementService;
         }
 
         public int PurgeUnusedFillPatterns(Document doc, Action<string>? logCallback = null)
         {
+            return PurgeUnusedFillPatterns(doc, PurgeContext.Create(doc), logCallback);
+        }
+
+        public int PurgeUnusedFillPatterns(Document doc, PurgeContext context, Action<string>? logCallback = null)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(context);
+
             logCallback?.Invoke("Scanning for unused fill patterns...");
 
             var allPatterns = new FilteredElementCollector(doc)
@@ -32,20 +34,7 @@ namespace LECG.Services
                 .Where(p => !RevitConstants.IsBuiltInFillPattern(p.Name))
                 .ToDictionary(p => p.Id, p => p.Name);
 
-            var usedIds = new HashSet<ElementId>();
-            foreach (Material mat in new FilteredElementCollector(doc).OfClass(typeof(Material)))
-            {
-                _referenceScanner.AddIfValid(usedIds, mat.SurfaceForegroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, mat.SurfaceBackgroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, mat.CutForegroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, mat.CutBackgroundPatternId);
-            }
-
-            foreach (FilledRegionType frt in new FilteredElementCollector(doc).OfClass(typeof(FilledRegionType)))
-            {
-                _referenceScanner.AddIfValid(usedIds, frt.ForegroundPatternId);
-                _referenceScanner.AddIfValid(usedIds, frt.BackgroundPatternId);
-            }
+            var usedIds = context.UsedFillPatternIds;
 
             int deleted = 0;
             foreach (var kvp in allPatterns)

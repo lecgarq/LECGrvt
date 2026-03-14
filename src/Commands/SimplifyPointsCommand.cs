@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Interop;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.Utils;
 using LECG.ViewModels;
@@ -32,11 +32,8 @@ namespace LECG.Commands
             var vm = ServiceLocator.GetRequiredService<SimplifyPointsViewModel>();
             
             // 3. View
-            var view = ServiceLocator.CreateWith<SimplifyPointsView>(vm, uiDoc);
-             
-             // Set owner to Revit window
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            var view = ServiceLocator.GetRequiredService<SimplifyPointsView>();
+            view.Initialize(uiDoc);
             
             // 4. Show
             bool? result = view.ShowDialog();
@@ -44,6 +41,7 @@ namespace LECG.Commands
             // 5. Run if confirmed
             if (result == true && vm.ShouldRun && vm.SelectedRefs.Any())
             {
+                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
                  // Show Log
                 ShowLogWindow("Simplify Points");
                 Log("Starting simplification...");
@@ -52,7 +50,7 @@ namespace LECG.Commands
                 // Map references to Elements
                 var elements = vm.SelectedRefs.Select(r => doc.GetElement(r)).Where(e => e != null);
 
-                service.SimplifyPoints(doc, elements, UpdateProgress, Log);
+                service.SimplifyPoints(doc, elements, reporter);
                 
                 UpdateProgress(100, "Done");
             }

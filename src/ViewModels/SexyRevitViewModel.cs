@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using LECG.Models;
 
 namespace LECG.ViewModels
 {
@@ -22,6 +23,20 @@ namespace LECG.ViewModels
         public SexyRevitViewModel()
         {
             Title = "SEXY REVIT";
+        }
+
+        public SexyRevitSettings ToSettings()
+        {
+            return new SexyRevitSettings(
+                UseConsistentColors,
+                UseSmoothLines,
+                UseDetailFine,
+                HideLevels,
+                HideGrids,
+                HideRefPoints,
+                HideScopeBox,
+                HideSectionBox,
+                ConfigureSun);
         }
     }
 }

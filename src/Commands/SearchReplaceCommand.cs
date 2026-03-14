@@ -31,13 +31,15 @@ namespace LECG.Commands
             
             vm.Initialize(service, doc);
 
-            var view = new SearchReplaceView(vm);
+            var view = ServiceLocator.GetRequiredService<SearchReplaceView>();
+            view.DataContext = vm;
             bool? result = view.ShowDialog();
 
             if (result == true && vm.ShouldRun)
             {
                 ShowLogWindow("Batch Rename");
-                service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), Logger.Instance, UpdateProgress);
+                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), Logger.Instance, reporter);
                 Log("Rename complete.");
             }
         }

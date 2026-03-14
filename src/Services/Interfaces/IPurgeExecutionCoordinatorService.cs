@@ -5,10 +5,22 @@ namespace LECG.Services.Interfaces
 {
     public interface IPurgeExecutionCoordinatorService
     {
-        (int lineStylesDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) Execute(
+        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) Execute(
             Document doc,
             int passCount,
             bool lineStyles,
+            bool linePatterns,
+            bool fillPatterns,
+            bool materials,
+            bool levels,
+            bool parameters,
+            IProgressReporter reporter);
+
+        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) Execute(
+            Document doc,
+            int passCount,
+            bool lineStyles,
+            bool linePatterns,
             bool fillPatterns,
             bool materials,
             bool levels,

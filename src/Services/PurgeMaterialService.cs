@@ -12,10 +12,6 @@ namespace LECG.Services
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
         private readonly IPurgeMaterialUsageCollectorService _purgeMaterialUsageCollectorService;
 
-        public PurgeMaterialService() : this(new PurgeDeleteElementService(), new PurgeMaterialUsageCollectorService(new PurgeReferenceScannerService()))
-        {
-        }
-
         public PurgeMaterialService(IPurgeDeleteElementService purgeDeleteElementService, IPurgeMaterialUsageCollectorService purgeMaterialUsageCollectorService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
@@ -24,6 +20,14 @@ namespace LECG.Services
 
         public int PurgeUnusedMaterials(Document doc, Action<string>? logCallback = null)
         {
+            return PurgeUnusedMaterials(doc, PurgeContext.Create(doc), logCallback);
+        }
+
+        public int PurgeUnusedMaterials(Document doc, PurgeContext context, Action<string>? logCallback = null)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(context);
+
             logCallback?.Invoke("Scanning for unused materials...");
 
             var allMaterials = new FilteredElementCollector(doc)
@@ -33,7 +37,7 @@ namespace LECG.Services
                 .ToDictionary(m => m.Id, m => m.Name);
 
             var validMaterialIds = new HashSet<ElementId>(allMaterials.Keys);
-            var usedIds = _purgeMaterialUsageCollectorService.CollectUsedMaterialIds(doc, validMaterialIds);
+            var usedIds = _purgeMaterialUsageCollectorService.CollectUsedMaterialIds(context, validMaterialIds);
 
             int deleted = 0;
             foreach (var kvp in allMaterials)

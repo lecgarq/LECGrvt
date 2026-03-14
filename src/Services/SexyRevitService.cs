@@ -1,6 +1,5 @@
-using System;
 using Autodesk.Revit.DB;
-using LECG.ViewModels;
+using LECG.Models;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -11,44 +10,40 @@ namespace LECG.Services
         private readonly ISexyCategoryVisibilityService _categoryVisibilityService;
         private readonly ISexySectionBoxVisibilityService _sectionBoxVisibilityService;
         private readonly ISexyGraphicsApplyService _sexyGraphicsApplyService;
+        private readonly ITransactionService _transactionService;
 
-        public SexyRevitService() : this(new SexySunSettingsService(), new SexyCategoryVisibilityService(), new SexySectionBoxVisibilityService(), new SexyGraphicsApplyService())
-        {
-        }
-
-        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService, ISexySectionBoxVisibilityService sectionBoxVisibilityService, ISexyGraphicsApplyService sexyGraphicsApplyService)
+        public SexyRevitService(ISexySunSettingsService sunSettingsService, ISexyCategoryVisibilityService categoryVisibilityService, ISexySectionBoxVisibilityService sectionBoxVisibilityService, ISexyGraphicsApplyService sexyGraphicsApplyService, ITransactionService transactionService)
         {
             _sunSettingsService = sunSettingsService;
             _categoryVisibilityService = categoryVisibilityService;
             _sectionBoxVisibilityService = sectionBoxVisibilityService;
             _sexyGraphicsApplyService = sexyGraphicsApplyService;
+            _transactionService = transactionService;
         }
 
-        public void ApplyBeauty(Document doc, View view, SexyRevitViewModel settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
+        public void ApplyBeauty(Document doc, View view, SexyRevitSettings settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
+        {
+            ApplyBeauty(doc, view, settings, new LegacyProgressReporter(progressCallback, logCallback));
+        }
+
+        public void ApplyBeauty(Document doc, View view, SexyRevitSettings settings, IProgressReporter reporter)
         {
             if (view == null) return;
 
-            // Helper for logging/progress to handle nulls gracefully
-            Action<string> log = logCallback ?? (_ => { });
-            Action<double, string> progress = progressCallback ?? ((_, __) => { });
-
-            using (Transaction t = new Transaction(doc, "Sexy Revit"))
+            _transactionService.Run(doc, "Sexy Revit", currentDoc =>
             {
-                t.Start();
                 // 1. Graphics Settings (Textures, Shadows, Lighting)
-                _sexyGraphicsApplyService.Apply(new RevitViewGraphicsFacade(view), settings, log, progress);
+                _sexyGraphicsApplyService.Apply(new RevitViewGraphicsFacade(view), settings, reporter);
 
                 // 2. Sun Settings (3D only)
-                _sunSettingsService.Apply(view, settings, log, progress);
+                _sunSettingsService.Apply(view, settings, reporter);
 
                 // 3. Hide Categories
-                _categoryVisibilityService.Apply(doc, view, settings, log, progress);
+                _categoryVisibilityService.Apply(currentDoc, view, settings, reporter);
 
                 // 4. Section Box (3D Only)
-                _sectionBoxVisibilityService.Apply(doc, view, settings, log, progress);
-
-                t.Commit();
-            }
+                _sectionBoxVisibilityService.Apply(currentDoc, view, settings, reporter);
+            });
         }
 
     }

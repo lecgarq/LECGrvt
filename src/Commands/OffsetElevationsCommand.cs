@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Interop;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -27,18 +26,16 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             var offsetService = ServiceLocator.GetRequiredService<IOffsetService>();
+            var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
 
             // 1. Settings & Dialog
-            var loadedSettings = SettingsManager.Load<OffsetElevationsVM>("OffsetSettings.json");
-            var settings = ServiceLocator.GetRequiredService<OffsetElevationsVM>();
+            var loadedSettings = SettingsManager.Load<OffsetElevationsViewModel>("OffsetSettings.json");
+            var settings = ServiceLocator.GetRequiredService<OffsetElevationsViewModel>();
             settings.OffsetValue = loadedSettings.OffsetValue;
             settings.IsAddition = loadedSettings.IsAddition;
             
-            OffsetElevationsView view = ServiceLocator.CreateWith<OffsetElevationsView>(settings, uiDoc);
-             
-             // Set owner to Revit window
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            OffsetElevationsView view = ServiceLocator.GetRequiredService<OffsetElevationsView>();
+            view.Initialize(uiDoc);
 
             if (view.ShowDialog() != true || !settings.ShouldRun) return;
 
@@ -64,19 +61,17 @@ namespace LECG.Commands
             int successCount = 0;
             int failCount = 0;
 
-            using (Transaction t = new Transaction(doc, "Offset Elevations"))
+            transactionService.Run(doc, "Offset Elevations", currentDoc =>
             {
-                t.Start();
                 foreach (Reference r in refs)
                 {
-                    Element elem = doc.GetElement(r);
+                    Element elem = currentDoc.GetElement(r);
                     if (elem == null) continue;
 
-                    if (offsetService.TryOffsetElement(doc, elem, offsetValue, Log)) successCount++;
+                    if (offsetService.TryOffsetElement(currentDoc, elem, offsetValue, Log)) successCount++;
                     else failCount++;
                 }
-                t.Commit();
-            }
+            });
 
             UpdateProgress(100, "Complete!");
             Log("");

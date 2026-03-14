@@ -27,7 +27,6 @@ namespace LECG.ViewModels
         public bool IsDistributeMode => Mode == AlignMode.DistributeHorizontally || Mode == AlignMode.DistributeVertically;
         public bool IsAlignMode => !IsDistributeMode;
 
-        public bool ShouldRun { get; private set; }
         public bool CanRun 
         { 
             get 
@@ -37,13 +36,9 @@ namespace LECG.ViewModels
             }
         }
 
-        public AlignElementsViewModel(IAlignElementsService service, AlignMode mode)
+        public AlignElementsViewModel(IAlignElementsService service)
         {
             _service = service;
-            Mode = mode;
-            
-            // Set Title based on Mode
-            Title = GetTitle(mode);
 
             // Init Selection properties
             ReferenceSelection.ElementName = "Reference Element";
@@ -54,6 +49,12 @@ namespace LECG.ViewModels
                 if (e.PropertyName == nameof(SelectionViewModel.HasSelection) || e.PropertyName == nameof(SelectionViewModel.SelectionCount)) 
                     OnPropertyChanged(nameof(CanRun)); 
             };
+        }
+
+        public void Initialize(AlignMode mode)
+        {
+            Mode = mode;
+            Title = GetTitle(mode);
         }
 
         private string GetTitle(AlignMode mode)
@@ -102,13 +103,13 @@ namespace LECG.ViewModels
             TargetSelection.UpdateSelection(validRefs.Count);
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        protected override void Cancel()
+        public override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

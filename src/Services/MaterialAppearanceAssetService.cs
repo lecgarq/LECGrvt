@@ -9,10 +9,14 @@ namespace LECG.Services
     public class MaterialAppearanceAssetService : IMaterialAppearanceAssetService
     {
         private readonly IMaterialBitmapPropertyService _materialBitmapPropertyService;
+        private readonly ITransactionService _transactionService;
 
-        public MaterialAppearanceAssetService(IMaterialBitmapPropertyService materialBitmapPropertyService)
+        public MaterialAppearanceAssetService(
+            IMaterialBitmapPropertyService materialBitmapPropertyService,
+            ITransactionService transactionService)
         {
             _materialBitmapPropertyService = materialBitmapPropertyService;
+            _transactionService = transactionService;
         }
 
         public void ApplyTextures(
@@ -63,12 +67,10 @@ namespace LECG.Services
 
                 if (mat.AppearanceAssetId == ElementId.InvalidElementId)
                 {
-                    using (Transaction t = new Transaction(doc, "Assign Appearance"))
+                    _transactionService.Run(doc, "Assign Appearance", _ =>
                     {
-                        t.Start();
                         mat.AppearanceAssetId = assetId;
-                        t.Commit();
-                    }
+                    });
                 }
             }
         }

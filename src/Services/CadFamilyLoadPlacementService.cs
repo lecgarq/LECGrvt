@@ -9,51 +9,48 @@ namespace LECG.Services
         private readonly ICadTempFileCleanupService _cadTempFileCleanupService;
         private readonly ICadSourceCleanupService _cadSourceCleanupService;
         private readonly ICadFamilyInstancePlacementService _cadFamilyInstancePlacementService;
+        private readonly ITransactionService _transactionService;
 
         public CadFamilyLoadPlacementService(
             ICadFamilyLoadResolveService cadFamilyLoadResolveService,
             ICadTempFileCleanupService cadTempFileCleanupService,
             ICadSourceCleanupService cadSourceCleanupService,
-            ICadFamilyInstancePlacementService cadFamilyInstancePlacementService)
+            ICadFamilyInstancePlacementService cadFamilyInstancePlacementService,
+            ITransactionService transactionService)
         {
             _cadFamilyLoadResolveService = cadFamilyLoadResolveService;
             _cadTempFileCleanupService = cadTempFileCleanupService;
             _cadSourceCleanupService = cadSourceCleanupService;
             _cadFamilyInstancePlacementService = cadFamilyInstancePlacementService;
+            _transactionService = transactionService;
         }
 
         public ElementId LoadOnly(Document doc, string path)
         {
-            ElementId createdId = ElementId.InvalidElementId;
-            using (Transaction t = new Transaction(doc, "Load Family"))
+            ElementId createdId = _transactionService.Run(doc, "Load Family", _ =>
             {
-                t.Start();
                 FamilySymbol? symbol = _cadFamilyLoadResolveService.LoadAndResolvePrimarySymbol(doc, path);
-                if (symbol != null)
-                {
-                    createdId = symbol.Id;
-                }
-                t.Commit();
-            }
+                return symbol?.Id ?? ElementId.InvalidElementId;
+            });
             _cadTempFileCleanupService.Cleanup(path);
             return createdId;
         }
 
         public ElementId LoadAndPlace(Document doc, string path, XYZ location, ElementId deleteId)
         {
-            ElementId createdId = ElementId.InvalidElementId;
-            using (Transaction t = new Transaction(doc, "Load and Place Detail Item"))
+            ElementId createdId = _transactionService.Run(doc, "Load and Place Detail Item", _ =>
             {
-                t.Start();
                 FamilySymbol? symbol = _cadFamilyLoadResolveService.LoadAndResolvePrimarySymbol(doc, path);
                 if (symbol != null)
                 {
-                    createdId = symbol.Id;
+                    ElementId symbolId = symbol.Id;
                     _cadFamilyInstancePlacementService.Place(doc, symbol, location);
                     _cadSourceCleanupService.DeleteOriginalIfPresent(doc, deleteId);
+                    return symbolId;
                 }
-                t.Commit();
-            }
+
+                return ElementId.InvalidElementId;
+            });
             _cadTempFileCleanupService.Cleanup(path);
             return createdId;
         }

@@ -24,20 +24,18 @@ namespace LECG.ViewModels
         [ObservableProperty] private bool _enableSecondary = true;
         [ObservableProperty] private double _secondaryInterval = 0.25; // meters
         
-        public bool ShouldRun { get; private set; }
-
         public UpdateContoursViewModel()
         {
             Title = "UPDATE CONTOURS";
         }
 
-        protected override void Apply()
+        public override void Apply()
         {
             ShouldRun = true;
             CloseAction?.Invoke();
         }
 
-        protected override void Cancel()
+        public override void Cancel()
         {
             ShouldRun = false;
             CloseAction?.Invoke();

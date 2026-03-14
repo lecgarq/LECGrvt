@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace LECG.ViewModels
 {
-    public partial class LogViewModel : ObservableObject
+    public partial class LogViewModel : ObservableObject, System.IDisposable
     {
         private readonly ILogger _logger;
 
@@ -62,6 +62,14 @@ namespace LECG.ViewModels
             CurrentStatus = status;
             // The logger's DoEvents will handle the UI refresh if called from the Logger.
             // If called directly here, we might need our own DoEvents if we aren't logging.
+        }
+        public void Dispose()
+        {
+            if (_logger != null)
+            {
+                _logger.OnProgressUpdate -= UpdateProgress;
+            }
+            System.GC.SuppressFinalize(this);
         }
     }
 }

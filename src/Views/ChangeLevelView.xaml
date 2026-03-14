@@ -10,6 +10,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
@@ -34,6 +35,7 @@
 
                 <TextBlock Text="NEW LEVEL" Style="{DynamicResource LabelStyle}" Margin="0,0,0,4"/>
                 <ComboBox ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel}" DisplayMemberPath="Name" Height="32" Padding="8,0" VerticalContentAlignment="Center"/>
+                <TextBlock Text="{Binding ValidationMessage}" Margin="0,10,0,0" Foreground="#B42318" TextWrapping="Wrap" Visibility="{Binding HasValidationMessage, Converter={StaticResource BoolToVis}}"/>
             </StackPanel>
         </Border>
 
@@ -47,7 +49,7 @@
 
             <Button Content="Cancel" Grid.Column="0" Height="32" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
 
-            <Button Content="Apply" Grid.Column="2" Height="32" Command="{Binding RunCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Apply" Grid.Column="2" Height="32" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

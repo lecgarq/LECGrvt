@@ -42,8 +42,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ExecuteCancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
-            <Button Content="Assign" Grid.Column="2" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ExecuteRunCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Assign" Grid.Column="2" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

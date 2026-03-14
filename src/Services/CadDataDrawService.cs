@@ -23,6 +23,11 @@ namespace LECG.Services
 
         public void Draw(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
         {
+            Draw(familyDoc, data, offset, styleName, color, weight, new LegacyProgressReporter(progress), startPct, endPct);
+        }
+
+        public void Draw(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, IProgressReporter reporter, double startPct = 50, double endPct = 90)
+        {
             ArgumentNullException.ThrowIfNull(familyDoc);
             ArgumentNullException.ThrowIfNull(data);
             ArgumentNullException.ThrowIfNull(offset);
@@ -34,14 +39,14 @@ namespace LECG.Services
             int total = data.Curves.Count + data.Hatches.Count;
             int current = 0;
 
-            current = _curveRenderService.DrawCurves(familyDoc, data.Curves, toOrigin, planView, lineStyle, progress, startPct, endPct, total, current);
+            current = _curveRenderService.DrawCurves(familyDoc, data.Curves, toOrigin, planView, lineStyle, reporter, startPct, endPct, total, current);
 
             _hatchRenderService.DrawHatches(
                 familyDoc,
                 data.Hatches,
                 toOrigin,
                 planView,
-                progress,
+                reporter,
                 startPct,
                 endPct,
                 total,

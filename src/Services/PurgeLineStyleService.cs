@@ -10,18 +10,22 @@ namespace LECG.Services
     {
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLineStyleService() : this(new PurgeDeleteElementService())
-        {
-        }
-
-        public PurgeLineStyleService(IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeLineStyleService(
+            IPurgeReferenceScannerService referenceScanner,
+            IPurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
         }
 
         public int PurgeUnusedLineStyles(Document doc, Action<string>? logCallback = null)
         {
+            return PurgeUnusedLineStyles(doc, PurgeContext.Create(doc), logCallback);
+        }
+
+        public int PurgeUnusedLineStyles(Document doc, PurgeContext context, Action<string>? logCallback = null)
+        {
             ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(context);
 
             logCallback?.Invoke("Scanning for unused line styles...");
 
@@ -38,14 +42,13 @@ namespace LECG.Services
             }
             logCallback?.Invoke($"  Found {allStyles.Count} potential candidates.");
 
-            var usedIds = new HashSet<ElementId>();
-            var curves = new FilteredElementCollector(doc).OfClass(typeof(CurveElement));
-
-            foreach (CurveElement curve in curves)
+            var validIds = new HashSet<ElementId>(allStyles.Keys);
+            var usedIds = new HashSet<ElementId>(context.UsedLineStyleIds);
+            foreach (ElementId referencedId in context.ParameterReferencedIds)
             {
-                if (curve.LineStyle is GraphicsStyle gs && gs.GraphicsStyleCategory != null)
+                if (validIds.Contains(referencedId))
                 {
-                    usedIds.Add(gs.GraphicsStyleCategory.Id);
+                    usedIds.Add(referencedId);
                 }
             }
 

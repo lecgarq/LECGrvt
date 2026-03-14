@@ -8,7 +8,6 @@ using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using System.Linq;
 using System.Collections.Generic;
-using System.Windows.Interop;
 
 namespace LECG.Commands
 {
@@ -30,10 +29,8 @@ namespace LECG.Commands
 
             // 2. Initialize VM & View
             var vm = ServiceLocator.GetRequiredService<AssignMaterialViewModel>();
-            var view = ServiceLocator.CreateWith<AssignMaterialView>(vm, uiDoc);
-
-            WindowInteropHelper helper = new WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+            var view = ServiceLocator.GetRequiredService<AssignMaterialView>();
+            view.Initialize(uiDoc);
 
             // 3. Show Dialog
             bool? result = view.ShowDialog();
@@ -50,7 +47,8 @@ namespace LECG.Commands
                     .ToList();
 
                 // Call Logic
-                service.AssignMaterialsToElements(doc, elements, (msg) => Log(msg), (p, s) => UpdateProgress(p, s));
+                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                service.AssignMaterialsToElements(doc, elements, reporter);
                 //Log("DEBUG: Logic temporarily disabled for build test.");
             }
         }

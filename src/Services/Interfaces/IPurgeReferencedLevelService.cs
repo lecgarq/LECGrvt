@@ -6,5 +6,6 @@ namespace LECG.Services.Interfaces
     public interface IPurgeReferencedLevelService
     {
         HashSet<ElementId> CollectReferencedLevelIds(Document doc, HashSet<ElementId> validLevelIds);
+        HashSet<ElementId> CollectReferencedLevelIds(PurgeContext context, HashSet<ElementId> validLevelIds);
     }
 }

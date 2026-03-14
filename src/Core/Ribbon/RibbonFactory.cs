@@ -51,9 +51,9 @@ namespace LECG.Core.Ribbon
         /// <summary>
         /// Creates a PulldownButton on the specified panel.
         /// </summary>
-        public static PulldownButton CreatePulldownButton(RibbonPanel panel, string name, string text, string tooltip, ImageSource? icon, ImageSource? icon16 = null)
+        public static PulldownButton? CreatePulldownButton(RibbonPanel panel, string name, string text, string tooltip, ImageSource? icon, ImageSource? icon16 = null)
         {
-            if (panel == null || name == null || text == null || tooltip == null) return null!;
+            if (panel == null || name == null || text == null || tooltip == null) return null;
 
             try
             {
@@ -66,11 +66,11 @@ namespace LECG.Core.Ribbon
                     if (icon != null) button.LargeImage = icon;
                     if (icon16 != null) button.Image = icon16;
                 }
-                return button!;
+                return button;
             }
             catch
             {
-                return null!;
+                return null;
             }
         }
 

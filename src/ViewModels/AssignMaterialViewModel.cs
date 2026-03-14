@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels.Components;
@@ -16,7 +15,6 @@ namespace LECG.ViewModels
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public List<Reference> SelectedRefs { get; private set; } = new List<Reference>();
 
-        public bool ShouldRun { get; private set; }
         public bool CanRun => Selection.HasSelection;
 
         public AssignMaterialViewModel(IMaterialService service)
@@ -34,20 +32,6 @@ namespace LECG.ViewModels
 
             SelectedRefs = refs.ToList();
             Selection.UpdateSelection(refs.Count);
-        }
-
-        [RelayCommand]
-        private void ExecuteRun()
-        {
-            ShouldRun = true;
-            CloseAction?.Invoke();
-        }
-
-        [RelayCommand]
-        private void ExecuteCancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
         }
     }
 }

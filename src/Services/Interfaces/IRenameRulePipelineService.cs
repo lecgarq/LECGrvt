@@ -1,9 +1,9 @@
-using LECG.ViewModels;
+using LECG.Models;
 
 namespace LECG.Services.Interfaces
 {
     public interface IRenameRulePipelineService
     {
-        string ApplyRules(string text, SearchReplaceViewModel vm, int index);
+        string ApplyRules(string text, RenameRuleContext context, int index);
     }
 }

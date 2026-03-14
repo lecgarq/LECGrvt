@@ -8,25 +8,33 @@ namespace LECG.Services
     public class CadTempDwgExtractionService : ICadTempDwgExtractionService
     {
         private readonly ICadGeometryExtractionService _geometryExtractionService;
+        private readonly ITransactionService _transactionService;
 
-        public CadTempDwgExtractionService(ICadGeometryExtractionService geometryExtractionService)
+        public CadTempDwgExtractionService(
+            ICadGeometryExtractionService geometryExtractionService,
+            ITransactionService transactionService)
         {
             _geometryExtractionService = geometryExtractionService;
+            _transactionService = transactionService;
         }
 
         public CadData Extract(Document doc, string templatePath, string dwgPath, Action<double, string>? progress = null)
+        {
+            return Extract(doc, templatePath, dwgPath, new LegacyProgressReporter(progress));
+        }
+
+        public CadData Extract(Document doc, string templatePath, string dwgPath, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(templatePath);
             ArgumentNullException.ThrowIfNull(dwgPath);
 
-            progress?.Invoke(5, "Initializing temporary document...");
+            reporter.Report("Initializing temporary document...", 5);
             Document tempDoc = doc.Application.NewFamilyDocument(templatePath);
-            CadData data;
+            CadData data = null!;
 
-            using (Transaction t = new Transaction(tempDoc, "Temp Import"))
+            _transactionService.RunRollbackOnly(tempDoc, "Temp Import", _ =>
             {
-                t.Start();
                 DWGImportOptions opt = new DWGImportOptions
                 {
                     Placement = ImportPlacement.Centered,
@@ -42,7 +50,7 @@ namespace LECG.Services
                     throw new Exception("No valid import view found.");
                 }
 
-                progress?.Invoke(15, "Importing DWG file...");
+                reporter.Report("Importing DWG file...", 15);
                 ElementId impId;
                 bool success = tempDoc.Import(dwgPath, opt, importView, out impId);
                 if (!success || impId == ElementId.InvalidElementId)
@@ -55,10 +63,9 @@ namespace LECG.Services
                 {
                     throw new Exception("Imported DWG instance could not be resolved.");
                 }
-                progress?.Invoke(30, "Extracting geometry...");
+                reporter.Report("Extracting geometry...", 30);
                 data = _geometryExtractionService.ExtractGeometry(tempDoc, imp);
-                t.RollBack();
-            }
+            });
 
             tempDoc.Close(false);
 

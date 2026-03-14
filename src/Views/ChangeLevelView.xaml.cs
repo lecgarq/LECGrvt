@@ -1,50 +1,45 @@
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.DB;
+using LECG.Core;
 using LECG.ViewModels;
 using LECG.Views.Base;
 using System.Collections.Generic;
+using System;
 
 namespace LECG.Views
 {
     public partial class ChangeLevelView : LecgWindow
     {
-        private readonly UIDocument _uiDoc;
+        private readonly ISelectionCoordinator _selectionCoordinator;
 
-        public ChangeLevelView(ChangeLevelViewModel vm, UIDocument uiDoc)
+        public ChangeLevelView(ChangeLevelViewModel vm, ISelectionCoordinator selectionCoordinator)
         {
             ArgumentNullException.ThrowIfNull(vm);
-            ArgumentNullException.ThrowIfNull(uiDoc);
+            _selectionCoordinator = selectionCoordinator;
 
             InitializeComponent();
             DataContext = vm;
-            _uiDoc = uiDoc;
             
-            // Wire up CloseAction from BaseViewModel
-            vm.CloseAction = () => Close();
+            BindClose(vm);
 
             // Wire up Selection Request
             vm.Selection.OnRequestSelect += (s, e) => 
             {
-                Hide();
-                try
+                if (UiDocument == null) return;
+                IList<Reference> refs = _selectionCoordinator.PickObjects(
+                    this,
+                    UiDocument,
+                    ObjectType.Element,
+                    vm.Selection.Filter,
+                    $"Select {vm.Selection.ElementName}");
+                if (refs.Count > 0)
                 {
-                    IList<Reference> refs = _uiDoc.Selection.PickObjects(
-                        ObjectType.Element, 
-                        vm.Selection.Filter, 
-                        $"Select {vm.Selection.ElementName}");
-                    
                     vm.Selection.UpdateSelection(refs.Count);
-                    
-                    // TODO: The VM logic needs the actual elements for Run(), not just the count.
-                    // Ideally, we pass the elements back to the VM here, or the VM manages logic differently.
-                    // For now, let's inject them into the VM context if possible, or assume VM needs a method SetElements(List<ElementId>).
-                    // BUT our ChangeLevelViewModel logic needs `List<Element>` to run.
-                    // Use a new method on VM: `SetSelectedElements(List<Element>)`.
                     
                     // Convert refs to Elements
                     List<Element> elements = new List<Element>();
-                    Document doc = _uiDoc.Document;
+                    Document doc = UiDocument.Document;
                     foreach(var r in refs)
                     {
                         var el = doc.GetElement(r);
@@ -53,20 +48,13 @@ namespace LECG.Views
                     
                     vm.SetSelectedElements(elements);
                 }
-                catch (Autodesk.Revit.Exceptions.OperationCanceledException)
-                {
-                    // User cancelled, do nothing
-                }
-                finally
-                {
-                    try
-                    {
-                        this.Visibility = System.Windows.Visibility.Visible;
-                        Activate();
-                    }
-                    catch { }
-                }
             };
+        }
+
+        public override void Initialize(UIDocument uiDoc)
+        {
+            base.Initialize(uiDoc);
+            (DataContext as ChangeLevelViewModel)?.Initialize(uiDoc.Document);
         }
     }
 }

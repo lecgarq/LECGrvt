@@ -12,11 +12,7 @@ namespace LECG.Commands
         public Result Execute(ExternalCommandData data, ref string message, ElementSet elements)
         {
             var view = ServiceLocator.GetRequiredService<HomeView>();
-            // owner is main window handled by base class or helper in ShowDialog if needed
-            // For simple view interaction:
-            System.Windows.Interop.WindowInteropHelper helper = new System.Windows.Interop.WindowInteropHelper(view);
-            helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
-            
+
             if (view.ShowDialog() != true)
             {
                 return Result.Cancelled;
@@ -29,8 +25,6 @@ namespace LECG.Commands
             if (selectedTool == "AlignMaster")
             {
                 var alignView = ServiceLocator.GetRequiredService<AlignDashboardView>();
-                System.Windows.Interop.WindowInteropHelper alignHelper = new System.Windows.Interop.WindowInteropHelper(alignView);
-                alignHelper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
 
                 if (alignView.ShowDialog() != true) return Result.Cancelled;
                 selectedTool = alignView.Tag as string ?? "";

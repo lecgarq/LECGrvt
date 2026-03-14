@@ -24,6 +24,22 @@ namespace LECG.Services
             IList<HatchData> hatches,
             Transform toOrigin,
             View planView,
+            IProgressReporter reporter,
+            double startPct,
+            double endPct,
+            int total,
+            int current,
+            int curveCount)
+        {
+            ArgumentNullException.ThrowIfNull(reporter);
+            return DrawHatches(familyDoc, hatches, toOrigin, planView, (pct, msg) => reporter.Report(msg, pct), startPct, endPct, total, current, curveCount);
+        }
+
+        public int DrawHatches(
+            Document familyDoc,
+            IList<HatchData> hatches,
+            Transform toOrigin,
+            View planView,
             Action<double, string>? progress,
             double startPct,
             double endPct,

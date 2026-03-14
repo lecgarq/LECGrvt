@@ -33,8 +33,8 @@
             <StackPanel>
                 <TextBlock Text="INFO" Style="{DynamicResource LabelStyle}" Margin="0,0,0,8" Opacity="0.5"/>
                 <TextBlock Text="This command will process all materials in the project." TextWrapping="Wrap" Margin="0,0,0,8"/>
-                <TextBlock Text="â€¢ Skips materials already synced." TextWrapping="Wrap" Margin="0,0,0,8" Opacity="0.8"/>
-                <TextBlock Text="â€¢ Forces update of shading color to match texture." TextWrapping="Wrap" Margin="0,0,0,0" Opacity="0.8"/>
+                <TextBlock Text="- Skips materials already synced." TextWrapping="Wrap" Margin="0,0,0,8" Opacity="0.8"/>
+                <TextBlock Text="- Forces update of shading color to match texture." TextWrapping="Wrap" Margin="0,0,0,0" Opacity="0.8"/>
             </StackPanel>
         </Border>
 
@@ -46,8 +46,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ExecuteCancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
-            <Button Content="Run" Grid.Column="2" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding RunCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Run" Grid.Column="2" Height="{DynamicResource ButtonHeightMedium}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

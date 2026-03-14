@@ -6,6 +6,7 @@ namespace LECG.Services.Interfaces
 {
     public interface IMaterialAssignmentExecutionService
     {
+        void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter);
         void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback);
     }
 }

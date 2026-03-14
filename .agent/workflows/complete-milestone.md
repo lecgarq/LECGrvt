@@ -26,7 +26,7 @@ grep -E "Status.*Not Started|Status.*In Progress" ".gsd/ROADMAP.md"
 
 **If incomplete phases found:**
 ```
-⚠️ Cannot complete milestone — {N} phases incomplete
+âš ï¸ Cannot complete milestone â€” {N} phases incomplete
 
 Run /progress to see status.
 ```
@@ -52,12 +52,12 @@ Create `.gsd/milestones/{name}-SUMMARY.md`:
 ## Completed: {date}
 
 ## Deliverables
-- ✅ {must-have 1}
-- ✅ {must-have 2}
+- âœ… {must-have 1}
+- âœ… {must-have 2}
 
 ## Phases Completed
-1. Phase 1: {name} — {date}
-2. Phase 2: {name} — {date}
+1. Phase 1: {name} â€” {date}
+2. Phase 2: {name} â€” {date}
 ...
 
 ## Metrics
@@ -113,23 +113,23 @@ git tag -a "{name}" -m "Milestone {name} complete"
 ## 7. Celebrate
 
 ```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- GSD ► MILESTONE COMPLETE 🎉
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+ GSD â–º MILESTONE COMPLETE ðŸŽ‰
+â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
 
 {name}
 
 Phases: {N} completed
 Tag: {name}
 
-───────────────────────────────────────────────────────
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-▶ NEXT
+â–¶ NEXT
 
-/new-milestone — Start next milestone
-/audit-milestone {name} — Review this milestone
+/new-milestone â€” Start next milestone
+/audit-milestone {name} â€” Review this milestone
 
-───────────────────────────────────────────────────────
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 ```
 
 </process>

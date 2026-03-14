@@ -117,6 +117,14 @@ namespace LECG.Core.Ribbon
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonCompactingStyles_Name,
+                UIConstants.ButtonCompactingStyles_Text,
+                "LECG.Commands.CompactingStylesCommand",
+                UIConstants.ButtonCompactingStyles_Tooltip,
+                AppImages.Trash
+            ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonPurge_Name,
                 UIConstants.ButtonPurge_Text,
                 "LECG.Commands.PurgeCommand",
@@ -155,7 +163,7 @@ namespace LECG.Core.Ribbon
             RibbonPanel panel = GetOrCreatePanel(app, tabName, AppConstants.Panels.Align);
 
             // Create Master Pulldown Button
-            PulldownButton alignBtn = RibbonFactory.CreatePulldownButton(
+            PulldownButton? alignBtn = RibbonFactory.CreatePulldownButton(
                 panel,
                 "btnAlignMaster",
                 "Align\nElements",

@@ -9,6 +9,10 @@ namespace LECG.Services.Interfaces
         void BatchSync(
             Document doc,
             IEnumerable<Material> materials,
+            IProgressReporter reporter);
+        void BatchSync(
+            Document doc,
+            IEnumerable<Material> materials,
             Action<string>? logCallback = null,
             Action<double, string>? progressCallback = null);
     }
