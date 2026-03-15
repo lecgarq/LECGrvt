@@ -32,7 +32,7 @@ namespace LECG.Services
             IReadOnlyList<Material> materials,
             IReadOnlyList<FilledRegionType> filledRegionTypes,
             IReadOnlyList<TextNote> textNotes,
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> parameterIndex)
+            Dictionary<ElementId, HashSet<ElementId>> parameterIndex)
         {
             Document = document;
             InstanceElements = instanceElements;
@@ -55,7 +55,7 @@ namespace LECG.Services
         public IReadOnlyList<Material> Materials { get; }
         public IReadOnlyList<FilledRegionType> FilledRegionTypes { get; }
         public IReadOnlyList<TextNote> TextNotes { get; }
-        public Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> ParameterIndex { get; }
+        public Dictionary<ElementId, HashSet<ElementId>> ParameterIndex { get; }
 
         public static CompactingStylesContext Create(
             Document doc,
@@ -109,7 +109,7 @@ namespace LECG.Services
                 .Cast<TextNote>()
                 .ToList();
 
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> parameterIndex =
+            Dictionary<ElementId, HashSet<ElementId>> parameterIndex =
                 BuildParamIndex(instanceElements, typeElements, progressCallback);
 
             return new CompactingStylesContext(
@@ -125,12 +125,12 @@ namespace LECG.Services
                 parameterIndex);
         }
 
-        private static Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> BuildParamIndex(
+        private static Dictionary<ElementId, HashSet<ElementId>> BuildParamIndex(
             IReadOnlyList<Element> instanceElements,
             IReadOnlyList<Element> typeElements,
             Action<double, string>? progressCallback)
         {
-            var index = new Dictionary<ElementId, List<(Element, Parameter)>>();
+            var index = new Dictionary<ElementId, HashSet<ElementId>>();
             int total = instanceElements.Count + typeElements.Count;
             int processed = 0;
 
@@ -151,19 +151,20 @@ namespace LECG.Services
                             continue;
                         }
 
+                        if (!parameter.HasValue) continue;
                         ElementId value = parameter.AsElementId();
                         if (value == ElementId.InvalidElementId)
                         {
                             continue;
                         }
 
-                        if (!index.TryGetValue(value, out List<(Element, Parameter)>? list))
+                        if (!index.TryGetValue(value, out HashSet<ElementId>? set))
                         {
-                            list = new List<(Element, Parameter)>();
-                            index[value] = list;
+                            set = new HashSet<ElementId>();
+                            index[value] = set;
                         }
 
-                        list.Add((element, parameter));
+                        set.Add(element.Id);
                     }
 
                     processed++;

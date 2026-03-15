@@ -43,7 +43,7 @@ namespace LECG.Services
                 return result;
             }
 
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> paramIndex = context.ParameterIndex;
+            Dictionary<ElementId, HashSet<ElementId>> paramIndex = context.ParameterIndex;
 
             for (int groupIndex = 0; groupIndex < duplicateGroups.Count; groupIndex++)
             {
@@ -184,7 +184,7 @@ namespace LECG.Services
             Document doc,
             LineStyleCandidate source,
             LineStyleCandidate survivor,
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> paramIndex)
+            Dictionary<ElementId, HashSet<ElementId>> paramIndex)
         {
             int rewired = 0;
 
@@ -195,12 +195,12 @@ namespace LECG.Services
             }
 
             // Rewire parameter references pointing to the subcategory ID
-            rewired += RewireParameterReferences(paramIndex, source.SubcategoryId, survivor.SubcategoryId);
+            rewired += RewireParameterReferences(doc, paramIndex, source.SubcategoryId, survivor.SubcategoryId);
 
             // Rewire parameter references pointing to the GraphicsStyle ID
             if (source.GraphicsStyle != null && survivor.GraphicsStyle != null)
             {
-                rewired += RewireParameterReferences(paramIndex, source.GraphicsStyle.Id, survivor.GraphicsStyle.Id);
+                rewired += RewireParameterReferences(doc, paramIndex, source.GraphicsStyle.Id, survivor.GraphicsStyle.Id);
             }
 
             return rewired;
@@ -232,50 +232,56 @@ namespace LECG.Services
         }
 
         private static int RewireParameterReferences(
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> paramIndex,
+            Document doc,
+            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
             ElementId sourceId,
             ElementId targetId)
         {
-            if (!paramIndex.TryGetValue(sourceId, out List<(Element Element, Parameter Parameter)>? entries))
+            if (!paramIndex.TryGetValue(sourceId, out HashSet<ElementId>? elementIds))
             {
                 return 0;
             }
 
             int rewired = 0;
-            var movedToTarget = new List<(Element, Parameter)>();
+            var movedToTarget = new HashSet<ElementId>();
 
-            foreach (var (element, parameter) in entries)
+            foreach (ElementId elementId in elementIds)
             {
-                if (element == null || !element.IsValidObject)
-                {
-                    continue;
-                }
-
                 try
                 {
-                    if (!parameter.HasValue) continue;
-                    if (parameter.AsElementId() == sourceId && parameter.Set(targetId))
+                    Element? element = doc.GetElement(elementId);
+                    if (element == null || !element.IsValidObject) continue;
+
+                    foreach (Parameter param in element.Parameters)
                     {
-                        rewired++;
-                        movedToTarget.Add((element, parameter));
+                        if (param.IsReadOnly || param.StorageType != StorageType.ElementId) continue;
+                        try
+                        {
+                            if (!param.HasValue) continue;
+                            if (param.AsElementId() == sourceId)
+                            {
+                                param.Set(targetId);
+                                rewired++;
+                                movedToTarget.Add(elementId);
+                            }
+                        }
+                        catch { }
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             paramIndex.Remove(sourceId);
 
             if (movedToTarget.Count > 0)
             {
-                if (!paramIndex.TryGetValue(targetId, out List<(Element, Parameter)>? targetList))
+                if (!paramIndex.TryGetValue(targetId, out HashSet<ElementId>? targetSet))
                 {
-                    targetList = new List<(Element, Parameter)>();
-                    paramIndex[targetId] = targetList;
+                    targetSet = new HashSet<ElementId>();
+                    paramIndex[targetId] = targetSet;
                 }
 
-                targetList.AddRange(movedToTarget);
+                targetSet.UnionWith(movedToTarget);
             }
 
             return rewired;
