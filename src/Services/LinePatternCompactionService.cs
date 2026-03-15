@@ -105,7 +105,7 @@ namespace LECG.Services
             Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> categoryIndex =
                 BuildCategoryPatternIndex(context.AllCategories, allSourceIds);
 
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> paramIndex = context.ParameterIndex;
+            Dictionary<ElementId, HashSet<ElementId>> paramIndex = context.ParameterIndex;
 
             // Build reverse index for view category overrides
             logCallback?.Invoke("Building view override index...");
@@ -152,6 +152,7 @@ namespace LECG.Services
                         foreach (LinePatternCandidate original in group.Candidates)
                         {
                             int rewired = RewireReferences(
+                                doc,
                                 original.Id,
                                 canonical.Id,
                                 categoryIndex,
@@ -192,6 +193,7 @@ namespace LECG.Services
                 foreach (LinePatternCandidate original in toDelete)
                 {
                     int rewired = RewireReferences(
+                        doc,
                         original.Id,
                         fallback.Id,
                         categoryIndex,
@@ -707,10 +709,11 @@ namespace LECG.Services
         }
 
         private static int RewireReferences(
+            Document doc,
             ElementId sourceId,
             ElementId targetId,
             Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> categoryIndex,
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> paramIndex,
+            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
             Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCatIndex,
             Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex)
         {
@@ -721,7 +724,7 @@ namespace LECG.Services
 
             int rewired = 0;
             rewired += RewireCategoryReferencesFromIndex(categoryIndex, sourceId, targetId);
-            rewired += RewireParameterReferencesFromIndex(paramIndex, sourceId, targetId);
+            rewired += RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
             rewired += RewireViewCategoryOverridesFromIndex(viewCatIndex, sourceId, targetId);
             rewired += RewireViewFilterOverridesFromIndex(viewFilterIndex, sourceId, targetId);
             return rewired;
@@ -831,50 +834,56 @@ namespace LECG.Services
         }
 
         private static int RewireParameterReferencesFromIndex(
-            Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> paramIndex,
+            Document doc,
+            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
             ElementId sourceId,
             ElementId targetId)
         {
-            if (!paramIndex.TryGetValue(sourceId, out List<(Element Element, Parameter Parameter)>? entries))
+            if (!paramIndex.TryGetValue(sourceId, out HashSet<ElementId>? elementIds))
             {
                 return 0;
             }
 
             int rewired = 0;
-            var movedToTarget = new List<(Element, Parameter)>();
+            var movedToTarget = new HashSet<ElementId>();
 
-            foreach (var (element, parameter) in entries)
+            foreach (ElementId elementId in elementIds)
             {
-                if (element == null || !element.IsValidObject)
-                {
-                    continue;
-                }
-
                 try
                 {
-                    if (!parameter.HasValue) continue;
-                    if (parameter.AsElementId() == sourceId && parameter.Set(targetId))
+                    Element? element = doc.GetElement(elementId);
+                    if (element == null || !element.IsValidObject) continue;
+
+                    foreach (Parameter param in element.Parameters)
                     {
-                        rewired++;
-                        movedToTarget.Add((element, parameter));
+                        if (param.IsReadOnly || param.StorageType != StorageType.ElementId) continue;
+                        try
+                        {
+                            if (!param.HasValue) continue;
+                            if (param.AsElementId() == sourceId)
+                            {
+                                param.Set(targetId);
+                                rewired++;
+                                movedToTarget.Add(elementId);
+                            }
+                        }
+                        catch { }
                     }
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             paramIndex.Remove(sourceId);
 
             if (movedToTarget.Count > 0)
             {
-                if (!paramIndex.TryGetValue(targetId, out List<(Element, Parameter)>? targetList))
+                if (!paramIndex.TryGetValue(targetId, out HashSet<ElementId>? targetSet))
                 {
-                    targetList = new List<(Element, Parameter)>();
-                    paramIndex[targetId] = targetList;
+                    targetSet = new HashSet<ElementId>();
+                    paramIndex[targetId] = targetSet;
                 }
 
-                targetList.AddRange(movedToTarget);
+                targetSet.UnionWith(movedToTarget);
             }
 
             return rewired;
