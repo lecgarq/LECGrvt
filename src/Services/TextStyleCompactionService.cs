@@ -113,9 +113,6 @@ namespace LECG.Services
                 groupData.Add((canonicalName, canonicalId, group));
             }
 
-            // Step 3: Single Regenerate before all deletes
-            doc.Regenerate();
-
             for (int groupIndex = 0; groupIndex < groupData.Count; groupIndex++)
             {
                 var (canonicalName, canonicalId, group) = groupData[groupIndex];
@@ -414,6 +411,7 @@ namespace LECG.Services
 
                 try
                 {
+                    if (!parameter.HasValue) continue;
                     if (parameter.AsElementId() == sourceId && parameter.Set(targetId))
                     {
                         rewired++;

@@ -6,6 +6,7 @@ using LECG.Core;
 using LECG.Models;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Views.Base;
 
 namespace LECG.Commands
 {
@@ -31,14 +32,11 @@ namespace LECG.Commands
             Log("=================");
             var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
 
-            Stopwatch contextTimer = Stopwatch.StartNew();
-            CompactingStylesContext context = CompactingStylesContext.Create(doc, reporter);
-            contextTimer.Stop();
-            Log($"Context prepared in {contextTimer.Elapsed.TotalSeconds:F2}s");
-
+            // Line Patterns
             var linePatternService = ServiceLocator.GetRequiredService<ILinePatternCompactionService>();
-            transactionService.Run(doc, "Compacting Styles - Line Patterns", currentDoc =>
+            transactionService.RunWithWarningHandler(doc, "Compacting Styles - Line Patterns", currentDoc =>
             {
+                CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
                 Stopwatch scopeTimer = Stopwatch.StartNew();
                 LinePatternCompactionResult lpResult = linePatternService.Compact(currentDoc, context, reporter);
                 scopeTimer.Stop();
@@ -48,9 +46,11 @@ namespace LECG.Commands
                 Log($"Line Patterns - Time: {scopeTimer.Elapsed.TotalSeconds:F2}s");
             });
 
+            // Fill Patterns
             var fillPatternService = ServiceLocator.GetRequiredService<IFillPatternCompactionService>();
-            transactionService.Run(doc, "Compacting Styles - Fill Patterns", currentDoc =>
+            transactionService.RunWithWarningHandler(doc, "Compacting Styles - Fill Patterns", currentDoc =>
             {
+                CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
                 Stopwatch scopeTimer = Stopwatch.StartNew();
                 FillPatternCompactionResult fpResult = fillPatternService.Compact(currentDoc, context, reporter);
                 scopeTimer.Stop();
@@ -60,9 +60,11 @@ namespace LECG.Commands
                 Log($"Fill Patterns - Time: {scopeTimer.Elapsed.TotalSeconds:F2}s");
             });
 
+            // Text Styles
             var textStyleService = ServiceLocator.GetRequiredService<ITextStyleCompactionService>();
-            transactionService.Run(doc, "Compacting Styles - Text Styles", currentDoc =>
+            transactionService.RunWithWarningHandler(doc, "Compacting Styles - Text Styles", currentDoc =>
             {
+                CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
                 Stopwatch scopeTimer = Stopwatch.StartNew();
                 TextStyleCompactionResult tsResult = textStyleService.Compact(currentDoc, context, reporter);
                 scopeTimer.Stop();
@@ -72,9 +74,11 @@ namespace LECG.Commands
                 Log($"Text Styles - Time: {scopeTimer.Elapsed.TotalSeconds:F2}s");
             });
 
+            // Line Styles
             var lineStyleService = ServiceLocator.GetRequiredService<ILineStyleCompactionService>();
-            transactionService.Run(doc, "Compacting Styles - Line Styles", currentDoc =>
+            transactionService.RunWithWarningHandler(doc, "Compacting Styles - Line Styles", currentDoc =>
             {
+                CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
                 Stopwatch scopeTimer = Stopwatch.StartNew();
                 LineStyleCompactionResult lsResult = lineStyleService.Compact(currentDoc, context, reporter);
                 scopeTimer.Stop();
@@ -87,16 +91,10 @@ namespace LECG.Commands
 
         private static bool ConfirmExecution()
         {
-            var dialog = new TaskDialog("Compacting Styles")
-            {
-                MainInstruction = "Normalize duplicated styles",
-                MainContent = "This command compacts Line Patterns, Fill Patterns, Text Styles, and Line Styles. For each scope it creates new canonical definitions, rewires reachable references, and deletes redundant originals when possible.",
-                CommonButtons = TaskDialogCommonButtons.Ok | TaskDialogCommonButtons.Cancel,
-                DefaultButton = TaskDialogResult.Ok,
-                AllowCancellation = true
-            };
-
-            return dialog.Show() == TaskDialogResult.Ok;
+            return LecgDialog.Confirm(
+                "Compacting Styles",
+                "Normalize duplicated styles",
+                "This command compacts Line Patterns, Fill Patterns, Text Styles, and Line Styles. For each scope it creates new canonical definitions, rewires reachable references, and deletes redundant originals when possible.");
         }
     }
 }

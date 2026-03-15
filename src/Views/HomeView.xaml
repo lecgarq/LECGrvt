@@ -1,16 +1,12 @@
-﻿<base:LecgWindow x:Class="LECG.Views.HomeView"
+<base:LecgWindow x:Class="LECG.Views.HomeView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="LECG TOOLKIT" Height="650" Width="900" WindowIcon="{x:Static icons:Icons.Home}">
+    xmlns:icons="clr-namespace:LECG.Utils" Title="LECG TOOLKIT" Height="650" Width="900" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Home}">
 
     <base:LecgWindow.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        <ResourceDictionary/>
     </base:LecgWindow.Resources>
 
     <Grid Margin="{DynamicResource ViewContentMarginLarge}">
@@ -20,128 +16,133 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMargin}">
-            <TextBlock Text="LECG TOOLKIT" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="{DynamicResource TitleMarginSmall}"/>
-            <TextBlock Text="Select a tool to begin." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="LECG TOOLKIT" FontWeight="Bold" FontSize="24" Foreground="{DynamicResource LecgTextPrimary}" Margin="0,0,0,4"/>
+            <TextBlock Text="Select a tool to begin." FontSize="14" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
         <!-- Tool Grid -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <UniformGrid Columns="4" Rows="3" Margin="0,0,8,0">
+            <WrapPanel Margin="0,0,8,0">
+                <WrapPanel.Resources>
+                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DashboardCardStyle}">
+                        <Setter Property="Width" Value="200"/>
+                        <Setter Property="Height" Value="100"/>
+                    </Style>
+                </WrapPanel.Resources>
 
                 <!-- 1. Align (Master) -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Alignment &amp; Distribution Tools" Click="AlignMaster_Click">
+                <Button ToolTip="Alignment &amp; Distribution Tools" Click="AlignMaster_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.AlignCenter}" Fill="{DynamicResource PrimaryAccentBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Align" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/AlignMaster_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Align" FontWeight="Bold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 2. Assign Material -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Assign Material by Type" Click="AssignMaterial_Click">
+                <Button ToolTip="Assign Material by Type" Click="AssignMaterial_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Material}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Assign Mat." FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/AssignMaterial.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Assign Mat." FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 3. Sexy Revit -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="View Beautification" Click="SexyRevit_Click">
+                <Button ToolTip="View Beautification" Click="SexyRevit_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Sparkles}" Fill="{DynamicResource PrimaryAccentBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Sexy Revit" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/SexyRevit.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Sexy Revit" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 4. Purge -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Project Health" Click="Purge_Click">
+                <Button ToolTip="Project Health" Click="Purge_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Trash}" Fill="{DynamicResource AlertBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Purge" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/Purge.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Purge" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 5. Offsets -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Offset Elevations" Click="Offsets_Click">
+                <Button ToolTip="Offset Elevations" Click="Offsets_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.ArrowUpDown}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Offsets" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/OffsetElevations.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Offsets" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 6. Reset Slabs -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Reset Shape Edited Slabs" Click="ResetSlabs_Click">
+                <Button ToolTip="Reset Shape Edited Slabs" Click="ResetSlabs_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.ResetSlabs}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Reset Slabs" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ResetSlabs.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Reset Slabs" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 7. Simplify Points -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Simplify Toposolid Points" Click="SimplifyPoints_Click">
+                <Button ToolTip="Simplify Toposolid Points" Click="SimplifyPoints_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Simplify}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Simplify Pts" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/simplify_points_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Simplify Pts" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 8. Align Edges -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Align Toposolid Edges" Click="AlignEdges_Click">
+                <Button ToolTip="Align Toposolid Edges" Click="AlignEdges_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Contours}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Align Edges" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/align_edges_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Align Edges" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 9. Update Contours -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Update Contours" Click="UpdateContours_Click">
+                <Button ToolTip="Update Contours" Click="UpdateContours_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Contours}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Contours" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/update_contours_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Contours" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 10. Change Level -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Change Level" Click="ChangeLevel_Click">
+                <Button ToolTip="Change Level" Click="ChangeLevel_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Level}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Change Lvl" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/change_level_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Change Lvl" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 11. Clean Schemas -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Clean Schemas" Click="CleanSchemas_Click">
+                <Button ToolTip="Clean Schemas" Click="CleanSchemas_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Eraser}" Fill="{DynamicResource AlertBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Clean" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/CleanSchemas.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Clean" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 12. Render Match -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Render Selection Match" Click="RenderMatch_Click">
+                <Button ToolTip="Render Selection Match" Click="RenderMatch_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Palette}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Render Match" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/RenderMatch.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Render Match" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 13. Convert Family -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Convert Family" Click="ConvertFamily_Click">
+                <Button ToolTip="Convert Family" Click="ConvertFamily_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.Hammer}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Convert Fam" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Convert Fam" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
 
                 <!-- 14. Batch Rename -->
-                <Button Style="{DynamicResource DashboardCardStyle}" ToolTip="Batch Rename" Click="BatchRename_Click">
+                <Button ToolTip="Batch Rename" Click="BatchRename_Click">
                     <StackPanel HorizontalAlignment="Center">
-                        <Path Data="{x:Static icons:Icons.SearchReplace}" Fill="{DynamicResource TextSecondaryBrush}" Width="{DynamicResource IconSizeLarge}" Height="{DynamicResource IconSizeLarge}" Stretch="Uniform" Margin="{DynamicResource IconMarginBottom}" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Rename" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center"/>
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/SearchReplace.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Rename" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>
-
-            </UniformGrid>
+            </WrapPanel>
         </ScrollViewer>
     </Grid>
 </base:LecgWindow>

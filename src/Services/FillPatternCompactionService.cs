@@ -159,9 +159,6 @@ namespace LECG.Services
                 groupData.Add((canonicalName, canonical.Id, group));
             }
 
-            // Single Regenerate before all deletes
-            doc.Regenerate();
-
             foreach (var (canonicalName, canonicalId, group) in groupData)
             {
                 foreach (FillPatternCandidate original in group)
@@ -610,6 +607,7 @@ namespace LECG.Services
 
                 try
                 {
+                    if (!parameter.HasValue) continue;
                     if (parameter.AsElementId() == sourceId && parameter.Set(targetId))
                     {
                         rewired++;
