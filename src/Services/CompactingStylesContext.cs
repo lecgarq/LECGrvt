@@ -75,10 +75,11 @@ namespace LECG.Services
 
             logCallback?.Invoke("Preparing compacting context...");
 
-            IReadOnlyList<Element> instanceElements = new FilteredElementCollector(doc)
-                .WhereElementIsNotElementType()
-                .ToElements()
-                .ToList();
+            // Only collect type elements for parameter indexing.
+            // Instance elements (200K-500K in large models) are not needed —
+            // pattern/style references live on types, materials, views, and categories
+            // which are handled by dedicated indexes in each compaction service.
+            IReadOnlyList<Element> instanceElements = Array.Empty<Element>();
 
             IReadOnlyList<Element> typeElements = new FilteredElementCollector(doc)
                 .WhereElementIsElementType()
