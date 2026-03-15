@@ -77,9 +77,6 @@ namespace LECG.Services
                 }
             }
 
-            // Regenerate before deletes
-            doc.Regenerate();
-
             // Delete non-survivors
             foreach (LineStyleDuplicateGroup group in duplicateGroups)
             {
@@ -256,6 +253,7 @@ namespace LECG.Services
 
                 try
                 {
+                    if (!parameter.HasValue) continue;
                     if (parameter.AsElementId() == sourceId && parameter.Set(targetId))
                     {
                         rewired++;

@@ -206,9 +206,6 @@ namespace LECG.Services
                 groupData.Add((fallback.Name, preferredName, -1, fallback.Id, toDelete));
             }
 
-            // Single Regenerate before all deletes
-            doc.Regenerate();
-
             foreach (var (createdName, preferredName, createdNameIndex, canonicalId, toDelete) in groupData)
             {
                 foreach (LinePatternCandidate original in toDelete)
@@ -855,6 +852,7 @@ namespace LECG.Services
 
                 try
                 {
+                    if (!parameter.HasValue) continue;
                     if (parameter.AsElementId() == sourceId && parameter.Set(targetId))
                     {
                         rewired++;
