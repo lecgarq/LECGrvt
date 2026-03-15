@@ -4,12 +4,12 @@
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:icons="clr-namespace:LECG.Utils"
-    xmlns:comp="clr-namespace:LECG.Views.Components" Title="OFFSET ELEVATIONS" Width="420" WindowIcon="{x:Static icons:Icons.ArrowUpDown}">
+    xmlns:comp="clr-namespace:LECG.Views.Components" Title="OFFSET ELEVATIONS" Width="420" Height="500" MinWidth="350" MinHeight="450" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.ArrowUpDown}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
@@ -24,31 +24,37 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMargin}">
-            <TextBlock Text="Offset Elevations" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="{DynamicResource TitleMargin}"/>
-            <TextBlock Text="Enter offset value and choose direction. Then select elements." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}" TextWrapping="Wrap"/>
+        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
+            <TextBlock Text="Offset Elevations" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Enter offset value and choose direction. Then select elements." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
         </StackPanel>
 
         <!-- Value Input -->
-        <Border Grid.Row="1" Style="{DynamicResource CardStyle}" Padding="16" Margin="{DynamicResource HeaderMargin}">
+        <Border Grid.Row="1" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
-                <TextBlock Text="OFFSET VALUE (PROJECT UNITS)" Style="{DynamicResource CardHeaderStyle}"/>
-                <Border CornerRadius="8" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1.5" Background="{DynamicResource PanelBackgroundBrush}">
-                    <TextBox x:Name="TxtValue" Text="{Binding OffsetValue, StringFormat=N2}" FontSize="{DynamicResource FontSizeExtraLarge}" FontWeight="{DynamicResource WeightBold}" Foreground="{DynamicResource TextPrimaryBrush}" Background="Transparent" BorderThickness="0" Padding="12,10" HorizontalContentAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="OFFSET VALUE (PROJECT UNITS)" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                </StackPanel>
+                <Border CornerRadius="8" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1.5" Background="{DynamicResource LecgBaseBackground}">
+                    <TextBox x:Name="TxtValue" Text="{Binding OffsetValue, StringFormat=N2}" FontSize="{DynamicResource FontSizeExtraLarge}" FontWeight="{DynamicResource WeightBold}" Foreground="{DynamicResource LecgTextPrimary}" Background="Transparent" BorderThickness="0" Padding="12,10" HorizontalContentAlignment="Center"/>
                 </Border>
             </StackPanel>
         </Border>
 
         <!-- Selection -->
-        <Border Grid.Row="2" Style="{DynamicResource CardStyle}" Padding="16" Margin="{DynamicResource HeaderMargin}">
+        <Border Grid.Row="2" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
-                <TextBlock Text="SELECTION" Style="{DynamicResource LabelStyle}" Margin="0,0,0,4" Opacity="0.5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                </StackPanel>
                 <comp:SelectionControl DataContext="{Binding Selection}"/>
             </StackPanel>
         </Border>
 
         <!-- Direction Buttons -->
-        <Grid Grid.Row="3" Margin="{DynamicResource HeaderMargin}">
+        <Grid Grid.Row="3" Margin="{DynamicResource HeaderMarginSmall}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="12"/>
@@ -59,7 +65,7 @@
             <Button Grid.Column="0" Height="{DynamicResource ButtonHeightLarge}" Command="{Binding ExecuteAddCommand}" IsEnabled="{Binding CanRun}" Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{DynamicResource SuccessBrush}" CornerRadius="10" Padding="16">
+                        <Border x:Name="border" Background="{DynamicResource LecgSuccess}" CornerRadius="10" Padding="16">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Path Data="{x:Static icons:Icons.Plus}" Stroke="White" StrokeThickness="2.5" Width="{DynamicResource IconSizeAction}" Height="{DynamicResource IconSizeAction}" Stretch="Uniform" Margin="0,0,10,0"/>
                                 <TextBlock Text="Add" FontSize="{DynamicResource FontSizeMediumLarge}" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
@@ -81,7 +87,7 @@
             <Button Grid.Column="2" Height="{DynamicResource ButtonHeightLarge}" Command="{Binding ExecuteSubtractCommand}" IsEnabled="{Binding CanRun}" Cursor="Hand">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{DynamicResource AlertBrush}" CornerRadius="10" Padding="16">
+                        <Border x:Name="border" Background="{DynamicResource LecgError}" CornerRadius="10" Padding="16">
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Path Data="{x:Static icons:Icons.Minus}" Stroke="White" StrokeThickness="2.5" Width="{DynamicResource IconSizeAction}" Height="{DynamicResource IconSizeAction}" Stretch="Uniform" Margin="0,0,10,0"/>
                                 <TextBlock Text="Subtract" FontSize="{DynamicResource FontSizeMediumLarge}" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>

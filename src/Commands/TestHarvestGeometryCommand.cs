@@ -4,6 +4,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services.Interfaces;
+using LECG.Views.Base;
 
 namespace LECG.Commands
 {
@@ -48,7 +49,7 @@ namespace LECG.Commands
                 }
             });
 
-            TaskDialog.Show("Result", $"Harvested {count} solids.");
+            LecgDialog.Show("Result", $"Harvested {count} solids.");
         }
     }
 }

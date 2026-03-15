@@ -4,12 +4,12 @@
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="RESET SLABS" Width="400" WindowIcon="{x:Static icons:Icons.ResetSlabs}">
+    xmlns:icons="clr-namespace:LECG.Utils" Title="RESET SLABS" Width="400" Height="400" MinWidth="350" MinHeight="350" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.ResetSlabs}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
@@ -23,23 +23,29 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMargin}">
-            <TextBlock Text="Reset Slab Shapes" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="{DynamicResource TitleMargin}"/>
-            <TextBlock Text="Reset Toposolid or Floor shape edits." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
+            <TextBlock Text="Reset Slab Shapes" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Reset Toposolid or Floor shape edits." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
         <!-- Selection -->
-        <Border Grid.Row="1" Style="{DynamicResource CardStyle}" Padding="16" Margin="{DynamicResource HeaderMargin}">
+        <Border Grid.Row="1" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
-                <TextBlock Text="SELECTION" Style="{DynamicResource LabelStyle}" Margin="0,0,0,4" Opacity="0.5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                </StackPanel>
                 <comp:SelectionControl DataContext="{Binding Selection}"/>
             </StackPanel>
         </Border>
 
         <!-- Options -->
-        <Border Grid.Row="2" Style="{DynamicResource CardStyle}" VerticalAlignment="Top" Margin="{DynamicResource HeaderMargin}">
+        <Border Grid.Row="2" Padding="16" Margin="{DynamicResource HeaderMarginSmall}" VerticalAlignment="Top">
             <StackPanel>
-                <TextBlock Text="OPTIONS" Style="{DynamicResource CardHeaderStyle}"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="OPTIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                </StackPanel>
                 <CheckBox Content="Duplicate elements before resetting" IsChecked="{Binding DuplicateElements, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}"/>
             </StackPanel>
         </Border>
@@ -53,7 +59,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
-            <Button Content="Reset" Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource PrimaryButtonStyle}"/>
+            <Button Content="Reset" Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource AccentButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

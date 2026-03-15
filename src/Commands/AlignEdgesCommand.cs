@@ -7,6 +7,7 @@ using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.ViewModels;
 using LECG.Views;
+using LECG.Views.Base;
 using LECG.Services.Interfaces;
 
 namespace LECG.Commands
@@ -38,7 +39,7 @@ namespace LECG.Commands
             if (result == true && vm.ShouldRun)
             {
                 service.AlignEdges(doc, vm.TargetRefs, vm.ReferenceRefs);
-                TaskDialog.Show("Align Edges", "Alignment completed successfully.");
+                LecgDialog.Show("Align Edges", "Alignment completed successfully.");
             }
         }
     }

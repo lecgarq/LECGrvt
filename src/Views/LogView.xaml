@@ -7,19 +7,19 @@
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:icons="clr-namespace:LECG.Utils"
     xmlns:vm="clr-namespace:LECG.ViewModels"
-    xmlns:logging="clr-namespace:LECG.Services.Logging" mc:Ignorable="d" Title="{Binding Title}" Height="450" Width="600" MinHeight="320" MaxHeight="800" WindowIcon="{x:Static icons:Icons.Layers}" WindowStartupLocation="CenterScreen" d:DataContext="{d:DesignInstance Type=vm:LogViewModel}">
+    xmlns:logging="clr-namespace:LECG.Services.Logging" mc:Ignorable="d" Title="{Binding Title}" Height="450" Width="600" MinWidth="400" MinHeight="300" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Layers}" WindowStartupLocation="CenterScreen" d:DataContext="{d:DesignInstance Type=vm:LogViewModel}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Converters if needed -->
 
             <!-- Log Item Template -->
             <DataTemplate DataType="{x:Type logging:LogEntry}">
-                <Border BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="8,4">
+                <Border BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="0,0,0,1" Padding="8,4">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Time"/>
@@ -28,7 +28,7 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Time -->
-                        <TextBlock Text="{Binding FormattedTime}" Foreground="{DynamicResource TextMutedBrush}" FontSize="11" Margin="0,0,12,0" VerticalAlignment="Center" FontFamily="Consolas, Monospace"/>
+                        <TextBlock Text="{Binding FormattedTime}" Foreground="{DynamicResource LecgTextMuted}" FontSize="11" Margin="0,0,12,0" VerticalAlignment="Center" FontFamily="Consolas, Monospace"/>
 
                         <!-- Level Indicator -->
                         <Border Grid.Column="1" CornerRadius="4" Margin="0,0,12,0" Padding="6,2" VerticalAlignment="Center" MinWidth="60">
@@ -52,7 +52,7 @@
                             <TextBlock Text="{Binding Level}" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="10">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Level}" Value="Success">
                                                 <Setter Property="Foreground" Value="#22543D"/>
@@ -70,7 +70,7 @@
                         </Border>
 
                         <!-- Message -->
-                        <TextBlock Grid.Column="2" Text="{Binding Message}" TextWrapping="Wrap" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="12" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding Message}" TextWrapping="Wrap" Foreground="{DynamicResource LecgTextPrimary}" FontSize="12" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
             </DataTemplate>
@@ -86,12 +86,12 @@
 
         <!-- Header Status -->
         <StackPanel Grid.Row="0" Margin="0,0,0,12">
-            <TextBlock Text="{Binding CurrentStatus}" FontSize="{DynamicResource FontSizeBody}" FontWeight="{DynamicResource WeightBold}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,8"/>
+            <TextBlock Text="{Binding CurrentStatus}" FontSize="{DynamicResource FontSizeBody}" FontWeight="{DynamicResource WeightBold}" Foreground="{DynamicResource LecgTextPrimary}" Margin="0,0,0,8"/>
 
             <!-- Minimal Progress Bar -->
             <Grid Height="4">
-                <Border CornerRadius="2" Background="{DynamicResource ContentBackgroundBrush}"/>
-                <Border CornerRadius="2" Background="{DynamicResource PrimaryAccentBrush}" HorizontalAlignment="Left">
+                <Border CornerRadius="2" Background="{DynamicResource LecgBaseBackground}"/>
+                <Border CornerRadius="2" Background="{DynamicResource LecgAccent}" HorizontalAlignment="Left">
                     <Border.Width>
                         <MultiBinding Converter="{utils:MathConverter}" ConverterParameter="x/100*y">
                             <Binding Path="ProgressValue"/>
@@ -103,7 +103,7 @@
         </StackPanel>
 
         <!-- Log List -->
-        <Border Grid.Row="1" CornerRadius="{DynamicResource ContentCornerRadius}" Background="{DynamicResource LogBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+        <Border Grid.Row="1" CornerRadius="{DynamicResource ContentCornerRadius}" Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1">
             <ListView ItemsSource="{Binding Entries}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
@@ -130,7 +130,7 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Command="{Binding CopyCommand}" Content="Copy Log" Style="{DynamicResource SecondaryButtonStyle}" Height="32" Padding="12,0"/>
-            <Button Grid.Column="2" Click="Close_Click" Content="Close" Style="{DynamicResource PrimaryButtonStyle}" Height="32" MinWidth="80"/>
+            <Button Grid.Column="2" Click="Close_Click" Content="Close" Style="{DynamicResource AccentButtonStyle}" Height="32" MinWidth="80"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

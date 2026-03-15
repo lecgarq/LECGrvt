@@ -56,10 +56,17 @@ namespace LECG.Views.Base
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            WindowInteropHelper helper = new WindowInteropHelper(this);
-            if (helper.Owner == IntPtr.Zero)
+            try
             {
-                helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+                WindowInteropHelper helper = new WindowInteropHelper(this);
+                if (helper.Owner == IntPtr.Zero)
+                {
+                    helper.Owner = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                // Owner cannot be set after dialog is shown — safe to ignore
             }
             LoadWindowState();
         }

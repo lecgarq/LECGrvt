@@ -115,7 +115,7 @@ namespace LECG.Core
                 catch (Exception ex)
                 {
                     // Fallback if Log Window fails (e.g. XAML error)
-                    System.Windows.MessageBox.Show($"Could not show Log Window: {ex.Message}", "LECG Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Views.Base.LecgDialog.Show("LECG Error", $"Could not show Log Window: {ex.Message}");
                 }
             });
         }
