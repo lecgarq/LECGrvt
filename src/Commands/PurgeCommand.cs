@@ -7,6 +7,7 @@ using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
+using LECG.Views.Base;
 using System;
 
 namespace LECG.Commands
@@ -150,22 +151,16 @@ namespace LECG.Commands
             purgeParameters = false;
             passCount = 1;
 
-            var dialog = new TaskDialog("LECG Purge Unused")
-            {
-                MainInstruction = "Choose purge mode",
-                MainContent = "Safe mode avoids family-parameter purge.",
-                CommonButtons = TaskDialogCommonButtons.Cancel,
-                AllowCancellation = true
-            };
+            int selected = LecgDialog.ShowOptions(
+                "LECG Purge Unused",
+                "Choose purge mode. Safe mode avoids family-parameter purge.",
+                "Safe Purge (Line Styles, Line Patterns, Fill Patterns, Materials)",
+                "Deep Purge (+Levels, 3 passes)");
 
-            dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Safe Purge (Line Styles, Line Patterns, Fill Patterns, Materials)");
-            dialog.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Deep Purge (+Levels, 3 passes)");
+            if (selected < 0) return false;
 
-            TaskDialogResult dialogResult = dialog.Show();
-            if (dialogResult != TaskDialogResult.CommandLink1 && dialogResult != TaskDialogResult.CommandLink2) return false;
-
-            purgeLevels = dialogResult == TaskDialogResult.CommandLink2;
-            passCount = dialogResult == TaskDialogResult.CommandLink2 ? 3 : 1;
+            purgeLevels = selected == 1;
+            passCount = selected == 1 ? 3 : 1;
             return true;
         }
     }

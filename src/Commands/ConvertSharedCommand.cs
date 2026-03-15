@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services.Interfaces;
+using LECG.Views.Base;
 using System;
 
 namespace LECG.Commands
@@ -67,7 +68,7 @@ namespace LECG.Commands
                     });
 
                     nestedDoc.LoadFamily(doc);
-                    TaskDialog.Show("Success", $"Family '{nestedFamily.Name}' converted to Non-Shared.");
+                    LecgDialog.Show("Success", $"Family '{nestedFamily.Name}' converted to Non-Shared.");
                 }
                 finally
                 {
@@ -78,7 +79,7 @@ namespace LECG.Commands
             }
 
             transactionService.Run(doc, "Set Nested Family to Non-Shared", _ => sharedParam.Set(0));
-            TaskDialog.Show("Success", $"Family '{nestedFamily.Name}' converted to Non-Shared.");
+            LecgDialog.Show("Success", $"Family '{nestedFamily.Name}' converted to Non-Shared.");
         }
     }
 }

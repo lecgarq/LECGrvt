@@ -7,6 +7,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
+using LECG.Views.Base;
 
 namespace LECG.Commands
 {
@@ -30,7 +31,7 @@ namespace LECG.Commands
                 sb.AppendLine($"- {m.Name} ({string.Join(", ", m.GetParameters().Select(p => p.ParameterType.Name))})");
             }
 
-            TaskDialog.Show("Debug API", sb.ToString());
+            LecgDialog.Show("Debug API", sb.ToString());
         }
     }
 }

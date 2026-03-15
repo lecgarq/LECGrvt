@@ -8,6 +8,7 @@ using LECG.Core;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
+using LECG.Views.Base;
 
 namespace LECG.Commands
 {
@@ -75,7 +76,7 @@ namespace LECG.Commands
                 });
 
                 string mode = vm.IsApplyMode ? "Applied" : "Removed";
-                TaskDialog.Show("Update Contours", $"{mode} contours on {processed} Toposolid type(s).");
+                LecgDialog.Show("Update Contours", $"{mode} contours on {processed} Toposolid type(s).");
             }
         }
     }

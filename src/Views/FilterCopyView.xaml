@@ -1,15 +1,15 @@
-﻿<base:LecgWindow x:Class="LECG.Views.FilterCopyView"
+<base:LecgWindow x:Class="LECG.Views.FilterCopyView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:icons="clr-namespace:LECG.Utils"
     xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:vm="clr-namespace:LECG.ViewModels" Title="{Binding Title}" Height="750" Width="1050" WindowIcon="{x:Static icons:Icons.Copy}">
+    xmlns:vm="clr-namespace:LECG.ViewModels" Title="{Binding Title}" Height="750" Width="1050" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Copy}">
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Styles.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <utils:BoolToVisibilityConverter x:Key="BoolToVis"/>
             <utils:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis"/>
@@ -74,7 +74,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Source Panel -->
-            <Border Grid.Column="0" Background="{DynamicResource CardBackgroundBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="20">
+            <Border Grid.Column="0" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="8" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" Padding="20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -87,7 +87,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.ColumnSpan="2" Text="SOURCE REPOSITORY" FontWeight="ExtraBold" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,0,15"/>
+                    <TextBlock Grid.ColumnSpan="2" Text="SOURCE REPOSITORY" FontWeight="ExtraBold" FontSize="11" Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,15"/>
 
                     <ComboBox Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SourceTypes}" SelectedItem="{Binding LeftSourceType}" Margin="0,0,0,12" Height="36" VerticalContentAlignment="Center"/>
 
@@ -102,13 +102,13 @@
 
                     <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Top">
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Collapse" ToolTip="Collapse All">
-                            <Path Data="{x:Static icons:Icons.Minimize}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                            <Path Data="{x:Static icons:Icons.Minimize}" Fill="{DynamicResource LecgTextSecondary}" Stretch="Uniform" Width="14"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Expand" ToolTip="Expand All">
-                            <Path Data="{x:Static icons:Icons.Plus}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                            <Path Data="{x:Static icons:Icons.Plus}" Fill="{DynamicResource LecgTextSecondary}" Stretch="Uniform" Width="14"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Check" ToolTip="Select All Filters" Margin="0,15,0,2">
-                            <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource PrimaryAccentBrush}" Stretch="Uniform" Width="16"/>
+                            <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource LecgAccent}" Stretch="Uniform" Width="16"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Uncheck" ToolTip="Unselect All">
                             <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
@@ -132,7 +132,7 @@
                                 <Border Background="Transparent" Padding="8,4" Margin="2,1,0,1" CornerRadius="8">
                                     <StackPanel Orientation="Horizontal">
                                         <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center"/>
-                                        <TextBlock Text="{Binding Name}" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                        <TextBlock Text="{Binding Name}" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource LecgTextSecondary}"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -147,7 +147,7 @@
                 </Button>
             </StackPanel>
 
-            <Border Grid.Column="2" Background="{DynamicResource CardBackgroundBrush}" CornerRadius="16" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Padding="20">
+            <Border Grid.Column="2" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="8" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" Padding="20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -160,7 +160,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.ColumnSpan="2" Text="TARGET DESTINATIONS" FontWeight="ExtraBold" FontSize="11" Foreground="{DynamicResource TextMutedBrush}" Margin="0,0,0,15"/>
+                    <TextBlock Grid.ColumnSpan="2" Text="TARGET DESTINATIONS" FontWeight="ExtraBold" FontSize="11" Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,15"/>
 
                     <ComboBox Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SourceTypes}" SelectedItem="{Binding RightSourceType}" Margin="0,0,0,12" Height="36" VerticalContentAlignment="Center"/>
 
@@ -197,7 +197,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="Path">
                                                         <Setter Property="Data" Value="{x:Static icons:Icons.X}"/>
-                                                        <Setter Property="Fill" Value="{DynamicResource AlertBrush}"/>
+                                                        <Setter Property="Fill" Value="{DynamicResource LecgError}"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Status}" Value="Removable">
                                                                 <Setter Property="Data" Value="{x:Static icons:Icons.ResetSlabs}"/>
@@ -216,13 +216,13 @@
 
                     <StackPanel Grid.Row="3" Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Top">
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Collapse" ToolTip="Collapse All">
-                            <Path Data="{x:Static icons:Icons.Minimize}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                            <Path Data="{x:Static icons:Icons.Minimize}" Fill="{DynamicResource LecgTextSecondary}" Stretch="Uniform" Width="14"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Expand" ToolTip="Expand All">
-                            <Path Data="{x:Static icons:Icons.Plus}" Fill="{DynamicResource TextSecondaryBrush}" Stretch="Uniform" Width="14"/>
+                            <Path Data="{x:Static icons:Icons.Plus}" Fill="{DynamicResource LecgTextSecondary}" Stretch="Uniform" Width="14"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Check" ToolTip="Select All Views" Margin="0,15,0,2">
-                            <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource PrimaryAccentBrush}" Stretch="Uniform" Width="16"/>
+                            <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource LecgAccent}" Stretch="Uniform" Width="16"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Uncheck" ToolTip="Unselect All">
                             <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
@@ -234,7 +234,7 @@
 
         <!-- Footer Actions -->
         <Grid Grid.Row="1" Margin="0,30,0,0">
-            <TextBlock Text="Modified filters Blue. New filters Green. Deleted Red." VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="{DynamicResource TextMutedBrush}"/>
+            <TextBlock Text="Modified filters Blue. New filters Green. Deleted Red." VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="{DynamicResource LecgTextMuted}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="CANCEL" Command="{Binding CancelCommand}" Width="110" Height="44" Margin="0,0,12,0" FontWeight="SemiBold"/>
                 <Button Content="APPLY CHANGES" Command="{Binding ApplyCommand}" Width="190" Height="44" Style="{DynamicResource PrimaryButtonStyle}" FontSize="12" FontWeight="Black"/>

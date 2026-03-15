@@ -2,6 +2,7 @@ using Autodesk.Revit.UI;
 using LECG.Configuration;
 using LECG.Core.Ribbon;
 using LECG.Utils;
+using LECG.Views.Base;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -37,7 +38,7 @@ namespace LECG
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("LECG Startup Error", ex.ToString());
+                LecgDialog.Show("LECG Startup Error", ex.ToString());
                 return Result.Failed;
             }
         }
@@ -57,7 +58,7 @@ namespace LECG
                 try
                 {
                     Services.Logging.Logger.Instance.Log($"Unhandled dispatcher exception: {e.Exception}");
-                    TaskDialog.Show("LECG Error", e.Exception.Message);
+                    LecgDialog.Show("LECG Error", e.Exception.Message);
                 }
                 catch
                 {
