@@ -1,29 +1,100 @@
-# SPEC.md — Project Specification
+﻿# SPEC.md — Project Specification
 
-> **Status**: `FINALIZED`
+> Status: FINALIZED`n
+# LECG Revit Plugin
 
-## Vision
-To elevate the LECG Revit 2026 Addin from a functional utility into a premium, state-of-the-art enterprise product by creating a unified, lightning-fast, and deeply branded UI/UX, while simultaneously continuing rigorous backend refactoring for maximum performance and modularity.
+## What This Is
 
-## Goals
-1. **Design System Standardization:** Build and deploy a centralized, reusable WPF component library enforcing the LECG brand identity (custom earth-toned palette, minimalism) across all 36 views.
-2. **Premium UX Features:** Ensure absolute consistency in professional interactions, including hover effects, ultra-fast real-time searching, batch selection/expansion/collapsing, and fluid layout scaling across all window sizes.
-3. **Architectural Refactoring:** Continue the backend performance and modularity refactoring (guided by prior architectural plans) to perfectly decouple the heavy Services from the refined MVVM UI layer.
+A Revit 2026 addin providing tools for converting, repairing, separating, merging, and reorganizing modeled elements while preserving geometric behavior, elevation data, and project references. Built for BIM professionals who need to manipulate Floors, Toposolids, multi-boundary geometry, and type-based model organization without losing modeled intent.
 
-## Non-Goals (Out of Scope)
-- No glassmorphism styling or complex translucency (strictly avoided due to Revit rendering crashes).
-- No new features outside of the existing mapped utilities—this effort strictly focuses on standardizing the UI/UX and backend modularization of *existing* tools.
+## Core Value
 
-## Users
-Architects and structural engineers utilizing the LECG Revit Addin who require extremely responsive, reliable, and visually cohesive tooling that feels distinctly "LECG" while operating within Revit 2026.
+Preserve the exact geometric behavior, elevation data, and project reference system of modeled elements during any conversion, repair, or reorganization operation.
+
+## Requirements
+
+### Validated
+
+<!-- Shipped and confirmed valuable. Phases P1-P9 completed. -->
+
+- Purge unused line styles, fill patterns, materials (PurgeCommand)
+- Clean third-party plugin schemas (CleanSchemasCommand)
+- Normalize duplicated line/fill/text styles (CompactingStylesCommand)
+- Batch find/replace in element names (SearchReplaceCommand)
+- Convert imported CAD to Detail Item families (ConvertCadCommand)
+- Convert hosted family to work plane-based generic model (ConvertFamilyCommand)
+- Convert shared family to non-shared (ConvertSharedCommand)
+- Change instance categories by modifying family definition (CategoryChangerCommand)
+- Copy view filters between views/templates (FilterCopyCommand)
+- Assign materials based on Floor/Toposolid type names (AssignMaterialCommand)
+- Offset height from level for Toposolids/Floors (OffsetElevationsCommand)
+- Reset slab shapes for Floor and Toposolid elements (ResetSlabsCommand)
+- Remove redundant sub-element points from Toposolids (SimplifyPointsCommand)
+- Align Toposolid points to another Toposolid surface (AlignEdgesCommand)
+- Apply/remove contour display on Toposolid types (UpdateContoursCommand)
+- Move Toposolids to new level maintaining elevation (ChangeLevelCommand)
+- Align/distribute elements (8 alignment commands)
+- Beautify current view (SexyRevitCommand)
+- Sync graphics/identity with render appearance (RenderAppearanceMatchCommand)
+- Create PBR materials from textures (PbrMaterialCreatorCommand)
+- Move formula parameters to Other group (FormulaAutoGroupingCommand)
+
+### Active
+
+<!-- Current scope: v2.0 Geometry Operations milestone -->
+
+- [ ] Floor to Toposolid conversion preserving shape points and elevations
+- [ ] Toposolid to Floor conversion preserving edited points and elevations
+- [ ] Fix Points â€” repair inconsistent points at edges/transitions
+- [ ] Split Boundaries â€” separate multi-boundary elements into independent instances
+- [ ] Type to Linked Models â€” separate by type into individual Revit files with shared coordinates
+
+**Deferred:** Merge Elements is descoped to v2.x pending a defensible boundary-union strategy.
+
+### Out of Scope
+
+- Revit versions before 2026 â€” single-target strategy, no backwards compatibility
+- Conceptual mass or adaptive component geometry â€” not part of Floor/Toposolid domain
+- Cloud-based file operations â€” all operations are local Revit document manipulation
+
+## Current Milestone: v2.0 Geometry Operations
+
+**Goal:** Add core geometry conversion, repair, and model organization commands for Floors and Toposolids.
+
+**Target features:**
+- Floor to Toposolid conversion
+- Toposolid to Floor conversion
+- Fix Points (repair inconsistent surface points)
+- Split Boundaries (multi-boundary to independent elements)
+- Type to Linked Models (type-based model separation with shared coordinates)
+
+**Deferred from this milestone:** Merge Elements (multiple elements to one consolidated)
+
+## Context
+
+- **Framework:** net8.0-windows, WPF, Revit 2026 API
+- **Architecture:** Strict MVVM + DI (SimpleDi container). Commands inherit RevitCommand, services have interfaces, VMs inherit BaseViewModel with CommunityToolkit.Mvvm
+- **Patterns:** All commands open config window first (never start by asking user to select). TransactionService wraps Revit transactions. SelectionCoordinator handles UI hide/show during selection.
+- **Existing relevant services:** SlabService (SlabShapeEditor access, DuplicateElement), ToposolidService (ToposolidType manipulation), SimplifyPointsService (SlabShapeVertex iteration), AlignEdges services (boundary points, vertex alignment), ToposolidBaseElevationService (level + height offset resolution)
+- **Ribbon:** "Toposolids" panel exists and will host most new commands. Type to Linked Models needs its own panel or goes in "Project Health".
+- **Previous work:** Phases P1-P9 completed covering all validated requirements above.
 
 ## Constraints
-- **Technical Restrictions:** Must strictly avoid WPF features known to crash the Revit 2026 rendering engine pipeline (e.g., intensive glassmorphism).
-- **Architecture:** Must rigidly adhere to the MVVM pattern utilizing `CommunityToolkit.Mvvm`, keeping Views strictly XAML-based and logic in ViewModels.
-- **Palette:** Must build around the defined 9-color HEX system: `#E6E3DA`, `#C8C0B4`, `#A89D8E`, `#7A634F`, `#E9E9E6`, `#96938C`, `#4E4B44`, `#323130`, `#708452`.
 
-## Success Criteria
-- [ ] A proprietary `LecgUI` component library is built and replaces ad-hoc XAML in at least 3 core views.
-- [ ] UI correctly scales to various monitor sizes without element clipping or distortion.
-- [ ] Batch selection and real-time search execute responsively without blocking the Revit main thread.
-- [ ] Codebase structure and modularity reflect the desired performance architecture, eliminating duplicated UI logic.
+- **Tech stack**: Revit 2026 API only, net8.0-windows, no external NuGet beyond existing
+- **Architecture**: Must follow existing MVVM + DI patterns (RevitCommand, interface-backed services, LecgWindow views, Bootstrapper registration)
+- **Interaction**: Commands must open config window first, never start by asking user to select elements
+- **Transactions**: All Revit modifications must go through TransactionService
+
+## Key Decisions
+
+| Decision | Rationale | Outcome |
+|----------|-----------|---------|
+| Single DI container (SimpleDi) | Lightweight, no external DI framework dependency | Good |
+| RevitCommand base class | Centralizes ExternalCommandData access and error handling | Good |
+| LecgWindow base for all views | Consistent theming and window behavior | Good |
+| TransactionService for all modifications | Centralized transaction management with SafeFailureHandler | Good |
+| Toposolids panel grouping | All terrain/surface tools in one ribbon location | Good |
+
+---
+*Last updated: 2026-03-19 after milestone v2.0 initialization*
