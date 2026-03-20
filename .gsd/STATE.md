@@ -1,24 +1,33 @@
 # Project State
 
-> **Last Updated:** 2026-03-14
+> Current status of the LECG Revit Addin project.
 
-## Current Objective
-Completed the final polish and responsive layout phase (Phase 4).
+## Milestone Status: v2.0 Geometry Operations
+**Status:** In Progress (Mapping Complete)
+**Current Task:** Transition to GSD Standard documentation.
 
-## Position
-- **Milestone**: v1.0.0-UI_Refresh
-- **Phase**: 4
-- **Status**: Phase 4 Complete
-- **Wave**: 1 (Adaptive Layout Boundaries) - RECTIFIED
+## Wave 1 Summary
+**Objective:** Map existing codebase and establish GSD protocol.
 
-- Foundation (Phases 1-1a) is verified.
-- Core Refactoring (Phase 2) is verified.
-- Global UI Standardization (Phase 3) is verified.
-- Polish & Responsiveness (Phase 4) is verified.
+**Changes:**
+- Initialized `.gsd/ARCHITECTURE.md` with system design.
+- Initialized `.gsd/STACK.md` with technology inventory.
+- Updated `.gsd/STATE.md` with current session memory.
 
-## Known Risks & Debt
-- None (Phase 4 addressed responsive scaling).
+**Files Touched:**
+- `.gsd/ARCHITECTURE.md`
+- `.gsd/STACK.md`
+- `.gsd/STATE.md`
 
-## Next Steps
-- Final review of documentation.
-- Project handoff / Ready for deployment.
+**Verification:**
+- Built successfully: `dotnet build` (to be verified)
+- Unit tests: No core tests found in `src`.
+
+**Risks/Debt:**
+- Many commands depend on `SlabService` which is becoming complex.
+- No unit tests for core geometry logic.
+
+## Next Wave TODO:
+- Finalize `SPEC.md` from `.planning/PROJECT.md`.
+- Finalize `ROADMAP.md` from `.planning/ROADMAP.md`.
+- Start execution of v2.0 milestone tasks.
