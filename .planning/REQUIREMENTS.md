@@ -88,36 +88,36 @@ Deferred to v2.x or later.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CORE-01 | — | Pending |
-| CORE-02 | — | Pending |
-| CONV-01 | — | Pending |
-| CONV-02 | — | Pending |
-| CONV-03 | — | Pending |
-| CONV-04 | — | Pending |
-| CONV-05 | — | Pending |
-| CONV-06 | — | Pending |
-| FIXP-01 | — | Pending |
-| FIXP-02 | — | Pending |
-| FIXP-03 | — | Pending |
-| FIXP-04 | — | Pending |
-| SPLT-01 | — | Pending |
-| SPLT-02 | — | Pending |
-| SPLT-03 | — | Pending |
-| SPLT-04 | — | Pending |
-| LINK-01 | — | Pending |
-| LINK-02 | — | Pending |
-| LINK-03 | — | Pending |
-| LINK-04 | — | Pending |
-| LINK-05 | — | Pending |
-| LINK-06 | — | Pending |
-| LINK-07 | — | Pending |
-| LINK-08 | — | Pending |
+| CORE-01 | Phase 10 | Pending |
+| CORE-02 | Phase 10 | Pending |
+| CONV-01 | Phase 11 | Pending |
+| CONV-02 | Phase 11 | Pending |
+| CONV-03 | Phase 11 | Pending |
+| CONV-04 | Phase 11 | Pending |
+| CONV-05 | Phase 11 | Pending |
+| CONV-06 | Phase 11 | Pending |
+| FIXP-01 | Phase 12 | Pending |
+| FIXP-02 | Phase 12 | Pending |
+| FIXP-03 | Phase 12 | Pending |
+| FIXP-04 | Phase 12 | Pending |
+| SPLT-01 | Phase 13 | Pending |
+| SPLT-02 | Phase 13 | Pending |
+| SPLT-03 | Phase 13 | Pending |
+| SPLT-04 | Phase 13 | Pending |
+| LINK-01 | Phase 14 | Pending |
+| LINK-02 | Phase 14 | Pending |
+| LINK-03 | Phase 14 | Pending |
+| LINK-04 | Phase 14 | Pending |
+| LINK-05 | Phase 14 | Pending |
+| LINK-06 | Phase 14 | Pending |
+| LINK-07 | Phase 14 | Pending |
+| LINK-08 | Phase 14 | Pending |
 
 **Coverage:**
 - v2.0 requirements: 24 total
-- Mapped to phases: 0
-- Unmapped: 24
+- Mapped to phases: 24
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-19*
-*Last updated: 2026-03-19 after initial definition*
+*Last updated: 2026-03-19 after roadmap creation (v2.0 traceability complete)*
