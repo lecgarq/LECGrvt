@@ -20,11 +20,11 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            
+
             BindClose(vm);
 
             // Wire up Selection Request
-            vm.Selection.OnRequestSelect += (s, e) => 
+            vm.Selection.OnRequestSelect += (s, e) =>
             {
                 if (UiDocument == null) return;
                 IList<Reference> refs = _selectionCoordinator.PickObjects(
@@ -36,16 +36,16 @@ namespace LECG.Views
                 if (refs.Count > 0)
                 {
                     vm.Selection.UpdateSelection(refs.Count);
-                    
+
                     // Convert refs to Elements
                     List<Element> elements = new List<Element>();
                     Document doc = UiDocument.Document;
-                    foreach(var r in refs)
+                    foreach (var r in refs)
                     {
                         var el = doc.GetElement(r);
-                        if(el != null) elements.Add(el);
+                        if (el != null) elements.Add(el);
                     }
-                    
+
                     vm.SetSelectedElements(elements);
                 }
             };
@@ -53,6 +53,7 @@ namespace LECG.Views
 
         public override void Initialize(UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
             base.Initialize(uiDoc);
             (DataContext as ChangeLevelViewModel)?.Initialize(uiDoc.Document);
         }

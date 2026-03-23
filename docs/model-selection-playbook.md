@@ -105,9 +105,9 @@
 
 **How to switch:**
 1. Create state snapshot
-2. Update STATE.md with current position
+2. Update `.planning/STATE.md` with current position
 3. Start fresh session with appropriate model
-4. Load STATE.md to resume
+4. Load `.planning/STATE.md` to resume
 
 ---
 

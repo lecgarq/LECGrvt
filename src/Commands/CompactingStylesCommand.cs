@@ -1,7 +1,6 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Collections.Generic;
 using System.Diagnostics;
 using LECG.Core;
 using LECG.Models;
@@ -32,9 +31,10 @@ namespace LECG.Commands
             Log("Compacting Styles");
             Log("=================");
             var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
-            var failureHandler = new CompactionFailureHandler();
+            var failureHandler = new SafeFailureHandler();
 
             // Line Patterns
+            UpdateProgress(5, "Compacting Line Patterns...");
             var linePatternService = ServiceLocator.GetRequiredService<ILinePatternCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Line Patterns", currentDoc =>
             {
@@ -49,6 +49,7 @@ namespace LECG.Commands
             }, failureHandler);
 
             // Fill Patterns
+            UpdateProgress(25, "Compacting Fill Patterns...");
             var fillPatternService = ServiceLocator.GetRequiredService<IFillPatternCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Fill Patterns", currentDoc =>
             {
@@ -63,6 +64,7 @@ namespace LECG.Commands
             }, failureHandler);
 
             // Text Styles
+            UpdateProgress(50, "Compacting Text Styles...");
             var textStyleService = ServiceLocator.GetRequiredService<ITextStyleCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Text Styles", currentDoc =>
             {
@@ -77,6 +79,7 @@ namespace LECG.Commands
             }, failureHandler);
 
             // Line Styles
+            UpdateProgress(75, "Compacting Line Styles...");
             var lineStyleService = ServiceLocator.GetRequiredService<ILineStyleCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Line Styles", currentDoc =>
             {
@@ -89,37 +92,10 @@ namespace LECG.Commands
                 Log($"Line Styles - Groups: {lsResult.DuplicateGroups}, Rewired: {lsResult.ReferencesRewired}, Deleted: {lsResult.OriginalStylesDeleted}, Blocked: {lsResult.BlockedDeletions.Count}");
                 Log($"Line Styles - Time: {scopeTimer.Elapsed.TotalSeconds:F2}s");
             }, failureHandler);
-        }
 
-        /// <summary>
-        /// Safe failure handler that only deletes warnings.
-        /// Rolls back on errors instead of auto-deleting elements,
-        /// which prevents cascading native crashes in Revit 2026.4.
-        /// </summary>
-        private class CompactionFailureHandler : IFailuresPreprocessor
-        {
-            public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
-            {
-                IList<FailureMessageAccessor> fmas = failuresAccessor.GetFailureMessages();
-                if (fmas.Count == 0) return FailureProcessingResult.Continue;
-
-                bool hasErrors = false;
-                foreach (FailureMessageAccessor fma in fmas)
-                {
-                    if (fma.GetSeverity() == FailureSeverity.Warning)
-                    {
-                        failuresAccessor.DeleteWarning(fma);
-                    }
-                    else
-                    {
-                        hasErrors = true;
-                    }
-                }
-
-                return hasErrors
-                    ? FailureProcessingResult.ProceedWithRollBack
-                    : FailureProcessingResult.ProceedWithCommit;
-            }
+            UpdateProgress(100, "Complete");
+            Log("");
+            Log("=== COMPACTING COMPLETE ===");
         }
 
         private static bool ConfirmExecution()

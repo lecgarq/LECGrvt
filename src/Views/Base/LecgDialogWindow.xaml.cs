@@ -1,3 +1,4 @@
+using System;
 using System.Windows;
 
 namespace LECG.Views.Base
@@ -39,6 +40,8 @@ namespace LECG.Views.Base
 
         public void SetOptions(string[] options)
         {
+            ArgumentNullException.ThrowIfNull(options);
+
             OptionsPanel.Visibility = Visibility.Visible;
 
             for (int i = 0; i < options.Length; i++)

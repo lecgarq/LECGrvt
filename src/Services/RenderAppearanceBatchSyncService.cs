@@ -42,6 +42,10 @@ namespace LECG.Services
             IEnumerable<Material> materials,
             IProgressReporter reporter)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(materials);
+            ArgumentNullException.ThrowIfNull(reporter);
+
             var matsList = materials.ToList();
             if (!matsList.Any()) return;
 

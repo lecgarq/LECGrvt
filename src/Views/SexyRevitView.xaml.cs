@@ -10,23 +10,7 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            BindAcceptedClose(vm);
-        }
-
-        // Keep event handlers for buttons if strictly necessary or map them to commands in XAML
-        // For now, simpler to map clicks to commands in code-behind if XAML isn't changed yet
-        // Bur for pure MVVM, we should use Command binding.
-        // Let's assume we update XAML to bind buttons, BUT since I can't easily change all XAML bindings at once safely
-        // without risk of breaking, I will rig the buttons here.
-
-        private void Apply_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            (DataContext as SexyRevitViewModel)?.ApplyCommand.Execute(null);
-        }
-
-        private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            (DataContext as SexyRevitViewModel)?.CancelCommand.Execute(null);
+            BindDialogClose(vm, () => vm.ShouldRun);
         }
     }
 }

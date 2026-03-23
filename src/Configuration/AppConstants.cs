@@ -6,7 +6,7 @@ namespace LECG.Configuration
     public static class AppConstants
     {
         public const string TabName = "LECG";
-        
+
         public static class Panels
         {
             public const string Home = "Home";
@@ -15,6 +15,7 @@ namespace LECG.Configuration
             public const string Toposolids = "Toposolids";
             public const string Visualization = "Visualization";
             public const string Align = "Align";
+            public const string ModelOrganization = "Model Organization";
         }
     }
 }

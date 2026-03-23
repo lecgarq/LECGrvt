@@ -24,6 +24,8 @@ Current status:
 - Errors: `0`.
 - Tests: passing (`LECG.Tests`).
 - Nullable warnings (CS86xx): none in current build.
+- Active planning canon: `.planning/`.
+- Machine-readable summary: `docs/review/master-context.jsonl`.
 
 ## Quality Gates
 
@@ -46,6 +48,7 @@ Completed and stable:
 - Service interface consolidation:
   - Path: `src/Services/Interfaces/`
   - Namespace: `LECG.Services.Interfaces`
+- Command entrypoints standardized on `RevitCommand` / `ExternalEventCommand` for production flows.
 - Build artifact hygiene (`bin/`, `obj/`, `build_logs/` ignored).
 - Large-service decomposition completed under P5 slices.
 - Static analysis and CI enforcement enabled.

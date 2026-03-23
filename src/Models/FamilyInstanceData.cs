@@ -9,12 +9,12 @@ namespace LECG.Models
     /// </summary>
     public class FamilyInstanceData
     {
-        public XYZ LocationPoint { get; private set; }
+        public XYZ? LocationPoint { get; private set; }
         public Curve? LocationCurve { get; private set; }
         public double Rotation { get; private set; }
         public bool IsHandFlipped { get; private set; }
         public bool IsFacingFlipped { get; private set; }
-        public ElementId LevelId { get; private set; }
+        public ElementId LevelId { get; private set; } = ElementId.InvalidElementId;
         public ElementId? HostId { get; private set; }
         public Dictionary<string, object?> Parameters { get; } = new();
 

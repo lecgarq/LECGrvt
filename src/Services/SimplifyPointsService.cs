@@ -3,6 +3,7 @@ using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -15,11 +16,6 @@ namespace LECG.Services
             _transactionService = transactionService;
         }
 
-        public void SimplifyPoints(Document doc, IEnumerable<Element> elements, Action<double, string> progressCallback, Action<string> logCallback)
-        {
-            SimplifyPoints(doc, elements, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
         public void SimplifyPoints(Document doc, IEnumerable<Element> elements, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
@@ -28,55 +24,89 @@ namespace LECG.Services
 
             int successCount = 0;
             int totalPointsDeleted = 0;
-            int current = 0;
-            int total = elements.Count();
+            var elementList = elements.ToList();
 
-            _transactionService.Run(doc, "Simplify Toposolid Points", currentDoc =>
+            for (int i = 0; i < elementList.Count; i++)
             {
-                foreach (Element elem in elements)
-                {
-                    current++;
-                    if (elem is Toposolid toposolid)
-                    {
-                        reporter.Report($"Processing {elem.Id}...", (double)current / total * 100);
-                        
-                        SlabShapeEditor editor = toposolid.GetSlabShapeEditor();
-                        if (editor != null)
-                        {
-                            if (!editor.IsEnabled) editor.Enable();
+                Element elem = elementList[i];
+                reporter.Report($"Processing {elem.Id}...", (double)(i + 1) / elementList.Count * 100);
 
-                            var vertices = editor.SlabShapeVertices.Cast<SlabShapeVertex>().ToList();
-                            if (vertices.Count > 0)
-                            {
-                                int initialCount = vertices.Count;
-                                int deletedForThis = 0;
-                                
-                                foreach (var v in vertices)
-                                {
-                                    try
-                                    {
-                                        editor.DeletePoint(v);
-                                        deletedForThis++;
-                                        totalPointsDeleted++;
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        reporter.LogWarning($"  Warning: Failed to delete point in ID {elem.Id}: {ex.Message}");
-                                    }
-                                }
-                                
-                                successCount++;
-                                reporter.Log($"  ID {elem.Id}: Removed {deletedForThis} of {initialCount} points.");
-                            }
-                        }
-                    }
+                SlabShapeEditor? editor = GetEditor(elem);
+                if (editor == null) continue;
+
+                int deletedForThis = DeleteAllDeletablePoints(doc, elem, editor, reporter);
+                totalPointsDeleted += deletedForThis;
+
+                if (deletedForThis >= 0)
+                {
+                    successCount++;
                 }
-            });
+            }
 
             reporter.Log("");
             reporter.Log("=== SUMMARY ===");
-            reporter.Log($"Toposolids processed: {successCount}");
+            reporter.Log($"Elements processed: {successCount}");
             reporter.Log($"Total points removed: {totalPointsDeleted}");
+        }
+
+        private int DeleteAllDeletablePoints(Document doc, Element elem, SlabShapeEditor editor, IProgressReporter reporter)
+        {
+            int initialCount = CountVertices(editor);
+            if (initialCount == 0) return 0;
+
+            int totalDeleted = 0;
+
+            _transactionService.Run(doc, $"Simplify Points - {elem.Id}", _ =>
+            {
+                if (!editor.IsEnabled) editor.Enable();
+
+                // Multi-pass: after each pass that deletes points, vertex references
+                // may become stale. Re-snapshot and retry until stable.
+                int deletedThisPass;
+                do
+                {
+                    deletedThisPass = 0;
+                    var vertices = editor.SlabShapeVertices.Cast<SlabShapeVertex>().ToList();
+
+                    foreach (var v in vertices)
+                    {
+                        try
+                        {
+                            editor.DeletePoint(v);
+                            deletedThisPass++;
+                        }
+                        catch (Exception ex) when (IsExpectedSimplifyPointsException(ex))
+                        {
+                            // Vertex protected by Revit — skip
+                        }
+                    }
+
+                    totalDeleted += deletedThisPass;
+                } while (deletedThisPass > 0);
+            });
+
+            int remaining = CountVertices(editor);
+            reporter.Log($"  ID {elem.Id}: {initialCount} points -> {remaining} remaining ({totalDeleted} removed).");
+            return totalDeleted;
+        }
+
+        private static SlabShapeEditor? GetEditor(Element elem)
+        {
+            if (elem is Toposolid t) return t.GetSlabShapeEditor();
+            if (elem is Floor f) return f.GetSlabShapeEditor();
+            return null;
+        }
+
+        private static int CountVertices(SlabShapeEditor editor)
+        {
+            return editor.SlabShapeVertices.Cast<SlabShapeVertex>().Count();
+        }
+
+        private static bool IsExpectedSimplifyPointsException(Exception ex)
+        {
+            return ex is ArgumentException
+                or InvalidOperationException
+                or RevitExceptions.InvalidOperationException;
         }
     }
 }

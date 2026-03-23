@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
@@ -13,11 +12,22 @@ namespace LECG.Commands
     {
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
             var sel = uiDoc.Selection.GetElementIds();
-            if(!sel.Any()) return;
+            ElementId selectedId = ElementId.InvalidElementId;
+            foreach (ElementId elementId in sel)
+            {
+                selectedId = elementId;
+                break;
+            }
 
-            Element el = doc.GetElement(sel.First());
+            if (selectedId == ElementId.InvalidElementId) return;
+
+            Element? el = doc.GetElement(selectedId);
+            if (el == null) return;
             int count = 0;
 
             transactionService.Run(doc, "Harvest Solid", _ =>

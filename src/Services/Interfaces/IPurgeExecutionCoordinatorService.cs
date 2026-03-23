@@ -5,7 +5,7 @@ namespace LECG.Services.Interfaces
 {
     public interface IPurgeExecutionCoordinatorService
     {
-        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) Execute(
+        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted, int groupsDeleted, int gridTypesDeleted, int levelTypesDeleted, int constraintsDeleted, int unplacedRoomsDeleted, int viewTemplatesDeleted, int viewFiltersDeleted) Execute(
             Document doc,
             int passCount,
             bool lineStyles,
@@ -14,9 +14,16 @@ namespace LECG.Services.Interfaces
             bool materials,
             bool levels,
             bool parameters,
+            bool groups,
+            bool gridTypes,
+            bool levelTypes,
+            bool constraints,
+            bool unplacedRooms,
+            bool viewTemplates,
+            bool viewFilters,
             IProgressReporter reporter);
 
-        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) Execute(
+        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted, int groupsDeleted, int gridTypesDeleted, int levelTypesDeleted, int constraintsDeleted, int unplacedRoomsDeleted, int viewTemplatesDeleted, int viewFiltersDeleted) Execute(
             Document doc,
             int passCount,
             bool lineStyles,
@@ -25,6 +32,13 @@ namespace LECG.Services.Interfaces
             bool materials,
             bool levels,
             bool parameters,
+            bool groups,
+            bool gridTypes,
+            bool levelTypes,
+            bool constraints,
+            bool unplacedRooms,
+            bool viewTemplates,
+            bool viewFilters,
             Action<string> logCallback,
             Action<double, string> progressCallback);
     }

@@ -12,13 +12,13 @@ namespace LECG.Services.Interfaces
     {
         List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters);
         List<string> GetUniqueCategories(List<ElementData> elements);
-        
+
         /// <summary>
         /// Proxies the preview processing search logic. Supports cancellation.
         /// </summary>
         List<ReplaceItem> ProcessPreview(
-            List<ElementData> candidates, 
-            SearchCriteria criteria, 
+            List<ElementData> candidates,
+            SearchCriteria criteria,
             RenameRuleContext context,
             CancellationToken ct = default);
 

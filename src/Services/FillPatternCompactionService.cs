@@ -6,26 +6,13 @@ using Autodesk.Revit.DB;
 using LECG.Configuration;
 using LECG.Models;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public class FillPatternCompactionService : IFillPatternCompactionService
     {
         private const string CanonicalPrefix = "LECG-FP-";
-
-        private static readonly HashSet<ViewType> SupportedViewTypes = new HashSet<ViewType>
-        {
-            ViewType.FloorPlan,
-            ViewType.CeilingPlan,
-            ViewType.Elevation,
-            ViewType.Section,
-            ViewType.Detail,
-            ViewType.ThreeD,
-            ViewType.DraftingView,
-            ViewType.Legend,
-            ViewType.AreaPlan,
-            ViewType.EngineeringPlan,
-        };
 
         public FillPatternCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
@@ -43,11 +30,7 @@ namespace LECG.Services
 
             var result = new FillPatternCompactionResult();
             List<FillPatternCandidate> candidates = CollectCandidates(doc);
-            List<IGrouping<string, FillPatternCandidate>> duplicateGroups = candidates
-                .GroupBy(candidate => candidate.Signature)
-                .Where(group => group.Count() > 1)
-                .OrderBy(group => group.Key, StringComparer.Ordinal)
-                .ToList();
+            List<IGrouping<string, FillPatternCandidate>> duplicateGroups = BuildDuplicateGroups(candidates);
 
             result.DuplicateGroups = duplicateGroups.Count;
 
@@ -63,65 +46,25 @@ namespace LECG.Services
                 return result;
             }
 
-            IReadOnlyList<Material> materials = context.Materials;
-            IReadOnlyList<FilledRegionType> filledRegionTypes = context.FilledRegionTypes;
-            IReadOnlyList<View> views = context.Views;
-            IReadOnlyList<Category> categories = context.Categories;
+            FillPatternCompactionIndexes indexes = BuildCompactionIndexes(doc, context, duplicateGroups, logCallback, progressCallback);
+            HashSet<string> existingNames = indexes.ExistingNames;
 
-            // Collect all source IDs that might be referenced
-            var allSourceIds = new HashSet<ElementId>(duplicateGroups.SelectMany(g => g).Select(c => c.Id));
-
-            Dictionary<ElementId, List<(Material Material, FillPatternReferenceSlot Slot)>> materialIndex =
-                BuildMaterialPatternIndex(materials, allSourceIds);
-
-            Dictionary<ElementId, List<(FilledRegionType RegionType, FillPatternReferenceSlot Slot)>> filledRegionIndex =
-                BuildFilledRegionPatternIndex(filledRegionTypes, allSourceIds);
-
-            Dictionary<ElementId, HashSet<ElementId>> paramIndex = context.ParameterIndex;
-
-            // Build reverse index for view category overrides
-            logCallback?.Invoke("Building view override index...");
-            Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCatIndex =
-                BuildViewCategoryOverrideIndex(views, categories, allSourceIds, progressCallback,
-                    (overrides, id) =>
-                        overrides.SurfaceForegroundPatternId == id ||
-                        overrides.SurfaceBackgroundPatternId == id ||
-                        overrides.CutForegroundPatternId == id ||
-                        overrides.CutBackgroundPatternId == id);
-
-            // Build reverse index for view filter overrides
-            Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex =
-                BuildViewFilterOverrideIndex(views, allSourceIds,
-                    (overrides, id) =>
-                        overrides.SurfaceForegroundPatternId == id ||
-                        overrides.SurfaceBackgroundPatternId == id ||
-                        overrides.CutForegroundPatternId == id ||
-                        overrides.CutBackgroundPatternId == id);
-
-            // Build HashSet of existing fill pattern names
-            HashSet<string> existingNames = new HashSet<string>(
-                new FilteredElementCollector(doc)
-                    .OfClass(typeof(FillPatternElement))
-                    .Cast<FillPatternElement>()
-                    .Select(p => p.Name),
-                StringComparer.OrdinalIgnoreCase);
-
-            // Two-phase: rewire all groups, then single Regenerate + delete
             int nextCanonicalIndex = 1;
-            var groupData = new List<(string CanonicalName, ElementId CanonicalId, IGrouping<string, FillPatternCandidate> Group)>();
+            var groupsToDelete = new List<IGrouping<string, FillPatternCandidate>>();
 
             for (int groupIndex = 0; groupIndex < duplicateGroups.Count; groupIndex++)
             {
                 IGrouping<string, FillPatternCandidate> group = duplicateGroups[groupIndex];
+                string logHeader = CreateGroupLogHeader(groupIndex, group);
                 FillPatternCandidate seed = group.First();
-                string canonicalName = CreateCanonicalName(existingNames, ref nextCanonicalIndex);
+                string canonicalName = CompactionSharedHelper.CreateCanonicalName(CanonicalPrefix, existingNames, ref nextCanonicalIndex);
 
                 FillPatternElement? canonical;
                 try
                 {
                     canonical = CreateCanonicalPattern(doc, seed.Element, canonicalName);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedFillPatternCompactionException(ex))
                 {
                     logCallback?.Invoke("");
                     logCallback?.Invoke($"Group {groupIndex + 1}: {string.Join(", ", group.Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal))}");
@@ -129,52 +72,14 @@ namespace LECG.Services
                     continue;
                 }
 
-                result.CanonicalPatternsCreated++;
-                result.CreatedCanonicalNames.Add(canonicalName);
+                RecordCanonicalPatternCreation(result, canonicalName, logHeader, logCallback);
 
-                logCallback?.Invoke("");
-                logCallback?.Invoke($"Group {groupIndex + 1}: {string.Join(", ", group.Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal))}");
-                logCallback?.Invoke($"  Created canonical: {canonicalName}");
+                RewireGroupReferences(doc, group, groupIndex, duplicateGroups.Count, canonical.Id, indexes, result, logCallback, progressCallback);
 
-                int originalIndex = 0;
-                foreach (FillPatternCandidate original in group)
-                {
-                    int rewired = RewireReferences(
-                        doc,
-                        original.Id,
-                        canonical.Id,
-                        materialIndex,
-                        filledRegionIndex,
-                        paramIndex,
-                        viewCatIndex,
-                        viewFilterIndex);
-                    result.ReferencesRewired += rewired;
-                    logCallback?.Invoke($"  Rewired from '{original.Name}': {rewired} reachable references");
-
-                    originalIndex++;
-                    double groupProgress = (groupIndex + (originalIndex / (double)group.Count())) / duplicateGroups.Count * 100d;
-                    progressCallback?.Invoke(Math.Round(groupProgress, 0),
-                        $"Compacting group {groupIndex + 1} of {duplicateGroups.Count} ({originalIndex}/{group.Count()})");
-                }
-
-                groupData.Add((canonicalName, canonical.Id, group));
+                groupsToDelete.Add(group);
             }
 
-            foreach (var (canonicalName, canonicalId, group) in groupData)
-            {
-                foreach (FillPatternCandidate original in group)
-                {
-                    if (TryDeletePattern(doc, original.Id))
-                    {
-                        result.OriginalPatternsDeleted++;
-                        logCallback?.Invoke($"  Deleted original: {original.Name}");
-                        continue;
-                    }
-
-                    result.BlockedDeletions.Add(original.Name);
-                    logCallback?.Invoke($"  Could not delete original: {original.Name}");
-                }
-            }
+            DeleteOriginalPatterns(doc, groupsToDelete, result, logCallback);
 
             progressCallback?.Invoke(100, "Fill pattern compaction complete");
             logCallback?.Invoke("");
@@ -188,180 +93,58 @@ namespace LECG.Services
             return result;
         }
 
-        private static Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> BuildParamIndex(
-            IReadOnlyList<Element> instanceElements,
-            IReadOnlyList<Element> typeElements,
+        private static string CreateGroupLogHeader(int groupIndex, IGrouping<string, FillPatternCandidate> group)
+        {
+            return $"Group {groupIndex + 1}: {string.Join(", ", group.Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal))}";
+        }
+
+        private static void RecordCanonicalPatternCreation(
+            FillPatternCompactionResult result,
+            string canonicalName,
+            string logHeader,
+            Action<string>? logCallback)
+        {
+            result.CanonicalPatternsCreated++;
+            result.CreatedCanonicalNames.Add(canonicalName);
+
+            logCallback?.Invoke("");
+            logCallback?.Invoke(logHeader);
+            logCallback?.Invoke($"  Created canonical: {canonicalName}");
+        }
+
+        private static void RewireGroupReferences(
+            Document doc,
+            IGrouping<string, FillPatternCandidate> group,
+            int groupIndex,
+            int totalGroupCount,
+            ElementId canonicalId,
+            FillPatternCompactionIndexes indexes,
+            FillPatternCompactionResult result,
+            Action<string>? logCallback,
             Action<double, string>? progressCallback)
         {
-            var index = new Dictionary<ElementId, List<(Element, Parameter)>>();
-            int total = instanceElements.Count + typeElements.Count;
-            int processed = 0;
-
-            void IndexElements(IReadOnlyList<Element> elements)
+            int originalIndex = 0;
+            int groupCount = group.Count();
+            foreach (FillPatternCandidate original in group)
             {
-                foreach (Element element in elements)
-                {
-                    if (element == null || !element.IsValidObject)
-                    {
-                        processed++;
-                        continue;
-                    }
+                int rewired = RewireReferences(
+                    doc,
+                    original.Id,
+                    canonicalId,
+                    indexes.MaterialIndex,
+                    indexes.FilledRegionIndex,
+                    indexes.ParameterIndex,
+                    indexes.ViewCategoryIndex,
+                    indexes.ViewFilterIndex);
+                result.ReferencesRewired += rewired;
+                logCallback?.Invoke($"  Rewired from '{original.Name}': {rewired} reachable references");
 
-                    foreach (Parameter parameter in element.Parameters)
-                    {
-                        if (parameter.IsReadOnly || parameter.StorageType != StorageType.ElementId)
-                        {
-                            continue;
-                        }
-
-                        ElementId value = parameter.AsElementId();
-                        if (value == ElementId.InvalidElementId)
-                        {
-                            continue;
-                        }
-
-                        if (!index.TryGetValue(value, out List<(Element, Parameter)>? list))
-                        {
-                            list = new List<(Element, Parameter)>();
-                            index[value] = list;
-                        }
-
-                        list.Add((element, parameter));
-                    }
-
-                    processed++;
-                    if (processed % 5000 == 0)
-                    {
-                        progressCallback?.Invoke(0, $"Indexing parameters... {processed}/{total}");
-                    }
-                }
+                originalIndex++;
+                double groupProgress = (groupIndex + (originalIndex / (double)groupCount)) / totalGroupCount * 100d;
+                progressCallback?.Invoke(
+                    Math.Round(groupProgress, 0),
+                    $"Compacting group {groupIndex + 1} of {totalGroupCount} ({originalIndex}/{groupCount})");
             }
-
-            IndexElements(instanceElements);
-            IndexElements(typeElements);
-            return index;
-        }
-
-        private static Dictionary<ElementId, List<(View View, ElementId CategoryId)>> BuildViewCategoryOverrideIndex(
-            IReadOnlyList<View> views,
-            IReadOnlyList<Category> categories,
-            HashSet<ElementId> sourceIds,
-            Action<double, string>? progressCallback,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny)
-        {
-            var index = new Dictionary<ElementId, List<(View, ElementId)>>();
-            int viewCount = 0;
-
-            foreach (View view in views)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                viewCount++;
-                if (viewCount % 50 == 0)
-                {
-                    progressCallback?.Invoke(0, $"Indexing view overrides... {viewCount}/{views.Count}");
-                }
-
-                try
-                {
-                    foreach (Category category in categories)
-                    {
-                        IndexSingleCategoryOverride(view, category.Id, sourceIds, matchesAny, index);
-
-                        foreach (Category subCategory in category.SubCategories)
-                        {
-                            IndexSingleCategoryOverride(view, subCategory.Id, sourceIds, matchesAny, index);
-                        }
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            return index;
-        }
-
-        private static void IndexSingleCategoryOverride(
-            View view,
-            ElementId categoryId,
-            HashSet<ElementId> sourceIds,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny,
-            Dictionary<ElementId, List<(View, ElementId)>> index)
-        {
-            try
-            {
-                OverrideGraphicSettings overrides = view.GetCategoryOverrides(categoryId);
-
-                foreach (ElementId sourceId in EnumerateFillPatternIds(overrides))
-                {
-                    if (sourceIds.Contains(sourceId) && matchesAny(overrides, sourceId))
-                    {
-                        if (!index.TryGetValue(sourceId, out List<(View, ElementId)>? list))
-                        {
-                            list = new List<(View, ElementId)>();
-                            index[sourceId] = list;
-                        }
-
-                        list.Add((view, categoryId));
-                        break;
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        private static Dictionary<ElementId, List<(View View, ElementId FilterId)>> BuildViewFilterOverrideIndex(
-            IReadOnlyList<View> views,
-            HashSet<ElementId> sourceIds,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny)
-        {
-            var index = new Dictionary<ElementId, List<(View, ElementId)>>();
-
-            foreach (View view in views)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                ICollection<ElementId> filterIds;
-                try { filterIds = view.GetFilters(); }
-                catch { continue; }
-
-                foreach (ElementId filterId in filterIds)
-                {
-                    try
-                    {
-                        OverrideGraphicSettings overrides = view.GetFilterOverrides(filterId);
-
-                        foreach (ElementId sourceId in EnumerateFillPatternIds(overrides))
-                        {
-                            if (sourceIds.Contains(sourceId) && matchesAny(overrides, sourceId))
-                            {
-                                if (!index.TryGetValue(sourceId, out List<(View, ElementId)>? list))
-                                {
-                                    list = new List<(View, ElementId)>();
-                                    index[sourceId] = list;
-                                }
-
-                                list.Add((view, filterId));
-                                break;
-                            }
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-
-            return index;
         }
 
         private static List<FillPatternCandidate> CollectCandidates(Document doc)
@@ -383,6 +166,80 @@ namespace LECG.Services
                     BuildSignature(item.Pattern!)))
                 .Where(candidate => !string.IsNullOrWhiteSpace(candidate.Signature))
                 .ToList();
+        }
+
+        private static List<IGrouping<string, FillPatternCandidate>> BuildDuplicateGroups(List<FillPatternCandidate> candidates)
+        {
+            return candidates
+                .GroupBy(candidate => candidate.Signature)
+                .Where(group => group.Count() > 1)
+                .OrderBy(group => group.Key, StringComparer.Ordinal)
+                .ToList();
+        }
+
+        private static FillPatternCompactionIndexes BuildCompactionIndexes(
+            Document doc,
+            CompactingStylesContext context,
+            List<IGrouping<string, FillPatternCandidate>> duplicateGroups,
+            Action<string>? logCallback,
+            Action<double, string>? progressCallback)
+        {
+            IReadOnlyList<Material> materials = context.Materials;
+            IReadOnlyList<FilledRegionType> filledRegionTypes = context.FilledRegionTypes;
+            IReadOnlyList<View> views = context.Views;
+            IReadOnlyList<Category> categories = context.Categories;
+            HashSet<ElementId> allSourceIds = new HashSet<ElementId>(duplicateGroups.SelectMany(g => g).Select(c => c.Id));
+
+            Dictionary<ElementId, List<(Material Material, FillPatternReferenceSlot Slot)>> materialIndex =
+                BuildMaterialPatternIndex(materials, allSourceIds);
+
+            Dictionary<ElementId, List<(FilledRegionType RegionType, FillPatternReferenceSlot Slot)>> filledRegionIndex =
+                BuildFilledRegionPatternIndex(filledRegionTypes, allSourceIds);
+
+            logCallback?.Invoke("Building view override index...");
+            Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCategoryIndex =
+                CompactionSharedHelper.BuildViewCategoryOverrideIndex(views, categories, allSourceIds, progressCallback, EnumerateFillPatternIds);
+
+            Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex =
+                CompactionSharedHelper.BuildViewFilterOverrideIndex(views, allSourceIds, EnumerateFillPatternIds);
+
+            HashSet<string> existingNames = new HashSet<string>(
+                new FilteredElementCollector(doc)
+                    .OfClass(typeof(FillPatternElement))
+                    .Cast<FillPatternElement>()
+                    .Select(p => p.Name),
+                StringComparer.OrdinalIgnoreCase);
+
+            return new FillPatternCompactionIndexes(
+                materialIndex,
+                filledRegionIndex,
+                context.ParameterIndex,
+                viewCategoryIndex,
+                viewFilterIndex,
+                existingNames);
+        }
+
+        private static void DeleteOriginalPatterns(
+            Document doc,
+            IEnumerable<IEnumerable<FillPatternCandidate>> groupsToDelete,
+            FillPatternCompactionResult result,
+            Action<string>? logCallback)
+        {
+            foreach (IEnumerable<FillPatternCandidate> group in groupsToDelete)
+            {
+                foreach (FillPatternCandidate original in group)
+                {
+                    if (CompactionSharedHelper.TryDeleteElement(doc, original.Id))
+                    {
+                        result.OriginalPatternsDeleted++;
+                        logCallback?.Invoke($"  Deleted original: {original.Name}");
+                        continue;
+                    }
+
+                    result.BlockedDeletions.Add(original.Name);
+                    logCallback?.Invoke($"  Could not delete original: {original.Name}");
+                }
+            }
         }
 
         private static string BuildSignature(FillPattern pattern)
@@ -419,20 +276,6 @@ namespace LECG.Services
             return FillPatternElement.Create(doc, fillPattern);
         }
 
-        private static string CreateCanonicalName(HashSet<string> existingNames, ref int nextCanonicalIndex)
-        {
-            while (true)
-            {
-                string candidate = $"{CanonicalPrefix}{nextCanonicalIndex:000}";
-                nextCanonicalIndex++;
-
-                if (existingNames.Add(candidate))
-                {
-                    return candidate;
-                }
-            }
-        }
-
         private static int RewireReferences(
             Document doc,
             ElementId sourceId,
@@ -451,9 +294,9 @@ namespace LECG.Services
             int rewired = 0;
             rewired += RewireMaterialReferencesFromIndex(materialIndex, sourceId, targetId);
             rewired += RewireFilledRegionTypeReferencesFromIndex(filledRegionIndex, sourceId, targetId);
-            rewired += RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
-            rewired += RewireViewCategoryOverridesFromIndex(viewCatIndex, sourceId, targetId);
-            rewired += RewireViewFilterOverridesFromIndex(viewFilterIndex, sourceId, targetId);
+            rewired += CompactionSharedHelper.RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
+            rewired += CompactionSharedHelper.RewireViewCategoryOverridesFromIndex(viewCatIndex, sourceId, targetId, RewriteFillPatternOverrides);
+            rewired += CompactionSharedHelper.RewireViewFilterOverridesFromIndex(viewFilterIndex, sourceId, targetId, RewriteFillPatternOverrides);
             return rewired;
         }
 
@@ -587,199 +430,35 @@ namespace LECG.Services
             return rewired;
         }
 
-        private static int RewireParameterReferencesFromIndex(
-            Document doc,
-            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
-            ElementId sourceId,
-            ElementId targetId)
+        private static int RewriteFillPatternOverrides(OverrideGraphicSettings overrides, ElementId sourceId, ElementId targetId)
         {
-            if (!paramIndex.TryGetValue(sourceId, out HashSet<ElementId>? elementIds))
+            int changed = 0;
+
+            if (overrides.SurfaceForegroundPatternId == sourceId)
             {
-                return 0;
+                overrides.SetSurfaceForegroundPatternId(targetId);
+                changed++;
             }
 
-            int rewired = 0;
-            var movedToTarget = new HashSet<ElementId>();
-
-            foreach (ElementId elementId in elementIds)
+            if (overrides.SurfaceBackgroundPatternId == sourceId)
             {
-                try
-                {
-                    Element? element = doc.GetElement(elementId);
-                    if (element == null || !element.IsValidObject) continue;
-
-                    foreach (Parameter param in element.Parameters)
-                    {
-                        if (param.IsReadOnly || param.StorageType != StorageType.ElementId) continue;
-                        try
-                        {
-                            if (!param.HasValue) continue;
-                            if (param.AsElementId() == sourceId)
-                            {
-                                param.Set(targetId);
-                                rewired++;
-                                movedToTarget.Add(elementId);
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                catch { }
+                overrides.SetSurfaceBackgroundPatternId(targetId);
+                changed++;
             }
 
-            paramIndex.Remove(sourceId);
-
-            if (movedToTarget.Count > 0)
+            if (overrides.CutForegroundPatternId == sourceId)
             {
-                if (!paramIndex.TryGetValue(targetId, out HashSet<ElementId>? targetSet))
-                {
-                    targetSet = new HashSet<ElementId>();
-                    paramIndex[targetId] = targetSet;
-                }
-
-                targetSet.UnionWith(movedToTarget);
+                overrides.SetCutForegroundPatternId(targetId);
+                changed++;
             }
 
-            return rewired;
-        }
-
-        private static int RewireViewCategoryOverridesFromIndex(
-            Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCatIndex,
-            ElementId sourceId,
-            ElementId targetId)
-        {
-            if (!viewCatIndex.TryGetValue(sourceId, out List<(View View, ElementId CategoryId)>? entries))
+            if (overrides.CutBackgroundPatternId == sourceId)
             {
-                return 0;
+                overrides.SetCutBackgroundPatternId(targetId);
+                changed++;
             }
 
-            int rewired = 0;
-
-            foreach (var (view, categoryId) in entries)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    OverrideGraphicSettings overrides = view.GetCategoryOverrides(categoryId);
-                    int changed = 0;
-
-                    if (overrides.SurfaceForegroundPatternId == sourceId)
-                    {
-                        overrides.SetSurfaceForegroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.SurfaceBackgroundPatternId == sourceId)
-                    {
-                        overrides.SetSurfaceBackgroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.CutForegroundPatternId == sourceId)
-                    {
-                        overrides.SetCutForegroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.CutBackgroundPatternId == sourceId)
-                    {
-                        overrides.SetCutBackgroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (changed > 0)
-                    {
-                        view.SetCategoryOverrides(categoryId, overrides);
-                        rewired += changed;
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            viewCatIndex.Remove(sourceId);
-            return rewired;
-        }
-
-        private static int RewireViewFilterOverridesFromIndex(
-            Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex,
-            ElementId sourceId,
-            ElementId targetId)
-        {
-            if (!viewFilterIndex.TryGetValue(sourceId, out List<(View View, ElementId FilterId)>? entries))
-            {
-                return 0;
-            }
-
-            int rewired = 0;
-
-            foreach (var (view, filterId) in entries)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    OverrideGraphicSettings overrides = view.GetFilterOverrides(filterId);
-                    int changed = 0;
-
-                    if (overrides.SurfaceForegroundPatternId == sourceId)
-                    {
-                        overrides.SetSurfaceForegroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.SurfaceBackgroundPatternId == sourceId)
-                    {
-                        overrides.SetSurfaceBackgroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.CutForegroundPatternId == sourceId)
-                    {
-                        overrides.SetCutForegroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.CutBackgroundPatternId == sourceId)
-                    {
-                        overrides.SetCutBackgroundPatternId(targetId);
-                        changed++;
-                    }
-
-                    if (changed > 0)
-                    {
-                        view.SetFilterOverrides(filterId, overrides);
-                        rewired += changed;
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            viewFilterIndex.Remove(sourceId);
-            return rewired;
-        }
-
-        private static bool TryDeletePattern(Document doc, ElementId patternId)
-        {
-            try
-            {
-                ICollection<ElementId> deletedIds = doc.Delete(patternId);
-                return deletedIds.Count > 0;
-            }
-            catch
-            {
-                return false;
-            }
+            return changed;
         }
 
         private static void IndexFillPatternReference<TElement>(
@@ -875,6 +554,39 @@ namespace LECG.Services
             {
                 yield return cutBackgroundId;
             }
+        }
+
+        private static bool IsExpectedFillPatternCompactionException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
+
+        private sealed class FillPatternCompactionIndexes
+        {
+            public FillPatternCompactionIndexes(
+                Dictionary<ElementId, List<(Material Material, FillPatternReferenceSlot Slot)>> materialIndex,
+                Dictionary<ElementId, List<(FilledRegionType RegionType, FillPatternReferenceSlot Slot)>> filledRegionIndex,
+                Dictionary<ElementId, HashSet<ElementId>> parameterIndex,
+                Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCategoryIndex,
+                Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex,
+                HashSet<string> existingNames)
+            {
+                MaterialIndex = materialIndex;
+                FilledRegionIndex = filledRegionIndex;
+                ParameterIndex = parameterIndex;
+                ViewCategoryIndex = viewCategoryIndex;
+                ViewFilterIndex = viewFilterIndex;
+                ExistingNames = existingNames;
+            }
+
+            public Dictionary<ElementId, List<(Material Material, FillPatternReferenceSlot Slot)>> MaterialIndex { get; }
+            public Dictionary<ElementId, List<(FilledRegionType RegionType, FillPatternReferenceSlot Slot)>> FilledRegionIndex { get; }
+            public Dictionary<ElementId, HashSet<ElementId>> ParameterIndex { get; }
+            public Dictionary<ElementId, List<(View View, ElementId CategoryId)>> ViewCategoryIndex { get; }
+            public Dictionary<ElementId, List<(View View, ElementId FilterId)>> ViewFilterIndex { get; }
+            public HashSet<string> ExistingNames { get; }
         }
 
         private sealed class FillPatternCandidate

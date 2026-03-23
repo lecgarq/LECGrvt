@@ -8,8 +8,8 @@ namespace LECG.Core
 {
     public interface ISelectionCoordinator
     {
-        IList<Reference> PickObjects(Window owner, UIDocument uiDoc, ObjectType objectType, ISelectionFilter? filter, string prompt);
+        IList<Reference> PickObjects(Window owner, UIDocument uiDoc, ObjectType objectType, ISelectionFilter? filter, string prompt, bool restoreModalState = true);
 
-        Reference? PickObject(Window owner, UIDocument uiDoc, ObjectType objectType, ISelectionFilter? filter, string prompt);
+        Reference? PickObject(Window owner, UIDocument uiDoc, ObjectType objectType, ISelectionFilter? filter, string prompt, bool restoreModalState = true);
     }
 }

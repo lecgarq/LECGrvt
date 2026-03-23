@@ -2,7 +2,9 @@
 
 ## Status
 
-The original roadmap is complete. Phases P1 through P9 are done for the Revit 2026 target.
+The original refactoring roadmap is complete. Phases P1 through P9 are done for the Revit 2026 target.
+
+Active milestone planning no longer lives in this document. Use `.planning/ROADMAP.md` and `.planning/STATE.md` for current project execution state.
 
 ## Completed Outcomes
 
@@ -46,6 +48,12 @@ The original roadmap is complete. Phases P1 through P9 are done for the Revit 20
 ### P9: Architecture Documentation
 
 - Review docs and operational docs are in place under `docs/review/`.
+
+## Canonical Project State
+
+- `docs/review/` is the maintained architecture and operations review set.
+- `.planning/` is the live roadmap, requirements, and session-state source.
+- Legacy `.gsd` project state is compatibility-only and not an active planning authority.
 
 ## Final CI Decision
 

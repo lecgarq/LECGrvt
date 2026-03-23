@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -10,9 +11,7 @@ namespace LECG.Services
     {
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLinePatternService(
-            IPurgeReferenceScannerService referenceScanner,
-            IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeLinePatternService(IPurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
         }
@@ -44,6 +43,14 @@ namespace LECG.Services
             var validIds = new HashSet<ElementId>(allPatterns.Keys);
             var usedIds = new HashSet<ElementId>();
             foreach (ElementId referencedId in context.ParameterReferencedIds)
+            {
+                if (validIds.Contains(referencedId))
+                {
+                    usedIds.Add(referencedId);
+                }
+            }
+
+            foreach (ElementId referencedId in context.UsedLinePatternIds)
             {
                 if (validIds.Contains(referencedId))
                 {
@@ -115,8 +122,17 @@ namespace LECG.Services
             {
                 AddTrackedId(category.GetLinePatternId(styleType), validIds, usedIds);
             }
-            catch
+            catch (ArgumentException ex)
             {
+                Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] TryAddCategoryPattern: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] TryAddCategoryPattern: {ex.Message}");
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
+            {
+                Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] TryAddCategoryPattern: {ex.Message}");
             }
         }
 
@@ -134,8 +150,17 @@ namespace LECG.Services
                     AddTrackedId(overrides.ProjectionLinePatternId, validIds, usedIds);
                     AddTrackedId(overrides.CutLinePatternId, validIds, usedIds);
                 }
-                catch
+                catch (ArgumentException ex)
                 {
+                    Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] ScanViewCategoryOverrides: {ex.Message}");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] ScanViewCategoryOverrides: {ex.Message}");
+                }
+                catch (RevitExceptions.InvalidOperationException ex)
+                {
+                    Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] ScanViewCategoryOverrides: {ex.Message}");
                 }
             }
         }
@@ -150,8 +175,19 @@ namespace LECG.Services
             {
                 filterIds = view.GetFilters();
             }
-            catch
+            catch (ArgumentException ex)
             {
+                Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] GetFilters: {ex.Message}");
+                return;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] GetFilters: {ex.Message}");
+                return;
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
+            {
+                Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] GetFilters: {ex.Message}");
                 return;
             }
 
@@ -163,8 +199,17 @@ namespace LECG.Services
                     AddTrackedId(overrides.ProjectionLinePatternId, validIds, usedIds);
                     AddTrackedId(overrides.CutLinePatternId, validIds, usedIds);
                 }
-                catch
+                catch (ArgumentException ex)
                 {
+                    Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] ScanViewFilterOverrides: {ex.Message}");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] ScanViewFilterOverrides: {ex.Message}");
+                }
+                catch (RevitExceptions.InvalidOperationException ex)
+                {
+                    Logging.Logger.Instance.LogWarning($"[PurgeLinePatternService] ScanViewFilterOverrides: {ex.Message}");
                 }
             }
         }

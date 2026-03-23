@@ -27,12 +27,10 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             var service = ServiceLocator.GetRequiredService<ISearchReplaceService>();
-            var vm = ServiceLocator.GetRequiredService<SearchReplaceViewModel>();
-            
-            vm.Initialize(service, doc);
-
             var view = ServiceLocator.GetRequiredService<SearchReplaceView>();
-            view.DataContext = vm;
+            var vm = (SearchReplaceViewModel)view.DataContext;
+
+            vm.Initialize(service, doc);
             bool? result = view.ShowDialog();
 
             if (result == true && vm.ShouldRun)
@@ -40,6 +38,7 @@ namespace LECG.Commands
                 ShowLogWindow("Batch Rename");
                 var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
                 service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), Logger.Instance, reporter);
+                UpdateProgress(100, "Complete");
                 Log("Rename complete.");
             }
         }

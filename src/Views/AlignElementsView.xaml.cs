@@ -21,11 +21,12 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            
+
             BindDialogClose(vm, () => vm.ShouldRun);
 
             // 2. Reference Selection Request
-            vm.ReferenceSelection.OnRequestSelect += (s, e) => {
+            vm.ReferenceSelection.OnRequestSelect += (s, e) =>
+            {
                 if (UiDocument == null) return;
                 Reference? r = _selectionCoordinator.PickObject(
                     this,
@@ -40,7 +41,8 @@ namespace LECG.Views
             };
 
             // 3. Target Selection Request
-            vm.TargetSelection.OnRequestSelect += (s, e) => {
+            vm.TargetSelection.OnRequestSelect += (s, e) =>
+            {
                 if (UiDocument == null) return;
                 IList<Reference> refs = _selectionCoordinator.PickObjects(
                     this,

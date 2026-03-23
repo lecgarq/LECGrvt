@@ -5,9 +5,10 @@ namespace LECG.Services
 {
     public class PurgePassMessagingService : IPurgePassMessagingService
     {
-        public void LogPassStart(IProgressReporter reporter, int passIndex)
+        public void LogPassStart(IProgressReporter reporter, int passIndex, int totalPasses = 3)
         {
-            reporter.Log($"--- PASS {passIndex}/3 ---");
+            ArgumentNullException.ThrowIfNull(reporter);
+            reporter.Log($"--- PASS {passIndex}/{totalPasses} ---");
         }
 
         public void LogCategoryCheck(IProgressReporter reporter, int passIndex, string categoryLabel, double progressValue)
@@ -19,9 +20,9 @@ namespace LECG.Services
             reporter.Report($"Pass {passIndex}: Purging {categoryLabel.ToLower()}...", progressValue);
         }
 
-        public void LogPassStart(Action<string> logCallback, int passIndex)
+        public void LogPassStart(Action<string> logCallback, int passIndex, int totalPasses = 3)
         {
-            logCallback?.Invoke($"--- PASS {passIndex}/3 ---");
+            logCallback?.Invoke($"--- PASS {passIndex}/{totalPasses} ---");
         }
 
         public void LogCategoryCheck(Action<string> logCallback, Action<double, string> progressCallback, int passIndex, string categoryLabel, double progressValue)

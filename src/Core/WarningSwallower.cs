@@ -11,9 +11,11 @@ namespace LECG.Core
     {
         public FailureProcessingResult PreprocessFailures(FailuresAccessor failuresAccessor)
         {
+            ArgumentNullException.ThrowIfNull(failuresAccessor);
+
             IList<FailureMessageAccessor> fmas = failuresAccessor.GetFailureMessages();
             if (fmas.Count == 0) return FailureProcessingResult.Continue;
-            
+
             foreach (FailureMessageAccessor fma in fmas)
             {
                 FailureSeverity severity = fma.GetSeverity();

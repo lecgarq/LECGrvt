@@ -12,32 +12,30 @@ namespace LECG.ViewModels
         public SelectionViewModel TargetsSelection { get; } = new SelectionViewModel();
         public SelectionViewModel ReferenceSelection { get; } = new SelectionViewModel();
 
-        public bool CanRun => TargetsSelection.HasSelection && ReferenceSelection.HasSelection;
+        [ObservableProperty]
+        private bool _findMyEdge;
+
+        public bool CanRun => TargetsSelection.HasSelection && (FindMyEdge || ReferenceSelection.HasSelection);
+        public bool ShowReferenceSection => !FindMyEdge;
 
         public AlignEdgesViewModel()
         {
             Title = "ALIGN EDGES";
-            
-            TargetsSelection.ElementName = "Toposolids";
-            ReferenceSelection.ElementName = "Reference Surface";
+
+            TargetsSelection.ElementName = "Source slabs";
+            ReferenceSelection.ElementName = "Reference slabs";
 
             // Subscribe to children changes to update CanRun
             TargetsSelection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
             ReferenceSelection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 
-        public override void Apply()
+        partial void OnFindMyEdgeChanged(bool value)
         {
-            ShouldRun = true;
-            CloseAction?.Invoke();
+            OnPropertyChanged(nameof(CanRun));
+            OnPropertyChanged(nameof(ShowReferenceSection));
         }
 
-        public override void Cancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
-        }
-        
         // Helper for View to inject results
         public IList<Reference> TargetRefs { get; private set; } = new List<Reference>();
         public IList<Reference> ReferenceRefs { get; private set; } = new List<Reference>();
@@ -49,11 +47,11 @@ namespace LECG.ViewModels
             TargetsSelection.UpdateSelection(refs.Count);
         }
 
-        public void SetReference(Reference r)
+        public void SetReferences(IList<Reference> refs)
         {
-            ArgumentNullException.ThrowIfNull(r);
-            ReferenceRefs = new List<Reference> { r };
-            ReferenceSelection.UpdateSelection(1);
+            ArgumentNullException.ThrowIfNull(refs);
+            ReferenceRefs = refs;
+            ReferenceSelection.UpdateSelection(refs.Count);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace LECG.ViewModels
     public partial class AssignMaterialViewModel : BaseViewModel
     {
         private readonly IMaterialService _service;
-        
+
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public List<Reference> SelectedRefs { get; private set; } = new List<Reference>();
 

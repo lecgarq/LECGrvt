@@ -32,12 +32,12 @@ namespace LECG.Utils
         public static Geometry SearchReplace { get; } = Geometry.Parse("M14 14l5 5 M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M16 9l-3 3 3 3 M9 9h7");
         public static Geometry Palette { get; } = Geometry.Parse("M12 22C6.5 22 2 17.5 2 12S6.5 2 12 2s10 4.5 10 10c0 .9-.73 1.64-1.64 1.64H18.5c-.45 0-.83.38-.83.83 0 .22.09.41.24.56.14.15.24.43.24.72C18.15 20.37 15.52 22 12 22ZM12 4C7.58 4 4 7.58 4 12s3.58 8 8 8c.29 0 .5-.21.5-.5 0-.14-.05-.26-.14-.35-.12-.13-.36-.35-.36-.65 0-.45.38-.83.83-.83h1.53c3.05 0 5.52-2.47 5.52-5.52 0-1.46-.6-2.82-1.68-3.89C17 7.16 14.64 4 12 4Z M6.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M9 8.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M15 8.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z M17.5 13a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z");
         public static Geometry Layers { get; } = Geometry.Parse("m12 2 9 4.9V17L12 22 3 17V6.9l9-4.9z M3 6.9l9 4.9 9-4.9 M12 22V11.8");
-        
+
         // Align & Distribute
         public static Geometry AlignLeft { get; } = Geometry.Parse("M21 6H3 M17 12H3 M13 18H3"); // Just generic align lines
         public static Geometry AlignCenter { get; } = Geometry.Parse("M3 6h18 M7 12h10 M10 18h4");
         public static Geometry AlignRight { get; } = Geometry.Parse("M21 6H3 M21 12H7 M21 18H11");
-        
+
         // Command Specifics
         public static Geometry Simplify { get; } = Geometry.Parse("M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M12 10v4"); // Simple circle
         public static Geometry Contours { get; } = Geometry.Parse("M3 12h18 M3 6h18 M3 18h18"); // Lines

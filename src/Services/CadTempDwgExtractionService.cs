@@ -28,10 +28,11 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(templatePath);
             ArgumentNullException.ThrowIfNull(dwgPath);
+            ArgumentNullException.ThrowIfNull(reporter);
 
             reporter.Report("Initializing temporary document...", 5);
             Document tempDoc = doc.Application.NewFamilyDocument(templatePath);
-            CadData data = null!;
+            CadData? data = null;
 
             _transactionService.RunRollbackOnly(tempDoc, "Temp Import", _ =>
             {
@@ -69,7 +70,7 @@ namespace LECG.Services
 
             tempDoc.Close(false);
 
-            return data;
+            return data ?? throw new InvalidOperationException("DWG extraction completed without producing CAD geometry data.");
         }
     }
 }

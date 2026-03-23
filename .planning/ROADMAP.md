@@ -31,7 +31,7 @@ All 24 commands shipped covering purge, standards normalization, toposolid tools
   2. Outer boundary loops are counterclockwise and void loops are clockwise — `Floor.Create` and `Toposolid.Create` accept the output without `ArgumentException`
   3. `ISlabService.GetEditorVertexPositions(element)` returns a safe `List<XYZ>` snapshot before any modification — iterating the snapshot while modifying the editor does not throw
   4. Both services are registered in `Bootstrapper` and resolvable via `SimpleDi`
-**Plans**: TBD
+**Plans**: 1 implementation pass completed (2026-03-19)
 
 ### Phase 11: Conversion Pair (Floor to Toposolid and Toposolid to Floor)
 **Goal**: Users can convert Floors to Toposolids and Toposolids to Floors in batch, with all shape points, boundaries, and elevations intact
@@ -44,7 +44,7 @@ All 24 commands shipped covering purge, standards normalization, toposolid tools
   4. User can choose whether to delete each source element after a successful conversion, and the default is to delete
   5. The log shows per-element results with vertex count, destination type, and the reason for any element that was skipped
   6. The system auto-suggests a destination type whose name most closely matches the source type name
-**Plans**: TBD
+**Plans**: 1 implementation pass completed (2026-03-19)
 
 ### Phase 12: Fix Points
 **Goal**: Users can repair inconsistent edge and transition points on Floors and Toposolids without recreating elements
@@ -55,7 +55,7 @@ All 24 commands shipped covering purge, standards normalization, toposolid tools
   2. The system identifies vertices at edges or transition zones whose Z values deviate from the surrounding surface and flags them — only Interior-type vertices are candidates for deletion; Edge vertices are corrected via `ModifySubElement`
   3. After repair, flagged vertices match the Z interpolation of the surrounding surface — the element renders without triangulation spikes
   4. The log shows per-element results with vertex counts before and after, and the correction method applied to each modified point
-**Plans**: TBD
+**Plans**: 1 implementation pass completed (2026-03-19)
 
 ### Phase 13: Split Boundaries
 **Goal**: Users can separate a Floor or Toposolid that contains multiple boundaries into independent elements, each preserving its own geometry
@@ -66,7 +66,7 @@ All 24 commands shipped covering purge, standards normalization, toposolid tools
   2. After splitting, each resulting element has exactly one boundary and preserves the elevation, edited points, and geometric definition of that boundary from the original element
   3. The Toposolid path uses the native `Toposolid.Split` API and the Floor path recreates one element per loop — both paths preserve type, level, and height offset on each result
   4. The log shows per-element split results with input boundary count and output element IDs
-**Plans**: TBD
+**Plans**: 1 implementation pass completed (2026-03-19)
 
 ### Phase 14: Type to Linked Models
 **Goal**: Users can separate model content by element type into individual Revit files that link back into the host with shared coordinates
@@ -79,7 +79,7 @@ All 24 commands shipped covering purge, standards normalization, toposolid tools
   4. After export, each output file is linked back into the host model as a Revit reference at the correct position using shared coordinates
   5. The host model is cleaned of all exported geometry, leaving it as a coordination-only container
   6. The log shows per-type results with file path, element count copied, and link registration status
-**Plans**: TBD
+**Plans**: 1 implementation pass completed (2026-03-19)
 
 ## Progress
 
@@ -87,8 +87,8 @@ All 24 commands shipped covering purge, standards normalization, toposolid tools
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 10. Shared Foundation | v2.0 | 0/TBD | Not started | - |
-| 11. Conversion Pair | v2.0 | 0/TBD | Not started | - |
-| 12. Fix Points | v2.0 | 0/TBD | Not started | - |
-| 13. Split Boundaries | v2.0 | 0/TBD | Not started | - |
-| 14. Type to Linked Models | v2.0 | 0/TBD | Not started | - |
+| 10. Shared Foundation | v2.0 | 1/1 | Completed | 2026-03-19 |
+| 11. Conversion Pair | v2.0 | 1/1 | Completed | 2026-03-19 |
+| 12. Fix Points | v2.0 | 1/1 | Completed | 2026-03-19 |
+| 13. Split Boundaries | v2.0 | 1/1 | Completed | 2026-03-19 |
+| 14. Type to Linked Models | v2.0 | 1/1 | Completed | 2026-03-19 |

@@ -11,7 +11,7 @@ namespace LECG.Services
     {
         private readonly IPurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeFillPatternService(IPurgeReferenceScannerService referenceScanner, IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeFillPatternService(IPurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
         }

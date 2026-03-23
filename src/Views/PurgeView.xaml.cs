@@ -10,18 +10,7 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            BindAcceptedClose(vm);
-        }
-
-        private void Cancel_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            DialogResult = false;
-            Close();
-        }
-
-        private void Run_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            (DataContext as PurgeViewModel)?.ApplyCommand.Execute(null);
+            BindDialogClose(vm, () => vm.ShouldRun);
         }
     }
 }

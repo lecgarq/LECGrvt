@@ -14,7 +14,7 @@ namespace LECG.ViewModels
     {
         private Document? _doc;
         private readonly IChangeLevelService _service;
-        
+
         // Internal storage for elements to be processed
         private List<Element> _selectedElements = new List<Element>();
 
@@ -40,7 +40,7 @@ namespace LECG.ViewModels
         {
             _service = service;
             Title = "CHANGE LEVEL";
-            
+
             Selection.ElementName = "Toposolids";
             Selection.Filter = new SelectionFilters.ToposolidFilter(); // Depends on if this filter class is accessible
         }

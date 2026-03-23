@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:LECG.Controls"
     xmlns:local="clr-namespace:LECG.Views"
     xmlns:vm="clr-namespace:LECG.ViewModels"
+    xmlns:models="clr-namespace:LECG.Models"
     xmlns:services="clr-namespace:LECG.Services"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="BATCH RENAME" Width="680" Height="600" MinWidth="640" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.SearchReplace}">
@@ -29,9 +30,9 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Section 2 divider -->
             <!-- 2. SCOPE & FILTERS                                     -->
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Scope and filters -->
             <Border Grid.Row="0" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="4" Margin="16,10,16,8" Padding="16,14,16,14">
                 <Border.Effect>
                     <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="1" Opacity="0.03" Direction="270"/>
@@ -44,7 +45,7 @@
                         <!-- Filters -->
                     </Grid.RowDefinitions>
 
-                    <!-- â”€â”€ Scope Section â”€â”€ -->
+                    <!-- Scope section -->
                     <StackPanel Grid.Row="0">
                         <!-- Section Header with accent bar -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
@@ -66,7 +67,7 @@
                         </WrapPanel>
                     </StackPanel>
 
-                    <!-- â”€â”€ Filters Section â”€â”€ -->
+                    <!-- Filters section -->
                     <StackPanel Grid.Row="1" Margin="0,12,0,0">
                         <!-- Section Header -->
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
@@ -94,7 +95,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFilterType}" ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type vm:SearchFilterType}}}" Height="30" Width="110" VerticalContentAlignment="Center" Margin="0,0,5,0" Padding="5,0"/>
+                                    <ComboBox Grid.Column="0" SelectedItem="{Binding SelectedFilterType}" ItemsSource="{Binding Source={utils:EnumBindingSource {x:Type models:SearchFilterType}}}" Height="30" Width="110" VerticalContentAlignment="Center" Margin="0,0,5,0" Padding="5,0"/>
 
                                     <TextBox Grid.Column="1" Text="{Binding FilterName, UpdateSourceTrigger=PropertyChanged}" Height="30"/>
 
@@ -107,7 +108,7 @@
                                 <ComboBox ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding FilterCategory}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
                             </StackPanel>
 
-                            <!-- Advanced Filters â€” Parameters (only visible when Parameters scope active) -->
+                            <!-- Advanced filters - parameters -->
                             <Expander Grid.Row="1" Grid.ColumnSpan="3" Visibility="{Binding IsParameterScope, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
@@ -152,7 +153,7 @@
                                 </Grid>
                             </Expander>
 
-                            <!-- Advanced Filters â€” Views (only visible when Views scope active) -->
+                            <!-- Advanced filters - views -->
                             <Expander Grid.Row="1" Grid.ColumnSpan="3" Visibility="{Binding IsViewScope, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0">
                                 <Expander.Header>
                                     <StackPanel Orientation="Horizontal">
@@ -177,9 +178,9 @@
                 </Grid>
             </Border>
 
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Section 3 divider -->
             <!-- 3. OPERATIONS                                          -->
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Operations -->
             <Border Grid.Row="1" Background="Transparent" Margin="16,0,16,10">
                 <StackPanel>
                     <!-- Section Header -->
@@ -384,9 +385,9 @@
                 </StackPanel>
             </Border>
 
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Section 4 divider -->
             <!-- 4. PREVIEW / DATAGRID                                  -->
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Preview and data grid -->
             <Border Grid.Row="2" Background="{DynamicResource PanelBackgroundBrush}" CornerRadius="{DynamicResource ContentCornerRadius}" Margin="16,0,16,10" Padding="12" ClipToBounds="True">
                 <Border.Effect>
                     <DropShadowEffect Color="#000000" BlurRadius="8" ShadowDepth="1" Opacity="0.03" Direction="270"/>
@@ -440,9 +441,9 @@
                 </Grid>
             </Border>
 
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Section 5 divider -->
             <!-- 5. FOOTER                                              -->
-            <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+            <!-- Footer -->
             <Grid Grid.Row="3" Margin="16,0,16,16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>

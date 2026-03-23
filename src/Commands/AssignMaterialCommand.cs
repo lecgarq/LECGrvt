@@ -29,7 +29,14 @@ namespace LECG.Commands
 
             // 2. Initialize VM & View
             var vm = ServiceLocator.GetRequiredService<AssignMaterialViewModel>();
-            var view = ServiceLocator.GetRequiredService<AssignMaterialView>();
+            var preselectedRefs = SelectionSeedHelper.GetSelectedReferences(uiDoc, new SelectionFilters.MaterialHostFilter());
+            if (preselectedRefs.Count > 0)
+            {
+                vm.SetSelection(preselectedRefs);
+            }
+
+            // Pass VM explicitly so command and view share the same instance
+            var view = ServiceLocator.CreateWith<AssignMaterialView>(vm);
             view.Initialize(uiDoc);
 
             // 3. Show Dialog
@@ -39,7 +46,7 @@ namespace LECG.Commands
             if (result == true && vm.ShouldRun && vm.SelectedRefs.Any())
             {
                 ShowLogWindow("Assigning Materials...");
-                
+
                 // Convert References to Elements
                 List<Element> elements = vm.SelectedRefs
                     .Select(r => doc.GetElement(r))
@@ -49,7 +56,7 @@ namespace LECG.Commands
                 // Call Logic
                 var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
                 service.AssignMaterialsToElements(doc, elements, reporter);
-                //Log("DEBUG: Logic temporarily disabled for build test.");
+                UpdateProgress(100, "Complete");
             }
         }
     }

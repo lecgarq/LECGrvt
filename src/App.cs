@@ -3,8 +3,10 @@ using LECG.Configuration;
 using LECG.Core.Ribbon;
 using LECG.Utils;
 using LECG.Views.Base;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Windows.Markup;
 
 namespace LECG
 {
@@ -45,6 +47,7 @@ namespace LECG
 
         public Result OnShutdown(UIControlledApplication application)
         {
+            Core.Bootstrapper.Shutdown();
             return Result.Succeeded;
         }
 
@@ -53,63 +56,23 @@ namespace LECG
             if (_globalHandlersRegistered) return;
             _globalHandlersRegistered = true;
 
-            Dispatcher.CurrentDispatcher.UnhandledException += (_, e) =>
-            {
-                try
-                {
-                    Services.Logging.Logger.Instance.Log($"Unhandled dispatcher exception: {e.Exception}");
-                    LecgDialog.Show("LECG Error", e.Exception.Message);
-                }
-                catch
-                {
-                }
-
-                e.Handled = true;
-            };
-
-            AppDomain.CurrentDomain.UnhandledException += (_, e) =>
-            {
-                try
-                {
-                    if (e.ExceptionObject is Exception ex)
-                    {
-                        Services.Logging.Logger.Instance.Log($"Unhandled domain exception: {ex}");
-                    }
-                }
-                catch
-                {
-                }
-            };
-
-            TaskScheduler.UnobservedTaskException += (_, e) =>
-            {
-                try
-                {
-                    Services.Logging.Logger.Instance.Log($"Unobserved task exception: {e.Exception}");
-                }
-                catch
-                {
-                }
-
-                e.SetObserved();
-            };
+            Dispatcher.CurrentDispatcher.UnhandledException += (_, e) => HandleDispatcherUnhandledException(e);
+            AppDomain.CurrentDomain.UnhandledException += (_, e) => LogUnhandledException("Unhandled domain exception", e.ExceptionObject as Exception);
+            TaskScheduler.UnobservedTaskException += (_, e) => HandleUnobservedTaskException(e);
         }
 
         private static void InitializeGlobalWpfDictionaries()
         {
             try
             {
-                if (System.Windows.Application.Current == null)
-                {
-                    _ = new System.Windows.Application();
-                }
+                System.Windows.Application app = System.Windows.Application.Current ?? new System.Windows.Application();
 
                 var uri = new Uri("pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml", UriKind.Absolute);
                 var dict = new System.Windows.ResourceDictionary { Source = uri };
-                
+
                 // Add or merge dictionary to global application resources
                 bool exists = false;
-                foreach (var md in System.Windows.Application.Current.Resources.MergedDictionaries)
+                foreach (var md in app.Resources.MergedDictionaries)
                 {
                     if (md.Source == uri)
                     {
@@ -119,13 +82,71 @@ namespace LECG
                 }
                 if (!exists)
                 {
-                    System.Windows.Application.Current.Resources.MergedDictionaries.Add(dict);
+                    app.Resources.MergedDictionaries.Add(dict);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedResourceInitializationException(ex))
             {
                 Services.Logging.Logger.Instance.Log($"Failed to load global WPF resources: {ex.Message}");
             }
+        }
+
+        private static bool IsExpectedResourceInitializationException(Exception ex)
+        {
+            return ex is IOException
+                or InvalidOperationException
+                or NotSupportedException
+                or UriFormatException
+                or XamlParseException;
+        }
+
+        private static void HandleDispatcherUnhandledException(DispatcherUnhandledExceptionEventArgs e)
+        {
+            RunGlobalHandlerSafely(() =>
+            {
+                Services.Logging.Logger.Instance.Log($"Unhandled dispatcher exception: {e.Exception}");
+                LecgDialog.Show("LECG Error", e.Exception.Message);
+            });
+
+            e.Handled = true;
+        }
+
+        private static void HandleUnobservedTaskException(UnobservedTaskExceptionEventArgs e)
+        {
+            LogUnhandledException("Unobserved task exception", e.Exception);
+            e.SetObserved();
+        }
+
+        private static void LogUnhandledException(string messagePrefix, Exception? exception)
+        {
+            if (exception == null)
+            {
+                return;
+            }
+
+            RunGlobalHandlerSafely(() =>
+            {
+                Services.Logging.Logger.Instance.Log($"{messagePrefix}: {exception}");
+            });
+        }
+
+        private static void RunGlobalHandlerSafely(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (Exception ex) when (IsExpectedGlobalHandlerException(ex))
+            {
+            }
+        }
+
+        private static bool IsExpectedGlobalHandlerException(Exception ex)
+        {
+            return ex is IOException
+                or InvalidOperationException
+                or NotSupportedException
+                or XamlParseException;
         }
     }
 }

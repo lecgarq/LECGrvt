@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -30,9 +31,9 @@ namespace LECG.Services
                 {
                     XYZ p0 = _cadPointFlattenService.Flatten(l.GetEndPoint(0));
                     XYZ p1 = _cadPointFlattenService.Flatten(l.GetEndPoint(1));
-                    
+
                     if (p0.DistanceTo(p1) < minLength) return null;
-                    try { return new List<Curve> { Line.CreateBound(p0, p1) }; } catch { return null; }
+                    return TryCreateLine(p0, p1);
                 }
                 else if (c is Arc a)
                 {
@@ -46,16 +47,16 @@ namespace LECG.Services
                     {
                         XYZ center = _cadPointFlattenService.Flatten(a.Center);
                         if (a.Radius < minLength) return null;
-                        try { return new List<Curve> { Arc.Create(center, a.Radius, 0, 2 * Math.PI, XYZ.BasisX, XYZ.BasisY) }; } catch { return null; }
+                        return TryCreateCircle(center, a.Radius);
                     }
 
                     if (p0.DistanceTo(mid) < minLength || p1.DistanceTo(mid) < minLength || p0.DistanceTo(p1) < minLength)
                     {
-                         if (p0.DistanceTo(p1) >= minLength)
-                         {
-                             try { return new List<Curve> { Line.CreateBound(p0, p1) }; } catch { return null; }
-                         }
-                         return null;
+                        if (p0.DistanceTo(p1) >= minLength)
+                        {
+                            return TryCreateLine(p0, p1);
+                        }
+                        return null;
                     }
 
                     // Check for collinearity after flattening
@@ -63,21 +64,21 @@ namespace LECG.Services
                     XYZ v2 = (p1 - mid).Normalize();
                     if (v1.IsAlmostEqualTo(v2, 0.0001) || v1.IsAlmostEqualTo(-v2, 0.0001))
                     {
-                        try { return new List<Curve> { Line.CreateBound(p0, p1) }; } catch { return null; }
+                        return TryCreateLine(p0, p1);
                     }
 
-                    try { return new List<Curve> { Arc.Create(p0, p1, mid) }; } catch { return null; }
+                    return TryCreateArc(p0, p1, mid);
                 }
                 else if (c is Ellipse e)
                 {
                     if (e.RadiusX < minLength || e.RadiusY < minLength) return null;
-                    try 
-                    { 
-                        var ellipse = Ellipse.CreateCurve(_cadPointFlattenService.Flatten(e.Center), e.RadiusX, e.RadiusY, XYZ.BasisX, XYZ.BasisY, e.GetEndParameter(0), e.GetEndParameter(1)); 
-                        if (ellipse.Length < minLength) return null;
-                        return new List<Curve> { ellipse };
-                    } 
-                    catch { return null; }
+                    return TryCreateEllipse(
+                        _cadPointFlattenService.Flatten(e.Center),
+                        e.RadiusX,
+                        e.RadiusY,
+                        e.GetEndParameter(0),
+                        e.GetEndParameter(1),
+                        minLength);
                 }
                 else if (c is HermiteSpline || c is NurbSpline)
                 {
@@ -87,11 +88,72 @@ namespace LECG.Services
                 var tessellated = _cadCurveTessellationService.Tessellate(c);
                 return tessellated?.Where(tc => tc.Length >= minLength);
             }
-            catch
+            catch (Exception ex) when (IsExpectedCadCurveException(ex))
             {
                 var tessellated = _cadCurveTessellationService.Tessellate(c);
                 return tessellated?.Where(tc => tc.Length >= minLength);
             }
+        }
+
+        private static List<Curve>? TryCreateLine(XYZ p0, XYZ p1)
+        {
+            try
+            {
+                return new List<Curve> { Line.CreateBound(p0, p1) };
+            }
+            catch (Exception ex) when (IsExpectedCadCurveException(ex))
+            {
+                return null;
+            }
+        }
+
+        private static List<Curve>? TryCreateCircle(XYZ center, double radius)
+        {
+            try
+            {
+                return new List<Curve> { Arc.Create(center, radius, 0, 2 * Math.PI, XYZ.BasisX, XYZ.BasisY) };
+            }
+            catch (Exception ex) when (IsExpectedCadCurveException(ex))
+            {
+                return null;
+            }
+        }
+
+        private static List<Curve>? TryCreateArc(XYZ p0, XYZ p1, XYZ mid)
+        {
+            try
+            {
+                return new List<Curve> { Arc.Create(p0, p1, mid) };
+            }
+            catch (Exception ex) when (IsExpectedCadCurveException(ex))
+            {
+                return null;
+            }
+        }
+
+        private static List<Curve>? TryCreateEllipse(XYZ center, double radiusX, double radiusY, double startParameter, double endParameter, double minLength)
+        {
+            try
+            {
+                Curve ellipse = Ellipse.CreateCurve(center, radiusX, radiusY, XYZ.BasisX, XYZ.BasisY, startParameter, endParameter);
+                if (ellipse.Length < minLength)
+                {
+                    return null;
+                }
+
+                return new List<Curve> { ellipse };
+            }
+            catch (Exception ex) when (IsExpectedCadCurveException(ex))
+            {
+                return null;
+            }
+        }
+
+        private static bool IsExpectedCadCurveException(Exception ex)
+        {
+            return ex is ArgumentException
+                or InvalidOperationException
+                or RevitExceptions.InvalidOperationException;
         }
 
     }

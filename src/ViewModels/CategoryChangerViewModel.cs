@@ -53,15 +53,22 @@ namespace LECG.ViewModels
                 if (!CanRun) return;
 
                 ShouldRun = true;
-                
+
                 // Instead of running logic here (UI context), 
                 // we tell the command to raise the External Event (API context).
                 RequestRun?.Invoke();
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedCategoryChangerViewModelException(ex))
             {
                 LECG.Services.Logging.Logger.Instance.Log($"Error in CategoryChanger Apply: {ex.Message}");
             }
+        }
+
+        private static bool IsExpectedCategoryChangerViewModelException(Exception ex)
+        {
+            return ex is InvalidOperationException
+                or NotSupportedException
+                or ArgumentException;
         }
 
         public void LoadCategories(Document doc)
@@ -98,10 +105,5 @@ namespace LECG.ViewModels
             OnPropertyChanged(nameof(CanRun));
         }
 
-        public override void Cancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
-        }
     }
 }

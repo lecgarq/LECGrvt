@@ -12,20 +12,35 @@ namespace LECG.Services
             int fillPatternsDeleted,
             int materialsDeleted,
             int levelsDeleted,
-            int parametersDeleted)
+            int parametersDeleted,
+            int groupsDeleted,
+            int gridTypesDeleted,
+            int levelTypesDeleted,
+            int constraintsDeleted,
+            int unplacedRoomsDeleted,
+            int viewTemplatesDeleted,
+            int viewFiltersDeleted)
         {
+            ArgumentNullException.ThrowIfNull(reporter);
             reporter.Report("Complete!", 100);
             reporter.Log("");
             reporter.Log("=== SUMMARY ===");
-            reporter.Log($"Line Styles deleted: {lineStylesDeleted}");
-            reporter.Log($"Line Patterns deleted: {linePatternsDeleted}");
-            reporter.Log($"Fill Patterns deleted: {fillPatternsDeleted}");
-            reporter.Log($"Materials deleted: {materialsDeleted}");
-            reporter.Log($"Levels deleted: {levelsDeleted}");
-            reporter.Log($"Family Parameters deleted: {parametersDeleted}");
+            LogIfActive(reporter, "Line Styles", lineStylesDeleted);
+            LogIfActive(reporter, "Line Patterns", linePatternsDeleted);
+            LogIfActive(reporter, "Fill Patterns", fillPatternsDeleted);
+            LogIfActive(reporter, "Materials", materialsDeleted);
+            LogIfActive(reporter, "Levels", levelsDeleted);
+            LogIfActive(reporter, "Groups", groupsDeleted);
+            LogIfActive(reporter, "Grid Types", gridTypesDeleted);
+            LogIfActive(reporter, "Level Types", levelTypesDeleted);
+            LogIfActive(reporter, "Constraints", constraintsDeleted);
+            LogIfActive(reporter, "Unplaced Rooms", unplacedRoomsDeleted);
+            LogIfActive(reporter, "View Templates", viewTemplatesDeleted);
+            LogIfActive(reporter, "View Filters", viewFiltersDeleted);
+            LogIfActive(reporter, "Family Parameters", parametersDeleted);
             reporter.Log("");
 
-            int total = lineStylesDeleted + linePatternsDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted + parametersDeleted;
+            int total = lineStylesDeleted + linePatternsDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted + parametersDeleted + groupsDeleted + gridTypesDeleted + levelTypesDeleted + constraintsDeleted + unplacedRoomsDeleted + viewTemplatesDeleted + viewFiltersDeleted;
             reporter.Log($"Total items purged: {total}");
         }
 
@@ -37,9 +52,22 @@ namespace LECG.Services
             int fillPatternsDeleted,
             int materialsDeleted,
             int levelsDeleted,
-            int parametersDeleted)
+            int parametersDeleted,
+            int groupsDeleted,
+            int gridTypesDeleted,
+            int levelTypesDeleted,
+            int constraintsDeleted,
+            int unplacedRoomsDeleted,
+            int viewTemplatesDeleted,
+            int viewFiltersDeleted)
         {
-            Report(new LegacyProgressReporter(progressCallback, logCallback), lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
+            Report(new LegacyProgressReporter(progressCallback, logCallback), lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted, groupsDeleted, gridTypesDeleted, levelTypesDeleted, constraintsDeleted, unplacedRoomsDeleted, viewTemplatesDeleted, viewFiltersDeleted);
+        }
+
+        private static void LogIfActive(IProgressReporter reporter, string category, int count)
+        {
+            if (count > 0)
+                reporter.Log($"{category} deleted: {count}");
         }
     }
 }

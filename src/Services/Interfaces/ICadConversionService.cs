@@ -16,11 +16,11 @@ namespace LECG.Services.Interfaces
             IProgressReporter reporter);
 
         ElementId ConvertCadToFamily(
-            Document doc, 
-            ImportInstance cadInstance, 
-            string familyName, 
-            string templatePath, 
-            string lineStyleName, 
+            Document doc,
+            ImportInstance cadInstance,
+            string familyName,
+            string templatePath,
+            string lineStyleName,
             Color lineColor,
             int lineWeight,
             System.Action<double, string>? progress = null);

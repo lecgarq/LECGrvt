@@ -10,6 +10,7 @@ using LECG.Views;
 using LECG.ViewModels;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Commands
 {
@@ -35,14 +36,20 @@ namespace LECG.Commands
             var loadedSettings = SettingsManager.Load<ResetSlabsViewModel>("ResetSlabsSettings.json");
             var settings = ServiceLocator.GetRequiredService<ResetSlabsViewModel>();
             settings.DuplicateElements = loadedSettings.DuplicateElements;
-            
-            ResetSlabsView view = ServiceLocator.GetRequiredService<ResetSlabsView>();
+            var preselectedRefs = SelectionSeedHelper.GetSelectedReferences(uiDoc, settings.Selection.Filter);
+            if (preselectedRefs.Count > 0)
+            {
+                settings.SetSelection(preselectedRefs);
+            }
+
+            // Pass VM explicitly so command and view share the same instance
+            ResetSlabsView view = ServiceLocator.CreateWith<ResetSlabsView>(settings);
             view.Initialize(uiDoc);
 
             if (view.ShowDialog() != true || !settings.ShouldRun) return;
 
             SettingsManager.Save(settings, "ResetSlabsSettings.json");
-            
+
             // 2. Select Elements - Already selected
             IList<Reference> refs = settings.SelectedRefs;
             if (refs == null || refs.Count == 0) return;
@@ -55,12 +62,16 @@ namespace LECG.Commands
             int successCount = 0;
             List<ElementId> processedIds = new List<ElementId>();
 
+            int processed = 0;
             transactionService.Run(doc, "Reset Slab Shapes", currentDoc =>
             {
                 foreach (Reference r in refs)
                 {
                     Element elem = currentDoc.GetElement(r);
                     if (elem == null) continue;
+
+                    processed++;
+                    UpdateProgress((double)processed / refs.Count * 95, $"Processing {processed} of {refs.Count}...");
 
                     Element targetElement = elem;
                     Log($"Processing ID: {elem.Id} ({elem.Category?.Name})");
@@ -77,7 +88,7 @@ namespace LECG.Commands
                                 processedIds.Add(targetElement.Id);
                             }
                         }
-                        catch (Exception copyEx)
+                        catch (Exception copyEx) when (IsExpectedResetSlabsException(copyEx))
                         {
                             Log($"  -> Copy Failed: {copyEx.Message}");
                             continue;
@@ -89,14 +100,14 @@ namespace LECG.Commands
                     }
 
                     // Reset
-                    if (slabService.TryResetSlabShape(targetElement, out string msg)) 
+                    if (slabService.TryResetSlabShape(targetElement, out string msg))
                     {
                         successCount++;
                         Log($"  -> {msg}");
                     }
                     else
                     {
-                         Log($"  -> {msg}");
+                        Log($"  -> {msg}");
                     }
                 }
             });
@@ -107,11 +118,18 @@ namespace LECG.Commands
             }
 
             Log($"Finished. Successfully reset {successCount} slabs.");
-            
+            UpdateProgress(100, "Complete");
+
             // Show log for success
             ShowLogWindow("Reset Slabs");
         }
 
+        private static bool IsExpectedResetSlabsException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
 
     }
 }

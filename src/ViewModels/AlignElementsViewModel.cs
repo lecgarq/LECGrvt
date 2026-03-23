@@ -13,13 +13,13 @@ namespace LECG.ViewModels
     public partial class AlignElementsViewModel : BaseViewModel
     {
         private readonly IAlignElementsService _service;
-        
+
         [ObservableProperty]
         private AlignMode _mode;
 
         public SelectionViewModel ReferenceSelection { get; } = new SelectionViewModel();
         public SelectionViewModel TargetSelection { get; } = new SelectionViewModel();
-        
+
         // State
         public Reference? SelectedReference { get; private set; }
         public List<Reference> SelectedTargets { get; private set; } = new List<Reference>();
@@ -27,9 +27,9 @@ namespace LECG.ViewModels
         public bool IsDistributeMode => Mode == AlignMode.DistributeHorizontally || Mode == AlignMode.DistributeVertically;
         public bool IsAlignMode => !IsDistributeMode;
 
-        public bool CanRun 
-        { 
-            get 
+        public bool CanRun
+        {
+            get
             {
                 if (IsDistributeMode) return TargetSelection.HasSelection && TargetSelection.SelectionCount >= 3;
                 return ReferenceSelection.HasSelection && TargetSelection.HasSelection;
@@ -45,9 +45,10 @@ namespace LECG.ViewModels
             TargetSelection.ElementName = "Target Elements";
 
             ReferenceSelection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
-            TargetSelection.PropertyChanged += (s, e) => { 
-                if (e.PropertyName == nameof(SelectionViewModel.HasSelection) || e.PropertyName == nameof(SelectionViewModel.SelectionCount)) 
-                    OnPropertyChanged(nameof(CanRun)); 
+            TargetSelection.PropertyChanged += (s, e) =>
+            {
+                if (e.PropertyName == nameof(SelectionViewModel.HasSelection) || e.PropertyName == nameof(SelectionViewModel.SelectionCount))
+                    OnPropertyChanged(nameof(CanRun));
             };
         }
 
@@ -88,7 +89,7 @@ namespace LECG.ViewModels
             ArgumentNullException.ThrowIfNull(doc);
 
             var validRefs = new List<Reference>();
-            
+
             foreach (var r in refs)
             {
                 // If in Align Mode, exclude the Reference Element
@@ -103,16 +104,5 @@ namespace LECG.ViewModels
             TargetSelection.UpdateSelection(validRefs.Count);
         }
 
-        public override void Apply()
-        {
-            ShouldRun = true;
-            CloseAction?.Invoke();
-        }
-
-        public override void Cancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
-        }
     }
 }

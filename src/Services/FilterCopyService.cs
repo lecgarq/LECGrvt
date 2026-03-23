@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using LECG.Core;
 using LECG.Models;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -64,7 +65,15 @@ namespace LECG.Services
 
                 return Result<int>.Success(updatedViews);
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
+            {
+                return Result<int>.Failure(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Result<int>.Failure(ex.Message);
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
             {
                 return Result<int>.Failure(ex.Message);
             }

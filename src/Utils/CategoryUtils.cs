@@ -11,6 +11,8 @@ namespace LECG.Utils
         /// </summary>
         public static List<Category> GetValidFamilyCategories(Document doc)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             var categories = doc.Settings.Categories;
             var result = new List<Category>();
 

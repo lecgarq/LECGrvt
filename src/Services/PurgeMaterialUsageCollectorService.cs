@@ -7,7 +7,7 @@ namespace LECG.Services
 {
     public class PurgeMaterialUsageCollectorService : IPurgeMaterialUsageCollectorService
     {
-        public PurgeMaterialUsageCollectorService(IPurgeReferenceScannerService referenceScanner)
+        public PurgeMaterialUsageCollectorService()
         {
         }
 

@@ -30,6 +30,10 @@ namespace LECG.Views
         private void ChangeLevel_Click(object sender, RoutedEventArgs e) => SetTagAndClose("ChangeLevel");
         private void CleanSchemas_Click(object sender, RoutedEventArgs e) => SetTagAndClose("CleanSchemas");
         private void RenderMatch_Click(object sender, RoutedEventArgs e) => SetTagAndClose("RenderMatch");
+        private void FixPoints_Click(object sender, RoutedEventArgs e) => SetTagAndClose("FixPoints");
+        private void SplitBoundaries_Click(object sender, RoutedEventArgs e) => SetTagAndClose("SplitBoundaries");
+        private void ConvertFloorToToposolid_Click(object sender, RoutedEventArgs e) => SetTagAndClose("ConvertFloorToToposolid");
+        private void ConvertToposolidToFloor_Click(object sender, RoutedEventArgs e) => SetTagAndClose("ConvertToposolidToFloor");
         private void ConvertFamily_Click(object sender, RoutedEventArgs e) => SetTagAndClose("ConvertFamily");
         private void BatchRename_Click(object sender, RoutedEventArgs e) => SetTagAndClose("BatchRename");
     }

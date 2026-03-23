@@ -7,7 +7,7 @@ namespace LECG.Services.Interfaces
     public interface IAlignEdgesBoundaryPointService
     {
         List<XYZ> CollectBoundaryHitPoints(
-            Sketch sketch,
+            IEnumerable<CurveLoop> loops,
             ReferenceIntersector intersector,
             double minSpacing,
             double maxSpacing,

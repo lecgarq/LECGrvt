@@ -1,74 +1,58 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using LECG.Services.Logging;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace LECG.ViewModels
 {
-    public partial class LogViewModel : ObservableObject, System.IDisposable
+    public partial class LogViewModel : CommunityToolkit.Mvvm.ComponentModel.ObservableObject, System.IDisposable
     {
         private readonly ILogger _logger;
 
         public ObservableCollection<LogEntry> Entries => _logger.Entries;
 
-        [ObservableProperty]
         private string _title = "Operation Log";
+        public string Title { get => _title; set => SetProperty(ref _title, value); }
 
-        [ObservableProperty]
         private string _currentStatus = "Ready";
+        public string CurrentStatus { get => _currentStatus; set => SetProperty(ref _currentStatus, value); }
 
-        [ObservableProperty]
         private double _progressValue;
+        public double ProgressValue { get => _progressValue; set => SetProperty(ref _progressValue, value); }
 
-        [ObservableProperty]
-        private bool _isBusy;
+        public ICommand CopyCommand { get; }
 
         public LogViewModel(ILogger logger)
         {
             _logger = logger ?? Logger.Instance;
             _logger.OnProgressUpdate += UpdateProgress;
+
+            CopyCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(Copy);
         }
 
-        [RelayCommand]
         private void Copy()
         {
             var sb = new StringBuilder();
-            foreach(var entry in Entries)
-            {
-                sb.AppendLine($"[{entry.FormattedTime}] {entry.Level}: {entry.Message}");
-            }
-            
+            foreach (var entry in Entries) sb.AppendLine($"[{entry.FormattedTime}] {entry.Level}: {entry.Message}");
             if (sb.Length > 0)
             {
                 Clipboard.SetText(sb.ToString());
-                // Could show a toast or small message here
                 _logger.LogSuccess("Log copied to clipboard.");
             }
         }
 
-        [RelayCommand]
-        private void Clear()
-        {
-            _logger.Clear();
-        }
-        
-        // Helper to update progress from commands
         public void UpdateProgress(double value, string status)
         {
             ProgressValue = value;
             CurrentStatus = status;
-            // The logger's DoEvents will handle the UI refresh if called from the Logger.
-            // If called directly here, we might need our own DoEvents if we aren't logging.
         }
+
         public void Dispose()
         {
-            if (_logger != null)
-            {
-                _logger.OnProgressUpdate -= UpdateProgress;
-            }
+            if (_logger != null) _logger.OnProgressUpdate -= UpdateProgress;
             System.GC.SuppressFinalize(this);
         }
     }

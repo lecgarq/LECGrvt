@@ -35,6 +35,9 @@ namespace LECG.Services
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(reporter);
+
             if (elements == null || !elements.Any()) return;
 
             reporter.Log("ANALYZING SELECTION");

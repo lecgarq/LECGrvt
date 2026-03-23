@@ -31,6 +31,10 @@ namespace LECG.Services
             using Transaction transaction = new Transaction(doc, name);
             transaction.Start();
 
+            FailureHandlingOptions options = transaction.GetFailureHandlingOptions();
+            options.SetFailuresPreprocessor(new SafeFailureHandler());
+            transaction.SetFailureHandlingOptions(options);
+
             try
             {
                 bool shouldCommit = action(doc);
@@ -101,17 +105,25 @@ namespace LECG.Services
             using Transaction transaction = new Transaction(doc, name);
             transaction.Start();
 
+            FailureHandlingOptions options = transaction.GetFailureHandlingOptions();
             if (configureOptions != null)
             {
-                FailureHandlingOptions options = transaction.GetFailureHandlingOptions();
                 configureOptions(options);
-                transaction.SetFailureHandlingOptions(options);
             }
+            else
+            {
+                options.SetFailuresPreprocessor(new SafeFailureHandler());
+            }
+            transaction.SetFailureHandlingOptions(options);
 
             try
             {
                 action(doc);
-                transaction.Commit();
+                TransactionStatus commitResult = transaction.Commit();
+                if (commitResult == TransactionStatus.RolledBack)
+                {
+                    throw new InvalidOperationException($"Transaction '{name}' was rolled back by Revit due to element errors.");
+                }
             }
             catch
             {

@@ -6,7 +6,7 @@ namespace LECG.Services
 {
     public class PurgeReferencedLevelService : IPurgeReferencedLevelService
     {
-        public PurgeReferencedLevelService(IPurgeReferenceScannerService referenceScanner)
+        public PurgeReferencedLevelService()
         {
         }
 

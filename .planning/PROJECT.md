@@ -44,8 +44,9 @@ Preserve the exact geometric behavior, elevation data, and project reference sys
 - [ ] Toposolid to Floor conversion preserving edited points and elevations
 - [ ] Fix Points — repair inconsistent points at edges/transitions
 - [ ] Split Boundaries — separate multi-boundary elements into independent instances
-- [ ] Merge Elements — combine multiple Floors/Toposolids into one element
 - [ ] Type to Linked Models — separate by type into individual Revit files with shared coordinates
+
+**Deferred:** Merge Elements is descoped to v2.x pending a defensible boundary-union strategy.
 
 ### Out of Scope
 
@@ -62,8 +63,9 @@ Preserve the exact geometric behavior, elevation data, and project reference sys
 - Toposolid to Floor conversion
 - Fix Points (repair inconsistent surface points)
 - Split Boundaries (multi-boundary to independent elements)
-- Merge Elements (multiple elements to one consolidated)
 - Type to Linked Models (type-based model separation with shared coordinates)
+
+**Deferred from this milestone:** Merge Elements (multiple elements to one consolidated)
 
 ## Context
 

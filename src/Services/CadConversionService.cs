@@ -32,7 +32,8 @@ namespace LECG.Services
 
         public string GetDefaultTemplatePath()
         {
-            return @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English\LECG\-\LECG_046_DETAIL-ITEM.rft";
+            return Configuration.RevitConstants.FindTemplate(@"English\LECG\-\LECG_046_DETAIL-ITEM.rft")
+                ?? string.Empty;
         }
 
         public ElementId ConvertCadToFamily(Document doc, ImportInstance cadInstance, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
@@ -82,6 +83,6 @@ namespace LECG.Services
                 lineWeight,
                 reporter);
         }
-        
+
     }
 }

@@ -18,7 +18,7 @@ namespace LECG.Services
                 CompoundStructure? cs = hostType.GetCompoundStructure();
                 if (cs == null)
                 {
-                    logCallback?.Invoke($"  âš  No compound structure on: {type.Name}");
+                    logCallback?.Invoke($"  WARNING No compound structure on: {type.Name}");
                     return false;
                 }
 
@@ -29,7 +29,7 @@ namespace LECG.Services
                 }
 
                 hostType.SetCompoundStructure(cs);
-                logCallback?.Invoke($"  âœ“ Assigned material to layers in: {type.Name}");
+                logCallback?.Invoke($"  OK Assigned material to layers in: {type.Name}");
                 return true;
             }
 
@@ -37,11 +37,11 @@ namespace LECG.Services
             if (structMatParam != null && !structMatParam.IsReadOnly)
             {
                 structMatParam.Set(materialId);
-                logCallback?.Invoke($"  âœ“ Assigned to: {type.Name} (Structural Material Param)");
+                logCallback?.Invoke($"  OK Assigned to: {type.Name} (Structural Material Param)");
                 return true;
             }
 
-            logCallback?.Invoke($"  âš  Could not assign material to: {type.Name}");
+            logCallback?.Invoke($"  WARNING Could not assign material to: {type.Name}");
             return false;
         }
     }

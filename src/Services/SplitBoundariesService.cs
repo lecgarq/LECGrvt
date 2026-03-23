@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
+using Clipper2Lib;
 using LECG.Services.Interfaces;
+using LECG.Utils;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
@@ -33,18 +35,22 @@ namespace LECG.Services
 
             foreach (Element element in elements)
             {
+                if (element == null || !element.IsValidObject) continue;
                 processed++;
                 double pct = (double)processed / elements.Count * 95;
                 reporter.Report($"Processing {processed} of {elements.Count}...", pct);
 
+                ElementId originalId = element.Id;
+
                 try
                 {
+                    // Document regenerates automatically after each element split commits
                     IList<CurveLoop> loops = _geometryBoundaryService.ExtractLoops(element);
                     int boundaryCount = loops.Count;
 
                     if (boundaryCount <= 1)
                     {
-                        reporter.Log($"ID {element.Id}: input boundaries {boundaryCount}, no split needed.");
+                        reporter.Log($"ID {originalId}: input boundaries {boundaryCount}, no split needed.");
                         continue;
                     }
 
@@ -58,12 +64,12 @@ namespace LECG.Services
                     }
                     else
                     {
-                        reporter.LogWarning($"ID {element.Id}: unsupported element type '{element.GetType().Name}', skipped.");
+                        reporter.LogWarning($"ID {originalId}: unsupported element type '{element.GetType().Name}', skipped.");
                     }
                 }
                 catch (Exception ex) when (IsExpectedSplitBoundariesException(ex))
                 {
-                    reporter.LogError($"ID {element.Id}: failed - {ex.Message}");
+                    reporter.LogError($"ID {originalId}: failed - {ex.Message}");
                 }
             }
 
@@ -73,6 +79,7 @@ namespace LECG.Services
         private void SplitToposolid(Document doc, Element element, IList<CurveLoop> loops, IProgressReporter reporter)
         {
             var toposolid = (Toposolid)element;
+            ElementId originalId = toposolid.Id;
             int loopCount = loops.Count;
             ElementId typeId = toposolid.GetTypeId();
             ElementId levelId = toposolid.LevelId;
@@ -83,7 +90,7 @@ namespace LECG.Services
             var loopAssignments = new List<CurveLoop>();
 
             var islands = GroupLoopsByIslands(loops);
-            
+
             _transactionService.Run(doc, "Split Toposolid Boundaries", currentDoc =>
             {
                 foreach (List<CurveLoop> islandProfile in islands)
@@ -92,10 +99,10 @@ namespace LECG.Services
                     SetHeightOffset(newToposolid, heightOffset);
                     newToposolidIds.Add(newToposolid.Id);
                     // For Toposolids, the first loop in an island profile is the outer boundary
-                    loopAssignments.Add(islandProfile[0]); 
+                    loopAssignments.Add(islandProfile[0]);
                 }
 
-                currentDoc.Delete(element.Id);
+                currentDoc.Delete(originalId);
             });
 
             if (vertexSnapshots.Count > 0 && newToposolidIds.Count > 0)
@@ -171,12 +178,13 @@ namespace LECG.Services
                 }
             }
 
-            reporter.Log($"ID {element.Id}: input boundaries {loopCount}, output IDs [{FormatElementIds(newToposolidIds)}].");
+            reporter.Log($"ID {originalId}: input boundaries {loopCount}, output IDs [{FormatElementIds(newToposolidIds)}].");
         }
 
         private void SplitFloor(Document doc, Element element, IList<CurveLoop> loops, IProgressReporter reporter)
         {
             var floor = (Floor)element;
+            ElementId originalId = floor.Id;
             int loopCount = loops.Count;
 
             ElementId typeId = floor.GetTypeId();
@@ -199,7 +207,7 @@ namespace LECG.Services
                     loopAssignments.Add(islandProfile[0]);
                 }
 
-                currentDoc.Delete(element.Id);
+                currentDoc.Delete(originalId);
             });
 
             if (vertexSnapshots.Count > 0 && newFloorIds.Count > 0)
@@ -208,6 +216,12 @@ namespace LECG.Services
 
                 _transactionService.Run(doc, "Copy Floor Shape Points", currentDoc =>
                 {
+                    // Floor's SlabShapeEditor.AddPoint() expects Z relative to the
+                    // reference surface (level elevation + height offset). The snapshotted
+                    // vertex positions use absolute Z, so we must subtract the reference.
+                    Level? level = currentDoc.GetElement(levelId) as Level;
+                    double referenceElevation = (level?.Elevation ?? 0.0) + heightOffset;
+
                     for (int i = 0; i < newFloorIds.Count; i++)
                     {
                         Element? newFloor = currentDoc.GetElement(newFloorIds[i]);
@@ -242,7 +256,8 @@ namespace LECG.Services
 
                                 try
                                 {
-                                    editor.AddPoint(snapshot.Position);
+                                    double relativeZ = snapshot.Position.Z - referenceElevation;
+                                    editor.AddPoint(new XYZ(snapshot.Position.X, snapshot.Position.Y, relativeZ));
                                     interiorPointsAdded++;
                                 }
                                 catch (RevitExceptions.InvalidOperationException)
@@ -275,7 +290,7 @@ namespace LECG.Services
                 }
             }
 
-            reporter.Log($"ID {element.Id}: input boundaries {loopCount}, output IDs [{FormatElementIds(newFloorIds)}].");
+            reporter.Log($"ID {originalId}: input boundaries {loopCount}, output IDs [{FormatElementIds(newFloorIds)}].");
         }
 
         private List<VertexSnapshot> SnapshotVertices(Element element)
@@ -298,13 +313,18 @@ namespace LECG.Services
 
         private static double GetHeightOffset(Element element)
         {
-            Parameter? param = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
-            return param?.AsDouble() ?? 0.0;
+            Parameter? floorParam = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
+            if (floorParam != null) return floorParam.AsDouble();
+
+            Parameter? topoParam = element.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM);
+            return topoParam?.AsDouble() ?? 0.0;
         }
 
         private static void SetHeightOffset(Element element, double value)
         {
-            Parameter? param = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
+            Parameter? param = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM)
+                ?? element.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM);
+
             if (param != null && !param.IsReadOnly)
             {
                 param.Set(value);
@@ -313,41 +333,22 @@ namespace LECG.Services
 
         private static bool IsPointInsideLoop(XYZ point, CurveLoop loop)
         {
-            // First check if it's on the edge to avoid rounding issues
             if (IsPointOnLoop(point, loop)) return true;
 
-            double testX = point.X;
-            double testY = point.Y;
-            int crossings = 0;
-
-            foreach (Curve curve in loop)
-            {
-                IList<XYZ> tessellated = curve.Tessellate();
-
-                for (int i = 0; i < tessellated.Count - 1; i++)
-                {
-                    XYZ p1 = tessellated[i];
-                    XYZ p2 = tessellated[i + 1];
-
-                    if (((p1.Y <= testY) && (p2.Y > testY)) || ((p2.Y <= testY) && (p1.Y > testY)))
-                    {
-                        double intersectX = (p2.X - p1.X) * (testY - p1.Y) / (p2.Y - p1.Y) + p1.X;
-                        if (testX < intersectX)
-                        {
-                            crossings++;
-                        }
-                    }
-                }
-            }
-
-            return (crossings % 2) == 1;
+            PathD polygon = ClipperUtils.CurveLoopToPathD(loop);
+            PointD testPt = new PointD(point.X, point.Y);
+            PointInPolygonResult result = Clipper.PointInPolygon(testPt, polygon);
+            return result != PointInPolygonResult.IsOutside;
         }
 
         private static List<List<CurveLoop>> GroupLoopsByIslands(IList<CurveLoop> loops)
         {
-            // Grouping by containment. 
-            // We assume outer loops are followed by their inner loops as per IGeometryBoundaryService extract contract.
-            var sorted = loops.ToList(); 
+            // Sorting by area is CRITICAL to identify outer loops first.
+            // Larger loops usually contain smaller ones.
+            var sorted = loops
+                .OrderByDescending(l => ComputeLoopArea(l))
+                .ToList();
+
             var islands = new List<List<CurveLoop>>();
             var handled = new bool[sorted.Count];
 
@@ -382,10 +383,34 @@ namespace LECG.Services
 
         private static XYZ GetReferencePointInLoop(CurveLoop loop)
         {
-            // Pick a point that is likely to be inside the loop
-            // We use the midpoint of a chord as a starting point.
+            // A more robust way to find an internal point than BBox center (which fails for concave shapes):
+            // Pick a point on the first curve and move it slightly "inside" based on the curve normal and loop orientation.
             Curve curve = loop.Cast<Curve>().First();
-            return (curve.GetEndPoint(0) + curve.GetEndPoint(1)) * 0.5;
+            XYZ p = curve.Evaluate(0.5, true);
+            XYZ tangent = curve.ComputeDerivatives(0.5, true).BasisX.Normalize();
+            XYZ normal = new XYZ(-tangent.Y, tangent.X, 0); // 90 deg rotation in XY plane
+
+            // Check if loop is CCW to determine which side is "inside"
+            bool isCcw = loop.IsCounterclockwise(XYZ.BasisZ);
+            XYZ offsetDir = isCcw ? normal : -normal;
+
+            XYZ testPoint = p + offsetDir * 0.1; // Offset by 0.1 feet
+
+            // Safety check: if the offset point is still outside (shouldn't happen for simple curves),
+            // fallback to tessellation average (centroid-ish)
+            if (!IsPointInsideLoop(testPoint, loop))
+            {
+                var points = loop.Cast<Curve>().SelectMany(c => c.Tessellate()).ToList();
+                return new XYZ(points.Average(pt => pt.X), points.Average(pt => pt.Y), points.Average(pt => pt.Z));
+            }
+
+            return testPoint;
+        }
+
+        private static double ComputeLoopArea(CurveLoop loop)
+        {
+            PathD polygon = ClipperUtils.CurveLoopToPathD(loop);
+            return Math.Abs(Clipper.Area(polygon));
         }
 
         private static bool IsPointOnLoop(XYZ point, CurveLoop loop)

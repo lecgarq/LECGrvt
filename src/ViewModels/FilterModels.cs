@@ -25,6 +25,7 @@ namespace LECG.ViewModels
 
         public ElementId Id { get; set; }
         public OverrideGraphicSettings GraphicsSettings { get; set; }
+        public bool IsFilterVisible { get; set; } = true;
         public bool IsVisibilityControlled { get; set; }
         [ObservableProperty]
         private bool _isVisible = true;
@@ -48,7 +49,7 @@ namespace LECG.ViewModels
 
         [ObservableProperty]
         private bool _isExpanded;
-        
+
         [ObservableProperty]
         private bool _isVisible = true;
 

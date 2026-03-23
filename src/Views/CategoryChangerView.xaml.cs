@@ -22,7 +22,7 @@ namespace LECG.Views
             InitializeComponent();
             DataContext = viewModel;
 
-            BindDialogClose(viewModel, () => viewModel.ShouldRun);
+            BindClose(viewModel);
 
             viewModel.Selection.OnRequestSelect += (s, e) =>
             {
@@ -32,7 +32,8 @@ namespace LECG.Views
                     UiDocument,
                     Autodesk.Revit.UI.Selection.ObjectType.Element,
                     new AnyFamilyInstanceFilter(),
-                    "Select family instances to change category.");
+                    "Select family instances to change category.",
+                    restoreModalState: false);
                 if (refs.Count > 0)
                 {
                     viewModel.SetSelection(refs, UiDocument.Document);
@@ -42,6 +43,7 @@ namespace LECG.Views
 
         public override void Initialize(UIDocument uiDoc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
             base.Initialize(uiDoc);
             _viewModel.LoadCategories(uiDoc.Document);
         }

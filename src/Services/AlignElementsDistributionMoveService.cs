@@ -13,6 +13,10 @@ namespace LECG.Services
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(sortedItems);
+            if (sortedItems.Count < 3)
+            {
+                return;
+            }
 
             var first = sortedItems[0];
             var last = sortedItems[sortedItems.Count - 1];

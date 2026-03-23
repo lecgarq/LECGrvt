@@ -35,7 +35,7 @@ namespace LECG.Controls
 
             // Native Windows behaviors allowed
             SelectionMode = DataGridSelectionMode.Extended;
-            
+
             // Standard performance flags for Large Revit Data
             EnableRowVirtualization = true;
             EnableColumnVirtualization = true;
@@ -54,7 +54,7 @@ namespace LECG.Controls
 
         public void CheckAll() => SetAllBooleanProperty(true);
         public void UncheckAll() => SetAllBooleanProperty(false);
-        
+
         // This could be expanded to select only the current filtered UI view
         private void SetAllBooleanProperty(bool value)
         {
@@ -67,7 +67,7 @@ namespace LECG.Controls
             // Reflect on the first element to get the property
             var targetType = items[0].GetType();
             var propInfo = targetType.GetProperty(CheckPropertyName, BindingFlags.Public | BindingFlags.Instance);
-            
+
             if (propInfo == null || propInfo.PropertyType != typeof(bool)) return;
 
             foreach (var item in items)

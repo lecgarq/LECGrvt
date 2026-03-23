@@ -25,6 +25,10 @@ namespace LECG.Services
 
         public CadData Prepare(Document doc, ImportInstance cadInstance, IProgressReporter reporter)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(cadInstance);
+            ArgumentNullException.ThrowIfNull(reporter);
+
             reporter.Report("Extracting geometry from CAD...", 10);
             CadData data = _geometryExtractionService.ExtractGeometry(doc, cadInstance);
 

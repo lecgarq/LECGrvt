@@ -87,7 +87,7 @@ namespace LECG.Services
                         continue;
                     }
 
-                    if (TryDeleteSubcategory(doc, original.SubcategoryId))
+                    if (CompactionSharedHelper.TryDeleteElement(doc, original.SubcategoryId))
                     {
                         result.OriginalStylesDeleted++;
                         logCallback?.Invoke($"  Deleted original: {original.Name}");
@@ -174,6 +174,12 @@ namespace LECG.Services
 
         private static LineStyleCandidate PickSurvivor(List<LineStyleCandidate> candidates)
         {
+            ArgumentNullException.ThrowIfNull(candidates);
+            if (candidates.Count == 0)
+            {
+                throw new ArgumentException("At least one line style candidate is required.", nameof(candidates));
+            }
+
             return candidates
                 .OrderBy(c => c.Name.Length)
                 .ThenBy(c => c.Name, StringComparer.OrdinalIgnoreCase)
@@ -195,12 +201,12 @@ namespace LECG.Services
             }
 
             // Rewire parameter references pointing to the subcategory ID
-            rewired += RewireParameterReferences(doc, paramIndex, source.SubcategoryId, survivor.SubcategoryId);
+            rewired += CompactionSharedHelper.RewireParameterReferencesFromIndex(doc, paramIndex, source.SubcategoryId, survivor.SubcategoryId);
 
             // Rewire parameter references pointing to the GraphicsStyle ID
             if (source.GraphicsStyle != null && survivor.GraphicsStyle != null)
             {
-                rewired += RewireParameterReferences(doc, paramIndex, source.GraphicsStyle.Id, survivor.GraphicsStyle.Id);
+                rewired += CompactionSharedHelper.RewireParameterReferencesFromIndex(doc, paramIndex, source.GraphicsStyle.Id, survivor.GraphicsStyle.Id);
             }
 
             return rewired;
@@ -229,75 +235,6 @@ namespace LECG.Services
             }
 
             return rewired;
-        }
-
-        private static int RewireParameterReferences(
-            Document doc,
-            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
-            ElementId sourceId,
-            ElementId targetId)
-        {
-            if (!paramIndex.TryGetValue(sourceId, out HashSet<ElementId>? elementIds))
-            {
-                return 0;
-            }
-
-            int rewired = 0;
-            var movedToTarget = new HashSet<ElementId>();
-
-            foreach (ElementId elementId in elementIds)
-            {
-                try
-                {
-                    Element? element = doc.GetElement(elementId);
-                    if (element == null || !element.IsValidObject) continue;
-
-                    foreach (Parameter param in element.Parameters)
-                    {
-                        if (param.IsReadOnly || param.StorageType != StorageType.ElementId) continue;
-                        try
-                        {
-                            if (!param.HasValue) continue;
-                            if (param.AsElementId() == sourceId)
-                            {
-                                param.Set(targetId);
-                                rewired++;
-                                movedToTarget.Add(elementId);
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                catch { }
-            }
-
-            paramIndex.Remove(sourceId);
-
-            if (movedToTarget.Count > 0)
-            {
-                if (!paramIndex.TryGetValue(targetId, out HashSet<ElementId>? targetSet))
-                {
-                    targetSet = new HashSet<ElementId>();
-                    paramIndex[targetId] = targetSet;
-                }
-
-                targetSet.UnionWith(movedToTarget);
-            }
-
-            return rewired;
-        }
-
-        private static bool TryDeleteSubcategory(Document doc, ElementId subcategoryId)
-        {
-            try
-            {
-                ICollection<ElementId> deletedIds = doc.Delete(subcategoryId);
-                return deletedIds.Count > 0;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         private sealed class LineStyleCandidate

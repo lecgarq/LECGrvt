@@ -39,14 +39,14 @@ namespace LECG.Services
             _purgeExecutionCoordinatorService = purgeExecutionCoordinatorService;
         }
 
-        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, Action<string> logCallback, Action<double, string> progressCallback)
+        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, bool groups, bool gridTypes, bool levelTypes, bool constraints, bool unplacedRooms, bool viewTemplates, bool viewFilters, Action<string> logCallback, Action<double, string> progressCallback)
         {
-            PurgeAll(doc, passCount, lineStyles, linePatterns, fillPatterns, materials, levels, parameters, new LegacyProgressReporter(progressCallback, logCallback));
+            PurgeAll(doc, passCount, lineStyles, linePatterns, fillPatterns, materials, levels, parameters, groups, gridTypes, levelTypes, constraints, unplacedRooms, viewTemplates, viewFilters, new LegacyProgressReporter(progressCallback, logCallback));
         }
 
-        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, IProgressReporter reporter)
+        public void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, bool groups, bool gridTypes, bool levelTypes, bool constraints, bool unplacedRooms, bool viewTemplates, bool viewFilters, IProgressReporter reporter)
         {
-            (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted) = _purgeExecutionCoordinatorService.Execute(
+            (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted, int groupsDeleted, int gridTypesDeleted, int levelTypesDeleted, int constraintsDeleted, int unplacedRoomsDeleted, int viewTemplatesDeleted, int viewFiltersDeleted) = _purgeExecutionCoordinatorService.Execute(
                 doc,
                 passCount,
                 lineStyles,
@@ -55,9 +55,16 @@ namespace LECG.Services
                 materials,
                 levels,
                 parameters,
+                groups,
+                gridTypes,
+                levelTypes,
+                constraints,
+                unplacedRooms,
+                viewTemplates,
+                viewFilters,
                 reporter);
 
-            _purgeSummaryService.Report(reporter, lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted);
+            _purgeSummaryService.Report(reporter, lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted, groupsDeleted, gridTypesDeleted, levelTypesDeleted, constraintsDeleted, unplacedRoomsDeleted, viewTemplatesDeleted, viewFiltersDeleted);
         }
 
         /// <summary>

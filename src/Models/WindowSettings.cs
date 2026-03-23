@@ -12,7 +12,7 @@ namespace LECG.Models
         public double Width { get; set; }
         public double Height { get; set; }
         public WindowState State { get; set; } = WindowState.Normal;
-        
+
         /// <summary>
         /// Flag to check if the settings have been initialized.
         /// </summary>

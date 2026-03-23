@@ -53,6 +53,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TService : class
             where TImplementation : class, TService
         {
+            ArgumentNullException.ThrowIfNull(services);
             services.Add(new ServiceDescriptor(typeof(TService), typeof(TImplementation), ServiceLifetime.Singleton));
             return services;
         }
@@ -60,6 +61,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSingleton<TService>(this IServiceCollection services)
             where TService : class
         {
+            ArgumentNullException.ThrowIfNull(services);
             services.Add(new ServiceDescriptor(typeof(TService), typeof(TService), ServiceLifetime.Singleton));
             return services;
         }
@@ -67,6 +69,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddSingleton<TService>(this IServiceCollection services, Func<IServiceProvider, TService> factory)
             where TService : class
         {
+            ArgumentNullException.ThrowIfNull(services);
+            ArgumentNullException.ThrowIfNull(factory);
             services.Add(new ServiceDescriptor(typeof(TService), sp => factory(sp), ServiceLifetime.Singleton));
             return services;
         }
@@ -75,6 +79,7 @@ namespace Microsoft.Extensions.DependencyInjection
             where TService : class
             where TImplementation : class, TService
         {
+            ArgumentNullException.ThrowIfNull(services);
             services.Add(new ServiceDescriptor(typeof(TService), typeof(TImplementation), ServiceLifetime.Transient));
             return services;
         }
@@ -82,6 +87,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddTransient<TService>(this IServiceCollection services)
             where TService : class
         {
+            ArgumentNullException.ThrowIfNull(services);
             services.Add(new ServiceDescriptor(typeof(TService), typeof(TService), ServiceLifetime.Transient));
             return services;
         }

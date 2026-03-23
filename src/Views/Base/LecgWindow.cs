@@ -2,8 +2,8 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using System.Windows.Media;
-using CommunityToolkit.Mvvm.Input;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Utils;
@@ -39,11 +39,11 @@ namespace LECG.Views.Base
             }
 
             // Init Commands
-            CloseCommand = new RelayCommand(() => Close());
-            MinimizeCommand = new RelayCommand(() => WindowState = WindowState.Minimized);
+            CloseCommand = new LocalRelayCommand(() => Close());
+            MinimizeCommand = new LocalRelayCommand(() => WindowState = WindowState.Minimized);
 
             // Behavior fixes for WindowStyle=None
-            this.Loaded += (s, e) => 
+            this.Loaded += (s, e) =>
             {
                 // Only center if no saved position was applied
                 if (this.WindowStartupLocation == WindowStartupLocation.CenterScreen)
@@ -89,19 +89,15 @@ namespace LECG.Views.Base
 
             viewModel.CloseAction = () =>
             {
-                if (IsLoaded)
+                try
                 {
-                    try
-                    {
-                        DialogResult = shouldRun();
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        Close();
-                    }
+                    DialogResult = shouldRun();
                 }
-                else
+                catch (InvalidOperationException)
                 {
+                    // DialogResult can only be set on a window shown via ShowDialog().
+                    // If this fails, force the result via a tag and close.
+                    Tag = shouldRun() ? "DialogOK" : null;
                     Close();
                 }
             };
@@ -142,7 +138,9 @@ namespace LECG.Views.Base
                     EnsureVisible();
                 }
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedWindowStateException(ex))
+            {
+            }
         }
 
         private bool TryNormalizeWindowSettings(WindowSettings settings, out WindowSettings normalized)
@@ -190,7 +188,18 @@ namespace LECG.Views.Base
 
                 SettingsManager.Save(settings, GetSettingsFileName());
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedWindowStateException(ex))
+            {
+            }
+        }
+
+        private static bool IsExpectedWindowStateException(Exception ex)
+        {
+            return ex is InvalidOperationException
+                or NotSupportedException
+                or XamlParseException
+                or System.IO.IOException
+                or UnauthorizedAccessException;
         }
 
         private void EnsureVisible()
@@ -219,6 +228,15 @@ namespace LECG.Views.Base
                 // Fallback to primary screen center if no owner set
                 this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             }
+        }
+
+        private class LocalRelayCommand : ICommand
+        {
+            private readonly Action _execute;
+            public LocalRelayCommand(Action execute) => _execute = execute;
+            public bool CanExecute(object? parameter) => true;
+            public void Execute(object? parameter) => _execute();
+            public event EventHandler? CanExecuteChanged { add { } remove { } }
         }
     }
 }

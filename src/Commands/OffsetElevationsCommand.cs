@@ -33,8 +33,14 @@ namespace LECG.Commands
             var settings = ServiceLocator.GetRequiredService<OffsetElevationsViewModel>();
             settings.OffsetValue = loadedSettings.OffsetValue;
             settings.IsAddition = loadedSettings.IsAddition;
-            
-            OffsetElevationsView view = ServiceLocator.GetRequiredService<OffsetElevationsView>();
+            var preselectedRefs = SelectionSeedHelper.GetSelectedReferences(uiDoc, settings.Selection.Filter);
+            if (preselectedRefs.Count > 0)
+            {
+                settings.SetSelection(preselectedRefs);
+            }
+
+            // Pass VM explicitly so command and view share the same instance
+            OffsetElevationsView view = ServiceLocator.CreateWith<OffsetElevationsView>(settings);
             view.Initialize(uiDoc);
 
             if (view.ShowDialog() != true || !settings.ShouldRun) return;
@@ -48,7 +54,7 @@ namespace LECG.Commands
             Log($"=================");
             Log($"Offset: {offsetValue}");
             Log("");
-            
+
             // 2. Select Elements - Already selected in VM
             IList<Reference> refs = settings.SelectedRefs;
 

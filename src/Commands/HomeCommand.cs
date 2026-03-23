@@ -7,70 +7,70 @@ using LECG.Views;
 namespace LECG.Commands
 {
     [Transaction(TransactionMode.Manual)]
-    public class HomeCommand : IExternalCommand
+    public class HomeCommand : RevitCommand
     {
-        public Result Execute(ExternalCommandData data, ref string message, ElementSet elements)
+        public override void Execute(UIDocument uiDoc, Document doc)
         {
             var view = ServiceLocator.GetRequiredService<HomeView>();
 
             if (view.ShowDialog() != true)
             {
-                return Result.Cancelled;
+                return;
             }
 
-            // Dispatch to selected command
             string selectedTool = view.Tag as string ?? "";
-            
-            // Handle Align Master Sub-Menu
+
             if (selectedTool == "AlignMaster")
             {
                 var alignView = ServiceLocator.GetRequiredService<AlignDashboardView>();
 
-                if (alignView.ShowDialog() != true) return Result.Cancelled;
+                if (alignView.ShowDialog() != true)
+                {
+                    return;
+                }
+
                 selectedTool = alignView.Tag as string ?? "";
             }
 
-            return DispatchCommand(selectedTool, data, ref message, elements);
+            RevitCommand? command = CreateCommand(selectedTool);
+            if (command == null)
+            {
+                return;
+            }
+
+            command.PrepareAsSubCommand(CommandData);
+            command.Execute(uiDoc, doc);
         }
 
-        private Result DispatchCommand(string toolTag, ExternalCommandData data, ref string message, ElementSet elements)
+        private static RevitCommand? CreateCommand(string toolTag) => toolTag switch
         {
-            IExternalCommand? cmd = null;
-
-            switch (toolTag)
-            {
-                case "AlignLeft": cmd = new AlignLeftCommand(); break;
-                case "AlignCenter": cmd = new AlignCenterCommand(); break;
-                case "AlignRight": cmd = new AlignRightCommand(); break;
-                case "AlignTop": cmd = new AlignTopCommand(); break;
-                case "AlignMiddle": cmd = new AlignMiddleCommand(); break;
-                case "AlignBottom": cmd = new AlignBottomCommand(); break;
-                case "DistributeH": cmd = new DistributeHorizontallyCommand(); break;
-                case "DistributeV": cmd = new DistributeVerticallyCommand(); break;
-                
-                case "AssignMaterial": cmd = new AssignMaterialCommand(); break;
-                case "SexyRevit": cmd = new SexyRevitCommand(); break;
-                case "Purge": cmd = new PurgeCommand(); break;
-                case "Offsets": cmd = new OffsetElevationsCommand(); break;
-                case "ResetSlabs": cmd = new ResetSlabsCommand(); break;
-                case "SimplifyPoints": cmd = new SimplifyPointsCommand(); break;
-                case "AlignEdges": cmd = new AlignEdgesCommand(); break;
-                case "UpdateContours": cmd = new UpdateContoursCommand(); break;
-                case "ChangeLevel": cmd = new ChangeLevelCommand(); break;
-                case "CleanSchemas": cmd = new CleanSchemasCommand(); break;
-                case "RenderMatch": cmd = new RenderAppearanceMatchCommand(); break;
-                case "ConvertFamily": cmd = new ConvertFamilyCommand(); break;
-                case "ConvertCad": cmd = new ConvertCadCommand(); break;
-                case "BatchRename": cmd = new SearchReplaceCommand(); break;
-
-                default: return Result.Cancelled;
-            }
-
-            if (cmd != null)
-            {
-                return cmd.Execute(data, ref message, elements);
-            }
-            return Result.Succeeded;
-        }
+            "AlignLeft" => ServiceLocator.CreateWith<AlignLeftCommand>(),
+            "AlignCenter" => ServiceLocator.CreateWith<AlignCenterCommand>(),
+            "AlignRight" => ServiceLocator.CreateWith<AlignRightCommand>(),
+            "AlignTop" => ServiceLocator.CreateWith<AlignTopCommand>(),
+            "AlignMiddle" => ServiceLocator.CreateWith<AlignMiddleCommand>(),
+            "AlignBottom" => ServiceLocator.CreateWith<AlignBottomCommand>(),
+            "DistributeH" => ServiceLocator.CreateWith<DistributeHorizontallyCommand>(),
+            "DistributeV" => ServiceLocator.CreateWith<DistributeVerticallyCommand>(),
+            "AssignMaterial" => ServiceLocator.CreateWith<AssignMaterialCommand>(),
+            "SexyRevit" => ServiceLocator.CreateWith<SexyRevitCommand>(),
+            "Purge" => ServiceLocator.CreateWith<PurgeCommand>(),
+            "Offsets" => ServiceLocator.CreateWith<OffsetElevationsCommand>(),
+            "ResetSlabs" => ServiceLocator.CreateWith<ResetSlabsCommand>(),
+            "SimplifyPoints" => ServiceLocator.CreateWith<SimplifyPointsCommand>(),
+            "AlignEdges" => ServiceLocator.CreateWith<AlignEdgesCommand>(),
+            "UpdateContours" => ServiceLocator.CreateWith<UpdateContoursCommand>(),
+            "ChangeLevel" => ServiceLocator.CreateWith<ChangeLevelCommand>(),
+            "CleanSchemas" => ServiceLocator.CreateWith<CleanSchemasCommand>(),
+            "RenderMatch" => ServiceLocator.CreateWith<RenderAppearanceMatchCommand>(),
+            "FixPoints" => ServiceLocator.CreateWith<FixPointsCommand>(),
+            "SplitBoundaries" => ServiceLocator.CreateWith<SplitBoundariesCommand>(),
+            "ConvertFloorToToposolid" => ServiceLocator.CreateWith<ConvertFloorToToposolidCommand>(),
+            "ConvertToposolidToFloor" => ServiceLocator.CreateWith<ConvertToposolidToFloorCommand>(),
+            "ConvertFamily" => ServiceLocator.CreateWith<ConvertFamilyCommand>(),
+            "ConvertCad" => ServiceLocator.CreateWith<ConvertCadCommand>(),
+            "BatchRename" => ServiceLocator.CreateWith<SearchReplaceCommand>(),
+            _ => null,
+        };
     }
 }

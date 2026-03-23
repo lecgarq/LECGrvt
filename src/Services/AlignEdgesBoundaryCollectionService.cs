@@ -2,40 +2,52 @@ using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public class AlignEdgesBoundaryCollectionService : IAlignEdgesBoundaryCollectionService
     {
         private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
+        private readonly IGeometryBoundaryService _geometryBoundaryService;
 
-        public AlignEdgesBoundaryCollectionService(IAlignEdgesBoundaryPointService boundaryPointService)
+        public AlignEdgesBoundaryCollectionService(IAlignEdgesBoundaryPointService boundaryPointService, IGeometryBoundaryService geometryBoundaryService)
         {
             _boundaryPointService = boundaryPointService;
+            _geometryBoundaryService = geometryBoundaryService;
         }
 
-        public List<XYZ> Collect(Document doc, Toposolid toposolid, ReferenceIntersector intersector, double minSpacing, double maxSpacing)
+        public List<XYZ> Collect(Document doc, Element slab, ReferenceIntersector intersector, double minSpacing, double maxSpacing)
         {
             ArgumentNullException.ThrowIfNull(doc);
-            ArgumentNullException.ThrowIfNull(toposolid);
+            ArgumentNullException.ThrowIfNull(slab);
             ArgumentNullException.ThrowIfNull(intersector);
 
             List<XYZ> points = new List<XYZ>();
 
             try
             {
-                Sketch? sketch = doc.GetElement(toposolid.SketchId) as Sketch;
-                if (sketch != null)
+                IList<CurveLoop> loops = _geometryBoundaryService.ExtractLoops(slab);
+                if (loops.Count > 0)
                 {
                     points.AddRange(_boundaryPointService.CollectBoundaryHitPoints(
-                        sketch,
+                        loops,
                         intersector,
                         minSpacing,
                         maxSpacing,
                         _ => { }));
                 }
             }
-            catch (Exception)
+            catch (ArgumentException)
+            {
+            }
+            catch (InvalidCastException)
+            {
+            }
+            catch (InvalidOperationException)
+            {
+            }
+            catch (RevitExceptions.InvalidOperationException)
             {
             }
 

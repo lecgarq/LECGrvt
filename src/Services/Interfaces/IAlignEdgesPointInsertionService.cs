@@ -6,6 +6,6 @@ namespace LECG.Services.Interfaces
 {
     public interface IAlignEdgesPointInsertionService
     {
-        void AddPoints(SlabShapeEditor editor, IEnumerable<XYZ> points);
+        int AddPoints(Element slab, SlabShapeEditor editor, IEnumerable<XYZ> points);
     }
 }

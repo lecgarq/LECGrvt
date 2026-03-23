@@ -13,6 +13,9 @@ namespace LECG.Commands
     {
         public override void Execute(UIDocument uiDoc, Document doc)
         {
+            ArgumentNullException.ThrowIfNull(uiDoc);
+            ArgumentNullException.ThrowIfNull(doc);
+
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
 
             if (!doc.IsFamilyDocument)
@@ -41,6 +44,7 @@ namespace LECG.Commands
             }
 
             Family nestedFamily = instance.Symbol.Family;
+            string familyName = nestedFamily.Name;
             Parameter? sharedParam = nestedFamily.LookupParameter("Shared");
 
             if (sharedParam == null)
@@ -68,7 +72,7 @@ namespace LECG.Commands
                     });
 
                     nestedDoc.LoadFamily(doc);
-                    LecgDialog.Show("Success", $"Family '{nestedFamily.Name}' converted to Non-Shared.");
+                    LecgDialog.Show("Success", $"Family '{familyName}' converted to Non-Shared.");
                 }
                 finally
                 {
@@ -79,7 +83,7 @@ namespace LECG.Commands
             }
 
             transactionService.Run(doc, "Set Nested Family to Non-Shared", _ => sharedParam.Set(0));
-            LecgDialog.Show("Success", $"Family '{nestedFamily.Name}' converted to Non-Shared.");
+            LecgDialog.Show("Success", $"Family '{familyName}' converted to Non-Shared.");
         }
     }
 }

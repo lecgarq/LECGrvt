@@ -65,12 +65,12 @@ namespace LECG.ViewModels
         private bool _useSelectedImport = true;
 
         public bool IsSelectionMode => UseSelectedImport;
-        public bool IsFileMode 
-        { 
+        public bool IsFileMode
+        {
             get => !UseSelectedImport;
             set => UseSelectedImport = !value;
         }
-        
+
         public System.Windows.Visibility SelectionVisibility => UseSelectedImport ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
         public System.Windows.Visibility FileVisibility => !UseSelectedImport ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
@@ -99,10 +99,10 @@ namespace LECG.ViewModels
         public bool ShouldPlace { get; private set; }
         public ElementId? CreatedFamilySymbolId { get; set; }
 
-        public bool CanRun => 
+        public bool CanRun =>
             !IsBusy && !IsFinished &&
-            (UseSelectedImport ? Selection.HasSelection : !string.IsNullOrWhiteSpace(DwgFilePath)) 
-            && !string.IsNullOrWhiteSpace(NewFamilyName) 
+            (UseSelectedImport ? Selection.HasSelection : !string.IsNullOrWhiteSpace(DwgFilePath))
+            && !string.IsNullOrWhiteSpace(NewFamilyName)
             && !string.IsNullOrWhiteSpace(TemplatePath);
 
         public ConvertCadViewModel(ICadConversionService service)
@@ -112,14 +112,15 @@ namespace LECG.ViewModels
             Selection.ElementName = "Imported CAD";
             TemplatePath = _service.GetDefaultTemplatePath();
             Selection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
-            SelectedColorItem = AvailableColors[0];
+            SelectedColorItem = AvailableColors.FirstOrDefault();
             LineWeight = 1;
             AddLog("System initialized.");
         }
 
         public void AddLog(string msg)
         {
-            System.Windows.Application.Current.Dispatcher.BeginInvoke(new System.Action(() => {
+            System.Windows.Application.Current.Dispatcher.BeginInvoke(new System.Action(() =>
+            {
                 Logs.Add($"[{System.DateTime.Now:HH:mm:ss}] {msg}");
                 StatusMessage = msg;
             }));
@@ -152,7 +153,7 @@ namespace LECG.ViewModels
 
             SelectedElementId = e.Id;
             Selection.UpdateSelection(1);
-            
+
             if (e != null)
             {
                 ElementId typeId = e.GetTypeId();
@@ -185,13 +186,13 @@ namespace LECG.ViewModels
 
         public override void Apply()
         {
-             if (CanRun)
-             {
-                 ShouldRun = true;
-                 IsBusy = true;
-                 OnPropertyChanged(nameof(CanRun));
-                 RunOperation?.Invoke();
-             }
+            if (CanRun && CanApply())
+            {
+                ShouldRun = true;
+                IsBusy = true;
+                OnPropertyChanged(nameof(CanRun));
+                RunOperation?.Invoke();
+            }
         }
 
         [RelayCommand]

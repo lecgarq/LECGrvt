@@ -1,22 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public class BatchRenameExecutionService : IBatchRenameExecutionService
     {
         private readonly ITransactionService _transactionService;
+        private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
 
-        public BatchRenameExecutionService(ITransactionService transactionService)
+        public BatchRenameExecutionService(ITransactionService transactionService, IFamilyLoadOptionsFactory loadOptionsFactory)
         {
             _transactionService = transactionService;
+            _loadOptionsFactory = loadOptionsFactory;
         }
 
         public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, Action<double, string>? onProgress = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(items);
+            ArgumentNullException.ThrowIfNull(logger);
+
             return ExecuteBatchRename(doc, items, logger, new LegacyProgressReporter(onProgress, logger.Log));
         }
 
@@ -70,11 +78,11 @@ namespace LECG.Services
                                 // Special handling for GraphicsStyle (Object Styles / Line Styles)
                                 if (el is GraphicsStyle gs)
                                 {
-                                    try 
+                                    try
                                     {
                                         // Try updating the element name directly
                                         // This often fails for certain built-in or imported styles
-                                        gs.Name = item.NewValue; 
+                                        gs.Name = item.NewValue;
                                         count++;
                                     }
                                     catch (Autodesk.Revit.Exceptions.InvalidOperationException)
@@ -96,14 +104,19 @@ namespace LECG.Services
                                         }
                                         else
                                         {
-                                             logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                            logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
                                         }
                                         continue;
                                     }
-                                    catch (Exception innerEx)
+                                    catch (ArgumentException innerEx)
                                     {
-                                         logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
-                                         continue;
+                                        logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
+                                        continue;
+                                    }
+                                    catch (InvalidOperationException innerEx)
+                                    {
+                                        logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
+                                        continue;
                                     }
                                 }
                                 else
@@ -114,9 +127,8 @@ namespace LECG.Services
 
                                 logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
                             }
-                            catch (Exception ex)
+                            catch (Exception ex) when (IsExpectedRenameException(ex))
                             {
-                                // Catch-all for other element types
                                 logger.LogError($"ERROR renaming {item.ElementName}: {ex.Message}");
                             }
                         }
@@ -131,15 +143,7 @@ namespace LECG.Services
             // crash with "referenced object is not valid" because the handle is stale.
             if (familyItems.Count > 0)
             {
-                // Group all checked rename items by their family element ID
-                var byFamily = new Dictionary<long, List<ReplaceItem>>();
-                foreach (var item in familyItems)
-                {
-                    if (!item.IsChecked) continue;
-                    if (!byFamily.ContainsKey(item.ElementId))
-                        byFamily[item.ElementId] = new List<ReplaceItem>();
-                    byFamily[item.ElementId].Add(item);
-                }
+                Dictionary<long, List<ReplaceItem>> byFamily = GroupCheckedFamilyParameterItems(familyItems);
 
                 int familyIndex = 0;
                 foreach (var kvp in byFamily)
@@ -157,66 +161,55 @@ namespace LECG.Services
                         continue;
                     }
 
-                    reporter.Report($"Processing Family '{family.Name}'...", percent);
+                    string familyName = family.Name;
+                    reporter.Report($"Processing Family '{familyName}'...", percent);
 
+                    Document? famDoc = null;
                     try
                     {
-                        Document? famDoc = doc.EditFamily(family);
+                        famDoc = doc.EditFamily(family);
                         if (famDoc == null)
                         {
-                            logger.LogError($"Could not open family document for '{family.Name}'.");
+                            logger.LogError($"Could not open family document for '{familyName}'.");
                             continue;
                         }
+
+                        // Pre-validate: build safety sets to detect parameters that could break the family
+                        FamilyManager preCheckMgr = famDoc.FamilyManager;
+                        var dimensionLabels = BuildDimensionLabelNames(famDoc);
+                        var formulaReferenced = BuildFormulaReferencedNames(preCheckMgr);
+                        var elementAssociated = BuildElementAssociationNames(famDoc, preCheckMgr);
 
                         int renamedInFamily = 0;
                         bool committed = _transactionService.RunConditional(famDoc, "Rename Parameters", _ =>
                         {
                             FamilyManager mgr = famDoc.FamilyManager;
 
-                            foreach (var item in kvp.Value)
-                            {
-                                // Find the parameter by its current (original) name in the family doc
-                                FamilyParameter? paramToRename = null;
-                                foreach (FamilyParameter fp in mgr.Parameters)
-                                {
-                                    if (fp.Definition.Name.Equals(item.OriginalValue, StringComparison.Ordinal))
-                                    {
-                                        paramToRename = fp;
-                                        break;
-                                    }
-                                }
-
-                                if (paramToRename != null)
-                                {
-                                    try
-                                    {
-                                        mgr.RenameParameter(paramToRename, item.NewValue);
-                                        renamedInFamily++;
-                                        count++;
-                                        logger.LogSuccess($"Renamed param '{item.OriginalValue}' → '{item.NewValue}' in '{family.Name}'");
-                                    }
-                                    catch (Exception renameEx)
-                                    {
-                                        logger.LogError($"Could not rename param '{item.OriginalValue}' in '{family.Name}': {renameEx.Message}");
-                                    }
-                                }
-                                else
-                                {
-                                    logger.Log($"Skipped: Param '{item.OriginalValue}' not found in family '{family.Name}'.");
-                                }
-                            }
+                            renamedInFamily = RenameFamilyParameters(
+                                mgr,
+                                kvp.Value,
+                                familyName,
+                                dimensionLabels,
+                                formulaReferenced,
+                                elementAssociated,
+                                logger);
+                            count += renamedInFamily;
                             return renamedInFamily > 0;
                         });
 
                         // Reload ONCE after all parameters are renamed in this family
                         if (committed)
-                            famDoc.LoadFamily(doc, new OverwriteFamilyOption());
+                            famDoc.LoadFamily(doc, _loadOptionsFactory.Create());
 
                         famDoc.Close(false);
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) when (IsExpectedRenameException(ex))
                     {
-                        logger.LogError($"Failed processing family '{family.Name}': {ex.Message}");
+                        logger.LogError($"Failed processing family '{familyName}': {ex.Message}");
+                    }
+                    finally
+                    {
+                        TryCloseFamilyDocument(famDoc, familyName, logger);
                     }
                 }
             }
@@ -225,6 +218,249 @@ namespace LECG.Services
             reporter.Report("Done", 100);
 
             return count;
+        }
+
+        private static Dictionary<long, List<ReplaceItem>> GroupCheckedFamilyParameterItems(List<ReplaceItem> familyItems)
+        {
+            Dictionary<long, List<ReplaceItem>> byFamily = new Dictionary<long, List<ReplaceItem>>();
+            foreach (ReplaceItem item in familyItems)
+            {
+                if (!item.IsChecked)
+                {
+                    continue;
+                }
+
+                if (!byFamily.TryGetValue(item.ElementId, out List<ReplaceItem>? items))
+                {
+                    items = new List<ReplaceItem>();
+                    byFamily[item.ElementId] = items;
+                }
+
+                items.Add(item);
+            }
+
+            return byFamily;
+        }
+
+        private static int RenameFamilyParameters(
+            FamilyManager manager,
+            List<ReplaceItem> items,
+            string familyName,
+            HashSet<string> dimensionLabels,
+            HashSet<string> formulaReferenced,
+            HashSet<string> elementAssociated,
+            Logging.ILogger logger)
+        {
+            int renamedCount = 0;
+            foreach (ReplaceItem item in items)
+            {
+                FamilyParameter? paramToRename = FindFamilyParameterByName(manager, item.OriginalValue);
+                if (paramToRename == null)
+                {
+                    logger.Log($"Skipped: Param '{item.OriginalValue}' not found in family '{familyName}'.");
+                    continue;
+                }
+
+                string? skipReason = GetRenameSkipReason(
+                    paramToRename,
+                    item.NewValue,
+                    manager,
+                    dimensionLabels,
+                    formulaReferenced,
+                    elementAssociated);
+                if (skipReason != null)
+                {
+                    logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': {skipReason}");
+                    continue;
+                }
+
+                if (TryRenameFamilyParameter(manager, paramToRename, item, familyName, logger))
+                {
+                    renamedCount++;
+                }
+            }
+
+            return renamedCount;
+        }
+
+        private static FamilyParameter? FindFamilyParameterByName(FamilyManager manager, string parameterName)
+        {
+            foreach (FamilyParameter parameter in manager.Parameters)
+            {
+                if (parameter.Definition.Name.Equals(parameterName, StringComparison.Ordinal))
+                {
+                    return parameter;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool TryRenameFamilyParameter(
+            FamilyManager manager,
+            FamilyParameter parameter,
+            ReplaceItem item,
+            string familyName,
+            Logging.ILogger logger)
+        {
+            try
+            {
+                manager.RenameParameter(parameter, item.NewValue);
+                logger.LogSuccess($"Renamed param '{item.OriginalValue}' -> '{item.NewValue}' in '{familyName}'");
+                return true;
+            }
+            catch (ArgumentException renameEx)
+            {
+                logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
+                return false;
+            }
+            catch (InvalidOperationException renameEx)
+            {
+                logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
+                return false;
+            }
+            catch (RevitExceptions.InvalidOperationException renameEx)
+            {
+                logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns null if the parameter is safe to rename, or a reason string explaining why it should be skipped.
+        /// Prevents renaming parameters that drive geometry, formulas, dimensions, or element associations.
+        /// </summary>
+        private static string? GetRenameSkipReason(
+            FamilyParameter fp,
+            string newName,
+            FamilyManager mgr,
+            HashSet<string> dimensionLabels,
+            HashSet<string> formulaReferenced,
+            HashSet<string> elementAssociated)
+        {
+            string name = fp.Definition.Name;
+
+            // Built-in parameters cannot be renamed
+            if (fp.Id.Value < 0)
+                return "built-in parameter (cannot rename)";
+
+            // Reporting parameters are dimension-driven — renaming could break references
+            if (fp.IsReporting)
+                return "reporting parameter (dimension-driven)";
+
+            // Dimension label — renaming could break dimension display
+            if (dimensionLabels.Contains(name))
+                return "drives a dimension label";
+
+            // Referenced in another parameter's formula — Revit may not auto-update all references
+            if (formulaReferenced.Contains(name))
+                return "referenced in another parameter's formula";
+
+            // Associated with element properties (geometry, material, visibility, nesting)
+            if (elementAssociated.Contains(name))
+                return "associated with element geometry/material/visibility";
+
+            // Check if the new name conflicts with an existing parameter name
+            foreach (FamilyParameter existing in mgr.Parameters)
+            {
+                if (existing.Id != fp.Id &&
+                    existing.Definition.Name.Equals(newName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return $"new name '{newName}' conflicts with existing parameter";
+                }
+            }
+
+            return null; // Safe to rename
+        }
+
+        /// <summary>
+        /// Build set of parameter names that are used as dimension labels in the family.
+        /// </summary>
+        private static HashSet<string> BuildDimensionLabelNames(Document famDoc)
+        {
+            var names = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            var dimensions = new FilteredElementCollector(famDoc)
+                .OfClass(typeof(Dimension))
+                .Cast<Dimension>();
+
+            foreach (Dimension dim in dimensions)
+            {
+                try
+                {
+                    FamilyParameter? label = dim.FamilyLabel;
+                    if (label != null)
+                        names.Add(label.Definition.Name);
+                }
+                catch
+                {
+                    // Some dimensions may not support FamilyLabel
+                }
+            }
+
+            return names;
+        }
+
+        /// <summary>
+        /// Build set of parameter names that are referenced in any other parameter's formula.
+        /// </summary>
+        private static HashSet<string> BuildFormulaReferencedNames(FamilyManager fm)
+        {
+            var referenced = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            // Collect all parameter names
+            var allNames = new List<string>();
+            foreach (FamilyParameter fp in fm.Parameters)
+                allNames.Add(fp.Definition.Name);
+
+            // Scan formulas for references
+            foreach (FamilyParameter fp in fm.Parameters)
+            {
+                if (string.IsNullOrEmpty(fp.Formula)) continue;
+
+                string formula = fp.Formula;
+                foreach (string name in allNames)
+                {
+                    if (formula.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                        referenced.Add(name);
+                }
+            }
+
+            return referenced;
+        }
+
+        /// <summary>
+        /// Build set of parameter names that are associated with element properties
+        /// (geometry, material assignments, visibility, nested family mappings).
+        /// </summary>
+        private static HashSet<string> BuildElementAssociationNames(Document famDoc, FamilyManager fm)
+        {
+            var associated = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            var allElements = new FilteredElementCollector(famDoc)
+                .WhereElementIsNotElementType()
+                .ToList();
+
+            foreach (Element el in allElements)
+            {
+                if (el.Parameters == null) continue;
+
+                foreach (Parameter p in el.Parameters)
+                {
+                    try
+                    {
+                        FamilyParameter? assoc = fm.GetAssociatedFamilyParameter(p);
+                        if (assoc != null)
+                            associated.Add(assoc.Definition.Name);
+                    }
+                    catch
+                    {
+                        // Some parameters/elements may not support association query
+                    }
+                }
+            }
+
+            return associated;
         }
 
         private bool SwapStyle(Document doc, GraphicsStyle oldStyle, string newName, Logging.ILogger logger)
@@ -252,31 +488,31 @@ namespace LECG.Services
 
                 // 2. Copy Properties
                 newCat.LineColor = oldCat.LineColor;
-                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Projection); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Projection); } catch (Exception ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set projection line weight: {ex.Message}"); }
-                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Cut); if(w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Cut); } catch (Exception ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set cut line weight: {ex.Message}"); }
-                
+                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Projection); if (w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Projection); } catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set projection line weight: {ex.Message}"); } catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set projection line weight: {ex.Message}"); } catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set projection line weight: {ex.Message}"); }
+                try { int? w = oldCat.GetLineWeight(GraphicsStyleType.Cut); if (w.HasValue) newCat.SetLineWeight(w.Value, GraphicsStyleType.Cut); } catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set cut line weight: {ex.Message}"); } catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set cut line weight: {ex.Message}"); } catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[BatchRenameExecutionService] Failed to set cut line weight: {ex.Message}"); }
+
                 // 3. Find Elements using the OLD style (CurveElements mostly)
                 // Note: This is simplified and mainly targets Line Styles (Model/Detail Lines)
                 var collector = new FilteredElementCollector(doc)
                     .OfClass(typeof(CurveElement));
-                
+
                 int movedCount = 0;
                 foreach (Element e in collector)
                 {
                     if (e is CurveElement curve)
                     {
-                         // CurveElement uses LineStyle property which is the GraphicsStyle element
-                         if (curve.LineStyle.Id == oldStyle.Id)
-                         {
-                             // Find the GraphicsStyle element corresponding to the NEW Category
-                             // We need to find the correct GraphicsStyle (Projection usually for lines)
-                             GraphicsStyle? newGs = newCat.GetGraphicsStyle(GraphicsStyleType.Projection);
-                             if (newGs != null)
-                             {
-                                 curve.LineStyle = newGs;
-                                 movedCount++;
-                             }
-                         }
+                        // CurveElement uses LineStyle property which is the GraphicsStyle element
+                        if (curve.LineStyle.Id == oldStyle.Id)
+                        {
+                            // Find the GraphicsStyle element corresponding to the NEW Category
+                            // We need to find the correct GraphicsStyle (Projection usually for lines)
+                            GraphicsStyle? newGs = newCat.GetGraphicsStyle(GraphicsStyleType.Projection);
+                            if (newGs != null)
+                            {
+                                curve.LineStyle = newGs;
+                                movedCount++;
+                            }
+                        }
                     }
                 }
 
@@ -285,41 +521,58 @@ namespace LECG.Services
                 {
                     doc.Delete(oldStyle.GraphicsStyleCategory.Id);
                 }
-                catch
+                catch (ArgumentException)
+                {
+                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
+                }
+                catch (InvalidOperationException)
+                {
+                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
+                }
+                catch (RevitExceptions.InvalidOperationException)
                 {
                     logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
                 }
 
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedRenameException(ex))
             {
                 logger.LogError($"Swap failed for {oldStyle.Name}: {ex.Message}");
                 return false;
             }
         }
-    }
 
-    public class OverwriteFamilyOption : IFamilyLoadOptions
-    {
-        public bool OnFamilyFound(bool familyInUse, out bool overwriteParameterValues)
+        private static bool IsExpectedRenameException(Exception ex)
         {
-            overwriteParameterValues = true;
-            return true;
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
         }
 
-        public bool OnSharedFamilyFound(Family sharedFamily, bool familyInUse, out FamilySource source, out bool overwriteParameterValues)
+        private static void TryCloseFamilyDocument(Document? famDoc, string familyName, Logging.ILogger logger)
         {
-            source = FamilySource.Family;
-            overwriteParameterValues = true;
-            return true;
-        }
+            if (famDoc == null || !famDoc.IsValidObject)
+            {
+                return;
+            }
 
-        public bool OnSharedFamilyFound(bool sharedFamilyInUse, out FamilySource source, out bool overwriteParameterValues)
-        {
-            source = FamilySource.Family;
-            overwriteParameterValues = true;
-            return true;
+            try
+            {
+                famDoc.Close(false);
+            }
+            catch (ArgumentException ex)
+            {
+                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}");
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
+            {
+                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}");
+            }
         }
     }
 }

@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using LECG.Core;
+using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using LECG.Views.Base;
-using LECG.Services.Interfaces;
 
 namespace LECG.Commands
 {
@@ -22,25 +20,42 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            // 1. Service
             var service = ServiceLocator.GetRequiredService<IAlignEdgesService>();
-            
-            // 2. VM
-            var vm = ServiceLocator.GetRequiredService<AlignEdgesViewModel>(); // Service is stateless, but we need refs from VM.
-            
-            // 3. View
-            var view = ServiceLocator.GetRequiredService<AlignEdgesView>();
+
+            var vm = ServiceLocator.GetRequiredService<AlignEdgesViewModel>();
+            var preselectedSources = SelectionSeedHelper.GetSelectedReferences(uiDoc, new SelectionFilters.SlabFilter());
+            if (preselectedSources.Count > 0)
+            {
+                vm.SetTargets(preselectedSources);
+            }
+
+            var view = ServiceLocator.CreateWith<AlignEdgesView>(vm);
             view.Initialize(uiDoc);
-            
-            // 4. Show
+
             bool? result = view.ShowDialog();
-            
-            // 5. Run if confirmed
+
             if (result == true && vm.ShouldRun)
             {
-                service.AlignEdges(doc, vm.TargetRefs, vm.ReferenceRefs);
-                LecgDialog.Show("Align Edges", "Alignment completed successfully.");
+                IReadOnlyList<AlignEdgesSourceResult> sourceResults = vm.FindMyEdge
+                    ? service.AlignEdgesFindMyEdge(doc, vm.TargetRefs)
+                    : service.AlignEdges(doc, vm.TargetRefs, vm.ReferenceRefs);
+
+                LecgDialog.Show("Align Edges", BuildCompletionMessage(sourceResults));
             }
+        }
+
+        private static string BuildCompletionMessage(IReadOnlyList<AlignEdgesSourceResult> sourceResults)
+        {
+            int alignedCount = sourceResults.Count(r => r.Status == AlignEdgesSourceStatus.Aligned);
+            int partialCount = sourceResults.Count(r => r.Status == AlignEdgesSourceStatus.PartiallyAligned);
+            int noTargetCount = sourceResults.Count(r => r.Status == AlignEdgesSourceStatus.NoValidTargets);
+            int failedCount = sourceResults.Count(r => r.Status == AlignEdgesSourceStatus.Failed);
+
+            return $"Processed {sourceResults.Count} source slabs.\n"
+                + $"Aligned: {alignedCount}\n"
+                + $"Partial: {partialCount}\n"
+                + $"No valid targets: {noTargetCount}\n"
+                + $"Failed: {failedCount}";
         }
     }
 }

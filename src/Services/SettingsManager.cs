@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using LECG.Core;
+using LECG.Services.Logging;
+using LECG.Validation;
 
 namespace LECG.Services
 {
@@ -35,6 +38,11 @@ namespace LECG.Services
         {
             try
             {
+                if (!TryValidateSettings(settings, fileName))
+                {
+                    return;
+                }
+
                 string json = JsonSerializer.Serialize(settings, _options);
                 string filePath = Path.Combine(_appDataPath, fileName);
                 File.WriteAllText(filePath, json);
@@ -57,7 +65,10 @@ namespace LECG.Services
                 {
                     string json = File.ReadAllText(filePath);
                     T? result = JsonSerializer.Deserialize<T>(json);
-                    return result ?? new T();
+                    if (result != null && TryValidateSettings(result, fileName))
+                    {
+                        return result;
+                    }
                 }
             }
             catch
@@ -65,6 +76,18 @@ namespace LECG.Services
                 // Return default if load fails
             }
             return new T();
+        }
+
+        private static bool TryValidateSettings<T>(T settings, string fileName)
+        {
+            IValidationService? validationService = ServiceLocator.GetService<IValidationService>();
+            if (validationService == null || validationService.TryValidate(settings!, out string message))
+            {
+                return true;
+            }
+
+            Logger.Instance.LogWarning($"Invalid settings in {fileName}: {message}", nameof(SettingsManager));
+            return false;
         }
     }
 }

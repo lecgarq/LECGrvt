@@ -4,6 +4,7 @@ using LECG.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -52,11 +53,11 @@ namespace LECG.Services
                     if (docCat == null)
                         throw new InvalidOperationException($"Category '{newCategory.Name}' is not loaded or valid in this family document.");
 
-                    try 
+                    try
                     {
                         familyDoc.OwnerFamily.FamilyCategory = docCat;
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
                     {
                         // WORKAROUND: Try the "Generic Model Bridge" if it's a model family
                         if (isSourceModel)
@@ -67,7 +68,7 @@ namespace LECG.Services
                                 familyDoc.OwnerFamily.FamilyCategory = gmCat;
                                 familyDoc.OwnerFamily.FamilyCategory = docCat; // Try again after resetting to GM
                             }
-                            catch
+                            catch (Exception bridgeEx) when (IsExpectedFamilyEditorException(bridgeEx))
                             {
                                 throw new InvalidOperationException($"Revit refused category change: {ex.Message}");
                             }
@@ -88,10 +89,10 @@ namespace LECG.Services
         private bool IsModelCategory(Category? cat)
         {
             if (cat == null) return true;
-            
+
             // Known 2D Categories that are NOT model categories
             BuiltInCategory bic = (BuiltInCategory)cat.Id.Value;
-            
+
             return bic switch
             {
                 BuiltInCategory.OST_DetailComponents => false,
@@ -107,14 +108,15 @@ namespace LECG.Services
         public bool ProcessFamily(Autodesk.Revit.DB.Family family, Action<Autodesk.Revit.DB.Document> action)
         {
             if (family == null) return false;
-            
+            ArgumentNullException.ThrowIfNull(action);
+
             Autodesk.Revit.DB.Document projectDoc = family.Document;
             Autodesk.Revit.DB.Document familyDoc = null!;
-            
+
             try
             {
                 familyDoc = projectDoc.EditFamily(family);
-                if (familyDoc == null) 
+                if (familyDoc == null)
                 {
                     LECG.Services.Logging.Logger.Instance.Log($"  [ERROR] Could not enter Family Editor for '{family.Name}'.");
                     return false;
@@ -128,34 +130,33 @@ namespace LECG.Services
                 // Load back into project (LoadFamily manages its own transaction internally)
                 var options = _loadOptionsFactory.Create();
                 familyDoc.LoadFamily(projectDoc, options);
-                
+
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
             {
                 LECG.Services.Logging.Logger.Instance.Log($"  [ERROR] {ex.Message}");
                 return false;
             }
             finally
             {
-                familyDoc?.Close(false);
+                TryCloseFamilyDocument(familyDoc);
             }
         }
 
         public Family RecreateAs(Family sourceFamily, Category targetCategory)
         {
             if (sourceFamily == null) throw new ArgumentNullException(nameof(sourceFamily));
-            
+
             Document projectDoc = sourceFamily.Document;
             Application app = projectDoc.Application;
-            
+
             // 1. Determine the correct template path with a robust search
-            string templatePath = FindTemplate(targetCategory);
-            
+            string templatePath = FindTemplate(targetCategory, app.VersionNumber);
+
             if (string.IsNullOrEmpty(templatePath))
             {
-                // Last ditch effort: try to ask the user via Log, but for now we throw a helpful diagnostic
-                string baseDir = @"C:\ProgramData\Autodesk\RVT 2026\Family Templates";
+                string baseDir = Configuration.RevitConstants.GetFamilyTemplatesBaseDir(app.VersionNumber);
                 throw new Exception($"Creator Engine Error: Could not find suitable .rft template in {baseDir}. Please ensure English or Spanish templates are installed.");
             }
 
@@ -166,12 +167,12 @@ namespace LECG.Services
             {
                 // 2. Create the new family document
                 targetDoc = app.NewFamilyDocument(templatePath);
-                
+
                 // 3. Nest source family into target
                 string safeName = sourceFamily.Name.Replace(" ", "_").Replace("[", "").Replace("]", "");
                 string tempPath = System.IO.Path.Combine(System.IO.Path.GetTempPath(), safeName + "_nest.rfa");
-                
-                try 
+
+                try
                 {
                     // Save source family to disk so it can be loaded
                     SaveAsOptions saveOptions = new SaveAsOptions { OverwriteExistingFile = true };
@@ -183,11 +184,11 @@ namespace LECG.Services
                         // Load the Detail Item into the new 3D family
                         Family nestedFamily;
                         bool loadSuccess = targetDoc.LoadFamily(tempPath, _loadOptionsFactory.Create(), out nestedFamily);
-                        
+
                         if (loadSuccess && nestedFamily != null)
                         {
                             // Place the symbol at the origin (Ref Level)
-                            FamilySymbol symbol = new FilteredElementCollector(targetDoc)
+                            FamilySymbol? symbol = new FilteredElementCollector(targetDoc)
                                 .OfClass(typeof(FamilySymbol))
                                 .Cast<FamilySymbol>()
                                 .FirstOrDefault(s => s.Family.Id == nestedFamily.Id);
@@ -200,16 +201,13 @@ namespace LECG.Services
                         }
                     });
                 }
-                catch (Exception nestEx)
+                catch (Exception nestEx) when (IsExpectedFamilyNestingException(nestEx))
                 {
-                     throw new Exception($"Nesting Failed: {nestEx.Message}. Harvesting logic exhausted.");
+                    throw new Exception($"Nesting Failed: {nestEx.Message}. Harvesting logic exhausted.");
                 }
                 finally
                 {
-                    if (System.IO.File.Exists(tempPath))
-                    {
-                        try { System.IO.File.Delete(tempPath); } catch { /* ignore cleanup errors */ }
-                    }
+                    TryDeleteTemporaryFile(tempPath);
                 }
 
                 // 4. Set the Category in the new family
@@ -227,7 +225,7 @@ namespace LECG.Services
                 string suffix = "-TRANSPLANTED";
                 string newName = sourceFamily.Name + suffix;
                 Family newFamily = targetDoc.LoadFamily(projectDoc, _loadOptionsFactory.Create());
-                
+
                 // Rename in project context
                 _transactionService.Run(projectDoc, "Rename Transplanted Family", _ =>
                 {
@@ -239,12 +237,15 @@ namespace LECG.Services
             finally
             {
                 // Note: sourceDoc was closed earlier in the try block to avoid lock
-                targetDoc?.Close(false);
+                TryCloseFamilyDocument(targetDoc);
             }
         }
 
         public void BatchProcess(IEnumerable<Autodesk.Revit.DB.Family> families, Action<Autodesk.Revit.DB.Document> action)
         {
+            ArgumentNullException.ThrowIfNull(families);
+            ArgumentNullException.ThrowIfNull(action);
+
             // Future performance enhancement: consider batching transactions if Revit allows
             // For now, iterate with individual family document management for memory safety
             foreach (var family in families)
@@ -253,16 +254,66 @@ namespace LECG.Services
             }
         }
 
-        private string FindTemplate(Category targetCategory)
+        private static bool IsExpectedFamilyEditorException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
+
+        private static bool IsExpectedFamilyNestingException(Exception ex)
+        {
+            return IsExpectedFamilyEditorException(ex)
+                || ex is System.IO.IOException
+                || ex is UnauthorizedAccessException;
+        }
+
+        private static void TryCloseFamilyDocument(Autodesk.Revit.DB.Document? familyDoc)
+        {
+            if (familyDoc == null || !familyDoc.IsValidObject)
+            {
+                return;
+            }
+
+            try
+            {
+                familyDoc.Close(false);
+            }
+            catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyEditorService] Could not close family document: {ex.Message}");
+            }
+        }
+
+        private static void TryDeleteTemporaryFile(string path)
+        {
+            if (!System.IO.File.Exists(path))
+            {
+                return;
+            }
+
+            try
+            {
+                System.IO.File.Delete(path);
+            }
+            catch (System.IO.IOException)
+            {
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+        }
+
+        private string FindTemplate(Category targetCategory, string versionNumber)
         {
             bool isModel = IsModelCategory(targetCategory);
-            
-            // Priority list of directories
+
+            string baseDir = Configuration.RevitConstants.GetFamilyTemplatesBaseDir(versionNumber);
             string[] searchDirs = new[]
             {
-                @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English",
-                @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\Spanish",
-                @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English-Imperial"
+                System.IO.Path.Combine(baseDir, "English"),
+                System.IO.Path.Combine(baseDir, "Spanish"),
+                System.IO.Path.Combine(baseDir, "English-Imperial")
             };
 
             // Priority list of file names (Metric then Imperial, localized common names)

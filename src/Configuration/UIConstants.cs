@@ -43,8 +43,8 @@ namespace LECG.Configuration
 
         // Material Creator
         public const string ButtonMaterialCreator_Name = "btnMaterialCreator";
-        public const string ButtonMaterialCreator_Text = "Create\nMaterials";
-        public const string ButtonMaterialCreator_Tooltip = "Create materials from texture folders (Diffuse, Normal, Roughness, AO).";
+        public const string ButtonMaterialCreator_Text = "PBR\nMaterial";
+        public const string ButtonMaterialCreator_Tooltip = "Create a render-ready material from diffuse, roughness, and bump textures.";
 
         // Reset Slabs
         public const string ButtonResetSlabs_Name = "cmdResetSlabs";
@@ -124,6 +124,11 @@ namespace LECG.Configuration
         public const string ButtonConvertCad_Text = "CAD\nBlocks";
         public const string ButtonConvertCad_Tooltip = "Convert Imported CAD to cleaned Detail Item families.";
 
+        // Formula Auto Grouping
+        public const string ButtonFormulaGrouping_Name = "btnFormulaGrouping";
+        public const string ButtonFormulaGrouping_Text = "Formula\nGrouping";
+        public const string ButtonFormulaGrouping_Tooltip = "Move formula-driven parameters to Revit's General/Other family parameter group across all families.";
+
         // Standards (Filter Copy)
         public const string ButtonFilterCopy_Name = "btnFilterCopy";
         public const string ButtonFilterCopy_Text = "Filter\nCopy";
@@ -133,5 +138,30 @@ namespace LECG.Configuration
         public const string ButtonCategoryChanger_Name = "btnCategoryChanger";
         public const string ButtonCategoryChanger_Text = "Category\nChanger";
         public const string ButtonCategoryChanger_Tooltip = "Quickly switch instance categories by modifying the family definition silently.";
+
+        // Convert Floor to Toposolid
+        public const string ButtonConvertFloorToTopo_Name = "btnConvertFloorToTopo";
+        public const string ButtonConvertFloorToTopo_Text = "Floor to\nToposolid";
+        public const string ButtonConvertFloorToTopo_Tooltip = "Convert Floors to Toposolids preserving shape points and elevations.";
+
+        // Convert Toposolid to Floor
+        public const string ButtonConvertTopoToFloor_Name = "btnConvertTopoToFloor";
+        public const string ButtonConvertTopoToFloor_Text = "Toposolid\nto Floor";
+        public const string ButtonConvertTopoToFloor_Tooltip = "Convert Toposolids to Floors preserving edited points and elevations.";
+
+        // Fix Points
+        public const string ButtonFixPoints_Name = "btnFixPoints";
+        public const string ButtonFixPoints_Text = "Fix\nPoints";
+        public const string ButtonFixPoints_Tooltip = "Repair inconsistent edge and transition points on Floors and Toposolids.";
+
+        // Split Boundaries
+        public const string ButtonSplitBoundaries_Name = "btnSplitBoundaries";
+        public const string ButtonSplitBoundaries_Text = "Split\nBoundaries";
+        public const string ButtonSplitBoundaries_Tooltip = "Separate multi-boundary elements into independent instances.";
+
+        // Type to Linked Models
+        public const string ButtonTypeToLinked_Name = "btnTypeToLinked";
+        public const string ButtonTypeToLinked_Text = "Type to\nLinked";
+        public const string ButtonTypeToLinked_Tooltip = "Separate model content by type into individual linked Revit files.";
     }
 }

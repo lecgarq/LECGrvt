@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -8,7 +7,7 @@ using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using System;
-using System.Linq;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Commands
 {
@@ -30,11 +29,13 @@ namespace LECG.Commands
             handler.Initialize(viewModel, service, transactionService);
 
             // Initialize ViewModel with Selection
-            var selId = uiDoc.Selection.GetElementIds();
-            if (selId.Count == 1)
+            foreach (Element preselectedElement in SelectionSeedHelper.GetSelectedElements(uiDoc, null))
             {
-                Element e = doc.GetElement(selId.First());
-                if (e is ImportInstance) viewModel.SetSelection(e);
+                if (preselectedElement is ImportInstance)
+                {
+                    viewModel.SetSelection(preselectedElement);
+                    break;
+                }
             }
 
             // Attach Event triggers to ViewModel
@@ -51,7 +52,8 @@ namespace LECG.Commands
             };
 
             // STEP 1: CONFIGURATION (Non-modal)
-            var view = ServiceLocator.GetRequiredService<ConvertCadView>();
+            // Pass VM explicitly so command and view share the same instance
+            var view = ServiceLocator.CreateWith<ConvertCadView>(viewModel);
             view.Initialize(uiDoc);
             view.Show();
         }
@@ -61,9 +63,9 @@ namespace LECG.Commands
 
     public class ConvertCadEventHandler : IExternalEventHandler
     {
-        private ConvertCadViewModel _viewModel;
-        private ICadConversionService _service;
-        private ITransactionService _transactionService;
+        private ConvertCadViewModel? _viewModel;
+        private ICadConversionService? _service;
+        private ITransactionService? _transactionService;
         private CadOpType _requestedOp = CadOpType.None;
 
         public void Initialize(ConvertCadViewModel vm, ICadConversionService svc, ITransactionService transactionService)
@@ -79,23 +81,27 @@ namespace LECG.Commands
         {
             ArgumentNullException.ThrowIfNull(app);
 
-            if (_viewModel == null || _requestedOp == CadOpType.None) return;
+            if (_viewModel == null || _service == null || _transactionService == null || _requestedOp == CadOpType.None)
+            {
+                return;
+            }
 
-            UIDocument uiDoc = app.ActiveUIDocument;
+            UIDocument uiDoc = app.ActiveUIDocument
+                ?? throw new InvalidOperationException("No active Revit document is available for CAD conversion.");
             Document doc = uiDoc.Document;
 
             try
             {
                 if (_requestedOp == CadOpType.Convert)
                 {
-                    RunConversion(doc);
+                    RunConversion(doc, _viewModel, _service);
                 }
                 else if (_requestedOp == CadOpType.Place)
                 {
-                    RunPlacement(uiDoc, doc);
+                    RunPlacement(uiDoc, doc, _viewModel, _transactionService);
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedCadOperationException(ex))
             {
                 _viewModel.AddLog($"FATAL ERROR [{ex.GetType().Name}]: {ex.Message}");
                 _viewModel.IsBusy = false;
@@ -107,72 +113,87 @@ namespace LECG.Commands
             }
         }
 
-        private void RunConversion(Document doc)
+        private void RunConversion(Document doc, ConvertCadViewModel viewModel, ICadConversionService service)
         {
-            _viewModel.AddLog("Starting conversion...");
-            _viewModel.Progress = 0;
-            _viewModel.IsBusy = true;
-            
-            var mColor = _viewModel.LineColor;
+            viewModel.AddLog("Starting conversion...");
+            viewModel.Progress = 0;
+            viewModel.IsBusy = true;
+
+            var mColor = viewModel.LineColor;
             var rColor = new Autodesk.Revit.DB.Color(mColor.R, mColor.G, mColor.B);
             ElementId createdId = ElementId.InvalidElementId;
             var reporter = new SimpleProgressReporter(report =>
             {
-                _viewModel.Progress = report.Percentage;
+                viewModel.Progress = report.Percentage;
                 if (!string.IsNullOrWhiteSpace(report.Message))
                 {
-                    _viewModel.AddLog(report.Message);
+                    viewModel.AddLog(report.Message);
                 }
             });
 
-            if (_viewModel.UseSelectedImport)
+            if (viewModel.UseSelectedImport)
             {
-                Element e = doc.GetElement(_viewModel.SelectedElementId);
-                createdId = _service.ConvertCadToFamily(doc, (ImportInstance)e, _viewModel.NewFamilyName, _viewModel.TemplatePath, _viewModel.LineStyleName, rColor, _viewModel.LineWeight, reporter);
+                Element? e = doc.GetElement(viewModel.SelectedElementId);
+                if (e is not ImportInstance importInstance)
+                {
+                    throw new InvalidOperationException("The selected element is no longer a valid CAD import instance.");
+                }
+
+                createdId = service.ConvertCadToFamily(doc, importInstance, viewModel.NewFamilyName, viewModel.TemplatePath, viewModel.LineStyleName, rColor, viewModel.LineWeight, reporter);
             }
             else
             {
-                createdId = _service.ConvertDwgToFamily(doc, _viewModel.DwgFilePath, _viewModel.NewFamilyName, _viewModel.TemplatePath, _viewModel.LineStyleName, rColor, _viewModel.LineWeight, reporter);
+                createdId = service.ConvertDwgToFamily(doc, viewModel.DwgFilePath, viewModel.NewFamilyName, viewModel.TemplatePath, viewModel.LineStyleName, rColor, viewModel.LineWeight, reporter);
             }
 
-            _viewModel.CreatedFamilySymbolId = createdId;
-            _viewModel.Progress = 100;
-            _viewModel.IsFinished = true;
-            _viewModel.IsBusy = false;
-            _viewModel.AddLog("Success! Operation completed.");
+            viewModel.CreatedFamilySymbolId = createdId;
+            viewModel.Progress = 100;
+            viewModel.IsFinished = true;
+            viewModel.IsBusy = false;
+            viewModel.AddLog("Success! Operation completed.");
         }
 
-        private void RunPlacement(UIDocument uiDoc, Document doc)
+        private void RunPlacement(UIDocument uiDoc, Document doc, ConvertCadViewModel viewModel, ITransactionService transactionService)
         {
-            if (_viewModel.CreatedFamilySymbolId == null || _viewModel.CreatedFamilySymbolId == ElementId.InvalidElementId)
+            if (viewModel.CreatedFamilySymbolId == null || viewModel.CreatedFamilySymbolId == ElementId.InvalidElementId)
+            {
                 return;
+            }
 
-            FamilySymbol symbol = doc.GetElement(_viewModel.CreatedFamilySymbolId) as FamilySymbol;
+            FamilySymbol? symbol = doc.GetElement(viewModel.CreatedFamilySymbolId) as FamilySymbol;
             if (symbol == null) return;
 
             // Detail items (2D) cannot be placed in 3D views.
             if (uiDoc.ActiveView.ViewType == ViewType.ThreeD)
             {
-                _viewModel.AddLog("Placement failed: detail items can only be placed in 2D views.");
+                viewModel.AddLog("Placement failed: detail items can only be placed in 2D views.");
                 return;
             }
 
             // Ensure symbol is active
             if (!symbol.IsActive)
             {
-                _transactionService.Run(doc, "Activate Symbol", _ => symbol.Activate());
+                transactionService.Run(doc, "Activate Symbol", _ => symbol.Activate());
             }
 
-            try 
+            try
             {
-                _viewModel.AddLog("Starting placement... closing window.");
-                _viewModel.CloseAction?.Invoke();
+                viewModel.AddLog("Starting placement... closing window.");
+                viewModel.CloseAction?.Invoke();
                 uiDoc.PromptForFamilyInstancePlacement(symbol);
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedCadOperationException(ex))
             {
-                _viewModel.AddLog($"Placement failed: {ex.Message}");
+                viewModel.AddLog($"Placement failed: {ex.Message}");
             }
+        }
+
+        private static bool IsExpectedCadOperationException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is OperationCanceledException
+                || ex is RevitExceptions.InvalidOperationException;
         }
 
         public string GetName() => "LECG CAD Conversion Handler";
