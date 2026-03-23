@@ -5,6 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <IsCiBuild>false</IsCiBuild>
+    <IsCiBuild Condition="'$(CI)' == 'true' Or '$(GITHUB_ACTIONS)' == 'true'">true</IsCiBuild>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -25,6 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\\LECG.csproj" />
+    <ProjectReference Include="..\\LECG.Core\\LECG.Core.csproj" Condition="'$(IsCiBuild)' == 'true'" />
+    <ProjectReference Include="..\\LECG.csproj" Condition="'$(IsCiBuild)' != 'true'" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsCiBuild)' == 'true'">
+    <Compile Remove="Caching\\**\\*.cs" />
+    <Compile Remove="DependencyInjection\\**\\*.cs" />
+    <Compile Remove="Validation\\**\\*.cs" />
   </ItemGroup>
 </Project>
