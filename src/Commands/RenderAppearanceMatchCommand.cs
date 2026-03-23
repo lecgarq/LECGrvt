@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -44,12 +43,9 @@ namespace LECG.Commands
                 Log("ANALYZING SELECTION");
                 HashSet<ElementId> materialsToProcessIds = new HashSet<ElementId>();
 
-                if (vm.ShouldRun)
-                {
-                    Log("Scope: ALL Project Materials");
-                    FilteredElementCollector collector = new FilteredElementCollector(doc).OfClass(typeof(Material));
-                    foreach (Element e in collector) materialsToProcessIds.Add(e.Id);
-                }
+                Log("Scope: ALL Project Materials");
+                FilteredElementCollector collector = new FilteredElementCollector(doc).OfClass(typeof(Material));
+                foreach (Element e in collector) materialsToProcessIds.Add(e.Id);
 
                 Log($"Found {materialsToProcessIds.Count} unique materials.");
                 Log("");
@@ -64,6 +60,7 @@ namespace LECG.Commands
                 var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
                 matService.BatchSyncWithRenderAppearance(doc, materialsList, reporter);
 
+                UpdateProgress(100, "Complete");
                 Log("");
                 Log("COMPLETE");
             }

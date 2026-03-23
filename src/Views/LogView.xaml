@@ -86,25 +86,66 @@
 
         <!-- Header Status -->
         <StackPanel Grid.Row="0" Margin="0,0,0,12">
-            <TextBlock Text="{Binding CurrentStatus}" FontSize="{DynamicResource FontSizeBody}" FontWeight="{DynamicResource WeightBold}" Foreground="{DynamicResource LecgTextPrimary}" Margin="0,0,0,8"/>
+            <TextBlock Text="{Binding CurrentStatus}" FontSize="{DynamicResource FontSizeBody}" FontWeight="{DynamicResource WeightSemiBold}" Foreground="{DynamicResource LecgTextPrimary}" Margin="0,0,0,6" TextTrimming="CharacterEllipsis"/>
 
-            <!-- Minimal Progress Bar -->
-            <Grid Height="4">
-                <Border CornerRadius="2" Background="{DynamicResource LecgBaseBackground}"/>
-                <Border CornerRadius="2" Background="{DynamicResource LecgAccent}" HorizontalAlignment="Left">
+            <!-- Progress Bar — dual-text contrast (dark on track, white on fill) -->
+            <Grid x:Name="ProgressBarContainer" Height="22">
+                <!-- Track -->
+                <Border CornerRadius="4" Background="{DynamicResource LecgBaseBackground}"/>
+
+                <!-- Dark percentage text (below fill, visible on empty track) -->
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextMuted}">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ProgressValue}" Value="0">
+                                    <Setter Property="Visibility" Value="Hidden"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                    <TextBlock.Text>
+                        <Binding Path="ProgressValue" StringFormat="{}{0:F0}%"/>
+                    </TextBlock.Text>
+                </TextBlock>
+
+                <!-- Fill with gradient + clipped white text -->
+                <Border CornerRadius="4" HorizontalAlignment="Left" ClipToBounds="True">
                     <Border.Width>
                         <MultiBinding Converter="{utils:MathConverter}" ConverterParameter="x/100*y">
                             <Binding Path="ProgressValue"/>
-                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType=Grid}"/>
+                            <Binding Path="ActualWidth" ElementName="ProgressBarContainer"/>
                         </MultiBinding>
                     </Border.Width>
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="{StaticResource ColorAccentLight}" Offset="0"/>
+                            <GradientStop Color="{StaticResource ColorAccent}" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Grid Width="{Binding ActualWidth, ElementName=ProgressBarContainer}">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontWeight="SemiBold" Foreground="White">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ProgressValue}" Value="0">
+                                            <Setter Property="Visibility" Value="Hidden"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                            <TextBlock.Text>
+                                <Binding Path="ProgressValue" StringFormat="{}{0:F0}%"/>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </Grid>
                 </Border>
             </Grid>
         </StackPanel>
 
         <!-- Log List -->
         <Border Grid.Row="1" CornerRadius="{DynamicResource ContentCornerRadius}" Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1">
-            <ListView ItemsSource="{Binding Entries}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView x:Name="EntriesList" ItemsSource="{Binding Entries}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

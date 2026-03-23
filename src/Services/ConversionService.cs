@@ -38,8 +38,12 @@ namespace LECG.Services
             for (int i = 0; i < floors.Count; i++)
             {
                 Element floor = floors[i];
+                if (floor == null || !floor.IsValidObject) continue;
+
                 double percent = (double)(i + 1) / floors.Count * 100;
                 reporter.Report($"Converting floor {i + 1} of {floors.Count}...", percent);
+
+                ElementId originalId = floor.Id;
 
                 try
                 {
@@ -49,7 +53,7 @@ namespace LECG.Services
                 catch (Exception ex) when (IsExpectedConversionException(ex))
                 {
                     failCount++;
-                    reporter.LogError($"Failed to convert floor ID {floor.Id} to '{targetTypeName}': {ex.Message}");
+                    reporter.LogError($"Failed to convert floor ID {originalId} to '{targetTypeName}': {ex.Message}");
                 }
             }
 
@@ -71,8 +75,12 @@ namespace LECG.Services
             for (int i = 0; i < toposolids.Count; i++)
             {
                 Element toposolid = toposolids[i];
+                if (toposolid == null || !toposolid.IsValidObject) continue;
+
                 double percent = (double)(i + 1) / toposolids.Count * 100;
                 reporter.Report($"Converting toposolid {i + 1} of {toposolids.Count}...", percent);
+
+                ElementId originalId = toposolid.Id;
 
                 try
                 {
@@ -82,7 +90,7 @@ namespace LECG.Services
                 catch (Exception ex) when (IsExpectedConversionException(ex))
                 {
                     failCount++;
-                    reporter.LogError($"Failed to convert toposolid ID {toposolid.Id} to '{targetTypeName}': {ex.Message}");
+                    reporter.LogError($"Failed to convert toposolid ID {originalId} to '{targetTypeName}': {ex.Message}");
                 }
             }
 
@@ -143,6 +151,7 @@ namespace LECG.Services
 
         private void ConvertSingleFloorToToposolid(Document doc, Element floor, ElementId toposolidTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter)
         {
+            ElementId originalId = floor.Id;
             Level targetLevel = doc.GetElement(levelId) as Level ?? throw new InvalidOperationException("Target level not found.");
             string targetTypeName = GetElementName(doc, toposolidTypeId);
 
@@ -150,7 +159,7 @@ namespace LECG.Services
             IList<CurveLoop> loops = _boundaryService.AlignLoopsToCommonPlane(_boundaryService.ExtractLoops(floor));
             if (loops.Count == 0)
             {
-                reporter.LogWarning($"Floor ID {floor.Id}: skipped for '{targetTypeName}' because no boundary loops were found.");
+                reporter.LogWarning($"Floor ID {originalId}: skipped for '{targetTypeName}' because no boundary loops were found.");
                 return;
             }
 
@@ -170,12 +179,12 @@ namespace LECG.Services
                 // Set height offset on the new Toposolid
                 SetHeightOffset(newToposolid, targetHeightOffset);
 
-                reporter.Log($"Floor ID {floor.Id} -> Toposolid ID {newToposolid.Id} | type '{targetTypeName}' | level '{targetLevel.Name}' | vertex count {interiorPoints.Count}");
+                reporter.Log($"Floor ID {originalId} -> Toposolid ID {newToposolid.Id} | type '{targetTypeName}' | level '{targetLevel.Name}' | vertex count {interiorPoints.Count}");
 
                 if (deleteSource)
                 {
-                    currentDoc.Delete(floor.Id);
-                    reporter.Log($"  Deleted source floor ID {floor.Id}");
+                    currentDoc.Delete(originalId);
+                    reporter.Log($"  Deleted source floor ID {originalId}");
                 }
             });
         }
@@ -201,52 +210,52 @@ namespace LECG.Services
 
             double targetHeightOffset = GetTargetHeightOffset(doc, toposolid, targetLevel);
 
-            // 2. Transaction 1: Create Floor and optionally delete source
-            ElementId newFloorId = ElementId.InvalidElementId;
-
-            _transactionService.Run(doc, "Convert Toposolid to Floor - Create", currentDoc =>
+            _transactionService.Run(doc, "Convert Toposolid to Floor", currentDoc =>
             {
-                Floor newFloor = Floor.Create(currentDoc, loops, floorTypeId, levelId);
-                newFloorId = newFloor.Id;
-
-                // Set height offset on the new Floor
-                SetHeightOffset(newFloor, targetHeightOffset);
-
-                if (deleteSource)
+                try
                 {
-                    currentDoc.Delete(toposolid.Id);
-                    reporter.Log($"  Deleted source toposolid ID {toposolid.Id}");
+                    reporter.Log($"  Step 1: Creating floor with {loops.Count} loops...");
+                    Floor newFloor = Floor.Create(currentDoc, loops, floorTypeId, levelId);
+                    if (newFloor == null) throw new InvalidOperationException("Revit returned null when creating the floor.");
+
+                    // CRITICAL: Regenerate document to ensure the new floor's geometry and SlabShapeEditor are initialized
+                    currentDoc.Regenerate();
+
+                    ElementId newFloorId = newFloor.Id;
+                    reporter.Log($"  Step 2: Floor created with ID {newFloorId}.");
+
+                    reporter.Log("  Step 3: Setting height offset...");
+                    SetHeightOffset(newFloor, targetHeightOffset);
+
+                    if (interiorPoints.Count > 0)
+                    {
+                        reporter.Log($"  Step 4: Applying {interiorPoints.Count} shape points...");
+                        SlabShapeEditor? editor = _slabService.GetEditor(newFloor);
+                        if (editor != null)
+                        {
+                            if (!editor.IsEnabled) editor.Enable();
+                            foreach (XYZ vertex in interiorPoints)
+                            {
+                                double relativeZ = vertex.Z - (targetLevel.Elevation + targetHeightOffset);
+                                editor.AddPoint(new XYZ(vertex.X, vertex.Y, relativeZ));
+                            }
+                        }
+                    }
+
+                    reporter.Log($"  Step 5: Completion check for Toposolid ID {toposolid.Id} -> Floor ID {newFloorId}");
+
+                    if (deleteSource)
+                    {
+                        reporter.Log($"  Step 6: Deleting source element {toposolid.Id}...");
+                        currentDoc.Delete(toposolid.Id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    reporter.LogError($"  Inner Failure Trace: {ex.GetType().Name} - {ex.Message}");
+                    throw; // Rethrow to be caught by the outer loop
                 }
             });
-
-            // 3. Transaction 2: Apply shape points via SlabShapeEditor
-            if (newFloorId != ElementId.InvalidElementId && interiorPoints.Count > 0)
-            {
-                _transactionService.Run(doc, "Convert Toposolid to Floor - Shape", currentDoc =>
-                {
-                    Element newFloorElement = currentDoc.GetElement(newFloorId);
-                    if (newFloorElement == null) return;
-
-                    SlabShapeEditor? editor = _slabService.GetEditor(newFloorElement);
-                    if (editor == null) return;
-
-                    if (!editor.IsEnabled)
-                        editor.Enable();
-
-                    // Convert absolute vertex positions to relative offsets for SlabShapeEditor
-                    foreach (XYZ vertex in interiorPoints)
-                    {
-                        // SlabShapeEditor.AddPoint for Floor expects Z relative to the Floor's plane
-                        double relativeZ = vertex.Z - (targetLevel.Elevation + targetHeightOffset);
-                        editor.AddPoint(new XYZ(vertex.X, vertex.Y, relativeZ));
-                    }
-                });
-            }
-
-            if (newFloorId != ElementId.InvalidElementId)
-            {
-                reporter.Log($"Toposolid ID {toposolid.Id} -> Floor ID {newFloorId} | type '{targetTypeName}' | level '{targetLevel.Name}' | vertex count {interiorPoints.Count}");
-            }
         }
 
         // ============================================
@@ -255,8 +264,11 @@ namespace LECG.Services
 
         private static double GetHeightOffset(Element element)
         {
-            Parameter? param = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
-            return param?.AsDouble() ?? 0.0;
+            Parameter? floorParam = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
+            if (floorParam != null) return floorParam.AsDouble();
+
+            Parameter? topoParam = element.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM);
+            return topoParam?.AsDouble() ?? 0.0;
         }
 
         private static double GetTargetHeightOffset(Document doc, Element sourceElement, Level targetLevel)
@@ -270,7 +282,9 @@ namespace LECG.Services
 
         private static void SetHeightOffset(Element element, double offset)
         {
-            Parameter? param = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
+            Parameter? param = element.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM)
+                ?? element.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM);
+
             if (param != null && !param.IsReadOnly)
             {
                 param.Set(offset);

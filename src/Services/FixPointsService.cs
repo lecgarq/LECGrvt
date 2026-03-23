@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using TriangleNet.Geometry;
+using TriangleNet.Meshing;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
+    /// <summary>
+    /// Detects and repairs anomalous surface vertices on Floor/Toposolid elements.
+    /// Identifies local outliers (spikes, pits, stuck points, slope breaks) via
+    /// least-squares plane fitting against the Delaunay neighborhood and corrects
+    /// them to the locally expected elevation.
+    /// </summary>
     public class FixPointsService : IFixPointsService
     {
+        private const int MaxIterations = 10;
+        // Minimum scale floor for MAD-based std-dev estimate (~1.5 mm)
+        private const double MinNeighborScale = 0.005;
+
         private readonly ITransactionService _transactionService;
         private readonly ISlabService _slabService;
 
@@ -18,342 +30,329 @@ namespace LECG.Services
             _slabService = slabService;
         }
 
-        public void FixPoints(Document doc, IList<Element> elements, IProgressReporter reporter)
+        public void FixPoints(Document doc, IList<Element> elements, int sensitivity, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(elements);
             ArgumentNullException.ThrowIfNull(reporter);
 
+            var (threshold, minAbsDev) = GetSensitivityParameters(sensitivity);
+            int totalDetected = 0;
             int totalCorrected = 0;
-            int totalExamined = 0;
-            int totalAfter = 0;
-            int totalFlagged = 0;
-            int elementsProcessed = 0;
 
             for (int i = 0; i < elements.Count; i++)
             {
                 Element element = elements[i];
-                reporter.Report($"Processing element {i + 1} of {elements.Count}...", (double)(i + 1) / elements.Count * 95);
+                reporter.Report($"Analyzing element {i + 1} of {elements.Count}...", (double)(i + 1) / elements.Count * 95);
 
-                var result = ProcessElement(doc, element, reporter);
-                totalCorrected += result.Corrected;
-                totalExamined += result.BeforeCount;
-                totalAfter += result.AfterCount;
-                totalFlagged += result.Flagged;
-
-                if (result.BeforeCount > 0)
-                {
-                    elementsProcessed++;
-                }
+                var result = ProcessElement(doc, element, threshold, minAbsDev, reporter);
+                totalDetected += result.DetectedCount;
+                totalCorrected += result.CorrectedCount;
             }
 
+            reporter.Report("Done", 100);
             reporter.Log("");
             reporter.Log("=== SUMMARY ===");
-            reporter.Log($"Elements processed: {elementsProcessed}");
-            reporter.Log($"Total vertices before: {totalExamined}");
-            reporter.Log($"Total vertices after: {totalAfter}");
-            reporter.Log($"Total vertices flagged: {totalFlagged}");
-            reporter.Log($"Total vertices corrected: {totalCorrected}");
+            reporter.Log($"Elements analyzed: {elements.Count}");
+            reporter.Log($"Anomalous vertices detected: {totalDetected}");
+            reporter.Log($"Vertices corrected: {totalCorrected}");
         }
 
-        private ProcessResult ProcessElement(Document doc, Element element, IProgressReporter reporter)
+        private ProcessResult ProcessElement(
+            Document doc, Element element, double threshold, double minAbsDev,
+            IProgressReporter reporter)
         {
             SlabShapeEditor? editor = _slabService.GetEditor(element);
             if (editor == null)
             {
-                reporter.LogWarning($"  ID {element.Id}: No SlabShapeEditor available, skipping.");
+                reporter.LogWarning($"  ID {element.Id}: No SlabShapeEditor, skipping.");
                 return ProcessResult.Empty;
             }
 
             try
             {
-                return _transactionService.Run(doc, $"Fix Points - ID {element.Id}", currentDoc =>
-                {
-                    if (!editor.IsEnabled)
-                    {
-                        editor.Enable();
-                    }
-
-                    // Snapshot all vertices with positions and types before modification
-                    var snapshot = SnapshotVertices(editor);
-                    if (snapshot.Count == 0)
-                    {
-                        reporter.Log($"  ID {element.Id}: No vertices found.");
-                        return ProcessResult.Empty;
-                    }
-
-                    // Compute the average spacing between vertices to derive the search radius and tolerance
-                    double averageSpacing = ComputeAverageSpacing(snapshot);
-                    double searchRadius = averageSpacing * 2.5;
-                    double tolerance = averageSpacing * 0.5;
-
-                    int corrected = 0;
-                    int flagged = 0;
-
-                    foreach (var entry in snapshot)
-                    {
-                        if (entry.VertexType != SlabShapeVertexType.Edge
-                            && entry.VertexType != SlabShapeVertexType.Interior)
-                        {
-                            continue;
-                        }
-
-                        // Find neighbors within the search radius (excluding self)
-                        var neighbors = FindNeighbors(snapshot, entry.Position, searchRadius, entry.Vertex);
-                        if (neighbors.Count < 2)
-                        {
-                            // Not enough neighbors to compute a meaningful interpolation
-                            continue;
-                        }
-
-                        double interpolatedZ = ComputePlanarZ(neighbors, entry.Position);
-                        double deviation = Math.Abs(entry.Position.Z - interpolatedZ);
-
-                        if (deviation > tolerance)
-                        {
-                            flagged++;
-
-                            if (TryRepairVertex(editor, element.Id, entry, interpolatedZ, deviation, reporter, out string actionMessage))
-                            {
-                                corrected++;
-                                reporter.Log(actionMessage);
-                            }
-                        }
-                    }
-
-                    int afterCount = SnapshotVertices(editor).Count;
-                    reporter.Log($"  ID {element.Id}: before {snapshot.Count}, after {afterCount}, flagged {flagged}, corrected {corrected}");
-                    return new ProcessResult(snapshot.Count, afterCount, flagged, corrected);
-                });
+                return _transactionService.Run(doc, $"Fix Points - ID {element.Id}",
+                    _ => DetectAndRepair(element, editor, threshold, minAbsDev, reporter));
             }
-            catch (Exception ex) when (IsExpectedFixPointsException(ex))
+            catch (Exception ex) when (IsExpectedException(ex))
             {
-                reporter.LogError($"  ID {element.Id}: Error processing element: {ex.Message}");
+                reporter.LogError($"  ID {element.Id}: {ex.Message}");
                 return ProcessResult.Empty;
             }
         }
 
-        private static bool TryRepairVertex(
-            SlabShapeEditor editor,
-            ElementId elementId,
-            VertexSnapshot entry,
-            double interpolatedZ,
-            double deviation,
-            IProgressReporter reporter,
-            out string actionMessage)
+        // ── Core detection and repair ────────────────────────────────
+
+        private ProcessResult DetectAndRepair(
+            Element element, SlabShapeEditor editor,
+            double threshold, double minAbsDev, IProgressReporter reporter)
         {
-            if (entry.VertexType == SlabShapeVertexType.Interior
-                && TryDeleteInteriorVertex(editor, elementId, entry, interpolatedZ, deviation, reporter, out actionMessage))
+            if (!editor.IsEnabled) editor.Enable();
+
+            var vertices = SnapshotVertices(editor);
+            if (vertices.Count < 4)
             {
-                return true;
+                reporter.Log($"  ID {element.Id}: Too few vertices ({vertices.Count}), skipping.");
+                return ProcessResult.Empty;
             }
 
-            return TryModifyVertex(editor, elementId, entry, interpolatedZ, deviation, reporter, out actionMessage);
-        }
-
-        private static bool TryDeleteInteriorVertex(
-            SlabShapeEditor editor,
-            ElementId elementId,
-            VertexSnapshot entry,
-            double interpolatedZ,
-            double deviation,
-            IProgressReporter reporter,
-            out string actionMessage)
-        {
-            actionMessage = string.Empty;
-
-            try
+            var adjacency = BuildDelaunayAdjacency(vertices);
+            if (adjacency == null)
             {
-                if (editor.DeletePoint(entry.Vertex))
+                reporter.LogWarning($"  ID {element.Id}: Could not triangulate surface, skipping.");
+                return ProcessResult.Empty;
+            }
+
+            bool[] isModifiable = vertices.Select(v => v.VertexType == SlabShapeVertexType.Interior).ToArray();
+            double[] originalZ = vertices.Select(v => v.Position.Z).ToArray();
+            double[] workingZ = (double[])originalZ.Clone();
+            var correctedIndices = new HashSet<int>();
+
+            for (int iter = 0; iter < MaxIterations; iter++)
+            {
+                var outliers = DetectOutliers(vertices, workingZ, adjacency, isModifiable, threshold, minAbsDev);
+                if (outliers.Count == 0) break;
+
+                foreach (var (index, expectedZ) in outliers)
                 {
-                    actionMessage = $"    ID {elementId}: deleted interior point at {FormatPoint(entry.Position)} | deviation {deviation:F3} | target Z {interpolatedZ:F3}";
-                    return true;
+                    workingZ[index] = expectedZ;
+                    correctedIndices.Add(index);
+                }
+
+                reporter.Log($"  ID {element.Id}: Pass {iter + 1} — {outliers.Count} anomalies.");
+            }
+
+            int corrected = 0;
+            foreach (int i in correctedIndices)
+            {
+                double delta = workingZ[i] - originalZ[i];
+                if (Math.Abs(delta) < 1e-9) continue;
+
+                try
+                {
+                    editor.ModifySubElement(vertices[i].Vertex, delta);
+                    corrected++;
+                }
+                catch (Exception ex) when (IsExpectedException(ex))
+                {
                 }
             }
-            catch (Exception ex) when (IsExpectedFixPointsException(ex))
-            {
-                reporter.LogWarning($"    ID {elementId}: interior delete failed at {FormatPoint(entry.Position)}: {ex.Message}");
-            }
 
-            return false;
+            reporter.Log($"  ID {element.Id}: {vertices.Count} vertices, {correctedIndices.Count} anomalies, {corrected} corrected.");
+            return new ProcessResult(correctedIndices.Count, corrected);
         }
 
-        private static bool TryModifyVertex(
-            SlabShapeEditor editor,
-            ElementId elementId,
-            VertexSnapshot entry,
-            double interpolatedZ,
-            double deviation,
-            IProgressReporter reporter,
-            out string actionMessage)
-        {
-            actionMessage = string.Empty;
-            double deltaZ = interpolatedZ - entry.Position.Z;
+        // ── Outlier detection ────────────────────────────────────────
 
+        private static List<(int index, double expectedZ)> DetectOutliers(
+            List<VertexSnapshot> vertices, double[] workingZ,
+            Dictionary<int, HashSet<int>> adjacency, bool[] isModifiable,
+            double threshold, double minAbsDev)
+        {
+            var outliers = new List<(int, double)>();
+
+            for (int i = 0; i < vertices.Count; i++)
+            {
+                if (!isModifiable[i]) continue;
+                if (!adjacency.TryGetValue(i, out var neighbors) || neighbors.Count < 2) continue;
+
+                var (expectedZ, localScale) = FitLocalPlane(i, vertices, workingZ, adjacency);
+                double deviation = Math.Abs(workingZ[i] - expectedZ);
+
+                if (deviation < minAbsDev) continue;
+
+                double effectiveScale = Math.Max(localScale, MinNeighborScale);
+                if (deviation / effectiveScale > threshold)
+                {
+                    outliers.Add((i, expectedZ));
+                }
+            }
+
+            return outliers;
+        }
+
+        // ── Local plane fitting ──────────────────────────────────────
+
+        /// <summary>
+        /// Fits a least-squares plane Z = a·dx + b·dy + c through the Delaunay
+        /// neighbors of the given vertex. Returns the expected Z at the vertex
+        /// position (dx=0, dy=0 → Z=c) and a MAD-based robust scale estimate
+        /// of neighbor residuals around the fitted plane.
+        /// </summary>
+        private static (double expectedZ, double localScale) FitLocalPlane(
+            int vertexIndex, List<VertexSnapshot> vertices, double[] zValues,
+            Dictionary<int, HashSet<int>> adjacency)
+        {
+            XYZ v = vertices[vertexIndex].Position;
+            HashSet<int> neighbors = adjacency[vertexIndex];
+            int n = neighbors.Count;
+
+            if (n < 3)
+            {
+                double avgZ = 0;
+                foreach (int ni in neighbors) avgZ += zValues[ni];
+                avgZ /= n;
+
+                double sumSqDiff = 0;
+                foreach (int ni in neighbors)
+                {
+                    double diff = zValues[ni] - avgZ;
+                    sumSqDiff += diff * diff;
+                }
+
+                return (avgZ, Math.Sqrt(sumSqDiff / n));
+            }
+
+            // Accumulate sums for least-squares plane fit
+            double sumDx = 0, sumDy = 0, sumZ = 0;
+            double sumDx2 = 0, sumDy2 = 0, sumDxDy = 0;
+            double sumDxZ = 0, sumDyZ = 0;
+
+            foreach (int ni in neighbors)
+            {
+                double dx = vertices[ni].Position.X - v.X;
+                double dy = vertices[ni].Position.Y - v.Y;
+                double z = zValues[ni];
+
+                sumDx += dx; sumDy += dy; sumZ += z;
+                sumDx2 += dx * dx; sumDy2 += dy * dy; sumDxDy += dx * dy;
+                sumDxZ += dx * z; sumDyZ += dy * z;
+            }
+
+            double meanDx = sumDx / n;
+            double meanDy = sumDy / n;
+            double meanZ = sumZ / n;
+
+            double sxx = sumDx2 - n * meanDx * meanDx;
+            double syy = sumDy2 - n * meanDy * meanDy;
+            double sxy = sumDxDy - n * meanDx * meanDy;
+            double sxz = sumDxZ - n * meanDx * meanZ;
+            double syz = sumDyZ - n * meanDy * meanZ;
+
+            double det = sxx * syy - sxy * sxy;
+            double a = 0, b = 0;
+            double expectedZ;
+
+            if (Math.Abs(det) > 1e-12)
+            {
+                a = (syy * sxz - sxy * syz) / det;
+                b = (sxx * syz - sxy * sxz) / det;
+                expectedZ = meanZ - a * meanDx - b * meanDy;
+            }
+            else
+            {
+                expectedZ = meanZ;
+            }
+
+            // MAD-based robust scale from neighbor residuals
+            var absResiduals = new double[n];
+            int idx = 0;
+            foreach (int ni in neighbors)
+            {
+                double dx = vertices[ni].Position.X - v.X;
+                double dy = vertices[ni].Position.Y - v.Y;
+                double predicted = a * dx + b * dy + expectedZ;
+                absResiduals[idx++] = Math.Abs(zValues[ni] - predicted);
+            }
+
+            Array.Sort(absResiduals);
+            double mad = absResiduals[n / 2];
+            double localScale = mad * 1.4826; // MAD → σ conversion
+
+            return (expectedZ, localScale);
+        }
+
+        // ── Delaunay adjacency ───────────────────────────────────────
+
+        private static Dictionary<int, HashSet<int>>? BuildDelaunayAdjacency(List<VertexSnapshot> vertices)
+        {
             try
             {
-                editor.ModifySubElement(entry.Vertex, deltaZ);
+                var triVertices = new List<Vertex>(vertices.Count);
+                for (int i = 0; i < vertices.Count; i++)
+                {
+                    triVertices.Add(new Vertex(vertices[i].Position.X, vertices[i].Position.Y) { ID = i });
+                }
 
-                string method = entry.VertexType == SlabShapeVertexType.Edge
-                    ? "modified edge point"
-                    : "modified interior fallback";
+                var mesh = (TriangleNet.Mesh)new GenericMesher().Triangulate(triVertices);
+                if (mesh == null || mesh.Triangles.Count == 0) return null;
 
-                actionMessage = $"    ID {elementId}: {method} at {FormatPoint(entry.Position)} | delta {deltaZ:F3} | deviation {deviation:F3} | target Z {interpolatedZ:F3}";
-                return true;
+                var adjacency = new Dictionary<int, HashSet<int>>();
+                for (int i = 0; i < vertices.Count; i++)
+                    adjacency[i] = new HashSet<int>();
+
+                foreach (var tri in mesh.Triangles)
+                {
+                    int i0 = tri.GetVertexID(0);
+                    int i1 = tri.GetVertexID(1);
+                    int i2 = tri.GetVertexID(2);
+
+                    if (i0 < 0 || i0 >= vertices.Count ||
+                        i1 < 0 || i1 >= vertices.Count ||
+                        i2 < 0 || i2 >= vertices.Count)
+                        continue;
+
+                    adjacency[i0].Add(i1); adjacency[i0].Add(i2);
+                    adjacency[i1].Add(i0); adjacency[i1].Add(i2);
+                    adjacency[i2].Add(i0); adjacency[i2].Add(i1);
+                }
+
+                return adjacency;
             }
-            catch (Exception ex) when (IsExpectedFixPointsException(ex))
+            catch
             {
-                reporter.LogWarning($"    ID {elementId}: failed to correct {entry.VertexType.ToString().ToLowerInvariant()} point at {FormatPoint(entry.Position)}: {ex.Message}");
-                return false;
+                return null;
             }
         }
+
+        // ── Helpers ──────────────────────────────────────────────────
 
         private static List<VertexSnapshot> SnapshotVertices(SlabShapeEditor editor)
         {
             var result = new List<VertexSnapshot>();
-
-            foreach (SlabShapeVertex vertex in editor.SlabShapeVertices)
+            foreach (SlabShapeVertex v in editor.SlabShapeVertices)
             {
-                result.Add(new VertexSnapshot
-                {
-                    Vertex = vertex,
-                    Position = vertex.Position,
-                    VertexType = vertex.VertexType
-                });
+                result.Add(new VertexSnapshot(v, v.Position, v.VertexType));
             }
-
             return result;
         }
 
-        private static double ComputeAverageSpacing(List<VertexSnapshot> snapshot)
+        private static (double threshold, double minAbsDev) GetSensitivityParameters(int sensitivity)
         {
-            if (snapshot.Count < 2)
+            return sensitivity switch
             {
-                return 1.0; // Fallback to 1 foot if fewer than 2 vertices
-            }
-
-            double totalMinDist = 0;
-            int count = 0;
-
-            for (int i = 0; i < snapshot.Count; i++)
-            {
-                double minDist = double.MaxValue;
-
-                for (int j = 0; j < snapshot.Count; j++)
-                {
-                    if (i == j) continue;
-
-                    double dist = HorizontalDistance(snapshot[i].Position, snapshot[j].Position);
-                    if (dist < minDist && dist > 1e-9)
-                    {
-                        minDist = dist;
-                    }
-                }
-
-                if (minDist < double.MaxValue)
-                {
-                    totalMinDist += minDist;
-                    count++;
-                }
-            }
-
-            return count > 0 ? totalMinDist / count : 1.0;
+                1 => (4.0, 0.15),  // Conservative: only severe anomalies (~45mm)
+                2 => (3.0, 0.08),  // Moderate (~24mm)
+                3 => (2.5, 0.05),  // Balanced (~15mm)
+                4 => (2.0, 0.03),  // Sensitive (~9mm)
+                5 => (1.5, 0.02),  // Aggressive (~6mm)
+                _ => (2.5, 0.05)
+            };
         }
 
-        private static List<VertexSnapshot> FindNeighbors(List<VertexSnapshot> snapshot, XYZ position, double searchRadius, SlabShapeVertex self)
-        {
-            var neighbors = new List<VertexSnapshot>();
-
-            foreach (var entry in snapshot)
-            {
-                if (ReferenceEquals(entry.Vertex, self))
-                {
-                    continue;
-                }
-
-                double dist = HorizontalDistance(position, entry.Position);
-                if (dist <= searchRadius && dist > 1e-9)
-                {
-                    neighbors.Add(entry);
-                }
-            }
-
-            return neighbors;
-        }
-
-        private static double ComputePlanarZ(List<VertexSnapshot> neighbors, XYZ position)
-        {
-            if (neighbors.Count < 3)
-            {
-                // Not enough unique neighbors to form a plane; fallback to averaging
-                return neighbors.Any() ? neighbors.Average(n => n.Position.Z) : position.Z;
-            }
-
-            // Take the 3 nearest neighbors to form the local plane (triangle)
-            var sorted = neighbors.OrderBy(n => HorizontalDistance(position, n.Position)).ToList();
-            XYZ p1 = sorted[0].Position;
-            XYZ p2 = sorted[1].Position;
-            XYZ p3 = sorted[2].Position;
-
-            // Compute normal: n = (p2 - p1) x (p3 - p1)
-            XYZ v1 = p2 - p1;
-            XYZ v2 = p3 - p1;
-            XYZ normal = v1.CrossProduct(v2);
-
-            // Planar equation: normal.X*(x - p1.X) + normal.Y*(y - p1.Y) + normal.Z*(z - p1.Z) = 0
-            // If normal.Z is near zero, the triangle is vertical (invalid for slab surface)
-            if (Math.Abs(normal.Z) < 1e-9)
-            {
-                return neighbors.Average(n => n.Position.Z);
-            }
-
-            // z = p1.Z - (normal.X*(position.X - p1.X) + normal.Y*(position.Y - p1.Y)) / normal.Z
-            double z = p1.Z - (normal.X * (position.X - p1.X) + normal.Y * (position.Y - p1.Y)) / normal.Z;
-            return z;
-        }
-
-        private static double HorizontalDistance(XYZ a, XYZ b)
-        {
-            double dx = a.X - b.X;
-            double dy = a.Y - b.Y;
-            return Math.Sqrt(dx * dx + dy * dy);
-        }
-
-        private static string FormatPoint(XYZ point)
-        {
-            return $"({point.X:F3}, {point.Y:F3}, {point.Z:F3})";
-        }
-
-        private static bool IsExpectedFixPointsException(Exception ex)
+        private static bool IsExpectedException(Exception ex)
         {
             return ex is ArgumentException
                 or InvalidOperationException
                 or RevitExceptions.InvalidOperationException;
         }
 
-        private struct VertexSnapshot
-        {
-            public SlabShapeVertex Vertex;
-            public XYZ Position;
-            public SlabShapeVertexType VertexType;
-        }
+        // ── Data types ──────────────────────────────────────────────
+
+        private sealed record VertexSnapshot(SlabShapeVertex Vertex, XYZ Position, SlabShapeVertexType VertexType);
 
         private readonly struct ProcessResult
         {
-            public static ProcessResult Empty => new ProcessResult(0, 0, 0, 0);
+            public static ProcessResult Empty => new(0, 0);
 
-            public ProcessResult(int beforeCount, int afterCount, int flagged, int corrected)
+            public ProcessResult(int detectedCount, int correctedCount)
             {
-                BeforeCount = beforeCount;
-                AfterCount = afterCount;
-                Flagged = flagged;
-                Corrected = corrected;
+                DetectedCount = detectedCount;
+                CorrectedCount = correctedCount;
             }
 
-            public int BeforeCount { get; }
-            public int AfterCount { get; }
-            public int Flagged { get; }
-            public int Corrected { get; }
+            public int DetectedCount { get; }
+            public int CorrectedCount { get; }
         }
     }
 }

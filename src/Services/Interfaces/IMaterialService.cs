@@ -1,5 +1,6 @@
 using System;
 using Autodesk.Revit.DB;
+using LECG.Models;
 
 namespace LECG.Services.Interfaces
 {
@@ -8,6 +9,7 @@ namespace LECG.Services.Interfaces
         Color GetNextColor();
         ElementId GetOrCreateMaterial(Document doc, string name, Color color, Action<string>? logCallback = null);
         ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null);
+        ElementId CreatePBRMaterial(Document doc, PbrMaterialCreateRequest request, Action<string>? logCallback = null);
         bool AssignMaterialToType(Document doc, ElementType type, ElementId materialId, Action<string>? logCallback = null);
         void SyncWithRenderAppearance(Document doc, Material mat, IProgressReporter reporter);
         void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null);

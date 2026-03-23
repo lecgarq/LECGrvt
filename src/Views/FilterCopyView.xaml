@@ -2,6 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
+    xmlns:behaviors="clr-namespace:LECG.Behaviors"
     xmlns:icons="clr-namespace:LECG.Utils"
     xmlns:utils="clr-namespace:LECG.Utils"
     xmlns:vm="clr-namespace:LECG.ViewModels" Title="{Binding Title}" Height="750" Width="1050" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Copy}">
@@ -131,7 +132,7 @@
                             <DataTemplate DataType="{x:Type vm:FilterItem}">
                                 <Border Background="Transparent" Padding="8,4" Margin="2,1,0,1" CornerRadius="8">
                                     <StackPanel Orientation="Horizontal">
-                                        <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center"/>
+                                        <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center" behaviors:MultiSelectCheckboxBehavior.EnableRangeSelection="True"/>
                                         <TextBlock Text="{Binding Name}" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource LecgTextSecondary}"/>
                                     </StackPanel>
                                 </Border>
@@ -178,7 +179,7 @@
                             <HierarchicalDataTemplate DataType="{x:Type vm:ViewContainer}" ItemsSource="{Binding Filters}">
                                 <Border Background="Transparent" Padding="4">
                                     <StackPanel Orientation="Horizontal">
-                                        <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center"/>
+                                        <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center" behaviors:MultiSelectCheckboxBehavior.EnableRangeSelection="True"/>
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Margin="8,0,0,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=Foreground}"/>
                                     </StackPanel>
                                 </Border>
@@ -236,7 +237,7 @@
         <Grid Grid.Row="1" Margin="0,30,0,0">
             <TextBlock Text="Modified filters Blue. New filters Green. Deleted Red." VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="{DynamicResource LecgTextMuted}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Content="CANCEL" Command="{Binding CancelCommand}" Width="110" Height="44" Margin="0,0,12,0" FontWeight="SemiBold"/>
+                <Button Content="CANCEL" Command="{Binding CancelCommand}" IsCancel="True" Width="110" Height="44" Margin="0,0,12,0" FontWeight="SemiBold"/>
                 <Button Content="APPLY CHANGES" Command="{Binding ApplyCommand}" Width="190" Height="44" Style="{DynamicResource PrimaryButtonStyle}" FontSize="12" FontWeight="Black"/>
             </StackPanel>
         </Grid>

@@ -15,18 +15,18 @@ namespace LECG.Utils
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-             ArgumentNullException.ThrowIfNull(values);
+            ArgumentNullException.ThrowIfNull(values);
 
-             // For progress bar width: values[0] = progress (0-100), values[1] = total width
-             if (values.Length == 2 && values[0] is double progress && values[1] is double totalWidth)
-             {
-                 return (progress / 100.0) * totalWidth;
-             }
-             return 0;
+            // For progress bar width: values[0] = progress (0-100), values[1] = total width
+            if (values.Length == 2 && values[0] is double progress && values[1] is double totalWidth)
+            {
+                return (progress / 100.0) * totalWidth;
+            }
+            return 0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => new[] { Binding.DoNothing };
 
         public override object ProvideValue(IServiceProvider serviceProvider) => this;
 

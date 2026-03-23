@@ -17,7 +17,7 @@ namespace LECG.Services
         public string Category { get; set; } = "";
         public string Type { get; set; } = ""; // "Type", "View", "Sheet"
         public string OriginalValue { get; set; } = "";
-        
+
         // Advanced Filter Properties (for Family Parameters)
         public string ParamGroup { get; set; } = "";
         public bool IsInstance { get; set; }
@@ -50,9 +50,9 @@ namespace LECG.Services
 
         // 2. pure Logic Transformation (Fast, In-Memory)
         public List<ReplaceItem> ProcessPreview(
-            List<ElementData> candidates, 
-            SearchCriteria criteria, 
-            RenameRuleContext context, 
+            List<ElementData> candidates,
+            SearchCriteria criteria,
+            RenameRuleContext context,
             CancellationToken ct = default)
         {
             return _searchReplacePreviewService.ProcessPreview(candidates, criteria, context, ct);

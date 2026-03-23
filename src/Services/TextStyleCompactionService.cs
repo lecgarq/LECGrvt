@@ -5,6 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Models;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -70,14 +71,14 @@ namespace LECG.Services
             {
                 IGrouping<string, TextStyleCandidate> group = duplicateGroups[groupIndex];
                 TextStyleCandidate seed = group.First();
-                string canonicalName = CreateCanonicalName(existingNames, ref nextCanonicalIndex);
+                string canonicalName = CompactionSharedHelper.CreateCanonicalName(CanonicalPrefix, existingNames, ref nextCanonicalIndex);
 
                 ElementId canonicalId;
                 try
                 {
                     canonicalId = CreateCanonicalType(doc, seed.TypeElement, canonicalName);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedTextStyleCompactionException(ex))
                 {
                     logCallback?.Invoke("");
                     logCallback?.Invoke($"Group {groupIndex + 1}: {string.Join(", ", group.Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal))}");
@@ -120,7 +121,7 @@ namespace LECG.Services
 
                 foreach (TextStyleCandidate original in group)
                 {
-                    if (TryDeleteType(doc, original.Id))
+                    if (CompactionSharedHelper.TryDeleteElement(doc, original.Id))
                     {
                         result.OriginalTypesDeleted++;
                         logCallback?.Invoke($"  Deleted original: {original.Name}");
@@ -142,60 +143,6 @@ namespace LECG.Services
             logCallback?.Invoke($"Blocked deletions: {result.BlockedDeletions.Count}");
 
             return result;
-        }
-
-        private static Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> BuildParamIndex(
-            IReadOnlyList<Element> instanceElements,
-            IReadOnlyList<Element> typeElements,
-            Action<double, string>? progressCallback)
-        {
-            var index = new Dictionary<ElementId, List<(Element, Parameter)>>();
-            int total = instanceElements.Count + typeElements.Count;
-            int processed = 0;
-
-            void IndexElements(IReadOnlyList<Element> elements)
-            {
-                foreach (Element element in elements)
-                {
-                    if (element == null || !element.IsValidObject)
-                    {
-                        processed++;
-                        continue;
-                    }
-
-                    foreach (Parameter parameter in element.Parameters)
-                    {
-                        if (parameter.IsReadOnly || parameter.StorageType != StorageType.ElementId)
-                        {
-                            continue;
-                        }
-
-                        ElementId value = parameter.AsElementId();
-                        if (value == ElementId.InvalidElementId)
-                        {
-                            continue;
-                        }
-
-                        if (!index.TryGetValue(value, out List<(Element, Parameter)>? list))
-                        {
-                            list = new List<(Element, Parameter)>();
-                            index[value] = list;
-                        }
-
-                        list.Add((element, parameter));
-                    }
-
-                    processed++;
-                    if (processed % 5000 == 0)
-                    {
-                        progressCallback?.Invoke(0, $"Indexing parameters... {processed}/{total}");
-                    }
-                }
-            }
-
-            IndexElements(instanceElements);
-            IndexElements(typeElements);
-            return index;
         }
 
         private static List<TextStyleCandidate> CollectCandidates(Document doc, ElementId defaultTypeId)
@@ -283,18 +230,11 @@ namespace LECG.Services
             return duplicated.Id;
         }
 
-        private static string CreateCanonicalName(HashSet<string> existingNames, ref int nextCanonicalIndex)
+        private static bool IsExpectedTextStyleCompactionException(Exception ex)
         {
-            while (true)
-            {
-                string candidate = $"{CanonicalPrefix}{nextCanonicalIndex:000}";
-                nextCanonicalIndex++;
-
-                if (existingNames.Add(candidate))
-                {
-                    return candidate;
-                }
-            }
+            return ex is ArgumentException
+                or InvalidOperationException
+                or RevitExceptions.InvalidOperationException;
         }
 
         private static int RewireReferences(
@@ -311,7 +251,7 @@ namespace LECG.Services
 
             int rewired = 0;
             rewired += RewireTextNoteInstancesFromIndex(textNoteIndex, sourceId, targetId);
-            rewired += RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
+            rewired += CompactionSharedHelper.RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
             return rewired;
         }
 
@@ -389,75 +329,6 @@ namespace LECG.Services
             }
 
             return rewired;
-        }
-
-        private static int RewireParameterReferencesFromIndex(
-            Document doc,
-            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
-            ElementId sourceId,
-            ElementId targetId)
-        {
-            if (!paramIndex.TryGetValue(sourceId, out HashSet<ElementId>? elementIds))
-            {
-                return 0;
-            }
-
-            int rewired = 0;
-            var movedToTarget = new HashSet<ElementId>();
-
-            foreach (ElementId elementId in elementIds)
-            {
-                try
-                {
-                    Element? element = doc.GetElement(elementId);
-                    if (element == null || !element.IsValidObject) continue;
-
-                    foreach (Parameter param in element.Parameters)
-                    {
-                        if (param.IsReadOnly || param.StorageType != StorageType.ElementId) continue;
-                        try
-                        {
-                            if (!param.HasValue) continue;
-                            if (param.AsElementId() == sourceId)
-                            {
-                                param.Set(targetId);
-                                rewired++;
-                                movedToTarget.Add(elementId);
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                catch { }
-            }
-
-            paramIndex.Remove(sourceId);
-
-            if (movedToTarget.Count > 0)
-            {
-                if (!paramIndex.TryGetValue(targetId, out HashSet<ElementId>? targetSet))
-                {
-                    targetSet = new HashSet<ElementId>();
-                    paramIndex[targetId] = targetSet;
-                }
-
-                targetSet.UnionWith(movedToTarget);
-            }
-
-            return rewired;
-        }
-
-        private static bool TryDeleteType(Document doc, ElementId typeId)
-        {
-            try
-            {
-                ICollection<ElementId> deletedIds = doc.Delete(typeId);
-                return deletedIds.Count > 0;
-            }
-            catch
-            {
-                return false;
-            }
         }
 
         private sealed class TextStyleCandidate

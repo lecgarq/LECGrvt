@@ -9,6 +9,7 @@ using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
 using LECG.Views.Base;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Commands
 {
@@ -24,8 +25,9 @@ namespace LECG.Commands
 
             var service = ServiceLocator.GetRequiredService<IToposolidService>();
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
-            var vm = ServiceLocator.GetRequiredService<UpdateContoursViewModel>();
-            
+            var view = ServiceLocator.GetRequiredService<UpdateContoursView>();
+            var vm = (UpdateContoursViewModel)view.DataContext;
+
             // Populate ToposolidTypes from document
             var topoTypes = new FilteredElementCollector(doc)
                 .OfClass(typeof(ToposolidType))
@@ -35,16 +37,13 @@ namespace LECG.Commands
 
             foreach (var type in topoTypes)
             {
-                vm.ToposolidTypes.Add(new TypeSelectionItem 
-                { 
-                    Name = type.Name, 
+                vm.ToposolidTypes.Add(new TypeSelectionItem
+                {
+                    Name = type.Name,
                     ElementId = type.Id.Value,
-                    IsSelected = true 
+                    IsSelected = true
                 });
             }
-
-            var view = ServiceLocator.GetRequiredService<UpdateContoursView>();
-            view.DataContext = vm;
             bool? result = view.ShowDialog();
 
             if (result == true && vm.ShouldRun)
@@ -59,16 +58,16 @@ namespace LECG.Commands
                         {
                             service.UpdateContours(
                                 currentDoc,
-                                new ElementId(typeItem.ElementId), 
-                                vm.EnablePrimary, 
-                                vm.PrimaryInterval, 
-                                vm.EnableSecondary, 
-                                vm.SecondaryInterval, 
+                                new ElementId(typeItem.ElementId),
+                                vm.EnablePrimary,
+                                vm.PrimaryInterval,
+                                vm.EnableSecondary,
+                                vm.SecondaryInterval,
                                 vm.IsApplyMode);
-                            
+
                             processed++;
                         }
-                        catch (Exception ex)
+                        catch (Exception ex) when (IsExpectedUpdateContoursException(ex))
                         {
                             Log($"Failed to update contours for Toposolid type '{typeItem.Name}' ({typeItem.ElementId}): {ex.Message}");
                         }
@@ -78,6 +77,13 @@ namespace LECG.Commands
                 string mode = vm.IsApplyMode ? "Applied" : "Removed";
                 LecgDialog.Show("Update Contours", $"{mode} contours on {processed} Toposolid type(s).");
             }
+        }
+
+        private static bool IsExpectedUpdateContoursException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
         }
     }
 }

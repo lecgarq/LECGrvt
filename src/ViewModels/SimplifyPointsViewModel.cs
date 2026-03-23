@@ -11,7 +11,7 @@ namespace LECG.ViewModels
     public partial class SimplifyPointsViewModel : BaseViewModel
     {
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
-        
+
         // Helper for View to inject results
         public IList<Reference> SelectedRefs { get; private set; } = new List<Reference>();
 
@@ -21,8 +21,8 @@ namespace LECG.ViewModels
         {
             Title = "SIMPLIFY POINTS";
             Selection.ElementName = "Toposolids";
-            Selection.Filter = new SelectionFilters.ToposolidFilter(); 
-            
+            Selection.Filter = new SelectionFilters.ToposolidFilter();
+
             Selection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 
@@ -34,16 +34,5 @@ namespace LECG.ViewModels
             Selection.UpdateSelection(refs.Count);
         }
 
-        public override void Apply()
-        {
-            ShouldRun = true;
-            CloseAction?.Invoke();
-        }
-
-        public override void Cancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
-        }
     }
 }

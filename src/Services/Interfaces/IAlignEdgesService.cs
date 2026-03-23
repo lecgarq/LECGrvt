@@ -5,6 +5,7 @@ namespace LECG.Services.Interfaces
 {
     public interface IAlignEdgesService
     {
-        void AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references);
+        IReadOnlyList<AlignEdgesSourceResult> AlignEdges(Document doc, IList<Reference> targets, IList<Reference> references);
+        IReadOnlyList<AlignEdgesSourceResult> AlignEdgesFindMyEdge(Document doc, IList<Reference> targets);
     }
 }

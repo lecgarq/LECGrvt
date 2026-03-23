@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -67,7 +68,21 @@ namespace LECG.Services
 
             XYZ p1 = (normal * intercept) + (dir * startProj);
             XYZ p2 = (normal * intercept) + (dir * endProj);
-            try { return Line.CreateBound(p1, p2); } catch { return null; }
+            try
+            {
+                return Line.CreateBound(p1, p2);
+            }
+            catch (Exception ex) when (IsExpectedCadLineMergeException(ex))
+            {
+                return null;
+            }
+        }
+
+        private static bool IsExpectedCadLineMergeException(Exception ex)
+        {
+            return ex is ArgumentException
+                or InvalidOperationException
+                or RevitExceptions.InvalidOperationException;
         }
 
         private XYZ RoundVector(XYZ v)

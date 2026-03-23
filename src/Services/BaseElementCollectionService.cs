@@ -8,6 +8,7 @@ namespace LECG.Services
     {
         public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters)
         {
+            ArgumentNullException.ThrowIfNull(doc);
             List<ElementData> data = new List<ElementData>();
 
             if (types)
@@ -107,13 +108,13 @@ namespace LECG.Services
                         // Identify if this is a built-in category/subcategory
                         // SAFE CHECK: BuiltInCategories have negative integer IDs.
                         // User-created subcategories have positive integer IDs.
-                        bool isBuiltIn = cat.Id.Value < 0; 
-                        
+                        bool isBuiltIn = cat.Id.Value < 0;
+
                         // We want to SHOW user created styles (which are not built-in).
                         // So if it IS built-in, we generally skip it...
                         // ...UNLESS it's an Import (which also has positive keys sometimes, but often negative if standard).
                         // Actually, Imports in Object Styles usually appear as subcategories of "Imports in Families".
-                        
+
                         // For now, the user goal is to see styles that AREN'T showing up.
                         // The previous logic skipped if Enum.IsDefined, which might have been too aggressive 
                         // or coincidentally matching user IDs if they were large/small enough (unlikely but possible).
@@ -126,22 +127,22 @@ namespace LECG.Services
 
                         if (isLineStyle && lineStyles)
                         {
-                            data.Add(new ElementData 
-                            { 
-                                Id = el.Id.Value, 
-                                Name = cat.Name, 
-                                Category = "Line Styles", 
+                            data.Add(new ElementData
+                            {
+                                Id = el.Id.Value,
+                                Name = cat.Name,
+                                Category = "Line Styles",
                                 Type = "LineStyle",
                                 OriginalValue = cat.Name
                             });
                         }
                         else if (!isLineStyle && objectStyles)
                         {
-                            data.Add(new ElementData 
-                            { 
-                                Id = el.Id.Value, 
-                                Name = cat.Name, 
-                                Category = "Object Styles", 
+                            data.Add(new ElementData
+                            {
+                                Id = el.Id.Value,
+                                Name = cat.Name,
+                                Category = "Object Styles",
                                 Type = "ObjectStyle",
                                 OriginalValue = cat.Name
                             });
@@ -187,6 +188,11 @@ namespace LECG.Services
                 foreach (var kvp in symbolsByFamily)
                 {
                     List<FamilySymbol> symbols = kvp.Value;
+                    if (symbols.Count == 0)
+                    {
+                        continue;
+                    }
+
                     string familyName = symbols[0].FamilyName;
                     long familyId = kvp.Key;
 
@@ -197,36 +203,36 @@ namespace LECG.Services
                     {
                         foreach (Parameter p in fs.Parameters)
                         {
-                             bool isShared = p.IsShared;
-                             bool isBuiltIn = p.Id.Value < 0;
+                            bool isShared = p.IsShared;
+                            bool isBuiltIn = p.Id.Value < 0;
 
-                             if (!isShared && !isBuiltIn && seenParamNames.Add(p.Definition.Name))
-                             {
-                                 bool isInstanceParam = instanceDefs.Contains(p.Definition);
+                            if (!isShared && !isBuiltIn && seenParamNames.Add(p.Definition.Name))
+                            {
+                                bool isInstanceParam = instanceDefs.Contains(p.Definition);
 
-                                 string paramGroupLabel = "";
-                                 try
-                                 {
-                                     var groupTypeId = p.Definition.GetGroupTypeId();
-                                     paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
-                                 }
-                                 catch
-                                 {
-                                     paramGroupLabel = "";
-                                 }
+                                string paramGroupLabel = "";
+                                try
+                                {
+                                    var groupTypeId = p.Definition.GetGroupTypeId();
+                                    paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
+                                }
+                                catch
+                                {
+                                    paramGroupLabel = "";
+                                }
 
-                                 data.Add(new ElementData
-                                 {
-                                     Id = familyId,
-                                     Name = p.Definition.Name,
-                                     Category = familyName,
-                                     Type = "FamilyParameter",
-                                     OriginalValue = p.Definition.Name,
-                                     ParamGroup = paramGroupLabel,
-                                     IsInstance = isInstanceParam,
-                                     IsReadOnly = p.IsReadOnly
-                                 });
-                             }
+                                data.Add(new ElementData
+                                {
+                                    Id = familyId,
+                                    Name = p.Definition.Name,
+                                    Category = familyName,
+                                    Type = "FamilyParameter",
+                                    OriginalValue = p.Definition.Name,
+                                    ParamGroup = paramGroupLabel,
+                                    IsInstance = isInstanceParam,
+                                    IsReadOnly = p.IsReadOnly
+                                });
+                            }
                         }
                     }
                 }
@@ -244,7 +250,7 @@ namespace LECG.Services
                 {
                     if (fi.Symbol?.Family == null) continue;
                     long familyId = fi.Symbol.Family.Id.Value;
-                    
+
                     // Skip if we already scanned an instance of this family
                     if (!processedInstanceFamilies.Add(familyId)) continue;
 

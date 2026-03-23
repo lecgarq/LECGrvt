@@ -127,7 +127,39 @@
                     </StackPanel>
                 </Button>
 
-                <!-- 13. Convert Family -->
+                <!-- 13. Fix Points -->
+                <Button ToolTip="Repair inconsistent edge and transition points on Floors and Toposolids" Click="FixPoints_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/simplify_points_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Fix Points" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 14. Split Boundaries -->
+                <Button ToolTip="Separate multi-boundary elements into independent instances" Click="SplitBoundaries_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ResetSlabs.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Split Bound." FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 15. Floor to Toposolid -->
+                <Button ToolTip="Convert Floor elements to Toposolid elements" Click="ConvertFloorToToposolid_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Floor to Topo" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 16. Toposolid to Floor -->
+                <Button ToolTip="Convert Toposolid elements to Floor elements" Click="ConvertToposolidToFloor_Click">
+                    <StackPanel HorizontalAlignment="Center">
+                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Topo to Floor" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <!-- 17. Convert Family -->
                 <Button ToolTip="Convert Family" Click="ConvertFamily_Click">
                     <StackPanel HorizontalAlignment="Center">
                         <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -135,7 +167,7 @@
                     </StackPanel>
                 </Button>
 
-                <!-- 14. Batch Rename -->
+                <!-- 18. Batch Rename -->
                 <Button ToolTip="Batch Rename" Click="BatchRename_Click">
                     <StackPanel HorizontalAlignment="Center">
                         <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/SearchReplace.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>

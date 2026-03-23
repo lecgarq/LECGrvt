@@ -26,6 +26,11 @@ namespace LECG.Services
             if (curve is HermiteSpline hermiteSpline)
             {
                 IList<XYZ> points = hermiteSpline.ControlPoints.Select(p => _cadPointFlattenService.Flatten(p)).ToList();
+                if (points.Count == 0)
+                {
+                    return _cadCurveTessellationService.Tessellate(curve);
+                }
+
                 var cleanPoints = new List<XYZ> { points[0] };
 
                 for (int i = 1; i < points.Count; i++)
@@ -56,9 +61,9 @@ namespace LECG.Services
                             _cadDoubleArrayConversionService.ToList(nurbSpline.Knots),
                             controlPoints,
                             _cadDoubleArrayConversionService.ToList(nurbSpline.Weights));
-                    
+
                     if (newSpline.Length < 0.005) return _cadCurveTessellationService.Tessellate(curve);
-                    
+
                     return new List<Curve> { newSpline };
                 }
                 catch

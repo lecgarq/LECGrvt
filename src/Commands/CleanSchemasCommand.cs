@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -35,7 +34,7 @@ namespace LECG.Commands
             Log("");
 
             var cleaner = ServiceLocator.GetRequiredService<ISchemaCleanerService>();
-            
+
             // STEP 1: Scan for schemas
             Log("STEP 1: Scanning project for third-party schemas...");
             UpdateProgress(10, "Scanning...");
@@ -48,7 +47,7 @@ namespace LECG.Commands
             UpdateProgress(30, "Scanning DataStorage...");
 
             var (dsSchemas, dataStorageIds) = cleaner.ScanDataStorageElements(doc, Log);
-            
+
             // Merge all schemas
             foreach (var guid in dsSchemas) elementSchemas.Add(guid);
 

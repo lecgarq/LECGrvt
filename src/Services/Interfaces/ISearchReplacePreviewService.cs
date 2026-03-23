@@ -9,14 +9,14 @@ namespace LECG.Services.Interfaces
     public interface ISearchReplacePreviewService
     {
         List<string> GetUniqueCategories(List<ElementData> elements);
-        
+
         /// <summary>
         /// Processes the preview items based on criteria and context. 
         /// Supports cancellation for real-time background execution.
         /// </summary>
         List<ReplaceItem> ProcessPreview(
-            List<ElementData> candidates, 
-            SearchCriteria criteria, 
+            List<ElementData> candidates,
+            SearchCriteria criteria,
             RenameRuleContext context,
             CancellationToken ct = default);
     }

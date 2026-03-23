@@ -15,12 +15,12 @@ namespace LECG.ViewModels.Components
 
         [ObservableProperty]
         private bool _hasSelection;
-        
+
         [ObservableProperty]
         private string _elementName = "Elements"; // e.g. "Walls", "Toposolids"
 
         public ISelectionFilter? Filter { get; set; }
-        
+
         public event EventHandler? OnRequestSelect;
 
         public SelectionViewModel()
@@ -31,8 +31,8 @@ namespace LECG.ViewModels.Components
         {
             SelectionCount = count;
             HasSelection = count > 0;
-            SelectionStatus = count > 0 
-                ? $"{count} {ElementName} selected" 
+            SelectionStatus = count > 0
+                ? $"{count} {ElementName} selected"
                 : $"No {ElementName.ToLower()} selected";
         }
 

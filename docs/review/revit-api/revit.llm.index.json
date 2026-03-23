@@ -1,0 +1,23 @@
+{
+  "PublicTypeFiles": [
+    "revit.autodesk.revit.db.public.types.jsonl",
+    "revit.autodesk.revit.public.types.jsonl",
+    "revit.autodesk.revit.ui.public.types.jsonl",
+    "revitapi.public.types.jsonl",
+    "revitapiui.public.types.jsonl"
+  ],
+  "PublicMemberFiles": [
+    "revit.autodesk.revit.db.public.members.jsonl",
+    "revit.autodesk.revit.public.members.jsonl",
+    "revit.autodesk.revit.ui.public.members.jsonl",
+    "revitapi.public.members.jsonl",
+    "revitapiui.public.members.jsonl"
+  ],
+  "NamespaceIndexFile": "revit.public.namespaces.json",
+  "AutodeskRevitTypeFile": "revit.autodesk.revit.public.types.jsonl",
+  "AutodeskRevitMemberFile": "revit.autodesk.revit.public.members.jsonl",
+  "DbTypeFile": "revit.autodesk.revit.db.public.types.jsonl",
+  "DbMemberFile": "revit.autodesk.revit.db.public.members.jsonl",
+  "UiTypeFile": "revit.autodesk.revit.ui.public.types.jsonl",
+  "UiMemberFile": "revit.autodesk.revit.ui.public.members.jsonl"
+}

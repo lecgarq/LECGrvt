@@ -29,15 +29,12 @@ namespace LECG.Services
             {
                 string customPath = $@"C:\ProgramData\Autodesk\RVT {appVersion}\Family Templates\English\LECG\-\{templateName}";
                 if (File.Exists(customPath)) return customPath;
-
-                string specificPath2026 = $@"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English\LECG\-\{templateName}";
-                if (File.Exists(specificPath2026)) return specificPath2026;
             }
 
             // 2. Try Standard Revit Paths
             string rootPath = app.FamilyTemplatePath;
-            string[] possibleFiles = new[] { "Metric Generic Model.rft", "Generic Model.rft", "Generic Model.rft" };
-            
+            string[] possibleFiles = new[] { "Metric Generic Model.rft", "Generic Model.rft" };
+
             // Check in root
             if (Directory.Exists(rootPath))
             {
@@ -53,17 +50,16 @@ namespace LECG.Services
                     var files = Directory.GetFiles(rootPath, "*Generic Model.rft", SearchOption.AllDirectories);
                     if (files.Any()) return files.First();
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedTemplateSearchException(ex))
                 {
                     Logging.Logger.Instance.LogWarning($"[FamilyTemplatePathService] Generic template search failed in {rootPath}: {ex.Message}");
                 }
             }
 
             // 3. Try Hardcoded Default Paths as absolute fallback
-            string[] fallbackRoots = new[] 
+            string[] fallbackRoots = new[]
             {
                 $@"C:\ProgramData\Autodesk\RVT {appVersion}\Family Templates\English",
-                $@"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English",
                 $@"C:\ProgramData\Autodesk\RVT {appVersion}\Family Templates\English-Imperial"
             };
 
@@ -78,6 +74,13 @@ namespace LECG.Services
             }
 
             return string.Empty;
+        }
+
+        private static bool IsExpectedTemplateSearchException(Exception ex)
+        {
+            return ex is IOException
+                || ex is UnauthorizedAccessException
+                || ex is ArgumentException;
         }
     }
 }

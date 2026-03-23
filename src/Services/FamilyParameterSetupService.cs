@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -72,7 +73,7 @@ namespace LECG.Services
                         FamilyParameter created = targetFm.AddParameter(name, groupId, dataType, isInstance);
                         paramMap[name] = created;
                     }
-                    catch (Exception ex)
+                    catch (Exception ex) when (IsExpectedFamilyParameterSetupException(ex))
                     {
                         Logging.Logger.Instance.Log($"  Could not create parameter '{name}': {ex.Message}");
                         continue;
@@ -101,7 +102,7 @@ namespace LECG.Services
                 {
                     targetFm.SetFormula(targetFp, sourceFp.Formula);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedFamilyParameterSetupException(ex))
                 {
                     Logging.Logger.Instance.Log($"  Could not set formula for '{name}': {ex.Message}");
                 }
@@ -194,11 +195,18 @@ namespace LECG.Services
                     // Copy values for this type
                     CopyTypeValues(sourceFm, targetFm, sourceType, paramMap, sourceParamsWithFormulas);
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedFamilyParameterSetupException(ex))
                 {
                     Logging.Logger.Instance.Log($"  Could not copy type '{sourceType.Name}': {ex.Message}");
                 }
             }
+        }
+
+        private static bool IsExpectedFamilyParameterSetupException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
         }
 
         private static FamilyParameter? FindParameterByName(FamilyManager fm, string name)

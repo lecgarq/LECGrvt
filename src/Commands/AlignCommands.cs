@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace LECG.Commands
 {
     // Base class for shared logic? No, just direct implementation for simplicity as requested.
-    
+
     // --- Align Horizontal ---
     [Transaction(TransactionMode.Manual)]
     public class AlignLeftCommand : AlignCommandBase
@@ -71,16 +71,52 @@ namespace LECG.Commands
         protected override string? TransactionName => null; // Handled internally
         public abstract AlignMode Mode { get; }
 
+        private bool IsDistributeMode => Mode == AlignMode.DistributeHorizontally || Mode == AlignMode.DistributeVertically;
+
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
             var service = ServiceLocator.GetRequiredService<IAlignElementsService>();
+
+            // Distribute shortcut: if >= 3 elements already selected, skip the dialog
+            if (IsDistributeMode)
+            {
+                ICollection<ElementId> selectedIds = uiDoc.Selection.GetElementIds();
+                if (selectedIds.Count >= 3)
+                {
+                    List<Element> elements = selectedIds
+                        .Select(id => doc.GetElement(id))
+                        .Where(e => e != null)
+                        .ToList();
+
+                    service.Distribute(doc, elements, Mode);
+                    return;
+                }
+            }
+
             var vm = ServiceLocator.GetRequiredService<AlignElementsViewModel>();
             vm.Initialize(Mode);
+            if (vm.IsDistributeMode)
+            {
+                var preselectedTargets = SelectionSeedHelper.GetSelectedReferences(uiDoc, null);
+                if (preselectedTargets.Count > 0)
+                {
+                    vm.SetTargets(preselectedTargets, doc);
+                }
+            }
+            else
+            {
+                Reference? preselectedReference = SelectionSeedHelper.GetSelectedReferences(uiDoc, null, maxCount: 1).FirstOrDefault();
+                if (preselectedReference != null)
+                {
+                    vm.SetReference(preselectedReference, doc);
+                }
+            }
 
-            var view = ServiceLocator.GetRequiredService<AlignElementsView>();
+            // Pass VM explicitly so command and view share the same instance
+            var view = ServiceLocator.CreateWith<AlignElementsView>(vm);
             view.Initialize(uiDoc);
 
             bool? result = view.ShowDialog();
@@ -89,19 +125,19 @@ namespace LECG.Commands
             {
                 if (vm.IsDistributeMode)
                 {
-                     // Convert References to Elements
-                     List<Element> elements = vm.SelectedTargets
-                        .Select(r => doc.GetElement(r))
-                        .Where(e => e != null)
-                        .ToList();
-                     
-                     service.Distribute(doc, elements, Mode);
+                    // Convert References to Elements
+                    List<Element> elements = vm.SelectedTargets
+                       .Select(r => doc.GetElement(r))
+                       .Where(e => e != null)
+                       .ToList();
+
+                    service.Distribute(doc, elements, Mode);
                 }
                 else
                 {
                     // Align Mode
                     if (vm.SelectedReference == null) return;
-                    
+
                     Element refElem = doc.GetElement(vm.SelectedReference);
                     List<Element> targets = vm.SelectedTargets
                         .Select(r => doc.GetElement(r))

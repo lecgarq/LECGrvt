@@ -29,7 +29,8 @@ namespace LECG.Commands
 
             // 1. Load Settings
             var loadedSettings = SettingsManager.Load<SexyRevitViewModel>("SexyRevitSettings.json");
-            var settings = ServiceLocator.GetRequiredService<SexyRevitViewModel>();
+            SexyRevitView dialog = ServiceLocator.GetRequiredService<SexyRevitView>();
+            var settings = (SexyRevitViewModel)dialog.DataContext;
             settings.UseConsistentColors = loadedSettings.UseConsistentColors;
             settings.UseSmoothLines = loadedSettings.UseSmoothLines;
             settings.UseDetailFine = loadedSettings.UseDetailFine;
@@ -41,8 +42,6 @@ namespace LECG.Commands
             settings.ConfigureSun = loadedSettings.ConfigureSun;
 
             // 2. Show Dialog
-            SexyRevitView dialog = ServiceLocator.GetRequiredService<SexyRevitView>();
-            dialog.DataContext = settings;
             if (dialog.ShowDialog() != true) return;
 
             // 3. Save Settings
@@ -50,7 +49,7 @@ namespace LECG.Commands
 
             // 4. Run Service
             ShowLogWindow("Sexy Revit ✨");
-                
+
             Log("Sexy Revit - View Beautification");
             Log("=================================");
             Log($"View: {view.Name}");

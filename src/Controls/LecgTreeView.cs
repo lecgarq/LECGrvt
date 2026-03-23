@@ -31,8 +31,7 @@ namespace LECG.Controls
 
             foreach (object item in container.Items)
             {
-                TreeViewItem tvi = container.ItemContainerGenerator.ContainerFromItem(item) as TreeViewItem;
-                if (tvi != null)
+                if (container.ItemContainerGenerator.ContainerFromItem(item) is TreeViewItem tvi)
                 {
                     tvi.IsExpanded = isExpanded;
                     SetExpansionState(tvi, isExpanded);

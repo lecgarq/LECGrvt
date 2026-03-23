@@ -58,7 +58,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" IsCancel="True" Style="{DynamicResource SecondaryButtonStyle}"/>
             <Button Content="Proceed" Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource AccentButtonStyle}"/>
         </Grid>
     </Grid>

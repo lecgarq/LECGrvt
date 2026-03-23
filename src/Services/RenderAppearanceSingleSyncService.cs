@@ -1,6 +1,7 @@
 using System;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -33,7 +34,15 @@ namespace LECG.Services
             {
                 mat.UseRenderAppearanceForShading = true;
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
+            {
+                Logging.Logger.Instance.LogWarning($"[RenderAppearanceSingleSyncService] Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                Logging.Logger.Instance.LogWarning($"[RenderAppearanceSingleSyncService] Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}");
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
             {
                 Logging.Logger.Instance.LogWarning($"[RenderAppearanceSingleSyncService] Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}");
             }

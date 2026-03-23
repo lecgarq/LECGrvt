@@ -12,13 +12,13 @@ namespace LECG.ViewModels
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CanRun))]
         private double _offsetValue = 0.0;
-        
+
         [ObservableProperty]
         private bool _isAddition = true;
 
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public IList<Reference> SelectedRefs { get; private set; } = new List<Reference>();
-        
+
         public bool CanRun => Selection.HasSelection && OffsetValue >= 0;
 
         public OffsetElevationsViewModel()
@@ -26,7 +26,7 @@ namespace LECG.ViewModels
             Title = "OFFSET ELEVATIONS";
             Selection.ElementName = "Elements";
             Selection.Filter = new SelectionFilters.SlabFilter();
-            
+
             Selection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 

@@ -15,7 +15,7 @@ namespace LECG.ViewModels
 
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public IList<Reference> SelectedRefs { get; private set; } = new List<Reference>();
-        
+
         public bool CanRun => Selection.HasSelection;
 
         public ResetSlabsViewModel()
@@ -23,7 +23,7 @@ namespace LECG.ViewModels
             Title = "RESET SLABS";
             Selection.ElementName = "Elements";
             Selection.Filter = new SelectionFilters.SlabFilter();
-            
+
             Selection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 
@@ -35,16 +35,5 @@ namespace LECG.ViewModels
             Selection.UpdateSelection(refs.Count);
         }
 
-        public override void Apply()
-        {
-            ShouldRun = true;
-            CloseAction?.Invoke();
-        }
-
-        public override void Cancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
-        }
     }
 }

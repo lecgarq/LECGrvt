@@ -18,12 +18,12 @@ namespace LECG.Services
 
             if (existing != null)
             {
-                logCallback?.Invoke($"  â„¹ Material '{name}' already exists. Updating properties...");
+                logCallback?.Invoke($"  INFO Material '{name}' already exists. Updating properties...");
                 ApplyMaterialProperties(doc, existing, color, logCallback);
                 return existing.Id;
             }
 
-            logCallback?.Invoke($"  âœ“ Creating material: {name}");
+            logCallback?.Invoke($"  OK Creating material: {name}");
             ElementId newId = Material.Create(doc, name);
             Material? newMat = doc.GetElement(newId) as Material;
             if (newMat != null) ApplyMaterialProperties(doc, newMat, color, logCallback);
@@ -50,7 +50,7 @@ namespace LECG.Services
             mat.SurfaceBackgroundPatternId = solidId; mat.SurfaceBackgroundPatternColor = color;
             mat.CutForegroundPatternId = solidId; mat.CutForegroundPatternColor = color;
             mat.CutBackgroundPatternId = solidId; mat.CutBackgroundPatternColor = color;
-            logCallback?.Invoke($"    â†’ Color: RGB({color.Red}, {color.Green}, {color.Blue})");
+            logCallback?.Invoke($"    -> Color: RGB({color.Red}, {color.Green}, {color.Blue})");
         }
     }
 }

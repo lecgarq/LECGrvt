@@ -22,11 +22,11 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            
-            BindDialogClose(vm, () => vm.ShouldRun);
+
+            BindClose(vm);
 
             // Hook up selection request
-            vm.Selection.OnRequestSelect += (s, e) => 
+            vm.Selection.OnRequestSelect += (s, e) =>
             {
                 if (UiDocument == null) return;
                 Reference? r = _selectionCoordinator.PickObject(
@@ -34,7 +34,8 @@ namespace LECG.Views
                     UiDocument,
                     Autodesk.Revit.UI.Selection.ObjectType.Element,
                     null,
-                    "Select an Imported CAD or Link");
+                    "Select an Imported CAD or Link",
+                    restoreModalState: false);
                 if (r != null)
                 {
                     Element el = UiDocument.Document.GetElement(r);

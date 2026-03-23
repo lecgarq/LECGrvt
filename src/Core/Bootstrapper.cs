@@ -3,32 +3,65 @@ using LECG.ViewModels;
 using LECG.Services.Interfaces;
 using LECG.Services;
 using LECG.Core.Ribbon;
+using LECG.Models;
 using LECG.Services.Logging;
+using LECG.Validation;
+using LECG.Validation.Validators;
+using MsLoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
+using FluentValidation;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LECG.Core
 {
     public static class Bootstrapper
     {
+        private static IServiceProvider? _provider;
+
         public static void Initialize()
         {
-            var services = new ServiceCollection();
+            var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
+            MsLoggerFactory loggerFactory = SerilogBootstrapper.CreateLoggerFactory(out string? loggingInitializationError);
 
-            ConfigureServices(services);
+            ConfigureServices(services, loggerFactory);
             ConfigureViewModels(services);
             ConfigureViews(services);
 
-            var provider = services.BuildServiceProvider();
-            ServiceLocator.Initialize(provider);
+            _provider = services.BuildServiceProvider();
+            ServiceLocator.Initialize(_provider);
+
+            if (!string.IsNullOrWhiteSpace(loggingInitializationError))
+            {
+                Logger.Instance.LogWarning($"Structured logging fallback enabled: {loggingInitializationError}");
+            }
         }
 
-        private static void ConfigureServices(IServiceCollection services)
+        public static void Shutdown()
+        {
+            if (_provider is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+
+            _provider = null;
+        }
+
+        private static void ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection services, MsLoggerFactory loggerFactory)
         {
             // Core
+            Logger.Instance.ConfigureStructuredLogger(loggerFactory);
+            services.AddSingleton<MsLoggerFactory>(_ => loggerFactory);
             services.AddSingleton<IRibbonService, RibbonService>();
-            services.AddSingleton<ILogger>(_ => Logger.Instance);
+            services.AddSingleton<LECG.Services.Logging.ILogger>(_ => Logger.Instance);
+            services.AddSingleton<IValidationService, ValidationService>();
+            services.AddSingleton<IMemoryCache>(_ => new MemoryCache(new MemoryCacheOptions()));
+            services.AddSingleton<IAppMemoryCache, AppMemoryCache>();
             services.AddSingleton<ISelectionCoordinator, SelectionCoordinator>();
             services.AddSingleton<ITransactionService, TransactionService>();
-            
+
+            // Keep most registrations manual. Closed-generic validator scanning is safe
+            // because implementations map 1:1 to their interfaces and lifetimes stay singleton.
+            services.AddValidatorsFromAssemblyContaining<OffsetElevationsViewModelValidator>();
+
             // Domain Services
             services.AddSingleton<ISlabService, SlabService>();
             services.AddSingleton<IOffsetService, OffsetService>();
@@ -46,6 +79,7 @@ namespace LECG.Core
             services.AddSingleton<IMaterialColorSequenceService, MaterialColorSequenceService>();
             services.AddSingleton<IMaterialTextureLookupService, MaterialTextureLookupService>();
             services.AddSingleton<IMaterialBitmapPropertyService, MaterialBitmapPropertyService>();
+            services.AddSingleton<IImageColorExtractionService, ImageColorExtractionService>();
             services.AddSingleton<IMaterialAppearanceAssetService, MaterialAppearanceAssetService>();
             services.AddSingleton<IMaterialPbrService, MaterialPbrService>();
             services.AddSingleton<IMaterialElementGroupingService, MaterialElementGroupingService>();
@@ -68,12 +102,15 @@ namespace LECG.Core
             services.AddSingleton<IPurgeLinePatternService, PurgeLinePatternService>();
             services.AddSingleton<IPurgeFillPatternService, PurgeFillPatternService>();
             services.AddSingleton<IPurgeLevelService, PurgeLevelService>();
+            services.AddSingleton<IPurgeExtendedElementService, PurgeExtendedElementService>();
             services.AddSingleton<IPurgeParameterService, PurgeParameterService>();
             services.AddSingleton<IPurgeSummaryService, PurgeSummaryService>();
             services.AddSingleton<IPurgePassMessagingService, PurgePassMessagingService>();
             services.AddSingleton<IPurgePassSequenceService, PurgePassSequenceService>();
             services.AddSingleton<IPurgePassExecutionService, PurgePassExecutionService>();
             services.AddSingleton<IPurgeExecutionCoordinatorService, PurgeExecutionCoordinatorService>();
+            services.AddSingleton<INativePurgeDocumentService, NativePurgeDocumentService>();
+            services.AddSingleton<IDeepPurgeService, DeepPurgeService>();
             services.AddSingleton<IPurgeService, PurgeService>();
             services.AddSingleton<ISchemaVendorFilterService, SchemaVendorFilterService>();
             services.AddSingleton<ISchemaElementScanService, SchemaElementScanService>();
@@ -124,6 +161,7 @@ namespace LECG.Core
             services.AddSingleton<IChangeLevelElementUpdateService, ChangeLevelElementUpdateService>();
             services.AddSingleton<IChangeLevelService, ChangeLevelService>();
             services.AddSingleton<ISimplifyPointsService, SimplifyPointsService>();
+            services.AddSingleton<IFixPointsService, FixPointsService>();
             services.AddSingleton<IAlignElementsTranslationService, AlignElementsTranslationService>();
             services.AddSingleton<IAlignElementsDistributionItemService, AlignElementsDistributionItemService>();
             services.AddSingleton<IAlignElementsDistributionMoveService, AlignElementsDistributionMoveService>();
@@ -164,10 +202,14 @@ namespace LECG.Core
             services.AddSingleton<ICadDwgFamilyCreationService, CadDwgFamilyCreationService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             services.AddSingleton<IFamilyEditorService, FamilyEditorService>();
+            services.AddSingleton<IConversionService, ConversionService>();
+            services.AddSingleton<IGeometryBoundaryService, GeometryBoundaryService>();
+            services.AddSingleton<ISplitBoundariesService, SplitBoundariesService>();
+            services.AddSingleton<ILinkedModelExportService, LinkedModelExportService>();
             // Add other services here as we refactor
         }
 
-        private static void ConfigureViewModels(IServiceCollection services)
+        private static void ConfigureViewModels(Microsoft.Extensions.DependencyInjection.IServiceCollection services)
         {
             services.AddTransient<ResetSlabsViewModel>();
             services.AddTransient<ConvertCadViewModel>();
@@ -181,13 +223,19 @@ namespace LECG.Core
             services.AddTransient<ChangeLevelViewModel>();
             services.AddTransient<AlignElementsViewModel>();
             services.AddTransient<SimplifyPointsViewModel>();
+            services.AddTransient<FixPointsViewModel>();
             services.AddTransient<FilterCopyViewModel>();
             services.AddTransient<LogViewModel>();
             services.AddTransient<CategoryChangerViewModel>();
             services.AddTransient<RenderAppearanceViewModel>();
+            services.AddTransient<PbrMaterialCreatorViewModel>();
+            services.AddTransient<SplitBoundariesViewModel>();
+            services.AddTransient<TypeToLinkedModelsViewModel>();
+            services.AddTransient<ConvertFloorToToposolidViewModel>();
+            services.AddTransient<ConvertToposolidToFloorViewModel>();
         }
 
-        private static void ConfigureViews(IServiceCollection services)
+        private static void ConfigureViews(Microsoft.Extensions.DependencyInjection.IServiceCollection services)
         {
             // Views are often created by ViewModels or via a DialogService, 
             // but registering them can be useful if we use a Factory pattern.
@@ -202,6 +250,7 @@ namespace LECG.Core
             services.AddTransient<Views.ChangeLevelView>();
             services.AddTransient<Views.AlignElementsView>();
             services.AddTransient<Views.SimplifyPointsView>();
+            services.AddTransient<Views.FixPointsView>();
             services.AddTransient<Views.FilterCopyView>();
             services.AddTransient<Views.ConvertCadView>();
             services.AddTransient<Views.CategoryChangerView>();
@@ -209,6 +258,11 @@ namespace LECG.Core
             services.AddTransient<Views.HomeView>();
             services.AddTransient<Views.AlignDashboardView>();
             services.AddTransient<Views.RenderAppearanceView>();
+            services.AddTransient<Views.PbrMaterialCreatorView>();
+            services.AddTransient<Views.SplitBoundariesView>();
+            services.AddTransient<Views.TypeToLinkedModelsView>();
+            services.AddTransient<Views.ConvertFloorToToposolidView>();
+            services.AddTransient<Views.ConvertToposolidToFloorView>();
         }
     }
 }

@@ -21,36 +21,39 @@ namespace LECG.Views
 
             InitializeComponent();
             DataContext = vm;
-            
+
             BindDialogClose(vm, () => vm.ShouldRun);
-            
-            // Targets Selection
-            vm.TargetsSelection.OnRequestSelect += (s, e) => {
+
+            // Source slab selection
+            vm.TargetsSelection.OnRequestSelect += (s, e) =>
+            {
                 if (UiDocument == null) return;
                 IList<Reference> refs = _selectionCoordinator.PickObjects(
                     this,
                     UiDocument,
                     Autodesk.Revit.UI.Selection.ObjectType.Element,
-                    new LECG.Core.SelectionFilters.ToposolidFilter(),
-                    "Select Target Toposolids");
+                    new LECG.Core.SelectionFilters.SlabFilter(),
+                    "Select source floors or toposolids");
                 if (refs.Count > 0)
                 {
                     vm.SetTargets(refs);
                 }
             };
 
-            // Reference Selection
-            vm.ReferenceSelection.OnRequestSelect += (s, e) => {
+            // Reference selection (supports floors, toposolids, and linked model containers)
+            vm.ReferenceSelection.OnRequestSelect += (s, e) =>
+            {
                 if (UiDocument == null) return;
+
                 IList<Reference> refs = _selectionCoordinator.PickObjects(
                     this,
                     UiDocument,
                     Autodesk.Revit.UI.Selection.ObjectType.Element,
-                    new LECG.Core.SelectionFilters.ToposolidFilter(),
-                    "Select Reference Toposolid");
+                    new LECG.Core.SelectionFilters.SlabOrLinkFilter(),
+                    "Select reference floors, toposolids, or links");
                 if (refs.Count > 0)
                 {
-                    vm.SetReference(refs.First());
+                    vm.SetReferences(refs);
                 }
             };
         }

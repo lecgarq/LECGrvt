@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -37,10 +38,17 @@ namespace LECG.Services
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedReferenceScanException(ex))
             {
                 Logging.Logger.Instance.LogWarning($"[PurgeReferenceScannerService] Failed to collect used IDs for element {elem.Id}: {ex.Message}");
             }
+        }
+
+        private static bool IsExpectedReferenceScanException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
         }
     }
 }

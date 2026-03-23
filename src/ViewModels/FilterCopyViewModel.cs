@@ -54,7 +54,7 @@ namespace LECG.ViewModels
             Title = "Filter Copy";
             LeftSourceType = ViewSourceType.Views;
             RightSourceType = ViewSourceType.Views;
-            
+
             LoadData();
         }
 
@@ -79,7 +79,7 @@ namespace LECG.ViewModels
                 var container = CreateViewContainer(v);
                 if (container.Filters.Count > 0) // Only show views with filters on the left? User said "view templates or views, and filters for those templates or views"
                 {
-                   LeftItems.Add(container);
+                    LeftItems.Add(container);
                 }
             }
             FilterLeftItems();
@@ -106,7 +106,7 @@ namespace LECG.ViewModels
                 if (v.IsTemplate != (type == ViewSourceType.ViewTemplates)) continue;
                 if (v.IsTemplate)
                 {
-                   views.Add(v);
+                    views.Add(v);
                 }
                 else
                 {
@@ -122,7 +122,7 @@ namespace LECG.ViewModels
         private ViewContainer CreateViewContainer(View v)
         {
             var container = new ViewContainer(v.Name, v.Id, v.IsTemplate) { ViewType = v.ViewType };
-            
+
             // Get Filters
             var filterIds = v.GetOrderedFilters(); // Use ordered to respect priority
             foreach (var id in filterIds)
@@ -133,9 +133,9 @@ namespace LECG.ViewModels
                 var overrides = v.GetFilterOverrides(id);
                 var visibility = v.GetFilterVisibility(id); // Visibility setting
 
-                container.Filters.Add(new FilterItem(filterElement.Name, id, overrides) 
-                { 
-                    IsVisible = visibility 
+                container.Filters.Add(new FilterItem(filterElement.Name, id, overrides)
+                {
+                    IsFilterVisible = visibility
                 });
             }
             return container;
@@ -197,7 +197,7 @@ namespace LECG.ViewModels
 
             // Find selected views in Right
             var targetViews = RightItems.Where(x => x.IsSelected).ToList();
-            
+
             if (targetViews.Count == 0) return;
 
             foreach (var target in targetViews)
@@ -211,7 +211,7 @@ namespace LECG.ViewModels
                     {
                         // Update existing
                         existing.GraphicsSettings = sourceFilter.GraphicsSettings;
-                        existing.IsVisible = sourceFilter.IsVisible;
+                        existing.IsFilterVisible = sourceFilter.IsFilterVisible;
                         if (existing.Status != FilterStatus.Created) // Don't overwrite Created with Modified
                         {
                             existing.Status = FilterStatus.Modified;
@@ -223,7 +223,7 @@ namespace LECG.ViewModels
                         target.Filters.Add(new FilterItem(sourceFilter.Name, sourceFilter.Id, sourceFilter.GraphicsSettings)
                         {
                             Status = FilterStatus.Created,
-                            IsVisible = sourceFilter.IsVisible
+                            IsFilterVisible = sourceFilter.IsFilterVisible
                         });
                     }
                 }
@@ -236,7 +236,7 @@ namespace LECG.ViewModels
             if (filter.Status == FilterStatus.Created)
             {
                 // Remove from collection
-                foreach(var view in RightItems)
+                foreach (var view in RightItems)
                 {
                     if (view.Filters.Contains(filter))
                     {
@@ -254,15 +254,15 @@ namespace LECG.ViewModels
         [RelayCommand]
         private void SetActiveView(string side)
         {
-             var activeViewId = _doc.ActiveView.Id;
-             var collection = side == "Left" ? LeftItems : RightItems;
-             var found = collection.FirstOrDefault(x => x.Id == activeViewId);
-             
-             if (found != null)
-             {
-                 found.IsSelected = true;
-                 found.IsExpanded = true;
-             }
+            var activeViewId = _doc.ActiveView.Id;
+            var collection = side == "Left" ? LeftItems : RightItems;
+            var found = collection.FirstOrDefault(x => x.Id == activeViewId);
+
+            if (found != null)
+            {
+                found.IsSelected = true;
+                found.IsExpanded = true;
+            }
         }
 
         [RelayCommand]
@@ -309,13 +309,14 @@ namespace LECG.ViewModels
         public override void Apply()
         {
             var viewStates = RightItems
+                .Where(viewContainer => viewContainer.IsSelected)
                 .Select(viewContainer => new FilterCopyViewState(
                     viewContainer.Id,
                     viewContainer.Filters
                         .Select(filter => new FilterCopyFilterState(
                             filter.Id,
                             filter.GraphicsSettings,
-                            filter.IsVisible,
+                            filter.IsFilterVisible,
                             filter.Status == FilterStatus.Removable))
                         .ToList()))
                 .ToList();

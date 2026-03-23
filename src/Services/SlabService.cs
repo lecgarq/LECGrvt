@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
@@ -24,22 +26,66 @@ namespace LECG.Services
                 statusMessage = "Slab Shape Reset Success.";
                 return true;
             }
-            
+
             statusMessage = "SlabShapeEditor is already flat or not enabled.";
             return false;
         }
 
         public Element? DuplicateElement(Document doc, Element element)
         {
-             ArgumentNullException.ThrowIfNull(doc);
-             ArgumentNullException.ThrowIfNull(element);
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(element);
 
-             var copiedIds = ElementTransformUtils.CopyElements(doc, new[] { element.Id }, doc, Transform.Identity, new CopyPasteOptions());
-             if (copiedIds.Count > 0)
-             {
-                 return doc.GetElement(copiedIds.First());
-             }
-             return null;
+            var copiedIds = ElementTransformUtils.CopyElements(doc, new[] { element.Id }, doc, Transform.Identity, new CopyPasteOptions());
+            foreach (ElementId copiedId in copiedIds)
+            {
+                return doc.GetElement(copiedId);
+            }
+
+            return null;
+        }
+
+        public List<XYZ> GetEditorVertexPositions(Element element)
+        {
+            return GetVertexPositions(element, interiorOnly: false);
+        }
+
+        public List<XYZ> GetInteriorVertexPositions(Element element)
+        {
+            return GetVertexPositions(element, interiorOnly: true);
+        }
+
+        private List<XYZ> GetVertexPositions(Element element, bool interiorOnly)
+        {
+            ArgumentNullException.ThrowIfNull(element);
+
+            var editor = GetEditor(element);
+            if (editor == null || !editor.IsEnabled)
+                return new List<XYZ>();
+
+            var positions = new List<XYZ>();
+            foreach (SlabShapeVertex vertex in editor.SlabShapeVertices)
+            {
+                if (interiorOnly && vertex.VertexType != SlabShapeVertexType.Interior)
+                {
+                    continue;
+                }
+
+                positions.Add(vertex.Position);
+            }
+
+            return positions;
+        }
+
+        public SlabShapeEditor? GetEditor(Element element)
+        {
+            if (element is Floor f)
+                return f.GetSlabShapeEditor();
+
+            if (element is Toposolid t)
+                return t.GetSlabShapeEditor();
+
+            return null;
         }
     }
 }

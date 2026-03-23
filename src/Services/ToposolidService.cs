@@ -7,6 +7,9 @@ namespace LECG.Services
 {
     public class ToposolidService : IToposolidService
     {
+        private const double MetersToFeet = 3.28084;
+        private const double MaxElevationFeet = 19685; // ~6000m in feet
+
         public void UpdateContours(Document doc, ElementId toposolidTypeId, bool enablePrimary, double primaryInterval, bool enableSecondary, double secondaryInterval, bool isApplyMode)
         {
             ArgumentNullException.ThrowIfNull(doc);
@@ -15,7 +18,7 @@ namespace LECG.Services
             if (type == null) return;
 
             ContourSetting contour = type.GetContourSetting();
-            
+
             if (isApplyMode)
             {
                 // Clear existing contours
@@ -29,25 +32,16 @@ namespace LECG.Services
                 if (enablePrimary)
                 {
                     ElementId primarySubcat = new ElementId(BuiltInCategory.OST_ToposolidContours);
-                    double intervalFeet = primarySubcat != ElementId.InvalidElementId ? primaryInterval * 3.28084 : 1.0; // Check valid just in case
-                    intervalFeet = primaryInterval * 3.28084; // m to ft
-
-                    // Re-verify the subCategory logic from original command
-                    // Original: ElementId primarySubcat = new ElementId(BuiltInCategory.OST_ToposolidContours);
-                    // It seems the original code instantiated ElementId directly with BuiltInCategory which is valid for Category lookup usually but AddContourRange expects a GraphicsStyleId or similar? 
-                    // Actually AddContourRange takes "ElementId linePatternId" or "ElementId graphicsStyleId"?
-                    // Let's re-read the original command carefully.
-                    // Original: ElementId primarySubcat = new ElementId(BuiltInCategory.OST_ToposolidContours);
-                    
-                    contour.AddContourRange(0, 19685, intervalFeet, primarySubcat); // 6000m in feet
+                    double intervalFeet = primaryInterval * MetersToFeet; // m to ft
+                    contour.AddContourRange(0, MaxElevationFeet, intervalFeet, primarySubcat);
                 }
 
                 // Add Secondary Contours
                 if (enableSecondary)
                 {
                     ElementId secondarySubcat = new ElementId(BuiltInCategory.OST_ToposolidSecondaryContours);
-                    double intervalFeet = secondaryInterval * 3.28084; // m to ft
-                    contour.AddContourRange(0, 19685, intervalFeet, secondarySubcat); 
+                    double intervalFeet = secondaryInterval * MetersToFeet; // m to ft
+                    contour.AddContourRange(0, MaxElevationFeet, intervalFeet, secondarySubcat);
                 }
             }
             else

@@ -24,8 +24,8 @@ namespace LECG.Services
         }
 
         public List<ReplaceItem> ProcessPreview(
-            List<ElementData> candidates, 
-            SearchCriteria criteria, 
+            List<ElementData> candidates,
+            SearchCriteria criteria,
             RenameRuleContext context,
             CancellationToken ct = default)
         {

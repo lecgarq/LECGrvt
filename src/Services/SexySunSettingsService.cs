@@ -1,6 +1,7 @@
 using Autodesk.Revit.DB;
 using LECG.Models;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -30,10 +31,17 @@ namespace LECG.Services
                     reporter.Log("Sun Type: Still Image");
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedSunSettingsException(ex))
             {
                 reporter.LogWarning($"Sun settings: {ex.Message}");
             }
+        }
+
+        private static bool IsExpectedSunSettingsException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
         }
     }
 }

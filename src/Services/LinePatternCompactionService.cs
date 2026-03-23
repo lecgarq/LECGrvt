@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using LECG.Core.Naming;
 using LECG.Models;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -13,20 +14,6 @@ namespace LECG.Services
     {
         private const string CanonicalPrefix = "LECG-LP-";
         private const double GroupingToleranceMm = 1.0;
-
-        private static readonly HashSet<ViewType> SupportedViewTypes = new HashSet<ViewType>
-        {
-            ViewType.FloorPlan,
-            ViewType.CeilingPlan,
-            ViewType.Elevation,
-            ViewType.Section,
-            ViewType.Detail,
-            ViewType.ThreeD,
-            ViewType.DraftingView,
-            ViewType.Legend,
-            ViewType.AreaPlan,
-            ViewType.EngineeringPlan,
-        };
 
         public LinePatternCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
@@ -96,123 +83,168 @@ namespace LECG.Services
             Action<string>? logCallback,
             Action<double, string>? progressCallback)
         {
-            IReadOnlyList<View> views = context.Views;
-            IReadOnlyList<Category> categories = context.Categories;
+            LinePatternCompactionIndexes indexes = BuildCompactionIndexes(context, duplicateGroups, logCallback, progressCallback);
 
-            // Collect all source IDs that might be referenced
-            var allSourceIds = new HashSet<ElementId>(duplicateGroups.SelectMany(g => g.Candidates).Select(c => c.Id));
-
-            Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> categoryIndex =
-                BuildCategoryPatternIndex(context.AllCategories, allSourceIds);
-
-            Dictionary<ElementId, HashSet<ElementId>> paramIndex = context.ParameterIndex;
-
-            // Build reverse index for view category overrides
-            logCallback?.Invoke("Building view override index...");
-            Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCatIndex =
-                BuildViewCategoryOverrideIndex(views, categories, allSourceIds, progressCallback,
-                    (overrides, id) => overrides.ProjectionLinePatternId == id || overrides.CutLinePatternId == id);
-
-            // Build reverse index for view filter overrides
-            Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex =
-                BuildViewFilterOverrideIndex(views, allSourceIds,
-                    (overrides, id) => overrides.ProjectionLinePatternId == id || overrides.CutLinePatternId == id);
-
-            // Two-phase: rewire all groups, then single Regenerate + delete
             int nextCanonicalIndex = 1;
-            var groupData = new List<(string CreatedName, string PreferredName, int CreatedNameIndex, ElementId CanonicalId, IReadOnlyList<LinePatternCandidate> ToDelete)>();
+            var groupData = new List<LinePatternCompactionGroupData>();
 
             for (int groupIndex = 0; groupIndex < duplicateGroups.Count; groupIndex++)
             {
-                LinePatternDuplicateGroup group = duplicateGroups[groupIndex];
-                string preferredName = CreatePreferredCanonicalName(group);
-
-                string logHeader = $"Group {groupIndex + 1}: {string.Join(", ", group.Candidates.Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal))}";
-
-                // Try to create a new canonical pattern
-                LinePatternElement? canonical = null;
-                Exception? lastException = null;
-                foreach (LinePatternCandidate candidateSeed in group.Candidates)
+                LinePatternCompactionGroupData? compactedGroup = CompactDuplicateGroup(
+                    doc,
+                    duplicateGroups[groupIndex],
+                    groupIndex,
+                    duplicateGroups.Count,
+                    existingNames,
+                    indexes,
+                    result,
+                    ref nextCanonicalIndex,
+                    logCallback,
+                    progressCallback);
+                if (compactedGroup != null)
                 {
-                    try
-                    {
-                        string creationName = CreateIndexedCanonicalName(existingNames, ref nextCanonicalIndex);
-                        canonical = CreateCanonicalPattern(doc, candidateSeed.Pattern, creationName);
-
-                        result.CanonicalPatternsCreated++;
-                        int createdNameIndex = result.CreatedCanonicalNames.Count;
-                        result.CreatedCanonicalNames.Add(creationName);
-
-                        logCallback?.Invoke("");
-                        logCallback?.Invoke(logHeader);
-                        logCallback?.Invoke($"  Created canonical: {creationName}");
-
-                        // Rewire ALL candidates to the new canonical
-                        int originalIndex = 0;
-                        foreach (LinePatternCandidate original in group.Candidates)
-                        {
-                            int rewired = RewireReferences(
-                                doc,
-                                original.Id,
-                                canonical.Id,
-                                categoryIndex,
-                                paramIndex,
-                                viewCatIndex,
-                                viewFilterIndex);
-                            result.ReferencesRewired += rewired;
-                            logCallback?.Invoke($"  Rewired from '{original.Name}': {rewired} reachable references");
-
-                            originalIndex++;
-                            double groupProgress = (groupIndex + (originalIndex / (double)group.Candidates.Count)) / duplicateGroups.Count * 100d;
-                            progressCallback?.Invoke(Math.Round(groupProgress, 0),
-                                $"Compacting group {groupIndex + 1} of {duplicateGroups.Count} ({originalIndex}/{group.Candidates.Count})");
-                        }
-
-                        groupData.Add((creationName, preferredName, createdNameIndex, canonical.Id, group.Candidates));
-                        break;
-                    }
-                    catch (Exception ex)
-                    {
-                        lastException = ex;
-                    }
+                    groupData.Add(compactedGroup);
                 }
-
-                if (canonical != null)
-                {
-                    continue;
-                }
-
-                // Fallback: use the first existing candidate as canonical instead of creating a new one
-                LinePatternCandidate fallback = group.Candidates[0];
-                var toDelete = group.Candidates.Skip(1).ToList();
-
-                logCallback?.Invoke("");
-                logCallback?.Invoke(logHeader);
-                logCallback?.Invoke($"  Cannot recreate pattern ({lastException?.Message}), using existing '{fallback.Name}' as canonical");
-
-                foreach (LinePatternCandidate original in toDelete)
-                {
-                    int rewired = RewireReferences(
-                        doc,
-                        original.Id,
-                        fallback.Id,
-                        categoryIndex,
-                        paramIndex,
-                        viewCatIndex,
-                        viewFilterIndex);
-                    result.ReferencesRewired += rewired;
-                    logCallback?.Invoke($"  Rewired from '{original.Name}': {rewired} reachable references");
-                }
-
-                // CreatedNameIndex = -1 signals fallback (no entry in CreatedCanonicalNames)
-                groupData.Add((fallback.Name, preferredName, -1, fallback.Id, toDelete));
             }
 
-            foreach (var (createdName, preferredName, createdNameIndex, canonicalId, toDelete) in groupData)
+            FinalizeCompactedGroups(doc, existingNames, result, groupData, logCallback);
+        }
+
+        private static LinePatternCompactionGroupData? CompactDuplicateGroup(
+            Document doc,
+            LinePatternDuplicateGroup group,
+            int groupIndex,
+            int totalGroupCount,
+            HashSet<string> existingNames,
+            LinePatternCompactionIndexes indexes,
+            LinePatternCompactionResult result,
+            ref int nextCanonicalIndex,
+            Action<string>? logCallback,
+            Action<double, string>? progressCallback)
+        {
+            string preferredName = CreatePreferredCanonicalName(group);
+            string logHeader = $"Group {groupIndex + 1}: {string.Join(", ", group.Candidates.Select(item => item.Name).OrderBy(name => name, StringComparer.Ordinal))}";
+
+            LinePatternElement? canonical = null;
+            Exception? lastException = null;
+            foreach (LinePatternCandidate candidateSeed in group.Candidates)
             {
-                foreach (LinePatternCandidate original in toDelete)
+                try
                 {
-                    if (TryDeletePattern(doc, original.Id))
+                    string creationName = CompactionSharedHelper.CreateCanonicalName(CanonicalPrefix, existingNames, ref nextCanonicalIndex);
+                    canonical = CreateCanonicalPattern(doc, candidateSeed.Pattern, creationName);
+
+                    result.CanonicalPatternsCreated++;
+                    int createdNameIndex = result.CreatedCanonicalNames.Count;
+                    result.CreatedCanonicalNames.Add(creationName);
+
+                    logCallback?.Invoke("");
+                    logCallback?.Invoke(logHeader);
+                    logCallback?.Invoke($"  Created canonical: {creationName}");
+
+                    RewireGroupReferences(
+                        doc,
+                        group,
+                        groupIndex,
+                        totalGroupCount,
+                        canonical.Id,
+                        indexes,
+                        result,
+                        logCallback,
+                        progressCallback);
+
+                    return new LinePatternCompactionGroupData(
+                        creationName,
+                        preferredName,
+                        createdNameIndex,
+                        canonical.Id,
+                        group.Candidates);
+                }
+                catch (Exception ex) when (IsExpectedLinePatternCompactionException(ex))
+                {
+                    lastException = ex;
+                }
+            }
+
+            if (group.Candidates.Count == 0)
+            {
+                return null;
+            }
+
+            LinePatternCandidate fallback = group.Candidates[0];
+            IReadOnlyList<LinePatternCandidate> toDelete = group.Candidates.Skip(1).ToList();
+
+            logCallback?.Invoke("");
+            logCallback?.Invoke(logHeader);
+            logCallback?.Invoke($"  Cannot recreate pattern ({lastException?.Message}), using existing '{fallback.Name}' as canonical");
+
+            foreach (LinePatternCandidate original in toDelete)
+            {
+                int rewired = RewireReferences(
+                    doc,
+                    original.Id,
+                    fallback.Id,
+                    indexes.CategoryIndex,
+                    indexes.ParameterIndex,
+                    indexes.ViewCategoryIndex,
+                    indexes.ViewFilterIndex);
+                result.ReferencesRewired += rewired;
+                logCallback?.Invoke($"  Rewired from '{original.Name}': {rewired} reachable references");
+            }
+
+            return new LinePatternCompactionGroupData(
+                fallback.Name,
+                preferredName,
+                -1,
+                fallback.Id,
+                toDelete);
+        }
+
+        private static void RewireGroupReferences(
+            Document doc,
+            LinePatternDuplicateGroup group,
+            int groupIndex,
+            int totalGroupCount,
+            ElementId canonicalId,
+            LinePatternCompactionIndexes indexes,
+            LinePatternCompactionResult result,
+            Action<string>? logCallback,
+            Action<double, string>? progressCallback)
+        {
+            int originalIndex = 0;
+            foreach (LinePatternCandidate original in group.Candidates)
+            {
+                int rewired = RewireReferences(
+                    doc,
+                    original.Id,
+                    canonicalId,
+                    indexes.CategoryIndex,
+                    indexes.ParameterIndex,
+                    indexes.ViewCategoryIndex,
+                    indexes.ViewFilterIndex);
+                result.ReferencesRewired += rewired;
+                logCallback?.Invoke($"  Rewired from '{original.Name}': {rewired} reachable references");
+
+                originalIndex++;
+                double groupProgress = (groupIndex + (originalIndex / (double)group.Candidates.Count)) / totalGroupCount * 100d;
+                progressCallback?.Invoke(
+                    Math.Round(groupProgress, 0),
+                    $"Compacting group {groupIndex + 1} of {totalGroupCount} ({originalIndex}/{group.Candidates.Count})");
+            }
+        }
+
+        private static void FinalizeCompactedGroups(
+            Document doc,
+            HashSet<string> existingNames,
+            LinePatternCompactionResult result,
+            IReadOnlyList<LinePatternCompactionGroupData> groupData,
+            Action<string>? logCallback)
+        {
+            foreach (LinePatternCompactionGroupData group in groupData)
+            {
+                foreach (LinePatternCandidate original in group.ToDelete)
+                {
+                    if (CompactionSharedHelper.TryDeleteElement(doc, original.Id))
                     {
                         result.OriginalPatternsDeleted++;
                         existingNames.Remove(original.Name);
@@ -224,200 +256,18 @@ namespace LECG.Services
                     logCallback?.Invoke($"  Could not delete original: {original.Name}");
                 }
 
-                if (createdNameIndex >= 0)
-                {
-                    string finalizedName = FinalizeCanonicalName(doc, canonicalId, createdName, preferredName, existingNames);
-                    if (!string.Equals(finalizedName, createdName, StringComparison.Ordinal))
-                    {
-                        result.CreatedCanonicalNames[createdNameIndex] = finalizedName;
-                        logCallback?.Invoke($"  Renamed canonical: {finalizedName}");
-                    }
-                }
-            }
-        }
-
-        private static Dictionary<ElementId, List<(Element Element, Parameter Parameter)>> BuildParamIndex(
-            IReadOnlyList<Element> instanceElements,
-            IReadOnlyList<Element> typeElements,
-            Action<double, string>? progressCallback)
-        {
-            var index = new Dictionary<ElementId, List<(Element, Parameter)>>();
-            int total = instanceElements.Count + typeElements.Count;
-            int processed = 0;
-
-            void IndexElements(IReadOnlyList<Element> elements)
-            {
-                foreach (Element element in elements)
-                {
-                    if (element == null || !element.IsValidObject)
-                    {
-                        processed++;
-                        continue;
-                    }
-
-                    foreach (Parameter parameter in element.Parameters)
-                    {
-                        if (parameter.IsReadOnly || parameter.StorageType != StorageType.ElementId)
-                        {
-                            continue;
-                        }
-
-                        ElementId value = parameter.AsElementId();
-                        if (value == ElementId.InvalidElementId)
-                        {
-                            continue;
-                        }
-
-                        if (!index.TryGetValue(value, out List<(Element, Parameter)>? list))
-                        {
-                            list = new List<(Element, Parameter)>();
-                            index[value] = list;
-                        }
-
-                        list.Add((element, parameter));
-                    }
-
-                    processed++;
-                    if (processed % 5000 == 0)
-                    {
-                        progressCallback?.Invoke(0, $"Indexing parameters... {processed}/{total}");
-                    }
-                }
-            }
-
-            IndexElements(instanceElements);
-            IndexElements(typeElements);
-            return index;
-        }
-
-        private static Dictionary<ElementId, List<(View View, ElementId CategoryId)>> BuildViewCategoryOverrideIndex(
-            IReadOnlyList<View> views,
-            IReadOnlyList<Category> categories,
-            HashSet<ElementId> sourceIds,
-            Action<double, string>? progressCallback,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny)
-        {
-            var index = new Dictionary<ElementId, List<(View, ElementId)>>();
-            int viewCount = 0;
-
-            foreach (View view in views)
-            {
-                if (view == null || !view.IsValidObject)
+                if (group.CreatedNameIndex < 0)
                 {
                     continue;
                 }
 
-                viewCount++;
-                if (viewCount % 50 == 0)
+                string finalizedName = FinalizeCanonicalName(doc, group.CanonicalId, group.CreatedName, group.PreferredName, existingNames);
+                if (!string.Equals(finalizedName, group.CreatedName, StringComparison.Ordinal))
                 {
-                    progressCallback?.Invoke(0, $"Indexing view overrides... {viewCount}/{views.Count}");
-                }
-
-                try
-                {
-                    IndexCategoryOverrides(view, categories, sourceIds, matchesAny, index);
-                }
-                catch
-                {
+                    result.CreatedCanonicalNames[group.CreatedNameIndex] = finalizedName;
+                    logCallback?.Invoke($"  Renamed canonical: {finalizedName}");
                 }
             }
-
-            return index;
-        }
-
-        private static void IndexCategoryOverrides(
-            View view,
-            IReadOnlyList<Category> categories,
-            HashSet<ElementId> sourceIds,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny,
-            Dictionary<ElementId, List<(View, ElementId)>> index)
-        {
-            foreach (Category category in categories)
-            {
-                IndexSingleCategoryOverride(view, category.Id, sourceIds, matchesAny, index);
-
-                foreach (Category subCategory in category.SubCategories)
-                {
-                    IndexSingleCategoryOverride(view, subCategory.Id, sourceIds, matchesAny, index);
-                }
-            }
-        }
-
-        private static void IndexSingleCategoryOverride(
-            View view,
-            ElementId categoryId,
-            HashSet<ElementId> sourceIds,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny,
-            Dictionary<ElementId, List<(View, ElementId)>> index)
-        {
-            try
-            {
-                OverrideGraphicSettings overrides = view.GetCategoryOverrides(categoryId);
-                foreach (ElementId sourceId in EnumerateLinePatternIds(overrides))
-                {
-                    if (sourceIds.Contains(sourceId) && matchesAny(overrides, sourceId))
-                    {
-                        if (!index.TryGetValue(sourceId, out List<(View, ElementId)>? list))
-                        {
-                            list = new List<(View, ElementId)>();
-                            index[sourceId] = list;
-                        }
-
-                        list.Add((view, categoryId));
-                        break; // This (view, category) pair is already indexed
-                    }
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        private static Dictionary<ElementId, List<(View View, ElementId FilterId)>> BuildViewFilterOverrideIndex(
-            IReadOnlyList<View> views,
-            HashSet<ElementId> sourceIds,
-            Func<OverrideGraphicSettings, ElementId, bool> matchesAny)
-        {
-            var index = new Dictionary<ElementId, List<(View, ElementId)>>();
-
-            foreach (View view in views)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                ICollection<ElementId> filterIds;
-                try { filterIds = view.GetFilters(); }
-                catch { continue; }
-
-                foreach (ElementId filterId in filterIds)
-                {
-                    try
-                    {
-                        OverrideGraphicSettings overrides = view.GetFilterOverrides(filterId);
-                        foreach (ElementId sourceId in EnumerateLinePatternIds(overrides))
-                        {
-                            if (sourceIds.Contains(sourceId) && matchesAny(overrides, sourceId))
-                            {
-                                if (!index.TryGetValue(sourceId, out List<(View, ElementId)>? list))
-                                {
-                                    list = new List<(View, ElementId)>();
-                                    index[sourceId] = list;
-                                }
-
-                                list.Add((view, filterId));
-                                break;
-                            }
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-
-            return index;
         }
 
         private static List<LinePatternCandidate> CollectCandidates(Document doc)
@@ -500,6 +350,12 @@ namespace LECG.Services
             string? familyName,
             List<LinePatternCandidate> candidates)
         {
+            ArgumentNullException.ThrowIfNull(candidates);
+            if (candidates.Count == 0)
+            {
+                throw new ArgumentException("At least one line pattern candidate is required.", nameof(candidates));
+            }
+
             IReadOnlyList<double> averageLengths = LinePatternNamingPolicy.AverageLengthsMm(candidates.Select(item => item.SegmentLengthsMm));
             string sortKey = $"{candidates[0].TypeSignature}:{string.Join("|", averageLengths.Select(value => value.ToString("0.####", CultureInfo.InvariantCulture)))}";
             return new LinePatternDuplicateGroup(familyName, candidates, averageLengths, sortKey);
@@ -626,18 +482,31 @@ namespace LECG.Services
             return LinePatternElement.Create(doc, linePattern);
         }
 
-        private static string CreateIndexedCanonicalName(HashSet<string> existingNames, ref int nextCanonicalIndex)
+        private static LinePatternCompactionIndexes BuildCompactionIndexes(
+            CompactingStylesContext context,
+            List<LinePatternDuplicateGroup> duplicateGroups,
+            Action<string>? logCallback,
+            Action<double, string>? progressCallback)
         {
-            while (true)
-            {
-                string candidate = $"{CanonicalPrefix}{nextCanonicalIndex:000}";
-                nextCanonicalIndex++;
+            IReadOnlyList<View> views = context.Views;
+            IReadOnlyList<Category> categories = context.Categories;
+            HashSet<ElementId> allSourceIds = new HashSet<ElementId>(duplicateGroups.SelectMany(g => g.Candidates).Select(c => c.Id));
 
-                if (existingNames.Add(candidate))
-                {
-                    return candidate;
-                }
-            }
+            Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> categoryIndex =
+                BuildCategoryPatternIndex(context.AllCategories, allSourceIds);
+
+            logCallback?.Invoke("Building view override index...");
+            Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCategoryIndex =
+                CompactionSharedHelper.BuildViewCategoryOverrideIndex(views, categories, allSourceIds, progressCallback, EnumerateLinePatternIds);
+
+            Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex =
+                CompactionSharedHelper.BuildViewFilterOverrideIndex(views, allSourceIds, EnumerateLinePatternIds);
+
+            return new LinePatternCompactionIndexes(
+                categoryIndex,
+                context.ParameterIndex,
+                viewCategoryIndex,
+                viewFilterIndex);
         }
 
         private static int RenameToSemanticNames(
@@ -697,7 +566,7 @@ namespace LECG.Services
                     existingNames.Remove(oldName);
                     existingNames.Add(preferredName);
                     renamed++;
-                    logCallback?.Invoke($"  Renamed: {oldName} → {preferredName}");
+                    logCallback?.Invoke($"  Renamed: {oldName} -> {preferredName}");
                 }
                 catch
                 {
@@ -724,9 +593,9 @@ namespace LECG.Services
 
             int rewired = 0;
             rewired += RewireCategoryReferencesFromIndex(categoryIndex, sourceId, targetId);
-            rewired += RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
-            rewired += RewireViewCategoryOverridesFromIndex(viewCatIndex, sourceId, targetId);
-            rewired += RewireViewFilterOverridesFromIndex(viewFilterIndex, sourceId, targetId);
+            rewired += CompactionSharedHelper.RewireParameterReferencesFromIndex(doc, paramIndex, sourceId, targetId);
+            rewired += CompactionSharedHelper.RewireViewCategoryOverridesFromIndex(viewCatIndex, sourceId, targetId, RewriteLinePatternOverrides);
+            rewired += CompactionSharedHelper.RewireViewFilterOverridesFromIndex(viewFilterIndex, sourceId, targetId, RewriteLinePatternOverrides);
             return rewired;
         }
 
@@ -766,8 +635,9 @@ namespace LECG.Services
 
                 entries.Add((category, styleType));
             }
-            catch
+            catch (Exception ex) when (IsExpectedLinePatternCompactionException(ex))
             {
+                Logging.Logger.Instance.LogWarning($"[LinePatternCompactionService] IndexCategoryPattern: {ex.Message}");
             }
         }
 
@@ -797,8 +667,9 @@ namespace LECG.Services
                     rewired++;
                     movedToTarget.Add((category, styleType));
                 }
-                catch
+                catch (Exception ex) when (IsExpectedLinePatternCompactionException(ex))
                 {
+                    Logging.Logger.Instance.LogWarning($"[LinePatternCompactionService] RewireCategoryReferences: {ex.Message}");
                 }
             }
 
@@ -818,6 +689,13 @@ namespace LECG.Services
             return rewired;
         }
 
+        private static bool IsExpectedLinePatternCompactionException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
+
         private static IEnumerable<ElementId> EnumerateLinePatternIds(OverrideGraphicSettings overrides)
         {
             ElementId projectionId = overrides.ProjectionLinePatternId;
@@ -833,175 +711,66 @@ namespace LECG.Services
             }
         }
 
-        private static int RewireParameterReferencesFromIndex(
-            Document doc,
-            Dictionary<ElementId, HashSet<ElementId>> paramIndex,
-            ElementId sourceId,
-            ElementId targetId)
+        private static int RewriteLinePatternOverrides(OverrideGraphicSettings overrides, ElementId sourceId, ElementId targetId)
         {
-            if (!paramIndex.TryGetValue(sourceId, out HashSet<ElementId>? elementIds))
+            int changed = 0;
+
+            if (overrides.ProjectionLinePatternId == sourceId)
             {
-                return 0;
+                overrides.SetProjectionLinePatternId(targetId);
+                changed++;
             }
 
-            int rewired = 0;
-            var movedToTarget = new HashSet<ElementId>();
-
-            foreach (ElementId elementId in elementIds)
+            if (overrides.CutLinePatternId == sourceId)
             {
-                try
-                {
-                    Element? element = doc.GetElement(elementId);
-                    if (element == null || !element.IsValidObject) continue;
-
-                    foreach (Parameter param in element.Parameters)
-                    {
-                        if (param.IsReadOnly || param.StorageType != StorageType.ElementId) continue;
-                        try
-                        {
-                            if (!param.HasValue) continue;
-                            if (param.AsElementId() == sourceId)
-                            {
-                                param.Set(targetId);
-                                rewired++;
-                                movedToTarget.Add(elementId);
-                            }
-                        }
-                        catch { }
-                    }
-                }
-                catch { }
+                overrides.SetCutLinePatternId(targetId);
+                changed++;
             }
 
-            paramIndex.Remove(sourceId);
-
-            if (movedToTarget.Count > 0)
-            {
-                if (!paramIndex.TryGetValue(targetId, out HashSet<ElementId>? targetSet))
-                {
-                    targetSet = new HashSet<ElementId>();
-                    paramIndex[targetId] = targetSet;
-                }
-
-                targetSet.UnionWith(movedToTarget);
-            }
-
-            return rewired;
+            return changed;
         }
 
-        private static int RewireViewCategoryOverridesFromIndex(
-            Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCatIndex,
-            ElementId sourceId,
-            ElementId targetId)
+        private sealed class LinePatternCompactionIndexes
         {
-            if (!viewCatIndex.TryGetValue(sourceId, out List<(View View, ElementId CategoryId)>? entries))
+            public LinePatternCompactionIndexes(
+                Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> categoryIndex,
+                Dictionary<ElementId, HashSet<ElementId>> parameterIndex,
+                Dictionary<ElementId, List<(View View, ElementId CategoryId)>> viewCategoryIndex,
+                Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex)
             {
-                return 0;
+                CategoryIndex = categoryIndex;
+                ParameterIndex = parameterIndex;
+                ViewCategoryIndex = viewCategoryIndex;
+                ViewFilterIndex = viewFilterIndex;
             }
 
-            int rewired = 0;
-
-            foreach (var (view, categoryId) in entries)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    OverrideGraphicSettings overrides = view.GetCategoryOverrides(categoryId);
-                    int changed = 0;
-
-                    if (overrides.ProjectionLinePatternId == sourceId)
-                    {
-                        overrides.SetProjectionLinePatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.CutLinePatternId == sourceId)
-                    {
-                        overrides.SetCutLinePatternId(targetId);
-                        changed++;
-                    }
-
-                    if (changed > 0)
-                    {
-                        view.SetCategoryOverrides(categoryId, overrides);
-                        rewired += changed;
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            viewCatIndex.Remove(sourceId);
-            return rewired;
+            public Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> CategoryIndex { get; }
+            public Dictionary<ElementId, HashSet<ElementId>> ParameterIndex { get; }
+            public Dictionary<ElementId, List<(View View, ElementId CategoryId)>> ViewCategoryIndex { get; }
+            public Dictionary<ElementId, List<(View View, ElementId FilterId)>> ViewFilterIndex { get; }
         }
 
-        private static int RewireViewFilterOverridesFromIndex(
-            Dictionary<ElementId, List<(View View, ElementId FilterId)>> viewFilterIndex,
-            ElementId sourceId,
-            ElementId targetId)
+        private sealed class LinePatternCompactionGroupData
         {
-            if (!viewFilterIndex.TryGetValue(sourceId, out List<(View View, ElementId FilterId)>? entries))
+            public LinePatternCompactionGroupData(
+                string createdName,
+                string preferredName,
+                int createdNameIndex,
+                ElementId canonicalId,
+                IReadOnlyList<LinePatternCandidate> toDelete)
             {
-                return 0;
+                CreatedName = createdName;
+                PreferredName = preferredName;
+                CreatedNameIndex = createdNameIndex;
+                CanonicalId = canonicalId;
+                ToDelete = toDelete;
             }
 
-            int rewired = 0;
-
-            foreach (var (view, filterId) in entries)
-            {
-                if (view == null || !view.IsValidObject)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    OverrideGraphicSettings overrides = view.GetFilterOverrides(filterId);
-                    int changed = 0;
-
-                    if (overrides.ProjectionLinePatternId == sourceId)
-                    {
-                        overrides.SetProjectionLinePatternId(targetId);
-                        changed++;
-                    }
-
-                    if (overrides.CutLinePatternId == sourceId)
-                    {
-                        overrides.SetCutLinePatternId(targetId);
-                        changed++;
-                    }
-
-                    if (changed > 0)
-                    {
-                        view.SetFilterOverrides(filterId, overrides);
-                        rewired += changed;
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            viewFilterIndex.Remove(sourceId);
-            return rewired;
-        }
-
-        private static bool TryDeletePattern(Document doc, ElementId patternId)
-        {
-            try
-            {
-                ICollection<ElementId> deletedIds = doc.Delete(patternId);
-                return deletedIds.Count > 0;
-            }
-            catch
-            {
-                return false;
-            }
+            public string CreatedName { get; }
+            public string PreferredName { get; }
+            public int CreatedNameIndex { get; }
+            public ElementId CanonicalId { get; }
+            public IReadOnlyList<LinePatternCandidate> ToDelete { get; }
         }
 
         private sealed class LinePatternCandidate

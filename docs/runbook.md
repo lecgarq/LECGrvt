@@ -47,7 +47,7 @@ git branch --show-current
 
 2. All verifications passed (documented in SUMMARY.md)
 
-3. STATE.md updated with current position
+3. `.planning/STATE.md` updated with current position
 
 4. State snapshot created
 
@@ -76,7 +76,7 @@ After 3 consecutive failed debug attempts:
 
 1. **Stop** — Don't try a 4th approach in same session
 
-2. **Document** in STATE.md:
+2. **Document** in `.planning/STATE.md`:
    ```markdown
    ## Debug Session
    
@@ -153,18 +153,18 @@ golangci-lint run
 
 ## State Recovery
 
-### From STATE.md
+### From `.planning/STATE.md`
 
 When resuming work:
 
-1. Read STATE.md for current position
+1. Read `.planning/STATE.md` for current position
 2. Check "Last Action" for context
 3. Follow "Next Steps" to continue
 4. Verify recent commits match documented progress
 
 ### From Git History
 
-If STATE.md is outdated:
+If `.planning/STATE.md` is outdated:
 
 ```powershell
 # See recent work
@@ -182,7 +182,7 @@ git show <commit-hash>:path/to/file
 If quality is degrading mid-session:
 
 1. Create state snapshot immediately
-2. Update STATE.md with full context
+2. Update `.planning/STATE.md` with full context
 3. Commit any pending work
 4. Start fresh session
 5. Run `/resume` to reload context
@@ -239,9 +239,9 @@ Before reading any file:
 **Cause:** Planning lock prevents implementation
 
 **Fix:**
-1. Open `.gsd/SPEC.md`
-2. Complete all required sections
-3. Change status to `Status: FINALIZED`
+1. Open `.planning/PROJECT.md`
+2. Confirm `.planning/REQUIREMENTS.md` matches the approved scope
+3. Update any stale scope or milestone notes
 4. Retry command
 
 ### "Context degrading"
@@ -270,23 +270,23 @@ git diff --staged
 
 ### Pre-Execution Checklist
 
-- [ ] SPEC.md is FINALIZED
-- [ ] ROADMAP.md has current phase
-- [ ] STATE.md loaded and understood
+- [ ] `.planning/PROJECT.md` and `.planning/REQUIREMENTS.md` reflect approved scope
+- [ ] `.planning/ROADMAP.md` has current phase
+- [ ] `.planning/STATE.md` loaded and understood
 - [ ] Previous wave verified complete
 
 ### Post-Wave Checklist
 
 - [ ] All tasks committed
 - [ ] Verifications documented
-- [ ] STATE.md updated
+- [ ] `.planning/STATE.md` updated
 - [ ] State snapshot created
 - [ ] No uncommitted changes
 
 ### Session End Checklist
 
 - [ ] Current work committed
-- [ ] STATE.md has "Next Steps"
+- [ ] `.planning/STATE.md` has "Next Steps"
 - [ ] JOURNAL.md updated (if milestone)
 - [ ] No loose ends
 

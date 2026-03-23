@@ -81,9 +81,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Click="Cancel_Click" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" IsCancel="True" Style="{DynamicResource SecondaryButtonStyle}"/>
 
-            <Button Grid.Column="2" Height="{DynamicResource ButtonHeight}" Click="Apply_Click" Style="{DynamicResource AccentButtonStyle}">
+            <Button Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" Style="{DynamicResource AccentButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Path Data="{x:Static icons:Icons.Sparkles}" Stroke="White" StrokeThickness="1.5" Width="{DynamicResource IconSizeButton}" Height="{DynamicResource IconSizeButton}" Stretch="Uniform" Margin="0,0,8,0"/>
                     <TextBlock Text="Apply" VerticalAlignment="Center"/>

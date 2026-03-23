@@ -1,14 +1,18 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using Autodesk.Revit.UI.Events;
 using LECG.Core;
 using LECG.Models;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.ViewModels;
 using LECG.Views;
 using LECG.Views.Base;
+using LECG.Validation;
 using System;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Commands
 {
@@ -23,6 +27,20 @@ namespace LECG.Commands
         // We handle the transaction internally due to conditional logic
         protected override string? TransactionName => null;
 
+        /// <summary>
+        /// Auto-dismiss Revit TaskDialogs during purge operations.
+        /// Catches "Extrusion is too thin", "Base sketch for extrusion is invalid", and similar
+        /// geometry-validation dialogs that LoadFamily triggers outside the FailuresProcessing pipeline.
+        /// Always cancels (result 2) to preserve existing geometry — never deletes elements.
+        /// </summary>
+        private static void OnDialogShowing(object? sender, DialogBoxShowingEventArgs e)
+        {
+            // Cancel all dialogs during purge — preserves geometry, does NOT delete elements.
+            e.OverrideResult(2);
+            string detail = e is TaskDialogShowingEventArgs td ? td.Message : e.DialogId ?? "unknown";
+            Logger.Instance.Log($"  Auto-dismissed dialog during purge: {detail}");
+        }
+
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
@@ -30,138 +48,139 @@ namespace LECG.Commands
 
             UIApplication app = uiDoc.Application;
 
-            if (TryGetOptionsFromCustomDialog(
-                out bool purgeLineStyles,
-                out bool purgeLinePatterns,
-                out bool purgeFillPatterns,
-                out bool purgeMaterials,
-                out bool purgeLevels,
-                out bool purgeParameters,
-                out int passCount,
-                out bool cancelled))
-            {
-                if (cancelled) return;
-            }
-            else
-            {
-                if (cancelled) return;
+            PurgeDialogSettings? settings = GetOptionsFromCustomDialog() ?? GetOptionsFromFallbackDialog();
+            if (settings == null) return;
+            if (!TryValidateSettings(settings)) return;
 
-                if (!TryGetOptionsFromFallbackDialog(
-                    out purgeLineStyles,
-                    out purgeLinePatterns,
-                    out purgeFillPatterns,
-                    out purgeMaterials,
-                    out purgeLevels,
-                    out purgeParameters,
-                    out passCount))
-                {
-                    return;
-                }
-            }
-
-            var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
             var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
 
             ShowLogWindow("Purge Unused");
-            purgeService.PurgeAll(doc, passCount, purgeLineStyles, purgeLinePatterns, purgeFillPatterns, purgeMaterials, purgeLevels, purgeParameters, reporter);
+            try
+            {
+                // Subscribe to DialogBoxShowing on the REAL UIApplication to suppress
+                // "Extrusion is too thin" and similar modal TaskDialogs during LoadFamily.
+                // Active for the entire purge operation — single subscription, not per-family.
+                app.DialogBoxShowing += OnDialogShowing;
+
+                if (settings.PassCount > 1)
+                {
+                    Log("Deep purge is using Revit native Purge Unused for every editable loaded family and for the project.");
+                    Log("Category-specific purge toggles are ignored during deep purge.");
+
+                    var deepPurgeService = ServiceLocator.GetRequiredService<IDeepPurgeService>();
+                    deepPurgeService.Purge(doc, settings.PassCount, reporter);
+
+                    if (settings.PurgeParameters)
+                    {
+                        Log("");
+                        Log("--- FAMILY PARAMETERS ---");
+                        var purgeParameterService = ServiceLocator.GetRequiredService<IPurgeParameterService>();
+                        int deleted = purgeParameterService.PurgeUnusedParameters(doc, Log);
+                        Log($"Family Parameters deleted: {deleted}");
+                    }
+                }
+                else
+                {
+                    var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
+                    purgeService.PurgeAll(doc, settings.PassCount, settings.PurgeLineStyles, settings.PurgeLinePatterns, settings.PurgeFillPatterns, settings.PurgeMaterials, settings.PurgeLevels, settings.PurgeParameters, settings.PurgeGroups, settings.PurgeGridTypes, settings.PurgeLevelTypes, settings.PurgeConstraints, settings.PurgeUnplacedRooms, settings.PurgeViewTemplates, settings.PurgeViewFilters, reporter);
+                }
+            }
+            finally
+            {
+                // ALWAYS unsubscribe — even if purge throws
+                app.DialogBoxShowing -= OnDialogShowing;
+            }
+
+            UpdateProgress(100, "Complete");
             Log("Purge Complete.");
         }
 
-        private bool TryGetOptionsFromCustomDialog(
-            out bool purgeLineStyles,
-            out bool purgeLinePatterns,
-            out bool purgeFillPatterns,
-            out bool purgeMaterials,
-            out bool purgeLevels,
-            out bool purgeParameters,
-            out int passCount,
-            out bool cancelled)
+        private PurgeDialogSettings? GetOptionsFromCustomDialog()
         {
-            purgeLineStyles = true;
-            purgeLinePatterns = true;
-            purgeFillPatterns = true;
-            purgeMaterials = true;
-            purgeLevels = false;
-            purgeParameters = false;
-            passCount = 1;
-            cancelled = false;
-
             try
             {
                 var loaded = SettingsManager.Load<PurgeDialogSettings>(PurgeSettingsFile) ?? new PurgeDialogSettings();
-                var settings = ServiceLocator.GetRequiredService<PurgeViewModel>();
-                settings.PurgeLineStyles = loaded.PurgeLineStyles;
-                settings.PurgeLinePatterns = loaded.PurgeLinePatterns;
-                settings.PurgeFillPatterns = loaded.PurgeFillPatterns;
-                settings.PurgeMaterials = loaded.PurgeMaterials;
-                settings.PurgeLevels = loaded.PurgeLevels;
-                settings.PurgeParameters = loaded.PurgeParameters;
-                settings.IsDeepPurge = loaded.IsDeepPurge;
-
                 var view = ServiceLocator.GetRequiredService<PurgeView>();
-                view.DataContext = settings; 
+                var vm = (PurgeViewModel)view.DataContext;
+                vm.PurgeLineStyles = loaded.PurgeLineStyles;
+                vm.PurgeLinePatterns = loaded.PurgeLinePatterns;
+                vm.PurgeFillPatterns = loaded.PurgeFillPatterns;
+                vm.PurgeMaterials = loaded.PurgeMaterials;
+                vm.PurgeLevels = loaded.PurgeLevels;
+                vm.PurgeParameters = loaded.PurgeParameters;
+                vm.PurgeGroups = loaded.PurgeGroups;
+                vm.PurgeGridTypes = loaded.PurgeGridTypes;
+                vm.PurgeLevelTypes = loaded.PurgeLevelTypes;
+                vm.PurgeConstraints = loaded.PurgeConstraints;
+                vm.PurgeUnplacedRooms = loaded.PurgeUnplacedRooms;
+                vm.PurgeViewTemplates = loaded.PurgeViewTemplates;
+                vm.PurgeViewFilters = loaded.PurgeViewFilters;
+                vm.IsDeepPurge = loaded.IsDeepPurge;
+
                 bool? result = view.ShowDialog();
-                if (result != true)
+                if (result != true) return null;
+
+                var settings = new PurgeDialogSettings
                 {
-                    cancelled = true;
-                    return false;
+                    PurgeLineStyles = vm.PurgeLineStyles,
+                    PurgeLinePatterns = vm.PurgeLinePatterns,
+                    PurgeFillPatterns = vm.PurgeFillPatterns,
+                    PurgeMaterials = vm.PurgeMaterials,
+                    PurgeLevels = vm.PurgeLevels,
+                    PurgeParameters = vm.PurgeParameters,
+                    PurgeGroups = vm.PurgeGroups,
+                    PurgeGridTypes = vm.PurgeGridTypes,
+                    PurgeLevelTypes = vm.PurgeLevelTypes,
+                    PurgeConstraints = vm.PurgeConstraints,
+                    PurgeUnplacedRooms = vm.PurgeUnplacedRooms,
+                    PurgeViewTemplates = vm.PurgeViewTemplates,
+                    PurgeViewFilters = vm.PurgeViewFilters,
+                    IsDeepPurge = vm.IsDeepPurge
+                };
+
+                if (!TryValidateSettings(settings))
+                {
+                    return null;
                 }
 
-                SettingsManager.Save(new PurgeDialogSettings
-                {
-                    PurgeLineStyles = settings.PurgeLineStyles,
-                    PurgeLinePatterns = settings.PurgeLinePatterns,
-                    PurgeFillPatterns = settings.PurgeFillPatterns,
-                    PurgeMaterials = settings.PurgeMaterials,
-                    PurgeLevels = settings.PurgeLevels,
-                    PurgeParameters = settings.PurgeParameters,
-                    IsDeepPurge = settings.IsDeepPurge
-                }, PurgeSettingsFile);
-
-                purgeLineStyles = settings.PurgeLineStyles;
-                purgeLinePatterns = settings.PurgeLinePatterns;
-                purgeFillPatterns = settings.PurgeFillPatterns;
-                purgeMaterials = settings.PurgeMaterials;
-                purgeLevels = settings.PurgeLevels;
-                purgeParameters = settings.PurgeParameters;
-                passCount = settings.IsDeepPurge ? 3 : 1;
-                return true;
+                SettingsManager.Save(settings, PurgeSettingsFile);
+                return settings;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedPurgeDialogException(ex))
             {
                 Log($"Purge WPF dialog failed. Using native fallback. {ex.Message}");
-                return false;
+                return null;
             }
         }
 
-        private static bool TryGetOptionsFromFallbackDialog(
-            out bool purgeLineStyles,
-            out bool purgeLinePatterns,
-            out bool purgeFillPatterns,
-            out bool purgeMaterials,
-            out bool purgeLevels,
-            out bool purgeParameters,
-            out int passCount)
+        private static PurgeDialogSettings? GetOptionsFromFallbackDialog()
         {
-            purgeLineStyles = true;
-            purgeLinePatterns = true;
-            purgeFillPatterns = true;
-            purgeMaterials = true;
-            purgeLevels = false;
-            purgeParameters = false;
-            passCount = 1;
-
             int selected = LecgDialog.ShowOptions(
                 "LECG Purge Unused",
                 "Choose purge mode. Safe mode avoids family-parameter purge.",
                 "Safe Purge (Line Styles, Line Patterns, Fill Patterns, Materials)",
                 "Deep Purge (+Levels, 3 passes)");
 
-            if (selected < 0) return false;
+            if (selected < 0) return null;
 
-            purgeLevels = selected == 1;
-            passCount = selected == 1 ? 3 : 1;
-            return true;
+            return new PurgeDialogSettings
+            {
+                PurgeLevels = selected == 1,
+                IsDeepPurge = selected == 1
+            };
+        }
+
+        private static bool TryValidateSettings(PurgeDialogSettings settings)
+        {
+            IValidationService? validationService = ServiceLocator.GetService<IValidationService>();
+            return validationService == null || validationService.TryValidateAndShow(settings, "Purge Validation");
+        }
+
+        private static bool IsExpectedPurgeDialogException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
         }
     }
 }

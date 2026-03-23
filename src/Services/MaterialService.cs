@@ -1,9 +1,9 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
+using LECG.Models;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -65,6 +65,11 @@ namespace LECG.Services
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)
         {
             return _materialPbrService.CreatePBRMaterial(doc, name, folderPath, logCallback);
+        }
+
+        public ElementId CreatePBRMaterial(Document doc, PbrMaterialCreateRequest request, Action<string>? logCallback = null)
+        {
+            return _materialPbrService.CreatePBRMaterial(doc, request, logCallback);
         }
 
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter)

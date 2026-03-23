@@ -1,4 +1,3 @@
-#pragma warning disable CS8600, CS8601, CS8602, CS8603, CS8604, CS8618
 using Autodesk.Revit.Attributes;
 using LECG.Services.Interfaces;
 using Autodesk.Revit.DB;
@@ -23,10 +22,14 @@ namespace LECG.Commands
             // 2. ViewModel
             var vm = ServiceLocator.GetRequiredService<ChangeLevelViewModel>();
             vm.Initialize(doc);
+            var preselectedElements = SelectionSeedHelper.GetSelectedElements(uidoc, vm.Selection.Filter);
+            if (preselectedElements.Count > 0)
+            {
+                vm.SetSelectedElements(preselectedElements);
+            }
 
-            // 3. View
-            // Pass UIDocument to view for selection handling
-            var view = ServiceLocator.GetRequiredService<ChangeLevelView>();
+            // 3. View — pass VM explicitly so command and view share the same instance
+            var view = ServiceLocator.CreateWith<ChangeLevelView>(vm);
             view.Initialize(uidoc);
 
             view.ShowDialog();

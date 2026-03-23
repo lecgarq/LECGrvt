@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
@@ -23,8 +24,8 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Align Toposolid Edges" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
-            <TextBlock Text="Project target points onto the reference surface." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
+            <TextBlock Text="Align Slab Edges" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Align source slab boundaries vertically to nearby or selected reference geometry." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
         <!-- Selection Cards -->
@@ -34,18 +35,21 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                         <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="1. TARGETS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                        <TextBlock Text="1. SOURCES" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                     </StackPanel>
                     <comp:SelectionControl DataContext="{Binding TargetsSelection}"/>
                 </StackPanel>
             </Border>
 
-            <!-- Reference Selection -->
-            <Border Margin="{DynamicResource CardMarginNone}">
+            <!-- Find My Edge Toggle -->
+            <CheckBox Content="Find my edge" IsChecked="{Binding FindMyEdge}" Margin="0,12,0,0" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextPrimary}" ToolTip="Automatically scan surrounding floors, toposolids, and links for local boundary drivers"/>
+
+            <!-- Reference Selection (hidden when Find My Edge is checked) -->
+            <Border Margin="{DynamicResource CardMarginNone}" Visibility="{Binding ShowReferenceSection, Converter={StaticResource BoolToVisibility}}">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                         <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="2. REFERENCE" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                        <TextBlock Text="2. REFERENCES" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                     </StackPanel>
                     <comp:SelectionControl DataContext="{Binding ReferenceSelection}"/>
                 </StackPanel>

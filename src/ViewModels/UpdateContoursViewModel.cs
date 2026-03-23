@@ -9,36 +9,24 @@ namespace LECG.ViewModels
     {
         // Mode selection
         [ObservableProperty] private bool _isApplyMode = true;
-        
+
         // Types list expanded/collapsed
         [ObservableProperty] private bool _isTypesExpanded = true;
-        
+
         // Toposolid Types
         public ObservableCollection<TypeSelectionItem> ToposolidTypes { get; } = new();
-        
+
         // Primary Contours
         [ObservableProperty] private bool _enablePrimary = true;
         [ObservableProperty] private double _primaryInterval = 1.0; // meters
-        
+
         // Secondary Contours
         [ObservableProperty] private bool _enableSecondary = true;
         [ObservableProperty] private double _secondaryInterval = 0.25; // meters
-        
+
         public UpdateContoursViewModel()
         {
             Title = "UPDATE CONTOURS";
-        }
-
-        public override void Apply()
-        {
-            ShouldRun = true;
-            CloseAction?.Invoke();
-        }
-
-        public override void Cancel()
-        {
-            ShouldRun = false;
-            CloseAction?.Invoke();
         }
 
         [RelayCommand]

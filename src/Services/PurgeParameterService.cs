@@ -3,51 +3,66 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     /// <summary>
     /// Service for purging unused family parameters from all families in the project.
-    /// 
+    ///
     /// A parameter is considered SAFE TO DELETE only if ALL of the following are true:
     ///   1. It is NOT a built-in parameter (Id.Value >= 0)
     ///   2. It is NOT a reporting parameter (IsReporting == false)
-    ///   3. It has NO formula (Formula is null/empty)
-    ///   4. It is NOT referenced by ANY other parameter's formula
-    ///   5. It is NOT a dimension label (no Dimension.FamilyLabel points to it)
-    ///   6. It is NOT associated to ANY element property (material, visibility, geometry, nested families)
-    ///   7. It does NOT have meaningful values set across family types
-    ///   8. It is NOT a shared parameter (shared params may be used in schedules/tags)
+    ///   3. It is NOT a material-type parameter (always structural to family design)
+    ///   4. It is NOT a third-party plugin parameter (name contains "Enscape")
+    ///   5. It has NO formula (Formula is null/empty)
+    ///   6. It is NOT referenced by ANY other parameter's formula
+    ///   7. It is NOT a dimension label (no Dimension.FamilyLabel points to it)
+    ///   8. It is NOT associated to ANY element property (material, visibility, geometry, nested families)
+    ///   9. It does NOT have meaningful values set across family types
+    ///  10. If shared: it is NOT registered at the project level (SharedParameterElement with matching GUID
+    ///      indicates use in schedules, tags, or filters — those are KEPT)
     /// </summary>
     public class PurgeParameterService : IPurgeParameterService
     {
         private readonly ITransactionService _transactionService;
+        private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
 
-        public PurgeParameterService(ITransactionService transactionService)
+        public PurgeParameterService(ITransactionService transactionService, IFamilyLoadOptionsFactory loadOptionsFactory)
         {
             _transactionService = transactionService;
+            _loadOptionsFactory = loadOptionsFactory;
         }
 
         public int PurgeUnusedParameters(Document doc, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+
             logCallback?.Invoke("Scanning families for unused parameters...");
 
             int totalDeleted = 0;
             int familiesProcessed = 0;
             int familiesSkipped = 0;
 
-            // Collect all families in the project
-            var families = new FilteredElementCollector(doc)
-                .OfClass(typeof(Family))
-                .Cast<Family>()
-                .ToList();
+            // Build project-level shared parameter GUIDs ONCE (used across all families)
+            var projectSharedGuids = BuildProjectSharedParameterGuids(doc);
+            logCallback?.Invoke($"  Found {projectSharedGuids.Count} shared parameters registered at project level.");
+
+            List<ProjectFamilyTarget> families = CollectProjectFamilies(doc);
 
             logCallback?.Invoke($"  Found {families.Count} families to scan.");
 
-            foreach (Family family in families)
+            foreach (ProjectFamilyTarget familyTarget in families)
             {
                 try
                 {
+                    Family? family = doc.GetElement(familyTarget.Id) as Family;
+                    if (family == null || !family.IsValidObject)
+                    {
+                        familiesSkipped++;
+                        continue;
+                    }
+
                     // Skip non-editable families (in-place, system families)
                     if (!family.IsEditable)
                     {
@@ -55,13 +70,13 @@ namespace LECG.Services
                         continue;
                     }
 
-                    int deletedInFamily = ProcessFamily(doc, family, logCallback);
+                    int deletedInFamily = ProcessFamily(doc, family, familyTarget.Name, projectSharedGuids, logCallback);
                     totalDeleted += deletedInFamily;
                     familiesProcessed++;
                 }
-                catch (Exception ex)
+                catch (Exception ex) when (IsExpectedFamilyPurgeException(ex))
                 {
-                    logCallback?.Invoke($"  ⚠ Error processing family '{family.Name}': {ex.Message}");
+                    logCallback?.Invoke($"  WARNING Error processing family '{familyTarget.Name}': {ex.Message}");
                     familiesSkipped++;
                 }
             }
@@ -71,16 +86,25 @@ namespace LECG.Services
             return totalDeleted;
         }
 
+        private static List<ProjectFamilyTarget> CollectProjectFamilies(Document doc)
+        {
+            return new FilteredElementCollector(doc)
+                .OfClass(typeof(Family))
+                .Cast<Family>()
+                .Select(family => new ProjectFamilyTarget(family.Id, family.Name))
+                .ToList();
+        }
+
         /// <summary>
         /// Opens a family document via EditFamily, finds unused parameters, removes them,
         /// reloads the family back, and closes the family document.
         /// </summary>
-        private int ProcessFamily(Document projectDoc, Family family, Action<string>? logCallback)
+        private int ProcessFamily(Document projectDoc, Family family, string familyName, HashSet<Guid> projectSharedGuids, Action<string>? logCallback)
         {
             Document? famDoc = projectDoc.EditFamily(family);
             if (famDoc == null)
             {
-                logCallback?.Invoke($"  Could not open family '{family.Name}'.");
+                logCallback?.Invoke($"  Could not open family '{familyName}'.");
                 return 0;
             }
 
@@ -89,21 +113,24 @@ namespace LECG.Services
                 FamilyManager fm = famDoc.FamilyManager;
                 if (fm == null)
                 {
-                    famDoc.Close(false);
+                    TryCloseFamilyDocument(famDoc, familyName, logCallback);
                     return 0;
                 }
 
                 // Build safety sets
-                var formulaReferencedParams = BuildFormulaReferencedSet(fm);
-                var dimensionLabelParams = BuildDimensionLabelSet(famDoc);
-                var elementAssociatedParams = BuildElementAssociationSet(famDoc, fm);
-                var valueInUseParams = BuildValueInUseSet(fm);
+                FamilyParameterUsageContext usageContext = BuildUsageContext(famDoc, fm);
 
                 // Find parameters safe to delete
                 var paramsToDelete = new List<FamilyParameter>();
                 foreach (FamilyParameter fp in fm.Parameters)
                 {
-                    string reason = GetSkipReason(fp, formulaReferencedParams, dimensionLabelParams, elementAssociatedParams, valueInUseParams);
+                    string? reason = GetSkipReason(
+                        fp,
+                        usageContext.FormulaReferencedParams,
+                        usageContext.DimensionLabelParams,
+                        usageContext.ElementAssociatedParams,
+                        usageContext.ValueInUseParams,
+                        projectSharedGuids);
                     if (reason != null)
                     {
                         // Parameter is in use — skip
@@ -115,42 +142,28 @@ namespace LECG.Services
 
                 if (paramsToDelete.Count == 0)
                 {
-                    famDoc.Close(false);
+                    TryCloseFamilyDocument(famDoc, familyName, logCallback);
                     return 0;
                 }
 
                 // Delete unused parameters
-                int deleted = 0;
-                bool committed = _transactionService.RunConditional(famDoc, "Purge Unused Parameters", _ =>
+                int deleted = DeleteParameters(famDoc, fm, paramsToDelete, familyName, logCallback);
+
+                // Reload family back into project if changes were made.
+                // DialogBoxShowing is handled at the PurgeCommand level (real UIApplication).
+                // FailuresProcessing here handles failure messages during the internal LoadFamily transaction.
+                if (deleted > 0)
                 {
-                    foreach (FamilyParameter fp in paramsToDelete)
-                    {
-                        try
-                        {
-                            string paramName = fp.Definition.Name;
-                            fm.RemoveParameter(fp);
-                            deleted++;
-                            logCallback?.Invoke($"  Deleted: '{paramName}' from '{family.Name}'");
-                        }
-                        catch (Exception ex)
-                        {
-                            logCallback?.Invoke($"  Could not delete param '{fp.Definition.Name}' from '{family.Name}': {ex.Message}");
-                        }
-                    }
-                    return deleted > 0;
-                });
+                    ReloadFamily(projectDoc, famDoc, familyName, logCallback);
+                }
 
-                // Reload family back into project if changes were made
-                if (committed)
-                    famDoc.LoadFamily(projectDoc, new OverwriteFamilyOption());
-
-                famDoc.Close(false);
+                TryCloseFamilyDocument(famDoc, familyName, logCallback);
                 return deleted;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (IsExpectedFamilyPurgeException(ex))
             {
-                logCallback?.Invoke($"  ⚠ Error in family '{family.Name}': {ex.Message}");
-                try { famDoc.Close(false); } catch { /* swallow close errors */ }
+                logCallback?.Invoke($"  WARNING Error in family '{familyName}': {ex.Message}");
+                TryCloseFamilyDocument(famDoc, familyName, logCallback);
                 return 0;
             }
         }
@@ -158,12 +171,13 @@ namespace LECG.Services
         /// <summary>
         /// Returns null if the parameter is safe to delete, or a reason string if it should be kept.
         /// </summary>
-        private string? GetSkipReason(
+        private static string? GetSkipReason(
             FamilyParameter fp,
             HashSet<ElementId> formulaReferencedParams,
             HashSet<ElementId> dimensionLabelParams,
             HashSet<ElementId> elementAssociatedParams,
-            HashSet<ElementId> valueInUseParams)
+            HashSet<ElementId> valueInUseParams,
+            HashSet<Guid> projectSharedGuids)
         {
             // 1. Built-in parameter
             if (fp.Id.Value < 0)
@@ -173,31 +187,156 @@ namespace LECG.Services
             if (fp.IsReporting)
                 return "reporting";
 
-            // 3. Has a formula
+            // 3. Material-type parameter — always structural to family design.
+            // Material parameters are intentionally created even when no material is assigned yet.
+            try
+            {
+                if (fp.Definition.GetDataType() == SpecTypeId.Reference.Material)
+                    return "material-type parameter (structural to family)";
+            }
+            catch
+            {
+                // GetDataType may throw on some parameter types — continue with other checks
+            }
+
+            // 4. Third-party plugin parameter — preserve Enscape and similar renderer parameters
+            if (fp.Definition.Name.Contains("Enscape", StringComparison.OrdinalIgnoreCase))
+                return "third-party plugin parameter (Enscape)";
+
+            // 5. Has a formula
             if (!string.IsNullOrEmpty(fp.Formula))
                 return "has formula";
 
-            // 4. Referenced by another parameter's formula
+            // 6. Referenced by another parameter's formula
             if (formulaReferencedParams.Contains(fp.Id))
                 return "referenced in formula";
 
-            // 5. Is a dimension label
+            // 7. Is a dimension label
             if (dimensionLabelParams.Contains(fp.Id))
                 return "dimension label";
 
-            // 6. Associated with ANY element property (material, visibility, geometry, nested families)
+            // 8. Associated with ANY element property (material, visibility, geometry, nested families)
             if (elementAssociatedParams.Contains(fp.Id))
                 return "element association (material/visibility/geometry)";
 
-            // 7. Has non-default values across family types
+            // 9. Has non-default values across family types
             if (valueInUseParams.Contains(fp.Id))
                 return "has values set across types";
 
-            // 8. Shared parameter (may be used in schedules, tags, filters in the project)
-            if (fp.IsShared)
-                return "shared parameter";
+            // 10. Shared parameter registered at project level (used in schedules, tags, or filters)
+            // Shared params NOT registered at project level are treated like regular params — deletable
+            if (fp.IsShared && projectSharedGuids.Contains(fp.GUID))
+                return "shared parameter used in project (schedules/tags/filters)";
 
             return null; // Safe to delete
+        }
+
+        private FamilyParameterUsageContext BuildUsageContext(Document famDoc, FamilyManager fm)
+        {
+            return new FamilyParameterUsageContext(
+                BuildFormulaReferencedSet(fm),
+                BuildDimensionLabelSet(famDoc),
+                BuildElementAssociationSet(famDoc, fm),
+                BuildValueInUseSet(fm));
+        }
+
+        private int DeleteParameters(
+            Document famDoc,
+            FamilyManager fm,
+            List<FamilyParameter> paramsToDelete,
+            string familyName,
+            Action<string>? logCallback)
+        {
+            List<FamilyParameterTarget> parameterTargets = paramsToDelete
+                .Select(fp => new FamilyParameterTarget(fp.Id, fp.Definition.Name))
+                .ToList();
+
+            int deleted = 0;
+            _transactionService.RunConditional(famDoc, "Purge Unused Parameters", _ =>
+            {
+                foreach (FamilyParameterTarget parameterTarget in parameterTargets)
+                {
+                    FamilyParameter? currentParameter = FindFamilyParameter(fm, parameterTarget.Id, parameterTarget.Name);
+                    if (currentParameter == null)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        fm.RemoveParameter(currentParameter);
+                        deleted++;
+                        logCallback?.Invoke($"  Deleted: '{parameterTarget.Name}' from '{familyName}'");
+                    }
+                    catch (Exception ex) when (IsExpectedFamilyPurgeException(ex))
+                    {
+                        logCallback?.Invoke($"  Could not delete param '{parameterTarget.Name}' from '{familyName}': {ex.Message}");
+                    }
+                }
+
+                return deleted > 0;
+            });
+
+            return deleted;
+        }
+
+        private static FamilyParameter? FindFamilyParameter(FamilyManager fm, ElementId id, string name)
+        {
+            foreach (FamilyParameter parameter in fm.Parameters)
+            {
+                if (parameter.Id == id)
+                {
+                    return parameter;
+                }
+            }
+
+            foreach (FamilyParameter parameter in fm.Parameters)
+            {
+                if (string.Equals(parameter.Definition.Name, name, StringComparison.Ordinal))
+                {
+                    return parameter;
+                }
+            }
+
+            return null;
+        }
+
+        private void ReloadFamily(Document projectDoc, Document famDoc, string familyName, Action<string>? logCallback)
+        {
+            EventHandler<Autodesk.Revit.DB.Events.FailuresProcessingEventArgs>? failureHandler = null;
+            try
+            {
+                failureHandler = (sender, args) =>
+                {
+                    FailuresAccessor accessor = args.GetFailuresAccessor();
+                    foreach (FailureMessageAccessor fma in accessor.GetFailureMessages())
+                    {
+                        if (fma.GetSeverity() == FailureSeverity.Warning)
+                        {
+                            accessor.DeleteWarning(fma);
+                        }
+                    }
+
+                    if (accessor.GetFailureMessages().Count > 0)
+                    {
+                        args.SetProcessingResult(FailureProcessingResult.ProceedWithRollBack);
+                    }
+                };
+
+                projectDoc.Application.FailuresProcessing += failureHandler;
+                famDoc.LoadFamily(projectDoc, _loadOptionsFactory.Create());
+            }
+            catch (Exception loadEx) when (IsExpectedFamilyPurgeException(loadEx))
+            {
+                logCallback?.Invoke($"  WARNING Could not reload '{familyName}': {loadEx.Message}");
+            }
+            finally
+            {
+                if (failureHandler != null)
+                {
+                    projectDoc.Application.FailuresProcessing -= failureHandler;
+                }
+            }
         }
 
         /// <summary>
@@ -310,31 +449,40 @@ namespace LECG.Services
         }
 
         /// <summary>
-        /// Build set of parameter IDs that have non-default values set across family types.
-        /// If a parameter has any meaningful value in any type, it's considered in-use.
+        /// Build set of parameter IDs that have meaningful non-default values across family types.
+        /// Only considers a parameter "in use" if it has a non-zero/non-empty/non-invalid value,
+        /// not just any value (HasValue returns true for defaults that Revit sets automatically).
         /// </summary>
-        private HashSet<ElementId> BuildValueInUseSet(FamilyManager fm)
+        private static HashSet<ElementId> BuildValueInUseSet(FamilyManager fm)
         {
             var inUse = new HashSet<ElementId>();
 
-            // Get all family types
             var types = fm.Types;
             if (types == null) return inUse;
 
             foreach (FamilyParameter fp in fm.Parameters)
             {
-                // Skip built-in, they're already handled
                 if (fp.Id.Value < 0) continue;
 
                 foreach (FamilyType ft in types)
                 {
                     try
                     {
-                        if (ft.HasValue(fp))
+                        if (!ft.HasValue(fp)) continue;
+
+                        bool hasMeaningfulValue = fp.StorageType switch
                         {
-                            // Parameter has a value set in this type — it's in use
+                            StorageType.Double => ft.AsDouble(fp) is double d && Math.Abs(d) > 1e-9,
+                            StorageType.Integer => ft.AsInteger(fp) is int i && i != 0,
+                            StorageType.String => !string.IsNullOrEmpty(ft.AsString(fp)),
+                            StorageType.ElementId => ft.AsElementId(fp) is ElementId eid && eid != ElementId.InvalidElementId,
+                            _ => true
+                        };
+
+                        if (hasMeaningfulValue)
+                        {
                             inUse.Add(fp.Id);
-                            break; // No need to check more types
+                            break;
                         }
                     }
                     catch
@@ -346,5 +494,74 @@ namespace LECG.Services
 
             return inUse;
         }
+
+        /// <summary>
+        /// Build a set of shared parameter GUIDs that are registered at the project level.
+        /// A SharedParameterElement exists when the parameter is bound to project categories
+        /// (used in schedules, tags, filters, or element instances). If a shared parameter
+        /// in a family has a matching GUID here, it's in active use and must NOT be deleted.
+        /// </summary>
+        private static HashSet<Guid> BuildProjectSharedParameterGuids(Document projectDoc)
+        {
+            var guids = new HashSet<Guid>();
+
+            var sharedParamElements = new FilteredElementCollector(projectDoc)
+                .OfClass(typeof(SharedParameterElement))
+                .Cast<SharedParameterElement>();
+
+            foreach (var sp in sharedParamElements)
+            {
+                guids.Add(sp.GuidValue);
+            }
+
+            return guids;
+        }
+
+        private static bool IsExpectedFamilyPurgeException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
+
+        private static void TryCloseFamilyDocument(Document? famDoc, string familyName, Action<string>? logCallback)
+        {
+            if (famDoc == null || !famDoc.IsValidObject)
+            {
+                return;
+            }
+
+            try
+            {
+                famDoc.Close(false);
+            }
+            catch (Exception ex) when (IsExpectedFamilyPurgeException(ex))
+            {
+                logCallback?.Invoke($"  Could not close family '{familyName}': {ex.Message}");
+            }
+        }
+
+        private sealed class FamilyParameterUsageContext
+        {
+            public FamilyParameterUsageContext(
+                HashSet<ElementId> formulaReferencedParams,
+                HashSet<ElementId> dimensionLabelParams,
+                HashSet<ElementId> elementAssociatedParams,
+                HashSet<ElementId> valueInUseParams)
+            {
+                FormulaReferencedParams = formulaReferencedParams;
+                DimensionLabelParams = dimensionLabelParams;
+                ElementAssociatedParams = elementAssociatedParams;
+                ValueInUseParams = valueInUseParams;
+            }
+
+            public HashSet<ElementId> FormulaReferencedParams { get; }
+            public HashSet<ElementId> DimensionLabelParams { get; }
+            public HashSet<ElementId> ElementAssociatedParams { get; }
+            public HashSet<ElementId> ValueInUseParams { get; }
+        }
+
+        private sealed record ProjectFamilyTarget(ElementId Id, string Name);
+        private sealed record FamilyParameterTarget(ElementId Id, string Name);
     }
 }

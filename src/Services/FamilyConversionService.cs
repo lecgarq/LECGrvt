@@ -1,5 +1,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 using LECG.Services.Interfaces;
 using LECG.Models;
 using LECG.Utils;
@@ -46,6 +47,7 @@ namespace LECG.Services
 
         public void ConvertFamilyBatch(Document doc, IEnumerable<FamilyInstance> instances, string customName, string templatePath, bool isTemporary, bool replaceInPlace, IProgressReporter? reporter = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
             if (instances == null || !instances.Any()) return;
 
             int totalCount = instances.Count();
@@ -57,119 +59,15 @@ namespace LECG.Services
 
                 foreach (var group in instancesByFamily)
                 {
-                    var firstInstance = group.First();
-                    Family sourceFamily = firstInstance.Symbol.Family;
-                    string sourceFamilyName = sourceFamily.Name;
-                    
-                    // Force the name to matching exactly to overwrite existing family definition
-                    string targetFamilyName = sourceFamilyName;
-
-                    string resolvedTemplatePath = templatePath;
-                    if (string.IsNullOrEmpty(resolvedTemplatePath))
-                    {
-                        resolvedTemplatePath = @"C:\ProgramData\Autodesk\RVT 2026\Family Templates\English\LECG\-\LECG_070_GENERIC-MODELS.rft";
-                    }
-
-                    using (new ExecutionTimer($"Family Group: {sourceFamilyName}"))
-                    {
-                        reporter?.Report($"Converting Family: {sourceFamilyName}...", (double)currentCount / totalCount * 100);
-                        _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, resolvedTemplatePath, isTemporary: false);
-
-                        // 1. CAPTURE ALL INSTANCES OF THIS FAMILY IN THE ENTIRE PROJECT
-                        var allInstancesOfFamily = new FilteredElementCollector(doc)
-                            .OfClass(typeof(FamilyInstance))
-                            .Cast<FamilyInstance>()
-                            .Where(i => i.Symbol != null && i.Symbol.Family.Id == sourceFamily.Id)
-                            .ToList();
-
-                        var capturedDataList = allInstancesOfFamily.Select(FamilyInstanceData.Capture).ToList();
-                        var oldInstanceIds = allInstancesOfFamily.Select(i => i.Id).ToList();
-                        
-                        // 2. OPEN SOURCE DOCUMENT
-                        Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
-                        if (sourceFamilyDoc == null) { currentCount += group.Count(); continue; }
-
-                        Document? targetFamilyDoc = null;
-                        string tempFamilyPath = "";
-
-                        try
-                        {
-                            // 3. DELETE OLD INSTANCES BEFORE EXECUTION
-                            if (replaceInPlace)
-                            {
-                                _transactionService.Run(doc, "Delete Old Instances for Conversion", _ =>
-                                {
-                                    foreach (var id in oldInstanceIds) { try { doc.Delete(id); } catch (Exception ex) { LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to delete instance {id}: {ex.Message}"); } }
-                                });
-                                LECG.Services.Logging.Logger.Instance.Log($"Cleared {oldInstanceIds.Count} instances from project to unlock native conversion.");
-                            }
-
-                            // 4. EXECUTE CONVERSION
-                            (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(doc, sourceFamily, sourceFamilyDoc, resolvedTemplatePath, targetFamilyName);
-                            
-                            if (targetFamilyDoc != null && replaceInPlace)
-                            {
-                                // 5. FIND NEW SYMBOL
-                                Family? newFamily = new FilteredElementCollector(doc).OfClass(typeof(Family)).Cast<Family>().FirstOrDefault(f => f.Name == targetFamilyName);
-                                if (newFamily != null)
-                                {
-                                    var symbolIds = newFamily.GetFamilySymbolIds();
-                                    FamilySymbol? newSymbol = symbolIds.Any() ? doc.GetElement(symbolIds.First()) as FamilySymbol : null;
-
-                                    if (newSymbol != null)
-                                    {
-                                        // 6. PLACE NEW UNHOSTED INSTANCES
-                                        _transactionService.RunWithOptions(doc, "Replace Instances", _ =>
-                                        {
-                                            if (!newSymbol.IsActive) newSymbol.Activate();
-
-                                            foreach (var data in capturedDataList)
-                                            {
-                                                currentCount++;
-                                                reporter?.Report($"Placing Instance {currentCount} of {totalCount}...", (double)currentCount / totalCount * 100);
-                                                
-                                                try {
-                                                    XYZ loc = data.LocationPoint ?? XYZ.Zero;
-                                                    Level lev = doc.GetElement(data.LevelId) as Level ?? doc.ActiveView?.GenLevel ?? new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();
-                                                    
-                                                    FamilyInstance ni = null;
-                                                    // Strategy A: Standard Level-based placement (Revit handles Work Plane auto-association for unhosted families)
-                                                    try {
-                                                        ni = doc.Create.NewFamilyInstance(loc, newSymbol, lev, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
-                                                    } 
-                                                    catch {
-                                                    // Strategy B: Pure Point-based fallback
-                                                        try { ni = doc.Create.NewFamilyInstance(loc, newSymbol, Autodesk.Revit.DB.Structure.StructuralType.NonStructural); } 
-                                                        catch (Exception ex2) { LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Placement Strategy B failed: {ex2.Message}"); }
-                                                    }
-
-                                                    if (ni != null) 
-                                                    { 
-                                                        data.Apply(ni); 
-                                                        LECG.Services.Logging.Logger.Instance.Log($"  ✓ Instance placed at ({loc.X:F2}, {loc.Y:F2}, {loc.Z:F2})");
-                                                    }
-                                                } catch (Exception ex) { LECG.Services.Logging.Logger.Instance.Log($"  Placement error: {ex.Message}"); }
-                                            }
-                                        }, options => options.SetForcedModalHandling(false));
-                                    }
-                                }
-                            }
-                            else if (targetFamilyDoc == null)
-                            {
-                                LECG.Services.Logging.Logger.Instance.Log("ERROR: targetFamilyDoc was null. Conversion failed internally.");
-                                currentCount += group.Count();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            _familyConversionLoggingService.LogCriticalError(ex.Message, ex.StackTrace ?? "");
-                            currentCount += group.Count();
-                        }
-                        finally
-                        {
-                            _familyConversionFinalizeService.Finalize(sourceFamilyDoc, targetFamilyDoc, tempFamilyPath, isTemporary: false);
-                        }
-                    }
+                    List<FamilyInstance> groupInstances = group.ToList();
+                    currentCount = ProcessFamilyGroup(
+                        doc,
+                        groupInstances,
+                        templatePath,
+                        replaceInPlace,
+                        totalCount,
+                        currentCount,
+                        reporter);
                 }
                 reporter?.Report("Batch Conversion Complete.", 100);
             }
@@ -179,5 +77,312 @@ namespace LECG.Services
         {
             return _templatePathService.GetTargetTemplatePath(app, category);
         }
+
+        private int ProcessFamilyGroup(
+            Document doc,
+            IReadOnlyList<FamilyInstance> groupInstances,
+            string templatePath,
+            bool replaceInPlace,
+            int totalCount,
+            int currentCount,
+            IProgressReporter? reporter)
+        {
+            FamilyInstance firstInstance = groupInstances[0];
+            Family sourceFamily = firstInstance.Symbol.Family;
+            string sourceFamilyName = sourceFamily.Name;
+            string targetFamilyName = sourceFamilyName;
+            string resolvedTemplatePath = ResolveTemplatePath(doc, templatePath, sourceFamily);
+
+            using (new ExecutionTimer($"Family Group: {sourceFamilyName}"))
+            {
+                reporter?.Report($"Converting Family: {sourceFamilyName}...", (double)currentCount / totalCount * 100);
+                _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, resolvedTemplatePath, isTemporary: false);
+
+                CapturedFamilyInstances capturedInstances = CaptureFamilyInstances(doc, sourceFamily.Id);
+                Document? sourceFamilyDoc = _familySourceDocumentService.Open(doc, sourceFamily);
+                if (sourceFamilyDoc == null)
+                {
+                    return currentCount + groupInstances.Count;
+                }
+
+                currentCount = ExecuteFamilyGroupConversion(
+                    doc,
+                    sourceFamily,
+                    targetFamilyName,
+                    resolvedTemplatePath,
+                    replaceInPlace,
+                    capturedInstances,
+                    sourceFamilyDoc,
+                    groupInstances.Count,
+                    totalCount,
+                    currentCount,
+                    reporter);
+            }
+
+            return currentCount;
+        }
+
+        private int ExecuteFamilyGroupConversion(
+            Document doc,
+            Family sourceFamily,
+            string targetFamilyName,
+            string resolvedTemplatePath,
+            bool replaceInPlace,
+            CapturedFamilyInstances capturedInstances,
+            Document sourceFamilyDoc,
+            int groupInstanceCount,
+            int totalCount,
+            int currentCount,
+            IProgressReporter? reporter)
+        {
+            Document? targetFamilyDoc = null;
+            string tempFamilyPath = string.Empty;
+
+            try
+            {
+                if (replaceInPlace)
+                {
+                    DeleteCapturedInstances(doc, capturedInstances.InstanceIds);
+                    LECG.Services.Logging.Logger.Instance.Log($"Cleared {capturedInstances.InstanceIds.Count} instances from project to unlock native conversion.");
+                }
+
+                (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(
+                    doc,
+                    sourceFamily,
+                    sourceFamilyDoc,
+                    resolvedTemplatePath,
+                    targetFamilyName);
+
+                if (targetFamilyDoc != null && replaceInPlace)
+                {
+                    FamilySymbol? newSymbol = FindReplacementSymbol(doc, targetFamilyName);
+                    if (newSymbol != null)
+                    {
+                        currentCount = ReplaceCapturedInstances(
+                            doc,
+                            newSymbol,
+                            capturedInstances.CapturedData,
+                            totalCount,
+                            currentCount,
+                            reporter);
+                    }
+                }
+                else if (targetFamilyDoc == null)
+                {
+                    LECG.Services.Logging.Logger.Instance.Log("ERROR: targetFamilyDoc was null. Conversion failed internally.");
+                    currentCount += groupInstanceCount;
+                }
+            }
+            catch (Exception ex) when (IsExpectedGroupConversionException(ex))
+            {
+                _familyConversionLoggingService.LogCriticalError(ex.Message, ex.StackTrace ?? string.Empty);
+                currentCount += groupInstanceCount;
+            }
+            finally
+            {
+                _familyConversionFinalizeService.Finalize(sourceFamilyDoc, targetFamilyDoc, tempFamilyPath, isTemporary: false);
+            }
+
+            return currentCount;
+        }
+
+        private string ResolveTemplatePath(Document doc, string templatePath, Family sourceFamily)
+        {
+            if (!string.IsNullOrEmpty(templatePath))
+            {
+                return templatePath;
+            }
+
+            return Configuration.RevitConstants.FindTemplate(@"English\LECG\-\LECG_070_GENERIC-MODELS.rft")
+                ?? _templatePathService.GetTargetTemplatePath(doc.Application, sourceFamily.FamilyCategory);
+        }
+
+        private static CapturedFamilyInstances CaptureFamilyInstances(Document doc, ElementId familyId)
+        {
+            List<FamilyInstance> allInstancesOfFamily = new FilteredElementCollector(doc)
+                .OfClass(typeof(FamilyInstance))
+                .Cast<FamilyInstance>()
+                .Where(i => i.Symbol != null && i.Symbol.Family.Id == familyId)
+                .ToList();
+
+            List<FamilyInstanceData> capturedData = allInstancesOfFamily
+                .Select(FamilyInstanceData.Capture)
+                .ToList();
+
+            List<ElementId> instanceIds = allInstancesOfFamily
+                .Select(i => i.Id)
+                .ToList();
+
+            return new CapturedFamilyInstances(capturedData, instanceIds);
+        }
+
+        private void DeleteCapturedInstances(Document doc, IReadOnlyCollection<ElementId> oldInstanceIds)
+        {
+            _transactionService.Run(doc, "Delete Old Instances for Conversion", _ =>
+            {
+                foreach (ElementId id in oldInstanceIds)
+                {
+                    try
+                    {
+                        doc.Delete(id);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to delete instance {id}: {ex.Message}");
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to delete instance {id}: {ex.Message}");
+                    }
+                }
+            });
+        }
+
+        private static FamilySymbol? FindReplacementSymbol(Document doc, string targetFamilyName)
+        {
+            Family? newFamily = new FilteredElementCollector(doc)
+                .OfClass(typeof(Family))
+                .Cast<Family>()
+                .FirstOrDefault(f => f.Name == targetFamilyName);
+
+            if (newFamily == null)
+            {
+                return null;
+            }
+
+            ICollection<ElementId> symbolIds = newFamily.GetFamilySymbolIds();
+            if (!symbolIds.Any())
+            {
+                return null;
+            }
+
+            return doc.GetElement(symbolIds.First()) as FamilySymbol;
+        }
+
+        private int ReplaceCapturedInstances(
+            Document doc,
+            FamilySymbol newSymbol,
+            IReadOnlyList<FamilyInstanceData> capturedData,
+            int totalCount,
+            int currentCount,
+            IProgressReporter? reporter)
+        {
+            int updatedCount = currentCount;
+
+            _transactionService.RunWithOptions(doc, "Replace Instances", _ =>
+            {
+                if (!newSymbol.IsActive)
+                {
+                    newSymbol.Activate();
+                }
+
+                foreach (FamilyInstanceData data in capturedData)
+                {
+                    updatedCount++;
+                    reporter?.Report($"Placing Instance {updatedCount} of {totalCount}...", (double)updatedCount / totalCount * 100);
+
+                    if (data.LocationPoint == null)
+                    {
+                        LECG.Services.Logging.Logger.Instance.LogWarning("[FamilyConversionService] Skipping non-point-based instance during replacement.");
+                        continue;
+                    }
+
+                    XYZ loc = data.LocationPoint;
+                    Level? lev = ResolvePlacementLevel(doc, data.LevelId);
+                    FamilyInstance? newInstance = TryPlaceReplacementInstance(doc, newSymbol, loc, lev);
+
+                    if (newInstance == null)
+                    {
+                        continue;
+                    }
+
+                    ApplyCapturedInstanceData(data, newInstance, loc);
+                }
+            }, options => options.SetForcedModalHandling(false));
+
+            return updatedCount;
+        }
+
+        private static void ApplyCapturedInstanceData(FamilyInstanceData data, FamilyInstance newInstance, XYZ location)
+        {
+            try
+            {
+                data.Apply(newInstance);
+                LECG.Services.Logging.Logger.Instance.Log($"  [OK] Instance placed at ({location.X:F2}, {location.Y:F2}, {location.Z:F2})");
+            }
+            catch (ArgumentException ex)
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to apply captured state to {newInstance.Id}: {ex.Message}");
+            }
+            catch (InvalidOperationException ex)
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to apply captured state to {newInstance.Id}: {ex.Message}");
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to apply captured state to {newInstance.Id}: {ex.Message}");
+            }
+        }
+
+        private static bool IsExpectedGroupConversionException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
+
+        private static Level? ResolvePlacementLevel(Document doc, ElementId levelId)
+        {
+            return doc.GetElement(levelId) as Level
+                ?? doc.ActiveView?.GenLevel
+                ?? new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();
+        }
+
+        private static FamilyInstance? TryPlaceReplacementInstance(Document doc, FamilySymbol newSymbol, XYZ location, Level? level)
+        {
+            if (level != null)
+            {
+                try
+                {
+                    return doc.Create.NewFamilyInstance(location, newSymbol, level, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                }
+                catch (ArgumentException ex)
+                {
+                    LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Level-based placement failed: {ex.Message}");
+                }
+                catch (InvalidOperationException ex)
+                {
+                    LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Level-based placement failed: {ex.Message}");
+                }
+                catch (RevitExceptions.InvalidOperationException ex)
+                {
+                    LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Level-based placement failed: {ex.Message}");
+                }
+            }
+
+            try
+            {
+                return doc.Create.NewFamilyInstance(location, newSymbol, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+            }
+            catch (ArgumentException ex)
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Point-based placement failed: {ex.Message}");
+                return null;
+            }
+            catch (InvalidOperationException ex)
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Point-based placement failed: {ex.Message}");
+                return null;
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
+            {
+                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Point-based placement failed: {ex.Message}");
+                return null;
+            }
+        }
+
+        private sealed record CapturedFamilyInstances(
+            IReadOnlyList<FamilyInstanceData> CapturedData,
+            IReadOnlyCollection<ElementId> InstanceIds);
     }
 }

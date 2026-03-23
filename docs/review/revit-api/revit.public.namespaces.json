@@ -1,0 +1,3298 @@
+[
+  {
+    "Namespace": "Autodesk.Revit.DB",
+    "TypeCount": 4416,
+    "MemberCount": 69084,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "",
+    "TypeCount": 1672,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Structure",
+    "TypeCount": 690,
+    "MemberCount": 5922,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "std",
+    "TypeCount": 550,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Electrical",
+    "TypeCount": 336,
+    "MemberCount": 2688,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Analysis",
+    "TypeCount": 309,
+    "MemberCount": 3396,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Visual",
+    "TypeCount": 309,
+    "MemberCount": 2118,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI",
+    "TypeCount": 309,
+    "MemberCount": 4131,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Architecture",
+    "TypeCount": 228,
+    "MemberCount": 1380,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Mechanical",
+    "TypeCount": 210,
+    "MemberCount": 1983,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Events",
+    "TypeCount": 177,
+    "MemberCount": 387,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Structure.StructuralSections",
+    "TypeCount": 165,
+    "MemberCount": 837,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.DirectContext3D",
+    "TypeCount": 96,
+    "MemberCount": 588,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Lighting",
+    "TypeCount": 87,
+    "MemberCount": 540,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Plumbing",
+    "TypeCount": 87,
+    "MemberCount": 726,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI.Events",
+    "TypeCount": 87,
+    "MemberCount": 270,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.Exceptions",
+    "TypeCount": 62,
+    "MemberCount": 131,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Fabrication",
+    "TypeCount": 54,
+    "MemberCount": 486,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.ExternalService",
+    "TypeCount": 51,
+    "MemberCount": 384,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.PointClouds",
+    "TypeCount": 42,
+    "MemberCount": 300,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.ExtensibleStorage",
+    "TypeCount": 27,
+    "MemberCount": 306,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "ATL",
+    "TypeCount": 26,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "crs",
+    "TypeCount": 25,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Carmel",
+    "TypeCount": 24,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "autodesk.platform.assets",
+    "TypeCount": 22,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI.Selection",
+    "TypeCount": 21,
+    "MemberCount": 179,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.ExternalData",
+    "TypeCount": 18,
+    "MemberCount": 183,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.IFC",
+    "TypeCount": 15,
+    "MemberCount": 81,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Element",
+    "TypeCount": 14,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Macros",
+    "TypeCount": 12,
+    "MemberCount": 48,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI.Mechanical",
+    "TypeCount": 9,
+    "MemberCount": 53,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI.Plumbing",
+    "TypeCount": 9,
+    "MemberCount": 53,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleControlSite",
+    "TypeCount": 9,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.Creation",
+    "TypeCount": 7,
+    "MemberCount": 180,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "CDocument",
+    "TypeCount": 7,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.Attributes",
+    "TypeCount": 6,
+    "MemberCount": 11,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "CFile",
+    "TypeCount": 5,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleServerDoc",
+    "TypeCount": 5,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FamilySymbol",
+    "TypeCount": 5,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.ApplicationServices",
+    "TypeCount": 4,
+    "MemberCount": 205,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "COleClientItem",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MoveHelper",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECMsgFilter",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogData",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogME",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogRL",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogSTC",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Viewer",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.locale",
+    "TypeCount": 4,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ACommandHandler",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AddInItem",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.DB.Steel",
+    "TypeCount": 3,
+    "MemberCount": 24,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI.DockablePanes",
+    "TypeCount": 3,
+    "MemberCount": 44,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Autodesk.Revit.UI.Macros",
+    "TypeCount": 3,
+    "MemberCount": 47,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXBDateTimeCtrl",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ElementType",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "GContextAuxInfoProvider",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "GHermiteSpline",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SketchHelper",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogERD",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "__std_fs_reparse_data_buffer.$UnnamedClass$0x4d798830$740$",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.filesystem",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "std.ios_base",
+    "TypeCount": 3,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ADDTable",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ADialogBar",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ADocument",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "APIEditorChecker",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AddInError",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AddInManager",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AllProjectPhases",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CFrameWnd",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXBCurrencyEdit",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXSortInfo",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXStylesMap",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCButton",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCDynamicLayout",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCTabCtrl",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCToolBarImages",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleControlContainer",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleLinkingDoc",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleServerItem",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CRectTracker",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CWnd",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ControlIconElem",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DBView",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DialogBoxShowingEventArgs",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentLoadStoreOptions",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ExtentElem",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ExternalCommand",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "GFace",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MultipleValuesIndicationSettings",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PasteHelper",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ProjectPhase",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECDockBar",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECDockBar.Splitter",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogLock",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogOpen",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogTypeDefs",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogWS",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SnapObj",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "adp",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "crs.SlowCompactSet\u003CParamValueAString,std::less\u003CParamValueAString\u003E \u003E",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "crs.SlowCompactSet\u003CParamValueDouble,std::less\u003CParamValueDouble\u003E \u003E",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "crs.SlowCompactSet\u003CParamValueElementId,std::less\u003CParamValueElementId\u003E \u003E",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "crs.SlowCompactSet\u003CParamValueInt,std::less\u003CParamValueInt\u003E \u003E",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "in_addr.\u003Cunnamed-type-S_un\u003E",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "nlohmann.detail",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "tnallc\u003CElementId\u003E",
+    "TypeCount": 2,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AActiveTaskDialog",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ADialogCreatedEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AListDrivenDialog",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AProperty.AStorage",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CImage",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.COleDateTime",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.COleDateTimeSpan",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CSimpleArray\u003C_GUID,ATL::CSimpleArrayEqualHelper\u003C_GUID\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CSimpleMap\u003Cwchar_t *,wchar_t *,ATL::CExpansionVectorEqualHelper\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C1,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C1024,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C1048576,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C128,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C131072,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C16,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C16384,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C2,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C2048,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C2097152,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C256,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C262144,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C32,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C32768,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C4,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C4096,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C4194304,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C512,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C524288,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C64,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C65536,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C8,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ATL.CTraceCategoryEx\u003C8192,0\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ActiveCommandChanged",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AddInManager.ButtonHelpStatus",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AppDBTheme",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "AppFrameTheme",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ApplicationClosingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ApplicationInitializedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Background",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "BeforeExecutedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "BroadcastType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CArchive",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CBaseTransition",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CControlBar",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXBrowserGrid",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXDIB",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXFont.$UnnamedClass$0x95ef00d6$2$",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXFont.$UnnamedClass$0x9c5c5f8a$1$",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXFont.$UnnamedClass$0xf287319a$30$",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXFont.$UnnamedClass$0xfef8a806$1$",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXProperties",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXRange",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CGXStyle",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCBaseTabCtrl",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCDynamicLayoutData",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCPropertySheet",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMFCVisualManager",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003CATL::CStringT\u003Cwchar_t,StrTraitMFC_DLL\u003Cwchar_t,ATL::ChTraitsCRT\u003Cwchar_t\u003E \u003E \u003E,wchar_t const *,IObjectCollection *,IObjectCollection *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003CHICON__ *,HICON__ *,int,int\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003Cunsigned int,unsigned int \u0026,CMFCToolBarButton *,CMFCToolBarButton * \u0026\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003Cunsigned int,unsigned int,HMENU__ *,HMENU__ *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003Cunsigned int,unsigned int,SECControlBar *,SECControlBar *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003Cunsigned int,unsigned int,int,int\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMap\u003Cunsigned int,unsigned int,unsigned int,unsigned int\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CMapStringToString",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleCurrency",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleDropTarget",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleMessageFilter",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "COleObjectFactory",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CPaneContainer",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CPaneDivider",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CSplitterWnd",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CanExecuteEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CommandEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ComponentClassification",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ConfirmCantSaveInEditMode",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ConfirmFalseEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ConfirmTrueEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ConnectorType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ConstEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ContainerMemoryStats",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "CurveElementType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "D2D1",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "D2D1.ColorF",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DBViewType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DataAccessTokenBase",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DetachFromCentralOption",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DetachedVirtualSlot.StaticRegistrar",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DialogBoxShowingEventArgs.DialogType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DisplayUnitType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DisplayingOptionsDialogEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocContextEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocTemplateSpec",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DockPosition",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DockableFrameFocusChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DockableFrameVisibilityChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentCreatedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentCreatingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentElementsAddedEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentElementsDeletedEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentSubelementsChangedEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "DocumentType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EHExceptionRecord",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ESContainerType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ESCopyDirection",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EdHprCreateElemOpts",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EditorInteractionType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ElemEdHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Element.LazyDataCommitState",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "Element.TransientOption",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ElementTypePartitionHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EndUndoTransactionOptions",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EventMarkAtomTouched",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EventPreTouchElement",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EventRequest",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EventReturnCode",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "EventStatus",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ExecutedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ExternalFileReferenceType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FabricationPartBrowserChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FailureResolutionType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FamilySymbolPartitionHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FilterSpeed",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FormatOptions",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "FormulaEditingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "GContextPreviewInfo",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "GNurbSpline",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "GeomRef",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "IdlingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "JournalData",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "JournalDataAnswerBox",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "JournalMgrBase",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "LanguageType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MFCDockableFrame",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MacroUpdatedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ManageDocOpen",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MassDisplayTemporaryOverrideType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MessageBoxShowingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ModelDisplayMode",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ModelPathType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MutableEvent",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "MyArchive",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "NamingHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ObjectDifferencesReport",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ObserverId.Type",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "OnElementDeletionGetElementCheck",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "OnIdleTask",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ParamDefCombo",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PartType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PartitionHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PathType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PolymorphicBase",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PostEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PreEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "PreviewFamilyVisibilityMode",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ProjectBrowserUtils",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ProjectVisibilityOptionsChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RecentPinStatusChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RenderingAssetType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RenderingQuality",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ReportLatestStep",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ReportLinkOutOfDate",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPIEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPIEventStatus",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPIPostDocEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPIPostEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPIPreDocEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPIPreEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitAPISingleEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "RevitEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECCaptionControlMsgFilter",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECControlBar",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECDockBar.ClientEdge",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECDockPos",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECFrameWnd",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECListBaseC",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECListBaseV",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECMDIChildWnd",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SECMDIFrameWnd",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SectionType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SelectFaceInteriors",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SelectionChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SimpleWorksetConfiguration",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SketchGalleryOptions",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogAAoRPoE",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogData.Status",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogERD.Deny",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogERD.Grant",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogFileVersion",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogSTC.STCPairLocal",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogSTC.Save",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogSTC.Save.Rel",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogSTC.Save.Rel.Grant",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SlogSession",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "SnappingServers",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "StartPointEditor",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "StructuralLayerCleanupType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "StructuralMaterialType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "TaskDialogShowingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ThemeChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "TimeIntervalDropdownBase",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "TransactionStatus",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "TransferredProjectStandardsEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "TransferringProjectStandardsEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "TransmittedModelOptions",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "UndoItem",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "UnitSymbolType",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "UnitSystem",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "UserInterfaceOptionsChangedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewActivatedEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewActivatingEventArgs",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewDetailLevel",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewElemRec",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewTitleFormat",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewerMoveHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewerSketchHelper",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "ViewportRotation",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "WorksetConfig",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "_AFX_OCC_DIALOG_INFO",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "_LARGE_INTEGER",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "_TP_CALLBACK_ENVIRON_V3",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "_TP_CALLBACK_ENVIRON_V3.\u003Cunnamed-type-u\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "_ULARGE_INTEGER",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "in6_addr",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "in_addr",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "msclr",
+    "TypeCount": 1,
+    "MemberCount": 1,
+    "Assemblies": [
+      "RevitAPI"
+    ]
+  },
+  {
+    "Namespace": "std._String_val\u003Cstd::_Simple_types\u003Cchar16_t\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._String_val\u003Cstd::_Simple_types\u003Cchar32_t\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._String_val\u003Cstd::_Simple_types\u003Cchar\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._String_val\u003Cstd::_Simple_types\u003Cwchar_t\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CARuntimeClass const *,System::Object ^ (__clrcall*)(void *,bool),std::less\u003CARuntimeClass const *\u003E,tnallc\u003Cstd::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CAString,AString,std::less\u003CAString\u003E,tnallc\u003Cstd::pair\u003CAString const ,AString\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CAString,Arr\u003CIContextMenuCreator const *\u003E,std::less\u003CAString\u003E,tnallc\u003Cstd::pair\u003CAString const ,Arr\u003CIContextMenuCreator const *\u003E \u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CAString,EventObserver\u003CMutableEventPolicy\u003E *,AStringLessNoCase,tnallc\u003Cstd::pair\u003CAString const ,EventObserver\u003CMutableEventPolicy\u003E *\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CAString,bool,AStringLessWithCase,std::allocator\u003Cstd::pair\u003CAString const ,bool\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CDockablePaneId,Owner\u003CAPIDockablePaneData\u003E,std::less\u003CDockablePaneId\u003E,tnallc\u003Cstd::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CElementId,LightSchemeEntry,std::less\u003CElementId\u003E,tnallc\u003Cstd::pair\u003CElementId const ,LightSchemeEntry\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CElementId,ViewElemRec,std::less\u003CElementId\u003E,std::allocator\u003Cstd::pair\u003CElementId const ,ViewElemRec\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CElementId,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E,std::less\u003CElementId\u003E,tnallc\u003Cstd::pair\u003CElementId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CObserverId,ObserverBoolAndIndex\u003CConstEventPolicy\u003E,std::less\u003CObserverId\u003E,tnallc\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CConstEventPolicy\u003E \u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CObserverId,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E,std::less\u003CObserverId\u003E,tnallc\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E \u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CParameterSourceType,int,std::less\u003CParameterSourceType\u003E,tnallc\u003Cstd::pair\u003CParameterSourceType const ,int\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003CResourceId,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E,std::less\u003CResourceId\u003E,tnallc\u003Cstd::pair\u003CResourceId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tmap_traits\u003Cint,AString,std::less\u003Cint\u003E,tnallc\u003Cstd::pair\u003Cint const ,AString\u003E \u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tset_traits\u003CAString,std::less\u003CAString\u003E,tnallc\u003CAString\u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tset_traits\u003CClassificationValueInfo,std::less\u003CClassificationValueInfo\u003E,tnallc\u003CClassificationValueInfo\u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tset_traits\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tset_traits\u003CExceptionInfo,std::less\u003CExceptionInfo\u003E,tnallc\u003CExceptionInfo\u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree\u003Cstd::_Tset_traits\u003Cenum ViewDetailLevel::Enum,std::less\u003Cenum ViewDetailLevel::Enum\u003E,tnallc\u003Cenum ViewDetailLevel::Enum\u003E,0\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003CAString,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003CClassificationValueInfo,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003CElementId,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003CExceptionInfo,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cenum ViewDetailLevel::Enum,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CAString const ,AString\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CAString const ,Arr\u003CIContextMenuCreator const *\u003E \u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CAString const ,EventObserver\u003CMutableEventPolicy\u003E *\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CAString const ,bool\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CElementId const ,ViewElemRec\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CElementId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CConstEventPolicy\u003E \u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E \u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CParameterSourceType const ,int\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003CResourceId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_node\u003Cstd::pair\u003Cint const ,AString\u003E,void *\u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Cstd::allocator\u003Cstd::_Tree_node\u003Cstd::pair\u003CAString const ,bool\u003E,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Cstd::allocator\u003Cstd::_Tree_node\u003Cstd::pair\u003CElementId const ,ViewElemRec\u003E,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003CAString,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003CClassificationValueInfo,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003CElementId,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003Cstd::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003Cstd::pair\u003CAString const ,AString\u003E,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003Cstd::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_temp_node\u003Ctnallc\u003Cstd::_Tree_node\u003Cstd::pair\u003Cint const ,AString\u003E,void *\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003CAString,unsigned int,__int64,AString *,AString const *,std::_Tree_node\u003CAString,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003CClassificationValueInfo,unsigned int,__int64,ClassificationValueInfo *,ClassificationValueInfo const *,std::_Tree_node\u003CClassificationValueInfo,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003CElementId,unsigned int,__int64,ElementId *,ElementId const *,std::_Tree_node\u003CElementId,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003CExceptionInfo,unsigned int,__int64,ExceptionInfo *,ExceptionInfo const *,std::_Tree_node\u003CExceptionInfo,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cenum ViewDetailLevel::Enum,unsigned int,__int64,enum ViewDetailLevel::Enum *,enum ViewDetailLevel::Enum const *,std::_Tree_node\u003Cenum ViewDetailLevel::Enum,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E,unsigned int,__int64,std::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E *,std::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E const *,std::_Tree_node\u003Cstd::pair\u003CARuntimeClass const * const,System::Object ^ (__clrcall*)(void *,bool)\u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CAString const ,AString\u003E,unsigned int,__int64,std::pair\u003CAString const ,AString\u003E *,std::pair\u003CAString const ,AString\u003E const *,std::_Tree_node\u003Cstd::pair\u003CAString const ,AString\u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CAString const ,Arr\u003CIContextMenuCreator const *\u003E \u003E,unsigned int,__int64,std::pair\u003CAString const ,Arr\u003CIContextMenuCreator const *\u003E \u003E *,std::pair\u003CAString const ,Arr\u003CIContextMenuCreator const *\u003E \u003E const *,std::_Tree_node\u003Cstd::pair\u003CAString const ,Arr\u003CIContextMenuCreator const *\u003E \u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CAString const ,EventObserver\u003CMutableEventPolicy\u003E *\u003E,unsigned int,__int64,std::pair\u003CAString const ,EventObserver\u003CMutableEventPolicy\u003E *\u003E *,std::pair\u003CAString const ,EventObserver\u003CMutableEventPolicy\u003E *\u003E const *,std::_Tree_node\u003Cstd::pair\u003CAString const ,EventObserver\u003CMutableEventPolicy\u003E *\u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E,unsigned int,__int64,std::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E *,std::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E const *,std::_Tree_node\u003Cstd::pair\u003CDockablePaneId const ,Owner\u003CAPIDockablePaneData\u003E \u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CElementId const ,LightSchemeEntry\u003E,unsigned int,__int64,std::pair\u003CElementId const ,LightSchemeEntry\u003E *,std::pair\u003CElementId const ,LightSchemeEntry\u003E const *,std::_Tree_node\u003Cstd::pair\u003CElementId const ,LightSchemeEntry\u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CElementId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E,unsigned int,__int64,std::pair\u003CElementId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E *,std::pair\u003CElementId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E const *,std::_Tree_node\u003Cstd::pair\u003CElementId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CConstEventPolicy\u003E \u003E,unsigned int,__int64,std::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CConstEventPolicy\u003E \u003E *,std::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CConstEventPolicy\u003E \u003E const *,std::_Tree_node\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CConstEventPolicy\u003E \u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E \u003E,unsigned int,__int64,std::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E \u003E *,std::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E \u003E const *,std::_Tree_node\u003Cstd::pair\u003CObserverId const ,ObserverBoolAndIndex\u003CMutableEventPolicy\u003E \u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CParameterSourceType const ,int\u003E,unsigned int,__int64,std::pair\u003CParameterSourceType const ,int\u003E *,std::pair\u003CParameterSourceType const ,int\u003E const *,std::_Tree_node\u003Cstd::pair\u003CParameterSourceType const ,int\u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003CResourceId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E,unsigned int,__int64,std::pair\u003CResourceId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E *,std::pair\u003CResourceId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E const *,std::_Tree_node\u003Cstd::pair\u003CResourceId const ,crs_impl::Set\u003CElementId,std::less\u003CElementId\u003E,tnallc\u003CElementId\u003E \u003E \u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_iter_types\u003Cstd::pair\u003Cint const ,AString\u003E,unsigned int,__int64,std::pair\u003Cint const ,AString\u003E *,std::pair\u003Cint const ,AString\u003E const *,std::_Tree_node\u003Cstd::pair\u003Cint const ,AString\u003E,void *\u003E *\u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_simple_types\u003Cstd::pair\u003CAString const ,bool\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std._Tree_val\u003Cstd::_Tree_simple_types\u003Cstd::pair\u003CElementId const ,ViewElemRec\u003E \u003E \u003E",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.filesystem._Dir_enum_impl",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.filesystem._Dir_enum_impl._Creator",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.filesystem.path",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.money_base",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.nullopt_t",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.thread",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "std.time_base",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  },
+  {
+    "Namespace": "stingray.foundation.SECColorWell",
+    "TypeCount": 1,
+    "MemberCount": 0,
+    "Assemblies": [
+      "RevitAPIUI"
+    ]
+  }
+]

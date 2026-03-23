@@ -3,6 +3,7 @@ using System.Reflection;
 using Autodesk.Revit.UI;
 using System.Windows.Media;
 using LECG.Utils;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Core.Ribbon
 {
@@ -21,9 +22,9 @@ namespace LECG.Core.Ribbon
             try
             {
                 PushButtonData buttonData = new PushButtonData(
-                    data.Name, 
-                    data.Text, 
-                    assemblyPath, 
+                    data.Name,
+                    data.Text,
+                    assemblyPath,
                     data.CommandClass);
 
                 if (!string.IsNullOrEmpty(availabilityClassName))
@@ -32,11 +33,11 @@ namespace LECG.Core.Ribbon
                 }
 
                 PushButton? button = panel.AddItem(buttonData) as PushButton;
-                
+
                 if (button != null)
                 {
                     button.ToolTip = data.Tooltip;
-                    
+
                     // Create icon 
                     button.LargeImage = data.Icon;
                     if (data.Icon16 != null) button.Image = data.Icon16;
@@ -102,7 +103,16 @@ namespace LECG.Core.Ribbon
                     if (data.Icon16 != null) button.Image = data.Icon16;
                 }
             }
-            catch { }
+            catch (Exception ex) when (IsExpectedRibbonFactoryException(ex))
+            {
+            }
+        }
+
+        private static bool IsExpectedRibbonFactoryException(Exception ex)
+        {
+            return ex is ArgumentException
+                or InvalidOperationException
+                or RevitExceptions.InvalidOperationException;
         }
     }
 }

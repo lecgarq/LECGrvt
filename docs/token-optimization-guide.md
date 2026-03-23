@@ -170,7 +170,7 @@ GOOD:
 
 ```markdown
 □ Have I compressed context for next wave?
-□ Are summaries documented in STATE.md?
+□ Are summaries documented in `.planning/STATE.md`?
 □ Would a fresh session be more efficient?
 ```
 

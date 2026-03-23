@@ -22,6 +22,14 @@ namespace LECG.Services
 
         public ElementId CreateAndLoad(Document doc, CadData data, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)
         {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(data);
+            ArgumentNullException.ThrowIfNull(familyName);
+            ArgumentNullException.ThrowIfNull(templatePath);
+            ArgumentNullException.ThrowIfNull(lineStyleName);
+            ArgumentNullException.ThrowIfNull(lineColor);
+            ArgumentNullException.ThrowIfNull(reporter);
+
             reporter.Report("Creating final family...", 50);
             string path = _cadFamilyBuildService.BuildAndSave(
                 doc,

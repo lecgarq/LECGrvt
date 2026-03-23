@@ -1,6 +1,7 @@
 using System;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
@@ -32,7 +33,17 @@ namespace LECG.Services
                 logCallback?.Invoke($"  Deleted: {name}");
                 return true;
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
+            {
+                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
+                return false;
+            }
+            catch (InvalidOperationException ex)
+            {
+                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
+                return false;
+            }
+            catch (RevitExceptions.InvalidOperationException ex)
             {
                 logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
                 return false;

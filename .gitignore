@@ -35,6 +35,9 @@ journals/
 # AI agent artifacts
 .gemini/
 
+# WPF temp build files
+*_wpftmp.csproj
+
 # Stale code artifacts
 *.snippet
 *.backup

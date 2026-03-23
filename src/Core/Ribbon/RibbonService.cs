@@ -2,6 +2,7 @@ using System.Reflection;
 using Autodesk.Revit.UI;
 using LECG.Configuration;
 using LECG.Utils;
+using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Core.Ribbon
 {
@@ -15,7 +16,13 @@ namespace LECG.Core.Ribbon
             string tabName = AppConstants.TabName;
 
             // 1. Create Tab
-            try { app.CreateRibbonTab(tabName); } catch { }
+            try
+            {
+                app.CreateRibbonTab(tabName);
+            }
+            catch (Exception ex) when (IsExpectedRibbonInitializationException(ex))
+            {
+            }
 
             // 2. Build Panels (Alphabetical Order)
             CreateHomePanel(app, tabName, assemblyPath);
@@ -23,7 +30,15 @@ namespace LECG.Core.Ribbon
             CreateStandardsPanel(app, tabName, assemblyPath);
             CreateToposolidsPanel(app, tabName, assemblyPath);
             CreateAlignPanel(app, tabName, assemblyPath);
+            CreateModelOrganizationPanel(app, tabName, assemblyPath);
             CreateVisualizationPanel(app, tabName, assemblyPath);
+        }
+
+        private static bool IsExpectedRibbonInitializationException(Exception ex)
+        {
+            return ex is ArgumentException
+                or InvalidOperationException
+                or RevitExceptions.InvalidOperationException;
         }
 
         private void CreateHomePanel(UIControlledApplication app, string tabName, string assemblyPath)
@@ -101,6 +116,38 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonChangeLevel_Tooltip,
                 AppImages.ChangeLevel
             ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonConvertFloorToTopo_Name,
+                UIConstants.ButtonConvertFloorToTopo_Text,
+                "LECG.Commands.ConvertFloorToToposolidCommand",
+                UIConstants.ButtonConvertFloorToTopo_Tooltip,
+                AppImages.ConvertFamily
+            ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonConvertTopoToFloor_Name,
+                UIConstants.ButtonConvertTopoToFloor_Text,
+                "LECG.Commands.ConvertToposolidToFloorCommand",
+                UIConstants.ButtonConvertTopoToFloor_Tooltip,
+                AppImages.ConvertFamily
+            ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonFixPoints_Name,
+                UIConstants.ButtonFixPoints_Text,
+                "LECG.Commands.FixPointsCommand",
+                UIConstants.ButtonFixPoints_Tooltip,
+                AppImages.SimplifyPoints
+            ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonSplitBoundaries_Name,
+                UIConstants.ButtonSplitBoundaries_Text,
+                "LECG.Commands.SplitBoundariesCommand",
+                UIConstants.ButtonSplitBoundaries_Tooltip,
+                AppImages.ResetSlabs
+            ), assemblyPath, availability);
         }
 
         private void CreateHealthPanel(UIControlledApplication app, string tabName, string assemblyPath)
@@ -131,6 +178,14 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonPurge_Tooltip,
                 AppImages.Trash
             ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonFormulaGrouping_Name,
+                UIConstants.ButtonFormulaGrouping_Text,
+                "LECG.Commands.FormulaAutoGroupingCommand",
+                UIConstants.ButtonFormulaGrouping_Tooltip,
+                AppImages.Sparkles
+            ), assemblyPath, availability);
         }
 
         private void CreateVisualizationPanel(UIControlledApplication app, string tabName, string assemblyPath)
@@ -147,7 +202,13 @@ namespace LECG.Core.Ribbon
                 AppImages.Palette
             ), assemblyPath, availability);
 
-
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonMaterialCreator_Name,
+                UIConstants.ButtonMaterialCreator_Text,
+                "LECG.Commands.PbrMaterialCreatorCommand",
+                UIConstants.ButtonMaterialCreator_Tooltip,
+                AppImages.AssignMaterial
+            ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonSexy_Name,
@@ -175,53 +236,53 @@ namespace LECG.Core.Ribbon
             if (alignBtn == null) return;
 
             // Add Items to Pulldown - NO AVAILABILITY RESTRICTION (Available always due to Master availability)
-            string availability = ""; 
+            string availability = "";
 
             // 1. Align Left/Center/Right
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonAlignLeft_Name, "Align Left", "LECG.Commands.AlignLeftCommand", UIConstants.ButtonAlignLeft_Tooltip, 
-                AppImages.AlignLeft32, AppImages.AlignLeft16), 
+                UIConstants.ButtonAlignLeft_Name, "Align Left", "LECG.Commands.AlignLeftCommand", UIConstants.ButtonAlignLeft_Tooltip,
+                AppImages.AlignLeft32, AppImages.AlignLeft16),
                 assemblyPath, availability);
 
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonAlignCenter_Name, "Align Center", "LECG.Commands.AlignCenterCommand", UIConstants.ButtonAlignCenter_Tooltip, 
-                AppImages.AlignCenter32, AppImages.AlignCenter16), 
+                UIConstants.ButtonAlignCenter_Name, "Align Center", "LECG.Commands.AlignCenterCommand", UIConstants.ButtonAlignCenter_Tooltip,
+                AppImages.AlignCenter32, AppImages.AlignCenter16),
                 assemblyPath, availability);
 
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonAlignRight_Name, "Align Right", "LECG.Commands.AlignRightCommand", UIConstants.ButtonAlignRight_Tooltip, 
-                AppImages.AlignRight32, AppImages.AlignRight16), 
+                UIConstants.ButtonAlignRight_Name, "Align Right", "LECG.Commands.AlignRightCommand", UIConstants.ButtonAlignRight_Tooltip,
+                AppImages.AlignRight32, AppImages.AlignRight16),
                 assemblyPath, availability);
 
             alignBtn.AddSeparator();
 
             // 2. Align Top/Middle/Bottom
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonAlignTop_Name, "Align Top", "LECG.Commands.AlignTopCommand", UIConstants.ButtonAlignTop_Tooltip, 
-                AppImages.AlignTop32, AppImages.AlignTop16), 
+                UIConstants.ButtonAlignTop_Name, "Align Top", "LECG.Commands.AlignTopCommand", UIConstants.ButtonAlignTop_Tooltip,
+                AppImages.AlignTop32, AppImages.AlignTop16),
                 assemblyPath, availability);
 
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonAlignMiddle_Name, "Align Middle", "LECG.Commands.AlignMiddleCommand", UIConstants.ButtonAlignMiddle_Tooltip, 
-                AppImages.AlignMiddle32, AppImages.AlignMiddle16), 
+                UIConstants.ButtonAlignMiddle_Name, "Align Middle", "LECG.Commands.AlignMiddleCommand", UIConstants.ButtonAlignMiddle_Tooltip,
+                AppImages.AlignMiddle32, AppImages.AlignMiddle16),
                 assemblyPath, availability);
 
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonAlignBottom_Name, "Align Bottom", "LECG.Commands.AlignBottomCommand", UIConstants.ButtonAlignBottom_Tooltip, 
-                AppImages.AlignBottom32, AppImages.AlignBottom16), 
+                UIConstants.ButtonAlignBottom_Name, "Align Bottom", "LECG.Commands.AlignBottomCommand", UIConstants.ButtonAlignBottom_Tooltip,
+                AppImages.AlignBottom32, AppImages.AlignBottom16),
                 assemblyPath, availability);
 
             alignBtn.AddSeparator();
 
             // 3. Distribute
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonDistributeH_Name, "Distribute Horiz.", "LECG.Commands.DistributeHorizontallyCommand", UIConstants.ButtonDistributeH_Tooltip, 
-                AppImages.DistributeH32, AppImages.DistributeH16), 
+                UIConstants.ButtonDistributeH_Name, "Distribute Horiz.", "LECG.Commands.DistributeHorizontallyCommand", UIConstants.ButtonDistributeH_Tooltip,
+                AppImages.DistributeH32, AppImages.DistributeH16),
                 assemblyPath, availability);
 
             RibbonFactory.AddItemToPulldown(alignBtn, new RibbonButtonConfig(
-                UIConstants.ButtonDistributeV_Name, "Distribute Vert.", "LECG.Commands.DistributeVerticallyCommand", UIConstants.ButtonDistributeV_Tooltip, 
-                AppImages.DistributeV32, AppImages.DistributeV16), 
+                UIConstants.ButtonDistributeV_Name, "Distribute Vert.", "LECG.Commands.DistributeVerticallyCommand", UIConstants.ButtonDistributeV_Tooltip,
+                AppImages.DistributeV32, AppImages.DistributeV16),
                 assemblyPath, availability);
         }
 
@@ -283,6 +344,20 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonFilterCopy_Tooltip,
                 AppImages.SearchReplace // Placeholder icon
             ), assemblyPath, projectAvailability);
+        }
+
+        private void CreateModelOrganizationPanel(UIControlledApplication app, string tabName, string assemblyPath)
+        {
+            RibbonPanel panel = GetOrCreatePanel(app, tabName, AppConstants.Panels.ModelOrganization);
+            string availability = "LECG.Core.ProjectDocumentAvailability";
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonTypeToLinked_Name,
+                UIConstants.ButtonTypeToLinked_Text,
+                "LECG.Commands.TypeToLinkedModelsCommand",
+                UIConstants.ButtonTypeToLinked_Tooltip,
+                AppImages.ConvertFamily
+            ), assemblyPath, availability);
         }
 
         private RibbonPanel GetOrCreatePanel(UIControlledApplication app, string tabName, string panelName)

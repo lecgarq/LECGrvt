@@ -18,13 +18,34 @@ namespace LECG.ViewModels
         private bool _purgeMaterials = true;
 
         [ObservableProperty]
-        private bool _purgeLevels = false; 
+        private bool _purgeLevels = false;
 
         [ObservableProperty]
         private bool _isDeepPurge = true;
 
         [ObservableProperty]
         private bool _purgeParameters = false;
+
+        [ObservableProperty]
+        private bool _purgeGroups = false;
+
+        [ObservableProperty]
+        private bool _purgeGridTypes = false;
+
+        [ObservableProperty]
+        private bool _purgeLevelTypes = false;
+
+        [ObservableProperty]
+        private bool _purgeConstraints = false;
+
+        [ObservableProperty]
+        private bool _purgeUnplacedRooms = false;
+
+        [ObservableProperty]
+        private bool _purgeViewTemplates = false;
+
+        [ObservableProperty]
+        private bool _purgeViewFilters = false;
 
         public PurgeViewModel()
         {
