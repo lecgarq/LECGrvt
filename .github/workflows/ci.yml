@@ -20,16 +20,16 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore LECG.Tests/LECG.Tests.csproj
 
       - name: Build core with code analysis
         run: dotnet build LECG.Core/LECG.Core.csproj -c Release --no-restore /p:TreatWarningsAsErrors=true
 
       - name: Test core-dependent tests
-        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release
+        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-restore
 
       - name: Collect coverage
-        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --collect:"XPlat Code Coverage"
+        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-build --no-restore --collect:"XPlat Code Coverage"
 
       - name: Publish coverage summary
         shell: pwsh
@@ -58,6 +58,6 @@ jobs:
           $lineRate = [double]$xml.coverage.'line-rate'
           $linePct = [math]::Round($lineRate * 100, 2)
           if ($linePct -lt [double]$env:COVERAGE_MIN) {
-            Write-Error \"Line coverage $linePct% is below threshold $env:COVERAGE_MIN%.\"
+            Write-Error "Line coverage $linePct% is below threshold $env:COVERAGE_MIN%."
             exit 1
           }
