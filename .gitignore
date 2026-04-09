@@ -1,4 +1,7 @@
-﻿# Codex working dir
+﻿# Secrets
+.env
+
+# Codex working dir
 codex/
 
 # VS / build outputs
