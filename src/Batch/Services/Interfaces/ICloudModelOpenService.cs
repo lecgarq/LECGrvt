@@ -6,6 +6,6 @@ namespace LECG.Batch.Services.Interfaces
 {
     public interface ICloudModelOpenService
     {
-        Document Open(UIApplication app, BatchJob job);
+        Document? Open(UIApplication app, BatchJob job);
     }
 }
