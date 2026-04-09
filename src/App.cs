@@ -18,6 +18,8 @@ namespace LECG
         {
             try
             {
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
                 // Ensure pack URI scheme is registered (Fixes "The URI prefix is not recognized" in .NET 8 / Revit 2026)
                 if (!System.UriParser.IsKnownScheme("pack"))
                 {
@@ -47,8 +49,22 @@ namespace LECG
 
         public Result OnShutdown(UIControlledApplication application)
         {
+            AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
             Core.Bootstrapper.Shutdown();
             return Result.Succeeded;
+        }
+
+        private static System.Reflection.Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
+        {
+            string assemblyName = new System.Reflection.AssemblyName(args.Name).Name + ".dll";
+            string folder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "";
+            string assemblyPath = Path.Combine(folder, assemblyName);
+
+            if (File.Exists(assemblyPath))
+            {
+                return System.Reflection.Assembly.LoadFrom(assemblyPath);
+            }
+            return null;
         }
 
         private static void RegisterGlobalExceptionHandlers()

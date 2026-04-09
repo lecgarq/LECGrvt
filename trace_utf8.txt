@@ -1,0 +1,606 @@
+﻿
+>   ' 2:< API_ERROR {  
+System.InvalidCastException 
+exception(Unable to cast 
+object of type 'Autodesk.Revi
+t.ApplicationServices.Applica
+tion' to type 'Autodesk.Revit
+.DB.Document'.) was thrown 
+from a handler of Autodesk.Re
+vit.Proxy.DB.Events.DocumentS
+avingEventArgsProxy event. 
+The API event handler was 
+registered by application 
+Environment (eccb03c4-b3c3-4c
+39-868e-5d65d9cebbbb). 
+Changes made by this handler 
+are going to be discarded. } 
+    ' 2:< API_SUCCESS { 
+Registering Idling event by 
+application ModPlus (90e912da
+-4c66-4b52-aa3d-6b491f1d6772)
+. } 
+    'C 23-Mar-2026 
+10:34:26.872;  
+implSaveSchemasToAppInfo_ 
+ESSchema count 15 -> 26 
+      'E 23-Mar-2026 
+10:34:26.872;   1:< 
+      ' 
+[Jrn.ESSchemaSaveRoster] 
+20Rvt.Attr.UsedSchemas: bcac1
+b0b-b97f-4173-983a-b43f365ad4
+57 TypeNameStorage  00000000-
+0000-0000-0000-000000000000 
+1 1 5449828836228005141,  9e7
+ce70c-bf2a-4d87-acd0-73e24442
+0f14 SlopePathInitialSettings
+Storage  00000000-0000-0000-0
+000-000000000000 1 1 
+6321290916524452046,  ee23383
+2-5c3d-4455-b714-5f4379016eba
+ FromFaceInitialSettingsStora
+ge  00000000-0000-0000-0000-0
+00000000000 1 1 
+6431651543942623625,  ec20e43
+7-4ead-471a-b0a8-cadf0910255c
+ LinkFileManager_2024  000000
+00-0000-0000-0000-00000000000
+0 1 1 4002040342395145936,  d
+2d4e339-b51c-4147-b965-f8ef03
+e576fb FromEdgeInitialSetting
+sStorage  00000000-0000-0000-
+0000-000000000000 1 1 
+96712362717854585,  ebd81653-
+f178-431d-beb8-7146cb1825b4 E
+nvironmentInsertCivilDataInit
+ialSettings_2024  00000000-00
+00-0000-0000-000000000000 1 
+1 4529818372740986191,  4f2d0
+758-f217-4bc3-aead-2930ce88a2
+5e MaterialSideStorage  00000
+000-0000-0000-0000-0000000000
+00 1 1 14159211836546335620, 
+ cdde747d-2d45-4a4d-ae3f-107d
+555d46cc AddPointsInitialSett
+ingsStorage  00000000-0000-00
+00-0000-000000000000 1 1 
+6057533123210160876,  fc5f298
+a-f91d-4b65-8778-55c566511f88
+ CrossSectionStorage_2024  00
+000000-0000-0000-0000-0000000
+00000 1 1 
+2804274076924824083,  280cd58
+e-ae1a-4b0e-9da7-720591d3d7fd
+ LinkFileStorage_2024  000000
+00-0000-0000-0000-00000000000
+0 1 1 5688830547262096459,  8
+aa5309a-7f24-432c-97fa-5fc18e
+e2b288 AddLineInitialSettings
+Storage  00000000-0000-0000-0
+000-000000000000 1 1 
+780011934129887428,  5fc1deb0
+-3031-43da-9630-a8d1e683d01b 
+MaterialStorage  00000000-000
+0-0000-0000-000000000000 1 1 
+16053116277531367221,  fb2bf7
+b2-2c26-46d4-97c2-d3b1eb295ef
+0 ObjectOutlineUpdaterEnableF
+lagStorage  00000000-0000-000
+0-0000-000000000000 1 1 
+15487388943943323882,  13db9f
+ba-db56-4fd2-ac3f-fa041ff57d6
+8 MaterialStorage  00000000-0
+000-0000-0000-000000000000 1 
+1 11319918177559224852,  5f67
+5bc7-7d85-4295-aecf-7bb8b587b
+570 EnvUltSplitLineInitialSet
+tingsManager  00000000-0000-0
+000-0000-000000000000 1 1 
+4935628123044400417,  762561c
+a-da19-27dc-9415-e57f874aa1f0
+ ModifyTopographyExternalStor
+age  00000000-0000-0000-0000-
+000000000000 1 1 
+15487388943943323882,  85c142
+dd-eca5-4a81-b28f-befa7964815
+5 LinkFileStorage_2024  00000
+000-0000-0000-0000-0000000000
+00 1 1 12098087828457698323, 
+ a0e6d6e5-e15f-4857-a45b-d0b6
+a028aae9 ParentTypeStorage  0
+0000000-0000-0000-0000-000000
+000000 1 1 
+5422094492098995447,  fd1ca1f
+2-8bdf-4149-b980-c56018e0dbcc
+ UnifiProjectId INVL 00000000
+-0000-0000-0000-000000000000 
+1 1 14588695383123314811,  26
+6ee3f8-3675-47a2-8a9b-a5adaa7
+fd5ac PointsSelectionInitialS
+ettingsStorage  00000000-0000
+-0000-0000-000000000000 1 1 
+4385827245247664933  , 
+6Rvt.Attr.UnusedSchemas: b09e
+4316-e42d-4729-aee9-abc7198ef
+48c CreaseInTopoElemStorage  
+00000000-0000-0000-0000-00000
+0000000 1 1 
+10752922668356016804,  9f2a39
+67-f2db-4382-a0f4-078e11d23d5
+1 
+LinkElementMarkStorage_2024  
+00000000-0000-0000-0000-00000
+0000000 1 1 
+1838280601558166676,  32cbae9
+0-8745-48e9-a677-81e13a6bbafc
+ ExternalPointsStorage  00000
+000-0000-0000-0000-0000000000
+00 1 1 1210712435964061995,  
+1b36f995-3528-45e3-84d6-9aa52
+e726b5c ToposolidMarkStorage 
+ 00000000-0000-0000-0000-0000
+00000000 1 1 
+7135949563433755100,  765fae9
+a-6002-4f81-8217-cadcd6e22730
+ ToposolidCoordinateSystemSto
+rage  00000000-0000-0000-0000
+-000000000000 1 1 
+9305678631884701805,  0b9e29c
+d-4907-4a62-8395-305e82444fc2
+ EnvironmentUltimateAdditiona
+lCreasesStorage  00000000-000
+0-0000-0000-000000000000 1 1 
+10752922668356016804 
+      'E 23-Mar-2026 
+10:34:26.879;   1:< 
+      ' 
+[Jrn.ForgeSchemaSaveRoster] 
+1387
+    ' 3:< compare GUIDs; 
+creation dfe9af17-20db-4c95-8
+a4e-37071b7606a8; detach dfe9
+af17-20db-4c95-8a4e-37071b760
+6a8; upgrade dfe9af17-20db-4c
+95-8a4e-37071b7606a8; DIFF 
+prevUpgrade null != dfe9af17-
+20db-4c95-8a4e-37071b7606a8 
+    ' 1:< ::10169:: Delta 
+VM: Avail -18 -> 133853794 
+MB, Used 9653 MB; RAM: Avail 
+-4 -> 31329 MB, Used +1 -> 
+6770 MB 
+    ' 1:< GUI Resource Usage 
+GDI: Avail 8246, Used 1754, 
+User: Used 657 
+    '  0.103461    2:<<OpenFi
+leForSave::openFileForSave 
+    ' 5:< ::10169:: Delta 
+VM: Avail -307 -> 133853488 
+MB, Used 9653 MB; RAM: Avail 
+-154 -> 31175 MB, Used +0 -> 
+6771 MB 
+    ' 5:< GUI Resource Usage 
+GDI: Avail 8245, Used 1755, 
+User: Used 657 
+    ' 5:< Detect if missing 
+elements for C:\Users\luis.co
+rtes\Desktop\v2\SIEMENS\RVT\L
+ECG_RVT_SIEMENS - Terreno 
+Natural.rvt: File Size: 
+160423936, Element Count: 
+2896 
+    ' 6:< [ISL] Stream#96 
+(15 live/33 total elements) 
+marked for reconsolidation 
+    ' 6:< [ISL] Stream#98 (0 
+live/4 total elements) 
+marked for deletion during 
+reconsolidation 
+    ' 6:< [ISL] Stream#99 (0 
+live/6 total elements) 
+marked for deletion during 
+reconsolidation 
+    ' 6:< [ISL] Stream#105 
+(0 live/16 total elements) 
+marked for deletion during 
+reconsolidation 
+    ' 5:< updateDITforSave 
+increment 106C has 95 (+1) 
+episodes 
+    ' 4:< ::10169:: Delta 
+VM: Avail -21 -> 133853467 
+MB, Used +4 -> 9657 MB; RAM: 
+Avail -24 -> 31151 MB, Used 
++13 -> 6784 MB 
+    ' 4:< GUI Resource Usage 
+GDI: Avail 8245, Used 1755, 
+User: Used 657 
+>   ' 2:< API_ERROR {  
+System.InvalidCastException 
+exception(Unable to cast 
+object of type 'Autodesk.Revi
+t.ApplicationServices.Applica
+tion' to type 'Autodesk.Revit
+.DB.Document'.) was thrown 
+from a handler of Autodesk.Re
+vit.Proxy.DB.Events.DocumentS
+avingEventArgsProxy event. 
+The API event handler was 
+registered by application 
+Environment (eccb03c4-b3c3-4c
+39-868e-5d65d9cebbbb). 
+Changes made by this handler 
+are going to be discarded. } 
+    ' 2:< API_SUCCESS { 
+Registering Idling event by 
+application ModPlus (90e912da
+-4c66-4b52-aa3d-6b491f1d6772)
+. } 
+    'C 23-Mar-2026 
+10:36:13.629;  
+implSaveSchemasToAppInfo_ 
+ESSchema count 26 -> 26 
+      'E 23-Mar-2026 
+10:36:13.629;   1:< 
+      ' 
+[Jrn.ESSchemaSaveRoster] 
+20Rvt.Attr.UsedSchemas: bcac1
+b0b-b97f-4173-983a-b43f365ad4
+57 TypeNameStorage  00000000-
+0000-0000-0000-000000000000 
+1 1 5449828836228005141,  9e7
+ce70c-bf2a-4d87-acd0-73e24442
+0f14 SlopePathInitialSettings
+Storage  00000000-0000-0000-0
+000-000000000000 1 1 
+6321290916524452046,  ee23383
+2-5c3d-4455-b714-5f4379016eba
+ FromFaceInitialSettingsStora
+ge  00000000-0000-0000-0000-0
+00000000000 1 1 
+6431651543942623625,  ec20e43
+7-4ead-471a-b0a8-cadf0910255c
+ LinkFileManager_2024  000000
+00-0000-0000-0000-00000000000
+0 1 1 4002040342395145936,  d
+2d4e339-b51c-4147-b965-f8ef03
+e576fb FromEdgeInitialSetting
+sStorage  00000000-0000-0000-
+0000-000000000000 1 1 
+96712362717854585,  ebd81653-
+f178-431d-beb8-7146cb1825b4 E
+nvironmentInsertCivilDataInit
+ialSettings_2024  00000000-00
+00-0000-0000-000000000000 1 
+1 4529818372740986191,  4f2d0
+758-f217-4bc3-aead-2930ce88a2
+5e MaterialSideStorage  00000
+000-0000-0000-0000-0000000000
+00 1 1 14159211836546335620, 
+ cdde747d-2d45-4a4d-ae3f-107d
+555d46cc AddPointsInitialSett
+ingsStorage  00000000-0000-00
+00-0000-000000000000 1 1 
+6057533123210160876,  fc5f298
+a-f91d-4b65-8778-55c566511f88
+ CrossSectionStorage_2024  00
+000000-0000-0000-0000-0000000
+00000 1 1 
+2804274076924824083,  280cd58
+e-ae1a-4b0e-9da7-720591d3d7fd
+ LinkFileStorage_2024  000000
+00-0000-0000-0000-00000000000
+0 1 1 5688830547262096459,  8
+aa5309a-7f24-432c-97fa-5fc18e
+e2b288 AddLineInitialSettings
+Storage  00000000-0000-0000-0
+000-000000000000 1 1 
+780011934129887428,  5fc1deb0
+-3031-43da-9630-a8d1e683d01b 
+MaterialStorage  00000000-000
+0-0000-0000-000000000000 1 1 
+16053116277531367221,  fb2bf7
+b2-2c26-46d4-97c2-d3b1eb295ef
+0 ObjectOutlineUpdaterEnableF
+lagStorage  00000000-0000-000
+0-0000-000000000000 1 1 
+15487388943943323882,  13db9f
+ba-db56-4fd2-ac3f-fa041ff57d6
+8 MaterialStorage  00000000-0
+000-0000-0000-000000000000 1 
+1 11319918177559224852,  5f67
+5bc7-7d85-4295-aecf-7bb8b587b
+570 EnvUltSplitLineInitialSet
+tingsManager  00000000-0000-0
+000-0000-000000000000 1 1 
+4935628123044400417,  762561c
+a-da19-27dc-9415-e57f874aa1f0
+ ModifyTopographyExternalStor
+age  00000000-0000-0000-0000-
+000000000000 1 1 
+15487388943943323882,  85c142
+dd-eca5-4a81-b28f-befa7964815
+5 LinkFileStorage_2024  00000
+000-0000-0000-0000-0000000000
+00 1 1 12098087828457698323, 
+ a0e6d6e5-e15f-4857-a45b-d0b6
+a028aae9 ParentTypeStorage  0
+0000000-0000-0000-0000-000000
+000000 1 1 
+5422094492098995447,  fd1ca1f
+2-8bdf-4149-b980-c56018e0dbcc
+ UnifiProjectId INVL 00000000
+-0000-0000-0000-000000000000 
+1 1 14588695383123314811,  26
+6ee3f8-3675-47a2-8a9b-a5adaa7
+fd5ac PointsSelectionInitialS
+ettingsStorage  00000000-0000
+-0000-0000-000000000000 1 1 
+4385827245247664933  , 
+6Rvt.Attr.UnusedSchemas: b09e
+4316-e42d-4729-aee9-abc7198ef
+48c CreaseInTopoElemStorage  
+00000000-0000-0000-0000-00000
+0000000 1 1 
+10752922668356016804,  9f2a39
+67-f2db-4382-a0f4-078e11d23d5
+1 
+LinkElementMarkStorage_2024  
+00000000-0000-0000-0000-00000
+0000000 1 1 
+1838280601558166676,  32cbae9
+0-8745-48e9-a677-81e13a6bbafc
+ ExternalPointsStorage  00000
+000-0000-0000-0000-0000000000
+00 1 1 1210712435964061995,  
+1b36f995-3528-45e3-84d6-9aa52
+e726b5c ToposolidMarkStorage 
+ 00000000-0000-0000-0000-0000
+00000000 1 1 
+7135949563433755100,  765fae9
+a-6002-4f81-8217-cadcd6e22730
+ ToposolidCoordinateSystemSto
+rage  00000000-0000-0000-0000
+-000000000000 1 1 
+9305678631884701805,  0b9e29c
+d-4907-4a62-8395-305e82444fc2
+ EnvironmentUltimateAdditiona
+lCreasesStorage  00000000-000
+0-0000-0000-000000000000 1 1 
+10752922668356016804 
+      'E 23-Mar-2026 
+10:36:13.634;   1:< 
+      ' 
+[Jrn.ForgeSchemaSaveRoster] 
+1387
+    ' 3:< compare GUIDs; 
+creation dfe9af17-20db-4c95-8
+a4e-37071b7606a8; detach dfe9
+af17-20db-4c95-8a4e-37071b760
+6a8; upgrade dfe9af17-20db-4c
+95-8a4e-37071b7606a8; DIFF 
+prevUpgrade null != dfe9af17-
+20db-4c95-8a4e-37071b7606a8 
+    ' 1:< ::10462:: Delta 
+VM: Avail -2 -> 133853276 
+MB, Used -11 -> 9973 MB; 
+RAM: Avail -12 -> 30929 MB, 
+Used -3 -> 6877 MB 
+    ' 1:< GUI Resource Usage 
+GDI: Avail 8210, Used 1790, 
+User: Used 665 
+    '  0.120183    2:<<OpenFi
+leForSave::openFileForSave 
+    ' 2:< DummyStorage 
+destroying 
+DataStorageInterface 
+0x000001F94BA530A0 
+    ' 5:< Detect if missing 
+elements for C:\Users\luis.co
+rtes\Desktop\v2\SIEMENS\RVT\L
+ECG_RVT_SIEMENS - Terreno 
+Natural.rvt: File Size: 
+160423936, Element Count: 
+2896 
+    ' 6:< [ISL] Stream#106 
+(31 live/317 total elements) 
+marked for reconsolidation 
+    ' 5:< updateDITforSave 
+increment 107C has 96 (+1) 
+episodes 
+    ' 4:< ::10462:: Delta 
+VM: Avail -35 -> 133853241 
+MB, Used +18 -> 9991 MB, 
+Peak +38 -> 10033 MB; RAM: 
+Avail -38 -> 30892 MB, Used 
++31 -> 6908 MB 
+    ' 4:< GUI Resource Usage 
+GDI: Avail 8209, Used 1791, 
+User: Used 665 
+    '  0.555394       5:<<Mod
+elStorer::storeStreams()  
+    '  0.585418      4:<<Mode
+lStorer::storeDocument()  
+    ' 3:< 
+GETLOADSTOREOPTIONS in GET F:
+\Ship26.4\2026_px64\Source\Re
+vit\RevitDB\Project\ProjectAg
+ent.cpp(29) despite 
+m_dontFetch 
+    ' 3:< 
+GETLOADSTOREOPTIONS in GET F:
+\Ship26.4\2026_px64\Source\Re
+vit\RevitDB\Project\OleStorag
+e.cpp(220) despite 
+m_dontFetch 
+>   ' 2:< API_ERROR {  
+System.InvalidCastException 
+exception(Unable to cast 
+object of type 'Autodesk.Revi
+t.ApplicationServices.Applica
+tion' to type 'Autodesk.Revit
+.DB.Document'.) was thrown 
+from a handler of Autodesk.Re
+vit.Proxy.DB.Events.DocumentS
+avingEventArgsProxy event. 
+The API event handler was 
+registered by application 
+Environment (eccb03c4-b3c3-4c
+39-868e-5d65d9cebbbb). 
+Changes made by this handler 
+are going to be discarded. } 
+    ' 2:< API_SUCCESS { 
+Registering Idling event by 
+application ModPlus (90e912da
+-4c66-4b52-aa3d-6b491f1d6772)
+. } 
+    'C 23-Mar-2026 
+10:36:45.295;  
+implSaveSchemasToAppInfo_ 
+ESSchema count 15 -> 15 
+      'E 23-Mar-2026 
+10:36:45.295;   1:< 
+      ' 
+[Jrn.ESSchemaSaveRoster] 
+6Rvt.Attr.UsedSchemas: bcac1b
+0b-b97f-4173-983a-b43f365ad45
+7 TypeNameStorage  00000000-0
+000-0000-0000-000000000000 1 
+1 5449828836228005141,  4f2d0
+758-f217-4bc3-aead-2930ce88a2
+5e MaterialSideStorage  00000
+000-0000-0000-0000-0000000000
+00 1 1 14159211836546335620, 
+ 5fc1deb0-3031-43da-9630-a8d1
+e683d01b MaterialStorage  000
+00000-0000-0000-0000-00000000
+0000 1 1 
+16053116277531367221,  13db9f
+ba-db56-4fd2-ac3f-fa041ff57d6
+8 MaterialStorage  00000000-0
+000-0000-0000-000000000000 1 
+1 11319918177559224852,  a0e6
+d6e5-e15f-4857-a45b-d0b6a028a
+ae9 ParentTypeStorage  000000
+00-0000-0000-0000-00000000000
+0 1 1 5422094492098995447,  f
+d1ca1f2-8bdf-4149-b980-c56018
+e0dbcc UnifiProjectId INVL 00
+000000-0000-0000-0000-0000000
+00000 1 1 
+14588695383123314811  , 
+9Rvt.Attr.UnusedSchemas: b09e
+4316-e42d-4729-aee9-abc7198ef
+48c CreaseInTopoElemStorage  
+00000000-0000-0000-0000-00000
+0000000 1 1 
+10752922668356016804,  9f2a39
+67-f2db-4382-a0f4-078e11d23d5
+1 
+LinkElementMarkStorage_2024  
+00000000-0000-0000-0000-00000
+0000000 1 1 
+1838280601558166676,  fc5f298
+a-f91d-4b65-8778-55c566511f88
+ CrossSectionStorage_2024  00
+000000-0000-0000-0000-0000000
+00000 1 1 
+2804274076924824083,  280cd58
+e-ae1a-4b0e-9da7-720591d3d7fd
+ LinkFileStorage_2024  000000
+00-0000-0000-0000-00000000000
+0 1 1 5688830547262096459,  3
+2cbae90-8745-48e9-a677-81e13a
+6bbafc ExternalPointsStorage 
+ 00000000-0000-0000-0000-0000
+00000000 1 1 
+1210712435964061995,  1b36f99
+5-3528-45e3-84d6-9aa52e726b5c
+ ToposolidMarkStorage  000000
+00-0000-0000-0000-00000000000
+0 1 1 7135949563433755100,  7
+65fae9a-6002-4f81-8217-cadcd6
+e22730 ToposolidCoordinateSys
+temStorage  00000000-0000-000
+0-0000-000000000000 1 1 
+9305678631884701805,  0b9e29c
+d-4907-4a62-8395-305e82444fc2
+ EnvironmentUltimateAdditiona
+lCreasesStorage  00000000-000
+0-0000-0000-000000000000 1 1 
+10752922668356016804,  85c142
+dd-eca5-4a81-b28f-befa7964815
+5 LinkFileStorage_2024  00000
+000-0000-0000-0000-0000000000
+00 1 1 12098087828457698323 
+      'E 23-Mar-2026 
+10:36:45.302;   1:< 
+      ' 
+[Jrn.ForgeSchemaSaveRoster] 
+1387
+    ' 3:< compare GUIDs; 
+creation dfe9af17-20db-4c95-8
+a4e-37071b7606a8; detach dfe9
+af17-20db-4c95-8a4e-37071b760
+6a8; upgrade dfe9af17-20db-4c
+95-8a4e-37071b7606a8; DIFF 
+prevUpgrade null != dfe9af17-
+20db-4c95-8a4e-37071b7606a8 
+    ' 5:< ::10521:: Delta 
+VM: Avail +76 -> 133854517 
+MB, Used -10 -> 9316 MB; 
+RAM: Avail +31 -> 31462 MB, 
+Used +69 -> 6462 MB 
+    ' 5:< GUI Resource Usage 
+GDI: Avail 8280, Used 1720, 
+User: Used 640 
+    '  0.574772        
+6:<<<;PERF;MISC;drawing 
+    '  0.621637     3:<<creat
+ePreviewImage/ALL_GAPS   
+0.046865/TurnOff_GAPs 
+11%/Threshold_GAPs 2% 
+    '  0.639204    2:<<OpenFi
+leForSave::openFileForSave 
+    ' 5:< ::10521:: Delta 
+VM: Avail -307 -> 133854211 
+MB, Used 9316 MB; RAM: Avail 
+-140 -> 31322 MB, Used 6462 
+MB 
+    ' 5:< GUI Resource Usage 
+GDI: Avail 8289, Used 1711, 
+User: Used 636 
+    ' 5:< Detect if missing 
+elements for C:\Users\luis.co
+rtes\Desktop\v2\SIEMENS\RVT\L
+ECG_RVT_SIEMENS.rvt: File 
+Size: 160423936, Element 
+Count: 2619 
+    ' 6:< [ISL] Stream#105 
+(0 live/16 total elements) 
+marked for deletion during 
+reconsolidation 
+    ' 5:< updateDITforSave 
+increment 106C has 95 (+1) 
+episodes 
+    ' 3:< 
+GETLOADSTOREOPTIONS in GET F:
+\Ship26.4\2026_px64\Source\Re
+vit\RevitDB\Project\ProjectAg
+ent.cpp(29) despite 
+m_dontFetch 
+    ' 3:< 
+GETLOADSTOREOPTIONS in GET F:
+\Ship26.4\2026_px64\Source\Re
+vit\RevitDB\Project\OleStorag
+e.cpp(220) despite 
+m_dontFetch 
+    ' 4:< 
+GETLOADSTOREOPTIONS in GET F:
+\Ship26.4\2026_px64\Source\Re
+vit\RevitDB\Document\Document
+.cpp(6549) despite 
+m_dontFetch 
+
+
