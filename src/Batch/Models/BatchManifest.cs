@@ -4,6 +4,6 @@ namespace LECG.Batch.Models
     {
         public string BatchRunId { get; set; } = Guid.NewGuid().ToString();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public List<BatchJob> Jobs { get; set; } = new();
+        public List<BatchJob> Jobs { get; private set; } = new();
     }
 }

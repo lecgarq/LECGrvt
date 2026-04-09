@@ -23,6 +23,6 @@ namespace LECG.Batch.Models
         public int Failed { get; set; }
         public int Poisoned { get; set; }
         public int Cancelled { get; set; }
-        public List<BatchJobReportEntry> Jobs { get; set; } = new();
+        public List<BatchJobReportEntry> Jobs { get; private set; } = new();
     }
 }
