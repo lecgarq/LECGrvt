@@ -218,7 +218,7 @@ namespace LECG.Core
             services.AddSingleton(new System.Net.Http.HttpClient());
 
             // APS credentials — placeholder values; replace with your app's Client ID
-            const string apsClientId   = "YOUR_APS_CLIENT_ID";
+            const string apsClientId   = "boQ3IUTZHC5ffcvjaiAmvwX4IjCG0IixxJhBAHrk4W228hIC";
             const string apsRedirectUri = "http://localhost:8090/callback";
             string[] apsScopes = ["openid", "user-profile:read", "data:read", "data:create", "data:write"];
 
