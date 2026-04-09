@@ -32,6 +32,7 @@ namespace LECG.Core.Ribbon
             CreateAlignPanel(app, tabName, assemblyPath);
             CreateModelOrganizationPanel(app, tabName, assemblyPath);
             CreateVisualizationPanel(app, tabName, assemblyPath);
+            CreateCloudPanel(app, tabName, assemblyPath);
         }
 
         private static bool IsExpectedRibbonInitializationException(Exception ex)
@@ -357,6 +358,20 @@ namespace LECG.Core.Ribbon
                 "LECG.Commands.TypeToLinkedModelsCommand",
                 UIConstants.ButtonTypeToLinked_Tooltip,
                 AppImages.ConvertFamily
+            ), assemblyPath, availability);
+        }
+
+        private void CreateCloudPanel(UIControlledApplication app, string tabName, string assemblyPath)
+        {
+            RibbonPanel panel = GetOrCreatePanel(app, tabName, AppConstants.Panels.Cloud);
+            string availability = "LECG.Core.ProjectDocumentAvailability";
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonBatchProcess_Name,
+                UIConstants.ButtonBatchProcess_Text,
+                "LECG.Batch.Commands.BatchProcessCommand",
+                UIConstants.ButtonBatchProcess_Tooltip,
+                AppImages.Home
             ), assemblyPath, availability);
         }
 

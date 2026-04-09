@@ -16,6 +16,7 @@ namespace LECG.Configuration
             public const string Visualization = "Visualization";
             public const string Align = "Align";
             public const string ModelOrganization = "Model Organization";
+            public const string Cloud = "Cloud";
         }
     }
 }

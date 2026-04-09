@@ -10,6 +10,11 @@ using LECG.Validation.Validators;
 using MsLoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 using FluentValidation;
 using Microsoft.Extensions.Caching.Memory;
+using LECG.Batch.Services;
+using LECG.Batch.Services.Interfaces;
+using LECG.Batch.Handlers;
+using LECG.Batch.ViewModels;
+using LECG.Batch.Views;
 
 namespace LECG.Core
 {
@@ -207,6 +212,42 @@ namespace LECG.Core
             services.AddSingleton<ISplitBoundariesService, SplitBoundariesService>();
             services.AddSingleton<ILinkedModelExportService, LinkedModelExportService>();
             // Add other services here as we refactor
+
+            // ── Batch Pipeline ────────────────────────────────────────────
+            // Shared HttpClient for all APS HTTP calls
+            services.AddSingleton(new System.Net.Http.HttpClient());
+
+            // APS credentials — placeholder values; replace with your app's Client ID
+            const string apsClientId   = "YOUR_APS_CLIENT_ID";
+            const string apsRedirectUri = "http://localhost:8090/callback";
+            string[] apsScopes = ["openid", "user-profile:read", "data:read", "data:create", "data:write"];
+
+            services.AddSingleton<IApsSessionStore, ApsSessionStore>();
+            services.AddSingleton<IApsTokenProvider>(sp => new ApsTokenProvider(
+                sp.GetRequiredService<IApsSessionStore>(),
+                sp.GetRequiredService<System.Net.Http.HttpClient>(),
+                apsClientId,
+                apsRedirectUri));
+            services.AddSingleton<IApsAuthService>(sp => new ApsAuthService(
+                sp.GetRequiredService<IApsSessionStore>(),
+                sp.GetRequiredService<System.Net.Http.HttpClient>(),
+                apsClientId,
+                apsRedirectUri,
+                apsScopes));
+            services.AddSingleton<IApsDataManagementService>(sp => new ApsDataManagementService(
+                sp.GetRequiredService<IApsTokenProvider>(),
+                sp.GetRequiredService<System.Net.Http.HttpClient>()));
+            services.AddSingleton<IBatchManifestService, BatchManifestService>();
+            services.AddSingleton<IBatchReportService, BatchReportService>();
+            services.AddSingleton<IBatchOrchestrationService, BatchOrchestrationService>();
+            services.AddSingleton<ICloudModelOpenService, CloudModelOpenService>();
+            services.AddSingleton<ISynchronizeWithCentralService, SynchronizeWithCentralService>();
+            services.AddSingleton<ICloudSaveService, CloudSaveService>();
+            services.AddSingleton<IApsPublishService>(sp => new ApsPublishService(
+                sp.GetRequiredService<IApsTokenProvider>(),
+                sp.GetRequiredService<System.Net.Http.HttpClient>()));
+            services.AddSingleton<IBatchJobRoutine, DefaultBatchJobRoutine>();
+            services.AddSingleton<RevitBatchJobHandler>();
         }
 
         private static void ConfigureViewModels(Microsoft.Extensions.DependencyInjection.IServiceCollection services)
@@ -233,6 +274,11 @@ namespace LECG.Core
             services.AddTransient<TypeToLinkedModelsViewModel>();
             services.AddTransient<ConvertFloorToToposolidViewModel>();
             services.AddTransient<ConvertToposolidToFloorViewModel>();
+
+            // Batch Pipeline ViewModels
+            services.AddTransient<BatchProcessViewModel>();
+            services.AddTransient<CloudModelBrowserViewModel>();
+            services.AddTransient<BatchJobRowViewModel>();
         }
 
         private static void ConfigureViews(Microsoft.Extensions.DependencyInjection.IServiceCollection services)
@@ -263,6 +309,10 @@ namespace LECG.Core
             services.AddTransient<Views.TypeToLinkedModelsView>();
             services.AddTransient<Views.ConvertFloorToToposolidView>();
             services.AddTransient<Views.ConvertToposolidToFloorView>();
+
+            // Batch Pipeline Views
+            services.AddTransient<BatchProcessView>();
+            services.AddTransient<CloudModelBrowserView>();
         }
     }
 }

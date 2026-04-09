@@ -163,5 +163,10 @@ namespace LECG.Configuration
         public const string ButtonTypeToLinked_Name = "btnTypeToLinked";
         public const string ButtonTypeToLinked_Text = "Type to\nLinked";
         public const string ButtonTypeToLinked_Tooltip = "Separate model content by type into individual linked Revit files.";
+
+        // Batch Cloud Process
+        public const string ButtonBatchProcess_Name = "btnBatchProcess";
+        public const string ButtonBatchProcess_Text = "Batch\nProcess";
+        public const string ButtonBatchProcess_Tooltip = "Open, process, sync, and optionally publish multiple cloud Revit models in sequence.";
     }
 }
