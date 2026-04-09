@@ -215,7 +215,7 @@ namespace LECG.Core
 
             // ── Batch Pipeline ────────────────────────────────────────────
             // Shared HttpClient for all APS HTTP calls
-            services.AddSingleton(new System.Net.Http.HttpClient());
+            services.AddSingleton<System.Net.Http.HttpClient>(_ => new System.Net.Http.HttpClient());
 
             // APS credentials — placeholder values; replace with your app's Client ID
             const string apsClientId   = "boQ3IUTZHC5ffcvjaiAmvwX4IjCG0IixxJhBAHrk4W228hIC";

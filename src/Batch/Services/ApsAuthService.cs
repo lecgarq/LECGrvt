@@ -1,4 +1,6 @@
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using LECG.Batch.Configuration;
 using LECG.Batch.Models;
