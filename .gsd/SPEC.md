@@ -1,100 +1,34 @@
-﻿# SPEC.md — Project Specification
+# SPEC.md — Project Specification
 
-> Status: FINALIZED`n
-# LECG Revit Plugin
+> Status: FINALIZED
 
-## What This Is
+## Vision
+Enhance the "Render Appearance Match" tool to provide intelligent material standardization. It will automatically detect and fix non-compliant materials, correctly map Normal Map properties, and allow user-controlled UV scaling via a new UI dropdown.
 
-A Revit 2026 addin providing tools for converting, repairing, separating, merging, and reorganizing modeled elements while preserving geometric behavior, elevation data, and project references. Built for BIM professionals who need to manipulate Floors, Toposolids, multi-boundary geometry, and type-based model organization without losing modeled intent.
+## Goals
+1. **Intelligent Skip/Update**: Automatically identify and skip materials that already meet the 4-point standard.
+2. **4-Point Standardization**:
+    - "Use Render Appearance" enabled for Graphics Shading.
+    - Graphics Shading color precisely matched to Render Appearance average color.
+    - Surface patterns (Foreground & Background) set to Solid Fill.
+    - Cut patterns (Foreground & Background) set to Solid Fill.
+3. **Normal Map Correction**: Fix the Revit API property mapping for Bump assets to ensure they are explicitly defined as "Normal Maps".
+4. **Custom UV Scaling**: Provide a dropdown in the UI (0.5m, 1m, 2m, 5m) to define the texture scale during synchronization.
 
-## Core Value
+## Success Criteria
+- [ ] Log output identifies only modified (non-compliant) materials.
+- [ ] Materials updated by the tool have "Normal Map" successfully checked in the Revit Appearance Editor.
+- [ ] Materials updated reflect the UV scale chosen in the UI.
+- [ ] Shading color, surface/cut patterns are consistent across all "Matched" materials.
 
-Preserve the exact geometric behavior, elevation data, and project reference system of modeled elements during any conversion, repair, or reorganization operation.
-
-## Requirements
-
-### Validated
-
-<!-- Shipped and confirmed valuable. Phases P1-P9 completed. -->
-
-- Purge unused line styles, fill patterns, materials (PurgeCommand)
-- Clean third-party plugin schemas (CleanSchemasCommand)
-- Normalize duplicated line/fill/text styles (CompactingStylesCommand)
-- Batch find/replace in element names (SearchReplaceCommand)
-- Convert imported CAD to Detail Item families (ConvertCadCommand)
-- Convert hosted family to work plane-based generic model (ConvertFamilyCommand)
-- Convert shared family to non-shared (ConvertSharedCommand)
-- Change instance categories by modifying family definition (CategoryChangerCommand)
-- Copy view filters between views/templates (FilterCopyCommand)
-- Assign materials based on Floor/Toposolid type names (AssignMaterialCommand)
-- Offset height from level for Toposolids/Floors (OffsetElevationsCommand)
-- Reset slab shapes for Floor and Toposolid elements (ResetSlabsCommand)
-- Remove redundant sub-element points from Toposolids (SimplifyPointsCommand)
-- Align Toposolid points to another Toposolid surface (AlignEdgesCommand)
-- Apply/remove contour display on Toposolid types (UpdateContoursCommand)
-- Move Toposolids to new level maintaining elevation (ChangeLevelCommand)
-- Align/distribute elements (8 alignment commands)
-- Beautify current view (SexyRevitCommand)
-- Sync graphics/identity with render appearance (RenderAppearanceMatchCommand)
-- Create PBR materials from textures (PbrMaterialCreatorCommand)
-- Move formula parameters to Other group (FormulaAutoGroupingCommand)
-
-### Active
-
-<!-- Current scope: v2.0 Geometry Operations milestone -->
-
-- [ ] Floor to Toposolid conversion preserving shape points and elevations
-- [ ] Toposolid to Floor conversion preserving edited points and elevations
-- [ ] Fix Points â€” repair inconsistent points at edges/transitions
-- [ ] Split Boundaries â€” separate multi-boundary elements into independent instances
-- [ ] Type to Linked Models â€” separate by type into individual Revit files with shared coordinates
-
-**Deferred:** Merge Elements is descoped to v2.x pending a defensible boundary-union strategy.
-
-### Out of Scope
-
-- Revit versions before 2026 â€” single-target strategy, no backwards compatibility
-- Conceptual mass or adaptive component geometry â€” not part of Floor/Toposolid domain
-- Cloud-based file operations â€” all operations are local Revit document manipulation
-
-## Current Milestone: v2.0 Geometry Operations
-
-**Goal:** Add core geometry conversion, repair, and model organization commands for Floors and Toposolids.
-
-**Target features:**
-- Floor to Toposolid conversion
-- Toposolid to Floor conversion
-- Fix Points (repair inconsistent surface points)
-- Split Boundaries (multi-boundary to independent elements)
-- Type to Linked Models (type-based model separation with shared coordinates)
-
-**Deferred from this milestone:** Merge Elements (multiple elements to one consolidated)
-
-## Context
-
-- **Framework:** net8.0-windows, WPF, Revit 2026 API
-- **Architecture:** Strict MVVM + DI (SimpleDi container). Commands inherit RevitCommand, services have interfaces, VMs inherit BaseViewModel with CommunityToolkit.Mvvm
-- **Patterns:** All commands open config window first (never start by asking user to select). TransactionService wraps Revit transactions. SelectionCoordinator handles UI hide/show during selection.
-- **Existing relevant services:** SlabService (SlabShapeEditor access, DuplicateElement), ToposolidService (ToposolidType manipulation), SimplifyPointsService (SlabShapeVertex iteration), AlignEdges services (boundary points, vertex alignment), ToposolidBaseElevationService (level + height offset resolution)
-- **Ribbon:** "Toposolids" panel exists and will host most new commands. Type to Linked Models needs its own panel or goes in "Project Health".
-- **Previous work:** Phases P1-P9 completed covering all validated requirements above.
+## Users
+BIM Managers and Architects who need to standardize project material graphics for consistent documentation and visualization without manual property auditing.
 
 ## Constraints
+- **Target**: Revit 2026 / .NET 8.0.
+- **Architecture**: Must integrate into the existing `RenderAppearanceMatchCommand` and its associated Service/VM.
+- **Performance**: Must remain efficient for projects with thousands of materials.
 
-- **Tech stack**: Revit 2026 API only, net8.0-windows, no external NuGet beyond existing
-- **Architecture**: Must follow existing MVVM + DI patterns (RevitCommand, interface-backed services, LecgWindow views, Bootstrapper registration)
-- **Interaction**: Commands must open config window first, never start by asking user to select elements
-- **Transactions**: All Revit modifications must go through TransactionService
-
-## Key Decisions
-
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Single DI container (SimpleDi) | Lightweight, no external DI framework dependency | Good |
-| RevitCommand base class | Centralizes ExternalCommandData access and error handling | Good |
-| LecgWindow base for all views | Consistent theming and window behavior | Good |
-| TransactionService for all modifications | Centralized transaction management with SafeFailureHandler | Good |
-| Toposolids panel grouping | All terrain/surface tools in one ribbon location | Good |
-
----
-*Last updated: 2026-03-19 after milestone v2.0 initialization*
+## Non-Goals
+- Modifying custom textures (beyond scale and property assignment).
+- Creating new materials from scratch.
