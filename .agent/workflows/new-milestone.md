@@ -1,5 +1,6 @@
 ---
 description: Create a new milestone with phases
+argument-hint: "<milestone-name>"
 ---
 
 # /new-milestone Workflow
@@ -31,10 +32,10 @@ fi
 ## 2. Gather Milestone Information
 
 Ask for:
-- **Name** â€” Milestone identifier (e.g., "v1.0", "MVP", "Beta")
-- **Goal** â€” What does this milestone achieve?
-- **Must-haves** â€” Non-negotiable deliverables
-- **Nice-to-haves** â€” Optional if time permits
+- **Name** — Milestone identifier (e.g., "v1.0", "MVP", "Beta")
+- **Goal** — What does this milestone achieve?
+- **Must-haves** — Non-negotiable deliverables
+- **Nice-to-haves** — Optional if time permits
 
 ---
 
@@ -71,11 +72,11 @@ Ask user to confirm or modify.
 ## Phases
 
 ### Phase 1: {name}
-**Status**: â¬œ Not Started
+**Status**: ⬜ Not Started
 **Objective**: {description}
 
 ### Phase 2: {name}
-**Status**: â¬œ Not Started
+**Status**: ⬜ Not Started
 **Objective**: {description}
 
 ...
@@ -94,6 +95,35 @@ Ask user to confirm or modify.
 
 ---
 
+## 5b. Reset Session Files (if starting fresh)
+
+If DECISIONS.md or JOURNAL.md contain entries from a previous milestone, reset them to prevent monolithic growth:
+
+**PowerShell:**
+```powershell
+# Only reset if files are non-empty and no archive exists yet
+if ((Test-Path ".gsd/DECISIONS.md") -and (Get-Content ".gsd/DECISIONS.md" | Measure-Object -Line).Lines -gt 5) {
+    Set-Content ".gsd/DECISIONS.md" "# Decisions`n`n---`n"
+}
+if ((Test-Path ".gsd/JOURNAL.md") -and (Get-Content ".gsd/JOURNAL.md" | Measure-Object -Line).Lines -gt 5) {
+    Set-Content ".gsd/JOURNAL.md" "# Journal`n`n---`n"
+}
+```
+
+**Bash:**
+```bash
+if [ -f ".gsd/DECISIONS.md" ] && [ "$(wc -l < .gsd/DECISIONS.md)" -gt 5 ]; then
+    printf '# Decisions\n\n---\n' > .gsd/DECISIONS.md
+fi
+if [ -f ".gsd/JOURNAL.md" ] && [ "$(wc -l < .gsd/JOURNAL.md)" -gt 5 ]; then
+    printf '# Journal\n\n---\n' > .gsd/JOURNAL.md
+fi
+```
+
+> **Note:** Only resets if files have grown beyond a header. If running `/complete-milestone` first, files are already archived and reset.
+
+---
+
 ## 6. Commit
 
 ```bash
@@ -106,20 +136,20 @@ git commit -m "docs: create milestone {name}"
 ## 7. Offer Next Steps
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º MILESTONE CREATED âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► MILESTONE CREATED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Milestone: {name}
 Phases: {N}
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
-â–¶ NEXT
+▶ NEXT
 
-/plan 1 â€” Create Phase 1 execution plans
+/plan 1 — Create Phase 1 execution plans
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 </process>

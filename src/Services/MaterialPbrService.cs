@@ -167,6 +167,7 @@ namespace LECG.Services
                 || ex is UnauthorizedAccessException
                 || ex is ArgumentException
                 || ex is InvalidOperationException
+                || ex is RevitExceptions.ArgumentException
                 || ex is RevitExceptions.InvalidOperationException;
         }
 

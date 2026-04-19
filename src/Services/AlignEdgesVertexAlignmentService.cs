@@ -66,21 +66,27 @@ namespace LECG.Services
             var knownRefIds = new HashSet<ElementId>();
 
             // === Pass 1: Direct ray for vertices inside the overlap region ===
-            // When overlapRegion is available, only fire rays at vertices known to be
-            // inside the reference footprint (guaranteed hit). Vertices outside go
-            // straight to radial search or neighbor interpolation.
+            // Process both edge AND interior vertices that fall inside the overlap
+            // region. Interior vertices outside overlap are skipped — they belong to
+            // the source surface's own shape, not the shared edge zone.
+            // Edge vertices outside overlap go to radial search as before.
             foreach (SlabShapeVertex v in editor.SlabShapeVertices)
             {
-                if (v.VertexType == SlabShapeVertexType.Interior)
+                bool isInterior = v.VertexType == SlabShapeVertexType.Interior;
+                XYZ origin = v.Position;
+
+                bool insideOverlap = hasOverlap && activeOverlapRegion != null
+                    && ClipperUtils.IsPointInsideRegion(origin.X, origin.Y, activeOverlapRegion);
+
+                // Interior vertices are only aligned when inside the overlap region
+                if (isInterior && !insideOverlap)
                 {
                     continue;
                 }
 
-                XYZ origin = v.Position;
-
-                if (hasOverlap && activeOverlapRegion != null && !ClipperUtils.IsPointInsideRegion(origin.X, origin.Y, activeOverlapRegion))
+                if (!insideOverlap && hasOverlap)
                 {
-                    // Outside overlap — skip the expensive direct ray, route to radial search
+                    // Edge vertex outside overlap — route to radial search
                     radialVertices.Add((v, origin));
                     continue;
                 }
@@ -370,6 +376,7 @@ namespace LECG.Services
         {
             return ex is ArgumentException
                 or InvalidOperationException
+                or RevitExceptions.ArgumentException
                 or RevitExceptions.InvalidOperationException;
         }
     }

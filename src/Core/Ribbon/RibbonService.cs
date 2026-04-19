@@ -148,6 +148,14 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonSplitBoundaries_Tooltip,
                 AppImages.ResetSlabs
             ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonDivideToposolid_Name,
+                UIConstants.ButtonDivideToposolid_Text,
+                "LECG.Commands.DivideToposolidCommand",
+                UIConstants.ButtonDivideToposolid_Tooltip,
+                AppImages.ResetSlabs
+            ), assemblyPath, availability);
         }
 
         private void CreateHealthPanel(UIControlledApplication app, string tabName, string assemblyPath)

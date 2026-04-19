@@ -47,7 +47,7 @@ namespace LECG.Services
 
                 Asset editableAsset = editScope.Start(assetId);
                 if (!string.IsNullOrEmpty(diffusePath)) _materialBitmapPropertyService.SetupBitmapProperty(editableAsset.FindByName("generic_diffuse"), diffusePath, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms);
-                if (!string.IsNullOrEmpty(normalPath)) _materialBitmapPropertyService.SetupBitmapProperty(editableAsset.FindByName("generic_bump_map"), normalPath, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms);
+                if (!string.IsNullOrEmpty(normalPath)) _materialBitmapPropertyService.SetupBumpBitmapProperty(editableAsset, editableAsset.FindByName("generic_bump_map"), normalPath, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms, 1);
                 if (!string.IsNullOrEmpty(roughPath)) _materialBitmapPropertyService.SetupBitmapProperty(editableAsset.FindByName("generic_glossiness") ?? editableAsset.FindByName("generic_reflectivity_at_0deg"), roughPath, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms);
 
                 editScope.Commit(true);
@@ -94,15 +94,13 @@ namespace LECG.Services
                     logCallback?.Invoke($"    -> Diffuse: {System.IO.Path.GetFileName(request.DiffusePath)}");
                 }
 
-                // Normal Map - set bump map type to "Normal" (value 1)
+                // Normal Map
                 if (!string.IsNullOrEmpty(request.NormalPath))
                 {
                     AssetProperty? bumpMapProp = asset.FindByName("generic_bump_map");
-                    _materialBitmapPropertyService.SetupBitmapProperty(bumpMapProp, request.NormalPath, sx, sy, ox, oy, rot, link);
-
-                    // Set bump map type: 0 = Bump, 1 = Normal
-                    SetAssetInteger(asset, "generic_bump_map_type", 1);
-                    logCallback?.Invoke($"    -> Normal: {System.IO.Path.GetFileName(request.NormalPath)} (type=Normal)");
+                    _materialBitmapPropertyService.SetupBumpBitmapProperty(asset, bumpMapProp, request.NormalPath, sx, sy, ox, oy, rot, link, request.BumpMapType);
+                    string bumpTypeLabel = request.BumpMapType == 1 ? "Normal Maps" : "Height Maps";
+                    logCallback?.Invoke($"    -> Relief Pattern: {System.IO.Path.GetFileName(request.NormalPath)} (type={bumpTypeLabel})");
                 }
 
                 // Roughness -> maps to glossiness (inverted in Revit's Generic schema)
@@ -152,8 +150,7 @@ namespace LECG.Services
                     if (string.IsNullOrEmpty(request.NormalPath))
                     {
                         AssetProperty? bumpProp = asset.FindByName("generic_bump_map");
-                        _materialBitmapPropertyService.SetupBitmapProperty(bumpProp, request.DisplacementPath, sx, sy, ox, oy, rot, link);
-                        SetAssetInteger(asset, "generic_bump_map_type", 0); // Bump type
+                        _materialBitmapPropertyService.SetupBumpBitmapProperty(asset, bumpProp, request.DisplacementPath, sx, sy, ox, oy, rot, link, request.BumpMapType);
                     }
                     else
                     {
@@ -209,6 +206,42 @@ namespace LECG.Services
             }
 
             return assetId;
+        }
+
+        /// <summary>
+        /// Sets the bump type to Normal Map (1) on <paramref name="bumpConnectedAsset"/> — the asset
+        /// that was just connected to the bump slot. Tries both <see cref="BumpMap.BumpmapType"/>
+        /// (BumpMap schema wrapper) and "unifiedbitmap_Bump_Type" (Generic / Ceramic / direct UnifiedBitmap).
+        /// </summary>
+        private static void SetBumpmapType(Asset? bumpConnectedAsset, int value)
+        {
+            if (bumpConnectedAsset == null) return;
+
+            // BumpMap schema wrapper
+            if (TrySetBumpmapTypeDirect(bumpConnectedAsset, BumpMap.BumpmapType, value)) return;
+
+            // Direct UnifiedBitmap in bump slot (Generic / Ceramic / most materials)
+            if (TrySetBumpmapTypeDirect(bumpConnectedAsset, "unifiedbitmap_Bump_Type", value)) return;
+
+            // One level deeper
+            for (int i = 0; i < bumpConnectedAsset.Size; i++)
+            {
+                Asset? nested = bumpConnectedAsset[i]?.GetSingleConnectedAsset();
+                if (nested == null) continue;
+                if (TrySetBumpmapTypeDirect(nested, BumpMap.BumpmapType, value)) return;
+                if (TrySetBumpmapTypeDirect(nested, "unifiedbitmap_Bump_Type", value)) return;
+            }
+        }
+
+        private static bool TrySetBumpmapTypeDirect(Asset asset, string propertyName, int value)
+        {
+            if (asset.FindByName(propertyName) is not AssetPropertyInteger prop
+                || prop.IsReadOnly
+                || prop.Value == value)
+                return false;
+
+            prop.Value = value;
+            return true;
         }
 
         private static void SetAssetInteger(Asset asset, string propName, int value)

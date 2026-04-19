@@ -1,5 +1,6 @@
 ---
 description: Add a new phase to the end of the roadmap
+argument-hint: "<phase-name>"
 ---
 
 # /add-phase Workflow
@@ -33,9 +34,9 @@ $nextPhase = $phases.Count + 1
 ## 3. Gather Phase Information
 
 Ask for:
-- **Name** â€” Phase title
-- **Objective** â€” What this phase achieves
-- **Depends on** â€” Previous phases (usually N-1)
+- **Name** — Phase title
+- **Objective** — What this phase achieves
+- **Depends on** — Previous phases (usually N-1)
 
 ---
 
@@ -46,7 +47,7 @@ Append:
 ---
 
 ### Phase {N}: {name}
-**Status**: â¬œ Not Started
+**Status**: ⬜ Not Started
 **Objective**: {objective}
 **Depends on**: Phase {N-1}
 
@@ -77,19 +78,19 @@ git commit -m "docs: add phase {N} - {name}"
 ## 7. Offer Next Steps
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º PHASE ADDED âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► PHASE ADDED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Phase {N}: {name}
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
-â–¶ NEXT
+▶ NEXT
 
-/plan {N} â€” Create execution plans for this phase
+/plan {N} — Create execution plans for this phase
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 </process>

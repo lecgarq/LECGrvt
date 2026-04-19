@@ -1,8 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using LECG.ViewModels.Components;
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
-using LECG.Core;
+using LECG.Models;
 
 namespace LECG.ViewModels
 {
@@ -14,5 +11,15 @@ namespace LECG.ViewModels
         }
 
         public bool CanRun => true;
+
+        public RenderAppearanceSettings ToSettings()
+        {
+            return new RenderAppearanceSettings(
+                SkipCompliant: true,
+                UseRenderAppearanceForShading: true,
+                MatchShadingColorToRenderAppearance: true,
+                SetSurfacePatternsToSolidFill: true,
+                SetCutPatternsToSolidFill: true);
+        }
     }
 }

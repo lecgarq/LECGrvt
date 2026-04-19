@@ -79,6 +79,16 @@ namespace LECG.ViewModels
 
         public string TabHeader => $"Material {PageNumber}";
 
+        public IReadOnlyList<double> UvScaleOptions { get; } = new[] { 0.5, 1.0, 2.0, 2.5, 5.0 };
+
+        [ObservableProperty]
+        private double _selectedUvScaleMeters = 2.5;
+
+        public IReadOnlyList<string> ReliefPatternOptions { get; } = new[] { "Bump Map", "Normal Map" };
+
+        [ObservableProperty]
+        private string _selectedReliefPattern = "Normal Map";
+
         public bool CanRun =>
             !string.IsNullOrWhiteSpace(MaterialName) &&
             !string.IsNullOrWhiteSpace(DiffusePath) &&
@@ -252,6 +262,10 @@ namespace LECG.ViewModels
 
         public PbrMaterialCreateRequest CreateRequest()
         {
+            double uvScaleMillimeters = SelectedUvScaleMeters * 1000.0;
+
+            int bumpMapType = SelectedReliefPattern == "Normal Map" ? 1 : 0;
+
             return new PbrMaterialCreateRequest(
                 MaterialName.Trim(),
                 MaterialName.Trim(),
@@ -265,12 +279,13 @@ namespace LECG.ViewModels
                 NormalizeOptionalPath(DisplacementPath),
                 NormalizeOptionalPath(OpacityPath),
                 true,
-                2500,
-                2500,
+                uvScaleMillimeters,
+                uvScaleMillimeters,
                 0,
                 0,
                 0,
-                true);
+                true,
+                bumpMapType);
         }
 
         private void NotifyCanRun()

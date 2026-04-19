@@ -47,6 +47,9 @@ namespace LECG.Services
             catch (InvalidOperationException)
             {
             }
+            catch (RevitExceptions.ArgumentException)
+            {
+            }
             catch (RevitExceptions.InvalidOperationException)
             {
             }

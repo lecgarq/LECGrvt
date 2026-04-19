@@ -52,14 +52,14 @@ namespace LECG.Services
             _renderAppearanceService.SyncWithRenderAppearance(doc, mat, new LegacyProgressReporter(logCallback: logCallback));
         }
 
-        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, IProgressReporter reporter)
+        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, RenderAppearanceSettings settings, IProgressReporter reporter)
         {
-            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, reporter);
+            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, settings, reporter);
         }
 
-        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
+        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, RenderAppearanceSettings settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
-            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, new LegacyProgressReporter(progressCallback, logCallback));
+            _renderAppearanceService.BatchSyncWithRenderAppearance(doc, materials, settings, new LegacyProgressReporter(progressCallback, logCallback));
         }
 
         public ElementId CreatePBRMaterial(Document doc, string name, string folderPath, Action<string>? logCallback = null)

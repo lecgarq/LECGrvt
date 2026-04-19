@@ -22,7 +22,13 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="View Beautification" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <Grid>
+                <TextBlock Text="View Beautification" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button Content="Check All" Command="{Binding CheckAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"/>
+                    <Button Content="Uncheck All" Command="{Binding UncheckAllCommand}" Style="{DynamicResource LinkButtonStyle}"/>
+                </StackPanel>
+            </Grid>
             <TextBlock Text="Configure visual settings for a stunning view." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 

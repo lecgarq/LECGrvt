@@ -159,6 +159,11 @@ namespace LECG.Configuration
         public const string ButtonSplitBoundaries_Text = "Split\nBoundaries";
         public const string ButtonSplitBoundaries_Tooltip = "Separate multi-boundary elements into independent instances.";
 
+        // Divide Toposolid
+        public const string ButtonDivideToposolid_Name = "btnDivideToposolid";
+        public const string ButtonDivideToposolid_Text = "Divide\nToposolid";
+        public const string ButtonDivideToposolid_Tooltip = "Split multi-layer toposolids into individual single-layer toposolids.";
+
         // Type to Linked Models
         public const string ButtonTypeToLinked_Name = "btnTypeToLinked";
         public const string ButtonTypeToLinked_Text = "Type to\nLinked";

@@ -49,6 +49,7 @@ namespace LECG.Services
         {
             return ex is ArgumentException
                 or InvalidOperationException
+                or RevitExceptions.ArgumentException
                 or RevitExceptions.InvalidOperationException;
         }
     }

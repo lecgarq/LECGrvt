@@ -10,13 +10,13 @@
 
 **SPEC → PLAN → EXECUTE → VERIFY → COMMIT**
 
-1. **PROJECT**: Define scope in `.planning/PROJECT.md` and `.planning/REQUIREMENTS.md`
-2. **PLAN**: Decompose into phases in `.planning/ROADMAP.md`, then detailed plans
+1. **SPEC**: Define requirements in `.gsd/SPEC.md` until status is `FINALIZED`
+2. **PLAN**: Decompose into phases in `.gsd/ROADMAP.md`, then detailed plans
 3. **EXECUTE**: Implement with atomic commits per task
 4. **VERIFY**: Prove completion with empirical evidence
 5. **COMMIT**: One task = one commit, message format: `type(scope): description`
 
-**Planning Lock**: No implementation code until `.planning/PROJECT.md` and `.planning/REQUIREMENTS.md` reflect approved scope.
+**Planning Lock**: No implementation code until SPEC.md contains "Status: FINALIZED".
 
 ---
 
@@ -69,7 +69,7 @@ Plans are grouped into **waves** based on dependencies:
 1. All tasks in wave verified
 2. State snapshot created
 3. Commit all wave work
-4. Update `.planning/STATE.md` with position
+4. Update STATE.md with position
 
 ---
 
@@ -161,16 +161,16 @@ PROJECT_RULES.md          # ← This file (canonical rules)
 GSD-STYLE.md              # Style and conventions
 
 .agent/
-├── workflows/            # Slash commands (/plan, /execute, etc.)
-└── skills/               # Agent specializations
+└── workflows/            # Slash commands (/plan, /execute, etc.)
+
+.agents/
+└── skills/               # Agent specializations (Agent Skills standard)
 
 .gemini/                  # Gemini-specific configuration
-.planning/                # Project state and active planning artifacts
-├── PROJECT.md            # Current project brief
-├── REQUIREMENTS.md       # Active requirements and traceability
+.gsd/                     # Project state and artifacts
+├── SPEC.md               # Requirements (must be FINALIZED)
 ├── ROADMAP.md            # Phases and progress
 ├── STATE.md              # Session memory
-.gsd/                     # Legacy workflow assets and compatibility pointers
 ├── templates/            # Document templates
 └── examples/             # Usage examples
 
@@ -196,7 +196,7 @@ scripts/                  # Utility scripts
 - Keep plans under 50% context usage
 - Fresh context for each plan execution
 - After 3 debugging failures → state dump → fresh session
-- `.planning/STATE.md` = memory across sessions
+- STATE.md = memory across sessions
 
 ---
 
@@ -224,7 +224,7 @@ scripts/                  # Utility scripts
 ### Compression Protocol
 
 After understanding a file:
-1. Create summary in `.planning/STATE.md` or task notes
+1. Create summary in STATE.md or task notes
 2. Reference summary instead of re-reading
 3. Only reload specific sections if needed
 
@@ -246,9 +246,9 @@ After understanding a file:
 ## Quick Reference
 
 ```
-Before coding    → `.planning/PROJECT.md` and `.planning/REQUIREMENTS.md` match approved scope
+Before coding    → SPEC.md must be FINALIZED
 Before file read → Search first, then targeted read
-After each task  → Commit + update `.planning/STATE.md`
+After each task  → Commit + update STATE.md
 After each wave  → State snapshot
 After 3 failures → State dump + fresh session
 Before "Done"    → Empirical proof captured

@@ -33,7 +33,7 @@ namespace LECG.Services
                 {
                     ElementId primarySubcat = new ElementId(BuiltInCategory.OST_ToposolidContours);
                     double intervalFeet = primaryInterval * MetersToFeet; // m to ft
-                    contour.AddContourRange(0, MaxElevationFeet, intervalFeet, primarySubcat);
+                    contour.AddContourRange(-MaxElevationFeet, MaxElevationFeet, intervalFeet, primarySubcat);
                 }
 
                 // Add Secondary Contours
@@ -41,7 +41,7 @@ namespace LECG.Services
                 {
                     ElementId secondarySubcat = new ElementId(BuiltInCategory.OST_ToposolidSecondaryContours);
                     double intervalFeet = secondaryInterval * MetersToFeet; // m to ft
-                    contour.AddContourRange(0, MaxElevationFeet, intervalFeet, secondarySubcat);
+                    contour.AddContourRange(-MaxElevationFeet, MaxElevationFeet, intervalFeet, secondarySubcat);
                 }
             }
             else

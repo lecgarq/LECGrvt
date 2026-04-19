@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
+using LECG.Models;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -31,19 +32,22 @@ namespace LECG.Services
         public void BatchSync(
             Document doc,
             IEnumerable<Material> materials,
+            RenderAppearanceSettings settings,
             Action<string>? logCallback = null,
             Action<double, string>? progressCallback = null)
         {
-            BatchSync(doc, materials, new LegacyProgressReporter(progressCallback, logCallback));
+            BatchSync(doc, materials, settings, new LegacyProgressReporter(progressCallback, logCallback));
         }
 
         public void BatchSync(
             Document doc,
             IEnumerable<Material> materials,
+            RenderAppearanceSettings settings,
             IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(materials);
+            ArgumentNullException.ThrowIfNull(settings);
             ArgumentNullException.ThrowIfNull(reporter);
 
             var matsList = materials.ToList();
@@ -51,8 +55,11 @@ namespace LECG.Services
 
             int total = matsList.Count;
             int processed = 0;
-            int skipped = 0;
+            int unchanged = 0;
             int updated = 0;
+            int normalMapAlreadyNormal = 0;
+            int normalMapNotApplicable = 0;
+            int normalMapFailures = 0;
 
             reporter.Log($"Analyzing {total} materials...");
             reporter.Report("Analyzing materials...", 0);
@@ -71,17 +78,35 @@ namespace LECG.Services
                         reporter.Report($"Processing: {mat.Name}", _renderBatchProgressService.ToPercent(processed, total));
                     }
 
-                    if (!_syncExecutionService.TrySync(mat, solidId))
+                    RenderMaterialSyncResult result = _syncExecutionService.TrySync(mat, solidId, settings, reporter.Log);
+                    if (!result.Changed)
                     {
-                        skipped++;
-                        continue;
+                        unchanged++;
+                    }
+                    else
+                    {
+                        updated++;
                     }
 
-                    updated++;
+                    if (result.NormalMapStatus == NormalMapSyncStatus.AlreadyNormal)
+                    {
+                        normalMapAlreadyNormal++;
+                    }
+
+                    if (result.NormalMapNotApplicable)
+                    {
+                        normalMapNotApplicable++;
+                    }
+
+                    if (result.NormalMapFailed)
+                    {
+                        normalMapFailures++;
+                        continue;
+                    }
                 }
             });
 
-            reporter.Log($"Sync Complete: {updated} updated, {skipped} skipped.");
+            reporter.Log($"Sync Complete: {updated} updated, {unchanged} unchanged.");
             reporter.Report("Done", 100);
         }
     }

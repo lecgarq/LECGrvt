@@ -18,5 +18,6 @@ namespace LECG.Models
         double OffsetXMillimeters,
         double OffsetYMillimeters,
         double RotationDegrees,
-        bool LinkTextureTransforms);
+        bool LinkTextureTransforms,
+        int BumpMapType);
 }

@@ -34,10 +34,16 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="ELEMENT TYPES" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
-                </StackPanel>
+                <Grid Grid.Row="0" Margin="0,0,0,8">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="ELEMENT TYPES" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Content="Check All" Command="{Binding CheckAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"/>
+                        <Button Content="Uncheck All" Command="{Binding UncheckAllCommand}" Style="{DynamicResource LinkButtonStyle}"/>
+                    </StackPanel>
+                </Grid>
 
                 <ListView Grid.Row="1" ItemsSource="{Binding TypeGroups}" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListView.ItemTemplate>

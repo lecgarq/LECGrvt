@@ -172,6 +172,14 @@ namespace LECG.ViewModels
                 AvailableParamGroups.Clear(); AvailableParamGroups.Add("All"); foreach (var g in groups) AvailableParamGroups.Add(g);
                 FilterParamGroup = "All";
             }
+
+            if (ScopeViewName)
+            {
+                var viewTypes = _cachedElements.Where(e => e.Type == "View" && !string.IsNullOrEmpty(e.Category)).Select(e => e.Category).Distinct().OrderBy(t => t);
+                AvailableViewTypes.Clear(); AvailableViewTypes.Add("All"); foreach (var t in viewTypes) AvailableViewTypes.Add(t);
+                FilterViewType = "All";
+            }
+
             _ = UpdatePreviewAsync();
         }
 

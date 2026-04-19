@@ -187,6 +187,16 @@
                         </TextBlock>
                     </Border>
 
+                    <!-- TEXTURE SCALE -->
+                    <TextBlock Text="TEXTURE SCALE" Style="{DynamicResource SectionHeaderStyle}" Margin="0,4,0,8"/>
+                    <StackPanel Margin="0,0,0,10">
+                        <TextBlock Text="UV Scale (m)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                        <ComboBox ItemsSource="{Binding UvScaleOptions}"
+                                  SelectedItem="{Binding SelectedUvScaleMeters}"
+                                  Height="34"
+                                  VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
                     <!-- DETECTED TEXTURES -->
                     <TextBlock Text="PBR CHANNELS" Style="{DynamicResource SectionHeaderStyle}" Margin="0,4,0,8"/>
 
@@ -208,7 +218,15 @@
                     </Grid>
 
                     <!-- Normal -->
-                    <TextBlock Text="Normal Map" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                        <TextBlock Text="Relief Pattern" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <ComboBox ItemsSource="{Binding ReliefPatternOptions}"
+                                  SelectedItem="{Binding SelectedReliefPattern}"
+                                  Height="24"
+                                  Width="110"
+                                  FontSize="11"
+                                  VerticalContentAlignment="Center"/>
+                    </StackPanel>
                     <Grid Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>

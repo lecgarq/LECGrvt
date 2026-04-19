@@ -1,7 +1,6 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.Services;
 using LECG.Services.Interfaces;
@@ -10,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using LECG.ViewModels;
+using LECG.Models;
 
 namespace LECG.Commands
 {
@@ -27,17 +27,19 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            // 2. Initial Setup
+            // 1. Initial Setup
             var matService = ServiceLocator.GetRequiredService<IMaterialService>();
 
-            // VM & View
+            // 2. VM & View
             var vm = ServiceLocator.GetRequiredService<RenderAppearanceViewModel>();
             var view = ServiceLocator.CreateWith<RenderAppearanceView>(vm, uiDoc);
 
             bool? result = view.ShowDialog();
 
-            if (result == true && vm.ShouldRun)
+            if (result == true && vm.CanRun)
             {
+                var settings = vm.ToSettings();
+
                 // 3. Collect Materials
                 ShowLogWindow("Syncing Render Appearance...");
                 Log("ANALYZING SELECTION");
@@ -58,7 +60,7 @@ namespace LECG.Commands
 
                 // 4. Process Materials (Batch)
                 var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
-                matService.BatchSyncWithRenderAppearance(doc, materialsList, reporter);
+                matService.BatchSyncWithRenderAppearance(doc, materialsList, settings, reporter);
 
                 UpdateProgress(100, "Complete");
                 Log("");

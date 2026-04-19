@@ -1,5 +1,6 @@
 ---
 description: Systematic debugging with persistent state
+argument-hint: "[description of issue]"
 ---
 
 # /debug Workflow
@@ -15,7 +16,7 @@ Systematically diagnose an issue using hypothesis-driven debugging, with persist
 <context>
 **Issue:** $ARGUMENTS (description of the problem to debug)
 
-**Skill reference:** `.agent/skills/debugger/SKILL.md`
+**Skill reference:** `.agents/skills/debugger/SKILL.md`
 </context>
 
 <process>
@@ -37,9 +38,9 @@ If exists, load previous attempts. If not, create new session.
 
 Display banner:
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º DEBUG SESSION
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► DEBUG SESSION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Issue: {description}
 ```
@@ -119,7 +120,7 @@ Test highest likelihood first:
 ## Attempts
 
 ### Attempt 1
-**Testing:** H1 â€” {hypothesis}
+**Testing:** H1 — {hypothesis}
 **Action:** {what you did to test}
 **Result:** {outcome}
 **Conclusion:** {CONFIRMED | ELIMINATED | INCONCLUSIVE}
@@ -153,7 +154,7 @@ Update DEBUG.md:
 If 3 attempts fail on SAME approach:
 
 ```
-âš ï¸ 3 FAILURES ON SAME APPROACH
+⚠️ 3 FAILURES ON SAME APPROACH
 
 Action: STOP and reassess
 
@@ -183,35 +184,35 @@ Update STATE.md with resolution.
 
 **If Resolved:**
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º BUG FIXED âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► BUG FIXED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Root cause: {what was wrong}
 Fix: {what was done}
 
 Committed: {hash}
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 **If Stuck After 3 Attempts:**
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º DEBUG PAUSED â¸
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► DEBUG PAUSED ⏸
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 3 attempts exhausted on current approach.
 State saved to .gsd/DEBUG.md
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
 Options:
-â€¢ /debug {issue} â€” try different approach
-â€¢ /pause â€” save state for fresh session
-â€¢ Provide more context about the issue
+• /debug {issue} — try different approach
+• /pause — save state for fresh session
+• Provide more context about the issue
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 </offer_next>

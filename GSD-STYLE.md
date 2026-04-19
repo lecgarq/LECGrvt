@@ -23,7 +23,7 @@ Slash commands the user invokes. Each workflow:
 - Contains XML-structured process blocks
 - Ends with "Next Steps" routing
 
-### Skills (`.agent/skills/*/SKILL.md`)
+### Skills (`.agents/skills/*/SKILL.md`)
 
 Specialized agent behaviors. Each skill:
 - Has YAML frontmatter with `name` and `description`

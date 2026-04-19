@@ -22,6 +22,20 @@ namespace LECG.ViewModels
 
         public bool CanRun => TypeGroups.Any(t => t.IsSelected) && !string.IsNullOrEmpty(OutputFolder);
 
+        [RelayCommand]
+        private void CheckAll()
+        {
+            foreach (var item in TypeGroups)
+                item.IsSelected = true;
+        }
+
+        [RelayCommand]
+        private void UncheckAll()
+        {
+            foreach (var item in TypeGroups)
+                item.IsSelected = false;
+        }
+
         public TypeToLinkedModelsViewModel(ILinkedModelExportService exportService)
         {
             _exportService = exportService ?? throw new ArgumentNullException(nameof(exportService));

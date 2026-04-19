@@ -11,6 +11,7 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(targetColor);
             ArgumentNullException.ThrowIfNull(solidId);
 
+            if (!mat.UseRenderAppearanceForShading) return false;
             if (!ColorsEqual(mat.Color, targetColor)) return false;
 
             if (mat.SurfaceForegroundPatternId != solidId) return false;

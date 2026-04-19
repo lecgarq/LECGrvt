@@ -1,5 +1,6 @@
 ---
-description: The Strategist â€” Decompose requirements into executable phases in ROADMAP.md
+description: The Strategist — Decompose requirements into executable phases in ROADMAP.md
+argument-hint: "[phase] [--research] [--skip-research] [--gaps]"
 ---
 
 # /plan Workflow
@@ -18,22 +19,22 @@ You are a GSD planner orchestrator. You create executable phase plans with task 
 <objective>
 Create executable phase prompts (PLAN.md files) for a roadmap phase with integrated research and verification.
 
-**Default flow:** Research (if needed) â†’ Plan â†’ Verify â†’ Done
+**Default flow:** Research (if needed) → Plan → Verify → Done
 
 **Why subagents:** Research and planning burn context fast. Verification uses fresh context. User sees the flow between agents in main context.
 </objective>
 
 <context>
-**Phase number:** $ARGUMENTS (optional â€” auto-detects next unplanned phase if not provided)
+**Phase number:** $ARGUMENTS (optional — auto-detects next unplanned phase if not provided)
 
 **Flags:**
-- `--research` â€” Force re-research even if RESEARCH.md exists
-- `--skip-research` â€” Skip research entirely, go straight to planning
-- `--gaps` â€” Gap closure mode (reads VERIFICATION.md, skips research)
+- `--research` — Force re-research even if RESEARCH.md exists
+- `--skip-research` — Skip research entirely, go straight to planning
+- `--gaps` — Gap closure mode (reads VERIFICATION.md, skips research)
 
 **Required files:**
-- `.gsd/SPEC.md` â€” Must be FINALIZED (Planning Lock)
-- `.gsd/ROADMAP.md` â€” Must have phases defined
+- `.gsd/SPEC.md` — Must be FINALIZED (Planning Lock)
+- `.gsd/ROADMAP.md` — Must have phases defined
 </context>
 
 <philosophy>
@@ -74,23 +75,28 @@ Each plan: **2-3 tasks max**. No exceptions.
 
 Discovery is MANDATORY unless you can prove current context exists.
 
-**Level 0 â€” Skip** (pure internal work)
+**Level 0 — Skip** (pure internal work)
 - ALL work follows established codebase patterns
 - No new external dependencies
 - Pure internal refactoring or feature extension
 
-**Level 1 â€” Quick Verification** (2-5 min)
+**Level 1 — Quick Verification** (2-5 min)
 - Single known library, confirming syntax/version
 - Low-risk decision (easily changed later)
 - Action: Quick web search, no RESEARCH.md needed
 
-**Level 2 â€” Standard Research** (15-30 min)
+**Level 1.5 — Discovery** (5-15 min)
+- Quick library/option comparison (A vs B)
+- Low-to-medium risk, focused question
+- Action: Create DISCOVERY.md using `.gsd/templates/discovery.md` template
+
+**Level 2 — Standard Research** (15-30 min)
 - Choosing between 2-3 options
 - New external integration (API, service)
 - Medium-risk decision
 - Action: Create RESEARCH.md with findings
 
-**Level 3 â€” Deep Dive** (1+ hour)
+**Level 3 — Deep Dive** (1+ hour)
 - Architectural decision with long-term impact
 - Novel problem without clear patterns
 - High-risk, hard to change later
@@ -121,7 +127,7 @@ if ! grep -q "FINALIZED" ".gsd/SPEC.md"; then
 fi
 ```
 
-**If not finalized:** Error â€” user must complete SPEC.md first.
+**If not finalized:** Error — user must complete SPEC.md first.
 
 ---
 
@@ -197,9 +203,9 @@ test -f "$PHASE_DIR/RESEARCH.md"
 
 Display banner:
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º RESEARCHING PHASE {N}
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► RESEARCHING PHASE {N}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 Perform research based on discovery level (see `<discovery_levels>`).
@@ -212,17 +218,18 @@ Create `$PHASE_DIR/RESEARCH.md` with findings.
 
 Display banner:
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º PLANNING PHASE {N}
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► PLANNING PHASE {N}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### 6a. Gather Context
 Load:
-- `.gsd/SPEC.md` â€” Requirements
-- `.gsd/ROADMAP.md` â€” Phase description
-- `$PHASE_DIR/RESEARCH.md` â€” If exists
-- `.gsd/ARCHITECTURE.md` â€” If exists
+- `.gsd/SPEC.md` — Requirements
+- `.gsd/REQUIREMENTS.md` — Formal requirements tracking (if exists)
+- `.gsd/ROADMAP.md` — Phase description
+- `$PHASE_DIR/RESEARCH.md` — If exists
+- `.gsd/ARCHITECTURE.md` — If exists
 
 ### 6b. Decompose into Tasks
 For the phase goal:
@@ -285,8 +292,23 @@ For each plan, verify:
 - [ ] Verify commands are executable
 - [ ] Done criteria are measurable
 - [ ] Context references exist
+- [ ] Tests are meaningful (see Test Quality Rules below)
 
 **If issues found:** Fix and re-verify (max 3 iterations).
+
+### Test Quality Rules
+
+Tests must verify real behavior, not just pass. Reject plans with tests that:
+
+| Anti-pattern | Example | Fix |
+|-------------|---------|-----|
+| **Mock everything** | Mocking the DB then asserting the mock was called | Use real DB or integration test |
+| **Tautological assert** | `assert mock.called` with no behavior check | Assert actual output or side effect |
+| **Always-pass test** | `assert True` or `assert response is not None` | Assert specific expected values |
+| **Testing the framework** | Asserting that Express returns 200 on a stub | Test your logic, not the framework |
+| **No negative cases** | Only testing the happy path | Include at least one failure/edge case |
+
+**Rule:** Every `<verify>` command must test the *actual behavior* of the code, not just that it runs without errors. If a test would still pass with the implementation deleted, it is not a valid test.
 
 ---
 
@@ -322,24 +344,24 @@ git commit -m "docs(phase-$PHASE): create execution plans"
 <offer_next>
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º PHASE {N} PLANNED âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► PHASE {N} PLANNED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X} plans created across {Y} waves
 
 Plans:
-â€¢ {N}.1: {Name} (wave 1)
-â€¢ {N}.2: {Name} (wave 1)
-â€¢ {N}.3: {Name} (wave 2)
+• {N}.1: {Name} (wave 1)
+• {N}.2: {Name} (wave 1)
+• {N}.3: {Name} (wave 2)
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
-â–¶ Next Up
+▶ Next Up
 
-/execute {N} â€” run all plans
+/execute {N} — run all plans
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 </offer_next>

@@ -205,6 +205,7 @@ namespace LECG.Core
             services.AddSingleton<IConversionService, ConversionService>();
             services.AddSingleton<IGeometryBoundaryService, GeometryBoundaryService>();
             services.AddSingleton<ISplitBoundariesService, SplitBoundariesService>();
+            services.AddSingleton<IDivideToposolidService, DivideToposolidService>();
             services.AddSingleton<ILinkedModelExportService, LinkedModelExportService>();
             // Add other services here as we refactor
         }
@@ -230,6 +231,7 @@ namespace LECG.Core
             services.AddTransient<RenderAppearanceViewModel>();
             services.AddTransient<PbrMaterialCreatorViewModel>();
             services.AddTransient<SplitBoundariesViewModel>();
+            services.AddTransient<DivideToposolidViewModel>();
             services.AddTransient<TypeToLinkedModelsViewModel>();
             services.AddTransient<ConvertFloorToToposolidViewModel>();
             services.AddTransient<ConvertToposolidToFloorViewModel>();
@@ -260,6 +262,7 @@ namespace LECG.Core
             services.AddTransient<Views.RenderAppearanceView>();
             services.AddTransient<Views.PbrMaterialCreatorView>();
             services.AddTransient<Views.SplitBoundariesView>();
+            services.AddTransient<Views.DivideToposolidView>();
             services.AddTransient<Views.TypeToLinkedModelsView>();
             services.AddTransient<Views.ConvertFloorToToposolidView>();
             services.AddTransient<Views.ConvertToposolidToFloorView>();

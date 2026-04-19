@@ -1,5 +1,6 @@
 ---
-description: The Engineer â€” Execute a specific phase with focused context
+description: The Engineer — Execute a specific phase with focused context
+argument-hint: "<phase-number> [--gaps-only]"
 ---
 
 # /execute Workflow
@@ -27,12 +28,12 @@ Orchestrator stays lean: discover plans, analyze dependencies, group into waves,
 **Phase:** $ARGUMENTS (required - phase number to execute)
 
 **Flags:**
-- `--gaps-only` â€” Execute only gap closure plans (created by `/verify` when issues found)
+- `--gaps-only` — Execute only gap closure plans (created by `/verify` when issues found)
 
 **Required files:**
-- `.gsd/ROADMAP.md` â€” Phase definitions
-- `.gsd/STATE.md` â€” Current position
-- `.gsd/phases/{phase}/` â€” Phase directory with PLAN.md files
+- `.gsd/ROADMAP.md` — Phase definitions
+- `.gsd/STATE.md` — Current position
+- `.gsd/phases/{phase}/` — Phase directory with PLAN.md files
 </context>
 
 <process>
@@ -51,7 +52,7 @@ test -f ".gsd/ROADMAP.md"
 test -f ".gsd/STATE.md"
 ```
 
-**If not found:** Error â€” user should run `/plan` first.
+**If not found:** Error — user should run `/plan` first.
 
 ---
 
@@ -139,9 +140,9 @@ wave: 1
 
 Display wave structure:
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º EXECUTING PHASE {N}
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► EXECUTING PHASE {N}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Wave 1: {plan-1}, {plan-2}
 Wave 2: {plan-3}
@@ -158,15 +159,15 @@ For each wave in order:
 ### 6a. Execute Plans in Wave
 For each plan in the current wave:
 
-1. **Load plan context** â€” Read only the PLAN.md file
-2. **Execute tasks** â€” Follow `<task>` blocks in order
-3. **Verify each task** â€” Run `<verify>` commands
+1. **Load plan context** — Read only the PLAN.md file
+2. **Execute tasks** — Follow `<task>` blocks in order
+3. **Verify each task** — Run `<verify>` commands
 4. **Commit per task:**
    ```bash
    git add -A
    git commit -m "feat(phase-{N}): {task-name}"
    ```
-5. **Create SUMMARY.md** â€” Document what was done
+5. **Create SUMMARY.md** — Document what was done
 
 ### 6b. Verify Wave Complete
 Check all plans in wave have SUMMARY.md files.
@@ -189,15 +190,15 @@ After all waves complete:
 ## Phase {N} Verification
 
 ### Must-Haves
-- [x] Must-have 1 â€” VERIFIED (evidence: ...)
-- [ ] Must-have 2 â€” FAILED (reason: ...)
+- [x] Must-have 1 — VERIFIED (evidence: ...)
+- [ ] Must-have 2 — FAILED (reason: ...)
 
 ### Verdict: PASS / FAIL
 ```
 
 **Route by verdict:**
-- `PASS` â†’ Continue to step 8
-- `FAIL` â†’ Create gap closure plans, offer `/execute {N} --gaps-only`
+- `PASS` → Continue to step 8
+- `FAIL` → Create gap closure plans, offer `/execute {N} --gaps-only`
 
 ---
 
@@ -206,7 +207,7 @@ After all waves complete:
 **Update ROADMAP.md:**
 ```markdown
 ### Phase {N}: {Name}
-**Status**: âœ… Complete
+**Status**: ✅ Complete
 ```
 
 **Update STATE.md:**
@@ -223,12 +224,17 @@ Phase {N} executed successfully. {X} plans, {Y} tasks completed.
 1. Proceed to Phase {N+1}
 ```
 
+**Update REQUIREMENTS.md** (if exists):
+- Cross-reference completed tasks with requirement IDs
+- Mark requirements satisfied by this phase as `In Progress` or `Complete`
+- Update the traceability matrix with plan references
+
 ---
 
 ## 9. Commit Phase Completion
 
 ```bash
-git add .gsd/ROADMAP.md .gsd/STATE.md
+git add .gsd/ROADMAP.md .gsd/STATE.md .gsd/REQUIREMENTS.md
 git commit -m "docs(phase-{N}): complete {phase-name}"
 ```
 
@@ -244,49 +250,49 @@ Output based on status:
 **Route A: Phase complete, more phases remain**
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º PHASE {N} COMPLETE âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► PHASE {N} COMPLETE ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X} plans executed
-Goal verified âœ“
+Goal verified ✓
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
-â–¶ Next Up
+▶ Next Up
 Phase {N+1}: {Name}
 
-/plan {N+1}  â€” create execution plans
-/execute {N+1} â€” execute directly (if plans exist)
+/plan {N+1}  — create execution plans
+/execute {N+1} — execute directly (if plans exist)
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 **Route B: All phases complete**
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º MILESTONE COMPLETE ðŸŽ‰
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► MILESTONE COMPLETE 🎉
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 All phases completed and verified.
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 **Route C: Gaps found**
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º PHASE {N} GAPS FOUND âš 
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► PHASE {N} GAPS FOUND ⚠
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 {X}/{Y} must-haves verified
 Gap closure plans created.
 
-/execute {N} --gaps-only â€” execute fix plans
+/execute {N} --gaps-only — execute fix plans
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 </offer_next>
 

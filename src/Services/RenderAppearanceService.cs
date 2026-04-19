@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using LECG.Models;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -28,14 +29,14 @@ namespace LECG.Services
             _singleSyncService.SyncWithRenderAppearance(doc, mat, new LegacyProgressReporter(logCallback: logCallback));
         }
 
-        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, IProgressReporter reporter)
+        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, RenderAppearanceSettings settings, IProgressReporter reporter)
         {
-            _batchSyncService.BatchSync(doc, materials, reporter);
+            _batchSyncService.BatchSync(doc, materials, settings, reporter);
         }
 
-        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
+        public void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, RenderAppearanceSettings settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
-            _batchSyncService.BatchSync(doc, materials, new LegacyProgressReporter(progressCallback, logCallback));
+            _batchSyncService.BatchSync(doc, materials, settings, new LegacyProgressReporter(progressCallback, logCallback));
         }
     }
 }

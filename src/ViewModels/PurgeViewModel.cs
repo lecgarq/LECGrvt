@@ -5,6 +5,42 @@ namespace LECG.ViewModels
 {
     public partial class PurgeViewModel : BaseViewModel
     {
+        [RelayCommand]
+        private void CheckAll()
+        {
+            PurgeLineStyles = true;
+            PurgeLinePatterns = true;
+            PurgeFillPatterns = true;
+            PurgeMaterials = true;
+            PurgeLevels = true;
+            PurgeGroups = true;
+            PurgeGridTypes = true;
+            PurgeLevelTypes = true;
+            PurgeConstraints = true;
+            PurgeUnplacedRooms = true;
+            PurgeViewTemplates = true;
+            PurgeViewFilters = true;
+            PurgeParameters = true;
+        }
+
+        [RelayCommand]
+        private void UncheckAll()
+        {
+            PurgeLineStyles = false;
+            PurgeLinePatterns = false;
+            PurgeFillPatterns = false;
+            PurgeMaterials = false;
+            PurgeLevels = false;
+            PurgeGroups = false;
+            PurgeGridTypes = false;
+            PurgeLevelTypes = false;
+            PurgeConstraints = false;
+            PurgeUnplacedRooms = false;
+            PurgeViewTemplates = false;
+            PurgeViewFilters = false;
+            PurgeParameters = false;
+        }
+
         [ObservableProperty]
         private bool _purgeLineStyles = true;
 

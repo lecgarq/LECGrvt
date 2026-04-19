@@ -1,4 +1,8 @@
+using System;
+using System.IO;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Visual;
+using LECG.Models;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -7,26 +11,75 @@ namespace LECG.Services
     {
         private readonly IRenderMaterialSyncCheckService _syncCheckService;
         private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;
+        private readonly IImageColorExtractionService _imageColorExtractionService;
 
-        public RenderMaterialSyncExecutionService(IRenderMaterialSyncCheckService syncCheckService, IRenderMaterialGraphicsApplyService graphicsApplyService)
+        public RenderMaterialSyncExecutionService(
+            IRenderMaterialSyncCheckService syncCheckService,
+            IRenderMaterialGraphicsApplyService graphicsApplyService,
+            IImageColorExtractionService imageColorExtractionService)
         {
             _syncCheckService = syncCheckService;
             _graphicsApplyService = graphicsApplyService;
+            _imageColorExtractionService = imageColorExtractionService;
         }
 
-        public bool TrySync(Material material, ElementId solidFillPatternId)
+        public RenderMaterialSyncResult TrySync(Material material, ElementId solidFillPatternId, RenderAppearanceSettings settings, Action<string>? logCallback = null)
         {
             ArgumentNullException.ThrowIfNull(material);
             ArgumentNullException.ThrowIfNull(solidFillPatternId);
+            ArgumentNullException.ThrowIfNull(settings);
 
-            Color renderColor = material.Color;
-            if (_syncCheckService.IsMaterialSynced(material, renderColor, solidFillPatternId))
+            Color renderColor = GetRenderAppearanceColor(material);
+            bool graphicsChanged = !_syncCheckService.IsMaterialSynced(material, renderColor, solidFillPatternId);
+
+            if (!graphicsChanged)
             {
-                return false;
+                return new RenderMaterialSyncResult(false, false, NormalMapSyncStatus.NotRequested);
             }
 
-            _graphicsApplyService.Apply(material, renderColor, solidFillPatternId);
-            return true;
+            _graphicsApplyService.Apply(material, renderColor, solidFillPatternId, logCallback);
+            return new RenderMaterialSyncResult(true, true, NormalMapSyncStatus.NotRequested);
+        }
+
+        private Color GetRenderAppearanceColor(Material material)
+        {
+            string? diffusePath = TryGetDiffuseBitmapPath(material);
+            if (string.IsNullOrWhiteSpace(diffusePath) || !File.Exists(diffusePath))
+            {
+                return material.Color;
+            }
+
+            try
+            {
+                return _imageColorExtractionService.GetAverageColor(diffusePath);
+            }
+            catch (Exception)
+            {
+                return material.Color;
+            }
+        }
+
+        private string? TryGetDiffuseBitmapPath(Material material)
+        {
+            if (material.AppearanceAssetId == ElementId.InvalidElementId)
+            {
+                return null;
+            }
+
+            var assetElement = material.Document.GetElement(material.AppearanceAssetId) as AppearanceAssetElement;
+            Asset? asset = assetElement?.GetRenderingAsset();
+            AssetProperty? diffuseProperty = asset?.FindByName("generic_diffuse");
+            Asset? bitmapAsset = diffuseProperty?.GetSingleConnectedAsset();
+
+            return TryGetAssetString(bitmapAsset, "unifiedbitmap_Bitmap")
+                ?? TryGetAssetString(bitmapAsset, "texture_Bitmap");
+        }
+
+        private static string? TryGetAssetString(Asset? asset, string propertyName)
+        {
+            return asset?.FindByName(propertyName) is AssetPropertyString property && !string.IsNullOrWhiteSpace(property.Value)
+                ? property.Value
+                : null;
         }
     }
 }

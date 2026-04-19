@@ -143,10 +143,10 @@
 
                                     <!-- ReadOnly -->
                                     <StackPanel Grid.Column="4">
-                                        <TextBlock Text="Editable?" Style="{DynamicResource LabelStyle}"/>
+                                        <TextBlock Text="Read Only?" Style="{DynamicResource LabelStyle}"/>
                                         <ComboBox SelectedIndex="{Binding FilterIsReadOnlyIndex}" Height="26" Padding="5,0">
                                                 <ComboBoxItem Content="All"/>
-                                                <ComboBoxItem Content="Yes (Formula/ReadOnly)"/>
+                                                <ComboBoxItem Content="Yes (Read Only)"/>
                                                 <ComboBoxItem Content="No (Editable)"/>
                                         </ComboBox>
                                     </StackPanel>
@@ -420,13 +420,13 @@
                     </Grid>
 
                     <!-- DataGrid -->
-                    <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewItems}">
+                    <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewItems}" CanUserSortColumns="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="Sel" Binding="{Binding IsChecked}" Width="35"/>
-                            <DataGridTextColumn Header="Old Name" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="New Name" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}"/>
-                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True"/>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ElementId}" Width="60" IsReadOnly="True"/>
+                            <DataGridCheckBoxColumn Header="Sel" Binding="{Binding IsChecked}" Width="35" SortMemberPath="IsChecked"/>
+                            <DataGridTextColumn Header="Old Name" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue"/>
+                            <DataGridTextColumn Header="New Name" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True" SortMemberPath="Type"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ElementId}" Width="60" IsReadOnly="True" SortMemberPath="ElementId"/>
                         </DataGrid.Columns>
                     </controls:LecgDataGrid>
 

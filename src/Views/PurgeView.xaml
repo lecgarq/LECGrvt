@@ -29,10 +29,16 @@
         <Border Grid.Row="1" Padding="16" Margin="{DynamicResource HeaderMarginSmall}" VerticalAlignment="Top">
             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="OPTIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
-                </StackPanel>
+                <Grid Margin="0,0,0,8">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="OPTIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Content="Check All" Command="{Binding CheckAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"/>
+                        <Button Content="Uncheck All" Command="{Binding UncheckAllCommand}" Style="{DynamicResource LinkButtonStyle}"/>
+                    </StackPanel>
+                </Grid>
                 <CheckBox Content="Unused Line Styles" IsChecked="{Binding PurgeLineStyles, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Line Patterns" IsChecked="{Binding PurgeLinePatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                 <CheckBox Content="Unused Fill Patterns" IsChecked="{Binding PurgeFillPatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>

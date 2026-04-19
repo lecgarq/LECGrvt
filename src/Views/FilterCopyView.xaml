@@ -41,7 +41,6 @@
 
             <Style x:Key="FilterTreeViewItemStyle" TargetType="TreeViewItem">
                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}"/>
-                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
                 <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BoolToVis}}"/>
                 <Setter Property="Background" Value="Transparent"/>
                 <Setter Property="Padding" Value="0,2"/>
@@ -51,10 +50,10 @@
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource ColorTextPrimary}" />
                 </Style.Resources>
                 <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
+                    <DataTrigger Binding="{Binding IsSelected}" Value="True">
                         <Setter Property="FontWeight" Value="SemiBold"/>
                         <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
-                    </Trigger>
+                    </DataTrigger>
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>

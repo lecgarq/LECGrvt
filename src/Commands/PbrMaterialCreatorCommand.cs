@@ -43,6 +43,7 @@ namespace LECG.Commands
                 Log($"[{i + 1}/{requests.Count}] CREATING MATERIAL");
                 Log($"  Material: {request.MaterialName}");
                 Log($"  Appearance Asset: {request.AppearanceAssetName}");
+                Log($"  UV Scale: {request.ScaleXMillimeters / 1000.0:0.##} m");
                 if (!string.IsNullOrEmpty(request.Description))
                 {
                     Log($"  Description: {request.Description}");

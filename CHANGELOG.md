@@ -2,6 +2,33 @@
 
 All notable changes to GSD for Antigravity.
 
+## [1.5.0] - 2026-04-01
+
+### Breaking Changes
+- **Skills moved from `.agent/skills/` to `.agents/skills/`** — aligns with the [Agent Skills open standard](https://agentskills.io/specification), the universal cross-agent discovery path used by Gemini CLI, Claude Code, Cursor, VS Code Copilot, and other compatible agents
+- **SKILL.md `name` fields updated** — all 11 skills now use lowercase-hyphenated names matching their folder names per spec (e.g., `GSD Executor` → `executor`)
+
+### Added
+- `/sprint` workflow — time-boxed sprints (new/status/close) for quick focused work outside the milestone cycle
+- **Test Quality Rules** in `/plan` — prevents agents from gaming test suites with mock-everything, tautological assertions, or always-pass tests
+- **Discovery template reference** (Level 1.5) in `/plan` — bridges the gap between quick verification and full research
+- **Journal/decisions archival** in `/complete-milestone` — archives DECISIONS.md and JOURNAL.md into milestone folder, resets for next milestone
+- **Architecture auto-refresh** in `/complete-milestone` — refreshes ARCHITECTURE.md and STACK.md after milestone completion
+- **Requirements tracking** — `/plan` loads REQUIREMENTS.md, `/execute` updates requirement status, `/complete-milestone` archives and marks requirements
+- **Session file reset** in `/new-milestone` — resets DECISIONS.md and JOURNAL.md if they've grown beyond a header
+- SVG banner in README
+
+### Changed
+- README updated with `/sprint` commands section, new file structure, command count (29 total)
+- All references across docs, scripts, and workflows updated for `.agents/skills/` path
+- `validate-skills.ps1/.sh` updated to scan `.agents/skills/`
+- `install.md` and `update.md` workflows handle both `.agent/` (workflows) and `.agents/` (skills)
+
+### Fixed
+- Skills not appearing in Antigravity after updates (closes #10)
+
+---
+
 ## [1.4.0] - 2026-01-17
 
 ### Added

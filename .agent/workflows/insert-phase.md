@@ -1,5 +1,6 @@
 ---
 description: Insert a phase between existing phases (renumbers subsequent)
+argument-hint: "<position> <phase-name>"
 ---
 
 # /insert-phase Workflow
@@ -13,8 +14,8 @@ Insert a new phase at a specific position, renumbering all subsequent phases.
 ## 1. Parse Arguments
 
 Extract:
-- **Position** â€” Where to insert (e.g., 2 inserts before current Phase 2)
-- **Name** â€” Phase title
+- **Position** — Where to insert (e.g., 2 inserts before current Phase 2)
+- **Name** — Phase title
 
 ---
 
@@ -41,8 +42,8 @@ fi
 ## 3. Gather Phase Information
 
 Ask for:
-- **Objective** â€” What this phase achieves
-- **Dependencies** â€” What it needs from earlier phases
+- **Objective** — What this phase achieves
+- **Dependencies** — What it needs from earlier phases
 
 ---
 
@@ -81,21 +82,21 @@ git commit -m "docs: insert phase {N} - {name} (renumbered {M} phases)"
 ## 8. Display Result
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º PHASE INSERTED âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► PHASE INSERTED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Inserted: Phase {N}: {name}
 Renumbered: Phases {N+1} through {M}
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
-â–¶ NEXT
+▶ NEXT
 
-/plan {N} â€” Create plans for new phase
-/progress â€” See updated roadmap
+/plan {N} — Create plans for new phase
+/progress — See updated roadmap
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 </process>

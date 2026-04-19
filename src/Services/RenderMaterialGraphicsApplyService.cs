@@ -12,6 +12,7 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(color);
             ArgumentNullException.ThrowIfNull(solidId);
 
+            mat.UseRenderAppearanceForShading = true;
             mat.Color = color;
             mat.SurfaceForegroundPatternId = solidId;
             mat.SurfaceForegroundPatternColor = color;

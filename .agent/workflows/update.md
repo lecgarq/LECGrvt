@@ -58,15 +58,15 @@ echo "Remote version: $remote_version"
 
 **If same version:**
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º ALREADY UP TO DATE âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► ALREADY UP TO DATE ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Version: {version}
 
 No updates available.
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 Exit after cleanup.
 
@@ -75,9 +75,9 @@ Exit after cleanup.
 ## 4. Show Changes
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º UPDATE AVAILABLE
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► UPDATE AVAILABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Current: {current-version}
 Latest:  {remote-version}
@@ -85,13 +85,13 @@ Latest:  {remote-version}
 Changes:
 {Extract from CHANGELOG.md}
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
 Update now?
-A) Yes â€” Apply updates
-B) No â€” Cancel
+A) Yes — Apply updates
+B) No — Cancel
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 ---
@@ -104,10 +104,14 @@ B) No â€” Cancel
 ```powershell
 # Backup current
 Copy-Item -Recurse ".agent" ".agent.backup"
+Copy-Item -Recurse ".agents" ".agents.backup"
 Copy-Item -Recurse ".gsd/templates" ".gsd/templates.backup"
 
-# Update workflows and skills (preserve user's .gsd docs)
+# Update workflows (preserve user's .gsd docs)
 Copy-Item -Recurse -Force ".gsd-update-temp/.agent/*" ".agent/"
+
+# Update skills (Agent Skills standard)
+Copy-Item -Recurse -Force ".gsd-update-temp/.agents/*" ".agents/"
 
 # Update templates only
 Copy-Item -Recurse -Force ".gsd-update-temp/.gsd/templates/*" ".gsd/templates/"
@@ -123,10 +127,14 @@ Copy-Item -Force ".gsd-update-temp/VERSION" "./"
 ```bash
 # Backup current
 cp -r .agent .agent.backup
+cp -r .agents .agents.backup
 cp -r .gsd/templates .gsd/templates.backup
 
-# Update workflows and skills (preserve user's .gsd docs)
+# Update workflows (preserve user's .gsd docs)
 cp -r .gsd-update-temp/.agent/* .agent/
+
+# Update skills (Agent Skills standard)
+cp -r .gsd-update-temp/.agents/* .agents/
 
 # Update templates only
 cp -r .gsd-update-temp/.gsd/templates/* .gsd/templates/
@@ -146,6 +154,7 @@ cp .gsd-update-temp/VERSION ./
 ```powershell
 Remove-Item -Recurse -Force ".gsd-update-temp"
 Remove-Item -Recurse -Force ".agent.backup"
+Remove-Item -Recurse -Force ".agents.backup"
 Remove-Item -Recurse -Force ".gsd/templates.backup"
 ```
 
@@ -153,6 +162,7 @@ Remove-Item -Recurse -Force ".gsd/templates.backup"
 ```bash
 rm -rf .gsd-update-temp
 rm -rf .agent.backup
+rm -rf .agents.backup
 rm -rf .gsd/templates.backup
 ```
 
@@ -161,17 +171,17 @@ rm -rf .gsd/templates.backup
 ## 7. Confirm
 
 ```
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
- GSD â–º UPDATED âœ“
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ GSD ► UPDATED ✓
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Updated to version {remote-version}
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 
-/whats-new â€” See what changed
+/whats-new — See what changed
 
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+───────────────────────────────────────────────────────
 ```
 
 </process>
