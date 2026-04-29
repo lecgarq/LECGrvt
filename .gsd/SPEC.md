@@ -1,34 +1,29 @@
-# SPEC.md — Project Specification
+# SPEC.md — Batch Rename Plugin Optimization
 
-> Status: FINALIZED
+> **Status**: `FINALIZED`
 
 ## Vision
-Enhance the "Render Appearance Match" tool to provide intelligent material standardization. It will automatically detect and fix non-compliant materials, correctly map Normal Map properties, and allow user-controlled UV scaling via a new UI dropdown.
+Transform the Batch Rename plugin into a robust, high-performance tool that handles all renameable element types and parameters without intermittent failures, blank fields, or unexplained skips.
 
 ## Goals
-1. **Intelligent Skip/Update**: Automatically identify and skip materials that already meet the 4-point standard.
-2. **4-Point Standardization**:
-    - "Use Render Appearance" enabled for Graphics Shading.
-    - Graphics Shading color precisely matched to Render Appearance average color.
-    - Surface patterns (Foreground & Background) set to Solid Fill.
-    - Cut patterns (Foreground & Background) set to Solid Fill.
-3. **Normal Map Correction**: Fix the Revit API property mapping for Bump assets to ensure they are explicitly defined as "Normal Maps".
-4. **Custom UV Scaling**: Provide a dropdown in the UI (0.5m, 1m, 2m, 5m) to define the texture scale during synchronization.
-
-## Success Criteria
-- [ ] Log output identifies only modified (non-compliant) materials.
-- [ ] Materials updated by the tool have "Normal Map" successfully checked in the Revit Appearance Editor.
-- [ ] Materials updated reflect the UV scale chosen in the UI.
-- [ ] Shading color, surface/cut patterns are consistent across all "Matched" materials.
-
-## Users
-BIM Managers and Architects who need to standardize project material graphics for consistent documentation and visualization without manual property auditing.
-
-## Constraints
-- **Target**: Revit 2026 / .NET 8.0.
-- **Architecture**: Must integrate into the existing `RenderAppearanceMatchCommand` and its associated Service/VM.
-- **Performance**: Must remain efficient for projects with thousands of materials.
+1. **Eliminate "Stubborn" Parameter Skips:** Refactor `GetRenameSkipReason` to allow renaming of associated parameters when safe (e.g., updating formula references).
+2. **Fix "Blank Fields" & Incomplete Data:** Ensure `BaseElementCollectionService` captures all valid elements even if they lack a category, and improve metadata display.
+3. **Enhance Error Reporting:** Instead of silently skipping, provide clear UI feedback on why a parameter cannot be renamed.
+4. **Refactor Technical Debt:** Consolidate renaming logic and ensure full test coverage for the `Renaming` namespace.
 
 ## Non-Goals
-- Modifying custom textures (beyond scale and property assignment).
-- Creating new materials from scratch.
+- Adding new search/replace algorithms (Regex/Replace is sufficient for now).
+- Changing the UI theme (Focus is on logic and stability).
+
+## Users
+BIM Managers and Revit Power Users who need to perform bulk renaming across complex models.
+
+## Constraints
+- **Revit 2026 API:** Must use the latest API patterns for Toposolids and other new elements.
+- **Performance:** Must handle families with hundreds of parameters without hanging the UI.
+- **Safety:** Must not break family integrity (formulas, associations) unless explicitly forced by user.
+
+## Success Criteria
+- [ ] 0% unexplained "skips" in batch rename logs.
+- [ ] All elements in the grid have valid name and category labels.
+- [ ] Unit tests covering 100% of renaming service logic.
