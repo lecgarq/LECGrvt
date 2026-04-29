@@ -18,13 +18,13 @@
 **Requirements**: REQ-06
 
 ### Phase 2: FormulaAutoGrouping Bug Fix
-**Status**: Not Started
+**Status**: In Progress (1/2 plans complete)
 **Goal**: Fix the FormulaAutoGrouping command so parameters with formulas are reliably moved to the "Other" group without rolling back or silently failing.
 **Requirements**: REQ-07
 **Plans:** 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Test scaffold + SubTransaction loop, remove in-transaction group check, EnsureCurrentType guard, remove EnsureParametersPersistInGroup from live transaction
+- [x] 02-01-PLAN.md — Test scaffold + SubTransaction loop, remove in-transaction group check, EnsureCurrentType guard, remove EnsureParametersPersistInGroup from live transaction
 - [ ] 02-02-PLAN.md — Clear-replace-restore sequence in TryReplaceSharedParameterGroup for cross-parameter formula dependencies + Revit verification checkpoint
 
 ### Phase 3: Grid & Collection Fixes
