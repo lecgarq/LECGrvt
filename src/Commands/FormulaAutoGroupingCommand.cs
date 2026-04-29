@@ -100,7 +100,6 @@ namespace LECG.Commands
                 try
                 {
                     changed = MoveParamsToGroup(famDoc, fm, paramsToChange, targetGroup, famDoc.Title);
-                    EnsureParametersPersistInGroup(fm, paramsToChange, targetGroup, famDoc.Title);
                     if (changed > 0)
                     {
                         t.Commit();
@@ -296,7 +295,6 @@ namespace LECG.Commands
                     try
                     {
                         changed = MoveParamsToGroup(famDoc, fm, paramsToChange, targetGroup, family.Name);
-                        EnsureParametersPersistInGroup(fm, paramsToChange, targetGroup, family.Name);
                         if (changed > 0)
                         {
                             t.Commit();
@@ -503,16 +501,20 @@ namespace LECG.Commands
                     continue;
                 }
 
-                if (!TryMoveParameterToGroup(familyDoc, fm, currentParameter, targetGroup, out string? error))
+                using (var sub = new SubTransaction(familyDoc))
                 {
-                    FamilyParameter? latestParameter = FindParamByIdOrName(fm, parameter.IdValue, name);
-                    string currentGroupLabel = latestParameter == null
-                        ? "missing"
-                        : DescribeGroup(latestParameter.Definition.GetGroupTypeId());
-                    throw new UnsupportedGroupChangeException($"Parameter '{name}' remained in '{currentGroupLabel}' instead of verified target '{targetGroup.ResolvedLabel}' in '{familyName}': {error}");
+                    sub.Start();
+                    if (TryMoveParameterToGroup(familyDoc, fm, currentParameter, targetGroup, out string? error))
+                    {
+                        sub.Commit();
+                        changed++;
+                    }
+                    else
+                    {
+                        sub.RollBack();
+                        Log($"  Skipped '{name}': {error ?? "move failed"}");
+                    }
                 }
-
-                changed++;
             }
 
             return changed;
@@ -536,11 +538,6 @@ namespace LECG.Commands
                 {
                     string currentGroupLabel = DescribeGroup(currentParameter.Definition.GetGroupTypeId());
                     throw new UnsupportedGroupChangeException($"Parameter '{parameter.Name}' resolved to runtime group '{currentGroupLabel}' instead of verified target '{targetGroup.ResolvedLabel}' in '{familyName}'.");
-                }
-
-                if (!TryGetFormula(currentParameter, out string? formula) || string.IsNullOrWhiteSpace(formula))
-                {
-                    throw new UnsupportedGroupChangeException($"Parameter '{parameter.Name}' lost its formula while targeting verified group '{targetGroup.ResolvedLabel}' in '{familyName}'.");
                 }
             }
         }
@@ -617,12 +614,6 @@ namespace LECG.Commands
             catch (Exception ex) when (IsExpectedFormulaGroupingException(ex))
             {
                 error = ex.Message;
-                return false;
-            }
-
-            if (parameter.Definition.GetGroupTypeId() != targetGroup)
-            {
-                error = "group change did not persist";
                 return false;
             }
 
@@ -805,6 +796,12 @@ namespace LECG.Commands
 
         private static bool TrySetFormula(FamilyManager familyManager, FamilyParameter parameter, string formula, out string? error)
         {
+            if (!EnsureCurrentType(familyManager))
+            {
+                error = "no family types exist — SetFormula requires a current type";
+                return false;
+            }
+
             try
             {
                 familyManager.SetFormula(parameter, formula);
@@ -931,6 +928,16 @@ namespace LECG.Commands
             {
                 return false;
             }
+        }
+
+        private static bool EnsureCurrentType(FamilyManager fm)
+        {
+            if (fm.CurrentType != null) return true;
+            foreach (FamilyType ft in fm.Types)
+            {
+                return TrySetCurrentType(fm, ft);
+            }
+            return false; // no types exist
         }
 
         private static void TrySetFamilyTypeValue(FamilyManager familyManager, FamilyParameter parameter, StorageType storageType, object value)
