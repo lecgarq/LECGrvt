@@ -4,6 +4,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 using LECG.Core;
+using LECG.Core.Rename;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using System;
@@ -675,6 +676,19 @@ namespace LECG.Commands
                 return false;
             }
 
+            // Clear formulas on OTHER parameters that reference this parameter's name.
+            // ReplaceParameter throws InvalidOperationException if any active formula references
+            // the parameter being replaced. We clear them first and restore after.
+            var formulasToRestore = new List<(FamilyParameter fp, string formula)>();
+            foreach (FamilyParameter fp in familyManager.Parameters)
+            {
+                if (fp.Id.Value == parameter.Id.Value) continue; // skip the parameter being replaced
+                if (!TryGetFormula(fp, out string? refFormula) || string.IsNullOrWhiteSpace(refFormula)) continue;
+                if (!FormulaNameUpdater.ContainsReference(refFormula, parameterName)) continue;
+                formulasToRestore.Add((fp, refFormula));
+                TrySetFormula(familyManager, fp, string.Empty, out _); // clear the reference — ignore failure (best effort)
+            }
+
             FamilyParameter replacementParameter;
             try
             {
@@ -702,6 +716,22 @@ namespace LECG.Commands
             {
                 error = "shared parameter replace did not persist target group";
                 return false;
+            }
+
+            // Restore formulas on other parameters that were cleared before ReplaceParameter.
+            // Use FindParamByName because the FamilyParameter object references may be stale
+            // after ReplaceParameter — look up by name to get the live object.
+            if (formulasToRestore.Count > 0)
+            {
+                _ = EnsureCurrentType(familyManager); // best effort — log nothing, TrySetFormula handles null CurrentType
+                foreach (var (fp, savedFormula) in formulasToRestore)
+                {
+                    FamilyParameter? current = FindParamByName(familyManager, fp.Definition.Name);
+                    if (current != null)
+                    {
+                        TrySetFormula(familyManager, current, savedFormula, out _); // best effort — do not fail the move
+                    }
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(originalFormula))
