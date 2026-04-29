@@ -21,7 +21,7 @@
 **Status**: In Progress (1/2 plans complete)
 **Goal**: Fix the FormulaAutoGrouping command so parameters with formulas are reliably moved to the "Other" group without rolling back or silently failing.
 **Requirements**: REQ-07
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 - [x] 02-01-PLAN.md — Test scaffold + SubTransaction loop, remove in-transaction group check, EnsureCurrentType guard, remove EnsureParametersPersistInGroup from live transaction
