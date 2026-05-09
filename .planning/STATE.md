@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-09T18:38:48.739Z"
+last_updated: "2026-05-09T18:40:21.004Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 6
+  completed_plans: 7
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 03-grid-collection-fixes
-- **Plan**: 02 of 10 (COMPLETE) — Wave 1
-- **Status**: Plan 03-02 (ElementRowViewModel) complete; Wave 1 in progress
+- **Plan**: 01 + 02 of 10 (COMPLETE) — Wave 1 in progress (parallel)
+- **Status**: Plans 03-01 (ElementLabelService) and 03-02 (ElementRowViewModel) complete; Wave 1 remaining tasks pending
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -45,6 +45,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 02.5]: FindReplacementSymbolByName uses ordinal exact-name match; no first-symbol fallback; missing type name throws before delete (REQ-10)
 - [Phase 03]: ElementRowViewModel uses [ObservableProperty] only for IsChecked; identity/display fields are plain auto-properties (set once at row creation)
 - [Phase 03]: ReplaceItem retained intact in Plan 03-02; Plan 03-04 owns SearchReplacePreviewService migration to keep wave-1 builds clean
+- [Phase 03]: ElementLabelService placed in src/Services (LECG.csproj) — GetLabels(Element) requires Revit API; pure-string overload supports unit-testing without Revit Document
+- [Phase 03]: Locale-safe category labels via LabelUtils.GetLabelFor((BuiltInCategory)cat.Id.Value); explicit null-check on Category (NOT element.Category?.Id.Value chain — short-circuits to nullable long which mis-casts)
+- [Phase 03]: ALL_MODEL_TYPE_NAME parameter fallback for blank Element.Name (non-English Revit pitfall); Logger.LogWarning fires only when fallback actually triggered
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -55,6 +58,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | 02.5  | 02   | 1min     | 1     | 1     |
 | Phase 02.5 P03 | 18min | 3 tasks | 2 files |
 | Phase 03 P02 | 6min | 1 tasks | 1 files |
+| Phase 03 P01 | 8min | 1 tasks | 2 files |
 
 ## Last Session
 - **Stopped at**: Completed 03-02-PLAN.md
