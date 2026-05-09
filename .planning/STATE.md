@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-09T03:57:33.712Z"
+last_updated: "2026-05-09T18:38:48.739Z"
 progress:
   total_phases: 6
   completed_phases: 2
-  total_plans: 5
-  completed_plans: 5
+  total_plans: 15
+  completed_plans: 6
 ---
 
 # Project State
 
 ## Current Position
-- **Phase**: 2.5
-- **Plan**: 3 of 3 (COMPLETE) — Phase 2.5 COMPLETE
-- **Status**: Phase 2.5 Complete — phase-end Revit verification pending
+- **Phase**: 03-grid-collection-fixes
+- **Plan**: 02 of 10 (COMPLETE) — Wave 1
+- **Status**: Plan 03-02 (ElementRowViewModel) complete; Wave 1 in progress
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -43,6 +43,8 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 02.5]: FamilyLoadOptionsFactory verified to force overwrite — load-before-delete safe with live instances (REQ-10)
 - [Phase 02.5]: Face-hosted preservation deferred to v1.2: FamilyInstanceData lacks HostFace capture; Branch 3 fallback documented as known limitation
 - [Phase 02.5]: FindReplacementSymbolByName uses ordinal exact-name match; no first-symbol fallback; missing type name throws before delete (REQ-10)
+- [Phase 03]: ElementRowViewModel uses [ObservableProperty] only for IsChecked; identity/display fields are plain auto-properties (set once at row creation)
+- [Phase 03]: ReplaceItem retained intact in Plan 03-02; Plan 03-04 owns SearchReplacePreviewService migration to keep wave-1 builds clean
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -52,11 +54,13 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 02.5 P01 | 15min | 1 tasks | 1 files |
 | 02.5  | 02   | 1min     | 1     | 1     |
 | Phase 02.5 P03 | 18min | 3 tasks | 2 files |
+| Phase 03 P02 | 6min | 1 tasks | 1 files |
 
 ## Last Session
-- **Stopped at**: Completed 02.5-03-PLAN.md
+- **Stopped at**: Completed 03-02-PLAN.md
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (per CONTEXT.md §D)
-2. Begin v1.2 milestone planning or next phase
+1. Continue Phase 03 Wave 1 / Wave 2 plans (03-01, 03-03, ...)
+2. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (per CONTEXT.md §D)
+3. Begin v1.2 milestone planning or next phase
