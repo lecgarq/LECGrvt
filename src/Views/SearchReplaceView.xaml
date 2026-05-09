@@ -9,8 +9,8 @@
     xmlns:vm="clr-namespace:LECG.ViewModels"
     xmlns:models="clr-namespace:LECG.Models"
     xmlns:services="clr-namespace:LECG.Services"
-    xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" mc:Ignorable="d" Title="BATCH RENAME" Width="680" Height="600" MinWidth="640" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.SearchReplace}">
+    xmlns:utils="clr-namespace:LECG.Utilities"
+    xmlns:icons="clr-namespace:LECG.Utilities" mc:Ignorable="d" Title="BATCH RENAME" Width="680" Height="600" MinWidth="640" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.SearchReplace}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -426,7 +426,7 @@
                             <DataGridTextColumn Header="Old Name" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue"/>
                             <DataGridTextColumn Header="New Name" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue"/>
                             <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True" SortMemberPath="Type"/>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ElementId}" Width="60" IsReadOnly="True" SortMemberPath="ElementId"/>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True" SortMemberPath="Id"/>
                         </DataGrid.Columns>
                     </controls:LecgDataGrid>
 

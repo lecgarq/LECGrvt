@@ -1,6 +1,7 @@
 using Autodesk.Revit.DB;
 using LECG.Models;
 using LECG.ViewModels;
+using LECG.ViewModels.Components;
 using LECG.Views;
 using LECG.Services.Interfaces;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace LECG.Services
         }
 
         // 2. pure Logic Transformation (Fast, In-Memory)
-        public List<ReplaceItem> ProcessPreview(
+        public List<ElementRowViewModel> ProcessPreview(
             List<ElementData> candidates,
             SearchCriteria criteria,
             RenameRuleContext context,
@@ -58,12 +59,12 @@ namespace LECG.Services
             return _searchReplacePreviewService.ProcessPreview(candidates, criteria, context, ct);
         }
 
-        public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Services.Logging.ILogger logger, Action<double, string>? onProgress = null)
+        public int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Services.Logging.ILogger logger, Action<double, string>? onProgress = null)
         {
             return _batchRenameExecutionService.ExecuteBatchRename(doc, items, logger, onProgress);
         }
 
-        public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Services.Logging.ILogger logger, IProgressReporter reporter)
+        public int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Services.Logging.ILogger logger, IProgressReporter reporter)
         {
             return _batchRenameExecutionService.ExecuteBatchRename(doc, items, logger, reporter);
         }

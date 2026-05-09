@@ -4,6 +4,7 @@ using System.Threading;
 using Autodesk.Revit.DB;
 using LECG.Models;
 using LECG.ViewModels;
+using LECG.ViewModels.Components;
 using LECG.Views;
 
 namespace LECG.Services.Interfaces
@@ -16,13 +17,13 @@ namespace LECG.Services.Interfaces
         /// <summary>
         /// Proxies the preview processing search logic. Supports cancellation.
         /// </summary>
-        List<ReplaceItem> ProcessPreview(
+        List<ElementRowViewModel> ProcessPreview(
             List<ElementData> candidates,
             SearchCriteria criteria,
             RenameRuleContext context,
             CancellationToken ct = default);
 
-        int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Services.Logging.ILogger logger, IProgressReporter reporter);
-        int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Services.Logging.ILogger logger, Action<double, string>? onProgress = null);
+        int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Services.Logging.ILogger logger, IProgressReporter reporter);
+        int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Services.Logging.ILogger logger, Action<double, string>? onProgress = null);
     }
 }

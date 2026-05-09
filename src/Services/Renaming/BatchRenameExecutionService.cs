@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
+using LECG.Core.Rename;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
+using LECG.ViewModels.Components;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
@@ -19,7 +21,7 @@ namespace LECG.Services
             _loadOptionsFactory = loadOptionsFactory;
         }
 
-        public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, Action<double, string>? onProgress = null)
+        public int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Logging.ILogger logger, Action<double, string>? onProgress = null)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(items);
@@ -28,7 +30,7 @@ namespace LECG.Services
             return ExecuteBatchRename(doc, items, logger, new LegacyProgressReporter(onProgress, logger.Log));
         }
 
-        public int ExecuteBatchRename(Document doc, List<ReplaceItem> items, Logging.ILogger logger, IProgressReporter reporter)
+        public int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Logging.ILogger logger, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(items);
@@ -39,8 +41,8 @@ namespace LECG.Services
             int total = items.Count;
             int current = 0;
 
-            List<ReplaceItem> standardItems = new List<ReplaceItem>();
-            List<ReplaceItem> familyItems = new List<ReplaceItem>();
+            List<ElementRowViewModel> standardItems = new List<ElementRowViewModel>();
+            List<ElementRowViewModel> familyItems = new List<ElementRowViewModel>();
 
             foreach (var item in items)
             {
@@ -64,14 +66,14 @@ namespace LECG.Services
 
                         if (!item.IsChecked) continue;
 
-                        ElementId id = new ElementId(item.ElementId);
+                        ElementId id = new ElementId(item.Id);
                         Element el = currentDoc.GetElement(id);
 
                         if (el != null)
                         {
                             try
                             {
-                                reporter.Report($"Processing {item.ElementName}...", percent);
+                                reporter.Report($"Processing {item.Name}...", percent);
 
                                 if (string.Equals(el.Name, item.NewValue, StringComparison.Ordinal)) continue;
 
@@ -129,7 +131,7 @@ namespace LECG.Services
                             }
                             catch (Exception ex) when (IsExpectedRenameException(ex))
                             {
-                                logger.LogError($"ERROR renaming {item.ElementName}: {ex.Message}");
+                                logger.LogError($"ERROR renaming {item.Name}: {ex.Message}");
                             }
                         }
                     }
@@ -143,7 +145,7 @@ namespace LECG.Services
             // crash with "referenced object is not valid" because the handle is stale.
             if (familyItems.Count > 0)
             {
-                Dictionary<long, List<ReplaceItem>> byFamily = GroupCheckedFamilyParameterItems(familyItems);
+                Dictionary<long, List<ElementRowViewModel>> byFamily = GroupCheckedFamilyParameterItems(familyItems);
 
                 int familyIndex = 0;
                 foreach (var kvp in byFamily)
@@ -220,20 +222,20 @@ namespace LECG.Services
             return count;
         }
 
-        private static Dictionary<long, List<ReplaceItem>> GroupCheckedFamilyParameterItems(List<ReplaceItem> familyItems)
+        private static Dictionary<long, List<ElementRowViewModel>> GroupCheckedFamilyParameterItems(List<ElementRowViewModel> familyItems)
         {
-            Dictionary<long, List<ReplaceItem>> byFamily = new Dictionary<long, List<ReplaceItem>>();
-            foreach (ReplaceItem item in familyItems)
+            Dictionary<long, List<ElementRowViewModel>> byFamily = new Dictionary<long, List<ElementRowViewModel>>();
+            foreach (ElementRowViewModel item in familyItems)
             {
                 if (!item.IsChecked)
                 {
                     continue;
                 }
 
-                if (!byFamily.TryGetValue(item.ElementId, out List<ReplaceItem>? items))
+                if (!byFamily.TryGetValue(item.Id, out List<ElementRowViewModel>? items))
                 {
-                    items = new List<ReplaceItem>();
-                    byFamily[item.ElementId] = items;
+                    items = new List<ElementRowViewModel>();
+                    byFamily[item.Id] = items;
                 }
 
                 items.Add(item);
@@ -244,7 +246,7 @@ namespace LECG.Services
 
         private static int RenameFamilyParameters(
             FamilyManager manager,
-            List<ReplaceItem> items,
+            List<ElementRowViewModel> items,
             string familyName,
             HashSet<string> dimensionLabels,
             HashSet<string> formulaReferenced,
@@ -252,7 +254,7 @@ namespace LECG.Services
             Logging.ILogger logger)
         {
             int renamedCount = 0;
-            foreach (ReplaceItem item in items)
+            foreach (ElementRowViewModel item in items)
             {
                 FamilyParameter? paramToRename = FindFamilyParameterByName(manager, item.OriginalValue);
                 if (paramToRename == null)
@@ -299,7 +301,7 @@ namespace LECG.Services
         private static bool TryRenameFamilyParameter(
             FamilyManager manager,
             FamilyParameter parameter,
-            ReplaceItem item,
+            ElementRowViewModel item,
             string familyName,
             Logging.ILogger logger)
         {
@@ -421,8 +423,10 @@ namespace LECG.Services
                 string formula = fp.Formula;
                 foreach (string name in allNames)
                 {
-                    if (formula.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0)
+                    if (FormulaNameUpdater.ContainsReference(formula, name))
+                    {
                         referenced.Add(name);
+                    }
                 }
             }
 

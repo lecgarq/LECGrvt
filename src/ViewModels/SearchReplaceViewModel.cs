@@ -10,20 +10,10 @@ using Autodesk.Revit.DB;
 using LECG.Models;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.ViewModels.Components;
 
 namespace LECG.ViewModels
 {
-    public partial class ReplaceItem : CommunityToolkit.Mvvm.ComponentModel.ObservableObject
-    {
-        private bool _isChecked = true;
-        public bool IsChecked { get => _isChecked; set => SetProperty(ref _isChecked, value); }
-        public string ElementName { get; set; } = "";
-        public string OriginalValue { get; set; } = "";
-        public string NewValue { get; set; } = "";
-        public long ElementId { get; set; }
-        public string Type { get; set; } = "";
-    }
-
     public partial class SearchReplaceViewModel : BaseViewModel
     {
         private ISearchReplaceService? _service;
@@ -105,8 +95,8 @@ namespace LECG.ViewModels
         public ICommand ReplaceSpacesCommand { get; }
         public ICommand ReplaceSpacesInReplaceTextCommand { get; }
 
-        private ObservableCollection<ReplaceItem> _previewItems = new ObservableCollection<ReplaceItem>();
-        public ObservableCollection<ReplaceItem> PreviewItems { get => _previewItems; set => SetProperty(ref _previewItems, value); }
+        private ObservableCollection<ElementRowViewModel> _previewItems = new ObservableCollection<ElementRowViewModel>();
+        public ObservableCollection<ElementRowViewModel> PreviewItems { get => _previewItems; set => SetProperty(ref _previewItems, value); }
 
         private ObservableCollection<string> _availableCategories = new ObservableCollection<string>();
         public ObservableCollection<string> AvailableCategories { get => _availableCategories; set => SetProperty(ref _availableCategories, value); }
