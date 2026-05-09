@@ -1,14 +1,11 @@
-// Wave 0 RED scaffold for Phase 03 (REQ-01).
+// Plan 03-04 GREEN: ProcessPreview now returns List<ElementRowViewModel>.
 // VALIDATION row: 3-W0-03. Targets Category propagation in
-// `LECG.Services.SearchReplacePreviewService.ProcessPreview` (Plan 03-04).
+// `LECG.Services.SearchReplacePreviewService.ProcessPreview`.
 //
-// Today: ProcessPreview returns List<ReplaceItem> which has no Category field.
-// Plan 03-04 migrates the return type to List<ElementRowViewModel> which carries
-// Category. The new-shape assertions are Skip-gated until 03-04 lands.
-//
-// One non-skipped anchor test asserts today's ReplaceItem-shaped behavior so the
-// fixture compiles and exercises the construction path. The anchor is marked for
-// deletion in Plan 03-04.
+// Plan 03-04 migrated the return type from List<ReplaceItem> to
+// List<ElementRowViewModel>; ElementRowViewModel carries Category, ParamGroup,
+// IsInstance, IsReadOnly. The Wave-0 anchor (ReplaceItem-shaped) was deleted by
+// Plan 03-04 per its DisplayName marker.
 using System.Collections.Generic;
 using FluentAssertions;
 using LECG.Models;
@@ -20,12 +17,10 @@ using NSubstitute;
 namespace LECG.Tests.Services;
 
 /// <summary>
-/// 3-W0-03 — RED scaffold. New-shape assertions await Plan 03-04 ElementRowViewModel migration.
+/// 3-W0-03 — GREEN. Asserts ElementRowViewModel shape post Plan 03-04 migration.
 /// </summary>
 public class SearchReplacePreviewServiceTests
 {
-    private const string SkipReason = "Awaiting Plan 03-04 — ProcessPreview returns ReplaceItem today";
-
     private static RenameRuleContext MakeContext(SearchCriteria criteria) => new RenameRuleContext(
         new ReplaceRule(), new RemoveRule(), new AddRule(), new NumberingRule(), new CaseRule(),
         ScopeTypeName: criteria.ScopeTypeName,
@@ -45,18 +40,19 @@ public class SearchReplacePreviewServiceTests
         FilterIsReadOnly: criteria.FilterIsReadOnly,
         FilterViewType: criteria.FilterViewType);
 
-    [Fact(DisplayName = "anchor — delete in 03-04")]
-    [Trait("Category", "Unit")]
-    public void Anchor_ProcessPreview_returns_ReplaceItem_for_typed_element()
+    private static IRenameRulePipelineService MakePassthroughPipeline()
     {
-        // Today's behavior: ProcessPreview returns List<ReplaceItem>. This anchor proves
-        // the construction path works (NSubstitute pipeline + criteria + ElementData).
-        // Plan 03-04 deletes this test when migrating the return type.
         var pipeline = Substitute.For<IRenameRulePipelineService>();
         pipeline.ApplyRules(Arg.Any<string>(), Arg.Any<RenameRuleContext>(), Arg.Any<int>())
             .Returns(ci => ci.ArgAt<string>(0));
+        return pipeline;
+    }
 
-        var sut = new SearchReplacePreviewService(pipeline);
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ProcessPreview_returns_rows_with_non_blank_Category_when_ElementData_Category_is_set()
+    {
+        var sut = new SearchReplacePreviewService(MakePassthroughPipeline());
         var candidates = new List<ElementData>
         {
             new ElementData { Id = 1, Name = "W-100", Category = "Walls", Type = "Type", OriginalValue = "W-100" }
@@ -66,30 +62,64 @@ public class SearchReplacePreviewServiceTests
         var rows = sut.ProcessPreview(candidates, criteria, MakeContext(criteria));
 
         rows.Should().HaveCount(1);
-        rows[0].ElementName.Should().Be("W-100");
+        rows[0].Name.Should().Be("W-100");
         rows[0].Type.Should().Be("Type");
+        rows[0].Category.Should().Be("Walls");
+        rows[0].OriginalValue.Should().Be("W-100");
+        rows[0].NewValue.Should().Be("W-100");
+        rows[0].IsChecked.Should().BeTrue();
     }
 
-    [Fact(Skip = SkipReason)]
-    [Trait("Category", "Unit")]
-    public void ProcessPreview_returns_rows_with_non_blank_Category_when_ElementData_Category_is_set()
-    {
-        // Plan 03-04: rows[0].Category should equal "Walls" — ElementRowViewModel carries Category.
-    }
-
-    [Fact(Skip = SkipReason)]
+    [Fact]
     [Trait("Category", "Unit")]
     public void ProcessPreview_returns_rows_with_fallback_Category_when_ElementData_Category_is_blank()
     {
-        // Plan 03-04 + Plan 03-03 fallback: when ElementData.Category is "" the row's Category
-        // must remain non-empty (ElementLabelService fallback to ClrTypeName).
+        // Plan 03-03 guarantees ElementData.Category is non-blank at the collection layer
+        // (ElementLabelService fallback to ClrTypeName). This test verifies that whatever
+        // Category value the upstream layer hands us — including the fallback — is
+        // propagated unchanged into the row. ProcessPreview is a pure pass-through
+        // for Category and must not coerce or rewrite the string.
+        var sut = new SearchReplacePreviewService(MakePassthroughPipeline());
+        var candidates = new List<ElementData>
+        {
+            new ElementData { Id = 2, Name = "F-1", Category = "FilledRegionType", Type = "Type", OriginalValue = "F-1" }
+        };
+        var criteria = new SearchCriteria { ScopeTypeName = true };
+
+        var rows = sut.ProcessPreview(candidates, criteria, MakeContext(criteria));
+
+        rows.Should().HaveCount(1);
+        rows[0].Category.Should().NotBeNullOrWhiteSpace();
+        rows[0].Category.Should().Be("FilledRegionType");
     }
 
-    [Fact(Skip = SkipReason)]
+    [Fact]
     [Trait("Category", "Unit")]
     public void ProcessPreview_propagates_ParamGroup_IsInstance_IsReadOnly_into_row()
     {
-        // Plan 03-04: ElementRowViewModel must carry ParamGroup, IsInstance, IsReadOnly
-        // through from ElementData unchanged.
+        var sut = new SearchReplacePreviewService(MakePassthroughPipeline());
+        var candidates = new List<ElementData>
+        {
+            new ElementData
+            {
+                Id = 7,
+                Name = "Width",
+                Category = "Dimensions",
+                Type = "FamilyParameter",
+                OriginalValue = "Width",
+                ParamGroup = "Dimensions",
+                IsInstance = true,
+                IsReadOnly = false
+            }
+        };
+        var criteria = new SearchCriteria { ScopeFamilyParameterName = true };
+
+        var rows = sut.ProcessPreview(candidates, criteria, MakeContext(criteria));
+
+        rows.Should().HaveCount(1);
+        rows[0].ParamGroup.Should().Be("Dimensions");
+        rows[0].IsInstance.Should().BeTrue();
+        rows[0].IsReadOnly.Should().BeFalse();
+        rows[0].Id.Should().Be(7);
     }
 }

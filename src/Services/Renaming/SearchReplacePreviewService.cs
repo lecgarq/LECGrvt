@@ -5,6 +5,7 @@ using System.Threading;
 using LECG.Models;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
+using LECG.ViewModels.Components;
 using LECG.Views;
 
 namespace LECG.Services
@@ -23,7 +24,7 @@ namespace LECG.Services
             return elements.Select(x => x.Category).Distinct().OrderBy(x => x).ToList();
         }
 
-        public List<ReplaceItem> ProcessPreview(
+        public List<ElementRowViewModel> ProcessPreview(
             List<ElementData> candidates,
             SearchCriteria criteria,
             RenameRuleContext context,
@@ -33,7 +34,7 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(criteria);
             ArgumentNullException.ThrowIfNull(context);
 
-            List<ReplaceItem> results = new List<ReplaceItem>();
+            List<ElementRowViewModel> results = new List<ElementRowViewModel>();
 
             foreach (ElementData el in candidates)
             {
@@ -107,14 +108,18 @@ namespace LECG.Services
                 // 6. Apply Rename Rules
                 string currentName = _renameRulePipelineService.ApplyRules(el.Name, context, results.Count);
 
-                results.Add(new ReplaceItem
+                results.Add(new ElementRowViewModel
                 {
-                    ElementId = el.Id,
-                    ElementName = el.Name,
+                    Id = el.Id,
+                    Name = el.Name,
+                    Category = el.Category,
                     OriginalValue = el.Name,
                     NewValue = currentName,
                     IsChecked = true,
-                    Type = el.Type
+                    Type = el.Type,
+                    ParamGroup = el.ParamGroup,
+                    IsInstance = el.IsInstance,
+                    IsReadOnly = el.IsReadOnly
                 });
             }
 

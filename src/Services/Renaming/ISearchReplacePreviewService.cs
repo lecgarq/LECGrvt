@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading;
 using LECG.Models;
 using LECG.ViewModels;
+using LECG.ViewModels.Components;
 using LECG.Views;
 
 namespace LECG.Services.Interfaces
@@ -11,10 +12,10 @@ namespace LECG.Services.Interfaces
         List<string> GetUniqueCategories(List<ElementData> elements);
 
         /// <summary>
-        /// Processes the preview items based on criteria and context. 
+        /// Processes the preview items based on criteria and context.
         /// Supports cancellation for real-time background execution.
         /// </summary>
-        List<ReplaceItem> ProcessPreview(
+        List<ElementRowViewModel> ProcessPreview(
             List<ElementData> candidates,
             SearchCriteria criteria,
             RenameRuleContext context,
