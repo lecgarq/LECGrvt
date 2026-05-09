@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: in_progress
-last_updated: "2026-05-09T20:08:42.322Z"
+last_updated: "2026-05-09T23:52:01.320Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 13
+  completed_plans: 14
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 03-grid-collection-fixes
-- **Plan**: 00 + 01 + 02 + 03 + 04 + 05 + 06 + 07 of 10 (COMPLETE) — Waves 0-4 done; Wave 5 (03-08) next
-- **Status**: Plans 03-00..03-07 complete; build clean (0 errors, 0 warnings), 100/100 tests GREEN. Plan 03-07 migrated SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid to ElementGridControl (parallel-safe with Plan 03-06 batch A on disjoint files). Cross-VM grep `ObservableCollection<string> SelectedElementSummaries` returns zero hits across all six text-summary VMs. Plan 03-08 (Wave 5: selection-backed screen sweep — Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints) is next.
+- **Plan**: 00 + 01 + 02 + 03 + 04 + 05 + 06 + 07 + 08 of 10 (COMPLETE) — Waves 0-5 done; Wave 6 (03-09 manual Revit verification) next
+- **Status**: Plans 03-00..03-08 complete; build clean (0 errors, 0 warnings), 100/100 tests GREEN. Plan 03-08 swept the 8 selection-backed screens (AlignEdges, AlignElements, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints) via Path A: `RowItems` + `SetSelectionRows` lifted into shared `SelectionViewModel`; `ElementGridControl` embedded directly in `SelectionControl.xaml`; zero per-View XAML edits required. Plan 03-09 (Wave 6: phase-end manual Revit verification — REQ-01 acceptance + REQ-08/09/10 verification from Phase 02.5) is next.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -34,6 +34,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - Plan 03-05 COMPLETE: ElementGridControl shared UserControl (Sel|Type|Category|Name|Status, wraps LecgDataGrid) shipped; SearchReplaceViewModel.PreviewView ICollectionView wires Category-asc default sort + AND-combined filter (FilterCategory dropdown + SetColumnFilter per-column predicate API); SearchReplaceView.xaml column order locked to ☑|Type|Category|Original|New; FilterCategory filtering removed from ProcessPreview; 3-W0-04 RED tests un-Skipped and GREEN (100/100 suite GREEN, build clean). User visually verified Batch Rename grid in Revit (column order, default sort, sort flip, FilterCategory, no blank rows, FamilyParameter scope all confirmed). Per-column header funnel chrome deferred to v1.2 follow-up — functional plumbing (SetColumnFilter API) proven via unit test.
 - Plan 03-06 COMPLETE: Text-summary batch A migration (REQ-01) — DivideToposolid, FixPoints, ConvertCad VMs/Views migrated from `ObservableCollection<string> SelectedElementSummaries` to `ObservableCollection<ElementRowViewModel> RowItems` rendered through `ElementGridControl`. Name/Category resolved via `ElementLabelService.GetLabels` (non-blank invariant). Per-screen Status: DivideToposolid layer-count outcome ("Ready to divide (N layers)" / "Already single layer" / "Layer count unavailable"); FixPoints "Level: {name}"; ConvertCad "Type: {typeName}". ConvertCad had no legacy SelectedElementSummaries (single-select screen) — RowItems populated on `SetSelection` with one row to honour must_haves contract. Build clean, 100/100 tests GREEN. Manual Revit verification deferred to Plan 03-09.
 - Plan 03-07 COMPLETE: Text-summary batch B migration (REQ-01) — SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid VMs/Views migrated from `ObservableCollection<string> SelectedElementSummaries` to `ObservableCollection<ElementRowViewModel> RowItems` rendered through `ElementGridControl`. SplitBoundaries Status: boundary-count outcome ("Ready to split (N boundaries)" / "No split needed" / "Boundary count unavailable"). Conversion screens Status: "<SourceTypeName> @ <LevelName>" (preserves prior DescribeElement summary verbatim). Cross-VM grep `ObservableCollection<string> SelectedElementSummaries` returns zero hits across all six text-summary VMs. Build clean (0/0); 100/100 tests GREEN.
+- Plan 03-08 COMPLETE: Selection-backed screen sweep (REQ-01) — Path A chosen. `SelectionViewModel` upgraded with `ObservableCollection<ElementRowViewModel> RowItems` + dual `SetSelectionRows` overloads (Reference+Document for 7 ref-driven VMs, Element for ChangeLevel) + Dispatcher-marshalled mutations. `SelectionControl.xaml` embeds `ElementGridControl` (visibility bound to `HasSelection`). 8 VMs (AlignEdges, AlignElements, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints) call `Selection.SetSelectionRows` after `UpdateSelection`; 5 VMs gained a `Document` parameter; 5 Views + 5 Commands updated for the cascade. Build clean (0/0); 100/100 tests GREEN.
 
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
@@ -75,6 +76,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 03]: [Phase 03-07]: Conversion screens (ConvertToposolidToFloor / ConvertFloorToToposolid) Status format = '<TypeName> @ <LevelName>' — preserves prior DescribeElement summary verbatim; eligibility detection deferred (no IConversionService eligibility API exists; out of scope for REQ-01)
 - [Phase 03]: [Phase 03-06]: ConvertCad single-select screen — RowItems populated on SetSelection with one row; legacy screen had no SelectedElementSummaries to migrate, but must_haves contract honoured by adding the grid below SelectionControl in Selection-mode only
 - [Phase 03]: [Phase 03-06]: Status column content per screen — DivideToposolid='Ready to divide (N layers)/Already single layer/Layer count unavailable'; FixPoints='Level: {name}'; ConvertCad='Type: {typeName}'
+- [Phase 03-08]: Path A chosen — embed ElementGridControl in SelectionControl.xaml; eliminates 8 per-View XAML edits and guarantees grid consistency across selection-backed screens
+- [Phase 03-08]: SelectionViewModel.SetSelectionRows ships two overloads (Reference+Document, Element) — picks the right one per call-site without forcing premature Reference-resolve at the View layer
+- [Phase 03-08]: WPF Dispatcher.Invoke wrapping inside SetSelectionRows — defends against future Revit ExternalEvent callers without mandating a thread contract on consumers
+- [Phase 03-08]: Grid Visibility bound to HasSelection — empty state stays clean; no empty grid below 'No X selected' summary
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -92,13 +97,13 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P05 | 45min | 3 tasks | 5 files |
 | Phase 03 P07 | 12min | 2 tasks | 6 files |
 | Phase 03 P06 | 3min | 2 tasks | 6 files |
+| Phase 03 P08 | 9min | 2 tasks | 20 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-07-PLAN.md (text-summary batch B migration to ElementGridControl; cross-VM grep zero hits across all six text-summary VMs)
+- **Stopped at**: Completed 03-08-PLAN.md (selection-backed screen sweep — 8 VMs wired to shared SelectionViewModel.RowItems via Path A; ElementGridControl embedded in SelectionControl)
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Phase 03 Wave 5: Plan 03-08 (selection-backed screen sweep — Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints).
-2. Phase 03 Wave 6: Plan 03-09 phase-end manual Revit verification (REQ-01 acceptance) + REQ-08/09/10 verification from Phase 02.5.
-3. Begin v1.2 milestone planning or next phase.
-4. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
+1. Phase 03 Wave 6: Plan 03-09 phase-end manual Revit verification (REQ-01 acceptance) + REQ-08/09/10 verification from Phase 02.5.
+2. Begin v1.2 milestone planning or next phase.
+3. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
