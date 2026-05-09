@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using Autodesk.Revit.DB;
 using LECG.Models;
@@ -59,7 +60,19 @@ namespace LECG.ViewModels
         public string FilterName { get => _filterName; set { if (SetProperty(ref _filterName, value)) _ = UpdatePreviewAsync(); } }
 
         private string _filterCategory = "All";
-        public string FilterCategory { get => _filterCategory; set { if (SetProperty(ref _filterCategory, value)) _ = UpdatePreviewAsync(); } }
+        public string FilterCategory
+        {
+            get => _filterCategory;
+            set
+            {
+                if (SetProperty(ref _filterCategory, value))
+                {
+                    // FilterCategory now lives on the ICollectionView (Plan 03-05) — no
+                    // re-run of ProcessPreview, just refresh the view's predicate.
+                    _previewView?.Refresh();
+                }
+            }
+        }
 
         private SearchFilterType _selectedFilterType = SearchFilterType.Contains;
         public SearchFilterType SelectedFilterType { get => _selectedFilterType; set { if (SetProperty(ref _selectedFilterType, value)) _ = UpdatePreviewAsync(); } }
@@ -97,6 +110,61 @@ namespace LECG.ViewModels
 
         private ObservableCollection<ElementRowViewModel> _previewItems = new ObservableCollection<ElementRowViewModel>();
         public ObservableCollection<ElementRowViewModel> PreviewItems { get => _previewItems; set => SetProperty(ref _previewItems, value); }
+
+        // Plan 03-05: ICollectionView wraps PreviewItems with default Category-ascending
+        // sort and an AND-combined filter (FilterCategory dropdown ∧ per-column filters).
+        // The XAML DataGrid binds to PreviewView (not PreviewItems) so WPF honours the
+        // SortDescriptions + Filter automatically.
+        private ICollectionView? _previewView;
+        public ICollectionView PreviewView
+        {
+            get
+            {
+                if (_previewView == null)
+                {
+                    _previewView = CollectionViewSource.GetDefaultView(PreviewItems);
+                    _previewView.SortDescriptions.Add(new SortDescription(
+                        nameof(ElementRowViewModel.Category),
+                        ListSortDirection.Ascending));
+                    _previewView.Filter = item => MatchesAllFilters((ElementRowViewModel)item);
+                }
+                return _previewView;
+            }
+        }
+
+        // Per-column filter predicates (column key → predicate). AND-combined with the
+        // top-of-grid FilterCategory dropdown by MatchesAllFilters.
+        private readonly Dictionary<string, Predicate<ElementRowViewModel>> _columnFilters = new();
+
+        /// <summary>
+        /// Set or clear a per-column filter predicate. Pass <c>null</c> to remove.
+        /// Refreshes <see cref="PreviewView"/> so the DataGrid re-evaluates.
+        /// </summary>
+        public void SetColumnFilter(string columnKey, Predicate<ElementRowViewModel>? predicate)
+        {
+            if (string.IsNullOrEmpty(columnKey)) return;
+            if (predicate == null) _columnFilters.Remove(columnKey);
+            else _columnFilters[columnKey] = predicate;
+            _previewView?.Refresh();
+        }
+
+        private bool MatchesAllFilters(ElementRowViewModel row)
+        {
+            // 1. Top-of-grid FilterCategory dropdown
+            if (!string.IsNullOrEmpty(FilterCategory)
+                && !FilterCategory.Equals("All", StringComparison.OrdinalIgnoreCase))
+            {
+                if (!row.Category.Contains(FilterCategory, StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            // 2. AND-combined per-column predicates
+            foreach (var p in _columnFilters.Values)
+            {
+                if (!p(row)) return false;
+            }
+            return true;
+        }
 
         private ObservableCollection<string> _availableCategories = new ObservableCollection<string>();
         public ObservableCollection<string> AvailableCategories { get => _availableCategories; set => SetProperty(ref _availableCategories, value); }
@@ -181,7 +249,16 @@ namespace LECG.ViewModels
             {
                 await Task.Delay(150, ct);
                 var results = await Task.Run(() => _service.ProcessPreview(_cachedElements, ToCriteria(), ToContext(), ct), ct);
-                System.Windows.Application.Current.Dispatcher.Invoke(() => { if (ct.IsCancellationRequested) return; ValidationMessage = string.Empty; PreviewItems.Clear(); foreach (var r in results) PreviewItems.Add(r); });
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (ct.IsCancellationRequested) return;
+                    ValidationMessage = string.Empty;
+                    PreviewItems.Clear();
+                    foreach (var r in results) PreviewItems.Add(r);
+                    // Materialize/refresh the ICollectionView so sort + filter apply.
+                    _ = PreviewView; // ensure created
+                    _previewView?.Refresh();
+                });
             }
             catch (OperationCanceledException) { }
             catch (Exception ex) { ValidationMessage = $"Error loading preview: {ex.Message}"; }

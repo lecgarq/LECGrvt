@@ -419,13 +419,17 @@
                         </StackPanel>
                     </Grid>
 
-                    <!-- DataGrid -->
-                    <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewItems}" CanUserSortColumns="True">
+                    <!-- DataGrid — bound to PreviewView (ICollectionView) so WPF honours
+                         SortDescriptions[0]=(Category, Asc) and the AND-combined Filter
+                         (FilterCategory dropdown ∧ per-column predicates).
+                         Column order locked by CONTEXT.md: ☑ | Type | Category | Original | New. -->
+                    <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True">
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="Sel" Binding="{Binding IsChecked}" Width="35" SortMemberPath="IsChecked"/>
-                            <DataGridTextColumn Header="Old Name" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue"/>
-                            <DataGridTextColumn Header="New Name" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue"/>
+                            <DataGridCheckBoxColumn Header="Sel" Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" Width="35" SortMemberPath="IsChecked"/>
                             <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True" SortMemberPath="Type"/>
+                            <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="Auto" IsReadOnly="True" SortMemberPath="Category"/>
+                            <DataGridTextColumn Header="Original" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue"/>
+                            <DataGridTextColumn Header="New" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue"/>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True" SortMemberPath="Id"/>
                         </DataGrid.Columns>
                     </controls:LecgDataGrid>

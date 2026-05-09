@@ -74,11 +74,11 @@ namespace LECG.Services
                     if (!match) continue;
                 }
 
-                // 3. Category Filtering
-                if (!string.IsNullOrWhiteSpace(criteria.FilterCategory) && !criteria.FilterCategory.Equals("All", StringComparison.OrdinalIgnoreCase))
-                {
-                    if (!el.Category.Contains(criteria.FilterCategory, StringComparison.OrdinalIgnoreCase)) continue;
-                }
+                // 3. Category Filtering — moved to SearchReplaceViewModel.PreviewView
+                //    (ICollectionView.Filter) per Plan 03-05 / RESEARCH §Open Question 3.
+                //    Post-collection filtering avoids re-running ProcessPreview on every
+                //    FilterCategory keystroke and lets the dropdown predicate AND-combine
+                //    with per-column filters.
 
                 // 4. Advanced Filtering — Parameters
                 if (el.Type == "FamilyParameter")

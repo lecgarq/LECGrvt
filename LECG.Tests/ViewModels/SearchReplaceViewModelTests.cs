@@ -1,26 +1,21 @@
-// Wave 0 RED scaffold for Phase 03 (REQ-01).
-// VALIDATION row: 3-W0-04. Targets ICollectionView wiring in
-// `LECG.ViewModels.SearchReplaceViewModel` (Plan 03-05).
-//
-// Today: PreviewItems is a plain ObservableCollection<ReplaceItem> with no
-// CollectionViewSource sort/filter wiring. Plan 03-05 introduces:
-//   - default Category-ascending SortDescription on the default ICollectionView
-//   - AND-combined filter that intersects FilterCategory and per-column filters
-//
-// All assertions are Skip-gated until Plan 03-05 lands. One anchor test forces
-// the type reference + parameterless constructor to keep compiling.
+// Plan 03-05 GREEN: ICollectionView wiring on SearchReplaceViewModel.PreviewItems.
+// VALIDATION row: 3-W0-04. Targets default Category-ascending sort + AND-combined
+// filter (FilterCategory dropdown ∧ per-column predicates) in
+// `LECG.ViewModels.SearchReplaceViewModel`.
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Data;
 using FluentAssertions;
 using LECG.ViewModels;
+using LECG.ViewModels.Components;
 
 namespace LECG.Tests.ViewModels;
 
 /// <summary>
-/// 3-W0-04 — RED scaffold. Sort/filter assertions await Plan 03-05 ICollectionView wiring.
+/// 3-W0-04 — GREEN. Asserts ICollectionView contract introduced by Plan 03-05.
 /// </summary>
 public class SearchReplaceViewModelTests
 {
-    private const string SkipReason = "Awaiting Plan 03-05 — ICollectionView sort/filter wiring";
-
     [Fact]
     [Trait("Category", "Unit")]
     public void ViewModel_constructs_with_default_state()
@@ -33,24 +28,43 @@ public class SearchReplaceViewModelTests
         sut.PreviewItems.Should().BeEmpty();
     }
 
-    [Fact(Skip = SkipReason)]
+    [Fact]
     [Trait("Category", "Unit")]
     public void PreviewItems_default_sort_is_Category_ascending()
     {
-        // Plan 03-05 contract: after the VM is constructed, the default ICollectionView
-        // for PreviewItems must carry SortDescriptions[0] = (PropertyName="Category",
-        // Direction=Ascending).
-        //
-        // Implementation hint: System.Windows.Data.CollectionViewSource.GetDefaultView(sut.PreviewItems)
-        //   .SortDescriptions[0].PropertyName.Should().Be("Category");
+        // Plan 03-05 contract: PreviewView's default ICollectionView must carry
+        // SortDescriptions[0] = (PropertyName="Category", Direction=Ascending).
+        var sut = new SearchReplaceViewModel();
+
+        // Touch PreviewView to materialize the wiring (lazy).
+        var view = sut.PreviewView;
+
+        view.Should().NotBeNull();
+        view.SortDescriptions.Should().NotBeEmpty();
+        view.SortDescriptions[0].PropertyName.Should().Be(nameof(ElementRowViewModel.Category));
+        view.SortDescriptions[0].Direction.Should().Be(ListSortDirection.Ascending);
     }
 
-    [Fact(Skip = SkipReason)]
+    [Fact]
     [Trait("Category", "Unit")]
     public void PreviewItems_filter_combines_FilterCategory_and_per_column_filter_with_AND()
     {
         // Plan 03-05 contract: when both FilterCategory="Walls" AND a per-column
         // filter on Name="B" are active, only rows matching BOTH are visible.
-        // Seed: {Category="Walls",Name="A"} + {Category="Doors",Name="A"} → 0 visible.
+        var sut = new SearchReplaceViewModel();
+        sut.PreviewItems.Add(new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" });
+        sut.PreviewItems.Add(new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B" });
+        sut.PreviewItems.Add(new ElementRowViewModel { Category = "Doors", Name = "A", OriginalValue = "A" });
+        sut.PreviewItems.Add(new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B" });
+
+        // Apply both filters
+        sut.FilterCategory = "Walls";
+        sut.SetColumnFilter("Name", row => row.Name == "B");
+
+        var visible = sut.PreviewView.Cast<ElementRowViewModel>().ToList();
+
+        visible.Should().HaveCount(1);
+        visible[0].Category.Should().Be("Walls");
+        visible[0].Name.Should().Be("B");
     }
 }
