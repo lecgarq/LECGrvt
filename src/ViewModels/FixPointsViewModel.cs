@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LECG.Core;
+using LECG.Services;
 using LECG.ViewModels.Components;
 
 namespace LECG.ViewModels
@@ -13,7 +14,7 @@ namespace LECG.ViewModels
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
 
         public List<ElementId> SelectedElementIds { get; private set; } = new List<ElementId>();
-        public ObservableCollection<string> SelectedElementSummaries { get; } = new ObservableCollection<string>();
+        public ObservableCollection<ElementRowViewModel> RowItems { get; } = new ObservableCollection<ElementRowViewModel>();
 
         [ObservableProperty]
         private int _sensitivity = 3;
@@ -64,7 +65,7 @@ namespace LECG.ViewModels
                 .ToList();
 
             Selection.UpdateSelection(SelectedElementIds.Count);
-            UpdateSelectedElementSummaries(selectedElements);
+            UpdateRowItems(selectedElements);
         }
 
         public List<Element> GetSelectedElements(Document doc)
@@ -77,23 +78,30 @@ namespace LECG.ViewModels
                 .ToList()!;
         }
 
-        private void UpdateSelectedElementSummaries(IEnumerable<Element> elements)
+        private void UpdateRowItems(IEnumerable<Element> elements)
         {
-            SelectedElementSummaries.Clear();
+            RowItems.Clear();
 
             foreach (Element element in elements)
             {
-                SelectedElementSummaries.Add(DescribeElement(element));
+                var (name, category) = ElementLabelService.GetLabels(element);
+                string status = ResolveStatus(element);
+                RowItems.Add(new ElementRowViewModel
+                {
+                    Id = element.Id.Value,
+                    Name = name,
+                    Category = category,
+                    Type = element.GetType().Name,
+                    Status = status,
+                    IsChecked = true
+                });
             }
         }
 
-        private static string DescribeElement(Element element)
+        private static string ResolveStatus(Element element)
         {
-            string category = element.Category?.Name ?? element.GetType().Name;
             string levelName = GetElementLevel(element)?.Name ?? "No Level";
-            string name = string.IsNullOrWhiteSpace(element.Name) ? category : element.Name;
-
-            return $"ID {element.Id} | {name} | Level: {levelName}";
+            return $"Level: {levelName}";
         }
 
         private static Level? GetElementLevel(Element element)

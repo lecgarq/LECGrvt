@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="DIVIDE TOPOSOLID" Width="420" Height="520" MinWidth="360" MinHeight="460" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Layers}">
+    xmlns:controls="clr-namespace:LECG.Controls"
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="DIVIDE TOPOSOLID" Width="420" Height="520" MinWidth="360" MinHeight="460" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Layers}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -35,15 +36,7 @@
                     <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <comp:SelectionControl DataContext="{Binding Selection}" Margin="0,0,0,12"/>
-                <Border Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="8" Padding="8">
-                    <ListBox ItemsSource="{Binding SelectedElementSummaries}" Height="160" Background="Transparent" BorderThickness="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="0,2" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextPrimary}"/>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListBox>
-                </Border>
+                <controls:ElementGridControl RowItems="{Binding RowItems}" Height="160"/>
             </StackPanel>
         </Border>
 

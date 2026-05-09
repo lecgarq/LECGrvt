@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Autodesk.Revit.DB;
+using LECG.Services;
 using LECG.ViewModels.Components;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
@@ -13,7 +14,7 @@ namespace LECG.ViewModels
     {
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public List<ElementId> SelectedElementIds { get; private set; } = new List<ElementId>();
-        public ObservableCollection<string> SelectedElementSummaries { get; } = new ObservableCollection<string>();
+        public ObservableCollection<ElementRowViewModel> RowItems { get; } = new ObservableCollection<ElementRowViewModel>();
 
         public bool CanRun => Selection.HasSelection;
 
@@ -56,7 +57,7 @@ namespace LECG.ViewModels
             List<Element> selectedElements = elements.Where(element => element != null).ToList();
             SelectedElementIds = selectedElements.Select(element => element.Id).Distinct().ToList();
             Selection.UpdateSelection(SelectedElementIds.Count);
-            UpdateSelectedElementSummaries(selectedElements);
+            UpdateRowItems(selectedElements);
         }
 
         public List<Element> GetSelectedElements(Document doc)
@@ -65,23 +66,32 @@ namespace LECG.ViewModels
             return SelectedElementIds.Select(doc.GetElement).Where(element => element != null).ToList()!;
         }
 
-        private void UpdateSelectedElementSummaries(IEnumerable<Element> elements)
+        private void UpdateRowItems(IEnumerable<Element> elements)
         {
-            SelectedElementSummaries.Clear();
+            RowItems.Clear();
             foreach (Element element in elements)
             {
+                var (name, category) = ElementLabelService.GetLabels(element);
                 int? layerCount = TryGetLayerCount(element);
-                string layerLabel = layerCount.HasValue ? layerCount.Value.ToString() : "?";
-                string status = layerCount switch
+                string status = ResolveStatus(layerCount);
+                RowItems.Add(new ElementRowViewModel
                 {
-                    null => "Layer count unavailable",
-                    <= 1 => "Already single layer",
-                    _ => "Ready to divide"
-                };
-                string category = element.Category?.Name ?? element.GetType().Name;
-                SelectedElementSummaries.Add($"ID {element.Id} | {category} | Layers: {layerLabel} | {status}");
+                    Id = element.Id.Value,
+                    Name = name,
+                    Category = category,
+                    Type = element.GetType().Name,
+                    Status = status,
+                    IsChecked = true
+                });
             }
         }
+
+        private static string ResolveStatus(int? layerCount) => layerCount switch
+        {
+            null => "Layer count unavailable",
+            <= 1 => "Already single layer",
+            _ => $"Ready to divide ({layerCount} layers)"
+        };
 
         private static int? TryGetLayerCount(Element element)
         {
