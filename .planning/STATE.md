@@ -1,22 +1,22 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Optimization
-status: in_progress
-last_updated: "2026-05-09T18:49:33.872Z"
+milestone: v1.2
+milestone_name: Plugin Maturity
+status: unknown
+last_updated: "2026-05-09T19:06:02.219Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 9
+  completed_plans: 10
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 03-grid-collection-fixes
-- **Plan**: 00 + 01 + 02 + 03 of 10 (COMPLETE) — Wave 0 done; Wave 1 done; Wave 2 in progress (03-04 next)
-- **Status**: Plan 03-00, 03-01, 03-02, 03-03 complete; Plan 03-04 (SearchReplacePreviewService → ElementRowViewModel migration) is next and will resolve pre-existing CS0029/CS1503 build errors documented in 03 deferred-items.md
+- **Plan**: 00 + 01 + 02 + 03 + 04 of 10 (COMPLETE) — Wave 0 done; Wave 1 done; Wave 2 done; Wave 3 (03-05) next
+- **Status**: Plans 03-00, 03-01, 03-02, 03-03, 03-04 complete; build clean (0 errors), 98/100 tests pass (2 skipped for 03-05). Plan 03-05 (ICollectionView sort/filter wiring on PreviewItems) is next.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -30,6 +30,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - Plan 03-01 COMPLETE: ElementLabelService — locale-safe GetLabels(Element) + GetLabelsFromRaw pure-string overload; 11/11 GREEN.
 - Plan 03-02 COMPLETE: ElementRowViewModel shared row model under LECG.ViewModels.Components.
 - Plan 03-03 COMPLETE: BaseElementCollectionService null-Category skip removed (REQ-01) — typeCollector + GraphicsStyle paths now route through ElementLabelService.GetLabels; FamilyInstance null-Family skip retained but now logs LogView warning. BaseElementCollectionServiceTests 4/4 GREEN. Pre-existing CS0029/CS1503 errors in SearchReplaceService/SearchReplacePreviewService deferred to Plan 03-04 (per the wave-1→wave-2 handoff decision).
+- Plan 03-04 COMPLETE: SearchReplacePreviewService.ProcessPreview returns List<ElementRowViewModel> with Category/ParamGroup/IsInstance/IsReadOnly propagated; ReplaceItem class deleted; consumer chain (BatchRenameExecutionService, ISearchReplaceService, SearchReplaceService) migrated; XAML rebound (ElementId→Id, ElementName→Name); 3-W0-03 RED tests un-Skipped and GREEN; build clean; 98/100 tests pass.
 
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
@@ -61,6 +62,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 03-03]: BaseElementCollectionService unit tests target ElementLabelService.GetLabelsFromRaw (the SSoT) instead of introducing a NormalizeForRow shim — keeps the public surface focused on a single helper
 - [Phase 03-03]: GraphicsStyle null-GraphicsStyleCategory now produces a fallback row + LogView warning (not a silent skip) — REQ-01's "every collected element produces a row" applies even when category metadata is missing
 - [Phase 03-03]: FamilyInstance null-Family skip retained (no usable parent label) but now emits Logger.LogWarning so the skip is observable
+- [Phase 03]: [Phase 03-04]: Atomic ReplaceItem -> ElementRowViewModel swap across preview + execution + VM + XAML in single plan; transient broken state between Task 1/2 commits is acceptable per RESEARCH Pitfall 2
+- [Phase 03]: [Phase 03-04]: ProcessPreview is pure pass-through for Category — no fallback computation; the collection layer (Plan 03-03) owns the non-blank invariant
+- [Phase 03]: [Phase 03-04]: Field-rename at consumers — ElementId -> Id, ElementName -> Name (single naming convention via ElementRowViewModel)
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -74,12 +78,13 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P01 | 8min | 1 tasks | 2 files |
 | Phase 03 P00 | 6min | 3 tasks | 4 files |
 | Phase 03 P03 | 12min | 2 tasks | 2 files |
+| Phase 03 P04 | 18min | 2 tasks | 9 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-03-PLAN.md (BaseElementCollectionService null-Category fallback)
+- **Stopped at**: Completed 03-04-PLAN.md (SearchReplacePreviewService → ElementRowViewModel migration; ReplaceItem deleted)
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Phase 03 Wave 2: Plan 03-04 next (SearchReplacePreviewService → ElementRowViewModel migration). Will resolve the two deferred CS0029/CS1503 errors logged in `.planning/phases/03-grid-collection-fixes/deferred-items.md`.
+1. Phase 03 Wave 3: Plan 03-05 next (ICollectionView sort/filter wiring on PreviewItems — Category-ascending default + AND-combined per-column filters). Un-Skip the two 3-W0-04 SearchReplaceViewModelTests scaffolds.
 2. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (Phase 02.5) + REQ-01 (Plan 03-09)
 3. Begin v1.2 milestone planning or next phase

@@ -36,3 +36,7 @@ refactor reduced the count to two).
 SCOPE BOUNDARY: errors are not caused by Plan 03-03's changes; they
 exist in unrelated files; the migration is the planned deliverable of
 Plan 03-04 in the same wave-2.
+
+#### Status (updated 2026-05-09 — Plan 03-04)
+
+**RESOLVED.** Plan 03-04 commit `3a29be6` migrated `SearchReplacePreviewService` and consumers to `List<ElementRowViewModel>` and deleted `ReplaceItem`. Both CS0029 and CS1503 errors are gone. Verified by `dotnet build LECG.Tests/LECG.Tests.csproj -p:SkipRevitDeploy=true`: 0 errors, 0 warnings; `dotnet test`: 98 passed, 2 skipped (Plan 03-05 reserved).
