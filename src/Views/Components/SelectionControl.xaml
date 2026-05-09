@@ -3,19 +3,31 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:LECG.Views.Components" mc:Ignorable="d" d:DesignHeight="60" d:DesignWidth="300">
+    xmlns:controls="clr-namespace:LECG.Controls"
+    xmlns:local="clr-namespace:LECG.Views.Components" mc:Ignorable="d" d:DesignHeight="220" d:DesignWidth="300">
 
-    <Grid Margin="0,5">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibility"/>
+    </UserControl.Resources>
 
-        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
-            <TextBlock Text="{Binding SelectionStatus}" FontSize="{DynamicResource FontSizeBody}" FontWeight="{DynamicResource WeightSemiBold}" Foreground="{DynamicResource LecgTextPrimary}"/>
-            <TextBlock Text="Click to add or change" FontSize="{DynamicResource FontSizeExtraSmall}" Foreground="{DynamicResource LecgTextMuted}"/>
-        </StackPanel>
+    <StackPanel>
+        <Grid Margin="0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-        <Button Grid.Column="1" Content="Select..." Command="{Binding SelectCommand}" Style="{DynamicResource SecondaryButtonStyle}" Width="80" Height="32"/>
-    </Grid>
+            <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="0,0,10,0">
+                <TextBlock Text="{Binding SelectionStatus}" FontSize="{DynamicResource FontSizeBody}" FontWeight="{DynamicResource WeightSemiBold}" Foreground="{DynamicResource LecgTextPrimary}"/>
+                <TextBlock Text="Click to add or change" FontSize="{DynamicResource FontSizeExtraSmall}" Foreground="{DynamicResource LecgTextMuted}"/>
+            </StackPanel>
+
+            <Button Grid.Column="1" Content="Select..." Command="{Binding SelectCommand}" Style="{DynamicResource SecondaryButtonStyle}" Width="80" Height="32"/>
+        </Grid>
+
+        <controls:ElementGridControl RowItems="{Binding RowItems}"
+                                     Height="160"
+                                     Margin="0,8,0,0"
+                                     Visibility="{Binding HasSelection, Converter={StaticResource BoolToVisibility}}"/>
+    </StackPanel>
 </UserControl>
