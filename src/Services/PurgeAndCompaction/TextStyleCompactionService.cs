@@ -173,9 +173,9 @@ namespace LECG.Services
             double widthScale = GetDoubleParam(type, BuiltInParameter.TEXT_WIDTH_SCALE);
             int background = GetIntParam(type, BuiltInParameter.TEXT_BACKGROUND);
             double tabSize = GetDoubleParam(type, BuiltInParameter.TEXT_TAB_SIZE);
-            int alignment = GetIntParamByName(type, "Horizontal Alignment");
-            int orientation = GetIntParamByName(type, "Text Orientation");
-            string leaderArrow = GetElementIdParamByName(type, "Leader Arrowhead");
+            int alignment = GetIntParam(type, BuiltInParameter.TEXT_ALIGNMENT);
+            string orientation = GetOrientationSentinel(type);
+            string leaderArrow = GetElementIdParam(type, BuiltInParameter.LEADER_ARROWHEAD);
 
             parts.Add($"Font:{font}");
             parts.Add($"Size:{size.ToString("0.######", CultureInfo.InvariantCulture)}");
@@ -211,17 +211,21 @@ namespace LECG.Services
             return p?.AsInteger() ?? 0;
         }
 
-        private static int GetIntParamByName(TextNoteType type, string name)
+        private static string GetElementIdParam(TextNoteType type, BuiltInParameter param)
         {
-            Parameter? p = type.LookupParameter(name);
-            return p?.AsInteger() ?? 0;
-        }
-
-        private static string GetElementIdParamByName(TextNoteType type, string name)
-        {
-            Parameter? p = type.LookupParameter(name);
+            Parameter p = type.get_Parameter(param);
             ElementId elementId = p?.AsElementId() ?? ElementId.InvalidElementId;
             return elementId.ToString();
+        }
+
+        private static string GetOrientationSentinel(TextNoteType type)
+        {
+            // "Text Orientation" has no BuiltInParameter in Revit 2024.
+            // English Revit: LookupParameter resolves; preserve current integer value.
+            // Spanish (or unreadable): return per-type sentinel so distinct types never falsely merge.
+            Parameter? p = type.LookupParameter("Text Orientation");
+            if (p != null) return p.AsInteger().ToString(CultureInfo.InvariantCulture);
+            return $"ORIENTATION_UNREADABLE:{type.Id}";
         }
 
         private static ElementId CreateCanonicalType(Document doc, TextNoteType seed, string canonicalName)
