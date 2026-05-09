@@ -11,4 +11,4 @@
 | REQ-07 | Fix FormulaAutoGrouping: parameters with formulas must reliably move to "Other" group without rollback | Bug Fix | Pending |
 | REQ-08 | Compact Styles must not merge visually different text styles on localized Revit (locale-safe parameter lookup) | Audit 2026-05-08 | Pending |
 | REQ-09 | Category Changer must transplant ALL instance location types (LocationCurve, hosted, face-hosted) or refuse with a clear log — no silent partial success | Audit 2026-05-08 | Complete (refuse path implemented; hosted/curve placement deferred to v1.2) |
-| REQ-10 | Convert Family must preserve host, location curve, and original symbol identity, and must not delete originals before new family loads | Audit 2026-05-08 | Pending |
+| REQ-10 | Convert Family must preserve host, location curve, and original symbol identity, and must not delete originals before new family loads | Audit 2026-05-08 | Complete (load-before-delete + pre-flight + exact symbol match + hosted/curve placement; face-hosted deferred to v1.2) |

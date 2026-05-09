@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-09T03:48:57.642Z"
+last_updated: "2026-05-09T03:53:32.112Z"
 progress:
   total_phases: 6
-  completed_phases: 1
+  completed_phases: 2
   total_plans: 5
-  completed_plans: 4
+  completed_plans: 5
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 2.5
-- **Plan**: 2 of 3 (COMPLETE) — next: 02.5-03
-- **Status**: In Progress
+- **Plan**: 3 of 3 (COMPLETE) — Phase 2.5 COMPLETE
+- **Status**: Phase 2.5 Complete — phase-end Revit verification pending
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -28,7 +28,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
 - Plan 02.5-02 COMPLETE: Category Changer (REQ-09) — refuse-all pre-flight in SwapInstances. Manual Revit verification pending (phase-end session per CONTEXT.md §D).
-- Plan 02.5-03 PENDING: Convert Family (REQ-10) — pre-flight validator + load-before-delete ordering + symbol match.
+- Plan 02.5-03 COMPLETE: Convert Family (REQ-10) — pre-flight validator + load-before-delete ordering + exact symbol-name match + hosted/curve placement overloads. Manual Revit verification pending (phase-end session per CONTEXT.md §D).
 
 ## Decisions
 - SubTransaction per parameter in MoveParamsToGroup: one failed move logs and continues rather than aborting all params.
@@ -40,6 +40,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 02.5-02]: Refuse-all (not partial-success) for mixed batches — any unsupported instance aborts entire SwapInstances swap
 - [Phase 02.5-02]: GetUnsupportedReason check order: LocationCurve > HostFace > Host > non-LocationPoint; HostFace before Host gives more precise label for face-hosted instances with both set
 - [Phase 02.5-02]: LocationCurve / hosted / face-hosted placement paths deferred to v1.2; no SubTransaction; logging surface stays LogView only
+- [Phase 02.5]: FamilyLoadOptionsFactory verified to force overwrite — load-before-delete safe with live instances (REQ-10)
+- [Phase 02.5]: Face-hosted preservation deferred to v1.2: FamilyInstanceData lacks HostFace capture; Branch 3 fallback documented as known limitation
+- [Phase 02.5]: FindReplacementSymbolByName uses ordinal exact-name match; no first-symbol fallback; missing type name throws before delete (REQ-10)
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -48,11 +51,12 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 02 P02 | 10min | 1 tasks | 1 files |
 | Phase 02.5 P01 | 15min | 1 tasks | 1 files |
 | 02.5  | 02   | 1min     | 1     | 1     |
+| Phase 02.5 P03 | 18min | 3 tasks | 2 files |
 
 ## Last Session
-- **Stopped at**: Completed 02.5-02-PLAN.md
+- **Stopped at**: Completed 02.5-03-PLAN.md
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Execute Phase 2.5 Plan 03: Convert Family pre-flight validator (REQ-10)
-2. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10
+1. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (per CONTEXT.md §D)
+2. Begin v1.2 milestone planning or next phase
