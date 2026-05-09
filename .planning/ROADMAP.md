@@ -41,16 +41,19 @@ Plans:
 **Status**: Not Started
 **Goal**: Fix blank fields and collection logic so all elements appear with valid name and category labels.
 **Requirements**: REQ-01
+**Gap Closure**: Closes REQ-01 from v1.1 milestone audit (2026-05-09)
 
 ### Phase 4: Advanced Renaming Logic
 **Status**: Not Started
 **Goal**: Implement safe renaming for stubborn parameters (formula-referenced and dimension-label parameters).
 **Requirements**: REQ-02, REQ-03, REQ-04
+**Gap Closure**: Closes REQ-02, REQ-03, REQ-04 from v1.1 milestone audit (2026-05-09)
 
 ### Phase 5: Verification & Polish
 **Status**: Not Started
 **Goal**: Full test coverage and final bug fixes.
 **Requirements**: REQ-05
+**Gap Closure**: Closes REQ-05 from v1.1 milestone audit (2026-05-09)
 
 ---
 
