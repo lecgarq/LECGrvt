@@ -1,22 +1,22 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.2
-milestone_name: Plugin Maturity
-status: unknown
-last_updated: "2026-05-09T18:40:21.004Z"
+milestone: v1.1
+milestone_name: Optimization
+status: in_progress
+last_updated: "2026-05-09T18:42:13Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 03-grid-collection-fixes
-- **Plan**: 01 + 02 of 10 (COMPLETE) — Wave 1 in progress (parallel)
-- **Status**: Plans 03-01 (ElementLabelService) and 03-02 (ElementRowViewModel) complete; Wave 1 remaining tasks pending
+- **Plan**: 00 + 01 + 02 of 10 (COMPLETE) — Wave 0 done; Wave 1 done; Wave 2 next
+- **Status**: Plan 03-00 (Wave 0 test scaffolds), 03-01 (ElementLabelService), 03-02 (ElementRowViewModel) complete; Wave 2 (03-03, 03-04) next
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -24,6 +24,11 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 ## Phase 2 Progress
 - Plan 02-01 COMPLETE: SubTransaction loop, EnsureCurrentType guard, in-transaction false-negative check removal, EnsureParametersPersistInGroup restricted to post-reload.
 - Plan 02-02 COMPLETE: TryReplaceSharedParameterGroup clear-restore sequence for shared parameters with cross-references.
+
+## Phase 3 Progress
+- Plan 03-00 COMPLETE: Wave 0 test scaffolds (REQ-01) — 4 xUnit fixtures (1 GREEN consumed by 03-01, 3 RED skip-gated for plans 03-03/04/05); VALIDATION.md flags `nyquist_compliant: true`, `wave_0_complete: true`; per-task map covers plans 03-01..09.
+- Plan 03-01 COMPLETE: ElementLabelService — locale-safe GetLabels(Element) + GetLabelsFromRaw pure-string overload; 11/11 GREEN.
+- Plan 03-02 COMPLETE: ElementRowViewModel shared row model under LECG.ViewModels.Components.
 
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
@@ -48,6 +53,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 03]: ElementLabelService placed in src/Services (LECG.csproj) — GetLabels(Element) requires Revit API; pure-string overload supports unit-testing without Revit Document
 - [Phase 03]: Locale-safe category labels via LabelUtils.GetLabelFor((BuiltInCategory)cat.Id.Value); explicit null-check on Category (NOT element.Category?.Id.Value chain — short-circuits to nullable long which mis-casts)
 - [Phase 03]: ALL_MODEL_TYPE_NAME parameter fallback for blank Element.Name (non-English Revit pitfall); Logger.LogWarning fires only when fallback actually triggered
+- [Phase 03-00]: Skip-gated RED tests with reason strings naming the implementing plan — keeps suite green and gives plan authors a greppable flip-point
+- [Phase 03-00]: One non-skipped anchor test per fixture ensures `dotnet test --filter` discovers it even when all behavioral tests are skip-gated
+- [Phase 03-00]: SearchReplacePreviewService anchor DisplayName-marked "delete in 03-04" — Plan 03-04 must remove it during ElementRowViewModel migration
+- [Phase 03-00]: Canonical local build command while Revit is open: `dotnet build LECG.Tests/LECG.Tests.csproj -p:SkipRevitDeploy=true` (bypasses MSB3027 file-lock on ProgramData addins folder)
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -59,12 +68,13 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 02.5 P03 | 18min | 3 tasks | 2 files |
 | Phase 03 P02 | 6min | 1 tasks | 1 files |
 | Phase 03 P01 | 8min | 1 tasks | 2 files |
+| Phase 03 P00 | 6min | 3 tasks | 4 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-02-PLAN.md
+- **Stopped at**: Completed 03-00-PLAN.md (Wave 0 test scaffolds)
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Continue Phase 03 Wave 1 / Wave 2 plans (03-01, 03-03, ...)
-2. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (per CONTEXT.md §D)
+1. Phase 03 Wave 2 (plans 03-03, 03-04): BaseElementCollectionService null-skip removal + SearchReplacePreviewService → ElementRowViewModel migration
+2. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (Phase 02.5) + REQ-01 (Plan 03-09)
 3. Begin v1.2 milestone planning or next phase
