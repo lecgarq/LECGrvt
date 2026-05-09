@@ -3,7 +3,7 @@ phase: 3
 slug: grid-collection-fixes
 status: planned
 nyquist_compliant: true
-wave_0_complete: false
+wave_0_complete: true
 created: 2026-05-09
 ---
 
@@ -40,27 +40,24 @@ created: 2026-05-09
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 3-W0-01 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~ElementLabelServiceTests"` | ⬜ planned | ⬜ pending |
-| 3-W0-02 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~BaseElementCollectionServiceTests"` | ⬜ planned | ⬜ pending |
-| 3-W0-03 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~SearchReplacePreviewServiceTests"` | ⬜ planned | ⬜ pending |
-| 3-W0-04 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~SearchReplaceViewModelTests"` | ⬜ planned | ⬜ pending |
-| 3-W0-T3 | 00 | 0 | REQ-01 | doc | `grep -c "nyquist_compliant: true" .planning/phases/03-grid-collection-fixes/03-VALIDATION.md` | ✅ | ⬜ pending |
-| 3-01-T1 | 01 | 1 | REQ-01 | unit (green) | `dotnet test --filter "FullyQualifiedName~ElementLabelServiceTests"` | ✅ after W0 | ⬜ pending |
-| 3-02-T1 | 02 | 1 | REQ-01 | compile | `dotnet build LECG.sln` | ✅ | ⬜ pending |
-| 3-03-T1 | 03 | 2 | REQ-01 | unit (green) | `dotnet test --filter "FullyQualifiedName~BaseElementCollectionServiceTests"` | ✅ after W0 | ⬜ pending |
-| 3-03-T2 | 03 | 2 | REQ-01 | suite | `dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-04-T1 | 04 | 2 | REQ-01 | unit (green) | `dotnet test --filter "FullyQualifiedName~SearchReplacePreviewServiceTests"` | ✅ after W0 | ⬜ pending |
-| 3-04-T2 | 04 | 2 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-05-T1 | 05 | 3 | REQ-01 | compile | `dotnet build LECG.sln` | ✅ | ⬜ pending |
-| 3-05-T2 | 05 | 3 | REQ-01 | unit (green) + suite | `dotnet test --filter "FullyQualifiedName~SearchReplaceViewModelTests"` then full suite | ✅ after W0 | ⬜ pending |
-| 3-05-T3 | 05 | 3 | REQ-01 | manual-only (Revit) | N/A — checkpoint:human-verify | N/A | ⬜ pending |
-| 3-06-T1 | 06 | 4 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-06-T2 | 06 | 4 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-07-T1 | 07 | 4 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-07-T2 | 07 | 4 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-08-T1 | 08 | 5 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-08-T2 | 08 | 5 | REQ-01 | compile+suite | `dotnet build LECG.sln; dotnet test LECG.Tests/LECG.Tests.csproj` | ✅ | ⬜ pending |
-| 3-09-T1 | 09 | 6 | REQ-01 | manual-only (Revit) | N/A — checkpoint:human-verify | N/A | ⬜ pending |
+| 3-W0-01 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~ElementLabelServiceTests"` | ✅ | ✅ green (consumed by 03-01) |
+| 3-W0-02 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~BaseElementCollectionServiceTests"` | ✅ | ⬜ red (skip-gated, awaiting 03-03) |
+| 3-W0-03 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~SearchReplacePreviewServiceTests"` | ✅ | ⬜ red (skip-gated, awaiting 03-04) |
+| 3-W0-04 | 00 | 0 | REQ-01 | unit (red) | `dotnet test --filter "FullyQualifiedName~SearchReplaceViewModelTests"` | ✅ | ⬜ red (skip-gated, awaiting 03-05) |
+| 3-W0-T3 | 00 | 0 | REQ-01 | doc | `grep -c "nyquist_compliant: true" .planning/phases/03-grid-collection-fixes/03-VALIDATION.md` | ✅ | ✅ green |
+| 3-01-T1 | 01 | 1 | REQ-01 | unit (green) | `dotnet test --filter "FullyQualifiedName~ElementLabelServiceTests"` | ✅ | ✅ green |
+| 3-02-T1 | 02 | 1 | REQ-01 | unit (compile) | `dotnet build LECG.csproj` | ✅ | ✅ green |
+| 3-03-T1 | 03 | 2 | REQ-01 | unit | `dotnet test --filter "FullyQualifiedName~BaseElementCollectionServiceTests"` | ✅ | ⬜ pending |
+| 3-03-T2 | 03 | 2 | REQ-01 | unit | `dotnet test --filter "FullyQualifiedName~BaseElementCollectionServiceTests"` | ✅ | ⬜ pending |
+| 3-04-T1 | 04 | 2 | REQ-01 | unit | `dotnet test --filter "FullyQualifiedName~SearchReplacePreviewServiceTests"` | ✅ | ⬜ pending |
+| 3-04-T2 | 04 | 2 | REQ-01 | unit | `dotnet test --filter "FullyQualifiedName~SearchReplacePreviewServiceTests"` | ✅ | ⬜ pending |
+| 3-05-T1 | 05 | 3 | REQ-01 | unit (VM) | `dotnet test --filter "FullyQualifiedName~SearchReplaceViewModelTests"` | ✅ | ⬜ pending |
+| 3-05-T2 | 05 | 3 | REQ-01 | manual+compile | `dotnet build LECG.csproj`; manual Revit verify | ✅/N/A | ⬜ pending |
+| 3-05-T3 | 05 | 3 | REQ-01 | unit (VM) | `dotnet test --filter "FullyQualifiedName~SearchReplaceViewModelTests"` | ✅ | ⬜ pending |
+| 3-06-T1..T2 | 06 | 4 | REQ-01 | compile+manual | `dotnet build LECG.csproj` | ✅ | ⬜ pending |
+| 3-07-T1..T2 | 07 | 4 | REQ-01 | compile+manual | `dotnet build LECG.csproj` | ✅ | ⬜ pending |
+| 3-08-T1..T2 | 08 | 5 | REQ-01 | compile+manual | `dotnet build LECG.csproj` | ✅ | ⬜ pending |
+| 3-09-T1 | 09 | 6 | REQ-01 | manual-only | N/A — Revit session | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -68,10 +65,10 @@ created: 2026-05-09
 
 ## Wave 0 Requirements
 
-- [ ] `LECG.Tests/Services/ElementLabelServiceTests.cs` — name-blank fallback and category-null fallback (REQ-01)
-- [ ] `LECG.Tests/Services/BaseElementCollectionServiceTests.cs` — removal of null-skip, fallback chain integration (REQ-01)
-- [ ] `LECG.Tests/Services/SearchReplacePreviewServiceTests.cs` — Category propagation from `ElementData` into `ElementRowViewModel` (REQ-01)
-- [ ] `LECG.Tests/ViewModels/SearchReplaceViewModelTests.cs` — default sort direction on `ICollectionView`, AND-combined filter (REQ-01)
+- [x] `LECG.Tests/Services/ElementLabelServiceTests.cs` — name-blank fallback and category-null fallback (REQ-01)
+- [x] `LECG.Tests/Services/BaseElementCollectionServiceTests.cs` — removal of null-skip, fallback chain integration (REQ-01)
+- [x] `LECG.Tests/Services/SearchReplacePreviewServiceTests.cs` — Category propagation from `ElementData` into `ElementRowViewModel` (REQ-01)
+- [x] `LECG.Tests/ViewModels/SearchReplaceViewModelTests.cs` — default sort direction on `ICollectionView`, AND-combined filter (REQ-01)
 
 (`nyquist_compliant: true` is set because every implementation task above maps to one of these four fixtures or a compile/suite gate. The four checkboxes flip during Plan 03-00 execution; `wave_0_complete` flips at end of Plan 03-00 Task 3.)
 
@@ -97,4 +94,4 @@ created: 2026-05-09
 - [x] Feedback latency < 60s (full suite ~60s, quick run ~30s).
 - [x] `nyquist_compliant: true` set in frontmatter.
 
-**Approval:** plan complete; awaiting Wave 0 execution.
+**Approval:** Wave 0 complete; awaiting Wave 1.
