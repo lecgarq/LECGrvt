@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 
 namespace LECG.Services
 {
@@ -18,14 +19,14 @@ namespace LECG.Services
 
                 foreach (var el in typeCollector)
                 {
-                    if (el.Category == null) continue;
+                    var (resolvedName, resolvedCategory) = ElementLabelService.GetLabels(el);
                     data.Add(new ElementData
                     {
                         Id = el.Id.Value,
-                        Name = el.Name,
-                        Category = el.Category.Name,
+                        Name = resolvedName,
+                        Category = resolvedCategory,
                         Type = "Type",
-                        OriginalValue = el.Name
+                        OriginalValue = resolvedName
                     });
                 }
             }
@@ -103,7 +104,27 @@ namespace LECG.Services
                     if (el is GraphicsStyle gs && gs.GraphicsStyleType == GraphicsStyleType.Projection)
                     {
                         Category cat = gs.GraphicsStyleCategory;
-                        if (cat == null) continue;
+                        if (cat == null)
+                        {
+                            // Fallback: GraphicsStyleCategory missing — surface the row via ElementLabelService
+                            // rather than silently skipping. Locale-safe label resolution + LogView warning.
+                            var (gsName, gsCategory) = ElementLabelService.GetLabels(gs);
+                            try
+                            {
+                                Logger.Instance.LogWarning(
+                                    $"BaseElementCollectionService: GraphicsStyle {gs.Id.Value} has null GraphicsStyleCategory — using fallback label ({gsName}, {gsCategory})");
+                            }
+                            catch { }
+                            data.Add(new ElementData
+                            {
+                                Id = gs.Id.Value,
+                                Name = gsName,
+                                Category = gsCategory,
+                                Type = "ObjectStyle",
+                                OriginalValue = gsName
+                            });
+                            continue;
+                        }
 
                         // Identify if this is a built-in category/subcategory
                         // SAFE CHECK: BuiltInCategories have negative integer IDs.
@@ -248,7 +269,16 @@ namespace LECG.Services
 
                 foreach (FamilyInstance fi in instanceCollector)
                 {
-                    if (fi.Symbol?.Family == null) continue;
+                    if (fi.Symbol?.Family == null)
+                    {
+                        try
+                        {
+                            Logger.Instance.LogWarning(
+                                $"BaseElementCollectionService: skipping family parameter row for FamilyInstance {fi.Id.Value} — Symbol or Family null");
+                        }
+                        catch { }
+                        continue;
+                    }
                     long familyId = fi.Symbol.Family.Id.Value;
 
                     // Skip if we already scanned an instance of this family
