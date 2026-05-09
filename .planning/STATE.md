@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: in_progress
-last_updated: "2026-05-09T20:30:00.000Z"
+last_updated: "2026-05-09T20:08:42.322Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 11
+  completed_plans: 13
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 03-grid-collection-fixes
-- **Plan**: 00 + 01 + 02 + 03 + 04 + 05 of 10 (COMPLETE) — Waves 0-3 done; Wave 4 (03-06) next
-- **Status**: Plans 03-00..03-05 complete; build clean (0 errors), 100/100 tests GREEN. Plan 03-05 user-verified in Revit (Batch Rename grid). Plan 03-06 (text-summary screens batch A migration to ElementGridControl) is next.
+- **Plan**: 00 + 01 + 02 + 03 + 04 + 05 + 06 + 07 of 10 (COMPLETE) — Waves 0-4 done; Wave 5 (03-08) next
+- **Status**: Plans 03-00..03-07 complete; build clean (0 errors, 0 warnings), 100/100 tests GREEN. Plan 03-07 migrated SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid to ElementGridControl (parallel-safe with Plan 03-06 batch A on disjoint files). Cross-VM grep `ObservableCollection<string> SelectedElementSummaries` returns zero hits across all six text-summary VMs. Plan 03-08 (Wave 5: selection-backed screen sweep — Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints) is next.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -32,6 +32,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - Plan 03-03 COMPLETE: BaseElementCollectionService null-Category skip removed (REQ-01) — typeCollector + GraphicsStyle paths now route through ElementLabelService.GetLabels; FamilyInstance null-Family skip retained but now logs LogView warning. BaseElementCollectionServiceTests 4/4 GREEN. Pre-existing CS0029/CS1503 errors in SearchReplaceService/SearchReplacePreviewService deferred to Plan 03-04 (per the wave-1→wave-2 handoff decision).
 - Plan 03-04 COMPLETE: SearchReplacePreviewService.ProcessPreview returns List<ElementRowViewModel> with Category/ParamGroup/IsInstance/IsReadOnly propagated; ReplaceItem class deleted; consumer chain (BatchRenameExecutionService, ISearchReplaceService, SearchReplaceService) migrated; XAML rebound (ElementId→Id, ElementName→Name); 3-W0-03 RED tests un-Skipped and GREEN; build clean; 98/100 tests pass.
 - Plan 03-05 COMPLETE: ElementGridControl shared UserControl (Sel|Type|Category|Name|Status, wraps LecgDataGrid) shipped; SearchReplaceViewModel.PreviewView ICollectionView wires Category-asc default sort + AND-combined filter (FilterCategory dropdown + SetColumnFilter per-column predicate API); SearchReplaceView.xaml column order locked to ☑|Type|Category|Original|New; FilterCategory filtering removed from ProcessPreview; 3-W0-04 RED tests un-Skipped and GREEN (100/100 suite GREEN, build clean). User visually verified Batch Rename grid in Revit (column order, default sort, sort flip, FilterCategory, no blank rows, FamilyParameter scope all confirmed). Per-column header funnel chrome deferred to v1.2 follow-up — functional plumbing (SetColumnFilter API) proven via unit test.
+- Plan 03-07 COMPLETE: Text-summary batch B migration (REQ-01) — SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid VMs/Views migrated from `ObservableCollection<string> SelectedElementSummaries` to `ObservableCollection<ElementRowViewModel> RowItems` rendered through `ElementGridControl`. SplitBoundaries Status: boundary-count outcome ("Ready to split (N boundaries)" / "No split needed" / "Boundary count unavailable"). Conversion screens Status: "<SourceTypeName> @ <LevelName>" (preserves prior DescribeElement summary verbatim). Cross-VM grep `ObservableCollection<string> SelectedElementSummaries` returns zero hits across all six text-summary VMs. Build clean (0/0); 100/100 tests GREEN.
 
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
@@ -70,6 +71,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 03-05]: Per-column filter exposed as SetColumnFilter(name, predicate) API on the ViewModel; visual WPF header funnel chrome (popup of distinct values) deferred to v1.2 follow-up — functional plumbing proven via unit test
 - [Phase 03-05]: ICollectionView ownership lives on the ViewModel (PreviewView), not the control — each screen owns its own sort/filter semantics
 - [Phase 03-05]: FilterCategory predicate moved out of SearchReplacePreviewService.ProcessPreview; collection layer (Plan 03-03) owns invariants, ICollectionView owns post-collection filtering (no preview re-run on filter change)
+- [Phase 03]: [Phase 03-07]: Conversion screens (ConvertToposolidToFloor / ConvertFloorToToposolid) Status format = '<TypeName> @ <LevelName>' — preserves prior DescribeElement summary verbatim; eligibility detection deferred (no IConversionService eligibility API exists; out of scope for REQ-01)
+- [Phase 03]: [Phase 03-06]: ConvertCad single-select screen — RowItems populated on SetSelection with one row; legacy screen had no SelectedElementSummaries to migrate, but must_haves contract honoured by adding the grid below SelectionControl in Selection-mode only
+- [Phase 03]: [Phase 03-06]: Status column content per screen — DivideToposolid='Ready to divide (N layers)/Already single layer/Layer count unavailable'; FixPoints='Level: {name}'; ConvertCad='Type: {typeName}'
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -85,15 +89,15 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P03 | 12min | 2 tasks | 2 files |
 | Phase 03 P04 | 18min | 2 tasks | 9 files |
 | Phase 03 P05 | 45min | 3 tasks | 5 files |
+| Phase 03 P07 | 12min | 2 tasks | 6 files |
+| Phase 03 P06 | 3min | 2 tasks | 6 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-05-PLAN.md (ElementGridControl + Batch Rename ICollectionView sort/filter; user-verified in Revit)
+- **Stopped at**: Completed 03-07-PLAN.md (text-summary batch B migration to ElementGridControl; cross-VM grep zero hits across all six text-summary VMs)
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Phase 03 Wave 4: Plan 03-06 next (migrate text-summary screens batch A — DivideToposolid, FixPoints, ConvertCad — to ElementGridControl).
-2. Phase 03 Wave 4: Plan 03-07 (text-summary batch B — SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid).
-3. Phase 03 Wave 5: Plan 03-08 (selection-backed screen sweep — Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints).
-4. Phase 03 Wave 6: Plan 03-09 phase-end manual Revit verification (REQ-01 acceptance) + REQ-08/09/10 verification from Phase 02.5.
-5. Begin v1.2 milestone planning or next phase.
-6. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
+1. Phase 03 Wave 5: Plan 03-08 (selection-backed screen sweep — Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints).
+2. Phase 03 Wave 6: Plan 03-09 phase-end manual Revit verification (REQ-01 acceptance) + REQ-08/09/10 verification from Phase 02.5.
+3. Begin v1.2 milestone planning or next phase.
+4. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
