@@ -5,6 +5,7 @@ using System.Linq;
 using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LECG.Core;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels.Components;
 
@@ -31,7 +32,7 @@ namespace LECG.ViewModels
 
         public ObservableCollection<ElementType> TargetTypes { get; } = new ObservableCollection<ElementType>();
         public ObservableCollection<Level> Levels { get; } = new ObservableCollection<Level>();
-        public ObservableCollection<string> SelectedElementSummaries { get; } = new ObservableCollection<string>();
+        public ObservableCollection<ElementRowViewModel> RowItems { get; } = new ObservableCollection<ElementRowViewModel>();
 
         public bool CanRun => _doc != null && SelectedType != null && SelectedLevel != null && Selection.HasSelection;
 
@@ -99,7 +100,7 @@ namespace LECG.ViewModels
                 .ToList();
 
             Selection.UpdateSelection(_selectedElementIds.Count);
-            UpdateSelectedElementSummaries(selectedElements);
+            UpdateRowItems(selectedElements);
 
             if (selectedElements.Count > 0)
             {
@@ -164,24 +165,27 @@ namespace LECG.ViewModels
             return null;
         }
 
-        private void UpdateSelectedElementSummaries(IEnumerable<Element> elements)
+        private void UpdateRowItems(IEnumerable<Element> elements)
         {
-            SelectedElementSummaries.Clear();
+            RowItems.Clear();
 
             foreach (Element element in elements)
             {
-                SelectedElementSummaries.Add(DescribeElement(element));
+                var (name, category) = ElementLabelService.GetLabels(element);
+                string typeName = GetElementTypeName(element) ?? "Unknown Type";
+                string levelName = GetElementLevel(element)?.Name ?? "No Level";
+                string status = $"{typeName} @ {levelName}";
+
+                RowItems.Add(new ElementRowViewModel
+                {
+                    Id = element.Id.Value,
+                    Name = name,
+                    Category = category,
+                    Type = element.GetType().Name,
+                    Status = status,
+                    IsChecked = true
+                });
             }
-        }
-
-        private static string DescribeElement(Element element)
-        {
-            string category = element.Category?.Name ?? element.GetType().Name;
-            string typeName = GetElementTypeName(element) ?? "Unknown Type";
-            string levelName = GetElementLevel(element)?.Name ?? "No Level";
-            string name = string.IsNullOrWhiteSpace(element.Name) ? category : element.Name;
-
-            return $"ID {element.Id} | {name} | Type: {typeName} | Level: {levelName}";
         }
     }
 }

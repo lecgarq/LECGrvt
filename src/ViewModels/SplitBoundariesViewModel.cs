@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Autodesk.Revit.DB;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels.Components;
 using RevitExceptions = Autodesk.Revit.Exceptions;
@@ -16,7 +17,7 @@ namespace LECG.ViewModels
 
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public List<ElementId> SelectedElementIds { get; private set; } = new List<ElementId>();
-        public ObservableCollection<string> SelectedElementSummaries { get; } = new ObservableCollection<string>();
+        public ObservableCollection<ElementRowViewModel> RowItems { get; } = new ObservableCollection<ElementRowViewModel>();
 
         public bool CanRun => Selection.HasSelection;
 
@@ -60,7 +61,7 @@ namespace LECG.ViewModels
             List<Element> selectedElements = elements.Where(element => element != null).ToList();
             SelectedElementIds = selectedElements.Select(element => element.Id).Distinct().ToList();
             Selection.UpdateSelection(SelectedElementIds.Count);
-            UpdateSelectedElementSummaries(selectedElements);
+            UpdateRowItems(selectedElements);
         }
 
         public List<Element> GetSelectedElements(Document doc)
@@ -69,16 +70,29 @@ namespace LECG.ViewModels
             return SelectedElementIds.Select(doc.GetElement).Where(element => element != null).ToList()!;
         }
 
-        private void UpdateSelectedElementSummaries(IEnumerable<Element> elements)
+        private void UpdateRowItems(IEnumerable<Element> elements)
         {
-            SelectedElementSummaries.Clear();
+            RowItems.Clear();
             foreach (Element element in elements)
             {
+                var (name, category) = ElementLabelService.GetLabels(element);
                 int? boundaryCount = TryGetBoundaryCount(element);
-                string boundaryLabel = boundaryCount.HasValue ? boundaryCount.Value.ToString() : "?";
-                string status = boundaryCount switch { null => "Boundary count unavailable", <= 1 => "No split needed", _ => "Ready to split" };
-                string category = element.Category?.Name ?? element.GetType().Name;
-                SelectedElementSummaries.Add($"ID {element.Id} | {category} | Boundaries: {boundaryLabel} | {status}");
+                string status = boundaryCount switch
+                {
+                    null => "Boundary count unavailable",
+                    <= 1 => "No split needed",
+                    _ => $"Ready to split ({boundaryCount.Value} boundaries)"
+                };
+
+                RowItems.Add(new ElementRowViewModel
+                {
+                    Id = element.Id.Value,
+                    Name = name,
+                    Category = category,
+                    Type = element.GetType().Name,
+                    Status = status,
+                    IsChecked = true
+                });
             }
         }
 
