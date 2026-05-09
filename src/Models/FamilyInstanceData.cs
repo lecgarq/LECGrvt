@@ -16,6 +16,7 @@ namespace LECG.Models
         public bool IsFacingFlipped { get; private set; }
         public ElementId LevelId { get; private set; } = ElementId.InvalidElementId;
         public ElementId? HostId { get; private set; }
+        public string? OriginalSymbolName { get; private set; }
         public Dictionary<string, object?> Parameters { get; } = new();
 
         public static FamilyInstanceData Capture(FamilyInstance instance)
@@ -26,6 +27,7 @@ namespace LECG.Models
             {
                 LevelId = instance.LevelId,
                 HostId = instance.Host?.Id,
+                OriginalSymbolName = instance.Symbol?.Name,
                 IsHandFlipped = instance.CanFlipHand && instance.HandFlipped,
                 IsFacingFlipped = instance.CanFlipFacing && instance.FacingFlipped
             };
