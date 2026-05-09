@@ -3,7 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services.Interfaces;
-using LECG.Utils;
+using LECG.Utilities;
 using LECG.ViewModels;
 using LECG.Views;
 using System;
@@ -181,18 +181,36 @@ namespace LECG.Commands
 
             _transactionService.Run(doc, "Swap Transplanted Instances", _ =>
             {
+                // PASS 1: scan all instances; log every unsupported one.
+                // Refuse-all per CONTEXT.md §A: any unsupported instance aborts the batch.
+                bool hasUnsupported = false;
+                foreach (var fi in oldInstances)
+                {
+                    string? reason = GetUnsupportedReason(fi);
+                    if (reason != null)
+                    {
+                        _viewModel.OnLog?.Invoke(
+                            $"    [UNSUPPORTED] Instance {fi.Id} ({fi.Symbol?.Family?.Name}): {reason}");
+                        hasUnsupported = true;
+                    }
+                }
+                if (hasUnsupported)
+                {
+                    _viewModel.OnLog?.Invoke(
+                        "    [REFUSED] Batch aborted — see [UNSUPPORTED] entries above. No instances were swapped.");
+                    throw new InvalidOperationException(
+                        "SwapInstances refused: one or more instances have unsupported location type. Batch rolled back.");
+                }
+
+                // PASS 2: swap (only reached if all instances are supported).
                 if (!newSymbol.IsActive) newSymbol.Activate();
 
                 foreach (var oldFi in oldInstances)
                 {
                     try
                     {
-                        if (oldFi.Location is not LocationPoint locationPoint)
-                        {
-                            _viewModel.OnLog?.Invoke($"    [SKIP] Instance {oldFi.Id} has no point-based location.");
-                            continue;
-                        }
-
+                        // Pass 1 guarantees Location is LocationPoint, Host == null, HostFace == null.
+                        LocationPoint locationPoint = (LocationPoint)oldFi.Location!;
                         XYZ pos = locationPoint.Point;
                         double rot = locationPoint.Rotation;
                         Level? level = doc.GetElement(oldFi.LevelId) as Level
@@ -223,14 +241,12 @@ namespace LECG.Commands
                             continue;
                         }
 
-                        // Apply rotation if needed
                         if (Math.Abs(rot) > 0.0001)
                         {
                             Line axis = Line.CreateBound(pos, pos + XYZ.BasisZ);
                             ElementTransformUtils.RotateElement(doc, newFi.Id, axis, rot);
                         }
 
-                        // Delete old
                         doc.Delete(oldFi.Id);
                     }
                     catch (Exception ex) when (IsExpectedCategoryChangerException(ex))
@@ -246,6 +262,19 @@ namespace LECG.Commands
             return ex is ArgumentException
                 || ex is InvalidOperationException
                 || ex is RevitExceptions.InvalidOperationException;
+        }
+
+        private static string? GetUnsupportedReason(FamilyInstance fi)
+        {
+            if (fi.Location is LocationCurve)
+                return "curve-driven (LocationCurve)";
+            if (fi.HostFace != null)
+                return "face-hosted (HostFace non-null)";
+            if (fi.Host != null)
+                return $"hosted on element {fi.Host.Id}";
+            if (fi.Location is not LocationPoint)
+                return "unknown location type (not LocationPoint)";
+            return null; // free-standing point — safe to swap
         }
 
         private static bool IsPlatformLimitException(Exception ex)
