@@ -9,6 +9,7 @@ using LECG.Core.Naming;
 using Microsoft.Win32;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System;
 
@@ -93,6 +94,13 @@ namespace LECG.ViewModels
 
         public System.Collections.ObjectModel.ObservableCollection<string> Logs { get; } = new System.Collections.ObjectModel.ObservableCollection<string>();
 
+        /// <summary>
+        /// Per-row view of the picked import instance (REQ-01). Populated on SetSelection
+        /// so the SOURCE panel renders Name/Category/Status via the shared ElementGridControl
+        /// instead of relying solely on SelectionControl's count-only summary.
+        /// </summary>
+        public ObservableCollection<ElementRowViewModel> RowItems { get; } = new ObservableCollection<ElementRowViewModel>();
+
         public Action? RunOperation { get; set; }
         public Action? PlaceOperation { get; set; }
 
@@ -154,18 +162,37 @@ namespace LECG.ViewModels
             SelectedElementId = e.Id;
             Selection.UpdateSelection(1);
 
-            if (e != null)
+            string typeName = string.Empty;
+            ElementId typeId = e.GetTypeId();
+            if (typeId != ElementId.InvalidElementId)
             {
-                ElementId typeId = e.GetTypeId();
-                if (typeId != ElementId.InvalidElementId)
+                Element? type = e.Document.GetElement(typeId);
+                if (type != null)
                 {
-                    Element? type = e.Document.GetElement(typeId);
-                    if (type != null)
-                    {
-                        NewFamilyName = DetailFamilyNamePolicy.FromTypeName(type.Name);
-                    }
+                    typeName = type.Name ?? string.Empty;
+                    NewFamilyName = DetailFamilyNamePolicy.FromTypeName(typeName);
                 }
             }
+
+            UpdateRowItems(e, typeName);
+        }
+
+        private void UpdateRowItems(Element e, string typeName)
+        {
+            RowItems.Clear();
+            var (name, category) = ElementLabelService.GetLabels(e);
+            string status = string.IsNullOrWhiteSpace(typeName)
+                ? "Ready to convert"
+                : $"Type: {typeName}";
+            RowItems.Add(new ElementRowViewModel
+            {
+                Id = e.Id.Value,
+                Name = name,
+                Category = category,
+                Type = e.GetType().Name,
+                Status = status,
+                IsChecked = true
+            });
         }
 
         [RelayCommand]
