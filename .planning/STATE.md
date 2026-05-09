@@ -2,21 +2,21 @@
 gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
-status: unknown
-last_updated: "2026-05-09T19:06:02.219Z"
+status: in_progress
+last_updated: "2026-05-09T20:30:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 10
+  completed_plans: 11
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 03-grid-collection-fixes
-- **Plan**: 00 + 01 + 02 + 03 + 04 of 10 (COMPLETE) — Wave 0 done; Wave 1 done; Wave 2 done; Wave 3 (03-05) next
-- **Status**: Plans 03-00, 03-01, 03-02, 03-03, 03-04 complete; build clean (0 errors), 98/100 tests pass (2 skipped for 03-05). Plan 03-05 (ICollectionView sort/filter wiring on PreviewItems) is next.
+- **Plan**: 00 + 01 + 02 + 03 + 04 + 05 of 10 (COMPLETE) — Waves 0-3 done; Wave 4 (03-06) next
+- **Status**: Plans 03-00..03-05 complete; build clean (0 errors), 100/100 tests GREEN. Plan 03-05 user-verified in Revit (Batch Rename grid). Plan 03-06 (text-summary screens batch A migration to ElementGridControl) is next.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -31,6 +31,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - Plan 03-02 COMPLETE: ElementRowViewModel shared row model under LECG.ViewModels.Components.
 - Plan 03-03 COMPLETE: BaseElementCollectionService null-Category skip removed (REQ-01) — typeCollector + GraphicsStyle paths now route through ElementLabelService.GetLabels; FamilyInstance null-Family skip retained but now logs LogView warning. BaseElementCollectionServiceTests 4/4 GREEN. Pre-existing CS0029/CS1503 errors in SearchReplaceService/SearchReplacePreviewService deferred to Plan 03-04 (per the wave-1→wave-2 handoff decision).
 - Plan 03-04 COMPLETE: SearchReplacePreviewService.ProcessPreview returns List<ElementRowViewModel> with Category/ParamGroup/IsInstance/IsReadOnly propagated; ReplaceItem class deleted; consumer chain (BatchRenameExecutionService, ISearchReplaceService, SearchReplaceService) migrated; XAML rebound (ElementId→Id, ElementName→Name); 3-W0-03 RED tests un-Skipped and GREEN; build clean; 98/100 tests pass.
+- Plan 03-05 COMPLETE: ElementGridControl shared UserControl (Sel|Type|Category|Name|Status, wraps LecgDataGrid) shipped; SearchReplaceViewModel.PreviewView ICollectionView wires Category-asc default sort + AND-combined filter (FilterCategory dropdown + SetColumnFilter per-column predicate API); SearchReplaceView.xaml column order locked to ☑|Type|Category|Original|New; FilterCategory filtering removed from ProcessPreview; 3-W0-04 RED tests un-Skipped and GREEN (100/100 suite GREEN, build clean). User visually verified Batch Rename grid in Revit (column order, default sort, sort flip, FilterCategory, no blank rows, FamilyParameter scope all confirmed). Per-column header funnel chrome deferred to v1.2 follow-up — functional plumbing (SetColumnFilter API) proven via unit test.
 
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
@@ -65,6 +66,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 03]: [Phase 03-04]: Atomic ReplaceItem -> ElementRowViewModel swap across preview + execution + VM + XAML in single plan; transient broken state between Task 1/2 commits is acceptable per RESEARCH Pitfall 2
 - [Phase 03]: [Phase 03-04]: ProcessPreview is pure pass-through for Category — no fallback computation; the collection layer (Plan 03-03) owns the non-blank invariant
 - [Phase 03]: [Phase 03-04]: Field-rename at consumers — ElementId -> Id, ElementName -> Name (single naming convention via ElementRowViewModel)
+- [Phase 03-05]: Batch Rename keeps inline LecgDataGrid (not ElementGridControl) because Original/New columns don't fit the generic Sel|Type|Category|Name|Status row shape; ElementGridControl reserved for migration sweep in Plans 03-06..08
+- [Phase 03-05]: Per-column filter exposed as SetColumnFilter(name, predicate) API on the ViewModel; visual WPF header funnel chrome (popup of distinct values) deferred to v1.2 follow-up — functional plumbing proven via unit test
+- [Phase 03-05]: ICollectionView ownership lives on the ViewModel (PreviewView), not the control — each screen owns its own sort/filter semantics
+- [Phase 03-05]: FilterCategory predicate moved out of SearchReplacePreviewService.ProcessPreview; collection layer (Plan 03-03) owns invariants, ICollectionView owns post-collection filtering (no preview re-run on filter change)
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -79,12 +84,16 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P00 | 6min | 3 tasks | 4 files |
 | Phase 03 P03 | 12min | 2 tasks | 2 files |
 | Phase 03 P04 | 18min | 2 tasks | 9 files |
+| Phase 03 P05 | 45min | 3 tasks | 5 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-04-PLAN.md (SearchReplacePreviewService → ElementRowViewModel migration; ReplaceItem deleted)
+- **Stopped at**: Completed 03-05-PLAN.md (ElementGridControl + Batch Rename ICollectionView sort/filter; user-verified in Revit)
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Phase 03 Wave 3: Plan 03-05 next (ICollectionView sort/filter wiring on PreviewItems — Category-ascending default + AND-combined per-column filters). Un-Skip the two 3-W0-04 SearchReplaceViewModelTests scaffolds.
-2. Phase-end Revit session: manual verification for REQ-08, REQ-09, REQ-10 (Phase 02.5) + REQ-01 (Plan 03-09)
-3. Begin v1.2 milestone planning or next phase
+1. Phase 03 Wave 4: Plan 03-06 next (migrate text-summary screens batch A — DivideToposolid, FixPoints, ConvertCad — to ElementGridControl).
+2. Phase 03 Wave 4: Plan 03-07 (text-summary batch B — SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid).
+3. Phase 03 Wave 5: Plan 03-08 (selection-backed screen sweep — Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints).
+4. Phase 03 Wave 6: Plan 03-09 phase-end manual Revit verification (REQ-01 acceptance) + REQ-08/09/10 verification from Phase 02.5.
+5. Begin v1.2 milestone planning or next phase.
+6. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
