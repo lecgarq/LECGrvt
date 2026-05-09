@@ -28,14 +28,14 @@ Plans:
 - [ ] 02-02-PLAN.md — Clear-replace-restore sequence in TryReplaceSharedParameterGroup for cross-parameter formula dependencies + Revit verification checkpoint
 
 ### Phase 2.5: Silent Data-Loss Hotfixes
-**Status**: Not Started
+**Status**: Planned
 **Goal**: Stop three silent partial-success / data-loss bugs surfaced by the 5-plugin audit (2026-05-08). Contained, fast.
 **Requirements**: REQ-08, REQ-09, REQ-10
 **Source**: `.planning/research/SYNTHESIS.md`
-**Plans:**
-- [ ] Plan 2.5-1 (S) — Compact Styles: locale-safe text-style signature (replace English `LookupParameter` calls in `TextStyleCompactionService.cs:176` with ForgeTypeId/built-in lookups)
-- [ ] Plan 2.5-2 (M) — Category Changer: `SwapInstances` handles `LocationCurve`, hosted, face-hosted instances; refuse + log unsupported geometry instead of falsely reporting `[SUCCESS]` (`CategoryChangerCommand.cs:190`)
-- [ ] Plan 2.5-3 (L) — Convert Family: load-new-then-delete-old ordering; restore `HostId`; preserve `LocationCurve`; capture original symbol for type fidelity instead of always picking first (`FamilyConversionService.cs:259`)
+**Plans:** 3 plans
+- [ ] 02.5-01-PLAN.md — Compact Styles (REQ-08, Wave 1): locale-safe text-style signature using `BuiltInParameter.TEXT_ALIGNMENT` / `LEADER_ARROWHEAD` + per-type sentinel for `"Text Orientation"` (no BIP) in `TextStyleCompactionService.BuildSignature`
+- [ ] 02.5-02-PLAN.md — Category Changer (REQ-09, Wave 1): refuse-all pre-flight in `SwapInstances` detecting `LocationCurve` / `Host` / `HostFace`; abort batch + log every unsupported instance instead of silent `[SKIP]` + false `[SUCCESS]`
+- [ ] 02.5-03-PLAN.md — Convert Family (REQ-10, Wave 2): pre-flight validator + load-before-delete ordering + exact-name symbol match (capture `OriginalSymbolName`) + `NewFamilyInstance` hosted/curve overloads in `FamilyConversionService` / `FamilyInstanceData`
 
 ### Phase 3: Grid & Collection Fixes
 **Status**: Not Started
