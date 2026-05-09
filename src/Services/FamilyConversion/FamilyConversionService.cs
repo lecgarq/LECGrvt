@@ -3,7 +3,7 @@ using Autodesk.Revit.UI;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 using LECG.Services.Interfaces;
 using LECG.Models;
-using LECG.Utils;
+using LECG.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,12 +140,13 @@ namespace LECG.Services
 
             try
             {
+                // 1. PRE-FLIGHT (read-only). Throws if any instance fails. No mutations yet.
                 if (replaceInPlace)
                 {
-                    DeleteCapturedInstances(doc, capturedInstances.InstanceIds);
-                    LECG.Services.Logging.Logger.Instance.Log($"Cleared {capturedInstances.InstanceIds.Count} instances from project to unlock native conversion.");
+                    ValidatePreFlight(doc, capturedInstances.CapturedData);
                 }
 
+                // 2. LOAD NEW FAMILY (FamilyLoadOptionsFactory forces overwrite — safe with live instances).
                 (targetFamilyDoc, tempFamilyPath) = _familyConversionExecutionService.Execute(
                     doc,
                     sourceFamily,
@@ -153,25 +154,49 @@ namespace LECG.Services
                     resolvedTemplatePath,
                     targetFamilyName);
 
-                if (targetFamilyDoc != null && replaceInPlace)
+                if (targetFamilyDoc == null)
                 {
-                    FamilySymbol? newSymbol = FindReplacementSymbol(doc, targetFamilyName);
-                    if (newSymbol != null)
-                    {
-                        currentCount = ReplaceCapturedInstances(
-                            doc,
-                            newSymbol,
-                            capturedInstances.CapturedData,
-                            totalCount,
-                            currentCount,
-                            reporter);
-                    }
-                }
-                else if (targetFamilyDoc == null)
-                {
-                    LECG.Services.Logging.Logger.Instance.Log("ERROR: targetFamilyDoc was null. Conversion failed internally.");
+                    LECG.Services.Logging.Logger.Instance.Log("ERROR: targetFamilyDoc was null. Conversion failed internally; originals untouched.");
                     currentCount += groupInstanceCount;
+                    return currentCount;
                 }
+
+                if (!replaceInPlace)
+                {
+                    return currentCount;  // No replacement requested.
+                }
+
+                // 3. VERIFY each captured instance has a name-matched symbol in the new family.
+                //    Per CONTEXT.md §B: no first-symbol fallback. Refuse-all if any name missing.
+                var symbolByName = new Dictionary<string, FamilySymbol>(StringComparer.Ordinal);
+                foreach (FamilyInstanceData data in capturedInstances.CapturedData)
+                {
+                    string name = data.OriginalSymbolName!;  // pre-flight guaranteed non-null
+                    if (symbolByName.ContainsKey(name)) continue;
+                    FamilySymbol? sym = FindReplacementSymbolByName(doc, targetFamilyName, name);
+                    if (sym == null)
+                    {
+                        LECG.Services.Logging.Logger.Instance.Log(
+                            $"[PRE-FLIGHT] New family '{targetFamilyName}' lacks type '{name}'. Originals untouched.");
+                        throw new InvalidOperationException(
+                            $"Family conversion refused: new family '{targetFamilyName}' has no type named '{name}'.");
+                    }
+                    symbolByName[name] = sym;
+                }
+
+                // 4. DELETE ORIGINALS (only after load + symbol verification succeed).
+                DeleteCapturedInstances(doc, capturedInstances.InstanceIds);
+                LECG.Services.Logging.Logger.Instance.Log(
+                    $"Cleared {capturedInstances.InstanceIds.Count} instances from project after successful family load.");
+
+                // 5. PLACE NEW INSTANCES (per-instance symbol from the dict).
+                currentCount = ReplaceCapturedInstances(
+                    doc,
+                    symbolByName,
+                    capturedInstances.CapturedData,
+                    totalCount,
+                    currentCount,
+                    reporter);
             }
             catch (Exception ex) when (IsExpectedGroupConversionException(ex))
             {
@@ -238,30 +263,58 @@ namespace LECG.Services
             });
         }
 
-        private static FamilySymbol? FindReplacementSymbol(Document doc, string targetFamilyName)
+        private static void ValidatePreFlight(
+            Document doc,
+            IReadOnlyList<FamilyInstanceData> capturedData)
         {
+            var failures = new List<string>();
+
+            foreach (FamilyInstanceData data in capturedData)
+            {
+                if (string.IsNullOrEmpty(data.OriginalSymbolName))
+                {
+                    failures.Add($"Instance at {data.LocationPoint}: original symbol name not captured.");
+                    continue;
+                }
+
+                if (data.HostId != null && doc.GetElement(data.HostId) == null)
+                {
+                    failures.Add($"Instance at {data.LocationPoint}: host {data.HostId} not found in document.");
+                }
+            }
+
+            if (failures.Count > 0)
+            {
+                foreach (string f in failures)
+                    LECG.Services.Logging.Logger.Instance.Log($"[PRE-FLIGHT] {f}");
+                throw new InvalidOperationException(
+                    $"Pre-flight failed for family conversion ({failures.Count} issue(s)). Originals untouched.");
+            }
+        }
+
+        private static FamilySymbol? FindReplacementSymbolByName(
+            Document doc, string targetFamilyName, string? symbolName)
+        {
+            if (string.IsNullOrEmpty(symbolName)) return null;
+
             Family? newFamily = new FilteredElementCollector(doc)
                 .OfClass(typeof(Family))
                 .Cast<Family>()
                 .FirstOrDefault(f => f.Name == targetFamilyName);
+            if (newFamily == null) return null;
 
-            if (newFamily == null)
+            foreach (ElementId id in newFamily.GetFamilySymbolIds())
             {
-                return null;
+                if (doc.GetElement(id) is FamilySymbol sym
+                    && string.Equals(sym.Name, symbolName, StringComparison.Ordinal))
+                    return sym;
             }
-
-            ICollection<ElementId> symbolIds = newFamily.GetFamilySymbolIds();
-            if (!symbolIds.Any())
-            {
-                return null;
-            }
-
-            return doc.GetElement(symbolIds.First()) as FamilySymbol;
+            return null;
         }
 
         private int ReplaceCapturedInstances(
             Document doc,
-            FamilySymbol newSymbol,
+            IReadOnlyDictionary<string, FamilySymbol> symbolByName,
             IReadOnlyList<FamilyInstanceData> capturedData,
             int totalCount,
             int currentCount,
@@ -271,9 +324,10 @@ namespace LECG.Services
 
             _transactionService.RunWithOptions(doc, "Replace Instances", _ =>
             {
-                if (!newSymbol.IsActive)
+                // Activate every symbol once.
+                foreach (FamilySymbol sym in symbolByName.Values)
                 {
-                    newSymbol.Activate();
+                    if (!sym.IsActive) sym.Activate();
                 }
 
                 foreach (FamilyInstanceData data in capturedData)
@@ -281,22 +335,22 @@ namespace LECG.Services
                     updatedCount++;
                     reporter?.Report($"Placing Instance {updatedCount} of {totalCount}...", (double)updatedCount / totalCount * 100);
 
-                    if (data.LocationPoint == null)
+                    if (string.IsNullOrEmpty(data.OriginalSymbolName)
+                        || !symbolByName.TryGetValue(data.OriginalSymbolName, out FamilySymbol? sym))
                     {
-                        LECG.Services.Logging.Logger.Instance.LogWarning("[FamilyConversionService] Skipping non-point-based instance during replacement.");
+                        LECG.Services.Logging.Logger.Instance.LogWarning(
+                            $"[FamilyConversionService] No symbol available for original type '{data.OriginalSymbolName}'.");
                         continue;
                     }
 
-                    XYZ loc = data.LocationPoint;
-                    Level? lev = ResolvePlacementLevel(doc, data.LevelId);
-                    FamilyInstance? newInstance = TryPlaceReplacementInstance(doc, newSymbol, loc, lev);
+                    FamilyInstance? newInstance = TryPlaceReplacementInstance(doc, sym, data);
+                    if (newInstance == null) continue;
 
-                    if (newInstance == null)
-                    {
-                        continue;
-                    }
-
-                    ApplyCapturedInstanceData(data, newInstance, loc);
+                    // Determine log location (ApplyCapturedInstanceData expects an XYZ for logging).
+                    XYZ logLoc = data.LocationPoint
+                        ?? data.LocationCurve?.GetEndPoint(0)
+                        ?? XYZ.Zero;
+                    ApplyCapturedInstanceData(data, newInstance, logLoc);
                 }
             }, options => options.SetForcedModalHandling(false));
 
@@ -339,45 +393,77 @@ namespace LECG.Services
                 ?? new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();
         }
 
-        private static FamilyInstance? TryPlaceReplacementInstance(Document doc, FamilySymbol newSymbol, XYZ location, Level? level)
+        private static FamilyInstance? TryPlaceReplacementInstance(
+            Document doc, FamilySymbol newSymbol, FamilyInstanceData data)
         {
-            if (level != null)
-            {
-                try
-                {
-                    return doc.Create.NewFamilyInstance(location, newSymbol, level, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
-                }
-                catch (ArgumentException ex)
-                {
-                    LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Level-based placement failed: {ex.Message}");
-                }
-                catch (InvalidOperationException ex)
-                {
-                    LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Level-based placement failed: {ex.Message}");
-                }
-                catch (RevitExceptions.InvalidOperationException ex)
-                {
-                    LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Level-based placement failed: {ex.Message}");
-                }
-            }
-
             try
             {
-                return doc.Create.NewFamilyInstance(location, newSymbol, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
-            }
-            catch (ArgumentException ex)
-            {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Point-based placement failed: {ex.Message}");
+                // Branch 1: curve-driven instance — preserve LocationCurve.
+                if (data.LocationCurve != null)
+                {
+                    Level? lev = ResolvePlacementLevel(doc, data.LevelId);
+                    if (lev == null)
+                    {
+                        LECG.Services.Logging.Logger.Instance.LogWarning(
+                            "[FamilyConversionService] Skipping curve instance — no valid level.");
+                        return null;
+                    }
+                    return doc.Create.NewFamilyInstance(
+                        data.LocationCurve,
+                        newSymbol,
+                        lev,
+                        Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                }
+
+                // Branch 2: hosted point instance — preserve HostId.
+                if (data.LocationPoint != null && data.HostId != null)
+                {
+                    Element? host = doc.GetElement(data.HostId);
+                    if (host == null)
+                    {
+                        LECG.Services.Logging.Logger.Instance.LogWarning(
+                            $"[FamilyConversionService] Host {data.HostId} not found at placement time (pre-flight stale?).");
+                        return null;
+                    }
+                    return doc.Create.NewFamilyInstance(
+                        data.LocationPoint,
+                        newSymbol,
+                        host,
+                        Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                }
+
+                // Branch 3: free-standing point with level (existing behavior).
+                if (data.LocationPoint != null)
+                {
+                    Level? lev = ResolvePlacementLevel(doc, data.LevelId);
+                    if (lev != null)
+                    {
+                        return doc.Create.NewFamilyInstance(
+                            data.LocationPoint,
+                            newSymbol,
+                            lev,
+                            Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                    }
+                    return doc.Create.NewFamilyInstance(
+                        data.LocationPoint,
+                        newSymbol,
+                        Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
+                }
+
+                LECG.Services.Logging.Logger.Instance.LogWarning(
+                    "[FamilyConversionService] Captured instance has neither LocationPoint nor LocationCurve.");
                 return null;
             }
-            catch (InvalidOperationException ex)
+            catch (Autodesk.Revit.Exceptions.ArgumentException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Point-based placement failed: {ex.Message}");
+                LECG.Services.Logging.Logger.Instance.LogWarning(
+                    $"[FamilyConversionService] Placement failed: {ex.Message}");
                 return null;
             }
-            catch (RevitExceptions.InvalidOperationException ex)
+            catch (Autodesk.Revit.Exceptions.InvalidOperationException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Point-based placement failed: {ex.Message}");
+                LECG.Services.Logging.Logger.Instance.LogWarning(
+                    $"[FamilyConversionService] Placement failed: {ex.Message}");
                 return null;
             }
         }
