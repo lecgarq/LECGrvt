@@ -34,7 +34,7 @@ Plans:
 **Source**: `.planning/research/SYNTHESIS.md`
 **Plans:** 3 plans
 - [ ] 02.5-01-PLAN.md — Compact Styles (REQ-08, Wave 1): locale-safe text-style signature using `BuiltInParameter.TEXT_ALIGNMENT` / `LEADER_ARROWHEAD` + per-type sentinel for `"Text Orientation"` (no BIP) in `TextStyleCompactionService.BuildSignature`
-- [ ] 02.5-02-PLAN.md — Category Changer (REQ-09, Wave 1): refuse-all pre-flight in `SwapInstances` detecting `LocationCurve` / `Host` / `HostFace`; abort batch + log every unsupported instance instead of silent `[SKIP]` + false `[SUCCESS]`
+- [x] 02.5-02-PLAN.md — Category Changer (REQ-09, Wave 1): refuse-all pre-flight in `SwapInstances` detecting `LocationCurve` / `Host` / `HostFace`; abort batch + log every unsupported instance instead of silent `[SKIP]` + false `[SUCCESS]`
 - [ ] 02.5-03-PLAN.md — Convert Family (REQ-10, Wave 2): pre-flight validator + load-before-delete ordering + exact-name symbol match (capture `OriginalSymbolName`) + `NewFamilyInstance` hosted/curve overloads in `FamilyConversionService` / `FamilyInstanceData`
 
 ### Phase 3: Grid & Collection Fixes
