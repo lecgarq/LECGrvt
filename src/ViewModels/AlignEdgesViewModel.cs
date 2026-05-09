@@ -40,18 +40,22 @@ namespace LECG.ViewModels
         public IList<Reference> TargetRefs { get; private set; } = new List<Reference>();
         public IList<Reference> ReferenceRefs { get; private set; } = new List<Reference>();
 
-        public void SetTargets(IList<Reference> refs)
+        public void SetTargets(IList<Reference> refs, Document doc)
         {
             ArgumentNullException.ThrowIfNull(refs);
+            ArgumentNullException.ThrowIfNull(doc);
             TargetRefs = refs;
             TargetsSelection.UpdateSelection(refs.Count);
+            TargetsSelection.SetSelectionRows(refs, doc);
         }
 
-        public void SetReferences(IList<Reference> refs)
+        public void SetReferences(IList<Reference> refs, Document doc)
         {
             ArgumentNullException.ThrowIfNull(refs);
+            ArgumentNullException.ThrowIfNull(doc);
             ReferenceRefs = refs;
             ReferenceSelection.UpdateSelection(refs.Count);
+            ReferenceSelection.SetSelectionRows(refs, doc);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace LECG.Views
                     "Select source floors or toposolids");
                 if (refs.Count > 0)
                 {
-                    vm.SetTargets(refs);
+                    vm.SetTargets(refs, UiDocument.Document);
                 }
             };
 
@@ -53,7 +53,7 @@ namespace LECG.Views
                     "Select reference floors, toposolids, or links");
                 if (refs.Count > 0)
                 {
-                    vm.SetReferences(refs);
+                    vm.SetReferences(refs, UiDocument.Document);
                 }
             };
         }

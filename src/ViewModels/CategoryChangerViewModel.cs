@@ -2,7 +2,7 @@ using LECG.ViewModels.Components;
 using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LECG.Utils;
+using LECG.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -85,6 +85,7 @@ namespace LECG.ViewModels
 
             SelectedRefs = refs;
             Selection.UpdateSelection(refs.Count);
+            Selection.SetSelectionRows(refs, doc);
         }
 
         partial void OnSearchTextChanged(string value)

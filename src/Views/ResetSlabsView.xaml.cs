@@ -35,7 +35,7 @@ namespace LECG.Views
                     "Select Elements to Reset");
                 if (refs.Count > 0)
                 {
-                    vm.SetSelection(refs);
+                    vm.SetSelection(refs, UiDocument.Document);
                 }
             };
         }

@@ -81,6 +81,7 @@ namespace LECG.ViewModels
 
             SelectedReference = r;
             ReferenceSelection.UpdateSelection(1);
+            ReferenceSelection.SetSelectionRows(new[] { r }, doc);
         }
 
         public void SetTargets(IList<Reference> refs, Document doc)
@@ -102,6 +103,7 @@ namespace LECG.ViewModels
 
             SelectedTargets = validRefs;
             TargetSelection.UpdateSelection(validRefs.Count);
+            TargetSelection.SetSelectionRows(validRefs, doc);
         }
 
     }

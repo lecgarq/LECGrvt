@@ -32,7 +32,7 @@ namespace LECG.Commands
             var preselectedRefs = SelectionSeedHelper.GetSelectedReferences(uiDoc, new SelectionFilters.MaterialHostFilter());
             if (preselectedRefs.Count > 0)
             {
-                vm.SetSelection(preselectedRefs);
+                vm.SetSelection(preselectedRefs, doc);
             }
 
             // Pass VM explicitly so command and view share the same instance

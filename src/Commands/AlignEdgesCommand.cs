@@ -26,7 +26,7 @@ namespace LECG.Commands
             var preselectedSources = SelectionSeedHelper.GetSelectedReferences(uiDoc, new SelectionFilters.SlabFilter());
             if (preselectedSources.Count > 0)
             {
-                vm.SetTargets(preselectedSources);
+                vm.SetTargets(preselectedSources, doc);
             }
 
             var view = ServiceLocator.CreateWith<AlignEdgesView>(vm);

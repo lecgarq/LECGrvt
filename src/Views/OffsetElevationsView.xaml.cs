@@ -36,7 +36,7 @@ namespace LECG.Views
                     "Select Elements to Offset");
                 if (refs.Count > 0)
                 {
-                    vm.SetSelection(refs);
+                    vm.SetSelection(refs, UiDocument.Document);
                 }
             };
 

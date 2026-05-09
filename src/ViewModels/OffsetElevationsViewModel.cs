@@ -30,12 +30,14 @@ namespace LECG.ViewModels
             Selection.PropertyChanged += (s, e) => { if (e.PropertyName == nameof(SelectionViewModel.HasSelection)) OnPropertyChanged(nameof(CanRun)); };
         }
 
-        public void SetSelection(IList<Reference> refs)
+        public void SetSelection(IList<Reference> refs, Document doc)
         {
             ArgumentNullException.ThrowIfNull(refs);
+            ArgumentNullException.ThrowIfNull(doc);
 
             SelectedRefs = refs;
             Selection.UpdateSelection(refs.Count);
+            Selection.SetSelectionRows(refs, doc);
         }
 
         [RelayCommand]

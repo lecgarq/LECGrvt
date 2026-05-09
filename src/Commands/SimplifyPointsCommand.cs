@@ -8,7 +8,7 @@ using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.Services;
 using LECG.Services.Interfaces;
-using LECG.Utils;
+using LECG.Utilities;
 using LECG.ViewModels;
 using LECG.Views;
 
@@ -33,7 +33,7 @@ namespace LECG.Commands
             var preselectedRefs = SelectionSeedHelper.GetSelectedReferences(uiDoc, vm.Selection.Filter);
             if (preselectedRefs.Count > 0)
             {
-                vm.SetSelection(preselectedRefs);
+                vm.SetSelection(preselectedRefs, doc);
             }
 
             // 3. View — pass VM explicitly so command and view share the same instance

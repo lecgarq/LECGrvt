@@ -36,7 +36,7 @@ namespace LECG.Views
                     "Select elements to assign materials");
                 if (refs.Count > 0)
                 {
-                    vm.SetSelection(refs);
+                    vm.SetSelection(refs, UiDocument.Document);
                 }
             };
         }
