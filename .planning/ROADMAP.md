@@ -55,10 +55,19 @@ Plans:
 - [x] 03-09-PLAN.md — Wave 6: Phase-end manual Revit verification (REQ-01 acceptance) — 22/22 PASS
 
 ### Phase 4: Advanced Renaming Logic
-**Status**: Not Started
-**Goal**: Implement safe renaming for stubborn parameters (formula-referenced and dimension-label parameters).
+**Status**: Planned
+**Goal**: Implement always-on Safe Rename for formula-referenced, dimension-label, and element-associated FamilyParameters (atomic rename + reference update inside per-param SubTransactions); narrow GetRenameSkipReason to built-in/reporting/name-conflict; add standard-item pre-flight dry-run skip detection; surface skip reasons + side-effect counts in Batch Rename Status column with muted-row + disabled-checkbox UI; mirror skips into LogView.
 **Requirements**: REQ-02, REQ-03, REQ-04
 **Gap Closure**: Closes REQ-02, REQ-03, REQ-04 from v1.1 milestone audit (2026-05-09)
+**Plans:** 6 plans
+
+Plans:
+- [ ] 04-00-PLAN.md — Wave 0: test scaffolds + ElementRowViewModel.IsRenameable + VALIDATION.md flip
+- [ ] 04-01-PLAN.md — Wave 1: narrow GetRenameSkipReason + add GetStandardItemSkipReason + standard-item pre-flight dry-run (REQ-04 detection)
+- [ ] 04-02-PLAN.md — Wave 1: SearchReplacePreviewService Status + IsRenameable + side-effect count; SearchReplaceView.xaml IsEnabled + muted-row + tooltip (REQ-04 UI)
+- [ ] 04-03-PLAN.md — Wave 2: inject IFormulaUpdateService + per-param SubTransaction + formula-update loop (REQ-02)
+- [ ] 04-04-PLAN.md — Wave 3: BuildDimensionsByLabelName + dimension FamilyLabel reassignment + composite success log (REQ-03)
+- [ ] 04-05-PLAN.md — Wave 4: phase-end manual Revit verification + REQUIREMENTS/STATE/ROADMAP closure
 
 ### Phase 5: Verification & Polish
 **Status**: Not Started
