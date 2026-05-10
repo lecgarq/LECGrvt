@@ -366,9 +366,24 @@ public class BatchRenameExecutionServiceTests
         log.Should().Equal("clear-A", "assign-A", "clear-B", "assign-B");
     }
 
-    [Fact(Skip = "Implemented by plan 05-03: Polish #3 standard-item progress capping — max before done equals 100")]
+    [Fact]
     public void BatchRenameProgress_MixedBatch_MaxBeforeDoneEquals100()
     {
-        Assert.True(false, "see plan 05-03");
+        var seq = BatchRenameExecutionService.BuildProgressSequence(
+            standardCount: 5,
+            familyGroupRowCounts: new[] { 3, 2 });
+
+        seq.Max().Should().Be(100.0);
+    }
+
+    [Fact]
+    public void BuildProgressSequence_IsMonotonic()
+    {
+        var seq = BatchRenameExecutionService.BuildProgressSequence(
+            standardCount: 5,
+            familyGroupRowCounts: new[] { 3, 2 });
+
+        for (int i = 1; i < seq.Count; i++)
+            seq[i].Should().BeGreaterThanOrEqualTo(seq[i - 1]);
     }
 }
