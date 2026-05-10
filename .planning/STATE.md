@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T19:13:35.837Z"
+last_updated: "2026-05-10T19:21:28.521Z"
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 21
-  completed_plans: 18
+  completed_plans: 19
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 04-advanced-renaming-logic (IN PROGRESS)
-- **Plan**: 01 of 6 COMPLETE (Wave 1 done; plans 02-05 remain)
-- **Status**: Plan 04-01 complete — GetRenameSkipReason narrowed (formula-referenced/dimension-label/element-associated branches removed, built-in/reporting/name-conflict kept); EvaluateFamilyParamSkipReason + EvaluateStandardItemSkipReason pure-data helpers added (unit-testable without Revit); GetStandardItemSkipReason + ApplyPreFlightSkipReasons added; pre-flight dry-run loop wired in ExecuteBatchRename OUTSIDE transaction. 13 RED tests flipped GREEN: 12 RenameSkipDetectorTests + 2 BatchRenameSafeRenameTests REQ-04 dry-run. Build clean (0 errors, 0 warnings); full suite 121 passed, 10 skip-gated (REQ-02/03 for plans 04-03/04-04). Stopped at 2026-05-10.
+- **Plan**: 03 of 6 COMPLETE (Wave 2 plans 01-03 done; plans 04-05 remain)
+- **Status**: Plan 04-03 complete — IFormulaUpdateService injected into BatchRenameExecutionService; RenameFamilyParameters converted to instance method with per-param SubTransaction wrapping rename + formula-update loop; CollectFormulaUpdates + LogRenameSuccess pure-data helpers extracted; renamedCount incremented only after subTx.Commit() (Pitfall 3 guard). 7 RED tests flipped GREEN: 3 FormulaUpdateServiceTests + 4 BatchRenameSafeRenameTests REQ-02. Build clean (0 errors, 0 warnings); full suite 128 passed, 3 skip-gated (REQ-03 for plan 04-04). REQ-02 closed. Stopped at 2026-05-10.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -90,6 +90,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 04-01]: Extracted EvaluateFamilyParamSkipReason + EvaluateStandardItemSkipReason pure-data helpers for unit testing without Revit API
 - [Phase 04-01]: ApplyPreFlightSkipReasons takes Func<ElementRowViewModel, string?> delegate — decouples loop from Revit API; loop runs OUTSIDE _transactionService.Run (pre-flight read-only pass)
 - [Phase 04-01]: GetStandardItemSkipReason uses Family.IsInPlace (not IsSystemFamily) as proxy — Revit 2026 API does not expose Family.IsSystemFamily directly
+- [Phase 04-03]: IFormulaUpdateService injected as last constructor parameter in BatchRenameExecutionService; DI registration in Bootstrapper.cs unchanged — MS DI resolves automatically
+- [Phase 04-03]: Injectable constructor test uses reflection instead of NSubstitute — Castle DynamicProxy cannot proxy ITransactionService without RevitAPI.dll; reflection confirms the parameter type is accepted without RevitAPI dependency
+- [Phase 04-03]: CollectFormulaUpdates extracted as internal static pure-data helper — enables unit testing of formula-update logic without Revit API; formulaReferenced.Contains opt-in skips loop for non-referenced params
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -111,9 +114,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P09 | 1min | 1 tasks | 4 files |
 | Phase 04 P02 | 35min | 2 tasks | 5 files |
 | Phase 04 P01 | 40min | 2 tasks | 3 files |
+| Phase 04 P03 | 20min | 2 tasks | 3 files |
 
 ## Last Session
-- **Stopped at**: 2026-05-10 — Phase 2.5 CONTEXT.md updated: narrowed phase-end Revit verify to must-pass = ConvertFamily host preservation (REQ-10) + Phase 2 regression (REQ-07); REQ-08 (Compact Styles) and REQ-09 (CategoryChanger refuse-all) trusted by code review (Phase 2 pattern). Face-hosted preservation limitation captured under deferred. Status flipped to code-complete; verify scheduled before Phase 4 planning. Revit is open — local builds must use `-p:SkipRevitDeploy=true`.
+- **Stopped at**: Completed 04-03-PLAN.md — IFormulaUpdateService injection + per-param SubTransaction + formula-update loop; 7 RED tests GREEN (3 FormulaUpdateServiceTests + 4 REQ-02 BatchRenameSafeRenameTests); REQ-02 closed. Build clean 128/131 passed.
 - **Date**: 2026-05-10
 
 ## Next Steps
