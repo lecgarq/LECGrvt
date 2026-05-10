@@ -334,16 +334,20 @@ public class BatchRenameExecutionServiceTests
     // Wave 3 RED rows — plan 05-03 owns implementation (3 polish fixes)
     // -----------------------------------------------------------------------
 
-    [Fact(Skip = "Implemented by plan 05-03: Polish #1 count-on-rollback fix — committed adds renamed to current count")]
+    [Fact]
     public void AccumulateCommittedFamilyCount_Committed_AddsRenamedToCurrentCount()
     {
-        Assert.True(false, "see plan 05-03");
+        var result = BatchRenameExecutionService.AccumulateCommittedFamilyCount(
+            committed: true, renamedInFamily: 5, currentCount: 10);
+        result.Should().Be(15);
     }
 
-    [Fact(Skip = "Implemented by plan 05-03: Polish #1 count-on-rollback fix — not committed returns current count unchanged")]
+    [Fact]
     public void AccumulateCommittedFamilyCount_NotCommitted_ReturnsCurrentCountUnchanged()
     {
-        Assert.True(false, "see plan 05-03");
+        var result = BatchRenameExecutionService.AccumulateCommittedFamilyCount(
+            committed: false, renamedInFamily: 5, currentCount: 10);
+        result.Should().Be(10);
     }
 
     [Fact(Skip = "Implemented by plan 05-03: Polish #2 Dimension.FamilyLabel null-clear before reassigning")]
