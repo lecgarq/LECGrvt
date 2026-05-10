@@ -74,7 +74,7 @@ Plans:
 **Goal**: Bring every service under `src/Services/Renaming/` to a baseline of dedicated unit-test coverage (service→fixture matrix in `05-VERIFICATION.md`) and land three deferred polish fixes with RED-before-GREEN discipline: count-on-rollback at `BatchRenameExecutionService.cs:222`, `Dimension.FamilyLabel` null-clear via pair-action overload, and standard-item progress capping below 100%.
 **Requirements**: REQ-05
 **Gap Closure**: Closes REQ-05 from v1.1 milestone audit (2026-05-09)
-**Plans:** 2/5 plans executed
+**Plans:** 3/5 plans executed
 
 Plans:
 - [ ] 05-00-PLAN.md — Wave 0: test scaffolds (RenameRulePipelineServiceTests, SearchReplaceServiceTests, BatchRenameExecutionServiceTests new fixtures + BaseElementCollectionServiceTests deepening rows) + 05-VERIFICATION.md matrix scaffold + VALIDATION flip
