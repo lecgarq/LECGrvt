@@ -1,9 +1,9 @@
 ---
 phase: 4
 slug: advanced-renaming-logic
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+status: ready
+nyquist_compliant: true
+wave_0_complete: true
 created: 2026-05-10
 ---
 
@@ -36,11 +36,15 @@ created: 2026-05-10
 
 ## Per-Task Verification Map
 
-> Populated by gsd-planner once tasks are decomposed. Each task row must have either an `<automated>` verify command OR a Wave 0 test-stub dependency.
+> Populated by Wave 0 (plan 04-00). Each implementing plan has an automated verify command pointing at its RED test fixture.
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| TBD     | TBD  | TBD  | REQ-02/03/04 | unit/integration | `dotnet test ...` | ❌ W0 | ⬜ pending |
+| 04-01-T1 | 04-01 | 1 | REQ-04 | unit | `dotnet test LECG.Tests/LECG.Tests.csproj -p:SkipRevitDeploy=true --filter "FullyQualifiedName~RenameSkipDetectorTests" --nologo -v minimal` | ✅ | ⬜ pending |
+| 04-02-T1 | 04-02 | 1 | REQ-04 | unit | `dotnet test LECG.Tests/LECG.Tests.csproj -p:SkipRevitDeploy=true --filter "FullyQualifiedName~SearchReplacePreviewServiceTests" --nologo -v minimal` | ✅ | ⬜ pending |
+| 04-03-T1 | 04-03 | 2 | REQ-02 | unit | `dotnet test LECG.Tests/LECG.Tests.csproj -p:SkipRevitDeploy=true --filter "FullyQualifiedName~FormulaUpdateServiceTests|FullyQualifiedName~BatchRenameSafeRenameTests" --nologo -v minimal` | ✅ | ⬜ pending |
+| 04-04-T1 | 04-04 | 3 | REQ-03 | unit | `dotnet test LECG.Tests/LECG.Tests.csproj -p:SkipRevitDeploy=true --filter "FullyQualifiedName~BatchRenameSafeRenameTests" --nologo -v minimal` | ✅ | ⬜ pending |
+| 04-05-T1 | 04-05 | 4 | REQ-02/03/04 | manual | Phase-end Revit verify session | — | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -48,10 +52,10 @@ created: 2026-05-10
 
 ## Wave 0 Requirements
 
-- [ ] `LECG.Tests/Services/BatchRenameExecutionServiceTests.cs` — stubs covering REQ-02 (formula-referenced rename), REQ-03 (dimension-label rename), and cross-batch name conflict detection
-- [ ] `LECG.Tests/Services/SearchReplacePreviewServiceTests.cs` — stubs for REQ-04 (Status + IsRenameable population) and narrowed `GetRenameSkipReason` branches
-- [ ] `LECG.Tests/ViewModels/SearchReplaceViewModelTests.cs` — stubs for `ElementRowViewModel.IsRenameable` propagation
-- [ ] Shared Revit-API mocks/fakes reused from existing test fixtures (no new framework install required)
+- [x] `LECG.Tests/Services/RenameSkipDetectorTests.cs` — stubs covering REQ-04 (GetStandardItemSkipReason) and narrowed `GetRenameSkipReason` branches (REQ-02/03/04)
+- [x] `LECG.Tests/Services/SearchReplacePreviewServiceTests.cs` — stubs for REQ-04 (Status + IsRenameable population) and cross-batch collision detection
+- [x] `LECG.Tests/Services/FormulaUpdateServiceTests.cs` — stubs for IFormulaUpdateService injection and delegation (REQ-02)
+- [x] `LECG.Tests/Services/BatchRenameSafeRenameTests.cs` — stubs for formula-referenced (REQ-02), dimension-label (REQ-03), and pre-flight dry-run (REQ-04) paths
 
 ---
 
@@ -67,11 +71,11 @@ created: 2026-05-10
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 30s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 30s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved 2026-05-10 — Wave 0 complete
