@@ -1,6 +1,6 @@
 ---
 phase: 05-verification-and-polish
-status: scaffold
+status: complete
 created: 2026-05-10
 ---
 
@@ -44,4 +44,4 @@ Status legend: ⬜ pending · ✅ pass · ❌ fail · 🚫 N/A
 - [x] Full xUnit suite GREEN (target >= ~165 tests) — actual: **175 Passed, 5 Skipped, 0 Failed** (Total: 180; run: 2026-05-10)
 - [x] Matrix above: all rows ✅
 - [x] Manual checklist: all 3 polish fixes PASS or trust-based sign-off recorded — P1 ✅ trust-based, P2 ✅ trust-based, P3 ✅ trust-based (user approved 2026-05-10 per Phase 4 precedent)
-- [ ] REQ-05 flipped Pending -> Complete in `.planning/REQUIREMENTS.md`
+- [x] REQ-05 flipped Pending -> Complete in `.planning/REQUIREMENTS.md` (2026-05-10)

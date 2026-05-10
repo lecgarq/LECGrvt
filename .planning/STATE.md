@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T22:10:38.211Z"
+last_updated: "2026-05-10T22:30:00.000Z"
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 26
-  completed_plans: 25
+  completed_plans: 26
 ---
 
 # Project State
 
 ## Current Position
-- **Phase**: 05-verification-and-polish (IN PROGRESS)
-- **Plan**: 4 of 5 COMPLETE (05-00, 05-01, 05-02, 05-03 done)
-- **Status**: Phase 5 Wave 3 complete. All 6 matrix rows ✅. Suite: 175 GREEN, 5 Skipped, 0 Failed. Plan 05-04 (manual Revit verification) remains.
+- **Phase**: 05-verification-and-polish (COMPLETE)
+- **Plan**: 5 of 5 COMPLETE (05-00, 05-01, 05-02, 05-03, 05-04 done)
+- **Status**: Phase 5 closed 2026-05-10. REQ-05 flipped to Complete. v1.1 milestone REQ-05 audit gap closed. Suite 175 tests GREEN.
 
 ## Phase 4 Progress
 - Plan 04-00 COMPLETE: Wave 0 test scaffolds — IsRenameable field on ElementRowViewModel; skip-gated RED fixtures for FormulaUpdate, BatchRenameSafeRename; VALIDATION.md per-task map.
@@ -116,6 +116,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 05-03]: [Phase 05-03]: Pair-action overload for ExecuteDimensionReassignments added alongside (not replacing) single-action overload — backward-compatible; existing 9 REQ-03 tests stay GREEN
 - [Phase 05-03]: [Phase 05-03]: BuildProgressSequence emits one step per standard item and one per family group weighted by row count; max is guaranteed 100.0 by shared denominator
 - [Phase 05-03]: [Phase 05-03]: Family loop denominator unified with standard loop via Option A (share current/total); helper exists for unit-test verifiability but production uses direct arithmetic
+- [Phase 05-04]: Manual Revit verification trust-based per Phase 4 precedent; live observation captured where feasible (P1+P3 arithmetic proven via unit tests), deferred where test fixture unavailable (P2 Dimension.FamilyLabel null-clear deferred follow-up if production issues surface)
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -149,12 +150,14 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - Plan 05-01 COMPLETE: Wave 1 TDD — RenameRulePipelineServiceTests 5 GREEN tests (rule order, index propagation, null-throws, inactive pass-through, null-text guard); BaseElementCollectionService 3 pure-data helpers extracted (TryGetGroupLabel, DispatchScopeFlags, MergeParamScanResults) + 10 new GREEN deepening tests; matrix rows 2+5 flipped to ✅. Suite: 149 GREEN, 30 Skipped, 0 Failed.
 - Plan 05-02 COMPLETE: Wave 2 TDD — BatchRenameExecutionServiceTests 19 GREEN (EvaluateFamilyParamSkipReason 4-branch, EvaluateStandardItemSkipReason 6-branch, FormatSafeRenameLog 4-branch, GroupCheckedFamilyParameterItems, LegacyProgressReporter null-callback, ctor null-guard via reflection); SearchReplaceServiceTests 4 GREEN (GetUniqueCategories, ProcessPreview+CancellationToken, ctor null-guards); SearchReplaceService ctor null-guards added; SearchReplaceFakes.cs internal test doubles added; 3 Document-parametered facade tests skip-gated per RevitAPI native runtime constraint. Matrix rows 3+6 updated (row 3: partial ✅; row 6: direct ✅, polish pending Wave 3). Suite: 170 GREEN, 9 Skipped, 0 Failed.
 - Plan 05-03 COMPLETE: Wave 3 TDD — 3 polish helpers extracted (AccumulateCommittedFamilyCount, ExecuteDimensionReassignments pair-action overload, BuildProgressSequence); 3 production rewires (count update post-commit at former :222; pair-action dim reassignment at :347-363; family loop denominator unified at :171-175); 5 new GREEN tests (2 for Polish #1, 1 for Polish #2, 2 for Polish #3); matrix row 6 fully ✅; all 6 matrix rows ✅. Suite: 175 GREEN, 5 Skipped, 0 Failed.
+- Plan 05-04 COMPLETE: Wave 4 — phase-end manual Revit verification trust-based per Phase 4 precedent (user approved 2026-05-10; P1/P2/P3 all ✅); REQ-05 flipped Pending→Complete; matrix all-✅; suite GREEN at 175 tests. Phase 5 closed.
 
 ## Last Session
-- **Stopped at**: Completed 05-03-PLAN.md — Wave 3 TDD. 3 polish helpers (AccumulateCommittedFamilyCount, pair-action ExecuteDimensionReassignments, BuildProgressSequence), 3 production rewires. All 6 matrix rows ✅. Suite: 175 GREEN, 5 Skipped, 0 Failed.
+- **Stopped at**: Phase 5 closed — v1.1 milestone REQ-05 audit gap closed. 05-04 Wave 4: trust-based manual Revit verification (P1/P2/P3 ✅); REQ-05 flipped Pending→Complete in REQUIREMENTS.md; STATE.md + ROADMAP.md updated; 05-04-SUMMARY.md written.
 - **Date**: 2026-05-10
 
 ## Next Steps
-1. Phase 5 (Verification & Polish — REQ-05) planning — only requirement remaining in v1.1 milestone.
-2. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
-3. v1.2 follow-up: investigate `Dimension.FamilyLabel` null-clear requirement — C1 was not observed live; if dimension reassignment issues surface in production use, add a null-clear step before setter assignment in the dimension reassignment loop.
+1. v1.1 milestone retrospective via `/gsd:retrospective-milestone v1.1`.
+2. v1.2 Plugin Maturity planning (queued — see ROADMAP.md v1.2 phases sketch).
+3. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
+4. v1.2 follow-up: `Dimension.FamilyLabel` null-clear live observation deferred (Phase 4 C1 + Phase 5 P2 pattern) — if production issues surface, the pair-action overload is already in place.
