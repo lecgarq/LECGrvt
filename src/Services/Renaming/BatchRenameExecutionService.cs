@@ -54,6 +54,25 @@ namespace LECG.Services
 
             logger.Log($"Starting batch rename for {total} items ({standardItems.Count} standard, {familyItems.Count} family parameters)...");
 
+            // Pre-flight dry-run: evaluate skip conditions for standard items BEFORE the rename
+            // transaction. This is a read-only walk — no Revit state is mutated here.
+            // Skipped rows have Status set, IsRenameable=false, IsChecked=false so the commit
+            // pass skips them automatically via the existing `if (!item.IsChecked) continue` guard.
+            if (standardItems.Count > 0)
+            {
+                var claimedNewNames = new HashSet<string>(StringComparer.Ordinal);
+                ApplyPreFlightSkipReasons(
+                    standardItems,
+                    row =>
+                    {
+                        ElementId id = new ElementId(row.Id);
+                        Element? el = doc.GetElement(id);
+                        if (el == null) return null;
+                        return GetStandardItemSkipReason(el, row.NewValue, doc, claimedNewNames);
+                    },
+                    logger);
+            }
+
             // 1. Process Standard Items (Transaction Required)
             if (standardItems.Count > 0)
             {
@@ -325,6 +344,35 @@ namespace LECG.Services
             {
                 logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Pre-flight dry-run loop for standard items. Runs OUTSIDE the main rename transaction.
+        /// For each checked row, calls <paramref name="getSkipReason"/> to evaluate skip conditions.
+        /// If a skip reason is returned, sets <c>row.Status</c>, <c>row.IsRenameable = false</c>,
+        /// <c>row.IsChecked = false</c>, and emits one <c>LogWarning</c> per skipped row.
+        /// If the row is renameable, adds <c>row.NewValue</c> to the cross-batch collision set
+        /// by letting the caller's <paramref name="getSkipReason"/> resolve it (Pitfall 5 guard).
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static void ApplyPreFlightSkipReasons(
+            IEnumerable<ElementRowViewModel> rows,
+            Func<ElementRowViewModel, string?> getSkipReason,
+            Logging.ILogger logger)
+        {
+            foreach (var row in rows)
+            {
+                if (!row.IsChecked) continue;
+
+                string? reason = getSkipReason(row);
+                if (reason != null)
+                {
+                    row.Status = reason;
+                    row.IsRenameable = false;
+                    row.IsChecked = false;
+                    logger.LogWarning($"Skipped '{row.OriginalValue}' ({row.Type}): {reason}");
+                }
             }
         }
 
