@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T22:05:01.850Z"
+last_updated: "2026-05-10T22:10:38.211Z"
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 26
-  completed_plans: 24
+  completed_plans: 25
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 05-verification-and-polish (IN PROGRESS)
-- **Plan**: 3 of 5 COMPLETE (05-00, 05-01, 05-02 done)
-- **Status**: Phase 5 Wave 2 complete. 19 GREEN BatchRenameExecutionServiceTests (direct coverage: EvaluateFamilyParamSkipReason 4-branch, EvaluateStandardItemSkipReason 6-branch, FormatSafeRenameLog 4-branch, GroupCheckedFamilyParameterItems, LegacyProgressReporter, ctor null-guard) + 4 GREEN SearchReplaceServiceTests (GetUniqueCategories, ProcessPreview+CancellationToken, ctor null-guards). Matrix rows 3+6 updated. Suite: 170 GREEN, 9 Skipped, 0 Failed. Plans 05-03/04 remain.
+- **Plan**: 4 of 5 COMPLETE (05-00, 05-01, 05-02, 05-03 done)
+- **Status**: Phase 5 Wave 3 complete. All 6 matrix rows ✅. Suite: 175 GREEN, 5 Skipped, 0 Failed. Plan 05-04 (manual Revit verification) remains.
 
 ## Phase 4 Progress
 - Plan 04-00 COMPLETE: Wave 0 test scaffolds — IsRenameable field on ElementRowViewModel; skip-gated RED fixtures for FormulaUpdate, BatchRenameSafeRename; VALIDATION.md per-task map.
@@ -112,6 +112,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 05]: [Phase 05-01]: DispatchScopeFlags added alongside (not replacing) production scope dispatch — if-chain unchanged to avoid invasive refactor; helper mirrors dispatch logic for direct testability
 - [Phase 05]: RevitAPI.dll has native-code deps only available inside Revit — Document-parametered facade tests skip-gated with manual Revit pointer; FakeXxx concrete test doubles in production project via InternalsVisibleTo for Revit-API-bound interface delegation
 - [Phase 05]: SearchReplaceService ctor null-guards added (Rule 2) — facade was v1.2 deletion candidate but Phase 5 acceptance requires green SearchReplaceServiceTests row
+- [Phase 05-03]: [Phase 05-03]: AccumulateCommittedFamilyCount extracts count-update-on-commit as a 1-line expression method; count mutation moved from inside RunConditional lambda to post-commit site
+- [Phase 05-03]: [Phase 05-03]: Pair-action overload for ExecuteDimensionReassignments added alongside (not replacing) single-action overload — backward-compatible; existing 9 REQ-03 tests stay GREEN
+- [Phase 05-03]: [Phase 05-03]: BuildProgressSequence emits one step per standard item and one per family group weighted by row count; max is guaranteed 100.0 by shared denominator
+- [Phase 05-03]: [Phase 05-03]: Family loop denominator unified with standard loop via Option A (share current/total); helper exists for unit-test verifiability but production uses direct arithmetic
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -138,14 +142,16 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 05 P00 | 15min | 3 tasks | 6 files |
 | Phase 05 P01 | 5min | 2 tasks | 4 files |
 | Phase 05 P02 | 35min | 2 tasks | 6 files |
+| Phase 05 P03 | 12min | 3 tasks | 3 files |
 
 ## Phase 5 Progress
 - Plan 05-00 COMPLETE: Wave 0 scaffolds — 3 new xUnit fixtures (RenameRulePipelineServiceTests, SearchReplaceServiceTests, BatchRenameExecutionServiceTests) with anchor + skip-gated RED rows; BaseElementCollectionServiceTests deepened with 12 skip-gated RED rows naming plans 05-01 and Revit-manual paths; 05-VERIFICATION.md 6-row matrix scaffold; 05-VALIDATION.md flipped to nyquist_compliant true, wave_0_complete true, wave-0-locked. Suite: 134 GREEN, 45 Skipped, 0 Failed.
 - Plan 05-01 COMPLETE: Wave 1 TDD — RenameRulePipelineServiceTests 5 GREEN tests (rule order, index propagation, null-throws, inactive pass-through, null-text guard); BaseElementCollectionService 3 pure-data helpers extracted (TryGetGroupLabel, DispatchScopeFlags, MergeParamScanResults) + 10 new GREEN deepening tests; matrix rows 2+5 flipped to ✅. Suite: 149 GREEN, 30 Skipped, 0 Failed.
 - Plan 05-02 COMPLETE: Wave 2 TDD — BatchRenameExecutionServiceTests 19 GREEN (EvaluateFamilyParamSkipReason 4-branch, EvaluateStandardItemSkipReason 6-branch, FormatSafeRenameLog 4-branch, GroupCheckedFamilyParameterItems, LegacyProgressReporter null-callback, ctor null-guard via reflection); SearchReplaceServiceTests 4 GREEN (GetUniqueCategories, ProcessPreview+CancellationToken, ctor null-guards); SearchReplaceService ctor null-guards added; SearchReplaceFakes.cs internal test doubles added; 3 Document-parametered facade tests skip-gated per RevitAPI native runtime constraint. Matrix rows 3+6 updated (row 3: partial ✅; row 6: direct ✅, polish pending Wave 3). Suite: 170 GREEN, 9 Skipped, 0 Failed.
+- Plan 05-03 COMPLETE: Wave 3 TDD — 3 polish helpers extracted (AccumulateCommittedFamilyCount, ExecuteDimensionReassignments pair-action overload, BuildProgressSequence); 3 production rewires (count update post-commit at former :222; pair-action dim reassignment at :347-363; family loop denominator unified at :171-175); 5 new GREEN tests (2 for Polish #1, 1 for Polish #2, 2 for Polish #3); matrix row 6 fully ✅; all 6 matrix rows ✅. Suite: 175 GREEN, 5 Skipped, 0 Failed.
 
 ## Last Session
-- **Stopped at**: Completed 05-02-PLAN.md — Wave 2 TDD. 19 GREEN BatchRenameExecutionServiceTests + 4 GREEN SearchReplaceServiceTests. Matrix rows 3+6 updated. Suite: 170 GREEN, 9 Skipped, 0 Failed.
+- **Stopped at**: Completed 05-03-PLAN.md — Wave 3 TDD. 3 polish helpers (AccumulateCommittedFamilyCount, pair-action ExecuteDimensionReassignments, BuildProgressSequence), 3 production rewires. All 6 matrix rows ✅. Suite: 175 GREEN, 5 Skipped, 0 Failed.
 - **Date**: 2026-05-10
 
 ## Next Steps
