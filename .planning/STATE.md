@@ -102,10 +102,11 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P09 | 1min | 1 tasks | 4 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-09-PLAN.md (phase-end manual Revit verification — REQ-01 acceptance, 22/22 PASS; Phase 3 closed)
-- **Date**: 2026-05-09
+- **Stopped at**: 2026-05-10 — Phase 2.5 CONTEXT.md updated: narrowed phase-end Revit verify to must-pass = ConvertFamily host preservation (REQ-10) + Phase 2 regression (REQ-07); REQ-08 (Compact Styles) and REQ-09 (CategoryChanger refuse-all) trusted by code review (Phase 2 pattern). Face-hosted preservation limitation captured under deferred. Status flipped to code-complete; verify scheduled before Phase 4 planning. Revit is open — local builds must use `-p:SkipRevitDeploy=true`.
+- **Date**: 2026-05-10
 
 ## Next Steps
-1. Phase 4 (Advanced Renaming Logic — REQ-02/03/04) planning.
-2. Phase 5 (Verification & Polish — REQ-05) planning.
-3. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
+1. Phase 2.5 phase-end Revit verify session — ConvertFamily host preservation (wall-hosted multi-type fixture) + FormulaAutoGrouping regression in same session.
+2. Phase 4 (Advanced Renaming Logic — REQ-02/03/04) planning — gated on (1).
+3. Phase 5 (Verification & Polish — REQ-05) planning.
+4. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
