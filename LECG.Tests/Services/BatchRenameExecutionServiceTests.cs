@@ -1,6 +1,12 @@
 // Wave 0 skip-gated RED scaffold — plans 05-02 and 05-03 flip these GREEN.
 // Covers direct BatchRenameExecutionService pure-data helpers and the 3 polish fixes (REQ-05).
+using System;
+using System.Collections.Generic;
+using FluentAssertions;
 using LECG.Services;
+using LECG.Services.Interfaces;
+using LECG.ViewModels.Components;
+using NSubstitute;
 using Xunit;
 
 namespace LECG.Tests.Services;
@@ -26,115 +32,302 @@ public class BatchRenameExecutionServiceTests
     }
 
     // -----------------------------------------------------------------------
-    // Wave 2 RED rows — plan 05-02 owns implementation (direct coverage)
+    // Wave 2 GREEN rows — plan 05-02 direct coverage
     // -----------------------------------------------------------------------
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateFamilyParamSkipReason built-in param returns built-in reason")]
+    // --- EvaluateFamilyParamSkipReason: 4 branches ---
+
+    [Fact]
     public void EvaluateFamilyParamSkipReason_BuiltInParam_ReturnsBuiltInReason()
     {
-        Assert.True(false, "see plan 05-02");
+        // paramIdValue < 0 → built-in branch
+        var result = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: -1,
+            isReporting: false,
+            paramName: "Width",
+            newName: "PanelWidth",
+            existingParamNames: Array.Empty<string>(),
+            formulaReferenced: new HashSet<string>(),
+            dimensionLabels: new HashSet<string>(),
+            elementAssociated: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("built-in");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateFamilyParamSkipReason reporting param returns reporting reason")]
+    [Fact]
     public void EvaluateFamilyParamSkipReason_ReportingParam_ReturnsReportingReason()
     {
-        Assert.True(false, "see plan 05-02");
+        // isReporting = true → reporting branch
+        var result = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 100,
+            isReporting: true,
+            paramName: "Height",
+            newName: "PanelHeight",
+            existingParamNames: Array.Empty<string>(),
+            formulaReferenced: new HashSet<string>(),
+            dimensionLabels: new HashSet<string>(),
+            elementAssociated: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("reporting");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateFamilyParamSkipReason name conflict returns conflict reason")]
+    [Fact]
     public void EvaluateFamilyParamSkipReason_NameConflict_ReturnsConflictReason()
     {
-        Assert.True(false, "see plan 05-02");
+        // newName collides with an existing param name (case-insensitive)
+        var result = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 200,
+            isReporting: false,
+            paramName: "Depth",
+            newName: "Width",
+            existingParamNames: new[] { "Width", "Height" },
+            formulaReferenced: new HashSet<string>(),
+            dimensionLabels: new HashSet<string>(),
+            elementAssociated: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("Width");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateFamilyParamSkipReason safe to rename returns null")]
+    [Fact]
     public void EvaluateFamilyParamSkipReason_SafeToRename_ReturnsNull()
     {
-        Assert.True(false, "see plan 05-02");
+        // positive id, not reporting, no name conflict → safe
+        var result = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 300,
+            isReporting: false,
+            paramName: "Thickness",
+            newName: "WallThickness",
+            existingParamNames: new[] { "Width", "Height" },
+            formulaReferenced: new HashSet<string>(),
+            dimensionLabels: new HashSet<string>(),
+            elementAssociated: new HashSet<string>());
+
+        result.Should().BeNull();
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateStandardItemSkipReason cross-batch collision returns collision reason")]
+    // --- EvaluateStandardItemSkipReason: 6 branches ---
+
+    [Fact]
     public void EvaluateStandardItemSkipReason_CrossBatchCollision_ReturnsCollisionReason()
     {
-        Assert.True(false, "see plan 05-02");
+        var claimed = new HashSet<string>(StringComparer.Ordinal) { "NewName" };
+
+        var result = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "NewName",
+            claimedNewNames: claimed);
+
+        result.Should().NotBeNull();
+        result.Should().Contain("NewName");
+        result.Should().Contain("claimed");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateStandardItemSkipReason system family returns system family reason")]
+    [Fact]
     public void EvaluateStandardItemSkipReason_SystemFamily_ReturnsSystemFamilyReason()
     {
-        Assert.True(false, "see plan 05-02");
+        var result = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: true,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "NewType",
+            claimedNewNames: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("system family");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateStandardItemSkipReason name in scope returns collision reason")]
+    [Fact]
     public void EvaluateStandardItemSkipReason_NameInScope_ReturnsCollisionReason()
     {
-        Assert.True(false, "see plan 05-02");
+        var result = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: true,
+            isSheetWithLockedNumber: false,
+            newValue: "ExistingName",
+            claimedNewNames: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("ExistingName");
+        result.Should().Contain("already in use");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateStandardItemSkipReason sheet locked returns locked reason")]
+    [Fact]
     public void EvaluateStandardItemSkipReason_SheetLocked_ReturnsLockedReason()
     {
-        Assert.True(false, "see plan 05-02");
+        var result = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: true,
+            newValue: "A101",
+            claimedNewNames: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("locked");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateStandardItemSkipReason read-only returns read-only reason")]
+    [Fact]
     public void EvaluateStandardItemSkipReason_ReadOnly_ReturnsReadOnlyReason()
     {
-        Assert.True(false, "see plan 05-02");
+        var result = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: true,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "NewStyle",
+            claimedNewNames: new HashSet<string>());
+
+        result.Should().NotBeNull();
+        result.Should().Contain("read-only");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: EvaluateStandardItemSkipReason freely renameable returns null")]
+    [Fact]
     public void EvaluateStandardItemSkipReason_FreelyRenameable_ReturnsNull()
     {
-        Assert.True(false, "see plan 05-02");
+        var result = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "FreeType",
+            claimedNewNames: new HashSet<string>());
+
+        result.Should().BeNull();
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: FormatSafeRenameLog both counts positive renders composite message")]
+    // --- FormatSafeRenameLog: 4 branches ---
+
+    [Fact]
     public void FormatSafeRenameLog_BothCountsPositive_RendersCompositeMessage()
     {
-        Assert.True(false, "see plan 05-02");
+        var msg = BatchRenameExecutionService.FormatSafeRenameLog("old", "new", formulaCount: 2, dimCount: 3);
+
+        msg.Should().Contain("old");
+        msg.Should().Contain("new");
+        msg.Should().Contain("2");
+        msg.Should().Contain("3");
+        msg.Should().Contain("formulas");
+        msg.Should().Contain("dimension labels");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: FormatSafeRenameLog formulas only renders formula suffix")]
+    [Fact]
     public void FormatSafeRenameLog_FormulasOnly_RendersFormulaSuffix()
     {
-        Assert.True(false, "see plan 05-02");
+        var msg = BatchRenameExecutionService.FormatSafeRenameLog("Width", "PanelWidth", formulaCount: 5, dimCount: 0);
+
+        msg.Should().Contain("Width");
+        msg.Should().Contain("PanelWidth");
+        msg.Should().Contain("5");
+        msg.Should().Contain("formulas");
+        msg.Should().NotContain("dimension labels");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: FormatSafeRenameLog dims only renders dim suffix")]
+    [Fact]
     public void FormatSafeRenameLog_DimsOnly_RendersDimSuffix()
     {
-        Assert.True(false, "see plan 05-02");
+        var msg = BatchRenameExecutionService.FormatSafeRenameLog("Depth", "WallDepth", formulaCount: 0, dimCount: 4);
+
+        msg.Should().Contain("Depth");
+        msg.Should().Contain("WallDepth");
+        msg.Should().Contain("4");
+        msg.Should().Contain("dimension labels");
+        msg.Should().NotContain("formulas");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: FormatSafeRenameLog neither side effect renders base message")]
+    [Fact]
     public void FormatSafeRenameLog_NeitherSideEffect_RendersBaseMessage()
     {
-        Assert.True(false, "see plan 05-02");
+        var msg = BatchRenameExecutionService.FormatSafeRenameLog("Alpha", "Beta", formulaCount: 0, dimCount: 0);
+
+        msg.Should().Contain("Alpha");
+        msg.Should().Contain("Beta");
+        msg.Should().NotContain("formulas");
+        msg.Should().NotContain("dimension labels");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: GroupCheckedFamilyParameterItems filters unchecked and preserves order")]
+    // --- GroupCheckedFamilyParameterItemsForTest: 2 tests ---
+
+    [Fact]
     public void GroupCheckedFamilyParameterItems_FiltersUnchecked_PreservesOrder()
     {
-        Assert.True(false, "see plan 05-02");
+        // Two checked items for the same family (Id=10), one unchecked for family Id=20
+        var checked1 = new ElementRowViewModel { Id = 10, Name = "Param1", OriginalValue = "Param1", NewValue = "ParamA", Type = "FamilyParameter", IsChecked = true };
+        var checked2 = new ElementRowViewModel { Id = 10, Name = "Param2", OriginalValue = "Param2", NewValue = "ParamB", Type = "FamilyParameter", IsChecked = true };
+        var uncheckedRow = new ElementRowViewModel { Id = 20, Name = "Param3", OriginalValue = "Param3", NewValue = "ParamC", Type = "FamilyParameter", IsChecked = false };
+
+        var items = new List<ElementRowViewModel> { checked1, checked2, uncheckedRow };
+
+        var result = BatchRenameExecutionService.GroupCheckedFamilyParameterItemsForTest(items);
+
+        result.Should().HaveCount(1, because: "only family Id=10 has checked items");
+        result[10].Should().HaveCount(2, because: "two checked items belong to family Id=10");
+        result[10][0].Should().BeSameAs(checked1, because: "order preserved");
+        result[10][1].Should().BeSameAs(checked2, because: "order preserved");
+        result.Should().NotContainKey(20, because: "unchecked row is excluded");
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: GroupCheckedFamilyParameterItems empty input returns empty")]
+    [Fact]
     public void GroupCheckedFamilyParameterItems_EmptyInput_ReturnsEmpty()
     {
-        Assert.True(false, "see plan 05-02");
+        var result = BatchRenameExecutionService.GroupCheckedFamilyParameterItemsForTest(new List<ElementRowViewModel>());
+
+        result.Should().BeEmpty();
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: LegacyProgressReporter null callback all five methods no-throw")]
+    // --- LegacyProgressReporter: all 5 methods no-throw when callback is null ---
+
+    [Fact]
     public void LegacyProgressReporter_NullCallback_AllFiveMethods_NoThrow()
     {
-        Assert.True(false, "see plan 05-02");
+        var reporter = new LegacyProgressReporter(progressCallback: null, logCallback: null);
+
+        Action report    = () => reporter.Report("msg", 50);
+        Action log       = () => reporter.Log("info");
+        Action logWarn   = () => reporter.LogWarning("warning");
+        Action logError  = () => reporter.LogError("error");
+
+        // LegacyProgressReporter only has 4 methods (Report, Log, LogWarning, LogError)
+        report.Should().NotThrow();
+        log.Should().NotThrow();
+        logWarn.Should().NotThrow();
+        logError.Should().NotThrow();
     }
 
-    [Fact(Skip = "Implemented by plan 05-02: constructor null FormulaUpdateService throws ArgumentNullException")]
+    // --- Constructor null-guard ---
+
+    [Fact]
     public void Constructor_NullFormulaUpdateService_Throws()
     {
-        Assert.True(false, "see plan 05-02");
+        // ITransactionService and IFamilyLoadOptionsFactory use Revit API types — Castle DynamicProxy
+        // cannot proxy them without RevitAPI.dll in the test runner (Phase 04-03 decision).
+        // Use reflection to invoke the constructor with null for formulaUpdateService and verify
+        // the resulting TargetInvocationException wraps ArgumentNullException.
+        var ctor = typeof(BatchRenameExecutionService).GetConstructors()[0];
+
+        // Pass null for all Revit-API-bound args; only the null-guard on formulaUpdateService fires
+        // because it is the last parameter and the guard executes after the other assignments.
+        Action act = () =>
+        {
+            try
+            {
+                ctor.Invoke(new object?[] { null, null, null });
+            }
+            catch (System.Reflection.TargetInvocationException tie)
+            {
+                System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(tie.InnerException!).Throw();
+            }
+        };
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("formulaUpdateService");
     }
 
     // -----------------------------------------------------------------------
