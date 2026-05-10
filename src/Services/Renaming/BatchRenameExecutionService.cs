@@ -349,18 +349,24 @@ namespace LECG.Services
                     int dimCount = 0;
                     if (dimensionsByName.TryGetValue(item.OriginalValue, out var dims) && dims.Count > 0)
                     {
+                        // PITFALL 2 GUARD: refetch the renamed param reference AFTER RenameParameter —
+                        // the original paramToRename reference is stale after rename.
                         FamilyParameter? renamedRef = FindFamilyParameterByName(manager, item.NewValue);
                         if (renamedRef != null)
                         {
-                            var reassignActions = new List<Action>(dims.Count);
+                            // Polish #2 (Phase 5 C1 follow-up): null-clear FamilyLabel before reassign — see 05-03-PLAN
+                            var reassignPairs = new List<(Action clear, Action assign)>(dims.Count);
                             foreach (Dimension dim in dims)
                             {
                                 Dimension capturedDim = dim;
                                 FamilyParameter capturedRef = renamedRef;
-                                reassignActions.Add(() => { capturedDim.FamilyLabel = capturedRef; });
+                                reassignPairs.Add((
+                                    clear:  () => { capturedDim.FamilyLabel = null; },
+                                    assign: () => { capturedDim.FamilyLabel = capturedRef; }
+                                ));
                             }
 
-                            ExecuteDimensionReassignments(reassignActions, item.OriginalValue, item.NewValue, out dimCount);
+                            ExecuteDimensionReassignments(reassignPairs, item.OriginalValue, item.NewValue, out dimCount);
                         }
                     }
 
@@ -484,6 +490,29 @@ namespace LECG.Services
             foreach (Action action in reassignActions)
             {
                 action(); // throws → propagates to SubTransaction rollback
+                dimCount++;
+            }
+        }
+
+        /// <summary>
+        /// Pair-action overload: executes a list of (clear, assign) action pairs, running clear()
+        /// before assign() per pair. Enables the null-clear → reassign pattern required by
+        /// Dimension.FamilyLabel (C1 follow-up from Phase 4 verification).
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        // Polish #2 (Phase 5 C1 follow-up): null-clear FamilyLabel before reassign — see 05-03-PLAN
+        internal static void ExecuteDimensionReassignments(
+            IReadOnlyList<(Action clear, Action assign)> pairs,
+            string oldName,
+            string newName,
+            out int dimCount)
+        {
+            dimCount = 0;
+            if (pairs == null) return;
+            foreach (var (clear, assign) in pairs)
+            {
+                clear();
+                assign();
                 dimCount++;
             }
         }
