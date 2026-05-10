@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T20:54:12.765Z"
+last_updated: "2026-05-10T21:44:11.804Z"
 progress:
   total_phases: 6
   completed_phases: 4
-  total_plans: 21
-  completed_plans: 21
+  total_plans: 26
+  completed_plans: 22
 ---
 
 # Project State
 
 ## Current Position
-- **Phase**: 04-advanced-renaming-logic (COMPLETE)
-- **Plan**: 6 of 6 COMPLETE
-- **Status**: Phase 4 closed 2026-05-10. REQ-02, REQ-03, REQ-04 all flipped to Complete. 131/131 unit tests GREEN; build deployed; user trust-based sign-off. Phase 5 (Verification & Polish — REQ-05) is next.
+- **Phase**: 05-verification-and-polish (IN PROGRESS)
+- **Plan**: 1 of 5 COMPLETE (05-00 done)
+- **Status**: Phase 5 Wave 0 complete. 3 new xUnit fixtures created + BaseElementCollectionServiceTests deepened + 05-VERIFICATION.md matrix scaffolded + 05-VALIDATION.md wave-0-locked. Suite: 134 GREEN, 45 Skipped, 0 Failed. Plans 05-01/02/03/04 remain.
 
 ## Phase 4 Progress
 - Plan 04-00 COMPLETE: Wave 0 test scaffolds — IsRenameable field on ElementRowViewModel; skip-gated RED fixtures for FormulaUpdate, BatchRenameSafeRename; VALIDATION.md per-task map.
@@ -105,6 +105,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 04-04]: LogRenameSuccess dimCount=0 default — backward-compatible extension; FormatSafeRenameLog 4-branch composite format centralized for testability
 - [Phase 04-04]: SearchReplacePreviewService dimensionCount stays IsDimensionLabel?1:0 — preview layer has only bool flag, not Dimension object count; consistent at single-param-label granularity
 - [Phase 04-05]: Verification accepted as trust-based (131/131 unit tests); C1 Dimension.FamilyLabel null-clear behavior not observed live — deferred follow-up if production issues surface
+- [Phase 05]: Wave-0 skip-gated RED pattern reused from Phases 03-00/04-00 — one anchor per new fixture, all behavioural tests skip-gated naming the implementing plan ID
+- [Phase 05]: [Phase 05-00]: BaseElementCollectionServiceTests uses existing 4 GREEN tests as anchor — no separate Fixture_Anchor_Exists added (fixture already enumerates)
+- [Phase 05]: [Phase 05-00]: Revit-bound collector paths (FilteredElementCollector, GraphicsStyle null-category) skip-gated with manual verification pointer to 05-VERIFICATION.md
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -128,9 +131,13 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 04 P01 | 40min | 2 tasks | 3 files |
 | Phase 04 P03 | 20min | 2 tasks | 3 files |
 | Phase 04 P04 | 12min | 1 tasks | 2 files |
+| Phase 05 P00 | 15min | 3 tasks | 6 files |
+
+## Phase 5 Progress
+- Plan 05-00 COMPLETE: Wave 0 scaffolds — 3 new xUnit fixtures (RenameRulePipelineServiceTests, SearchReplaceServiceTests, BatchRenameExecutionServiceTests) with anchor + skip-gated RED rows; BaseElementCollectionServiceTests deepened with 12 skip-gated RED rows naming plans 05-01 and Revit-manual paths; 05-VERIFICATION.md 6-row matrix scaffold; 05-VALIDATION.md flipped to nyquist_compliant true, wave_0_complete true, wave-0-locked. Suite: 134 GREEN, 45 Skipped, 0 Failed.
 
 ## Last Session
-- **Stopped at**: Completed 04-05-PLAN.md — Phase 4 closure. REQ-02/03/04 flipped to Complete in REQUIREMENTS.md. Verification passed (23/24; C1 N-A). SUMMARY created. Phase 5 planning next.
+- **Stopped at**: Completed 05-00-PLAN.md — Wave 0 scaffolds. 3 new fixtures + BaseElementCollectionServiceTests deepened + 05-VERIFICATION.md matrix + 05-VALIDATION.md flipped. 134 GREEN, 45 Skipped, 0 Failed.
 - **Date**: 2026-05-10
 
 ## Next Steps
