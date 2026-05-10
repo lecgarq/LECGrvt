@@ -38,7 +38,7 @@ Status legend: ⬜ pending · ✅ pass · ❌ fail · 🚫 N/A
 
 ## Sign-off (Wave 4)
 
-- [ ] Full xUnit suite GREEN (target >= ~165 tests)
-- [ ] Matrix above: all rows ✅
+- [x] Full xUnit suite GREEN (target >= ~165 tests) — actual: **175 Passed, 5 Skipped, 0 Failed** (Total: 180; run: 2026-05-10)
+- [x] Matrix above: all rows ✅
 - [ ] Manual checklist: all 3 polish fixes PASS or trust-based sign-off recorded
 - [ ] REQ-05 flipped Pending -> Complete in `.planning/REQUIREMENTS.md`
