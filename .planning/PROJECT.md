@@ -10,6 +10,19 @@ WPF UI under `src/Views/`, MVVM ViewModels under `src/ViewModels/`, services und
 
 Reliable, locale-safe, no-silent-failure bulk edits to Revit families and elements — every operation either succeeds visibly, skips with a reason surfaced in the UI, or refuses the batch with a structured log. No partial successes that look like full successes.
 
+## Current Milestone: v2.0 Plugin Maturity
+
+**Goal:** Mature the five core plugins (Purge Unused, Compacting Styles, Convert Family, Category Changer, Batch Rename) on a unified cross-cutting foundation — single structured logger, severity-preserving progress, whitelist dialog dismissal — and close the silent-failure / UX gaps surfaced in the 5-plugin audit (2026-05-08).
+
+**Target features:**
+- Cross-cutting infrastructure: unified logger interface, `IProgressReporter` severity preservation, whitelist-by-DialogId dismissal
+- Purge Unused maturity (Deep-mode UX gate, options-object refactor, dedup handlers, parameterized filters)
+- Compacting Styles maturity (real view + scope toggles + dry-run, `CompactionPipeline` base, LogView warnings)
+- Convert Family maturity (blast-radius preview, collapse over-decomposition, structured summary, face-hosted preservation via HostFace capture)
+- Category Changer maturity (extracted instance-swap service, real cancellation, typed `ChangeCategoryResult`, full-locationtype transplant)
+- Batch Rename maturity (collapse `SearchReplaceService` facade, async `CollectBaseElements`, scope-pills UX, dead-reg cleanup, per-column funnel chrome)
+- v1.1 carry-over gap closure (Phase 02 verification artifact, Phase 02.5 manual Revit checks, Phase 04 C1 live observation)
+
 ## Requirements
 
 ### Validated
@@ -25,7 +38,8 @@ Reliable, locale-safe, no-silent-failure bulk edits to Revit families and elemen
 - ✓ Category Changer refuse-all on unsupported location types — v1.1 (refuse path only; transplant deferred)
 - ✓ Convert Family load-before-delete + exact-symbol match — v1.1 (face-hosted deferred)
 
-### Active (v1.2 Plugin Maturity — queued)
+### Active (v2.0 Plugin Maturity)
+
 
 See `.planning/research/SYNTHESIS.md` (5-plugin audit, 2026-05-08) for the source analysis.
 
@@ -75,4 +89,4 @@ Branching: GSD planning uses `codex/review` workflow branch. Tag releases as `v[
 
 ---
 
-*Last updated: 2026-05-10 after v1.1 milestone*
+*Last updated: 2026-05-10 — v2.0 Plugin Maturity milestone started*
