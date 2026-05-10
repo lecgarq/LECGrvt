@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T21:44:11.804Z"
+last_updated: "2026-05-10T21:51:57.347Z"
 progress:
   total_phases: 6
   completed_phases: 4
   total_plans: 26
-  completed_plans: 22
+  completed_plans: 23
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 05-verification-and-polish (IN PROGRESS)
-- **Plan**: 1 of 5 COMPLETE (05-00 done)
-- **Status**: Phase 5 Wave 0 complete. 3 new xUnit fixtures created + BaseElementCollectionServiceTests deepened + 05-VERIFICATION.md matrix scaffolded + 05-VALIDATION.md wave-0-locked. Suite: 134 GREEN, 45 Skipped, 0 Failed. Plans 05-01/02/03/04 remain.
+- **Plan**: 2 of 5 COMPLETE (05-00, 05-01 done)
+- **Status**: Phase 5 Wave 1 complete. 5 GREEN pipeline tests (RenameRulePipelineServiceTests) + 10 new GREEN deepening tests (BaseElementCollectionServiceTests via TryGetGroupLabel/DispatchScopeFlags/MergeParamScanResults helpers). Matrix rows 2+5 flipped to ✅. Suite: 149 GREEN, 30 Skipped, 0 Failed. Plans 05-02/03/04 remain.
 
 ## Phase 4 Progress
 - Plan 04-00 COMPLETE: Wave 0 test scaffolds — IsRenameable field on ElementRowViewModel; skip-gated RED fixtures for FormulaUpdate, BatchRenameSafeRename; VALIDATION.md per-task map.
@@ -108,6 +108,8 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 05]: Wave-0 skip-gated RED pattern reused from Phases 03-00/04-00 — one anchor per new fixture, all behavioural tests skip-gated naming the implementing plan ID
 - [Phase 05]: [Phase 05-00]: BaseElementCollectionServiceTests uses existing 4 GREEN tests as anchor — no separate Fixture_Anchor_Exists added (fixture already enumerates)
 - [Phase 05]: [Phase 05-00]: Revit-bound collector paths (FilteredElementCollector, GraphicsStyle null-category) skip-gated with manual verification pointer to 05-VERIFICATION.md
+- [Phase 05]: [Phase 05-01]: TryGetGroupLabel uses Func<string> (not Func<ForgeTypeId>+Func<ForgeTypeId,string>) — single-delegate avoids ForgeTypeId exposure in test project; both exception paths remain testable via throw-from-lambda
+- [Phase 05]: [Phase 05-01]: DispatchScopeFlags added alongside (not replacing) production scope dispatch — if-chain unchanged to avoid invasive refactor; helper mirrors dispatch logic for direct testability
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -132,12 +134,14 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 04 P03 | 20min | 2 tasks | 3 files |
 | Phase 04 P04 | 12min | 1 tasks | 2 files |
 | Phase 05 P00 | 15min | 3 tasks | 6 files |
+| Phase 05 P01 | 5min | 2 tasks | 4 files |
 
 ## Phase 5 Progress
 - Plan 05-00 COMPLETE: Wave 0 scaffolds — 3 new xUnit fixtures (RenameRulePipelineServiceTests, SearchReplaceServiceTests, BatchRenameExecutionServiceTests) with anchor + skip-gated RED rows; BaseElementCollectionServiceTests deepened with 12 skip-gated RED rows naming plans 05-01 and Revit-manual paths; 05-VERIFICATION.md 6-row matrix scaffold; 05-VALIDATION.md flipped to nyquist_compliant true, wave_0_complete true, wave-0-locked. Suite: 134 GREEN, 45 Skipped, 0 Failed.
+- Plan 05-01 COMPLETE: Wave 1 TDD — RenameRulePipelineServiceTests 5 GREEN tests (rule order, index propagation, null-throws, inactive pass-through, null-text guard); BaseElementCollectionService 3 pure-data helpers extracted (TryGetGroupLabel, DispatchScopeFlags, MergeParamScanResults) + 10 new GREEN deepening tests; matrix rows 2+5 flipped to ✅. Suite: 149 GREEN, 30 Skipped, 0 Failed.
 
 ## Last Session
-- **Stopped at**: Completed 05-00-PLAN.md — Wave 0 scaffolds. 3 new fixtures + BaseElementCollectionServiceTests deepened + 05-VERIFICATION.md matrix + 05-VALIDATION.md flipped. 134 GREEN, 45 Skipped, 0 Failed.
+- **Stopped at**: Completed 05-01-PLAN.md — Wave 1 TDD. 5 GREEN pipeline tests + 10 new GREEN BaseElementCollectionService helper tests + 3 pure-data helpers extracted. Matrix rows 2+5 flipped to ✅. Suite: 149 GREEN, 30 Skipped, 0 Failed.
 - **Date**: 2026-05-10
 
 ## Next Steps
