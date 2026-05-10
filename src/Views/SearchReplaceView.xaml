@@ -422,15 +422,45 @@
                     <!-- DataGrid — bound to PreviewView (ICollectionView) so WPF honours
                          SortDescriptions[0]=(Category, Asc) and the AND-combined Filter
                          (FilterCategory dropdown ∧ per-column predicates).
-                         Column order locked by CONTEXT.md: ☑ | Type | Category | Original | New. -->
+                         Column order locked by CONTEXT.md: ☑ | Type | Category | Original | New | Status. -->
                     <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True">
+                        <!-- Muted-row Style: skipped rows (IsRenameable=false) rendered at reduced
+                             opacity with muted text so users can distinguish them at a glance. -->
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsRenameable}" Value="False">
+                                        <Setter Property="Opacity" Value="0.45"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
                         <DataGrid.Columns>
-                            <DataGridCheckBoxColumn Header="Sel" Binding="{Binding IsChecked, UpdateSourceTrigger=PropertyChanged}" Width="35" SortMemberPath="IsChecked"/>
+                            <!-- Sel checkbox: IsEnabled bound to IsRenameable so skipped rows cannot be ticked -->
+                            <DataGridTemplateColumn Header="Sel" Width="35" SortMemberPath="IsChecked">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                  IsEnabled="{Binding IsRenameable}"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                             <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True" SortMemberPath="Type"/>
                             <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="Auto" IsReadOnly="True" SortMemberPath="Category"/>
                             <DataGridTextColumn Header="Original" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue"/>
                             <DataGridTextColumn Header="New" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue"/>
                             <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True" SortMemberPath="Id"/>
+                            <!-- Status: shows skip reason or side-effect count; tooltip for overflow -->
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="140" IsReadOnly="True" SortMemberPath="Status">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="ToolTip" Value="{Binding Status}"/>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </controls:LecgDataGrid>
 
