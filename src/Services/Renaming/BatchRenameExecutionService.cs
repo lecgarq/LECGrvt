@@ -14,11 +14,13 @@ namespace LECG.Services
     {
         private readonly ITransactionService _transactionService;
         private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
+        private readonly IFormulaUpdateService _formulaUpdateService;
 
-        public BatchRenameExecutionService(ITransactionService transactionService, IFamilyLoadOptionsFactory loadOptionsFactory)
+        public BatchRenameExecutionService(ITransactionService transactionService, IFamilyLoadOptionsFactory loadOptionsFactory, IFormulaUpdateService formulaUpdateService)
         {
             _transactionService = transactionService;
             _loadOptionsFactory = loadOptionsFactory;
+            _formulaUpdateService = formulaUpdateService ?? throw new ArgumentNullException(nameof(formulaUpdateService));
         }
 
         public int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Logging.ILogger logger, Action<double, string>? onProgress = null)
