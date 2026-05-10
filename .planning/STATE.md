@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T19:21:28.521Z"
+last_updated: "2026-05-10T19:26:23.053Z"
 progress:
   total_phases: 6
   completed_phases: 3
   total_plans: 21
-  completed_plans: 19
+  completed_plans: 20
 ---
 
 # Project State
 
 ## Current Position
 - **Phase**: 04-advanced-renaming-logic (IN PROGRESS)
-- **Plan**: 03 of 6 COMPLETE (Wave 2 plans 01-03 done; plans 04-05 remain)
-- **Status**: Plan 04-03 complete — IFormulaUpdateService injected into BatchRenameExecutionService; RenameFamilyParameters converted to instance method with per-param SubTransaction wrapping rename + formula-update loop; CollectFormulaUpdates + LogRenameSuccess pure-data helpers extracted; renamedCount incremented only after subTx.Commit() (Pitfall 3 guard). 7 RED tests flipped GREEN: 3 FormulaUpdateServiceTests + 4 BatchRenameSafeRenameTests REQ-02. Build clean (0 errors, 0 warnings); full suite 128 passed, 3 skip-gated (REQ-03 for plan 04-04). REQ-02 closed. Stopped at 2026-05-10.
+- **Plan**: 04 of 6 COMPLETE (Wave 3 plan 04 done; plan 05 remains)
+- **Status**: Plan 04-04 complete — BuildDimensionsByLabelName collector added; ExecuteDimensionReassignments + FormatSafeRenameLog pure-data helpers extracted; dimension reassignment loop inserted inside per-param SubTransaction after formula-update loop with FindFamilyParameterByName re-fetch (Pitfall 2 guard); LogRenameSuccess extended with dimCount=0 default. 3 REQ-03 skip-gated tests flipped GREEN; full suite 131/131 passed (0 skip). REQ-03 closed. Stopped at 2026-05-10.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -93,6 +93,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 04-03]: IFormulaUpdateService injected as last constructor parameter in BatchRenameExecutionService; DI registration in Bootstrapper.cs unchanged — MS DI resolves automatically
 - [Phase 04-03]: Injectable constructor test uses reflection instead of NSubstitute — Castle DynamicProxy cannot proxy ITransactionService without RevitAPI.dll; reflection confirms the parameter type is accepted without RevitAPI dependency
 - [Phase 04-03]: CollectFormulaUpdates extracted as internal static pure-data helper — enables unit testing of formula-update logic without Revit API; formulaReferenced.Contains opt-in skips loop for non-referenced params
+- [Phase 04-04]: ExecuteDimensionReassignments accepts List<Action> not List<Dimension> — decouples helper from Revit API; unit tests inject mock actions, production builds dim.FamilyLabel setter closures
+- [Phase 04-04]: LogRenameSuccess dimCount=0 default — backward-compatible extension; FormatSafeRenameLog 4-branch composite format centralized for testability
+- [Phase 04-04]: SearchReplacePreviewService dimensionCount stays IsDimensionLabel?1:0 — preview layer has only bool flag, not Dimension object count; consistent at single-param-label granularity
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -115,9 +118,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 04 P02 | 35min | 2 tasks | 5 files |
 | Phase 04 P01 | 40min | 2 tasks | 3 files |
 | Phase 04 P03 | 20min | 2 tasks | 3 files |
+| Phase 04 P04 | 12min | 1 tasks | 2 files |
 
 ## Last Session
-- **Stopped at**: Completed 04-03-PLAN.md — IFormulaUpdateService injection + per-param SubTransaction + formula-update loop; 7 RED tests GREEN (3 FormulaUpdateServiceTests + 4 REQ-02 BatchRenameSafeRenameTests); REQ-02 closed. Build clean 128/131 passed.
+- **Stopped at**: Completed 04-04-PLAN.md — BuildDimensionsByLabelName + ExecuteDimensionReassignments + FormatSafeRenameLog; dimension reassignment loop in SubTransaction with Pitfall 2 guard (FindFamilyParameterByName re-fetch); 3 REQ-03 skip-gated tests GREEN; full suite 131/131. REQ-03 closed.
 - **Date**: 2026-05-10
 
 ## Next Steps
