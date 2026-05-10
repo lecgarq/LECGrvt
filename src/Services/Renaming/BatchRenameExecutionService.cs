@@ -219,9 +219,11 @@ namespace LECG.Services
                                 formulaReferenced,
                                 elementAssociated,
                                 logger);
-                            count += renamedInFamily;
                             return renamedInFamily > 0;
                         });
+
+                        // Polish #1 (Phase 5): count incremented only after committed observation — see 05-03-PLAN
+                        count = AccumulateCommittedFamilyCount(committed, renamedInFamily, count);
 
                         // Reload ONCE after all parameters are renamed in this family
                         if (committed)
@@ -396,6 +398,18 @@ namespace LECG.Services
 
             return null;
         }
+
+        /// <summary>
+        /// Pure-data helper: returns the updated committed-family rename count.
+        /// If <paramref name="committed"/> is true, adds <paramref name="renamedInFamily"/> to
+        /// <paramref name="currentCount"/>; otherwise returns <paramref name="currentCount"/> unchanged.
+        /// Extracted so that the count increment happens only AFTER the RunConditional result is
+        /// observed, preventing phantom count inflation on rollback (Polish #1, Phase 5).
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        // Polish #1 (Phase 5): count incremented only after committed observation — see 05-03-PLAN
+        internal static int AccumulateCommittedFamilyCount(bool committed, int renamedInFamily, int currentCount)
+            => committed ? currentCount + renamedInFamily : currentCount;
 
         /// <summary>
         /// Pure-data helper: collect formula updates for a rename operation.
