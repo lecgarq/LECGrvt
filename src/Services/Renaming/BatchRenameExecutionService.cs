@@ -210,6 +210,7 @@ namespace LECG.Services
 
                             renamedInFamily = RenameFamilyParameters(
                                 mgr,
+                                famDoc,
                                 kvp.Value,
                                 familyName,
                                 dimensionLabels,
@@ -265,8 +266,9 @@ namespace LECG.Services
             return byFamily;
         }
 
-        private static int RenameFamilyParameters(
+        private int RenameFamilyParameters(
             FamilyManager manager,
+            Document famDoc,
             List<ElementRowViewModel> items,
             string familyName,
             HashSet<string> dimensionLabels,
@@ -297,9 +299,58 @@ namespace LECG.Services
                     continue;
                 }
 
-                if (TryRenameFamilyParameter(manager, paramToRename, item, familyName, logger))
+                // Per-param SubTransaction: rename + formula-update is atomic per parameter.
+                // On exception the SubTransaction rolls back; the outer transaction (and other
+                // params) are unaffected. renamedCount is incremented ONLY after confirmed Commit.
+                SubTransaction? subTx = null;
+                try
                 {
+                    subTx = new SubTransaction(famDoc);
+                    subTx.Start();
+
+                    manager.RenameParameter(paramToRename, item.NewValue);
+
+                    // Formula-update loop: rewrite any formula referencing the old name.
+                    // Only enter the loop if the parameter is known to be formula-referenced
+                    // (opt-in via formulaReferenced set — performance guard, no behaviour change).
+                    int formulaCount = 0;
+                    if (formulaReferenced.Contains(item.OriginalValue))
+                    {
+                        var paramFormulas = new List<(string name, string formula)>();
+                        foreach (FamilyParameter fp in manager.Parameters)
+                        {
+                            if (!string.IsNullOrEmpty(fp.Formula))
+                                paramFormulas.Add((fp.Definition.Name, fp.Formula));
+                        }
+
+                        var updates = CollectFormulaUpdates(paramFormulas, item.OriginalValue, item.NewValue, _formulaUpdateService);
+                        foreach (var (targetName, updatedFormula) in updates)
+                        {
+                            FamilyParameter? targetParam = FindFamilyParameterByName(manager, targetName);
+                            if (targetParam != null)
+                            {
+                                manager.SetFormula(targetParam, updatedFormula);
+                                formulaCount++;
+                            }
+                        }
+                    }
+
+                    subTx.Commit();
+
+                    // Increment ONLY after confirmed commit (Pitfall 3 guard)
                     renamedCount++;
+                    LogRenameSuccess(logger, item.OriginalValue, item.NewValue, formulaCount);
+                }
+                catch (Exception ex)
+                {
+                    if (subTx != null && subTx.IsValidObject &&
+                        subTx.GetStatus() == TransactionStatus.Started)
+                    {
+                        subTx.RollBack();
+                    }
+
+                    logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': {ex.Message}");
+                    // Do NOT increment renamedCount — the SubTransaction was rolled back
                 }
             }
 
@@ -319,35 +370,53 @@ namespace LECG.Services
             return null;
         }
 
-        private static bool TryRenameFamilyParameter(
-            FamilyManager manager,
-            FamilyParameter parameter,
-            ElementRowViewModel item,
-            string familyName,
-            Logging.ILogger logger)
+        /// <summary>
+        /// Pure-data helper: collect formula updates for a rename operation.
+        /// For each parameter whose formula contains a reference to <paramref name="oldName"/>,
+        /// calls <paramref name="service"/>.UpdateFormula and returns the (paramName, updatedFormula) pairs.
+        /// No Revit API objects are touched — suitable for unit testing without RevitAPI.dll.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static List<(string name, string updatedFormula)> CollectFormulaUpdates(
+            IEnumerable<(string name, string formula)> parameters,
+            string oldName,
+            string newName,
+            IFormulaUpdateService service)
         {
-            try
+            var result = new List<(string name, string updatedFormula)>();
+            foreach (var (name, formula) in parameters)
             {
-                manager.RenameParameter(parameter, item.NewValue);
-                logger.LogSuccess($"Renamed param '{item.OriginalValue}' -> '{item.NewValue}' in '{familyName}'");
-                return true;
+                if (string.IsNullOrEmpty(formula)) continue;
+                if (!FormulaNameUpdater.ContainsReference(formula, oldName)) continue;
+
+                string updated = service.UpdateFormula(formula, oldName, newName);
+                result.Add((name, updated));
             }
-            catch (ArgumentException renameEx)
-            {
-                logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
-                return false;
-            }
-            catch (InvalidOperationException renameEx)
-            {
-                logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
-                return false;
-            }
-            catch (RevitExceptions.InvalidOperationException renameEx)
-            {
-                logger.LogError($"Could not rename param '{item.OriginalValue}' in '{familyName}': {renameEx.Message}");
-                return false;
-            }
+
+            return result;
         }
+
+        /// <summary>
+        /// Emits a success log line for a rename operation, including the formula-update count suffix
+        /// when formulas were rewritten. Format is "Renamed '{old}' to '{new}' (updated N formulas)"
+        /// when formulaCount &gt; 0, or "Renamed '{old}' to '{new}'" otherwise.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static void LogRenameSuccess(Logging.ILogger logger, string oldName, string newName, int formulaCount)
+        {
+            if (formulaCount > 0)
+                logger.LogSuccess($"Renamed '{oldName}' to '{newName}' (updated {formulaCount} formulas)");
+            else
+                logger.LogSuccess($"Renamed '{oldName}' to '{newName}'");
+        }
+
+        /// <summary>
+        /// Test-accessible wrapper around GroupCheckedFamilyParameterItems.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static Dictionary<long, List<ElementRowViewModel>> GroupCheckedFamilyParameterItemsForTest(
+            List<ElementRowViewModel> familyItems)
+            => GroupCheckedFamilyParameterItems(familyItems);
 
         /// <summary>
         /// Pre-flight dry-run loop for standard items. Runs OUTSIDE the main rename transaction.
