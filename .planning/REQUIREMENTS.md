@@ -2,7 +2,7 @@
 
 **Milestone:** v2.0 Plugin Maturity
 **Source:** `.planning/research/SYNTHESIS.md` (5-plugin audit, 2026-05-08) + user-confirmed UI/UX additions
-**Status:** Draft — pending roadmap phase mapping
+**Status:** Roadmap approved — Phases 6–13 mapped (2026-05-10)
 
 Carries forward the **core value** gate from v1.1: every command either succeeds visibly, skips with a reason surfaced in the UI, or refuses the batch with a structured log. No partial-success that looks like full-success.
 
@@ -90,8 +90,41 @@ Carries forward the **core value** gate from v1.1: every command either succeeds
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| _to be filled by gsd-roadmapper_ | | |
+| CROSS-01 | Phase 6 — Cross-cutting Foundation | Pending |
+| CROSS-02 | Phase 6 — Cross-cutting Foundation | Pending |
+| CROSS-03 | Phase 6 — Cross-cutting Foundation | Pending |
+| GAPS-01  | Phase 6 — Cross-cutting Foundation | Pending |
+| PURGE-01 | Phase 7 — Purge Unused Maturity | Pending |
+| PURGE-02 | Phase 7 — Purge Unused Maturity | Pending |
+| PURGE-03 | Phase 7 — Purge Unused Maturity | Pending |
+| COMPACT-01 | Phase 8 — Compacting Styles Maturity | Pending |
+| COMPACT-02 | Phase 8 — Compacting Styles Maturity | Pending |
+| COMPACT-03 | Phase 8 — Compacting Styles Maturity | Pending |
+| GAPS-02 | Phase 8 — Compacting Styles Maturity | Pending |
+| CONVERT-01 | Phase 9 — Convert Family Maturity | Pending |
+| CONVERT-02 | Phase 9 — Convert Family Maturity | Pending |
+| CONVERT-03 | Phase 9 — Convert Family Maturity | Pending |
+| CONVERT-04 | Phase 9 — Convert Family Maturity | Pending |
+| CATEGORY-01 | Phase 10 — Category Changer Maturity | Pending |
+| CATEGORY-02 | Phase 10 — Category Changer Maturity | Pending |
+| CATEGORY-03 | Phase 10 — Category Changer Maturity | Pending |
+| CATEGORY-04 | Phase 10 — Category Changer Maturity | Pending |
+| BATCH-01 | Phase 11 — Batch Rename Maturity | Pending |
+| BATCH-02 | Phase 11 — Batch Rename Maturity | Pending |
+| BATCH-03 | Phase 11 — Batch Rename Maturity | Pending |
+| BATCH-04 | Phase 11 — Batch Rename Maturity | Pending |
+| GAPS-03 | Phase 11 — Batch Rename Maturity | Pending |
+| UI-01 | Phase 12 — UI System | Pending |
+| UI-02 | Phase 12 — UI System | Pending |
+| UI-03 | Phase 12 — UI System | Pending |
+| UI-04 | Phase 12 — UI System | Pending |
+| UX-01 | Phase 13 — UX Polish | Pending |
+| UX-02 | Phase 13 — UX Polish | Pending |
+| UX-03 | Phase 13 — UX Polish | Pending |
+| UX-04 | Phase 13 — UX Polish | Pending |
+
+**Coverage:** 32 / 32 requirements mapped ✓ (no orphans, no duplicates)
 
 ---
 
-*Last updated: 2026-05-10 — v2.0 Plugin Maturity requirements drafted*
+*Last updated: 2026-05-10 — Phases 6–13 mapped by gsd-roadmapper*
