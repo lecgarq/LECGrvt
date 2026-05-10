@@ -1,11 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
 using Autodesk.Revit.DB;
 using LECG.Models;
 using LECG.ViewModels;
 using LECG.ViewModels.Components;
 using LECG.Views;
 using LECG.Services.Interfaces;
-using System.Collections.Generic;
-using System.Threading;
 
 
 
@@ -39,9 +40,9 @@ namespace LECG.Services
 
         public SearchReplaceService(ISearchReplacePreviewService searchReplacePreviewService, IBatchRenameExecutionService batchRenameExecutionService, IBaseElementCollectionService baseElementCollectionService)
         {
-            _searchReplacePreviewService = searchReplacePreviewService;
-            _batchRenameExecutionService = batchRenameExecutionService;
-            _baseElementCollectionService = baseElementCollectionService;
+            _searchReplacePreviewService = searchReplacePreviewService ?? throw new ArgumentNullException(nameof(searchReplacePreviewService));
+            _batchRenameExecutionService = batchRenameExecutionService ?? throw new ArgumentNullException(nameof(batchRenameExecutionService));
+            _baseElementCollectionService = baseElementCollectionService ?? throw new ArgumentNullException(nameof(baseElementCollectionService));
         }
 
         // 1. One-time Fetch of Grid Data

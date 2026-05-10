@@ -16,7 +16,6 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.6.5" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6" />
-    <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="NSubstitute" Version="5.1.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
@@ -29,6 +28,19 @@
   <ItemGroup>
     <ProjectReference Include="..\\LECG.Core\\LECG.Core.csproj" Condition="'$(IsCiBuild)' == 'true'" />
     <ProjectReference Include="..\\LECG.csproj" Condition="'$(IsCiBuild)' != 'true'" />
+  </ItemGroup>
+
+  <!-- RevitAPI reference for compile-time type resolution only.
+       Needed so the test project can call methods that accept Autodesk.Revit.DB.Document.
+       RevitAPI.dll has native-code dependencies that are only available inside Revit, so
+       it cannot be loaded in the xUnit test runner. Tests calling Document-parametered methods
+       are skip-gated with a manual-Revit pointer (see 05-VERIFICATION.md).
+       ExcludeAssets=runtime keeps it out of the output directory so it isn't accidentally loaded. -->
+  <ItemGroup Condition="'$(IsCiBuild)' != 'true'">
+    <Reference Include="RevitAPI">
+      <HintPath>C:\Program Files\Autodesk\Revit 2026\RevitAPI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsCiBuild)' == 'true'">
