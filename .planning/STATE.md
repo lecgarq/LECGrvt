@@ -15,8 +15,8 @@ progress:
 
 ## Current Position
 - **Phase**: 04-advanced-renaming-logic (IN PROGRESS)
-- **Plan**: 00 of 6 COMPLETE (Wave 0 scaffolds done; plans 01-05 remain)
-- **Status**: Phase 4 started. Plan 04-00 complete — Wave 0 test scaffolds in place: 3 new xUnit RED fixtures (RenameSkipDetectorTests, FormulaUpdateServiceTests, BatchRenameSafeRenameTests), SearchReplacePreviewServiceTests extended with 5 REQ-04 stubs, ElementRowViewModel.IsRenameable added, VALIDATION.md nyquist_compliant=true wave_0_complete=true. Build clean (0 errors, 0 warnings), 103 tests GREEN + 28 Skipped. v1.1 milestone status: REQ-01/06/07/08/09/10 Complete; REQ-02/03/04 (Phase 4, in progress) and REQ-05 (Phase 5) remain.
+- **Plan**: 01 of 6 COMPLETE (Wave 1 done; plans 02-05 remain)
+- **Status**: Plan 04-01 complete — GetRenameSkipReason narrowed (formula-referenced/dimension-label/element-associated branches removed, built-in/reporting/name-conflict kept); EvaluateFamilyParamSkipReason + EvaluateStandardItemSkipReason pure-data helpers added (unit-testable without Revit); GetStandardItemSkipReason + ApplyPreFlightSkipReasons added; pre-flight dry-run loop wired in ExecuteBatchRename OUTSIDE transaction. 13 RED tests flipped GREEN: 12 RenameSkipDetectorTests + 2 BatchRenameSafeRenameTests REQ-04 dry-run. Build clean (0 errors, 0 warnings); full suite 121 passed, 10 skip-gated (REQ-02/03 for plans 04-03/04-04). Stopped at 2026-05-10.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
