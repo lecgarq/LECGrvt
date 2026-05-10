@@ -6,17 +6,25 @@ status: unknown
 last_updated: "2026-05-10T19:26:23.053Z"
 progress:
   total_phases: 6
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 21
-  completed_plans: 20
+  completed_plans: 21
 ---
 
 # Project State
 
 ## Current Position
-- **Phase**: 04-advanced-renaming-logic (IN PROGRESS)
-- **Plan**: 04 of 6 COMPLETE (Wave 3 plan 04 done; plan 05 remains)
-- **Status**: Plan 04-04 complete — BuildDimensionsByLabelName collector added; ExecuteDimensionReassignments + FormatSafeRenameLog pure-data helpers extracted; dimension reassignment loop inserted inside per-param SubTransaction after formula-update loop with FindFamilyParameterByName re-fetch (Pitfall 2 guard); LogRenameSuccess extended with dimCount=0 default. 3 REQ-03 skip-gated tests flipped GREEN; full suite 131/131 passed (0 skip). REQ-03 closed. Stopped at 2026-05-10.
+- **Phase**: 04-advanced-renaming-logic (COMPLETE)
+- **Plan**: 6 of 6 COMPLETE
+- **Status**: Phase 4 closed 2026-05-10. REQ-02, REQ-03, REQ-04 all flipped to Complete. 131/131 unit tests GREEN; build deployed; user trust-based sign-off. Phase 5 (Verification & Polish — REQ-05) is next.
+
+## Phase 4 Progress
+- Plan 04-00 COMPLETE: Wave 0 test scaffolds — IsRenameable field on ElementRowViewModel; skip-gated RED fixtures for FormulaUpdate, BatchRenameSafeRename; VALIDATION.md per-task map.
+- Plan 04-01 COMPLETE: Narrowed GetRenameSkipReason to built-in/reporting/name-conflict; added EvaluateFamilyParamSkipReason + EvaluateStandardItemSkipReason pure-data helpers; ApplyPreFlightSkipReasons delegate pattern; GetStandardItemSkipReason via Family.IsInPlace proxy (REQ-04 detection).
+- Plan 04-02 COMPLETE: SearchReplacePreviewService Status + IsRenameable + side-effect count (formulaCount + dimCount composite); SearchReplaceView.xaml IsEnabled + TextMutedBrush muted-row + tooltip binding (REQ-04 UI).
+- Plan 04-03 COMPLETE: IFormulaUpdateService injected into BatchRenameExecutionService; CollectFormulaUpdates pure-data helper; formula-update loop inside per-param SubTransaction (REQ-02).
+- Plan 04-04 COMPLETE: BuildDimensionsByLabelName collector; ExecuteDimensionReassignments + FormatSafeRenameLog pure-data helpers; dimension reassignment loop in SubTransaction with FindFamilyParameterByName re-fetch (Pitfall 2 guard); LogRenameSuccess dimCount=0 default (REQ-03). 3 REQ-03 skip-gated tests GREEN.
+- Plan 04-05 COMPLETE: Phase-end verification sign-off. 23/24 checklist items PASS; C1 (Dimension.FamilyLabel null-clear) marked N-A with follow-up note. REQUIREMENTS.md REQ-02/03/04 flipped to Complete. Phase 4 closed.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -96,6 +104,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 04-04]: ExecuteDimensionReassignments accepts List<Action> not List<Dimension> — decouples helper from Revit API; unit tests inject mock actions, production builds dim.FamilyLabel setter closures
 - [Phase 04-04]: LogRenameSuccess dimCount=0 default — backward-compatible extension; FormatSafeRenameLog 4-branch composite format centralized for testability
 - [Phase 04-04]: SearchReplacePreviewService dimensionCount stays IsDimensionLabel?1:0 — preview layer has only bool flag, not Dimension object count; consistent at single-param-label granularity
+- [Phase 04-05]: Verification accepted as trust-based (131/131 unit tests); C1 Dimension.FamilyLabel null-clear behavior not observed live — deferred follow-up if production issues surface
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -121,11 +130,10 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 04 P04 | 12min | 1 tasks | 2 files |
 
 ## Last Session
-- **Stopped at**: Completed 04-04-PLAN.md — BuildDimensionsByLabelName + ExecuteDimensionReassignments + FormatSafeRenameLog; dimension reassignment loop in SubTransaction with Pitfall 2 guard (FindFamilyParameterByName re-fetch); 3 REQ-03 skip-gated tests GREEN; full suite 131/131. REQ-03 closed.
+- **Stopped at**: Completed 04-05-PLAN.md — Phase 4 closure. REQ-02/03/04 flipped to Complete in REQUIREMENTS.md. Verification passed (23/24; C1 N-A). SUMMARY created. Phase 5 planning next.
 - **Date**: 2026-05-10
 
 ## Next Steps
-1. Phase 2.5 phase-end Revit verify session — ConvertFamily host preservation (wall-hosted multi-type fixture) + FormulaAutoGrouping regression in same session.
-2. Phase 4 (Advanced Renaming Logic — REQ-02/03/04) planning — gated on (1).
-3. Phase 5 (Verification & Polish — REQ-05) planning.
-4. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
+1. Phase 5 (Verification & Polish — REQ-05) planning — only requirement remaining in v1.1 milestone.
+2. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.
+3. v1.2 follow-up: investigate `Dimension.FamilyLabel` null-clear requirement — C1 was not observed live; if dimension reassignment issues surface in production use, add a null-clear step before setter assignment in the dimension reassignment loop.

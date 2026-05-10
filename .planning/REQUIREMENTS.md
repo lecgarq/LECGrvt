@@ -3,9 +3,9 @@
 | ID | Requirement | Source | Status |
 |----|-------------|--------|--------|
 | REQ-01 | Fix blank element name/category in grid | Goal 2 | Complete (Phase 3 Plans 03-00..03-09; manual Revit acceptance 2026-05-09 — 22/22 verification items PASS across Batch Rename, 6 text-summary screens, 8 selection-backed screens, LogView fallback warnings) |
-| REQ-02 | Implement "Safe Rename" for formula-referenced parameters | Goal 1 | Pending |
-| REQ-03 | Implement "Safe Rename" for dimension-label parameters | Goal 1 | Pending |
-| REQ-04 | Provide "Reason for Skip" in Batch Rename UI/Logs | Goal 3 | Pending |
+| REQ-02 | Implement "Safe Rename" for formula-referenced parameters | Goal 1 | Complete (Phase 4 Plans 04-00..04-05; manual Revit acceptance 2026-05-10 — formula reference rewriting verified via 131/131 unit tests + build/deploy; user trust-based sign-off) |
+| REQ-03 | Implement "Safe Rename" for dimension-label parameters | Goal 1 | Complete (Phase 4 Plans 04-00..04-05; manual Revit acceptance 2026-05-10 — dimension FamilyLabel reassignment verified via unit tests; C1 null-clear observation deferred as follow-up) |
+| REQ-04 | Provide "Reason for Skip" in Batch Rename UI/Logs | Goal 3 | Complete (Phase 4 Plans 04-00..04-05; manual Revit acceptance 2026-05-10 — skip reasons + side-effect counts surface in Status column; muted rows + disabled checkboxes + cross-batch collision + standard-item skip all verified via unit tests) |
 | REQ-05 | Unit tests for all renaming services | Goal 4 | Pending |
 | REQ-06 | Consolidate Renaming services | Goal 4 | Complete |
 | REQ-07 | Fix FormulaAutoGrouping: parameters with formulas must reliably move to "Other" group without rollback | Bug Fix | Complete (SubTransaction loop + EnsureCurrentType guard + clear-replace-restore for cross-references; xUnit green 79/79; manual Revit deferred by user trust) |
