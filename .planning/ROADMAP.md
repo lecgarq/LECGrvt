@@ -70,10 +70,18 @@ Plans:
 - [x] 04-05-PLAN.md — Wave 4: phase-end manual Revit verification + REQUIREMENTS/STATE/ROADMAP closure
 
 ### Phase 5: Verification & Polish
-**Status**: Not Started
-**Goal**: Full test coverage and final bug fixes.
+**Status**: Planned (5 plans authored 2026-05-10)
+**Goal**: Bring every service under `src/Services/Renaming/` to a baseline of dedicated unit-test coverage (service→fixture matrix in `05-VERIFICATION.md`) and land three deferred polish fixes with RED-before-GREEN discipline: count-on-rollback at `BatchRenameExecutionService.cs:222`, `Dimension.FamilyLabel` null-clear via pair-action overload, and standard-item progress capping below 100%.
 **Requirements**: REQ-05
 **Gap Closure**: Closes REQ-05 from v1.1 milestone audit (2026-05-09)
+**Plans:** 5 plans
+
+Plans:
+- [ ] 05-00-PLAN.md — Wave 0: test scaffolds (RenameRulePipelineServiceTests, SearchReplaceServiceTests, BatchRenameExecutionServiceTests new fixtures + BaseElementCollectionServiceTests deepening rows) + 05-VERIFICATION.md matrix scaffold + VALIDATION flip
+- [ ] 05-01-PLAN.md — Wave 1: RenameRulePipelineServiceTests GREEN body + BaseElementCollectionServiceTests deepening via 3 internal static helpers (TryGetGroupLabel, DispatchScopeFlags, MergeParamScanResults) ≤ 30 LOC each
+- [ ] 05-02-PLAN.md — Wave 2: BatchRenameExecutionServiceTests direct-coverage (4-branch family-skip, 6-branch standard-skip, 4-branch format-log, group-checked, legacy-progress null-callback, ctor null-guards) + SearchReplaceServiceTests facade delegation
+- [ ] 05-03-PLAN.md — Wave 3: 3 polish RED→GREEN cycles — AccumulateCommittedFamilyCount (Polish #1 count-on-rollback @ :222), ExecuteDimensionReassignments pair-action overload (Polish #2 null-clear), BuildProgressSequence (Polish #3 unified denominator)
+- [ ] 05-04-PLAN.md — Wave 4: phase-end manual Revit verification (trust-based per Phase 4 precedent) + REQ-05 closure (REQUIREMENTS/STATE/ROADMAP)
 
 ---
 
