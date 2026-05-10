@@ -76,4 +76,84 @@ public class BaseElementCollectionServiceTests
         category.Should().NotBeNullOrWhiteSpace();
         category.Should().Be("GraphicsStyle");
     }
+
+    // -----------------------------------------------------------------------
+    // Wave 1 RED rows — plan 05-01 owns implementation
+    // -----------------------------------------------------------------------
+
+    [Fact(Skip = "Implemented by plan 05-01: ParamGroup label resolution helper — GetId succeeds, GetLabel returns string")]
+    public void TryGetGroupLabel_GetIdSucceeds_GetLabelReturnsString_ReturnsLabel()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: ParamGroup label resolution helper — GetId throws, returns empty string")]
+    public void TryGetGroupLabel_GetIdThrows_ReturnsEmptyString()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: ParamGroup label resolution helper — GetLabel throws, returns empty string")]
+    public void TryGetGroupLabel_GetLabelThrows_ReturnsEmptyString()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Types-only returns types mask")]
+    public void DispatchScopeFlags_TypesOnly_ReturnsTypesMask()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Families-only returns families mask")]
+    public void DispatchScopeFlags_FamiliesOnly_ReturnsFamiliesMask()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Materials-only returns materials mask")]
+    public void DispatchScopeFlags_MaterialsOnly_ReturnsMaterialsMask()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Parameters-only returns parameters mask")]
+    public void DispatchScopeFlags_ParametersOnly_ReturnsParametersMask()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — multiple scopes returns combined mask")]
+    public void DispatchScopeFlags_MultipleScopes_ReturnsCombinedMask()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: Phase A/B param scan merge helper — deduplicates by family ID and param name")]
+    public void MergeParamScanResults_DeduplicatesByFamilyIdAndParamName()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    [Fact(Skip = "Implemented by plan 05-01: Phase A/B param scan merge helper — empty inputs returns empty")]
+    public void MergeParamScanResults_EmptyInputs_ReturnsEmpty()
+    {
+        Assert.True(false, "see plan 05-01");
+    }
+
+    // -----------------------------------------------------------------------
+    // Revit-path RED rows — skip-gated; manual verification in 05-VERIFICATION.md
+    // -----------------------------------------------------------------------
+
+    [Fact(Skip = "Revit FilteredElementCollector path — covered by manual Revit verification in 05-VERIFICATION.md")]
+    public void CollectByScope_TypesPath_ProducesRowPerType()
+    {
+        Assert.True(false, "Revit-bound path; see 05-VERIFICATION.md manual checklist");
+    }
+
+    [Fact(Skip = "Revit GraphicsStyle path — covered by manual Revit verification in 05-VERIFICATION.md")]
+    public void CollectByScope_GraphicsStyleNullCategory_ProducesFallbackRow()
+    {
+        Assert.True(false, "Revit-bound path; see 05-VERIFICATION.md manual checklist");
+    }
 }
