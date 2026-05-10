@@ -38,7 +38,7 @@ Plans:
 - [ ] 02.5-03-PLAN.md — Convert Family (REQ-10, Wave 2): pre-flight validator + load-before-delete ordering + exact-name symbol match (capture `OriginalSymbolName`) + `NewFamilyInstance` hosted/curve overloads in `FamilyConversionService` / `FamilyInstanceData`
 
 ### Phase 3: Grid & Collection Fixes
-**Status**: In Progress (8/10 plans complete)
+**Status**: Complete (10/10 plans complete; REQ-01 accepted 2026-05-09)
 **Goal**: Fix blank fields and collection logic so all elements appear with valid name and category labels. Cross-cutting UI upgrade — every preview/selection grid in the plugin migrates to a shared row model + grid control. No-blanks invariant enforced at the collection layer.
 **Requirements**: REQ-01
 **Gap Closure**: Closes REQ-01 from v1.1 milestone audit (2026-05-09)
@@ -51,8 +51,8 @@ Plans:
 - [x] 03-05-PLAN.md — Wave 3: ElementGridControl UserControl + Batch Rename Category column + ICollectionView default sort + AND-combined filter (visual checkpoint approved 2026-05-09; per-column funnel chrome deferred to v1.2)
 - [x] 03-06-PLAN.md — Wave 4: Migrate text-summary screens batch A (DivideToposolid, FixPoints, ConvertCad)
 - [x] 03-07-PLAN.md — Wave 4: Migrate text-summary screens batch B (SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid)
-- [ ] 03-08-PLAN.md — Wave 5: Sweep 8 selection-backed screens (Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints)
-- [ ] 03-09-PLAN.md — Wave 6: Phase-end manual Revit verification (REQ-01 acceptance)
+- [x] 03-08-PLAN.md — Wave 5: Sweep 8 selection-backed screens (Align*, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints)
+- [x] 03-09-PLAN.md — Wave 6: Phase-end manual Revit verification (REQ-01 acceptance) — 22/22 PASS
 
 ### Phase 4: Advanced Renaming Logic
 **Status**: Not Started

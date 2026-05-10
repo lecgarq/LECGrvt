@@ -3,20 +3,20 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: in_progress
-last_updated: "2026-05-09T23:52:01.320Z"
+last_updated: "2026-05-09T23:59:00.000Z"
 progress:
   total_phases: 6
   completed_phases: 2
   total_plans: 15
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
 
 ## Current Position
-- **Phase**: 03-grid-collection-fixes
-- **Plan**: 00 + 01 + 02 + 03 + 04 + 05 + 06 + 07 + 08 of 10 (COMPLETE) — Waves 0-5 done; Wave 6 (03-09 manual Revit verification) next
-- **Status**: Plans 03-00..03-08 complete; build clean (0 errors, 0 warnings), 100/100 tests GREEN. Plan 03-08 swept the 8 selection-backed screens (AlignEdges, AlignElements, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints) via Path A: `RowItems` + `SetSelectionRows` lifted into shared `SelectionViewModel`; `ElementGridControl` embedded directly in `SelectionControl.xaml`; zero per-View XAML edits required. Plan 03-09 (Wave 6: phase-end manual Revit verification — REQ-01 acceptance + REQ-08/09/10 verification from Phase 02.5) is next.
+- **Phase**: 03-grid-collection-fixes (COMPLETE)
+- **Plan**: 00..09 of 10 (ALL COMPLETE) — Waves 0-6 done
+- **Status**: Phase 3 closed. Plan 03-09 phase-end manual Revit verification approved 2026-05-09 with 22/22 PASS (Batch Rename group A, 6 text-summary screens, 8 selection-backed screens, LogView fallback warnings). REQ-01 flipped to Complete in REQUIREMENTS.md. Build clean (0 errors, 0 warnings), 100/100 tests GREEN. v1.1 milestone status: REQ-01/06/07/08/09/10 Complete; REQ-02/03/04 (Phase 4) and REQ-05 (Phase 5) remain.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -35,6 +35,7 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - Plan 03-06 COMPLETE: Text-summary batch A migration (REQ-01) — DivideToposolid, FixPoints, ConvertCad VMs/Views migrated from `ObservableCollection<string> SelectedElementSummaries` to `ObservableCollection<ElementRowViewModel> RowItems` rendered through `ElementGridControl`. Name/Category resolved via `ElementLabelService.GetLabels` (non-blank invariant). Per-screen Status: DivideToposolid layer-count outcome ("Ready to divide (N layers)" / "Already single layer" / "Layer count unavailable"); FixPoints "Level: {name}"; ConvertCad "Type: {typeName}". ConvertCad had no legacy SelectedElementSummaries (single-select screen) — RowItems populated on `SetSelection` with one row to honour must_haves contract. Build clean, 100/100 tests GREEN. Manual Revit verification deferred to Plan 03-09.
 - Plan 03-07 COMPLETE: Text-summary batch B migration (REQ-01) — SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid VMs/Views migrated from `ObservableCollection<string> SelectedElementSummaries` to `ObservableCollection<ElementRowViewModel> RowItems` rendered through `ElementGridControl`. SplitBoundaries Status: boundary-count outcome ("Ready to split (N boundaries)" / "No split needed" / "Boundary count unavailable"). Conversion screens Status: "<SourceTypeName> @ <LevelName>" (preserves prior DescribeElement summary verbatim). Cross-VM grep `ObservableCollection<string> SelectedElementSummaries` returns zero hits across all six text-summary VMs. Build clean (0/0); 100/100 tests GREEN.
 - Plan 03-08 COMPLETE: Selection-backed screen sweep (REQ-01) — Path A chosen. `SelectionViewModel` upgraded with `ObservableCollection<ElementRowViewModel> RowItems` + dual `SetSelectionRows` overloads (Reference+Document for 7 ref-driven VMs, Element for ChangeLevel) + Dispatcher-marshalled mutations. `SelectionControl.xaml` embeds `ElementGridControl` (visibility bound to `HasSelection`). 8 VMs (AlignEdges, AlignElements, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints) call `Selection.SetSelectionRows` after `UpdateSelection`; 5 VMs gained a `Document` parameter; 5 Views + 5 Commands updated for the cascade. Build clean (0/0); 100/100 tests GREEN.
+- Plan 03-09 COMPLETE: Phase-end manual Revit verification (REQ-01 acceptance) — 22/22 verification items PASS across Batch Rename group A (column order, default Category sort, sort flip, FilterCategory, AND-combined filter, no blank rows, FamilyParameter scope fallback), 6 text-summary screens (DivideToposolid, FixPoints, ConvertCad, SplitBoundaries, ConvertToposolidToFloor, ConvertFloorToToposolid), 8 selection-backed screens (AlignEdges, AlignElements, AssignMaterial, CategoryChanger, ChangeLevel, OffsetElevations, ResetSlabs, SimplifyPoints), LogView fallback warnings observed for null-Category elements. REQ-01 flipped Pending → Complete in REQUIREMENTS.md. Phase 3 closed.
 
 ## Phase 2.5 Progress
 - Plan 02.5-01 COMPLETE: Compact Styles (REQ-08) — locale-safe text-style signature using BuiltInParameter.TEXT_ALIGNMENT + orientation sentinel.
@@ -98,12 +99,13 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P07 | 12min | 2 tasks | 6 files |
 | Phase 03 P06 | 3min | 2 tasks | 6 files |
 | Phase 03 P08 | 9min | 2 tasks | 20 files |
+| Phase 03 P09 | 1min | 1 tasks | 4 files |
 
 ## Last Session
-- **Stopped at**: Completed 03-08-PLAN.md (selection-backed screen sweep — 8 VMs wired to shared SelectionViewModel.RowItems via Path A; ElementGridControl embedded in SelectionControl)
+- **Stopped at**: Completed 03-09-PLAN.md (phase-end manual Revit verification — REQ-01 acceptance, 22/22 PASS; Phase 3 closed)
 - **Date**: 2026-05-09
 
 ## Next Steps
-1. Phase 03 Wave 6: Plan 03-09 phase-end manual Revit verification (REQ-01 acceptance) + REQ-08/09/10 verification from Phase 02.5.
-2. Begin v1.2 milestone planning or next phase.
+1. Phase 4 (Advanced Renaming Logic — REQ-02/03/04) planning.
+2. Phase 5 (Verification & Polish — REQ-05) planning.
 3. v1.2 follow-up: per-column header funnel chrome (visual UI) deferred from Plan 03-05 — `SetColumnFilter` API is functional; visual popup of distinct values per column remains.

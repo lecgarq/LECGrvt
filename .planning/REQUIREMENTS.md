@@ -2,7 +2,7 @@
 
 | ID | Requirement | Source | Status |
 |----|-------------|--------|--------|
-| REQ-01 | Fix blank element name/category in grid | Goal 2 | Pending |
+| REQ-01 | Fix blank element name/category in grid | Goal 2 | Complete (Phase 3 Plans 03-00..03-09; manual Revit acceptance 2026-05-09 — 22/22 verification items PASS across Batch Rename, 6 text-summary screens, 8 selection-backed screens, LogView fallback warnings) |
 | REQ-02 | Implement "Safe Rename" for formula-referenced parameters | Goal 1 | Pending |
 | REQ-03 | Implement "Safe Rename" for dimension-label parameters | Goal 1 | Pending |
 | REQ-04 | Provide "Reason for Skip" in Batch Rename UI/Logs | Goal 3 | Pending |
