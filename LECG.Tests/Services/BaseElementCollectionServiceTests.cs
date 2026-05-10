@@ -7,6 +7,10 @@
 // now delegates to (via `ElementLabelService.GetLabels(Element)`) at every former
 // null-skip site (typeCollector + GraphicsStyle path).
 //
+// Wave 1 (05-01) deepening tests target three extracted pure-data helpers:
+//   TryGetGroupLabel, DispatchScopeFlags, MergeParamScanResults.
+// Revit-bound paths remain skip-gated with manual verification pointer.
+//
 // The Type_is_referenceable_anchor test stays as the file's compile anchor.
 using FluentAssertions;
 using LECG.Services;
@@ -17,6 +21,9 @@ namespace LECG.Tests.Services;
 /// 3-W0-02 — Plan 03-03 GREEN. Asserts that the SSoT helper used by
 /// BaseElementCollectionService produces non-blank Name and Category for the
 /// degenerate inputs the collector previously skipped silently.
+///
+/// Wave 1 deepening tests (plan 05-01): TryGetGroupLabel, DispatchScopeFlags,
+/// MergeParamScanResults pure-data helpers.
 /// </summary>
 public class BaseElementCollectionServiceTests
 {
@@ -78,67 +85,157 @@ public class BaseElementCollectionServiceTests
     }
 
     // -----------------------------------------------------------------------
-    // Wave 1 RED rows — plan 05-01 owns implementation
+    // Wave 1 GREEN tests — TryGetGroupLabel (plan 05-01)
     // -----------------------------------------------------------------------
 
-    [Fact(Skip = "Implemented by plan 05-01: ParamGroup label resolution helper — GetId succeeds, GetLabel returns string")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void TryGetGroupLabel_GetIdSucceeds_GetLabelReturnsString_ReturnsLabel()
     {
-        Assert.True(false, "see plan 05-01");
+        // resolve() succeeds — returns the label string directly.
+        // TryGetGroupLabel should return that label unchanged.
+        var result = BaseElementCollectionService.TryGetGroupLabel(
+            () => "Identity Data");
+
+        result.Should().Be("Identity Data");
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: ParamGroup label resolution helper — GetId throws, returns empty string")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void TryGetGroupLabel_GetIdThrows_ReturnsEmptyString()
     {
-        Assert.True(false, "see plan 05-01");
+        // resolve() throws (simulates GetGroupTypeId() failure).
+        // TryGetGroupLabel must catch and return "".
+        var result = BaseElementCollectionService.TryGetGroupLabel(
+            () => throw new InvalidOperationException("no group type"));
+
+        result.Should().Be("");
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: ParamGroup label resolution helper — GetLabel throws, returns empty string")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void TryGetGroupLabel_GetLabelThrows_ReturnsEmptyString()
     {
-        Assert.True(false, "see plan 05-01");
+        // resolve() throws (simulates GetLabelForGroup() failure).
+        // TryGetGroupLabel must catch and return "".
+        var result = BaseElementCollectionService.TryGetGroupLabel(
+            () => throw new InvalidOperationException("label resolution failed"));
+
+        result.Should().Be("");
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Types-only returns types mask")]
+    // -----------------------------------------------------------------------
+    // Wave 1 GREEN tests — DispatchScopeFlags (plan 05-01)
+    // -----------------------------------------------------------------------
+
+    [Fact]
+    [Trait("Category", "Unit")]
     public void DispatchScopeFlags_TypesOnly_ReturnsTypesMask()
     {
-        Assert.True(false, "see plan 05-01");
+        var mask = BaseElementCollectionService.DispatchScopeFlags(
+            types: true, families: false, views: false, sheets: false,
+            materials: false, objectStyles: false, lineStyles: false,
+            fillPatterns: false, familyParameters: false);
+
+        mask.Should().HaveFlag(ScopeMask.Types);
+        mask.Should().NotHaveFlag(ScopeMask.Families);
+        mask.Should().NotHaveFlag(ScopeMask.Materials);
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Families-only returns families mask")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void DispatchScopeFlags_FamiliesOnly_ReturnsFamiliesMask()
     {
-        Assert.True(false, "see plan 05-01");
+        var mask = BaseElementCollectionService.DispatchScopeFlags(
+            types: false, families: true, views: false, sheets: false,
+            materials: false, objectStyles: false, lineStyles: false,
+            fillPatterns: false, familyParameters: false);
+
+        mask.Should().HaveFlag(ScopeMask.Families);
+        mask.Should().NotHaveFlag(ScopeMask.Types);
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Materials-only returns materials mask")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void DispatchScopeFlags_MaterialsOnly_ReturnsMaterialsMask()
     {
-        Assert.True(false, "see plan 05-01");
+        var mask = BaseElementCollectionService.DispatchScopeFlags(
+            types: false, families: false, views: false, sheets: false,
+            materials: true, objectStyles: false, lineStyles: false,
+            fillPatterns: false, familyParameters: false);
+
+        mask.Should().HaveFlag(ScopeMask.Materials);
+        mask.Should().NotHaveFlag(ScopeMask.Types);
+        mask.Should().NotHaveFlag(ScopeMask.Families);
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — Parameters-only returns parameters mask")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void DispatchScopeFlags_ParametersOnly_ReturnsParametersMask()
     {
-        Assert.True(false, "see plan 05-01");
+        var mask = BaseElementCollectionService.DispatchScopeFlags(
+            types: false, families: false, views: false, sheets: false,
+            materials: false, objectStyles: false, lineStyles: false,
+            fillPatterns: false, familyParameters: true);
+
+        mask.Should().HaveFlag(ScopeMask.FamilyParameters);
+        mask.Should().NotHaveFlag(ScopeMask.Types);
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: scope dispatch helper — multiple scopes returns combined mask")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void DispatchScopeFlags_MultipleScopes_ReturnsCombinedMask()
     {
-        Assert.True(false, "see plan 05-01");
+        var mask = BaseElementCollectionService.DispatchScopeFlags(
+            types: true, families: true, views: false, sheets: false,
+            materials: true, objectStyles: false, lineStyles: false,
+            fillPatterns: false, familyParameters: false);
+
+        mask.Should().HaveFlag(ScopeMask.Types);
+        mask.Should().HaveFlag(ScopeMask.Families);
+        mask.Should().HaveFlag(ScopeMask.Materials);
+        mask.Should().NotHaveFlag(ScopeMask.Views);
+        mask.Should().NotHaveFlag(ScopeMask.FamilyParameters);
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: Phase A/B param scan merge helper — deduplicates by family ID and param name")]
+    // -----------------------------------------------------------------------
+    // Wave 1 GREEN tests — MergeParamScanResults (plan 05-01)
+    // -----------------------------------------------------------------------
+
+    [Fact]
+    [Trait("Category", "Unit")]
     public void MergeParamScanResults_DeduplicatesByFamilyIdAndParamName()
     {
-        Assert.True(false, "see plan 05-01");
+        // scanA and scanB both have a row for family 1 / param "Height".
+        // The merged result should contain only ONE row for that pair.
+        var scanA = new List<ElementData>
+        {
+            new ElementData { Id = 1, Name = "Height", Category = "DoorFamily" },
+            new ElementData { Id = 1, Name = "Width",  Category = "DoorFamily" },
+        };
+        var scanB = new List<ElementData>
+        {
+            new ElementData { Id = 1, Name = "Height", Category = "DoorFamily" }, // duplicate
+            new ElementData { Id = 2, Name = "Depth",  Category = "WindowFamily" },
+        };
+
+        var result = BaseElementCollectionService.MergeParamScanResults(scanA, scanB);
+
+        result.Should().HaveCount(3);
+        result.Where(r => r.Id == 1 && r.Name == "Height").Should().HaveCount(1);
+        result.Where(r => r.Id == 1 && r.Name == "Width").Should().HaveCount(1);
+        result.Where(r => r.Id == 2 && r.Name == "Depth").Should().HaveCount(1);
     }
 
-    [Fact(Skip = "Implemented by plan 05-01: Phase A/B param scan merge helper — empty inputs returns empty")]
+    [Fact]
+    [Trait("Category", "Unit")]
     public void MergeParamScanResults_EmptyInputs_ReturnsEmpty()
     {
-        Assert.True(false, "see plan 05-01");
+        var result = BaseElementCollectionService.MergeParamScanResults(
+            new List<ElementData>(),
+            new List<ElementData>());
+
+        result.Should().BeEmpty();
     }
 
     // -----------------------------------------------------------------------

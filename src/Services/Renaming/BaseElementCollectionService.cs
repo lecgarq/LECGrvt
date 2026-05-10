@@ -5,6 +5,25 @@ using LECG.Services.Logging;
 
 namespace LECG.Services
 {
+    // -----------------------------------------------------------------------
+    // ScopeMask: pure flag enumeration for scope dispatch (no Revit API).
+    // Maps the bool scope arguments of CollectBaseElements to a testable mask.
+    // -----------------------------------------------------------------------
+    [System.Flags]
+    internal enum ScopeMask
+    {
+        None             = 0,
+        Types            = 1 << 0,
+        Families         = 1 << 1,
+        Views            = 1 << 2,
+        Sheets           = 1 << 3,
+        Materials        = 1 << 4,
+        ObjectStyles     = 1 << 5,
+        LineStyles       = 1 << 6,
+        FillPatterns     = 1 << 7,
+        FamilyParameters = 1 << 8,
+    }
+
     public class BaseElementCollectionService : IBaseElementCollectionService
     {
         public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters)
@@ -231,16 +250,8 @@ namespace LECG.Services
                             {
                                 bool isInstanceParam = instanceDefs.Contains(p.Definition);
 
-                                string paramGroupLabel = "";
-                                try
-                                {
-                                    var groupTypeId = p.Definition.GetGroupTypeId();
-                                    paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
-                                }
-                                catch
-                                {
-                                    paramGroupLabel = "";
-                                }
+                                string paramGroupLabel = TryGetGroupLabel(
+                                    () => LabelUtils.GetLabelForGroup(p.Definition.GetGroupTypeId()));
 
                                 data.Add(new ElementData
                                 {
@@ -301,16 +312,9 @@ namespace LECG.Services
                         if (!isShared && !isBuiltIn && seenParamNames.Add(p.Definition.Name))
                         {
                             // This param was NOT found on the FamilySymbol — it's instance-only
-                            string paramGroupLabel = "";
-                            try
-                            {
-                                var groupTypeId = p.Definition.GetGroupTypeId();
-                                paramGroupLabel = LabelUtils.GetLabelForGroup(groupTypeId);
-                            }
-                            catch
-                            {
-                                paramGroupLabel = "";
-                            }
+                            // NOTE: full dedup of ParamGroup branches deferred to v1.2 Phase 6
+                            string paramGroupLabel = TryGetGroupLabel(
+                                () => LabelUtils.GetLabelForGroup(p.Definition.GetGroupTypeId()));
 
                             data.Add(new ElementData
                             {
@@ -329,6 +333,85 @@ namespace LECG.Services
             }
 
             return data;
+        }
+
+        // -----------------------------------------------------------------------
+        // Pure-data helpers — internal static, no Revit API in signatures.
+        // Each ≤ 30 LOC. Directly unit-testable without a Revit Document.
+        // -----------------------------------------------------------------------
+
+        /// <summary>
+        /// Safely resolves a parameter-group label by invoking <paramref name="resolve"/>,
+        /// which is expected to call GetGroupTypeId() then LabelUtils.GetLabelForGroup().
+        /// Returns "" if the delegate throws (Revit API unavailable or group type unknown).
+        /// NOTE: full dedup of ParamGroup branches deferred to v1.2 Phase 6.
+        /// </summary>
+        internal static string TryGetGroupLabel(Func<string> resolve)
+        {
+            try
+            {
+                return resolve();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Maps individual scope bool flags to a combined <see cref="ScopeMask"/>.
+        /// Pure flag→mask mapping; no Revit API dependency.
+        /// </summary>
+        internal static ScopeMask DispatchScopeFlags(
+            bool types, bool families, bool views, bool sheets,
+            bool materials, bool objectStyles, bool lineStyles,
+            bool fillPatterns, bool familyParameters)
+        {
+            var mask = ScopeMask.None;
+            if (types)            mask |= ScopeMask.Types;
+            if (families)         mask |= ScopeMask.Families;
+            if (views)            mask |= ScopeMask.Views;
+            if (sheets)           mask |= ScopeMask.Sheets;
+            if (materials)        mask |= ScopeMask.Materials;
+            if (objectStyles)     mask |= ScopeMask.ObjectStyles;
+            if (lineStyles)       mask |= ScopeMask.LineStyles;
+            if (fillPatterns)     mask |= ScopeMask.FillPatterns;
+            if (familyParameters) mask |= ScopeMask.FamilyParameters;
+            return mask;
+        }
+
+        /// <summary>
+        /// Merges two Phase A/B param scan result lists, deduplicating rows by
+        /// (familyId, paramName). scanA rows take precedence; scanB rows are added
+        /// only when the (familyId, paramName) pair has not been seen.
+        /// Empty inputs → empty output.
+        /// </summary>
+        internal static List<ElementData> MergeParamScanResults(
+            IReadOnlyList<ElementData> scanA,
+            IReadOnlyList<ElementData> scanB)
+        {
+            var seen = new Dictionary<long, HashSet<string>>();
+            var result = new List<ElementData>();
+
+            foreach (var row in scanA)
+            {
+                if (!seen.TryGetValue(row.Id, out var names))
+                    seen[row.Id] = names = new HashSet<string>(StringComparer.Ordinal);
+
+                if (names.Add(row.Name))
+                    result.Add(row);
+            }
+
+            foreach (var row in scanB)
+            {
+                if (!seen.TryGetValue(row.Id, out var names))
+                    seen[row.Id] = names = new HashSet<string>(StringComparer.Ordinal);
+
+                if (names.Add(row.Name))
+                    result.Add(row);
+            }
+
+            return result;
         }
     }
 }
