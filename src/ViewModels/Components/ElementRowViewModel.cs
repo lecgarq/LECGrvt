@@ -23,6 +23,10 @@ namespace LECG.ViewModels.Components
         public string Category { get; set; } = "";
         public string Type { get; set; } = "";        // discriminator: "Type"|"Family"|"FamilyParameter"|"View"|"Sheet"|...
         public string Status { get; set; } = "";      // command-specific outcome / skip reason
+
+        /// <summary>False when the row was skipped during dry-run pre-flight (formula/dimension/standard-item conditions). Drives WPF checkbox IsEnabled and muted-row Style trigger.</summary>
+        public bool IsRenameable { get; set; } = true;
+
         public string Family { get; set; } = "";      // populated for FamilyParameter rows
 
         // Batch Rename carry-over (used only by SearchReplace path)
