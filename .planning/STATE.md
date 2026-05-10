@@ -14,9 +14,9 @@ progress:
 # Project State
 
 ## Current Position
-- **Phase**: 03-grid-collection-fixes (COMPLETE)
-- **Plan**: 00..09 of 10 (ALL COMPLETE) — Waves 0-6 done
-- **Status**: Phase 3 closed. Plan 03-09 phase-end manual Revit verification approved 2026-05-09 with 22/22 PASS (Batch Rename group A, 6 text-summary screens, 8 selection-backed screens, LogView fallback warnings). REQ-01 flipped to Complete in REQUIREMENTS.md. Build clean (0 errors, 0 warnings), 100/100 tests GREEN. v1.1 milestone status: REQ-01/06/07/08/09/10 Complete; REQ-02/03/04 (Phase 4) and REQ-05 (Phase 5) remain.
+- **Phase**: 04-advanced-renaming-logic (IN PROGRESS)
+- **Plan**: 00 of 6 COMPLETE (Wave 0 scaffolds done; plans 01-05 remain)
+- **Status**: Phase 4 started. Plan 04-00 complete — Wave 0 test scaffolds in place: 3 new xUnit RED fixtures (RenameSkipDetectorTests, FormulaUpdateServiceTests, BatchRenameSafeRenameTests), SearchReplacePreviewServiceTests extended with 5 REQ-04 stubs, ElementRowViewModel.IsRenameable added, VALIDATION.md nyquist_compliant=true wave_0_complete=true. Build clean (0 errors, 0 warnings), 103 tests GREEN + 28 Skipped. v1.1 milestone status: REQ-01/06/07/08/09/10 Complete; REQ-02/03/04 (Phase 4, in progress) and REQ-05 (Phase 5) remain.
 
 ## Phase 1 Summary
 Phase 1 (Research & Foundation) is complete. Service consolidation and formula update foundation are in place.
@@ -81,6 +81,9 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 03-08]: SelectionViewModel.SetSelectionRows ships two overloads (Reference+Document, Element) — picks the right one per call-site without forcing premature Reference-resolve at the View layer
 - [Phase 03-08]: WPF Dispatcher.Invoke wrapping inside SetSelectionRows — defends against future Revit ExternalEvent callers without mandating a thread contract on consumers
 - [Phase 03-08]: Grid Visibility bound to HasSelection — empty state stays clean; no empty grid below 'No X selected' summary
+- [Phase 04-00]: Wave 0 skip-gated RED pattern reused from Phase 03-00 — one anchor per fixture, all behavioural tests skip-gated naming the implementing plan ID
+- [Phase 04-00]: IsRenameable is a plain auto-property on ElementRowViewModel (NOT [ObservableProperty]) — follows Phase 03 decision that only IsChecked is observable
+- [Phase 04-00]: FormulaUpdateServiceTests and BatchRenameSafeRenameTests are separate fixtures — FormulaUpdate covers wiring (04-03), BatchRenameSafeRename covers execution paths (04-03 REQ-02 + 04-04 REQ-03 + 04-01 REQ-04)
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |

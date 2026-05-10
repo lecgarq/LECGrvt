@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using LECG.Core.Rename;
 using LECG.Models;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
@@ -108,7 +109,7 @@ namespace LECG.Services
                 // 6. Apply Rename Rules
                 string currentName = _renameRulePipelineService.ApplyRules(el.Name, context, results.Count);
 
-                results.Add(new ElementRowViewModel
+                ElementRowViewModel row = new ElementRowViewModel
                 {
                     Id = el.Id,
                     Name = el.Name,
@@ -120,10 +121,115 @@ namespace LECG.Services
                     ParamGroup = el.ParamGroup,
                     IsInstance = el.IsInstance,
                     IsReadOnly = el.IsReadOnly
-                });
+                };
+
+                // 7. FamilyParameter skip-reason and side-effect population
+                if (el.Type == "FamilyParameter")
+                {
+                    PopulateFamilyParameterStatus(row, el, candidates);
+                }
+
+                results.Add(row);
             }
 
+            // 8. Cross-batch name-collision pass (per-family-scope)
+            ApplyCrossBatchCollisionCheck(results);
+
             return results;
+        }
+
+        /// <summary>
+        /// For a FamilyParameter row, populate Status + IsRenameable + IsChecked based on:
+        /// - Skip conditions (read-only/reporting)
+        /// - Side-effect counts (formula references, dimension labels)
+        /// </summary>
+        private static void PopulateFamilyParameterStatus(
+            ElementRowViewModel row,
+            ElementData el,
+            List<ElementData> allCandidates)
+        {
+            // Check remaining skip conditions (built-in params are filtered at collection;
+            // read-only covers reporting parameters and formula-driven params)
+            if (el.IsReadOnly)
+            {
+                row.Status = "read-only parameter (cannot rename)";
+                row.IsRenameable = false;
+                row.IsChecked = false;
+                return;
+            }
+
+            // Safe-rename path: compute side-effect counts
+            int formulaCount = 0;
+            int dimensionCount = el.IsDimensionLabel ? 1 : 0;
+
+            // Count parameters in the same family whose formula references this parameter's name
+            foreach (ElementData other in allCandidates)
+            {
+                if (other == el) continue;
+                if (other.Type != "FamilyParameter") continue;
+                if (other.Id != el.Id) continue; // same family scope only
+                if (string.IsNullOrEmpty(other.Formula)) continue;
+                if (FormulaNameUpdater.ContainsReference(other.Formula, el.OriginalValue))
+                    formulaCount++;
+            }
+
+            // Format side-effect Status string
+            row.Status = FormatSideEffectStatus(formulaCount, dimensionCount);
+            row.IsRenameable = true;
+            // IsChecked stays at its default (true) — user may have changed it; don't override
+        }
+
+        /// <summary>
+        /// Format the side-effect count string per the plan's interface specification.
+        /// Returns empty string when both counts are zero.
+        /// </summary>
+        private static string FormatSideEffectStatus(int formulaCount, int dimensionCount)
+        {
+            if (formulaCount > 0 && dimensionCount > 0)
+                return $"+{formulaCount} formula{(formulaCount == 1 ? "" : "s")}, +{dimensionCount} dimension{(dimensionCount == 1 ? "" : "s")}";
+            if (formulaCount > 0)
+                return $"+{formulaCount} formula{(formulaCount == 1 ? "" : "s")}";
+            if (dimensionCount > 0)
+                return $"+{dimensionCount} dimension{(dimensionCount == 1 ? "" : "s")}";
+            return "";
+        }
+
+        /// <summary>
+        /// Walk all rows and detect cross-batch name collisions within each family scope.
+        /// The FIRST row claiming a NewValue is kept; subsequent rows with the same NewValue
+        /// in the same family scope are flipped to skip.
+        /// Uses ordinal StringComparer per plan spec.
+        /// </summary>
+        private static void ApplyCrossBatchCollisionCheck(List<ElementRowViewModel> rows)
+        {
+            // Group by family scope: for FamilyParameter rows, scope = (Type="FamilyParameter", Id)
+            // For standard items, scope = (Type) — collisions within the same element type scope
+            // Only checked rows participate in the claimed-name set
+            var claimedByScope = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+
+            foreach (ElementRowViewModel row in rows)
+            {
+                if (!row.IsRenameable) continue; // already skipped rows don't claim names
+                if (!row.IsChecked) continue;     // unchecked rows don't claim names
+
+                string scopeKey = row.Type == "FamilyParameter"
+                    ? $"FamilyParameter:{row.Id}"
+                    : row.Type;
+
+                if (!claimedByScope.TryGetValue(scopeKey, out HashSet<string>? claimed))
+                {
+                    claimed = new HashSet<string>(StringComparer.Ordinal);
+                    claimedByScope[scopeKey] = claimed;
+                }
+
+                if (!claimed.Add(row.NewValue))
+                {
+                    // Collision: this NewValue was already claimed by an earlier row
+                    row.Status = $"name '{row.NewValue}' already claimed by another row in this batch";
+                    row.IsRenameable = false;
+                    row.IsChecked = false;
+                }
+            }
         }
     }
 }

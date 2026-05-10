@@ -23,6 +23,12 @@ namespace LECG.Services
         public string ParamGroup { get; set; } = "";
         public bool IsInstance { get; set; }
         public bool IsReadOnly { get; set; } // Tracks if it has formula or is read-only
+
+        // Side-effect metadata for FamilyParameter preview (populated at collection time)
+        /// <summary>Formula string for this FamilyParameter (empty if none). Used by ProcessPreview to count cross-formula references.</summary>
+        public string Formula { get; set; } = "";
+        /// <summary>True if this FamilyParameter is used as a dimension label in the family. Used by ProcessPreview to compute side-effect count.</summary>
+        public bool IsDimensionLabel { get; set; }
     }
 
     public class SearchReplaceService : ISearchReplaceService
