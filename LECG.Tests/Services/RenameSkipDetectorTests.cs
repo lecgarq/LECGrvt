@@ -1,107 +1,239 @@
-// Wave 0 skip-gated RED tests for Phase 4 — Plan 04-01 will flip these GREEN.
-// Covers narrowed GetRenameSkipReason and new GetStandardItemSkipReason.
+// Plan 04-01 GREEN. Tests for narrowed GetRenameSkipReason (via EvaluateFamilyParamSkipReason)
+// and new GetStandardItemSkipReason (via EvaluateStandardItemSkipReason).
+// Both methods are tested through pure-data helpers extracted from BatchRenameExecutionService
+// so they are unit-testable without a live Revit session.
+using System.Collections.Generic;
 using FluentAssertions;
-using NSubstitute;
+using LECG.Services;
 using Xunit;
 
 namespace LECG.Tests.Services;
 
 /// <summary>
-/// Wave 0 RED fixture for Phase 4 renaming skip-detection (REQ-02/03/04).
-/// All behavioural tests are skip-gated; plan 04-01 un-skips them.
+/// Plan 04-01 GREEN. Covers narrowed skip detection for FamilyParameter paths
+/// and new standard-item skip detection (REQ-02/03/04).
 /// </summary>
+[Trait("Category", "Renaming")]
 public class RenameSkipDetectorTests
 {
     // -----------------------------------------------------------------------
-    // Anchor — keeps --filter discovery working when all other tests are Skipped
+    // Anchor
     // -----------------------------------------------------------------------
 
-    [Fact(DisplayName = "anchor — delete when plan 04-01 fills this fixture")]
-    [Trait("Category", "Renaming")]
+    [Fact(DisplayName = "anchor — plan 04-01 filled this fixture")]
     public void Fixture_Anchor_Exists() => Assert.True(true);
 
     // -----------------------------------------------------------------------
-    // GetRenameSkipReason (narrowed in plan 04-01) — REQ-02/03/04
+    // EvaluateFamilyParamSkipReason — narrowed (formula/dim/element branches removed)
     // -----------------------------------------------------------------------
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetRenameSkipReason_FormulaReferenced_ReturnsNull_AfterPhase4Narrowing()
     {
-        // RED — fills in plan 04-01
+        // After narrowing, formula-referenced names are NO LONGER a skip reason.
+        var formulaReferenced = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "Width" };
+        var dimensionLabels = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        var elementAssociated = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        var existingNames = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "Height" };
+
+        string? reason = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 100,
+            isReporting: false,
+            paramName: "Width",
+            newName: "Width_New",
+            existingParamNames: existingNames,
+            formulaReferenced: formulaReferenced,
+            dimensionLabels: dimensionLabels,
+            elementAssociated: elementAssociated);
+
+        reason.Should().BeNull("formula-referenced is no longer a skip condition after Phase 4 narrowing");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetRenameSkipReason_DimensionLabel_ReturnsNull_AfterPhase4Narrowing()
     {
-        // RED — fills in plan 04-01
+        var dimensionLabels = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "Height" };
+        var formulaReferenced = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        var elementAssociated = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        var existingNames = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "Width" };
+
+        string? reason = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 200,
+            isReporting: false,
+            paramName: "Height",
+            newName: "Height_New",
+            existingParamNames: existingNames,
+            formulaReferenced: formulaReferenced,
+            dimensionLabels: dimensionLabels,
+            elementAssociated: elementAssociated);
+
+        reason.Should().BeNull("dimension-label is no longer a skip condition after Phase 4 narrowing");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetRenameSkipReason_ElementAssociated_ReturnsNull_AfterPhase4Narrowing()
     {
-        // RED — fills in plan 04-01
+        var elementAssociated = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "Depth" };
+        var formulaReferenced = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        var dimensionLabels = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        var existingNames = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "Width" };
+
+        string? reason = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 300,
+            isReporting: false,
+            paramName: "Depth",
+            newName: "Depth_New",
+            existingParamNames: existingNames,
+            formulaReferenced: formulaReferenced,
+            dimensionLabels: dimensionLabels,
+            elementAssociated: elementAssociated);
+
+        reason.Should().BeNull("element-associated is no longer a skip condition after Phase 4 narrowing");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetRenameSkipReason_BuiltIn_StillReturnsReason_NegativeId()
     {
-        // RED — fills in plan 04-01
+        var empty = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+        string? reason = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: -1,
+            isReporting: false,
+            paramName: "SomeBuiltIn",
+            newName: "NewName",
+            existingParamNames: empty,
+            formulaReferenced: empty,
+            dimensionLabels: empty,
+            elementAssociated: empty);
+
+        reason.Should().NotBeNull("built-in parameters (negative Id) must still be skipped");
+        reason.Should().Contain("built-in");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetRenameSkipReason_Reporting_StillReturnsReason()
     {
-        // RED — fills in plan 04-01
+        var empty = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+        string? reason = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 400,
+            isReporting: true,
+            paramName: "ReportingParam",
+            newName: "NewName",
+            existingParamNames: empty,
+            formulaReferenced: empty,
+            dimensionLabels: empty,
+            elementAssociated: empty);
+
+        reason.Should().NotBeNull("reporting parameters must still be skipped");
+        reason.Should().Contain("reporting");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetRenameSkipReason_NameConflict_StillReturnsReason_NoAutoSuffix()
     {
-        // RED — fills in plan 04-01
+        var existingNames = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase) { "ExistingParam" };
+        var empty = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+
+        string? reason = BatchRenameExecutionService.EvaluateFamilyParamSkipReason(
+            paramIdValue: 500,
+            isReporting: false,
+            paramName: "OriginalParam",
+            newName: "ExistingParam",
+            existingParamNames: existingNames,
+            formulaReferenced: empty,
+            dimensionLabels: empty,
+            elementAssociated: empty);
+
+        reason.Should().NotBeNull("name conflicts must still be skipped with no auto-suffix");
+        reason.Should().Contain("ExistingParam");
     }
 
     // -----------------------------------------------------------------------
-    // GetStandardItemSkipReason (new in plan 04-01) — REQ-04
+    // EvaluateStandardItemSkipReason — new in plan 04-01 (REQ-04)
     // -----------------------------------------------------------------------
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetStandardItemSkipReason_ReadOnlyType_ReturnsReason()
     {
-        // RED — fills in plan 04-01
+        var claimed = new HashSet<string>(System.StringComparer.Ordinal);
+
+        string? reason = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: true,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "NewName",
+            claimedNewNames: claimed);
+
+        reason.Should().NotBeNull("read-only elements must be skipped");
+        reason.Should().Contain("read-only");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetStandardItemSkipReason_NameConflictInSameScope_ReturnsReason()
     {
-        // RED — fills in plan 04-01
+        var claimed = new HashSet<string>(System.StringComparer.Ordinal);
+
+        string? reason = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: true,
+            isSheetWithLockedNumber: false,
+            newValue: "ExistingType",
+            claimedNewNames: claimed);
+
+        reason.Should().NotBeNull("name conflict in scope must be skipped");
+        reason.Should().Contain("ExistingType");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetStandardItemSkipReason_SystemFamily_IsSystemFamilyTrue_ReturnsReason()
     {
-        // RED — fills in plan 04-01
+        var claimed = new HashSet<string>(System.StringComparer.Ordinal);
+
+        string? reason = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: true,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "NewName",
+            claimedNewNames: claimed);
+
+        reason.Should().NotBeNull("system family elements must be skipped");
+        reason.Should().Contain("system family");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetStandardItemSkipReason_SheetNumberLocked_ReturnsReason()
     {
-        // RED — fills in plan 04-01
+        var claimed = new HashSet<string>(System.StringComparer.Ordinal);
+
+        string? reason = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: true,
+            newValue: "A-001",
+            claimedNewNames: claimed);
+
+        reason.Should().NotBeNull("sheets with locked numbering schemes must be skipped");
+        reason.Should().Contain("sheet number");
     }
 
-    [Fact(Skip = "Implement in plan 04-01")]
-    [Trait("Category", "Renaming")]
+    [Fact]
     public void GetStandardItemSkipReason_RenameableSheet_ReturnsNull()
     {
-        // RED — fills in plan 04-01
+        var claimed = new HashSet<string>(System.StringComparer.Ordinal);
+
+        string? reason = BatchRenameExecutionService.EvaluateStandardItemSkipReason(
+            isReadOnly: false,
+            isSystemFamily: false,
+            nameAlreadyInScope: false,
+            isSheetWithLockedNumber: false,
+            newValue: "A-002",
+            claimedNewNames: claimed);
+
+        reason.Should().BeNull("freely-renameable rows must return null");
     }
 }

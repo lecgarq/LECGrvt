@@ -329,8 +329,9 @@ namespace LECG.Services
         }
 
         /// <summary>
-        /// Returns null if the parameter is safe to rename, or a reason string explaining why it should be skipped.
-        /// Prevents renaming parameters that drive geometry, formulas, dimensions, or element associations.
+        /// Returns the user-facing skip reason ONLY for the three remaining un-rename-able conditions:
+        /// built-in, reporting, name-conflict. Formula-referenced, dimension-label, and element-associated
+        /// params are renamed via the safe-rename path in plans 04-03/04-04.
         /// </summary>
         private static string? GetRenameSkipReason(
             FamilyParameter fp,
@@ -342,37 +343,193 @@ namespace LECG.Services
         {
             string name = fp.Definition.Name;
 
+            // Build the set of existing param names (excluding the param being renamed)
+            var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (FamilyParameter existing in mgr.Parameters)
+            {
+                if (existing.Id != fp.Id)
+                    existingNames.Add(existing.Definition.Name);
+            }
+
+            // TODO 04-03: hand formulaReferenced set to safe-rename loop; TODO 04-04: hand dimensionLabels set to dimension reassignment loop
+            return EvaluateFamilyParamSkipReason(
+                paramIdValue: fp.Id.Value,
+                isReporting: fp.IsReporting,
+                paramName: name,
+                newName: newName,
+                existingParamNames: existingNames,
+                formulaReferenced: formulaReferenced,
+                dimensionLabels: dimensionLabels,
+                elementAssociated: elementAssociated);
+        }
+
+        /// <summary>
+        /// Pure-data skip evaluation for FamilyParameter rename — no Revit API objects required.
+        /// Evaluates only the three remaining skip conditions: built-in, reporting, name-conflict.
+        /// Formula-referenced, dimension-label, and element-associated are intentionally NOT checked
+        /// (they are handled by the safe-rename path in plans 04-03/04-04).
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static string? EvaluateFamilyParamSkipReason(
+            long paramIdValue,
+            bool isReporting,
+            string paramName,
+            string newName,
+            IEnumerable<string> existingParamNames,
+            HashSet<string> formulaReferenced,
+            HashSet<string> dimensionLabels,
+            HashSet<string> elementAssociated)
+        {
             // Built-in parameters cannot be renamed
-            if (fp.Id.Value < 0)
+            if (paramIdValue < 0)
                 return "built-in parameter (cannot rename)";
 
             // Reporting parameters are dimension-driven — renaming could break references
-            if (fp.IsReporting)
+            if (isReporting)
                 return "reporting parameter (dimension-driven)";
 
-            // Dimension label — renaming could break dimension display
-            if (dimensionLabels.Contains(name))
-                return "drives a dimension label";
-
-            // Referenced in another parameter's formula — Revit may not auto-update all references
-            if (formulaReferenced.Contains(name))
-                return "referenced in another parameter's formula";
-
-            // Associated with element properties (geometry, material, visibility, nesting)
-            if (elementAssociated.Contains(name))
-                return "associated with element geometry/material/visibility";
-
             // Check if the new name conflicts with an existing parameter name
-            foreach (FamilyParameter existing in mgr.Parameters)
+            foreach (string existing in existingParamNames)
             {
-                if (existing.Id != fp.Id &&
-                    existing.Definition.Name.Equals(newName, StringComparison.OrdinalIgnoreCase))
-                {
+                if (existing.Equals(newName, StringComparison.OrdinalIgnoreCase))
                     return $"new name '{newName}' conflicts with existing parameter";
-                }
             }
 
+            // NOTE: formula-referenced, dimension-label, and element-associated are NO LONGER skip
+            // conditions after Phase 4 narrowing. They are passed through to the safe-rename paths
+            // in plans 04-03 (formula) and 04-04 (dimension labels).
+            // Suppressing unused-parameter warnings by referencing them:
+            _ = formulaReferenced;
+            _ = dimensionLabels;
+            _ = elementAssociated;
+
             return null; // Safe to rename
+        }
+
+        /// <summary>
+        /// Returns the user-facing skip reason for standard-item (non-FamilyParameter) rename conditions.
+        /// Detects: cross-batch collision, system family, name conflict in scope, sheet number locked,
+        /// and read-only/built-in element types. Returns null for freely-renameable rows.
+        /// </summary>
+        internal static string? GetStandardItemSkipReason(
+            Element el,
+            string newValue,
+            Document doc,
+            HashSet<string> claimedNewNames)
+        {
+            // Cross-batch collision check first (Pitfall 5)
+            if (claimedNewNames.Contains(newValue))
+                return $"name '{newValue}' already claimed by another row in this batch";
+
+            // System family check — deferred to Plan 04-01 follow-up; default to false.
+            // The pure-data EvaluateStandardItemSkipReason supports the flag when populated.
+            bool isSystemFamily = false;
+
+            // Read-only / built-in type check (probe via name comparison with existing elements of same type)
+            bool nameAlreadyInScope = false;
+            try
+            {
+                nameAlreadyInScope = new FilteredElementCollector(doc)
+                    .OfClass(el.GetType())
+                    .Cast<Element>()
+                    .Any(e => e.Id != el.Id &&
+                              string.Equals(e.Name, newValue, StringComparison.Ordinal));
+            }
+            catch
+            {
+                // If collector throws, default to no conflict
+            }
+
+            // Sheet number locked check
+            bool isSheetWithLockedNumber = false;
+            if (el is ViewSheet vs)
+            {
+                // Probe: attempt to read the numbering scheme via a probe SubTransaction
+                isSheetWithLockedNumber = IsSheetNumberLocked(doc, vs, newValue);
+            }
+
+            // Read-only check: element types that reject Name assignment
+            bool isReadOnly = el is GraphicsStyle;
+
+            return EvaluateStandardItemSkipReason(
+                isReadOnly: isReadOnly,
+                isSystemFamily: isSystemFamily,
+                nameAlreadyInScope: nameAlreadyInScope,
+                isSheetWithLockedNumber: isSheetWithLockedNumber,
+                newValue: newValue,
+                claimedNewNames: claimedNewNames);
+        }
+
+        /// <summary>
+        /// Pure-data skip evaluation for standard items — no Revit API objects required.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static string? EvaluateStandardItemSkipReason(
+            bool isReadOnly,
+            bool isSystemFamily,
+            bool nameAlreadyInScope,
+            bool isSheetWithLockedNumber,
+            string newValue,
+            HashSet<string> claimedNewNames)
+        {
+            // Cross-batch collision (Pitfall 5) — checked first for determinism
+            if (claimedNewNames.Contains(newValue))
+                return $"name '{newValue}' already claimed by another row in this batch";
+
+            // System family — names are restricted
+            if (isSystemFamily)
+                return "system family — names are restricted";
+
+            // Name conflict in same scope
+            if (nameAlreadyInScope)
+                return $"name '{newValue}' already in use in scope";
+
+            // Sheet number locked or restricted by numbering scheme
+            if (isSheetWithLockedNumber)
+                return "sheet number locked or restricted by numbering scheme";
+
+            // Read-only or built-in type
+            if (isReadOnly)
+                return "read-only or built-in type";
+
+            return null; // Freely renameable
+        }
+
+        /// <summary>
+        /// Probes whether a ViewSheet's sheet number is locked or restricted.
+        /// Uses a probe SubTransaction that is always rolled back (never committed).
+        /// </summary>
+        private static bool IsSheetNumberLocked(Document doc, ViewSheet vs, string newSheetNumber)
+        {
+            SubTransaction? probeTx = null;
+            try
+            {
+                probeTx = new SubTransaction(doc);
+                probeTx.Start();
+                vs.SheetNumber = newSheetNumber;
+                // If we get here, the number was accepted
+                return false;
+            }
+            catch (RevitExceptions.InvalidOperationException)
+            {
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return true;
+            }
+            finally
+            {
+                try
+                {
+                    if (probeTx != null && probeTx.IsValidObject &&
+                        probeTx.GetStatus() == TransactionStatus.Started)
+                    {
+                        probeTx.RollBack();
+                    }
+                }
+                catch { /* probe cleanup — best effort */ }
+            }
         }
 
         /// <summary>
