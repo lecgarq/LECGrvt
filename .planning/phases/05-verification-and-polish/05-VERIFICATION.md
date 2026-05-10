@@ -15,7 +15,7 @@ created: 2026-05-10
 | 3 | SearchReplaceService | SearchReplaceServiceTests | 4-method delegation; ctor null-guards | ✅ (2 delegation GREEN; 3 Document-param delegation skip-gated per Revit runtime constraint; ctor null-guards GREEN) |
 | 4 | SearchReplacePreviewService | SearchReplacePreviewServiceTests | scope/name filter; status; side-effect count; collision (8 tests) | ✅ |
 | 5 | BaseElementCollectionService | BaseElementCollectionServiceTests | no-blanks invariant (4 GREEN); TryGetGroupLabel (3); DispatchScopeFlags (5); MergeParamScanResults (2); Revit-iteration branches manually verified | ✅ |
-| 6 | BatchRenameExecutionService | BatchRenameExecutionServiceTests (new) + BatchRenameSafeRenameTests (existing) | 4-branch EvaluateFamilyParamSkipReason; 6-branch EvaluateStandardItemSkipReason; FormatSafeRenameLog 4-branch; GroupCheckedFamilyParameterItems; LegacyProgressReporter null-callback; ctor null-guards; + 3 polish helpers | direct ✅ (Wave 2); polish helpers pending Wave 3 (05-03) |
+| 6 | BatchRenameExecutionService | BatchRenameExecutionServiceTests (new) + BatchRenameSafeRenameTests (existing) | 4-branch EvaluateFamilyParamSkipReason; 6-branch EvaluateStandardItemSkipReason; FormatSafeRenameLog 4-branch; GroupCheckedFamilyParameterItems; LegacyProgressReporter null-callback; ctor null-guards; AccumulateCommittedFamilyCount 2-branch; pair-action ExecuteDimensionReassignments; BuildProgressSequence max+monotonic | ✅ |
 
 Acceptance: every row ✅ AND full suite 100% GREEN.
 

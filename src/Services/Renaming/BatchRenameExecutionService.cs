@@ -168,11 +168,13 @@ namespace LECG.Services
             {
                 Dictionary<long, List<ElementRowViewModel>> byFamily = GroupCheckedFamilyParameterItems(familyItems);
 
-                int familyIndex = 0;
                 foreach (var kvp in byFamily)
                 {
-                    familyIndex++;
-                    double percent = (double)familyIndex / byFamily.Count * 100;
+                    // Polish #3 (Phase 5): progress denominator unified with standard loop — see 05-03-PLAN
+                    // Advance current by the number of items in this family group so progress is
+                    // monotonic 0→100 across both standard and family loops.
+                    current += kvp.Value.Count;
+                    double percent = (double)current / total * 100;
 
                     ElementId familyId = new ElementId(kvp.Key);
                     Element el = doc.GetElement(familyId);
@@ -524,6 +526,37 @@ namespace LECG.Services
         internal static Dictionary<long, List<ElementRowViewModel>> GroupCheckedFamilyParameterItemsForTest(
             List<ElementRowViewModel> familyItems)
             => GroupCheckedFamilyParameterItems(familyItems);
+
+        /// <summary>
+        /// Pure-data helper: produces a monotonically increasing 0→100 progress sequence for a mixed
+        /// batch of <paramref name="standardCount"/> standard items followed by family groups.
+        /// Each family group contributes one progress step weighted by its row count.
+        /// The final value is guaranteed to be 100.0. Empty input returns an empty sequence.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        // Polish #3 (Phase 5): progress denominator unified with standard loop — see 05-03-PLAN
+        internal static IReadOnlyList<double> BuildProgressSequence(
+            int standardCount,
+            IReadOnlyList<int> familyGroupRowCounts)
+        {
+            if (familyGroupRowCounts == null) familyGroupRowCounts = Array.Empty<int>();
+            int total = standardCount + familyGroupRowCounts.Sum();
+            if (total == 0) return Array.Empty<double>();
+
+            var result = new List<double>(capacity: standardCount + familyGroupRowCounts.Count);
+            int current = 0;
+            for (int i = 0; i < standardCount; i++)
+            {
+                current++;
+                result.Add((double)current / total * 100.0);
+            }
+            foreach (int rowCount in familyGroupRowCounts)
+            {
+                current += rowCount;
+                result.Add((double)current / total * 100.0);
+            }
+            return result;
+        }
 
         /// <summary>
         /// Pre-flight dry-run loop for standard items. Runs OUTSIDE the main rename transaction.
