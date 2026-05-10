@@ -59,7 +59,7 @@ Plans:
 **Goal**: Implement always-on Safe Rename for formula-referenced, dimension-label, and element-associated FamilyParameters (atomic rename + reference update inside per-param SubTransactions); narrow GetRenameSkipReason to built-in/reporting/name-conflict; add standard-item pre-flight dry-run skip detection; surface skip reasons + side-effect counts in Batch Rename Status column with muted-row + disabled-checkbox UI; mirror skips into LogView.
 **Requirements**: REQ-02, REQ-03, REQ-04
 **Gap Closure**: Closes REQ-02, REQ-03, REQ-04 from v1.1 milestone audit (2026-05-09)
-**Plans:** 6 plans
+**Plans:** 3/6 plans executed
 
 Plans:
 - [ ] 04-00-PLAN.md — Wave 0: test scaffolds + ElementRowViewModel.IsRenameable + VALIDATION.md flip

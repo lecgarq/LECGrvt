@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v1.2
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-10T00:06:25.258Z"
+last_updated: "2026-05-10T19:13:35.837Z"
 progress:
   total_phases: 6
   completed_phases: 3
-  total_plans: 15
-  completed_plans: 15
+  total_plans: 21
+  completed_plans: 18
 ---
 
 # Project State
@@ -84,6 +84,12 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 - [Phase 04-00]: Wave 0 skip-gated RED pattern reused from Phase 03-00 — one anchor per fixture, all behavioural tests skip-gated naming the implementing plan ID
 - [Phase 04-00]: IsRenameable is a plain auto-property on ElementRowViewModel (NOT [ObservableProperty]) — follows Phase 03 decision that only IsChecked is observable
 - [Phase 04-00]: FormulaUpdateServiceTests and BatchRenameSafeRenameTests are separate fixtures — FormulaUpdate covers wiring (04-03), BatchRenameSafeRename covers execution paths (04-03 REQ-02 + 04-04 REQ-03 + 04-01 REQ-04)
+- [Phase 04-02]: ElementData.Formula + IsDimensionLabel fields carry side-effect metadata from collection to preview without Revit API
+- [Phase 04-02]: Preview skip detection uses IsReadOnly as proxy for read-only/reporting FamilyParameter skip conditions
+- [Phase 04-02]: TextMutedBrush used for muted-row Foreground in SearchReplaceView (Brushes.xaml project convention); Sel column converted to DataGridTemplateColumn for IsEnabled binding
+- [Phase 04-01]: Extracted EvaluateFamilyParamSkipReason + EvaluateStandardItemSkipReason pure-data helpers for unit testing without Revit API
+- [Phase 04-01]: ApplyPreFlightSkipReasons takes Func<ElementRowViewModel, string?> delegate — decouples loop from Revit API; loop runs OUTSIDE _transactionService.Run (pre-flight read-only pass)
+- [Phase 04-01]: GetStandardItemSkipReason uses Family.IsInPlace (not IsSystemFamily) as proxy — Revit 2026 API does not expose Family.IsSystemFamily directly
 
 ## Performance Metrics
 | Phase | Plan | Duration | Tasks | Files |
@@ -103,6 +109,8 @@ Phase 1 (Research & Foundation) is complete. Service consolidation and formula u
 | Phase 03 P06 | 3min | 2 tasks | 6 files |
 | Phase 03 P08 | 9min | 2 tasks | 20 files |
 | Phase 03 P09 | 1min | 1 tasks | 4 files |
+| Phase 04 P02 | 35min | 2 tasks | 5 files |
+| Phase 04 P01 | 40min | 2 tasks | 3 files |
 
 ## Last Session
 - **Stopped at**: 2026-05-10 — Phase 2.5 CONTEXT.md updated: narrowed phase-end Revit verify to must-pass = ConvertFamily host preservation (REQ-10) + Phase 2 regression (REQ-07); REQ-08 (Compact Styles) and REQ-09 (CategoryChanger refuse-all) trusted by code review (Phase 2 pattern). Face-hosted preservation limitation captured under deferred. Status flipped to code-complete; verify scheduled before Phase 4 planning. Revit is open — local builds must use `-p:SkipRevitDeploy=true`.
