@@ -350,10 +350,20 @@ public class BatchRenameExecutionServiceTests
         result.Should().Be(10);
     }
 
-    [Fact(Skip = "Implemented by plan 05-03: Polish #2 Dimension.FamilyLabel null-clear before reassigning")]
+    [Fact]
     public void ExecuteDimensionReassignments_PreClearsLabel_BeforeReassigning()
     {
-        Assert.True(false, "see plan 05-03");
+        var log = new List<string>();
+        var pairs = new (Action clear, Action assign)[]
+        {
+            ((Action)(() => log.Add("clear-A")), (Action)(() => log.Add("assign-A"))),
+            ((Action)(() => log.Add("clear-B")), (Action)(() => log.Add("assign-B"))),
+        };
+
+        BatchRenameExecutionService.ExecuteDimensionReassignments(pairs, "old", "new", out int dimCount);
+
+        dimCount.Should().Be(2);
+        log.Should().Equal("clear-A", "assign-A", "clear-B", "assign-B");
     }
 
     [Fact(Skip = "Implemented by plan 05-03: Polish #3 standard-item progress capping — max before done equals 100")]
