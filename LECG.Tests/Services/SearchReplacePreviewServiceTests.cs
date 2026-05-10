@@ -122,4 +122,45 @@ public class SearchReplacePreviewServiceTests
         rows[0].IsReadOnly.Should().BeFalse();
         rows[0].Id.Should().Be(7);
     }
+
+    // -----------------------------------------------------------------------
+    // Wave 0 RED stubs for REQ-04 IsRenameable propagation — plan 04-02
+    // -----------------------------------------------------------------------
+
+    [Fact(Skip = "Implement in plan 04-02")]
+    [Trait("Category", "Renaming")]
+    public void ProcessPreview_FamilyParameterSkipReason_PopulatesStatus_WithReasonString()
+    {
+        // RED — fills in plan 04-02
+    }
+
+    [Fact(Skip = "Implement in plan 04-02")]
+    [Trait("Category", "Renaming")]
+    public void ProcessPreview_FamilyParameterSkipReason_SetsIsRenameableFalse_AndIsCheckedFalse()
+    {
+        // RED — fills in plan 04-02
+    }
+
+    [Fact(Skip = "Implement in plan 04-02")]
+    [Trait("Category", "Renaming")]
+    public void ProcessPreview_SafeRenameRow_PopulatesStatus_WithSideEffectCount()
+    {
+        // RED — fills in plan 04-02
+        // e.g. status reads "+2 formulas, +1 dimension"
+    }
+
+    [Fact(Skip = "Implement in plan 04-02")]
+    [Trait("Category", "Renaming")]
+    public void ProcessPreview_RenameableRow_LeavesIsRenameableTrue_AndKeepsUserCheckedState()
+    {
+        // RED — fills in plan 04-02
+    }
+
+    [Fact(Skip = "Implement in plan 04-02")]
+    [Trait("Category", "Renaming")]
+    public void ProcessPreview_CrossBatchNameCollision_FlipsSecondRowToSkip_WithReason()
+    {
+        // RED — fills in plan 04-02
+        // Covers Pitfall 5 from RESEARCH
+    }
 }
