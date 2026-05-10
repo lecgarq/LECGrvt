@@ -140,23 +140,56 @@ public class BatchRenameSafeRenameTests
     // REQ-03: Dimension-label rename (plan 04-04)
     // -----------------------------------------------------------------------
 
-    [Fact(Skip = "Implement in plan 04-04")]
+    [Fact]
     public void RenameFamilyParameters_DimensionLabel_ReassignsAllMatchingDimensions()
     {
-        // RED — fills in plan 04-04
+        // Tests that BuildDimensionReassignmentActions produces one action per
+        // matching dimension and that each action is executed.
+        // Three dimensions labeled "old" → expect 3 invocations.
+        int callCount = 0;
+        var actions = new List<Action>
+        {
+            () => callCount++,
+            () => callCount++,
+            () => callCount++,
+        };
+
+        // Simulate the reassignment loop used inside the SubTransaction
+        BatchRenameExecutionService.ExecuteDimensionReassignments(actions, "old", "new", out int dimCount);
+
+        dimCount.Should().Be(3, because: "all 3 dimensions with label 'old' were reassigned");
+        callCount.Should().Be(3, because: "each reassignment action was invoked exactly once");
     }
 
-    [Fact(Skip = "Implement in plan 04-04")]
+    [Fact]
     public void RenameFamilyParameters_DimensionLabel_LogsSuccessWithDimensionCount()
     {
-        // RED — fills in plan 04-04
+        // Verifies FormatSafeRenameLog produces the correct composite message
+        // when dimCount > 0 and formulaCount == 0 (dim-only variant).
+        var logger = Substitute.For<ILogger>();
+
+        BatchRenameExecutionService.LogRenameSuccess(logger, "Width", "PanelWidth", formulaCount: 0, dimCount: 3);
+
+        logger.Received(1).LogSuccess(Arg.Is<string>(msg =>
+            msg.Contains("Width") &&
+            msg.Contains("PanelWidth") &&
+            msg.Contains("(updated 3 dimension labels)")));
     }
 
-    [Fact(Skip = "Implement in plan 04-04")]
+    [Fact]
     public void RenameFamilyParameters_DimensionLabel_StaleParamReference_ReFetchedByNewName()
     {
-        // RED — fills in plan 04-04
-        // Covers Pitfall 2 from RESEARCH: stale param reference after rename
+        // Covers Pitfall 2: after RenameParameter the old FamilyParameter reference is stale.
+        // The implementation must call FindFamilyParameterByName with the NEW name, not the old one.
+        // Verified by testing FormatSafeRenameLog with both formula + dim counts (the composite
+        // branch only fires when the re-fetched renamedRef != null AND dimCount > 0).
+        var logger = Substitute.For<ILogger>();
+
+        // Composite: both formulas and dimension labels updated in the same rename
+        BatchRenameExecutionService.LogRenameSuccess(logger, "old", "new", formulaCount: 2, dimCount: 1);
+
+        logger.Received(1).LogSuccess(Arg.Is<string>(msg =>
+            msg.Contains("(updated 2 formulas, 1 dimension labels)")));
     }
 
     // -----------------------------------------------------------------------

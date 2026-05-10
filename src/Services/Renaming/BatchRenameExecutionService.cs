@@ -200,6 +200,7 @@ namespace LECG.Services
                         // Pre-validate: build safety sets to detect parameters that could break the family
                         FamilyManager preCheckMgr = famDoc.FamilyManager;
                         var dimensionLabels = BuildDimensionLabelNames(famDoc);
+                        var dimensionsByName = BuildDimensionsByLabelName(famDoc);
                         var formulaReferenced = BuildFormulaReferencedNames(preCheckMgr);
                         var elementAssociated = BuildElementAssociationNames(famDoc, preCheckMgr);
 
@@ -214,6 +215,7 @@ namespace LECG.Services
                                 kvp.Value,
                                 familyName,
                                 dimensionLabels,
+                                dimensionsByName,
                                 formulaReferenced,
                                 elementAssociated,
                                 logger);
@@ -272,6 +274,7 @@ namespace LECG.Services
             List<ElementRowViewModel> items,
             string familyName,
             HashSet<string> dimensionLabels,
+            Dictionary<string, List<Dimension>> dimensionsByName,
             HashSet<string> formulaReferenced,
             HashSet<string> elementAssociated,
             Logging.ILogger logger)
@@ -299,9 +302,10 @@ namespace LECG.Services
                     continue;
                 }
 
-                // Per-param SubTransaction: rename + formula-update is atomic per parameter.
-                // On exception the SubTransaction rolls back; the outer transaction (and other
-                // params) are unaffected. renamedCount is incremented ONLY after confirmed Commit.
+                // Per-param SubTransaction: rename + formula-update + dimension-label reassignment
+                // is atomic per parameter. On exception the SubTransaction rolls back; the outer
+                // transaction (and other params) are unaffected. renamedCount is incremented ONLY
+                // after confirmed Commit.
                 SubTransaction? subTx = null;
                 try
                 {
@@ -335,11 +339,34 @@ namespace LECG.Services
                         }
                     }
 
+                    // Dimension-label reassignment loop: for each Dimension whose FamilyLabel
+                    // pointed at the old parameter name, reassign to the freshly renamed param.
+                    // PITFALL 2 GUARD: refetch the renamed param reference via FindFamilyParameterByName
+                    // BEFORE setting dim.FamilyLabel — the old paramToRename reference is stale after
+                    // RenameParameter.
+                    int dimCount = 0;
+                    if (dimensionsByName.TryGetValue(item.OriginalValue, out var dims) && dims.Count > 0)
+                    {
+                        FamilyParameter? renamedRef = FindFamilyParameterByName(manager, item.NewValue);
+                        if (renamedRef != null)
+                        {
+                            var reassignActions = new List<Action>(dims.Count);
+                            foreach (Dimension dim in dims)
+                            {
+                                Dimension capturedDim = dim;
+                                FamilyParameter capturedRef = renamedRef;
+                                reassignActions.Add(() => { capturedDim.FamilyLabel = capturedRef; });
+                            }
+
+                            ExecuteDimensionReassignments(reassignActions, item.OriginalValue, item.NewValue, out dimCount);
+                        }
+                    }
+
                     subTx.Commit();
 
                     // Increment ONLY after confirmed commit (Pitfall 3 guard)
                     renamedCount++;
-                    LogRenameSuccess(logger, item.OriginalValue, item.NewValue, formulaCount);
+                    LogRenameSuccess(logger, item.OriginalValue, item.NewValue, formulaCount, dimCount);
                 }
                 catch (Exception ex)
                 {
@@ -397,17 +424,54 @@ namespace LECG.Services
         }
 
         /// <summary>
-        /// Emits a success log line for a rename operation, including the formula-update count suffix
-        /// when formulas were rewritten. Format is "Renamed '{old}' to '{new}' (updated N formulas)"
-        /// when formulaCount &gt; 0, or "Renamed '{old}' to '{new}'" otherwise.
+        /// Emits a success log line for a rename operation, including formula and/or dimension
+        /// count suffixes when references were rewritten. The four branches are:
+        /// both &gt; 0: "(updated F formulas, D dimension labels)"
+        /// formulas only: "(updated F formulas)"
+        /// dimensions only: "(updated D dimension labels)"
+        /// neither: no suffix
         /// Internal for unit testing via InternalsVisibleTo.
         /// </summary>
-        internal static void LogRenameSuccess(Logging.ILogger logger, string oldName, string newName, int formulaCount)
+        internal static void LogRenameSuccess(Logging.ILogger logger, string oldName, string newName, int formulaCount, int dimCount = 0)
         {
+            logger.LogSuccess(FormatSafeRenameLog(oldName, newName, formulaCount, dimCount));
+        }
+
+        /// <summary>
+        /// Pure-data helper: formats the success log message for a safe rename, composing formula
+        /// and dimension label update counts. Returns "Renamed '{old}' to '{new}'" when both counts
+        /// are zero; adds count suffixes otherwise. Centralized for testability.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static string FormatSafeRenameLog(string oldName, string newName, int formulaCount, int dimCount)
+        {
+            if (formulaCount == 0 && dimCount == 0)
+                return $"Renamed '{oldName}' to '{newName}'";
+            if (formulaCount > 0 && dimCount > 0)
+                return $"Renamed '{oldName}' to '{newName}' (updated {formulaCount} formulas, {dimCount} dimension labels)";
             if (formulaCount > 0)
-                logger.LogSuccess($"Renamed '{oldName}' to '{newName}' (updated {formulaCount} formulas)");
-            else
-                logger.LogSuccess($"Renamed '{oldName}' to '{newName}'");
+                return $"Renamed '{oldName}' to '{newName}' (updated {formulaCount} formulas)";
+            return $"Renamed '{oldName}' to '{newName}' (updated {dimCount} dimension labels)";
+        }
+
+        /// <summary>
+        /// Pure-data helper: executes a list of pre-built dimension reassignment actions and counts
+        /// the successful ones. If any action throws, the exception propagates to roll back the
+        /// enclosing SubTransaction. Used inside the per-param SubTransaction after RenameParameter.
+        /// Internal for unit testing via InternalsVisibleTo.
+        /// </summary>
+        internal static void ExecuteDimensionReassignments(
+            IReadOnlyList<Action> reassignActions,
+            string oldName,
+            string newName,
+            out int dimCount)
+        {
+            dimCount = 0;
+            foreach (Action action in reassignActions)
+            {
+                action(); // throws → propagates to SubTransaction rollback
+                dimCount++;
+            }
         }
 
         /// <summary>
@@ -653,6 +717,7 @@ namespace LECG.Services
 
         /// <summary>
         /// Build set of parameter names that are used as dimension labels in the family.
+        /// Preserved intact — still used by GetRenameSkipReason for skip-condition detection.
         /// </summary>
         private static HashSet<string> BuildDimensionLabelNames(Document famDoc)
         {
@@ -677,6 +742,25 @@ namespace LECG.Services
             }
 
             return names;
+        }
+
+        /// <summary>
+        /// Build a dictionary of Dimension objects grouped by their current FamilyLabel parameter name.
+        /// Dimensions without a FamilyLabel (null) are omitted. Used in the per-param SubTransaction
+        /// to reassign dimension labels after a rename (REQ-03). Key comparison is Ordinal.
+        /// </summary>
+        private static Dictionary<string, List<Dimension>> BuildDimensionsByLabelName(Document famDoc)
+        {
+            var result = new Dictionary<string, List<Dimension>>(StringComparer.Ordinal);
+            foreach (Dimension dim in new FilteredElementCollector(famDoc).OfClass(typeof(Dimension)).Cast<Dimension>())
+            {
+                FamilyParameter? label = dim.FamilyLabel;
+                if (label == null) continue;
+                string name = label.Definition.Name;
+                if (!result.TryGetValue(name, out var list)) { list = new List<Dimension>(); result[name] = list; }
+                list.Add(dim);
+            }
+            return result;
         }
 
         /// <summary>
