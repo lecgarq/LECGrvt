@@ -12,9 +12,9 @@ Carries forward the **core value** gate from v1.1: every command either succeeds
 
 ### Cross-cutting infrastructure (CROSS)
 
-- [ ] **CROSS-01**: A developer can route every plugin log entry through a single structured `ILogger` interface with preserved severity (Info/Warn/Error), scope tag, and consistent `LogView` surfacing — replacing the `Logger.Instance` / `IProgressReporter` / VM-callback fragmentation.
-- [ ] **CROSS-02**: A user sees `LogWarning` and `LogError` entries from `IProgressReporter` rendered with their original severity in `LogView` (no more collapse-to-`Log`).
-- [ ] **CROSS-03**: Auto-dialog dismissal (Purge, Convert Family) suppresses only dialogs whose `DialogId` is in an explicit whitelist; any other dialog reaches the user.
+- [x] **CROSS-01**: A developer can route every plugin log entry through a single structured `ILogger` interface with preserved severity (Info/Warn/Error), scope tag, and consistent `LogView` surfacing — replacing the `Logger.Instance` / `IProgressReporter` / VM-callback fragmentation.
+- [x] **CROSS-02**: A user sees `LogWarning` and `LogError` entries from `IProgressReporter` rendered with their original severity in `LogView` (no more collapse-to-`Log`).
+- [x] **CROSS-03**: Auto-dialog dismissal (Purge, Convert Family) suppresses only dialogs whose `DialogId` is in an explicit whitelist; any other dialog reaches the user.
 
 ### Purge Unused maturity (PURGE)
 
@@ -90,9 +90,9 @@ Carries forward the **core value** gate from v1.1: every command either succeeds
 
 | REQ-ID | Phase | Status |
 |--------|-------|--------|
-| CROSS-01 | Phase 6 — Cross-cutting Foundation | Pending |
-| CROSS-02 | Phase 6 — Cross-cutting Foundation | Pending |
-| CROSS-03 | Phase 6 — Cross-cutting Foundation | Pending |
+| CROSS-01 | Phase 6 — Cross-cutting Foundation | Complete |
+| CROSS-02 | Phase 6 — Cross-cutting Foundation | Complete |
+| CROSS-03 | Phase 6 — Cross-cutting Foundation | Complete |
 | GAPS-01  | Phase 6 — Cross-cutting Foundation | Complete |
 | PURGE-01 | Phase 7 — Purge Unused Maturity | Pending |
 | PURGE-02 | Phase 7 — Purge Unused Maturity | Pending |
