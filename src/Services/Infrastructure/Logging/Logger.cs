@@ -11,10 +11,10 @@ namespace LECG.Services.Logging
     public interface ILogger
     {
         ObservableCollection<LogEntry> Entries { get; }
-        void Log(string message);
-        void LogSuccess(string message);
-        void LogWarning(string message);
-        void LogError(string message);
+        void Log(string message, string scope);
+        void LogSuccess(string message, string scope);
+        void LogWarning(string message, string scope, Exception? exception = null);
+        void LogError(string message, string scope, Exception? exception = null);
         void Clear();
         void SetDispatcher(Dispatcher dispatcher);
         void UpdateProgress(double percent, string status);
@@ -23,6 +23,8 @@ namespace LECG.Services.Logging
 
     public class Logger : ILogger
     {
+        private const string LegacyScope = "Legacy";
+
         private static Logger? _instance;
         public static Logger Instance => _instance ??= new Logger();
         private readonly object _sync = new object();
@@ -37,13 +39,11 @@ namespace LECG.Services.Logging
         private string _defaultCategoryName = "LECG.UI";
         public event Action<double, string>? OnProgressUpdate;
 
-        private Logger()
+        public Logger()
         {
-            // Attempt to capture current dispatcher, can be overwritten
-            if (Dispatcher.CurrentDispatcher != null)
-            {
-                SetDispatcher(Dispatcher.CurrentDispatcher);
-            }
+            // Dispatcher is NOT auto-captured in the public constructor to ensure
+            // predictable synchronous behavior in tests (Entries.Add is called directly).
+            // Call SetDispatcher(Dispatcher.CurrentDispatcher) explicitly in UI entry points.
         }
 
         public void SetDispatcher(Dispatcher? dispatcher)
@@ -95,7 +95,7 @@ namespace LECG.Services.Logging
             }
         }
 
-        private void AddEntry(LogEntry entry, Exception? exception = null, string? categoryName = null)
+        private void AddEntry(LogEntry entry, Exception? exception = null)
         {
             if (_uiDispatcher != null && !_uiDispatcher.CheckAccess())
             {
@@ -106,15 +106,39 @@ namespace LECG.Services.Logging
                 EnqueueVisibleEntry(entry);
             }
 
-            ForwardToStructuredLogger(entry, exception, categoryName);
+            ForwardToStructuredLogger(entry, exception);
         }
 
-        public void Log(string message) => AddEntry(new LogEntry(message, LogLevel.Info));
-        public void LogSuccess(string message) => AddEntry(new LogEntry(message, LogLevel.Success));
-        public void LogWarning(string message) => AddEntry(new LogEntry(message, LogLevel.Warning));
-        public void LogError(string message) => AddEntry(new LogEntry(message, LogLevel.Error));
-        public void LogWarning(string message, string categoryName, Exception? exception = null) => AddEntry(new LogEntry(message, LogLevel.Warning), exception, categoryName);
-        public void LogError(string message, string categoryName, Exception? exception = null) => AddEntry(new LogEntry(message, LogLevel.Error), exception, categoryName);
+        // ── New interface methods (scope required) ──────────────────────────────
+
+        public void Log(string message, string scope) =>
+            AddEntry(new LogEntry(message, LogLevel.Info, scope));
+
+        public void LogSuccess(string message, string scope) =>
+            AddEntry(new LogEntry(message, LogLevel.Success, scope));
+
+        public void LogWarning(string message, string scope, Exception? exception = null) =>
+            AddEntry(new LogEntry(message, LogLevel.Warning, scope), exception);
+
+        public void LogError(string message, string scope, Exception? exception = null) =>
+            AddEntry(new LogEntry(message, LogLevel.Error, scope), exception);
+
+        // ── TEMPORARY legacy overloads (removed in Wave 2) ─────────────────────
+        // These exist ONLY on the concrete Logger class, NOT on ILogger.
+        // They keep Logger.Instance.Log(...) call sites compiling during Wave 1
+        // and emit CS0618 Obsolete warnings that form the Wave 2 migration inventory.
+
+        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
+        public void Log(string message) => Log(message, LegacyScope);
+
+        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
+        public void LogSuccess(string message) => LogSuccess(message, LegacyScope);
+
+        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
+        public void LogWarning(string message) => LogWarning(message, LegacyScope);
+
+        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
+        public void LogError(string message) => LogError(message, LegacyScope);
 
         public void Clear()
         {
@@ -176,7 +200,7 @@ namespace LECG.Services.Logging
             }
         }
 
-        private void ForwardToStructuredLogger(LogEntry entry, Exception? exception, string? categoryName)
+        private void ForwardToStructuredLogger(LogEntry entry, Exception? exception)
         {
             MsLoggerFactory? loggerFactory;
             string fallbackCategoryName;
@@ -192,7 +216,7 @@ namespace LECG.Services.Logging
                 return;
             }
 
-            string loggerCategory = string.IsNullOrWhiteSpace(categoryName) ? fallbackCategoryName : categoryName;
+            string loggerCategory = string.IsNullOrWhiteSpace(entry.Scope) ? fallbackCategoryName : entry.Scope;
             Microsoft.Extensions.Logging.ILogger logger = loggerFactory.CreateLogger(loggerCategory);
             MsLogLevel level = ToMicrosoftLogLevel(entry.Level);
 
@@ -215,6 +239,5 @@ namespace LECG.Services.Logging
                 _ => MsLogLevel.Information
             };
         }
-
     }
 }

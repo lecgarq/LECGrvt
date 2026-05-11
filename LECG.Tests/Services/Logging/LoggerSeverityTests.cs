@@ -1,5 +1,6 @@
 using FluentAssertions;
 using LECG.Services;
+using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using Xunit;
 
