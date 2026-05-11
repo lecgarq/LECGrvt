@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
@@ -26,6 +27,13 @@ namespace LECG.Services
 
     public class BaseElementCollectionService : IBaseElementCollectionService
     {
+        private readonly ILogger _logger;
+
+        public BaseElementCollectionService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public List<ElementData> CollectBaseElements(Document doc, bool types, bool families, bool views, bool sheets, bool materials, bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters)
         {
             ArgumentNullException.ThrowIfNull(doc);
@@ -130,8 +138,9 @@ namespace LECG.Services
                             var (gsName, gsCategory) = ElementLabelService.GetLabels(gs);
                             try
                             {
-                                Logger.Instance.LogWarning(
-                                    $"BaseElementCollectionService: GraphicsStyle {gs.Id.Value} has null GraphicsStyleCategory — using fallback label ({gsName}, {gsCategory})");
+                                _logger.LogWarning(
+                                    $"GraphicsStyle {gs.Id.Value} has null GraphicsStyleCategory — using fallback label ({gsName}, {gsCategory})",
+                                    scope: "BaseElementCollection");
                             }
                             catch { }
                             data.Add(new ElementData
@@ -284,8 +293,9 @@ namespace LECG.Services
                     {
                         try
                         {
-                            Logger.Instance.LogWarning(
-                                $"BaseElementCollectionService: skipping family parameter row for FamilyInstance {fi.Id.Value} — Symbol or Family null");
+                            _logger.LogWarning(
+                                $"Skipping family parameter row for FamilyInstance {fi.Id.Value} — Symbol or Family null",
+                                scope: "BaseElementCollection");
                         }
                         catch { }
                         continue;

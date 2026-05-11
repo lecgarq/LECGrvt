@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using Autodesk.Revit.DB.Visual;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
@@ -10,6 +11,12 @@ namespace LECG.Services
     public class MaterialBitmapPropertyService : IMaterialBitmapPropertyService
     {
         private const double MillimetersPerFoot = 304.8;
+        private readonly ILogger _logger;
+
+        public MaterialBitmapPropertyService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
 
         public void SetupBitmapProperty(AssetProperty? prop, string path)
         {
@@ -21,22 +28,22 @@ namespace LECG.Services
             if (prop == null) return;
             Asset? connectedAsset = null;
 
-            if (prop.GetSingleConnectedAsset() != null)
+            // Always try to create a fresh connected asset first. Template-provided connected assets
+            // (e.g. from the Generic appearance template) have read-only scale properties; a freshly
+            // added UnifiedBitmap is fully writable. Fall back to reusing the existing asset only if
+            // AddConnectedAsset fails (e.g. property type doesn't support it).
+            try
             {
+                connectedAsset = TryAddConnectedAsset(prop, "UnifiedBitmap")
+                    ?? TryAddConnectedAsset(prop, "UnifiedBitmapSchema");
+            }
+            catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
+            {
+                _logger.LogWarning($"AddConnectedAsset failed: {ex.Message}", scope: "MaterialBitmapProperty");
+            }
+
+            if (connectedAsset == null)
                 connectedAsset = prop.GetSingleConnectedAsset();
-            }
-            else
-            {
-                try
-                {
-                    connectedAsset = TryAddConnectedAsset(prop, "UnifiedBitmap")
-                        ?? TryAddConnectedAsset(prop, "UnifiedBitmapSchema");
-                }
-                catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
-                {
-                    Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] AddConnectedAsset failed: {ex.Message}");
-                }
-            }
 
             if (connectedAsset != null)
                 ApplyBitmapProperties(connectedAsset, path, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms);
@@ -58,7 +65,7 @@ namespace LECG.Services
                 }
                 catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
                 {
-                    Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] SetupBumpBitmapProperty AddConnectedAsset failed: {ex.Message}");
+                    _logger.LogWarning($"SetupBumpBitmapProperty AddConnectedAsset failed: {ex.Message}", scope: "MaterialBitmapProperty");
                 }
             }
 
@@ -80,8 +87,9 @@ namespace LECG.Services
             BumpMapNormalizationResult normalizationResult = MaterialBumpMapNormalizer.NormalizeConnectedAsset(ownerAsset, prop, bumpMapAsset, bumpmapType);
             if (!normalizationResult.IsSuccessful)
             {
-                Logging.Logger.Instance.LogWarning(
-                    $"[MaterialBitmapPropertyService] Bump normalization unresolved for slot '{normalizationResult.SlotName}': {normalizationResult.Detail}");
+                _logger.LogWarning(
+                    $"Bump normalization unresolved for slot '{normalizationResult.SlotName}': {normalizationResult.Detail}",
+                    scope: "MaterialBitmapProperty");
             }
 
             // REFRESH: NormalizeConnectedAsset may have replaced the connected asset tree (re-wrapped as BumpMap).
@@ -128,7 +136,7 @@ namespace LECG.Services
             catch { return null; }
         }
 
-        private static void LogBumpAssetDiagnostics(Asset asset)
+        private void LogBumpAssetDiagnostics(Asset asset)
         {
             var sb = new StringBuilder();
             sb.Append($"[BumpDiag] schema='{asset.Name}' props={asset.Size}: ");
@@ -139,19 +147,24 @@ namespace LECG.Services
                 string connectedName = p.GetSingleConnectedAsset()?.Name ?? "-";
                 sb.Append($"[{p.Name}|{p.Type}|ro={p.IsReadOnly}|conn={connectedName}] ");
             }
-            Logging.Logger.Instance.Log(sb.ToString());
+            _logger.Log(sb.ToString(), scope: "MaterialBitmapProperty");
         }
 
         private void ApplyBitmapProperties(Asset asset, string path, double scaleXMillimeters, double scaleYMillimeters, double offsetXMillimeters, double offsetYMillimeters, double rotationDegrees, bool linkTextureTransforms)
         {
+            // BumpMap schema stores the image as a plain string property (not a connected sub-asset).
+            SetAssetString(asset, "bumpmap_Bitmap", path);
+            // UnifiedBitmap / texture schemas —- these are no-ops when applied to a BumpMap asset.
             SetAssetString(asset, "unifiedbitmap_Bitmap", path);
             SetAssetString(asset, "texture_Bitmap", path);
 
             SetAssetBoolean(asset, "texture_LinkTextureTransforms", false);
             SetAssetBoolean(asset, "unifiedbitmap_LinkTextureTransforms", false);
 
-            SetAssetDistance(asset, "texture_UScale", scaleXMillimeters);
-            SetAssetDistance(asset, "texture_VScale", scaleYMillimeters);
+            // texture_UScale/VScale are Double1 and expect Revit internal units (feet).
+            // They throw on BumpMap schema — TrySetAssetDouble swallows that silently.
+            TrySetAssetDouble(asset, "texture_UScale", scaleXMillimeters / MillimetersPerFoot);
+            TrySetAssetDouble(asset, "texture_VScale", scaleYMillimeters / MillimetersPerFoot);
             SetAssetDistance(asset, "texture_Scale_X", scaleXMillimeters);
             SetAssetDistance(asset, "texture_Scale_Y", scaleYMillimeters);
             SetAssetDistance(asset, "texture_RealWorldScaleX", scaleXMillimeters);
@@ -170,6 +183,31 @@ namespace LECG.Services
                 SetAssetBoolean(asset, "texture_LinkTextureTransforms", true);
                 SetAssetBoolean(asset, "unifiedbitmap_LinkTextureTransforms", true);
             }
+
+            LogScaleDiag(asset);
+        }
+
+        private void LogScaleDiag(Asset asset)
+        {
+            string[] names = { "texture_UScale", "texture_VScale", "texture_RealWorldScaleX", "texture_RealWorldScaleY", "unifiedbitmap_RealWorldScaleX", "unifiedbitmap_RealWorldScaleY" };
+            var sb = new StringBuilder($"[ScaleDiag] '{asset.Name}': ");
+            bool any = false;
+            foreach (string name in names)
+            {
+                AssetProperty? p = asset.FindByName(name);
+                if (p == null) continue;
+                any = true;
+                string val = p switch
+                {
+                    AssetPropertyDouble dp => dp.Value.ToString("F4"),
+                    AssetPropertyDistance dp => $"{dp.Value:F4}ft={dp.Value * MillimetersPerFoot:F1}mm",
+                    AssetPropertyFloat fp => fp.Value.ToString("F4"),
+                    _ => $"({p.Type})"
+                };
+                sb.Append($"{name}={val} ");
+            }
+            if (!any) sb.Append("(none found)");
+            _logger.Log(sb.ToString(), scope: "MaterialBitmapProperty");
         }
 
         private Asset? TryAddConnectedAsset(AssetProperty prop, string schemaName)
@@ -211,7 +249,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] SetAssetDistance '{propName}': {ex.Message}");
+                _logger.LogWarning($"SetAssetDistance '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
         }
 
@@ -224,8 +262,20 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] SetAssetDouble '{propName}': {ex.Message}");
+                _logger.LogWarning($"SetAssetDouble '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
+        }
+
+        /// <summary>Silent version — does not log if the property throws. Use for properties that are
+        /// conditionally non-editable depending on schema (e.g. BumpMap's texture_UScale/VScale).</summary>
+        private static void TrySetAssetDouble(Asset asset, string propName, double value)
+        {
+            try
+            {
+                AssetPropertyDouble? prop = asset.FindByName(propName) as AssetPropertyDouble;
+                if (prop != null && !prop.IsReadOnly) prop.Value = value;
+            }
+            catch { /* intentionally swallowed */ }
         }
 
         private void SetAssetString(Asset asset, string propName, string value)
@@ -237,7 +287,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] SetAssetString '{propName}': {ex.Message}");
+                _logger.LogWarning($"SetAssetString '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
         }
 
@@ -250,7 +300,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] SetAssetBoolean '{propName}': {ex.Message}");
+                _logger.LogWarning($"SetAssetBoolean '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
         }
 
@@ -263,7 +313,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[MaterialBitmapPropertyService] SetAssetInteger '{propName}': {ex.Message}");
+                _logger.LogWarning($"SetAssetInteger '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
         }
 

@@ -1,6 +1,7 @@
 using System;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
@@ -9,13 +10,16 @@ namespace LECG.Services
     {
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;
+        private readonly ILogger _logger;
 
         public RenderAppearanceSingleSyncService(
             IRenderSolidFillPatternService solidFillPatternService,
-            IRenderMaterialGraphicsApplyService graphicsApplyService)
+            IRenderMaterialGraphicsApplyService graphicsApplyService,
+            ILogger logger)
         {
             _solidFillPatternService = solidFillPatternService;
             _graphicsApplyService = graphicsApplyService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
@@ -36,15 +40,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[RenderAppearanceSingleSyncService] Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}");
+                _logger.LogWarning($"Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}", scope: "RenderAppearanceSingleSync");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[RenderAppearanceSingleSyncService] Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}");
+                _logger.LogWarning($"Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}", scope: "RenderAppearanceSingleSync");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[RenderAppearanceSingleSyncService] Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}");
+                _logger.LogWarning($"Failed to set UseRenderAppearanceForShading for {mat.Name}: {ex.Message}", scope: "RenderAppearanceSingleSync");
             }
 
             doc.Regenerate();

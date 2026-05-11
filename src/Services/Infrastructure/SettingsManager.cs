@@ -86,7 +86,7 @@ namespace LECG.Services
                 return true;
             }
 
-            Logger.Instance.LogWarning($"Invalid settings in {fileName}: {message}", nameof(SettingsManager));
+            ServiceLocator.GetService<ILogger>()?.LogWarning($"Invalid settings in {fileName}: {message}", scope: nameof(SettingsManager));
             return false;
         }
     }
