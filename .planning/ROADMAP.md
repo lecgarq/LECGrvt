@@ -28,7 +28,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 > **Source**: `.planning/research/SYNTHESIS.md` (5-plugin audit, 2026-05-08) + `.planning/REQUIREMENTS.md` (32 reqs).
 > **Theme**: Land cross-cutting foundation first (logger, severity progress, dialog whitelist), mature each of the five core plugins on top of it, then layer shared UI/UX chrome. Carry-over gaps from v1.1 fold into adjacent phases.
 
-- [ ] **Phase 6: Cross-cutting Foundation** — Unified `ILogger`, severity-preserving `IProgressReporter`, dialog whitelist; close v1.1 documentation gap (GAPS-01).
+- [x] **Phase 6: Cross-cutting Foundation** — Unified `ILogger`, severity-preserving `IProgressReporter`, dialog whitelist; close v1.1 documentation gap (GAPS-01). (completed 2026-05-11)
 - [ ] **Phase 7: Purge Unused Maturity** — Deep-mode honors user selections; typed `PurgeOptions`; accurate deletion counts; dedup failure handlers.
 - [ ] **Phase 8: Compacting Styles Maturity** — Real view (scope toggles + dry-run); shared `CompactionPipeline` base; warnings reach `LogView`; v1.1 Phase 02.5 manual Revit checks executed (GAPS-02).
 - [ ] **Phase 9: Convert Family Maturity** — Blast-radius preview; collapse over-decomposition; typed `FamilyConversionResult`; face-hosted preservation via `HostFace` capture.
@@ -48,7 +48,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   2. A user running any command sees `LogWarning` / `LogError` from `IProgressReporter` rendered with their actual severity in `LogView` (never collapsed to plain `Log`).
   3. A user running Purge or Convert Family sees only whitelisted dialogs auto-dismissed; any non-whitelisted dialog (including unexpected error dialogs) reaches the user.
   4. A developer reviewing v1.1 Phase 02 finds a complete `02-VERIFICATION.md` artifact with wave-0 evidence for REQ-07 (FormulaAutoGrouping).
-**Plans:** 4/5 plans executed
+**Plans:** 5/5 plans complete
   - [x] 06-00-PLAN.md — Wave 0: test scaffolding (LoggerSeverityTests, DialogWhitelistTests) + DialogId runtime discovery checkpoint
   - [x] 06-01-PLAN.md — Wave 1: extend ILogger contract with scope + rewrite IProgressReporter impls for severity preservation
   - [x] 06-02-PLAN.md — Wave 2: Logger.Instance migration sweep across 45 files + singleton deletion + Bootstrapper rewire (CROSS-01 complete)
@@ -142,7 +142,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 | 3. Grid & Collection Fixes | v1.1 | 10/10 | Complete | 2026-05-09 |
 | 4. Advanced Renaming Logic | v1.1 | 6/6 | Complete | 2026-05-10 |
 | 5. Verification & Polish | v1.1 | 5/5 | Complete | 2026-05-10 |
-| 6. Cross-cutting Foundation | 3/5 | In Progress|  | — |
+| 6. Cross-cutting Foundation | 5/5 | Complete   | 2026-05-11 | — |
 | 7. Purge Unused Maturity | v2.0 | 0/4 | Not started | — |
 | 8. Compacting Styles Maturity | v2.0 | 0/4 | Not started | — |
 | 9. Convert Family Maturity | v2.0 | 0/4 | Not started | — |
