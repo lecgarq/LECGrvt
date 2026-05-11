@@ -47,7 +47,7 @@ namespace LECG.Commands
             // 5. Run if confirmed
             if (result == true && vm.ShouldRun && vm.SelectedRefs.Any())
             {
-                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
                 // Show Log
                 ShowLogWindow("Simplify Points");
                 Log("Starting simplification...");

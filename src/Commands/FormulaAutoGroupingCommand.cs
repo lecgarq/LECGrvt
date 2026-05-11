@@ -32,7 +32,7 @@ namespace LECG.Commands
         {
             e.OverrideResult(2);
             string detail = e is TaskDialogShowingEventArgs td ? td.Message : e.DialogId ?? "unknown";
-            Logger.Instance.Log($"  Auto-dismissed dialog: {detail}");
+            ServiceLocator.GetRequiredService<ILogger>().Log($"Auto-dismissed dialog: {detail}", scope: "FormulaAutoGroupingCommand");
         }
 
         public override void Execute(UIDocument uiDoc, Document doc)

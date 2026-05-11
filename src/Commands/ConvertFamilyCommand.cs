@@ -38,7 +38,7 @@ namespace LECG.Commands
                     dialogId.Contains("Duplicate", StringComparison.OrdinalIgnoreCase))
                 {
                     taskArgs.OverrideResult(1); // IDOK — accept
-                    Logger.Instance.Log($"[ConvertFamily] Auto-accepted safe dialog: {message}");
+                    ServiceLocator.GetRequiredService<ILogger>().Log($"Auto-accepted safe dialog: {message}", scope: "ConvertFamilyCommand");
                     return;
                 }
 
@@ -50,19 +50,19 @@ namespace LECG.Commands
                     message.Contains("cannot be undone", StringComparison.OrdinalIgnoreCase))
                 {
                     taskArgs.OverrideResult(2); // IDCANCEL — block the destructive action
-                    Logger.Instance.LogWarning($"[ConvertFamily] BLOCKED dangerous dialog: {message}");
+                    ServiceLocator.GetRequiredService<ILogger>().LogWarning($"BLOCKED dangerous dialog: {message}", scope: "ConvertFamilyCommand");
                     return;
                 }
 
                 // Unknown dialogs — cancel to be safe (conservative default)
                 taskArgs.OverrideResult(2);
-                Logger.Instance.LogWarning($"[ConvertFamily] Blocked unknown dialog '{dialogId}': {message}");
+                ServiceLocator.GetRequiredService<ILogger>().LogWarning($"Blocked unknown dialog '{dialogId}': {message}", scope: "ConvertFamilyCommand");
             }
             else
             {
                 // Standard Windows dialog (not TaskDialog) — cancel to be safe
                 e.OverrideResult(2);
-                Logger.Instance.LogWarning($"[ConvertFamily] Blocked non-task dialog: {e.DialogId ?? "unknown"}");
+                ServiceLocator.GetRequiredService<ILogger>().LogWarning($"Blocked non-task dialog: {e.DialogId ?? "unknown"}", scope: "ConvertFamilyCommand");
             }
         }
 
@@ -126,7 +126,7 @@ namespace LECG.Commands
                 Log("--- 1-Click Seamless Conversion Started ---");
                 Log($"Processing {instances.Count} selected instances.");
 
-                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2 replaces Logger.Instance with injected _logger
+                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
 
                 // 3. Execute Batch
                 service.ConvertFamilyBatch(doc, instances, customName: "", templatePath: "", isTemporary: false, replaceInPlace: true, reporter);

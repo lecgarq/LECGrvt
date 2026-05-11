@@ -55,7 +55,7 @@ namespace LECG.Commands
                     .ToList();
 
                 // Call Logic
-                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
                 service.AssignMaterialsToElements(doc, elements, reporter);
                 UpdateProgress(100, "Complete");
             }

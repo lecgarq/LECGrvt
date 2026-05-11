@@ -14,6 +14,7 @@ namespace LECG.Core
     {
         protected LECG.Views.LogView? _logWindow;
         protected LECG.ViewModels.LogViewModel? _logViewModel;
+        protected Services.Logging.ILogger _logger = null!;
         private readonly Stopwatch _progressUpdateTimer = new Stopwatch();
         private double _lastProgressPercent = double.NaN;
         private string? _lastProgressStatus;
@@ -59,7 +60,7 @@ namespace LECG.Core
             }
         }
 
-        protected void Log(string text) => Services.Logging.Logger.Instance.Log(text);
+        protected void Log(string text) => _logger.Log(text, scope: GetType().Name);
 
         protected void UpdateProgress(double percent, string status)
         {
@@ -117,8 +118,9 @@ namespace LECG.Core
 
         protected void PrepareCommandExecution()
         {
-            Services.Logging.Logger.Instance.Clear();
-            Services.Logging.Logger.Instance.SetDispatcher(System.Windows.Application.Current?.Dispatcher);
+            _logger = ServiceLocator.GetRequiredService<Services.Logging.ILogger>();
+            _logger.Clear();
+            _logger.SetDispatcher(System.Windows.Application.Current?.Dispatcher);
             _lastProgressPercent = double.NaN;
             _lastProgressStatus = null;
             _progressUpdateTimer.Restart();

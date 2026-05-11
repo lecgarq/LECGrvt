@@ -38,7 +38,7 @@ namespace LECG.Commands
             // Cancel all dialogs during purge — preserves geometry, does NOT delete elements.
             e.OverrideResult(2);
             string detail = e is TaskDialogShowingEventArgs td ? td.Message : e.DialogId ?? "unknown";
-            Logger.Instance.Log($"  Auto-dismissed dialog during purge: {detail}");
+            ServiceLocator.GetRequiredService<ILogger>().Log($"Auto-dismissed dialog during purge: {detail}", scope: "PurgeCommand");
         }
 
         public override void Execute(UIDocument uiDoc, Document doc)
@@ -52,7 +52,7 @@ namespace LECG.Commands
             if (settings == null) return;
             if (!TryValidateSettings(settings)) return;
 
-            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2 replaces Logger.Instance with injected _logger
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
 
             ShowLogWindow("Purge Unused");
             try

@@ -56,7 +56,7 @@ namespace LECG.Commands
                 return;
             }
 
-            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
             Log("Starting Fix Points...");
             Log($"Selected {selectedElements.Count} elements. Sensitivity: {vm.Sensitivity}");
 

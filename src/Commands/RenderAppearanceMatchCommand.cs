@@ -60,7 +60,7 @@ namespace LECG.Commands
                 }
 
                 // 4. Process Materials (Batch)
-                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
                 matService.BatchSyncWithRenderAppearance(doc, materialsList, settings, reporter);
 
                 UpdateProgress(100, "Complete");

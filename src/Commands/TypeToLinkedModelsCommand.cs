@@ -63,7 +63,7 @@ namespace LECG.Commands
             Log($"Selected {selectedGroups.Count} type groups for export.");
             Log("");
 
-            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
 
             exportService.ExportAndLink(doc, selectedGroups, viewModel.OutputFolder, reporter);
 

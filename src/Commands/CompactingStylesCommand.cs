@@ -31,7 +31,7 @@ namespace LECG.Commands
 
             Log("Compacting Styles");
             Log("=================");
-            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
             var failureHandler = new SafeFailureHandler();
 
             // Line Patterns

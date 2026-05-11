@@ -57,7 +57,7 @@ namespace LECG.Commands
             Log("");
 
             var service = ServiceLocator.GetRequiredService<ISexyRevitService>();
-            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
             service.ApplyBeauty(doc, view, settings.ToSettings(), reporter);
 
             UpdateProgress(100, "Complete!");

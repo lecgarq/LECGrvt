@@ -36,8 +36,8 @@ namespace LECG.Commands
             if (result == true && vm.ShouldRun)
             {
                 ShowLogWindow("Batch Rename");
-                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
-                service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), Logger.Instance, reporter);
+                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
+                service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), _logger, reporter);
                 UpdateProgress(100, "Complete");
                 Log("Rename complete.");
             }
