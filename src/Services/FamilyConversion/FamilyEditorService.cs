@@ -273,7 +273,7 @@ namespace LECG.Services
                 || ex is UnauthorizedAccessException;
         }
 
-        private static void TryCloseFamilyDocument(Autodesk.Revit.DB.Document? familyDoc)
+        private void TryCloseFamilyDocument(Autodesk.Revit.DB.Document? familyDoc)
         {
             if (familyDoc == null || !familyDoc.IsValidObject)
             {

@@ -23,10 +23,6 @@ namespace LECG.Services.Logging
 
     public class Logger : ILogger
     {
-        private const string LegacyScope = "Legacy";
-
-        private static Logger? _instance;
-        public static Logger Instance => _instance ??= new Logger();
         private readonly object _sync = new object();
         private readonly Queue<LogEntry> _pendingEntries = new Queue<LogEntry>();
         private const int VisibleEntryFlushIntervalMs = 250;
@@ -123,22 +119,6 @@ namespace LECG.Services.Logging
         public void LogError(string message, string scope, Exception? exception = null) =>
             AddEntry(new LogEntry(message, LogLevel.Error, scope), exception);
 
-        // ── TEMPORARY legacy overloads (removed in Wave 2) ─────────────────────
-        // These exist ONLY on the concrete Logger class, NOT on ILogger.
-        // They keep Logger.Instance.Log(...) call sites compiling during Wave 1
-        // and emit CS0618 Obsolete warnings that form the Wave 2 migration inventory.
-
-        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
-        public void Log(string message) => Log(message, LegacyScope);
-
-        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
-        public void LogSuccess(string message) => LogSuccess(message, LegacyScope);
-
-        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
-        public void LogWarning(string message) => LogWarning(message, LegacyScope);
-
-        [Obsolete("Use ILogger via DI with explicit scope. Removed in Wave 2.")]
-        public void LogError(string message) => LogError(message, LegacyScope);
 
         public void Clear()
         {

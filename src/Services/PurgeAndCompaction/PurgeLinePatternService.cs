@@ -115,7 +115,7 @@ namespace LECG.Services
             }
         }
 
-        private static void TryAddCategoryPattern(
+        private void TryAddCategoryPattern(
             Category category,
             GraphicsStyleType styleType,
             HashSet<ElementId> validIds,
@@ -139,7 +139,7 @@ namespace LECG.Services
             }
         }
 
-        private static void ScanViewCategoryOverrides(
+        private void ScanViewCategoryOverrides(
             View view,
             IReadOnlyList<Category> categories,
             HashSet<ElementId> validIds,
@@ -168,7 +168,7 @@ namespace LECG.Services
             }
         }
 
-        private static void ScanViewFilterOverrides(
+        private void ScanViewFilterOverrides(
             View view,
             HashSet<ElementId> validIds,
             HashSet<ElementId> usedIds)

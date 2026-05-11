@@ -22,6 +22,14 @@ namespace LECG.Core
             var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             MsLoggerFactory loggerFactory = SerilogBootstrapper.CreateLoggerFactory(out string? loggingInitializationError);
 
+            // Pre-DI: buffer any startup warnings so they can be replayed after the
+            // container is built (Logger singleton is not yet available at this point).
+            var startupBuffer = new System.Collections.Generic.List<(string msg, bool isWarning)>();
+            if (!string.IsNullOrWhiteSpace(loggingInitializationError))
+            {
+                startupBuffer.Add(($"Structured logging fallback enabled: {loggingInitializationError}", true));
+            }
+
             ConfigureServices(services, loggerFactory);
             ConfigureViewModels(services);
             ConfigureViews(services);
@@ -29,9 +37,16 @@ namespace LECG.Core
             _provider = services.BuildServiceProvider();
             ServiceLocator.Initialize(_provider);
 
-            if (!string.IsNullOrWhiteSpace(loggingInitializationError))
+            // Post-DI: configure structured logger, then flush buffered startup entries.
+            var logger = _provider.GetRequiredService<LECG.Services.Logging.ILogger>();
+            if (logger is LECG.Services.Logging.Logger concreteLogger)
+                concreteLogger.ConfigureStructuredLogger(loggerFactory);
+            foreach (var (msg, isWarning) in startupBuffer)
             {
-                Logger.Instance.LogWarning($"Structured logging fallback enabled: {loggingInitializationError}");
+                if (isWarning)
+                    logger.LogWarning(msg, scope: "Bootstrapper");
+                else
+                    logger.Log(msg, scope: "Bootstrapper");
             }
         }
 
@@ -48,10 +63,9 @@ namespace LECG.Core
         private static void ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection services, MsLoggerFactory loggerFactory)
         {
             // Core
-            Logger.Instance.ConfigureStructuredLogger(loggerFactory);
             services.AddSingleton<MsLoggerFactory>(_ => loggerFactory);
             services.AddSingleton<IRibbonService, RibbonService>();
-            services.AddSingleton<LECG.Services.Logging.ILogger>(_ => Logger.Instance);
+            services.AddSingleton<LECG.Services.Logging.ILogger, Logger>();
             services.AddSingleton<IValidationService, ValidationService>();
             services.AddSingleton<IMemoryCache>(_ => new MemoryCache(new MemoryCacheOptions()));
             services.AddSingleton<IAppMemoryCache, AppMemoryCache>();
@@ -128,6 +142,7 @@ namespace LECG.Core
             services.AddSingleton<IRenameRulePipelineService, RenameRulePipelineService>();
             services.AddSingleton<ISearchReplacePreviewService, SearchReplacePreviewService>();
             services.AddSingleton<IBatchRenameExecutionService, BatchRenameExecutionService>();
+            services.AddSingleton<IFormulaUpdateService, FormulaUpdateService>();
             services.AddSingleton<ISearchReplaceService, SearchReplaceService>();
             services.AddSingleton<IFamilyTemplatePathService, FamilyTemplatePathService>();
             services.AddSingleton<IFamilyGeometryCollectionService, FamilyGeometryCollectionService>();

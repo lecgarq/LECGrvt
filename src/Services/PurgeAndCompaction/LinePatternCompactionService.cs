@@ -81,7 +81,7 @@ namespace LECG.Services
             return result;
         }
 
-        private static void CompactDuplicateGroups(
+        private void CompactDuplicateGroups(
             Document doc,
             CompactingStylesContext context,
             List<LinePatternDuplicateGroup> duplicateGroups,
@@ -117,7 +117,7 @@ namespace LECG.Services
             FinalizeCompactedGroups(doc, existingNames, result, groupData, logCallback);
         }
 
-        private static LinePatternCompactionGroupData? CompactDuplicateGroup(
+        private LinePatternCompactionGroupData? CompactDuplicateGroup(
             Document doc,
             LinePatternDuplicateGroup group,
             int groupIndex,
@@ -207,7 +207,7 @@ namespace LECG.Services
                 toDelete);
         }
 
-        private static void RewireGroupReferences(
+        private void RewireGroupReferences(
             Document doc,
             LinePatternDuplicateGroup group,
             int groupIndex,
@@ -489,7 +489,7 @@ namespace LECG.Services
             return LinePatternElement.Create(doc, linePattern);
         }
 
-        private static LinePatternCompactionIndexes BuildCompactionIndexes(
+        private LinePatternCompactionIndexes BuildCompactionIndexes(
             CompactingStylesContext context,
             List<LinePatternDuplicateGroup> duplicateGroups,
             Action<string>? logCallback,
@@ -584,7 +584,7 @@ namespace LECG.Services
             return renamed;
         }
 
-        private static int RewireReferences(
+        private int RewireReferences(
             Document doc,
             ElementId sourceId,
             ElementId targetId,
@@ -606,7 +606,7 @@ namespace LECG.Services
             return rewired;
         }
 
-        private static Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> BuildCategoryPatternIndex(
+        private Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> BuildCategoryPatternIndex(
             IReadOnlyList<Category> categories,
             HashSet<ElementId> sourceIds)
         {
@@ -620,7 +620,7 @@ namespace LECG.Services
             return index;
         }
 
-        private static void IndexCategoryPattern(
+        private void IndexCategoryPattern(
             Category category,
             GraphicsStyleType styleType,
             HashSet<ElementId> sourceIds,
@@ -648,7 +648,7 @@ namespace LECG.Services
             }
         }
 
-        private static int RewireCategoryReferencesFromIndex(
+        private int RewireCategoryReferencesFromIndex(
             Dictionary<ElementId, List<(Category Category, GraphicsStyleType StyleType)>> categoryIndex,
             ElementId sourceId,
             ElementId targetId)
