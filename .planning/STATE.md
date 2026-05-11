@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-11T05:49:11.195Z"
+last_updated: "2026-05-11T12:00:00.000Z"
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 5
-  completed_plans: 3
+  completed_plans: 4
 ---
 
 # Project State
@@ -16,9 +16,9 @@ progress:
 ## Current Position
 
 - **Phase**: 6 — Cross-cutting Foundation
-- **Plan**: 00 fully closed (Task 3 blocker-path); 01 complete; Plans 02–03 remaining (CROSS-02 migration sweep, CROSS-03 DialogWhitelist with LOW-confidence fallback); 04/GAPS-01 done
-- **Status**: In progress — Plan 06-00 all tasks complete (Task 3 via blocker-path); 3 of 5 plans done
-- **Last activity**: 2026-05-10 — Plan 06-00 Task 3 closed via blocker path: 06-DIALOG-DISCOVERY.md written as blocker artifact; Wave 3 falls back to LOW-confidence research guesses
+- **Plan**: 00 fully closed (Task 3 blocker-path); 01 complete; **02 complete (CROSS-01 migration sweep done)**; Plans 03 remaining (CROSS-03 DialogWhitelist with LOW-confidence fallback); 04/GAPS-01 done
+- **Status**: In progress — 4 of 5 plans done; Plan 06-03 (DialogWhitelist Wave 3) is next
+- **Last activity**: 2026-05-11 — Plan 06-02 complete: eliminated all Logger.Instance refs and [Obsolete] shims across 45 files; 0 CS0618 warnings; 190 tests GREEN
 
 ## Project Reference
 
@@ -65,6 +65,9 @@ See: `.planning/PROJECT.md` (updated 2026-05-10 — v2.0 Plugin Maturity milesto
 - **06-01**: Logger ctor no longer auto-captures dispatcher — requires explicit SetDispatcher; predictable test behavior
 - **06-01**: DialogWhitelist + IDialogOverride stubs in src/Core/ created to unblock Wave 0 test compilation (Wave 3 fills implementation)
 - [Phase 06]: Task 3 blocker path: 06-DIALOG-DISCOVERY.md written as blocker artifact (no runtime Revit access); Wave 3 falls back to LOW-confidence research guesses with mandatory confidence annotations
+- **06-02**: Static classes (PurgeContext, CompactionSharedHelper, ElementLabelService, SettingsManager) use ServiceLocator.GetService<ILogger>() — cannot receive injected ctor
+- **06-02**: Static dialog handlers in Commands resolve ILogger on-demand via ServiceLocator.GetRequiredService — acceptable since DI container is live at call time
+- **06-02**: Bootstrapper startup buffer pattern: pre-DI warnings captured in List<(string,bool)> and replayed post-BuildServiceProvider via concrete Logger cast for ConfigureStructuredLogger
 
 ## Performance Metrics
 
@@ -72,6 +75,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-10 — v2.0 Plugin Maturity milesto
 |-------|------|----------|-------|-------|
 | 06 | 04 | 10min | 1 | 1 |
 | 06 | 01 | 75min | 2 | 21 |
+| 06 | 02 | ~4h | 3 | 45 |
 
 ## Blockers
 
@@ -79,6 +83,6 @@ None.
 
 ## Next Steps
 
-1. Execute Phase 6 Plan 02 (CROSS-01 migration sweep: eliminate Logger.Instance, replace [Obsolete] shims with injected ILogger across all 30+ files).
+1. Execute Phase 6 Plan 03 (CROSS-03 DialogWhitelist Wave 3: fill implementation with LOW-confidence research guesses + mandatory confidence annotations).
 2. After Phase 6 ships → unblocks Phases 7–11 (any order, though Convert Family / Category Changer carry highest user-visible risk).
 3. Sequence Phases 12 → 13 after the five per-plugin phases settle.
