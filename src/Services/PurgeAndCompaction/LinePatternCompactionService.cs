@@ -6,6 +6,7 @@ using Autodesk.Revit.DB;
 using LECG.Core.Naming;
 using LECG.Models;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
@@ -14,6 +15,12 @@ namespace LECG.Services
     {
         private const string CanonicalPrefix = "LECG-LP-";
         private const double GroupingToleranceMm = 1.0;
+        private readonly ILogger _logger;
+
+        public LinePatternCompactionService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
 
         public LinePatternCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
         {
@@ -637,7 +644,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedLinePatternCompactionException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[LinePatternCompactionService] IndexCategoryPattern: {ex.Message}");
+                _logger.LogWarning($"IndexCategoryPattern: {ex.Message}", scope: "LinePatternCompaction");
             }
         }
 
@@ -669,7 +676,7 @@ namespace LECG.Services
                 }
                 catch (Exception ex) when (IsExpectedLinePatternCompactionException(ex))
                 {
-                    Logging.Logger.Instance.LogWarning($"[LinePatternCompactionService] RewireCategoryReferences: {ex.Message}");
+                    _logger.LogWarning($"RewireCategoryReferences: {ex.Message}", scope: "LinePatternCompaction");
                 }
             }
 

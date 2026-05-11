@@ -1,12 +1,21 @@
+using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public class PurgeReferenceScannerService : IPurgeReferenceScannerService
     {
+        private readonly ILogger _logger;
+
+        public PurgeReferenceScannerService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public void AddIfValid(HashSet<ElementId> set, ElementId id)
         {
             ArgumentNullException.ThrowIfNull(set);
@@ -40,7 +49,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedReferenceScanException(ex))
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeReferenceScannerService] Failed to collect used IDs for element {elem.Id}: {ex.Message}");
+                _logger.LogWarning($"Failed to collect used IDs for element {elem.Id}: {ex.Message}", scope: "PurgeReferenceScanner");
             }
         }
 

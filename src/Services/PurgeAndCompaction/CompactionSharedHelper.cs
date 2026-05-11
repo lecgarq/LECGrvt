@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
+using LECG.Core;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     internal static class CompactionSharedHelper
     {
+        // CompactionSharedHelper is a static utility class. ILogger is resolved from ServiceLocator.
+        private static ILogger? Logger => ServiceLocator.GetService<ILogger>();
         public static int RewireParameterReferencesFromIndex(
             Document doc,
             Dictionary<ElementId, HashSet<ElementId>> paramIndex,
@@ -41,14 +45,14 @@ namespace LECG.Services
                                 movedToTarget.Add(elementId);
                             }
                         }
-                        catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] Parameter rewire for element {elementId}: {ex.Message}"); }
-                        catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] Parameter rewire for element {elementId}: {ex.Message}"); }
-                        catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] Parameter rewire for element {elementId}: {ex.Message}"); }
+                        catch (ArgumentException ex) { Logger?.LogWarning($"Parameter rewire for element {elementId}: {ex.Message}", scope: "CompactionSharedHelper"); }
+                        catch (InvalidOperationException ex) { Logger?.LogWarning($"Parameter rewire for element {elementId}: {ex.Message}", scope: "CompactionSharedHelper"); }
+                        catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Parameter rewire for element {elementId}: {ex.Message}", scope: "CompactionSharedHelper"); }
                     }
                 }
-                catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] Element access during rewire {elementId}: {ex.Message}"); }
-                catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] Element access during rewire {elementId}: {ex.Message}"); }
-                catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] Element access during rewire {elementId}: {ex.Message}"); }
+                catch (ArgumentException ex) { Logger?.LogWarning($"Element access during rewire {elementId}: {ex.Message}", scope: "CompactionSharedHelper"); }
+                catch (InvalidOperationException ex) { Logger?.LogWarning($"Element access during rewire {elementId}: {ex.Message}", scope: "CompactionSharedHelper"); }
+                catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Element access during rewire {elementId}: {ex.Message}", scope: "CompactionSharedHelper"); }
             }
 
             paramIndex.Remove(sourceId);
@@ -404,7 +408,7 @@ namespace LECG.Services
 
         private static void LogExpectedOperationWarning(string context, Exception ex)
         {
-            Logging.Logger.Instance.LogWarning($"[CompactionSharedHelper] {context}: {ex.Message}");
+            Logger?.LogWarning($"{context}: {ex.Message}", scope: "CompactionSharedHelper");
         }
     }
 }

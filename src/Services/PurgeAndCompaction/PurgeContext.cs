@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
+using LECG.Core;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public sealed class PurgeContext
     {
+        // PurgeContext is a static-factory value type (sealed, private ctor).
+        // ILogger is resolved from ServiceLocator so callers do not need to pass it.
+        private static ILogger? Logger => ServiceLocator.GetService<ILogger>();
         private PurgeContext(
             IReadOnlyList<Level> levels,
             HashSet<ElementId> parameterReferencedIds,
@@ -173,15 +178,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect material references for element {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect material references for element {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect material references for element {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect material references for element {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect material references for element {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect material references for element {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
         }
 
@@ -201,15 +206,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect line style for curve {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect line style for curve {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect line style for curve {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect line style for curve {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect line style for curve {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect line style for curve {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
         }
 
@@ -237,15 +242,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect Object Style references: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect Object Style references: {ex.Message}", scope: "PurgeContext");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect Object Style references: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect Object Style references: {ex.Message}", scope: "PurgeContext");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect Object Style references: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect Object Style references: {ex.Message}", scope: "PurgeContext");
             }
         }
 
@@ -277,15 +282,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Category property access: {ex.Message}");
+                Logger?.LogWarning($"Category property access: {ex.Message}", scope: "PurgeContext");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Category property access: {ex.Message}");
+                Logger?.LogWarning($"Category property access: {ex.Message}", scope: "PurgeContext");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Category property access: {ex.Message}");
+                Logger?.LogWarning($"Category property access: {ex.Message}", scope: "PurgeContext");
             }
         }
 
@@ -344,14 +349,14 @@ namespace LECG.Services
                                 }
                             }
                         }
-                        catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Built-in material param read for element {element.Id}: {ex.Message}"); }
-                        catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Built-in material param read for element {element.Id}: {ex.Message}"); }
-                        catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Built-in material param read for element {element.Id}: {ex.Message}"); }
+                        catch (ArgumentException ex) { Logger?.LogWarning($"Built-in material param read for element {element.Id}: {ex.Message}", scope: "PurgeContext"); }
+                        catch (InvalidOperationException ex) { Logger?.LogWarning($"Built-in material param read for element {element.Id}: {ex.Message}", scope: "PurgeContext"); }
+                        catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Built-in material param read for element {element.Id}: {ex.Message}", scope: "PurgeContext"); }
                     }
                 }
-                catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Built-in material param filter for {bip}: {ex.Message}"); }
-                catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Built-in material param filter for {bip}: {ex.Message}"); }
-                catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Built-in material param filter for {bip}: {ex.Message}"); }
+                catch (ArgumentException ex) { Logger?.LogWarning($"Built-in material param filter for {bip}: {ex.Message}", scope: "PurgeContext"); }
+                catch (InvalidOperationException ex) { Logger?.LogWarning($"Built-in material param filter for {bip}: {ex.Message}", scope: "PurgeContext"); }
+                catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Built-in material param filter for {bip}: {ex.Message}", scope: "PurgeContext"); }
             }
         }
 
@@ -406,14 +411,14 @@ namespace LECG.Services
                                 }
                             }
                         }
-                        catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Shared material param read for element {element.Id}: {ex.Message}"); }
-                        catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Shared material param read for element {element.Id}: {ex.Message}"); }
-                        catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Shared material param read for element {element.Id}: {ex.Message}"); }
+                        catch (ArgumentException ex) { Logger?.LogWarning($"Shared material param read for element {element.Id}: {ex.Message}", scope: "PurgeContext"); }
+                        catch (InvalidOperationException ex) { Logger?.LogWarning($"Shared material param read for element {element.Id}: {ex.Message}", scope: "PurgeContext"); }
+                        catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Shared material param read for element {element.Id}: {ex.Message}", scope: "PurgeContext"); }
                     }
                 }
-                catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Shared material param binding scan: {ex.Message}"); }
-                catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Shared material param binding scan: {ex.Message}"); }
-                catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Shared material param binding scan: {ex.Message}"); }
+                catch (ArgumentException ex) { Logger?.LogWarning($"Shared material param binding scan: {ex.Message}", scope: "PurgeContext"); }
+                catch (InvalidOperationException ex) { Logger?.LogWarning($"Shared material param binding scan: {ex.Message}", scope: "PurgeContext"); }
+                catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Shared material param binding scan: {ex.Message}", scope: "PurgeContext"); }
             }
         }
 
@@ -446,9 +451,9 @@ namespace LECG.Services
                                 names.Add(param.Definition.Name);
                             }
                         }
-                        catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Symbol material param check: {ex.Message}"); }
-                        catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Symbol material param check: {ex.Message}"); }
-                        catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Symbol material param check: {ex.Message}"); }
+                        catch (ArgumentException ex) { Logger?.LogWarning($"Symbol material param check: {ex.Message}", scope: "PurgeContext"); }
+                        catch (InvalidOperationException ex) { Logger?.LogWarning($"Symbol material param check: {ex.Message}", scope: "PurgeContext"); }
+                        catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Symbol material param check: {ex.Message}", scope: "PurgeContext"); }
                     }
 
                     if (names.Count > 0)
@@ -456,9 +461,9 @@ namespace LECG.Services
                         materialParamNamesBySymbol[symbol.Id] = names;
                     }
                 }
-                catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] FamilySymbol material scan for {symbol.Id}: {ex.Message}"); }
-                catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] FamilySymbol material scan for {symbol.Id}: {ex.Message}"); }
-                catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] FamilySymbol material scan for {symbol.Id}: {ex.Message}"); }
+                catch (ArgumentException ex) { Logger?.LogWarning($"FamilySymbol material scan for {symbol.Id}: {ex.Message}", scope: "PurgeContext"); }
+                catch (InvalidOperationException ex) { Logger?.LogWarning($"FamilySymbol material scan for {symbol.Id}: {ex.Message}", scope: "PurgeContext"); }
+                catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"FamilySymbol material scan for {symbol.Id}: {ex.Message}", scope: "PurgeContext"); }
             }
 
             if (materialParamNamesBySymbol.Count == 0) return;
@@ -484,9 +489,9 @@ namespace LECG.Services
                             }
                         }
                     }
-                    catch (ArgumentException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Instance material param lookup '{name}': {ex.Message}"); }
-                    catch (InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Instance material param lookup '{name}': {ex.Message}"); }
-                    catch (RevitExceptions.InvalidOperationException ex) { Logging.Logger.Instance.LogWarning($"[PurgeContext] Instance material param lookup '{name}': {ex.Message}"); }
+                    catch (ArgumentException ex) { Logger?.LogWarning($"Instance material param lookup '{name}': {ex.Message}", scope: "PurgeContext"); }
+                    catch (InvalidOperationException ex) { Logger?.LogWarning($"Instance material param lookup '{name}': {ex.Message}", scope: "PurgeContext"); }
+                    catch (RevitExceptions.InvalidOperationException ex) { Logger?.LogWarning($"Instance material param lookup '{name}': {ex.Message}", scope: "PurgeContext"); }
                 }
             }
         }
@@ -499,15 +504,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect level for element {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect level for element {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect level for element {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect level for element {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"[PurgeContext] Failed to collect level for element {element.Id}: {ex.Message}");
+                Logger?.LogWarning($"Failed to collect level for element {element.Id}: {ex.Message}", scope: "PurgeContext");
             }
         }
 
@@ -519,15 +524,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                Logging.Logger.Instance.LogWarning($"{message}: {ex.Message}");
+                Logger?.LogWarning($"{message}: {ex.Message}", scope: "PurgeContext");
             }
             catch (InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"{message}: {ex.Message}");
+                Logger?.LogWarning($"{message}: {ex.Message}", scope: "PurgeContext");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                Logging.Logger.Instance.LogWarning($"{message}: {ex.Message}");
+                Logger?.LogWarning($"{message}: {ex.Message}", scope: "PurgeContext");
             }
         }
     }
