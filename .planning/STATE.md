@@ -3,12 +3,12 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Plugin Maturity
 status: unknown
-last_updated: "2026-05-11T05:21:23.136Z"
+last_updated: "2026-05-10T15:15:00.000Z"
 progress:
   total_phases: 8
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
+  completed_plans: 3
 ---
 
 # Project State
@@ -16,9 +16,9 @@ progress:
 ## Current Position
 
 - **Phase**: 6 — Cross-cutting Foundation
-- **Plan**: 04 of 05 complete (GAPS-01 closed; Plans 01–03 = CROSS-01/02/03 remaining)
-- **Status**: In progress — Phase 6 Plan 04 complete
-- **Last activity**: 2026-05-11 — Plan 06-04 complete: authored retroactive 02-VERIFICATION.md, closing GAPS-01
+- **Plan**: 01 of 05 complete (ILogger scope contract + severity-preserving IProgressReporter; Plans 02–04 = CROSS-02-migration-sweep, CROSS-03 remaining; 04/GAPS-01 done)
+- **Status**: In progress — Phase 6 Plan 01 complete
+- **Last activity**: 2026-05-10 — Plan 06-01 complete: extended ILogger with scope param; rewrote three IProgressReporter impls for severity preservation
 
 ## Project Reference
 
@@ -47,7 +47,7 @@ See: `.planning/PROJECT.md` (updated 2026-05-10 — v2.0 Plugin Maturity milesto
 
 ## Accumulated Context
 
-- 175 GREEN xUnit baseline (5 Skipped) — preserved from v1.1; must not break.
+- 190 GREEN xUnit baseline (5 Skipped) after Plan 06-01; 15 new CrossCutting tests added (was 175 from v1.1).
 - Phase numbering continues from v1.1 (last phase = 5). v2.0 starts at **Phase 6**.
 - `.planning/research/SYNTHESIS.md` (5-plugin audit) is the canonical source for v2.0 scope.
 - v1.1 carry-over gaps folded into v2.0 phases: GAPS-01 → Phase 6, GAPS-02 → Phase 8, GAPS-03 → Phase 11.
@@ -59,13 +59,18 @@ See: `.planning/PROJECT.md` (updated 2026-05-10 — v2.0 Plugin Maturity milesto
 - **06-04**: Cite at-phase test count (79) not current baseline for retroactive GAPS-01 verification artifact — retroactive artifacts record phase-period evidence only
 - **06-04**: UAT Tests #2-5 marked SKIPPED (trust-based v1.1 sign-off); live Revit re-observation deferred to GAPS-02 / Phase 8
 - [Phase 06]: DialogWhitelistTests use IDialogOverride seam to avoid sealed Revit type dependency in unit tests
-- [Phase 06]: Wave 0 RED tests reference future ILogger scope param + ILogger-based reporter ctors — build error is the intended state until Waves 1-3
+- **06-01**: Scope required (non-optional) on ILogger interface — missing scope is a compile error enforcing migration discipline
+- **06-01**: [Obsolete] shim strategy — Logger.Instance callers compile via single-arg overloads on concrete Logger; 684 CS0618 warnings = Wave 2 migration inventory
+- **06-01**: Dual-constructor on legacy reporters — plan understated callers (25+ Legacy, 4+ Simple); kept [Obsolete] overloads for Wave 1; Wave 2 removes
+- **06-01**: Logger ctor no longer auto-captures dispatcher — requires explicit SetDispatcher; predictable test behavior
+- **06-01**: DialogWhitelist + IDialogOverride stubs in src/Core/ created to unblock Wave 0 test compilation (Wave 3 fills implementation)
 
 ## Performance Metrics
 
 | Phase | Plan | Duration | Tasks | Files |
 |-------|------|----------|-------|-------|
 | 06 | 04 | 10min | 1 | 1 |
+| 06 | 01 | 75min | 2 | 21 |
 
 ## Blockers
 
@@ -73,6 +78,6 @@ None.
 
 ## Next Steps
 
-1. Execute Phase 6 Plans 01–03 (CROSS-01: ILogger unification, CROSS-02: IProgressReporter severity fix, CROSS-03: DialogWhitelist).
+1. Execute Phase 6 Plan 02 (CROSS-01 migration sweep: eliminate Logger.Instance, replace [Obsolete] shims with injected ILogger across all 30+ files).
 2. After Phase 6 ships → unblocks Phases 7–11 (any order, though Convert Family / Category Changer carry highest user-visible risk).
 3. Sequence Phases 12 → 13 after the five per-plugin phases settle.

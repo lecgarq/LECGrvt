@@ -48,12 +48,12 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   2. A user running any command sees `LogWarning` / `LogError` from `IProgressReporter` rendered with their actual severity in `LogView` (never collapsed to plain `Log`).
   3. A user running Purge or Convert Family sees only whitelisted dialogs auto-dismissed; any non-whitelisted dialog (including unexpected error dialogs) reaches the user.
   4. A developer reviewing v1.1 Phase 02 finds a complete `02-VERIFICATION.md` artifact with wave-0 evidence for REQ-07 (FormulaAutoGrouping).
-**Plans:** 2/5 plans executed
-  - [ ] 06-00-PLAN.md — Wave 0: test scaffolding (LoggerSeverityTests, DialogWhitelistTests) + DialogId runtime discovery checkpoint
-  - [ ] 06-01-PLAN.md — Wave 1: extend ILogger contract with scope + rewrite IProgressReporter impls for severity preservation
+**Plans:** 3/5 plans executed
+  - [x] 06-00-PLAN.md — Wave 0: test scaffolding (LoggerSeverityTests, DialogWhitelistTests) + DialogId runtime discovery checkpoint
+  - [x] 06-01-PLAN.md — Wave 1: extend ILogger contract with scope + rewrite IProgressReporter impls for severity preservation
   - [ ] 06-02-PLAN.md — Wave 2: Logger.Instance migration sweep across 30+ files + singleton deletion + Bootstrapper rewire
   - [ ] 06-03-PLAN.md — Wave 3: DialogWhitelist class + IDialogOverride seam + PurgeCommand/ConvertFamilyCommand handler migration
-  - [ ] 06-04-PLAN.md — Wave 1 (parallel, independent): retroactive 02-VERIFICATION.md compilation (GAPS-01)
+  - [x] 06-04-PLAN.md — Wave 1 (parallel, independent): retroactive 02-VERIFICATION.md compilation (GAPS-01)
 
 ### Phase 7: Purge Unused Maturity
 **Goal**: Make Deep purge honor user intent and report truthfully — no silent ignored checkboxes, no undercounted deletions, no hidden swallowed failures.
