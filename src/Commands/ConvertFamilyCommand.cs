@@ -18,52 +18,14 @@ namespace LECG.Commands
         protected override string? TransactionName => null;
 
         /// <summary>
-        /// Selectively dismiss known-safe Revit dialogs during conversion.
-        /// Dangerous dialogs (delete type, remove constraints) are CANCELLED to prevent family breakage.
-        /// Unknown dialogs are also cancelled (conservative default).
+        /// Auto-dismiss known-safe Revit dialogs during conversion via explicit whitelist.
+        /// Unknown dialogs reach the user (reach-user default per CROSS-03).
+        /// Whitelist entries are LOW-confidence until 06-DIALOG-DISCOVERY.md is updated
+        /// with runtime-confirmed DialogId values.
         /// </summary>
         private static void OnDialogShowing(object? sender, DialogBoxShowingEventArgs e)
         {
-            if (e is TaskDialogShowingEventArgs taskArgs)
-            {
-                string message = taskArgs.Message ?? "";
-                string dialogId = taskArgs.DialogId ?? "";
-
-                // Known SAFE dialogs — auto-accept (expected during conversion)
-                if (message.Contains("cannot be added", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("already exists", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("will be replaced", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("duplicate", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("overwrite", StringComparison.OrdinalIgnoreCase) ||
-                    dialogId.Contains("Duplicate", StringComparison.OrdinalIgnoreCase))
-                {
-                    taskArgs.OverrideResult(1); // IDOK — accept
-                    ServiceLocator.GetRequiredService<ILogger>().Log($"Auto-accepted safe dialog: {message}", scope: "ConvertFamilyCommand");
-                    return;
-                }
-
-                // Known DANGEROUS dialogs — auto-CANCEL to prevent family breakage
-                if (message.Contains("delete", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("remove", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("constraint", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("discard", StringComparison.OrdinalIgnoreCase) ||
-                    message.Contains("cannot be undone", StringComparison.OrdinalIgnoreCase))
-                {
-                    taskArgs.OverrideResult(2); // IDCANCEL — block the destructive action
-                    ServiceLocator.GetRequiredService<ILogger>().LogWarning($"BLOCKED dangerous dialog: {message}", scope: "ConvertFamilyCommand");
-                    return;
-                }
-
-                // Unknown dialogs — cancel to be safe (conservative default)
-                taskArgs.OverrideResult(2);
-                ServiceLocator.GetRequiredService<ILogger>().LogWarning($"Blocked unknown dialog '{dialogId}': {message}", scope: "ConvertFamilyCommand");
-            }
-            else
-            {
-                // Standard Windows dialog (not TaskDialog) — cancel to be safe
-                e.OverrideResult(2);
-                ServiceLocator.GetRequiredService<ILogger>().LogWarning($"Blocked non-task dialog: {e.DialogId ?? "unknown"}", scope: "ConvertFamilyCommand");
-            }
+            DialogWhitelist.Global.Apply(e, ServiceLocator.GetRequiredService<ILogger>());
         }
 
         public override void Execute(UIDocument uiDoc, Document doc)

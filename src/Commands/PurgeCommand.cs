@@ -28,17 +28,14 @@ namespace LECG.Commands
         protected override string? TransactionName => null;
 
         /// <summary>
-        /// Auto-dismiss Revit TaskDialogs during purge operations.
-        /// Catches "Extrusion is too thin", "Base sketch for extrusion is invalid", and similar
-        /// geometry-validation dialogs that LoadFamily triggers outside the FailuresProcessing pipeline.
-        /// Always cancels (result 2) to preserve existing geometry — never deletes elements.
+        /// Auto-dismiss known-safe Revit TaskDialogs during purge operations via explicit whitelist.
+        /// Unknown dialogs reach the user (reach-user default per CROSS-03).
+        /// Whitelist entries are LOW-confidence until 06-DIALOG-DISCOVERY.md is updated
+        /// with runtime-confirmed DialogId values.
         /// </summary>
         private static void OnDialogShowing(object? sender, DialogBoxShowingEventArgs e)
         {
-            // Cancel all dialogs during purge — preserves geometry, does NOT delete elements.
-            e.OverrideResult(2);
-            string detail = e is TaskDialogShowingEventArgs td ? td.Message : e.DialogId ?? "unknown";
-            ServiceLocator.GetRequiredService<ILogger>().Log($"Auto-dismissed dialog during purge: {detail}", scope: "PurgeCommand");
+            DialogWhitelist.Global.Apply(e, ServiceLocator.GetRequiredService<ILogger>());
         }
 
         public override void Execute(UIDocument uiDoc, Document doc)
