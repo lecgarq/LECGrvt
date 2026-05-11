@@ -12,20 +12,23 @@ namespace LECG.Services
         private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
         private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
         private readonly IFamilySaveLoadService _familySaveLoadService;
+        private readonly ILogger _logger;
 
         public FamilyConversionExecutionService(
             IFamilyTargetDocumentService familyTargetDocumentService,
             IFamilyGeometryCopyService familyGeometryCopyService,
-            IFamilySaveLoadService familySaveLoadService)
+            IFamilySaveLoadService familySaveLoadService,
+            ILogger logger)
         {
             _familyTargetDocumentService = familyTargetDocumentService;
             _familyGeometryCopyService = familyGeometryCopyService;
             _familySaveLoadService = familySaveLoadService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public (Document? targetFamilyDoc, string tempFamilyPath) Execute(Document projectDoc, Family sourceFamily, Document sourceFamilyDoc, string templatePath, string targetFamilyName)
         {
-            LECG.Services.Logging.Logger.Instance.Log($"--- Starting Template-Based Conversion for: {targetFamilyName} ---");
+            _logger.Log($"--- Starting Template-Based Conversion for: {targetFamilyName} ---", scope: "FamilyConversion");
 
             Document? targetFamilyDoc = _familyTargetDocumentService.Create(projectDoc, templatePath);
             if (targetFamilyDoc != null)
@@ -38,7 +41,7 @@ namespace LECG.Services
                 }
                 catch (Exception ex) when (IsExpectedFamilyConversionExecutionException(ex))
                 {
-                    Logger.Instance.LogWarning($"Family conversion execution failed for '{targetFamilyName}': {ex.Message}");
+                    _logger.LogWarning($"Family conversion execution failed for '{targetFamilyName}': {ex.Message}", scope: "FamilyConversion");
                     return (null, string.Empty);
                 }
             }

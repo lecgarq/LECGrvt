@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
@@ -6,6 +7,13 @@ namespace LECG.Services
 {
     public class FamilyTempFileCleanupService : IFamilyTempFileCleanupService
     {
+        private readonly ILogger _logger;
+
+        public FamilyTempFileCleanupService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public void Cleanup(string tempFamilyPath, bool isTemporary)
         {
             if (isTemporary)
@@ -13,7 +21,7 @@ namespace LECG.Services
                 try
                 {
                     if (File.Exists(tempFamilyPath)) File.Delete(tempFamilyPath);
-                    Logger.Instance.Log("Temporary file deleted.");
+                    _logger.Log("Temporary file deleted.", scope: "FamilyTempFileCleanup");
                 }
                 catch
                 {
@@ -22,7 +30,7 @@ namespace LECG.Services
             }
             else
             {
-                Logger.Instance.Log($"Family saved at {tempFamilyPath} (Temporary=False)");
+                _logger.Log($"Family saved at {tempFamilyPath} (Temporary=False)", scope: "FamilyTempFileCleanup");
                 // NOTE: If user wanted to save to a specific directory, we should have used that path instead of temp.
                 // But logic says "do not save this family", meaning pure temporary.
                 // Checkbox "Do not save" = Temporary.

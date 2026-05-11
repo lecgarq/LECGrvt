@@ -19,6 +19,7 @@ namespace LECG.Services
         private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
         private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
         private readonly ITransactionService _transactionService;
+        private readonly LECG.Services.Logging.ILogger _logger;
 
 
         public FamilyConversionService(
@@ -28,7 +29,8 @@ namespace LECG.Services
             IFamilyConversionNamingService familyConversionNamingService,
             IFamilyConversionLoggingService familyConversionLoggingService,
             IFamilyConversionFinalizeService familyConversionFinalizeService,
-            ITransactionService transactionService)
+            ITransactionService transactionService,
+            LECG.Services.Logging.ILogger logger)
         {
             _templatePathService = templatePathService;
             _familySourceDocumentService = familySourceDocumentService;
@@ -37,6 +39,7 @@ namespace LECG.Services
             _familyConversionLoggingService = familyConversionLoggingService;
             _familyConversionFinalizeService = familyConversionFinalizeService;
             _transactionService = transactionService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
@@ -53,7 +56,7 @@ namespace LECG.Services
             int totalCount = instances.Count();
             int currentCount = 0;
 
-            using (new ExecutionTimer($"Batch Conversion: {totalCount} instances"))
+            using (new ExecutionTimer($"Batch Conversion: {totalCount} instances", _logger))
             {
                 var instancesByFamily = instances.GroupBy(i => i.Symbol.Family.Id);
 
@@ -93,7 +96,7 @@ namespace LECG.Services
             string targetFamilyName = sourceFamilyName;
             string resolvedTemplatePath = ResolveTemplatePath(doc, templatePath, sourceFamily);
 
-            using (new ExecutionTimer($"Family Group: {sourceFamilyName}"))
+            using (new ExecutionTimer($"Family Group: {sourceFamilyName}", _logger))
             {
                 reporter?.Report($"Converting Family: {sourceFamilyName}...", (double)currentCount / totalCount * 100);
                 _familyConversionLoggingService.LogStart(sourceFamilyName, targetFamilyName, resolvedTemplatePath, isTemporary: false);
@@ -156,7 +159,7 @@ namespace LECG.Services
 
                 if (targetFamilyDoc == null)
                 {
-                    LECG.Services.Logging.Logger.Instance.Log("ERROR: targetFamilyDoc was null. Conversion failed internally; originals untouched.");
+                    _logger.LogError("targetFamilyDoc was null. Conversion failed internally; originals untouched.", scope: "FamilyConversion");
                     currentCount += groupInstanceCount;
                     return currentCount;
                 }
@@ -176,8 +179,9 @@ namespace LECG.Services
                     FamilySymbol? sym = FindReplacementSymbolByName(doc, targetFamilyName, name);
                     if (sym == null)
                     {
-                        LECG.Services.Logging.Logger.Instance.Log(
-                            $"[PRE-FLIGHT] New family '{targetFamilyName}' lacks type '{name}'. Originals untouched.");
+                        _logger.Log(
+                            $"New family '{targetFamilyName}' lacks type '{name}'. Originals untouched.",
+                            scope: "FamilyConversion");
                         throw new InvalidOperationException(
                             $"Family conversion refused: new family '{targetFamilyName}' has no type named '{name}'.");
                     }
@@ -186,8 +190,9 @@ namespace LECG.Services
 
                 // 4. DELETE ORIGINALS (only after load + symbol verification succeed).
                 DeleteCapturedInstances(doc, capturedInstances.InstanceIds);
-                LECG.Services.Logging.Logger.Instance.Log(
-                    $"Cleared {capturedInstances.InstanceIds.Count} instances from project after successful family load.");
+                _logger.Log(
+                    $"Cleared {capturedInstances.InstanceIds.Count} instances from project after successful family load.",
+                    scope: "FamilyConversion");
 
                 // 5. PLACE NEW INSTANCES (per-instance symbol from the dict).
                 currentCount = ReplaceCapturedInstances(
@@ -253,17 +258,17 @@ namespace LECG.Services
                     }
                     catch (ArgumentException ex)
                     {
-                        LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to delete instance {id}: {ex.Message}");
+                        _logger.LogWarning($"Failed to delete instance {id}: {ex.Message}", scope: "FamilyConversion");
                     }
                     catch (InvalidOperationException ex)
                     {
-                        LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to delete instance {id}: {ex.Message}");
+                        _logger.LogWarning($"Failed to delete instance {id}: {ex.Message}", scope: "FamilyConversion");
                     }
                 }
             });
         }
 
-        private static void ValidatePreFlight(
+        private void ValidatePreFlight(
             Document doc,
             IReadOnlyList<FamilyInstanceData> capturedData)
         {
@@ -286,7 +291,7 @@ namespace LECG.Services
             if (failures.Count > 0)
             {
                 foreach (string f in failures)
-                    LECG.Services.Logging.Logger.Instance.Log($"[PRE-FLIGHT] {f}");
+                    _logger.Log($"Pre-flight: {f}", scope: "FamilyConversion");
                 throw new InvalidOperationException(
                     $"Pre-flight failed for family conversion ({failures.Count} issue(s)). Originals untouched.");
             }
@@ -338,8 +343,9 @@ namespace LECG.Services
                     if (string.IsNullOrEmpty(data.OriginalSymbolName)
                         || !symbolByName.TryGetValue(data.OriginalSymbolName, out FamilySymbol? sym))
                     {
-                        LECG.Services.Logging.Logger.Instance.LogWarning(
-                            $"[FamilyConversionService] No symbol available for original type '{data.OriginalSymbolName}'.");
+                        _logger.LogWarning(
+                            $"No symbol available for original type '{data.OriginalSymbolName}'.",
+                            scope: "FamilyConversion");
                         continue;
                     }
 
@@ -357,24 +363,24 @@ namespace LECG.Services
             return updatedCount;
         }
 
-        private static void ApplyCapturedInstanceData(FamilyInstanceData data, FamilyInstance newInstance, XYZ location)
+        private void ApplyCapturedInstanceData(FamilyInstanceData data, FamilyInstance newInstance, XYZ location)
         {
             try
             {
                 data.Apply(newInstance);
-                LECG.Services.Logging.Logger.Instance.Log($"  [OK] Instance placed at ({location.X:F2}, {location.Y:F2}, {location.Z:F2})");
+                _logger.Log($"  [OK] Instance placed at ({location.X:F2}, {location.Y:F2}, {location.Z:F2})", scope: "FamilyConversion");
             }
             catch (ArgumentException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to apply captured state to {newInstance.Id}: {ex.Message}");
+                _logger.LogWarning($"Failed to apply captured state to {newInstance.Id}: {ex.Message}", scope: "FamilyConversion");
             }
             catch (InvalidOperationException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to apply captured state to {newInstance.Id}: {ex.Message}");
+                _logger.LogWarning($"Failed to apply captured state to {newInstance.Id}: {ex.Message}", scope: "FamilyConversion");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyConversionService] Failed to apply captured state to {newInstance.Id}: {ex.Message}");
+                _logger.LogWarning($"Failed to apply captured state to {newInstance.Id}: {ex.Message}", scope: "FamilyConversion");
             }
         }
 
@@ -393,7 +399,7 @@ namespace LECG.Services
                 ?? new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();
         }
 
-        private static FamilyInstance? TryPlaceReplacementInstance(
+        private FamilyInstance? TryPlaceReplacementInstance(
             Document doc, FamilySymbol newSymbol, FamilyInstanceData data)
         {
             try
@@ -404,8 +410,7 @@ namespace LECG.Services
                     Level? lev = ResolvePlacementLevel(doc, data.LevelId);
                     if (lev == null)
                     {
-                        LECG.Services.Logging.Logger.Instance.LogWarning(
-                            "[FamilyConversionService] Skipping curve instance — no valid level.");
+                        _logger.LogWarning("Skipping curve instance — no valid level.", scope: "FamilyConversion");
                         return null;
                     }
                     return doc.Create.NewFamilyInstance(
@@ -421,8 +426,9 @@ namespace LECG.Services
                     Element? host = doc.GetElement(data.HostId);
                     if (host == null)
                     {
-                        LECG.Services.Logging.Logger.Instance.LogWarning(
-                            $"[FamilyConversionService] Host {data.HostId} not found at placement time (pre-flight stale?).");
+                        _logger.LogWarning(
+                            $"Host {data.HostId} not found at placement time (pre-flight stale?).",
+                            scope: "FamilyConversion");
                         return null;
                     }
                     return doc.Create.NewFamilyInstance(
@@ -450,20 +456,17 @@ namespace LECG.Services
                         Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
                 }
 
-                LECG.Services.Logging.Logger.Instance.LogWarning(
-                    "[FamilyConversionService] Captured instance has neither LocationPoint nor LocationCurve.");
+                _logger.LogWarning("Captured instance has neither LocationPoint nor LocationCurve.", scope: "FamilyConversion");
                 return null;
             }
             catch (Autodesk.Revit.Exceptions.ArgumentException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning(
-                    $"[FamilyConversionService] Placement failed: {ex.Message}");
+                _logger.LogWarning($"Placement failed: {ex.Message}", scope: "FamilyConversion");
                 return null;
             }
             catch (Autodesk.Revit.Exceptions.InvalidOperationException ex)
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning(
-                    $"[FamilyConversionService] Placement failed: {ex.Message}");
+                _logger.LogWarning($"Placement failed: {ex.Message}", scope: "FamilyConversion");
                 return null;
             }
         }

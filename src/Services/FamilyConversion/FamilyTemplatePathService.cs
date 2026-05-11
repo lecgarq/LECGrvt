@@ -1,6 +1,7 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using System;
 using System.IO;
 using System.Linq;
@@ -9,6 +10,13 @@ namespace LECG.Services
 {
     public class FamilyTemplatePathService : IFamilyTemplatePathService
     {
+        private readonly ILogger _logger;
+
+        public FamilyTemplatePathService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public string GetTargetTemplatePath(Application app, Category category)
         {
             ArgumentNullException.ThrowIfNull(app);
@@ -52,7 +60,7 @@ namespace LECG.Services
                 }
                 catch (Exception ex) when (IsExpectedTemplateSearchException(ex))
                 {
-                    Logging.Logger.Instance.LogWarning($"[FamilyTemplatePathService] Generic template search failed in {rootPath}: {ex.Message}");
+                    _logger.LogWarning($"Generic template search failed in {rootPath}: {ex.Message}", scope: "FamilyTemplatePath");
                 }
             }
 

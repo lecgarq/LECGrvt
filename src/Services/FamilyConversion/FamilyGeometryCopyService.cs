@@ -1,6 +1,8 @@
 using Autodesk.Revit.DB;
 using LECG.Core;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace LECG.Services
@@ -11,15 +13,18 @@ namespace LECG.Services
         private readonly IFamilyGeometryCollectionService _geometryCollectionService;
         private readonly IFamilyParameterSetupService _familyParameterSetupService;
         private readonly ITransactionService _transactionService;
+        private readonly ILogger _logger;
 
         public FamilyGeometryCopyService(
             IFamilyGeometryCollectionService geometryCollectionService,
             IFamilyParameterSetupService familyParameterSetupService,
-            ITransactionService transactionService)
+            ITransactionService transactionService,
+            ILogger logger)
         {
             _geometryCollectionService = geometryCollectionService;
             _familyParameterSetupService = familyParameterSetupService;
             _transactionService = transactionService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public int CopyGeometry(Document sourceFamilyDoc, Document targetFamilyDoc)
@@ -43,7 +48,7 @@ namespace LECG.Services
                     }
                     catch
                     {
-                        LECG.Services.Logging.Logger.Instance.Log($"Batch copy failed for {idsToCopy.Count} elements. Falling back to individual copy...");
+                        _logger.Log($"Batch copy failed for {idsToCopy.Count} elements. Falling back to individual copy...", scope: "FamilyGeometryCopy");
                         foreach (var id in idsToCopy)
                         {
                             try
@@ -55,10 +60,10 @@ namespace LECG.Services
                             {
                                 var el = sourceFamilyDoc.GetElement(id);
                                 string elInfo = el != null ? $"{el.GetType().Name} '{el.Name}' (Cat: {el.Category?.Name ?? "none"})" : id.Value.ToString();
-                                LECG.Services.Logging.Logger.Instance.Log($"  Skipped: {elInfo}");
+                                _logger.Log($"  Skipped: {elInfo}", scope: "FamilyGeometryCopy");
                             }
                         }
-                        LECG.Services.Logging.Logger.Instance.Log($"Individual copy: {copiedCount}/{idsToCopy.Count} elements transferred.");
+                        _logger.Log($"Individual copy: {copiedCount}/{idsToCopy.Count} elements transferred.", scope: "FamilyGeometryCopy");
                     }
                 }
             }, new WarningSwallower());

@@ -1,6 +1,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.ApplicationServices;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,16 @@ namespace LECG.Services
     {
         private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
         private readonly ITransactionService _transactionService;
+        private readonly ILogger _logger;
 
         public FamilyEditorService(
             IFamilyLoadOptionsFactory loadOptionsFactory,
-            ITransactionService transactionService)
+            ITransactionService transactionService,
+            ILogger logger)
         {
             _loadOptionsFactory = loadOptionsFactory;
             _transactionService = transactionService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public bool ChangeCategory(Autodesk.Revit.DB.Family family, Autodesk.Revit.DB.Category newCategory)
@@ -118,7 +122,7 @@ namespace LECG.Services
                 familyDoc = projectDoc.EditFamily(family);
                 if (familyDoc == null)
                 {
-                    LECG.Services.Logging.Logger.Instance.Log($"  [ERROR] Could not enter Family Editor for '{family.Name}'.");
+                    _logger.LogError($"Could not enter Family Editor for '{family.Name}'.", scope: "FamilyEditor");
                     return false;
                 }
 
@@ -135,7 +139,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
             {
-                LECG.Services.Logging.Logger.Instance.Log($"  [ERROR] {ex.Message}");
+                _logger.LogError(ex.Message, scope: "FamilyEditor");
                 return false;
             }
             finally
@@ -282,7 +286,7 @@ namespace LECG.Services
             }
             catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
             {
-                LECG.Services.Logging.Logger.Instance.LogWarning($"[FamilyEditorService] Could not close family document: {ex.Message}");
+                _logger.LogWarning($"Could not close family document: {ex.Message}", scope: "FamilyEditor");
             }
         }
 

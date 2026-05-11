@@ -2,12 +2,20 @@ using System;
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public class FamilyParameterSetupService : IFamilyParameterSetupService
     {
+        private readonly ILogger _logger;
+
+        public FamilyParameterSetupService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public void ConfigureTargetFamilyParameters(Document targetFamilyDoc, Document sourceFamilyDoc)
         {
             ArgumentNullException.ThrowIfNull(targetFamilyDoc);
@@ -75,7 +83,7 @@ namespace LECG.Services
                     }
                     catch (Exception ex) when (IsExpectedFamilyParameterSetupException(ex))
                     {
-                        Logging.Logger.Instance.Log($"  Could not create parameter '{name}': {ex.Message}");
+                        _logger.Log($"  Could not create parameter '{name}': {ex.Message}", scope: "FamilyParameterSetup");
                         continue;
                     }
                 }
@@ -104,7 +112,7 @@ namespace LECG.Services
                 }
                 catch (Exception ex) when (IsExpectedFamilyParameterSetupException(ex))
                 {
-                    Logging.Logger.Instance.Log($"  Could not set formula for '{name}': {ex.Message}");
+                    _logger.Log($"  Could not set formula for '{name}': {ex.Message}", scope: "FamilyParameterSetup");
                 }
             }
 
@@ -197,7 +205,7 @@ namespace LECG.Services
                 }
                 catch (Exception ex) when (IsExpectedFamilyParameterSetupException(ex))
                 {
-                    Logging.Logger.Instance.Log($"  Could not copy type '{sourceType.Name}': {ex.Message}");
+                    _logger.Log($"  Could not copy type '{sourceType.Name}': {ex.Message}", scope: "FamilyParameterSetup");
                 }
             }
         }

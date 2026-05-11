@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
@@ -7,6 +8,13 @@ namespace LECG.Services
 {
     public class FamilySaveService : IFamilySaveService
     {
+        private readonly ILogger _logger;
+
+        public FamilySaveService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public string SaveTemp(Document targetFamilyDoc, string targetFamilyName)
         {
             ArgumentNullException.ThrowIfNull(targetFamilyDoc);
@@ -19,7 +27,7 @@ namespace LECG.Services
 
             SaveAsOptions saveOpts = new SaveAsOptions() { OverwriteExistingFile = true };
             targetFamilyDoc.SaveAs(tempFamilyPath, saveOpts);
-            Logger.Instance.Log($"Saved temporary family to: {tempFamilyPath}");
+            _logger.Log($"Saved temporary family to: {tempFamilyPath}", scope: "FamilySave");
 
             return tempFamilyPath;
         }
