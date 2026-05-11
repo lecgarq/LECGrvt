@@ -52,7 +52,7 @@ namespace LECG.Commands
             if (settings == null) return;
             if (!TryValidateSettings(settings)) return;
 
-            var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2 replaces Logger.Instance with injected _logger
 
             ShowLogWindow("Purge Unused");
             try

@@ -40,7 +40,7 @@ namespace LECG.ViewModels
             if (sb.Length > 0)
             {
                 Clipboard.SetText(sb.ToString());
-                _logger.LogSuccess("Log copied to clipboard.");
+                _logger.LogSuccess("Log copied to clipboard.", "LogView");
             }
         }
 

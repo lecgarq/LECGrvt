@@ -94,7 +94,7 @@ namespace LECG.Commands
                     uiApp.DialogBoxShowing -= OnDialogShowing;
                     try
                     {
-                        var filter = new LECG.Utils.FamilyInstanceFilter();
+                        var filter = new LECG.Utilities.FamilyInstanceFilter();
                         var refs = uiDoc.Selection.PickObjects(Autodesk.Revit.UI.Selection.ObjectType.Element, filter, "Select hosted family instances to convert.");
                         selectedRefs.AddRange(refs);
                     }
@@ -126,7 +126,7 @@ namespace LECG.Commands
                 Log("--- 1-Click Seamless Conversion Started ---");
                 Log($"Processing {instances.Count} selected instances.");
 
-                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2 replaces Logger.Instance with injected _logger
 
                 // 3. Execute Batch
                 service.ConvertFamilyBatch(doc, instances, customName: "", templatePath: "", isTemporary: false, replaceInPlace: true, reporter);

@@ -4,6 +4,7 @@ using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.Views;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace LECG.Commands
                 }
 
                 // 4. Process Materials (Batch)
-                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
                 matService.BatchSyncWithRenderAppearance(doc, materialsList, settings, reporter);
 
                 UpdateProgress(100, "Complete");

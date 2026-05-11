@@ -6,6 +6,7 @@ using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.ViewModels;
 using LECG.Views;
 
@@ -62,7 +63,7 @@ namespace LECG.Commands
             Log($"Selected {selectedGroups.Count} type groups for export.");
             Log("");
 
-            var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
 
             exportService.ExportAndLink(doc, selectedGroups, viewModel.OutputFolder, reporter);
 

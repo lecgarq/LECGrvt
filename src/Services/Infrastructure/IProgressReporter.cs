@@ -1,3 +1,6 @@
+using System;
+using LECG.Services.Logging;
+
 namespace LECG.Services.Interfaces
 {
     /// <summary>
@@ -21,35 +24,64 @@ namespace LECG.Services.Interfaces
     }
 
     /// <summary>
-    /// A simple implementation of IProgressReporter.
+    /// IProgressReporter backed by ILogger. Forwards LogWarning/LogError with severity preserved (CROSS-02).
+    /// The preferred constructor takes ILogger. The legacy Action<ProgressReport> overload is retained
+    /// for callers that drive their own UI update channels (ConvertCad, DivideToposolid, etc.)
+    /// and will be removed in Wave 2 when those commands are migrated to ILogger.
     /// </summary>
-    public class SimpleProgressReporter : IProgressReporter
+    public sealed class SimpleProgressReporter : IProgressReporter
     {
-        private readonly System.Action<ProgressReport>? _onReport;
+        private readonly ILogger? _logger;
+        private readonly Action<ProgressReport>? _onReport;
+        private const string Scope = "Progress";
 
-        public SimpleProgressReporter(System.Action<ProgressReport> onReport)
+        /// <summary>
+        /// Preferred constructor (Wave 1+): severity-preserving, routes through ILogger.
+        /// </summary>
+        public SimpleProgressReporter(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        /// <summary>
+        /// Legacy constructor retained for UI-callback callers. Removed in Wave 2.
+        /// </summary>
+        [Obsolete("Use SimpleProgressReporter(ILogger) instead. Removed in Wave 2.")]
+        public SimpleProgressReporter(Action<ProgressReport> onReport)
         {
             _onReport = onReport;
         }
 
         public void Report(string message, double percentage)
         {
-            _onReport?.Invoke(new ProgressReport { Message = message, Percentage = percentage });
+            if (_logger != null)
+                _logger.UpdateProgress(percentage, message);
+            else
+                _onReport?.Invoke(new ProgressReport { Message = message, Percentage = percentage });
         }
 
         public void Log(string message)
         {
-            _onReport?.Invoke(new ProgressReport { Message = message });
+            if (_logger != null)
+                _logger.Log(message, Scope);
+            else
+                _onReport?.Invoke(new ProgressReport { Message = message });
         }
 
         public void LogWarning(string message)
         {
-            _onReport?.Invoke(new ProgressReport { Message = message });
+            if (_logger != null)
+                _logger.LogWarning(message, Scope);
+            else
+                _onReport?.Invoke(new ProgressReport { Message = message });
         }
 
         public void LogError(string message)
         {
-            _onReport?.Invoke(new ProgressReport { Message = message });
+            if (_logger != null)
+                _logger.LogError(message, Scope);
+            else
+                _onReport?.Invoke(new ProgressReport { Message = message });
         }
     }
 }

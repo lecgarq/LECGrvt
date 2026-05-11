@@ -29,7 +29,7 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(items);
             ArgumentNullException.ThrowIfNull(logger);
 
-            return ExecuteBatchRename(doc, items, logger, new LegacyProgressReporter(onProgress, logger.Log));
+            return ExecuteBatchRename(doc, items, logger, new LegacyProgressReporter(logger, onProgress));
         }
 
         public int ExecuteBatchRename(Document doc, List<ElementRowViewModel> items, Logging.ILogger logger, IProgressReporter reporter)
@@ -54,7 +54,7 @@ namespace LECG.Services
                     standardItems.Add(item);
             }
 
-            logger.Log($"Starting batch rename for {total} items ({standardItems.Count} standard, {familyItems.Count} family parameters)...");
+            logger.Log($"Starting batch rename for {total} items ({standardItems.Count} standard, {familyItems.Count} family parameters)...", "BatchRename");
 
             // Pre-flight dry-run: evaluate skip conditions for standard items BEFORE the rename
             // transaction. This is a read-only walk — no Revit state is mutated here.
@@ -118,27 +118,27 @@ namespace LECG.Services
                                             if (swapped)
                                             {
                                                 count++;
-                                                logger.LogSuccess($"Renamed (via Swap) '{item.OriginalValue}' to '{item.NewValue}'");
+                                                logger.LogSuccess($"Renamed (via Swap) '{item.OriginalValue}' to '{item.NewValue}'", "BatchRename");
                                             }
                                             else
                                             {
-                                                logger.LogError($"Skipped '{item.OriginalValue}': API restricted & Swap failed.");
+                                                logger.LogError($"Skipped '{item.OriginalValue}': API restricted & Swap failed.", "BatchRename");
                                             }
                                         }
                                         else
                                         {
-                                            logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.");
+                                            logger.LogError($"Skipped '{item.OriginalValue}': Renaming this specific Object Style is restricted by the Revit API.", "BatchRename");
                                         }
                                         continue;
                                     }
                                     catch (ArgumentException innerEx)
                                     {
-                                        logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
+                                        logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}", "BatchRename");
                                         continue;
                                     }
                                     catch (InvalidOperationException innerEx)
                                     {
-                                        logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}");
+                                        logger.LogError($"Failed to rename style '{item.OriginalValue}': {innerEx.Message}", "BatchRename");
                                         continue;
                                     }
                                 }
@@ -148,11 +148,11 @@ namespace LECG.Services
                                     count++;
                                 }
 
-                                logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'");
+                                logger.LogSuccess($"Renamed '{item.OriginalValue}' to '{item.NewValue}'", "BatchRename");
                             }
                             catch (Exception ex) when (IsExpectedRenameException(ex))
                             {
-                                logger.LogError($"ERROR renaming {item.Name}: {ex.Message}");
+                                logger.LogError($"ERROR renaming {item.Name}: {ex.Message}", "BatchRename");
                             }
                         }
                     }
@@ -182,7 +182,7 @@ namespace LECG.Services
                     if (el is not Family family)
                     {
                         foreach (var item in kvp.Value)
-                            logger.LogError($"Skipped: Element {kvp.Key} is not a Family (type={el?.GetType().Name ?? "null"}).");
+                            logger.LogError($"Skipped: Element {kvp.Key} is not a Family (type={el?.GetType().Name ?? "null"}).", "BatchRename");
                         continue;
                     }
 
@@ -195,7 +195,7 @@ namespace LECG.Services
                         famDoc = doc.EditFamily(family);
                         if (famDoc == null)
                         {
-                            logger.LogError($"Could not open family document for '{familyName}'.");
+                            logger.LogError($"Could not open family document for '{familyName}'.", "BatchRename");
                             continue;
                         }
 
@@ -235,7 +235,7 @@ namespace LECG.Services
                     }
                     catch (Exception ex) when (IsExpectedRenameException(ex))
                     {
-                        logger.LogError($"Failed processing family '{familyName}': {ex.Message}");
+                        logger.LogError($"Failed processing family '{familyName}': {ex.Message}", "BatchRename");
                     }
                     finally
                     {
@@ -244,7 +244,7 @@ namespace LECG.Services
                 }
             }
 
-            logger.LogSuccess($"Batch rename complete. Modified {count} elements.");
+            logger.LogSuccess($"Batch rename complete. Modified {count} elements.", "BatchRename");
             reporter.Report("Done", 100);
 
             return count;
@@ -289,7 +289,7 @@ namespace LECG.Services
                 FamilyParameter? paramToRename = FindFamilyParameterByName(manager, item.OriginalValue);
                 if (paramToRename == null)
                 {
-                    logger.Log($"Skipped: Param '{item.OriginalValue}' not found in family '{familyName}'.");
+                    logger.Log($"Skipped: Param '{item.OriginalValue}' not found in family '{familyName}'.", "BatchRename");
                     continue;
                 }
 
@@ -302,7 +302,7 @@ namespace LECG.Services
                     elementAssociated);
                 if (skipReason != null)
                 {
-                    logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': {skipReason}");
+                    logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': {skipReason}", "BatchRename");
                     continue;
                 }
 
@@ -386,7 +386,7 @@ namespace LECG.Services
                         subTx.RollBack();
                     }
 
-                    logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': {ex.Message}");
+                    logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': {ex.Message}", "BatchRename");
                     // Do NOT increment renamedCount — the SubTransaction was rolled back
                 }
             }
@@ -456,7 +456,7 @@ namespace LECG.Services
         /// </summary>
         internal static void LogRenameSuccess(Logging.ILogger logger, string oldName, string newName, int formulaCount, int dimCount = 0)
         {
-            logger.LogSuccess(FormatSafeRenameLog(oldName, newName, formulaCount, dimCount));
+            logger.LogSuccess(FormatSafeRenameLog(oldName, newName, formulaCount, dimCount), "BatchRename");
         }
 
         /// <summary>
@@ -582,7 +582,7 @@ namespace LECG.Services
                     row.Status = reason;
                     row.IsRenameable = false;
                     row.IsChecked = false;
-                    logger.LogWarning($"Skipped '{row.OriginalValue}' ({row.Type}): {reason}");
+                    logger.LogWarning($"Skipped '{row.OriginalValue}' ({row.Type}): {reason}", "BatchRename");
                 }
             }
         }
@@ -963,22 +963,22 @@ namespace LECG.Services
                 }
                 catch (ArgumentException)
                 {
-                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
+                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.", "BatchRename");
                 }
                 catch (InvalidOperationException)
                 {
-                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
+                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.", "BatchRename");
                 }
                 catch (RevitExceptions.InvalidOperationException)
                 {
-                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.");
+                    logger.Log($"Warning: deeply swapped '{oldStyle.Name}' to '{newName}' but could not delete original.", "BatchRename");
                 }
 
                 return true;
             }
             catch (Exception ex) when (IsExpectedRenameException(ex))
             {
-                logger.LogError($"Swap failed for {oldStyle.Name}: {ex.Message}");
+                logger.LogError($"Swap failed for {oldStyle.Name}: {ex.Message}", "BatchRename");
                 return false;
             }
         }
@@ -1004,15 +1004,15 @@ namespace LECG.Services
             }
             catch (ArgumentException ex)
             {
-                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}");
+                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}", "BatchRename");
             }
             catch (InvalidOperationException ex)
             {
-                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}");
+                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}", "BatchRename");
             }
             catch (RevitExceptions.InvalidOperationException ex)
             {
-                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}");
+                logger.LogWarning($"Could not close family '{familyName}': {ex.Message}", "BatchRename");
             }
         }
     }

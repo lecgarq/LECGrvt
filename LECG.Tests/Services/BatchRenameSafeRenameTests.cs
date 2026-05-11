@@ -79,7 +79,7 @@ public class BatchRenameSafeRenameTests
         logger.Received(1).LogSuccess(Arg.Is<string>(msg =>
             msg.Contains("Width") &&
             msg.Contains("PanelWidth") &&
-            msg.Contains("(updated 1 formulas)")));
+            msg.Contains("(updated 1 formulas)")), Arg.Any<string>());
     }
 
     [Fact]
@@ -173,7 +173,7 @@ public class BatchRenameSafeRenameTests
         logger.Received(1).LogSuccess(Arg.Is<string>(msg =>
             msg.Contains("Width") &&
             msg.Contains("PanelWidth") &&
-            msg.Contains("(updated 3 dimension labels)")));
+            msg.Contains("(updated 3 dimension labels)")), Arg.Any<string>());
     }
 
     [Fact]
@@ -189,7 +189,7 @@ public class BatchRenameSafeRenameTests
         BatchRenameExecutionService.LogRenameSuccess(logger, "old", "new", formulaCount: 2, dimCount: 1);
 
         logger.Received(1).LogSuccess(Arg.Is<string>(msg =>
-            msg.Contains("(updated 2 formulas, 1 dimension labels)")));
+            msg.Contains("(updated 2 formulas, 1 dimension labels)")), Arg.Any<string>());
     }
 
     // -----------------------------------------------------------------------
@@ -266,6 +266,6 @@ public class BatchRenameSafeRenameTests
         // Assert: exactly one LogWarning was emitted for the skipped row
         logger.Received(1).LogWarning(Arg.Is<string>(msg =>
             msg.Contains("SystemWall") &&
-            msg.Contains("system family")));
+            msg.Contains("system family")), Arg.Any<string>());
     }
 }

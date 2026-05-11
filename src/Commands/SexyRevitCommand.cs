@@ -3,10 +3,11 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
-using LECG.Views;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.ViewModels;
+using LECG.Views;
 
 namespace LECG.Commands
 {
@@ -56,7 +57,7 @@ namespace LECG.Commands
             Log("");
 
             var service = ServiceLocator.GetRequiredService<ISexyRevitService>();
-            var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
             service.ApplyBeauty(doc, view, settings.ToSettings(), reporter);
 
             UpdateProgress(100, "Complete!");

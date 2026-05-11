@@ -2,12 +2,13 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
-using LECG.Views;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.ViewModels;
-using System.Linq;
+using LECG.Views;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LECG.Commands
 {
@@ -54,7 +55,7 @@ namespace LECG.Commands
                     .ToList();
 
                 // Call Logic
-                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
                 service.AssignMaterialsToElements(doc, elements, reporter);
                 UpdateProgress(100, "Complete");
             }

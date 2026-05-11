@@ -8,6 +8,7 @@ using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.Utilities;
 using LECG.ViewModels;
 using LECG.Views;
@@ -46,7 +47,7 @@ namespace LECG.Commands
             // 5. Run if confirmed
             if (result == true && vm.ShouldRun && vm.SelectedRefs.Any())
             {
-                var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+                var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
                 // Show Log
                 ShowLogWindow("Simplify Points");
                 Log("Starting simplification...");

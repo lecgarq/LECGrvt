@@ -6,6 +6,7 @@ using LECG.Core;
 using LECG.Models;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.Views.Base;
 
 namespace LECG.Commands
@@ -30,7 +31,7 @@ namespace LECG.Commands
 
             Log("Compacting Styles");
             Log("=================");
-            var reporter = new RevitCommandProgressReporter(Log, UpdateProgress);
+            var reporter = new RevitCommandProgressReporter(Logger.Instance, UpdateProgress); // TEMPORARY: Wave 2
             var failureHandler = new SafeFailureHandler();
 
             // Line Patterns
