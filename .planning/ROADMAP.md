@@ -142,7 +142,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 | 3. Grid & Collection Fixes | v1.1 | 10/10 | Complete | 2026-05-09 |
 | 4. Advanced Renaming Logic | v1.1 | 6/6 | Complete | 2026-05-10 |
 | 5. Verification & Polish | v1.1 | 5/5 | Complete | 2026-05-10 |
-| 6. Cross-cutting Foundation | 2/5 | In Progress|  | — |
+| 6. Cross-cutting Foundation | 3/5 | In Progress|  | — |
 | 7. Purge Unused Maturity | v2.0 | 0/4 | Not started | — |
 | 8. Compacting Styles Maturity | v2.0 | 0/4 | Not started | — |
 | 9. Convert Family Maturity | v2.0 | 0/4 | Not started | — |
