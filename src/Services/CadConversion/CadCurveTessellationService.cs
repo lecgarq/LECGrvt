@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
@@ -8,10 +9,12 @@ namespace LECG.Services
     public class CadCurveTessellationService : ICadCurveTessellationService
     {
         private readonly ICadPointFlattenService _cadPointFlattenService;
+        private readonly ILogger _logger;
 
-        public CadCurveTessellationService(ICadPointFlattenService cadPointFlattenService)
+        public CadCurveTessellationService(ICadPointFlattenService cadPointFlattenService, ILogger logger)
         {
             _cadPointFlattenService = cadPointFlattenService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public IEnumerable<Curve>? Tessellate(Curve c)
@@ -37,7 +40,7 @@ namespace LECG.Services
                     }
                     catch (Exception ex) when (IsExpectedCadCurveTessellationException(ex))
                     {
-                        Logging.Logger.Instance.LogWarning($"Line creation failed: {ex.Message}", nameof(CadCurveTessellationService), ex);
+                        _logger.LogWarning($"Line creation failed: {ex.Message}", scope: "CadCurveTessellation", exception: ex);
                     }
                 }
             }

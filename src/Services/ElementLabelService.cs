@@ -1,4 +1,5 @@
 using Autodesk.Revit.DB;
+using LECG.Core;
 using LECG.Services.Logging;
 
 namespace LECG.Services;
@@ -89,8 +90,9 @@ public static class ElementLabelService
         {
             try
             {
-                Logger.Instance.LogWarning(
-                    $"ElementLabelService: fallback for {clrTypeName} {id} -> ({labels.name}, {labels.category})");
+                ServiceLocator.GetService<ILogger>()?.LogWarning(
+                    $"ElementLabelService: fallback for {clrTypeName} {id} -> ({labels.name}, {labels.category})",
+                    scope: "ElementLabelService");
             }
             catch
             {

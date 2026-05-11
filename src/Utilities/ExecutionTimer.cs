@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using LECG.Services.Logging;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     /// <summary>
     /// Utility to measure and log execution time of code blocks using the disposable pattern.
@@ -10,14 +10,16 @@ namespace LECG.Utils
     public class ExecutionTimer : IDisposable
     {
         private readonly string _operationName;
+        private readonly ILogger _logger;
         private readonly Stopwatch _stopwatch;
         private bool _disposed;
 
-        public ExecutionTimer(string operationName)
+        public ExecutionTimer(string operationName, ILogger logger)
         {
             _operationName = operationName;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _stopwatch = Stopwatch.StartNew();
-            Logger.Instance.Log($"[PERF] Starting: {_operationName}");
+            _logger.Log($"[PERF] Starting: {_operationName}", scope: "ExecutionTimer");
         }
 
         public void Dispose()
@@ -33,7 +35,7 @@ namespace LECG.Utils
             if (disposing)
             {
                 _stopwatch.Stop();
-                Logger.Instance.Log($"[PERF] Completed: {_operationName} | Elapsed: {_stopwatch.Elapsed.TotalSeconds:F2}s");
+                _logger.Log($"[PERF] Completed: {_operationName} | Elapsed: {_stopwatch.Elapsed.TotalSeconds:F2}s", scope: "ExecutionTimer");
             }
 
             _disposed = true;

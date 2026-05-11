@@ -1,12 +1,20 @@
 using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
     public class CadPolylineExtractionService : ICadPolylineExtractionService
     {
+        private readonly ILogger _logger;
+
+        public CadPolylineExtractionService(ILogger logger)
+        {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         public List<Curve> Extract(PolyLine poly, Transform currentTransform)
         {
             ArgumentNullException.ThrowIfNull(poly);
@@ -27,7 +35,7 @@ namespace LECG.Services
                     }
                     catch (Exception ex) when (IsExpectedCadPolylineException(ex))
                     {
-                        Logging.Logger.Instance.LogWarning($"[CadPolylineExtractionService] Line creation failed: {ex.Message}");
+                        _logger.LogWarning($"Line creation failed: {ex.Message}", scope: "CadPolylineExtraction");
                     }
                 }
             }
