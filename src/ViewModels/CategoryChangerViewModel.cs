@@ -2,6 +2,7 @@ using LECG.ViewModels.Components;
 using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LECG.Services.Logging;
 using LECG.Utilities;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace LECG.ViewModels
 {
     public partial class CategoryChangerViewModel : BaseViewModel
     {
+        private readonly ILogger _logger;
         private List<Category> _allCategories = new();
 
         [ObservableProperty]
@@ -33,9 +35,10 @@ namespace LECG.ViewModels
         public Action? RequestRun { get; set; }
         public bool CanRun => Selection.HasSelection && SelectedCategory != null;
 
-        public CategoryChangerViewModel(LECG.Services.Interfaces.IFamilyEditorService familyService)
+        public CategoryChangerViewModel(LECG.Services.Interfaces.IFamilyEditorService familyService, ILogger logger)
         {
             FamilyService = familyService ?? throw new ArgumentNullException(nameof(familyService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             Title = "CATEGORY CHANGER [V6-EVENT]";
             Selection.ElementName = "Family Instances";
 
@@ -60,7 +63,7 @@ namespace LECG.ViewModels
             }
             catch (Exception ex) when (IsExpectedCategoryChangerViewModelException(ex))
             {
-                LECG.Services.Logging.Logger.Instance.Log($"Error in CategoryChanger Apply: {ex.Message}");
+                _logger.Log($"Error in CategoryChanger Apply: {ex.Message}", scope: "CategoryChanger");
             }
         }
 

@@ -1,7 +1,7 @@
 using Autodesk.Revit.UI;
 using LECG.Configuration;
 using LECG.Core.Ribbon;
-using LECG.Utils;
+using LECG.Utilities;
 using LECG.Views.Base;
 using System.IO;
 using System.Threading.Tasks;
@@ -87,7 +87,10 @@ namespace LECG
             }
             catch (Exception ex) when (IsExpectedResourceInitializationException(ex))
             {
-                Services.Logging.Logger.Instance.Log($"Failed to load global WPF resources: {ex.Message}");
+                // App-lifecycle exception path; ServiceLocator may not be initialized yet
+                (Core.ServiceLocator.GetService<Services.Logging.ILogger>() as Services.Logging.ILogger)
+                    ?.Log($"Failed to load global WPF resources: {ex.Message}", scope: "App");
+                System.Diagnostics.Debug.WriteLine($"[App] Failed to load global WPF resources: {ex.Message}");
             }
         }
 
@@ -104,7 +107,10 @@ namespace LECG
         {
             RunGlobalHandlerSafely(() =>
             {
-                Services.Logging.Logger.Instance.Log($"Unhandled dispatcher exception: {e.Exception}");
+                // App-lifecycle exception path; ServiceLocator may not be initialized yet
+                (Core.ServiceLocator.GetService<Services.Logging.ILogger>() as Services.Logging.ILogger)
+                    ?.Log($"Unhandled dispatcher exception: {e.Exception}", scope: "App");
+                System.Diagnostics.Debug.WriteLine($"[App] Unhandled dispatcher exception: {e.Exception}");
                 LecgDialog.Show("LECG Error", e.Exception.Message);
             });
 
@@ -126,7 +132,10 @@ namespace LECG
 
             RunGlobalHandlerSafely(() =>
             {
-                Services.Logging.Logger.Instance.Log($"{messagePrefix}: {exception}");
+                // App-lifecycle exception path; ServiceLocator may not be initialized yet
+                (Core.ServiceLocator.GetService<Services.Logging.ILogger>() as Services.Logging.ILogger)
+                    ?.Log($"{messagePrefix}: {exception}", scope: "App");
+                System.Diagnostics.Debug.WriteLine($"[App] {messagePrefix}: {exception}");
             });
         }
 

@@ -22,7 +22,7 @@ namespace LECG.Views
         }
 
         public LogView()
-            : this(ServiceLocator.GetService<LogViewModel>() ?? new LogViewModel(Logger.Instance))
+            : this(ServiceLocator.GetRequiredService<LogViewModel>())
         {
         }
 

@@ -27,7 +27,7 @@ namespace LECG.ViewModels
 
         public LogViewModel(ILogger logger)
         {
-            _logger = logger ?? Logger.Instance;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _logger.OnProgressUpdate += UpdateProgress;
 
             CopyCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(Copy);

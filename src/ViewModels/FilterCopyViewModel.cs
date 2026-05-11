@@ -9,7 +9,8 @@ using CommunityToolkit.Mvvm.Input;
 using LECG.Core.Filtering;
 using LECG.Models;
 using LECG.Services.Interfaces;
-using LECG.Services; // Assuming Logger is here or similar
+using LECG.Services;
+using LECG.Services.Logging;
 
 namespace LECG.ViewModels
 {
@@ -23,6 +24,7 @@ namespace LECG.ViewModels
     {
         private readonly Document _doc;
         private readonly IFilterCopyService _filterCopyService;
+        private readonly ILogger _logger;
 
         [ObservableProperty]
         private ObservableCollection<ViewContainer> _leftItems = new();
@@ -47,10 +49,11 @@ namespace LECG.ViewModels
 
         public List<ViewSourceType> SourceTypes { get; } = new() { ViewSourceType.Views, ViewSourceType.ViewTemplates };
 
-        public FilterCopyViewModel(Document doc, IFilterCopyService filterCopyService)
+        public FilterCopyViewModel(Document doc, IFilterCopyService filterCopyService, ILogger logger)
         {
             _doc = doc;
             _filterCopyService = filterCopyService;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             Title = "Filter Copy";
             LeftSourceType = ViewSourceType.Views;
             RightSourceType = ViewSourceType.Views;
@@ -328,7 +331,7 @@ namespace LECG.ViewModels
                 return;
             }
 
-            LECG.Services.Logging.Logger.Instance.Log($"Filter Copy failed: {result.Error}");
+            _logger.Log($"Filter Copy failed: {result.Error}", scope: "FilterCopy");
         }
     }
 }
