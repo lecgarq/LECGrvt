@@ -48,7 +48,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
   2. A user running any command sees `LogWarning` / `LogError` from `IProgressReporter` rendered with their actual severity in `LogView` (never collapsed to plain `Log`).
   3. A user running Purge or Convert Family sees only whitelisted dialogs auto-dismissed; any non-whitelisted dialog (including unexpected error dialogs) reaches the user.
   4. A developer reviewing v1.1 Phase 02 finds a complete `02-VERIFICATION.md` artifact with wave-0 evidence for REQ-07 (FormulaAutoGrouping).
-**Plans:** 5 plans
+**Plans:** 2/5 plans executed
   - [ ] 06-00-PLAN.md — Wave 0: test scaffolding (LoggerSeverityTests, DialogWhitelistTests) + DialogId runtime discovery checkpoint
   - [ ] 06-01-PLAN.md — Wave 1: extend ILogger contract with scope + rewrite IProgressReporter impls for severity preservation
   - [ ] 06-02-PLAN.md — Wave 2: Logger.Instance migration sweep across 30+ files + singleton deletion + Bootstrapper rewire
@@ -142,7 +142,7 @@ Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
 | 3. Grid & Collection Fixes | v1.1 | 10/10 | Complete | 2026-05-09 |
 | 4. Advanced Renaming Logic | v1.1 | 6/6 | Complete | 2026-05-10 |
 | 5. Verification & Polish | v1.1 | 5/5 | Complete | 2026-05-10 |
-| 6. Cross-cutting Foundation | v2.0 | 0/4 | Not started | — |
+| 6. Cross-cutting Foundation | 2/5 | In Progress|  | — |
 | 7. Purge Unused Maturity | v2.0 | 0/4 | Not started | — |
 | 8. Compacting Styles Maturity | v2.0 | 0/4 | Not started | — |
 | 9. Convert Family Maturity | v2.0 | 0/4 | Not started | — |

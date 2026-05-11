@@ -65,7 +65,7 @@ Carries forward the **core value** gate from v1.1: every command either succeeds
 
 ### v1.1 carry-over gap closure (GAPS)
 
-- [ ] **GAPS-01**: Phase 02 (FormulaAutoGrouping) has a formal `02-VERIFICATION.md` artifact authored retroactively, with wave-0 evidence for REQ-07.
+- [x] **GAPS-01**: Phase 02 (FormulaAutoGrouping) has a formal `02-VERIFICATION.md` artifact authored retroactively, with wave-0 evidence for REQ-07.
 - [ ] **GAPS-02**: Phase 02.5's 4 manual Revit human-verification items (Spanish-locale Compact Styles, English regression, mixed-batch refuse-all, wall-hosted Convert Family) are executed and logged.
 - [ ] **GAPS-03**: Phase 04 C1 `Dimension.FamilyLabel` null-clear behavior is observed live in Revit (pair-action overload in production) and signed off.
 
@@ -93,7 +93,7 @@ Carries forward the **core value** gate from v1.1: every command either succeeds
 | CROSS-01 | Phase 6 — Cross-cutting Foundation | Pending |
 | CROSS-02 | Phase 6 — Cross-cutting Foundation | Pending |
 | CROSS-03 | Phase 6 — Cross-cutting Foundation | Pending |
-| GAPS-01  | Phase 6 — Cross-cutting Foundation | Pending |
+| GAPS-01  | Phase 6 — Cross-cutting Foundation | Complete |
 | PURGE-01 | Phase 7 — Purge Unused Maturity | Pending |
 | PURGE-02 | Phase 7 — Purge Unused Maturity | Pending |
 | PURGE-03 | Phase 7 — Purge Unused Maturity | Pending |
