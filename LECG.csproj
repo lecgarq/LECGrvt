@@ -9,7 +9,6 @@
     <RootNamespace>LECG</RootNamespace>
     <AssemblyName>LECG</AssemblyName>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <NoWarn>MSB3277;CS0436</NoWarn>
     <SkipRevitDeploy>false</SkipRevitDeploy>
     <SkipRevitDeploy Condition="'$(GITHUB_ACTIONS)' == 'true' Or '$(CI)' == 'true'">true</SkipRevitDeploy>
     <!-- Code analysis for dead code detection -->
@@ -18,17 +17,13 @@
     <CommunityToolkitMvvmSourceGeneratorIsEnabled>true</CommunityToolkitMvvmSourceGeneratorIsEnabled>
   </PropertyGroup>
 
+  <!-- Revit 2026 API via reference-assembly NuGet packages (Nice3point) instead of a local
+       install HintPath. Reference-only (not copied to output; Revit supplies the real DLLs at
+       runtime), so this both keeps deployment behavior identical AND lets LECG.csproj build on
+       CI runners that have no Revit installed. -->
   <ItemGroup>
-    <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2026\RevitAPI.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-      <Private>false</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2026\RevitAPIUI.dll</HintPath>
-      <SpecificVersion>false</SpecificVersion>
-      <Private>false</Private>
-    </Reference>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="2026.4.10" />
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="2026.4.10" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Clipper2" Version="2.0.0" />
@@ -41,6 +36,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Roslynator.Analyzers" Version="4.15.0" PrivateAssets="all" />
     <PackageReference Include="Scrutor" Version="5.0.1" />
     <PackageReference Include="Serilog" Version="4.2.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />

@@ -7,5 +7,14 @@
     <AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
     <FileVersion>$(VersionPrefix).0</FileVersion>
     <InformationalVersion>$(Version)</InformationalVersion>
+
+    <!-- CS0436: type conflicts from the MVVM source generators (compiler warning → NoWarn). -->
+    <NoWarn>$(NoWarn);CS0436</NoWarn>
+    <!-- MSB3277: assembly-version conflicts among the Revit 2026 API DLLs. These are expected
+         (Revit ships many DLLs with overlapping versions) and are referenced with Private=false
+         so they never reach the output. It is an MSBuild-task warning (emitted by RAR, including
+         in the generated WPF markup-compiler temp project), so it must be downgraded via
+         MSBuildWarningsAsMessages rather than NoWarn. Applied solution-wide for a clean build. -->
+    <MSBuildWarningsAsMessages>$(MSBuildWarningsAsMessages);MSB3277</MSBuildWarningsAsMessages>
   </PropertyGroup>
 </Project>

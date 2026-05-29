@@ -30,23 +30,6 @@ namespace LECG.Services
             int lineWeight,
             string transactionName,
             string familyName,
-            Action<double, string>? progress,
-            double progressStart,
-            double progressEnd)
-        {
-            return BuildAndSave(projectDoc, templatePath, data, offset, lineStyleName, lineColor, lineWeight, transactionName, familyName, new LegacyProgressReporter(progress), progressStart, progressEnd);
-        }
-
-        public string BuildAndSave(
-            Document projectDoc,
-            string templatePath,
-            CadData data,
-            XYZ offset,
-            string lineStyleName,
-            Color lineColor,
-            int lineWeight,
-            string transactionName,
-            string familyName,
             IProgressReporter reporter,
             double progressStart,
             double progressEnd)

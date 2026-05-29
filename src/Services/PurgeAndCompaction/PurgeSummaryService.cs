@@ -44,26 +44,6 @@ namespace LECG.Services
             reporter.Log($"Total items purged: {total}");
         }
 
-        public void Report(
-            Action<string> logCallback,
-            Action<double, string> progressCallback,
-            int lineStylesDeleted,
-            int linePatternsDeleted,
-            int fillPatternsDeleted,
-            int materialsDeleted,
-            int levelsDeleted,
-            int parametersDeleted,
-            int groupsDeleted,
-            int gridTypesDeleted,
-            int levelTypesDeleted,
-            int constraintsDeleted,
-            int unplacedRoomsDeleted,
-            int viewTemplatesDeleted,
-            int viewFiltersDeleted)
-        {
-            Report(new LegacyProgressReporter(progressCallback, logCallback), lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, parametersDeleted, groupsDeleted, gridTypesDeleted, levelTypesDeleted, constraintsDeleted, unplacedRoomsDeleted, viewTemplatesDeleted, viewFiltersDeleted);
-        }
-
         private static void LogIfActive(IProgressReporter reporter, string category, int count)
         {
             if (count > 0)

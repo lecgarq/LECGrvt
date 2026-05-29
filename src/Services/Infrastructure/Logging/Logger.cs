@@ -16,7 +16,7 @@ namespace LECG.Services.Logging
         void LogWarning(string message, string scope, Exception? exception = null);
         void LogError(string message, string scope, Exception? exception = null);
         void Clear();
-        void SetDispatcher(Dispatcher dispatcher);
+        void SetDispatcher(Dispatcher? dispatcher);
         void UpdateProgress(double percent, string status);
         event Action<double, string> OnProgressUpdate;
     }

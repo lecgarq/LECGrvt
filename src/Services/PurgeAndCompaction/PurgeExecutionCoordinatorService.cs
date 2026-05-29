@@ -40,28 +40,6 @@ namespace LECG.Services
             bool unplacedRooms,
             bool viewTemplates,
             bool viewFilters,
-            Action<string> logCallback,
-            Action<double, string> progressCallback)
-        {
-            return Execute(doc, passCount, lineStyles, linePatterns, fillPatterns, materials, levels, parameters, groups, gridTypes, levelTypes, constraints, unplacedRooms, viewTemplates, viewFilters, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
-        public (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int parametersDeleted, int groupsDeleted, int gridTypesDeleted, int levelTypesDeleted, int constraintsDeleted, int unplacedRoomsDeleted, int viewTemplatesDeleted, int viewFiltersDeleted) Execute(
-            Document doc,
-            int passCount,
-            bool lineStyles,
-            bool linePatterns,
-            bool fillPatterns,
-            bool materials,
-            bool levels,
-            bool parameters,
-            bool groups,
-            bool gridTypes,
-            bool levelTypes,
-            bool constraints,
-            bool unplacedRooms,
-            bool viewTemplates,
-            bool viewFilters,
             IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

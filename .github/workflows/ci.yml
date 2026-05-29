@@ -20,16 +20,21 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore LECG.Tests/LECG.Tests.csproj
+        run: dotnet restore LECG.sln
 
-      - name: Build core with code analysis
+      - name: Build core with code analysis (warnings as errors)
         run: dotnet build LECG.Core/LECG.Core.csproj -c Release --no-restore /p:TreatWarningsAsErrors=true
 
-      - name: Test core-dependent tests
-        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-restore
+      # LECG.csproj now references the Revit API via Nice3point reference-assembly packages,
+      # so the full add-in (and the whole test suite) compiles on runners without Revit installed.
+      - name: Build full solution
+        run: dotnet build LECG.sln -c Release --no-restore /p:SkipRevitDeploy=true
+
+      - name: Run tests
+        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-build --no-restore
 
       - name: Collect coverage
-        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-build --no-restore --collect:"XPlat Code Coverage"
+        run: dotnet test LECG.Tests/LECG.Tests.csproj -c Release --no-build --no-restore --collect:"XPlat Code Coverage" --settings coverlet.runsettings
 
       - name: Publish coverage summary
         shell: pwsh

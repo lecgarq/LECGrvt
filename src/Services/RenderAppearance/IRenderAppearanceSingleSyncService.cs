@@ -6,6 +6,5 @@ namespace LECG.Services.Interfaces
     public interface IRenderAppearanceSingleSyncService
     {
         void SyncWithRenderAppearance(Document doc, Material mat, IProgressReporter reporter);
-        void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null);
     }
 }

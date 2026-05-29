@@ -18,19 +18,5 @@ namespace LECG.Services.Interfaces
             IProgressReporter reporter,
             double progressStart,
             double progressEnd);
-
-        string BuildAndSave(
-            Document projectDoc,
-            string templatePath,
-            CadData data,
-            XYZ offset,
-            string lineStyleName,
-            Color lineColor,
-            int lineWeight,
-            string transactionName,
-            string familyName,
-            Action<double, string>? progress,
-            double progressStart,
-            double progressEnd);
     }
 }

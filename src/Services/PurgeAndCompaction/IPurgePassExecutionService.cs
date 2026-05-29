@@ -21,23 +21,5 @@ namespace LECG.Services.Interfaces
             bool viewTemplates,
             bool viewFilters,
             IProgressReporter reporter);
-
-        (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int groupsDeleted, int gridTypesDeleted, int levelTypesDeleted, int constraintsDeleted, int unplacedRoomsDeleted, int viewTemplatesDeleted, int viewFiltersDeleted) ExecutePass(
-            Document doc,
-            int passIndex,
-            bool lineStyles,
-            bool linePatterns,
-            bool fillPatterns,
-            bool materials,
-            bool levels,
-            bool groups,
-            bool gridTypes,
-            bool levelTypes,
-            bool constraints,
-            bool unplacedRooms,
-            bool viewTemplates,
-            bool viewFilters,
-            Action<string> logCallback,
-            Action<double, string> progressCallback);
     }
 }

@@ -5,8 +5,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
-    <IsCiBuild>false</IsCiBuild>
-    <IsCiBuild Condition="'$(CI)' == 'true' Or '$(GITHUB_ACTIONS)' == 'true'">true</IsCiBuild>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -26,26 +24,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\\LECG.Core\\LECG.Core.csproj" Condition="'$(IsCiBuild)' == 'true'" />
-    <ProjectReference Include="..\\LECG.csproj" Condition="'$(IsCiBuild)' != 'true'" />
+    <ProjectReference Include="..\\LECG.csproj" />
   </ItemGroup>
 
-  <!-- RevitAPI reference for compile-time type resolution only.
-       Needed so the test project can call methods that accept Autodesk.Revit.DB.Document.
-       RevitAPI.dll has native-code dependencies that are only available inside Revit, so
-       it cannot be loaded in the xUnit test runner. Tests calling Document-parametered methods
-       are skip-gated with a manual-Revit pointer (see 05-VERIFICATION.md).
-       ExcludeAssets=runtime keeps it out of the output directory so it isn't accidentally loaded. -->
-  <ItemGroup Condition="'$(IsCiBuild)' != 'true'">
-    <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2026\RevitAPI.dll</HintPath>
-      <Private>false</Private>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(IsCiBuild)' == 'true'">
-    <Compile Remove="Caching\\**\\*.cs" />
-    <Compile Remove="DependencyInjection\\**\\*.cs" />
-    <Compile Remove="Validation\\**\\*.cs" />
+  <!-- Revit 2026 API via the same Nice3point reference assemblies as LECG.csproj, for
+       compile-time type resolution (tests call methods accepting Autodesk.Revit.DB.Document).
+       Reference-only: the real DLLs only load inside Revit, so tests that invoke Revit at
+       runtime are skip-gated. Because LECG.csproj now builds without a local Revit install,
+       the whole test suite compiles and runs on CI runners (no IsCiBuild split needed). -->
+  <ItemGroup>
+    <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="2026.4.10" />
   </ItemGroup>
 </Project>

@@ -22,11 +22,6 @@ namespace LECG.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public LinePatternCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
-        {
-            return Compact(doc, context, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
         public LinePatternCompactionResult Compact(Document doc, CompactingStylesContext? context, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

@@ -7,6 +7,7 @@ using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Views;
 using LECG.ViewModels;
+using LECG.Services;
 using LECG.Services.Interfaces;
 
 namespace LECG.Commands
@@ -57,18 +58,7 @@ namespace LECG.Commands
             // 3. Process
             ShowLogWindow("Split Boundaries");
 
-            var reporter = new SimpleProgressReporter(report =>
-            {
-                if (!string.IsNullOrEmpty(report.Message))
-                {
-                    Log(report.Message);
-                }
-
-                if (report.Percentage > 0)
-                {
-                    UpdateProgress(report.Percentage, report.Message);
-                }
-            });
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
 
             splitService.SplitBoundaries(doc, elements, reporter);
 

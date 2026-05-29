@@ -14,11 +14,6 @@ namespace LECG.Services
     {
         private const string CanonicalPrefix = "LECG-FP-";
 
-        public FillPatternCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
-        {
-            return Compact(doc, context, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
         public FillPatternCompactionResult Compact(Document doc, CompactingStylesContext? context, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

@@ -21,11 +21,6 @@ namespace LECG.Services
             _hatchRenderService = hatchRenderService;
         }
 
-        public void Draw(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, Action<double, string>? progress = null, double startPct = 50, double endPct = 90)
-        {
-            Draw(familyDoc, data, offset, styleName, color, weight, new LegacyProgressReporter(progress), startPct, endPct);
-        }
-
         public void Draw(Document familyDoc, CadData data, XYZ offset, string styleName, Color color, int weight, IProgressReporter reporter, double startPct = 50, double endPct = 90)
         {
             ArgumentNullException.ThrowIfNull(familyDoc);

@@ -18,11 +18,6 @@ namespace LECG.Services
             _cadDataValidationService = cadDataValidationService;
         }
 
-        public CadData Prepare(Document doc, ImportInstance cadInstance, Action<double, string>? progress = null)
-        {
-            return Prepare(doc, cadInstance, new LegacyProgressReporter(progress));
-        }
-
         public CadData Prepare(Document doc, ImportInstance cadInstance, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

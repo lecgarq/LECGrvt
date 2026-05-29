@@ -15,11 +15,6 @@ namespace LECG.Services
             _familyLoadPlacementService = familyLoadPlacementService;
         }
 
-        public ElementId CreateAndLoad(Document doc, CadData data, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
-        {
-            return CreateAndLoad(doc, data, familyName, templatePath, lineStyleName, lineColor, lineWeight, new LegacyProgressReporter(progress));
-        }
-
         public ElementId CreateAndLoad(Document doc, CadData data, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

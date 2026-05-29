@@ -22,11 +22,6 @@ namespace LECG.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null)
-        {
-            SyncWithRenderAppearance(doc, mat, new LegacyProgressReporter(logCallback: logCallback));
-        }
-
         public void SyncWithRenderAppearance(Document doc, Material mat, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

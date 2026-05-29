@@ -21,11 +21,6 @@ namespace LECG.Services
             _transactionService = transactionService;
         }
 
-        public void ApplyBeauty(Document doc, View view, SexyRevitSettings settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
-        {
-            ApplyBeauty(doc, view, settings, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
         public void ApplyBeauty(Document doc, View view, SexyRevitSettings settings, IProgressReporter reporter)
         {
             if (view == null) return;

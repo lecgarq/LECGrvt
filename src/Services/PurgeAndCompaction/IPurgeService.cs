@@ -6,7 +6,6 @@ namespace LECG.Services.Interfaces
     public interface IPurgeService
     {
         void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, bool groups, bool gridTypes, bool levelTypes, bool constraints, bool unplacedRooms, bool viewTemplates, bool viewFilters, IProgressReporter reporter);
-        void PurgeAll(Document doc, int passCount, bool lineStyles, bool linePatterns, bool fillPatterns, bool materials, bool levels, bool parameters, bool groups, bool gridTypes, bool levelTypes, bool constraints, bool unplacedRooms, bool viewTemplates, bool viewFilters, Action<string> logCallback, Action<double, string> progressCallback);
         int PurgeUnusedLineStyles(Document doc, Action<string>? logCallback = null);
         int PurgeUnusedLinePatterns(Document doc, Action<string>? logCallback = null);
         int PurgeUnusedFillPatterns(Document doc, Action<string>? logCallback = null);

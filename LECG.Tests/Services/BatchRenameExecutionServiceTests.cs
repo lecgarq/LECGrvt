@@ -282,25 +282,6 @@ public class BatchRenameExecutionServiceTests
         result.Should().BeEmpty();
     }
 
-    // --- LegacyProgressReporter: all 5 methods no-throw when callback is null ---
-
-    [Fact]
-    public void LegacyProgressReporter_NullCallback_AllFiveMethods_NoThrow()
-    {
-        var reporter = new LegacyProgressReporter(progressCallback: null, logCallback: null);
-
-        Action report    = () => reporter.Report("msg", 50);
-        Action log       = () => reporter.Log("info");
-        Action logWarn   = () => reporter.LogWarning("warning");
-        Action logError  = () => reporter.LogError("error");
-
-        // LegacyProgressReporter only has 4 methods (Report, Log, LogWarning, LogError)
-        report.Should().NotThrow();
-        log.Should().NotThrow();
-        logWarn.Should().NotThrow();
-        logError.Should().NotThrow();
-    }
-
     // --- Constructor null-guard ---
 
     [Fact]

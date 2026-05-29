@@ -18,11 +18,6 @@ namespace LECG.Services
             _transactionService = transactionService;
         }
 
-        public CadData Extract(Document doc, string templatePath, string dwgPath, Action<double, string>? progress = null)
-        {
-            return Extract(doc, templatePath, dwgPath, new LegacyProgressReporter(progress));
-        }
-
         public CadData Extract(Document doc, string templatePath, string dwgPath, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

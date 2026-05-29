@@ -5,6 +5,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
@@ -59,11 +60,7 @@ namespace LECG.Commands
             Log($"Delete Source: {vm.DeleteSource}");
             Log("");
 
-            var reporter = new SimpleProgressReporter(report =>
-            {
-                Log(report.Message);
-                UpdateProgress(report.Percentage, report.Message);
-            });
+            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
 
             service.ConvertToposolidToFloor(
                 doc,

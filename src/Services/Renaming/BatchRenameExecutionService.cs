@@ -363,7 +363,7 @@ namespace LECG.Services
                                 Dimension capturedDim = dim;
                                 FamilyParameter capturedRef = renamedRef;
                                 reassignPairs.Add((
-                                    clear:  () => { capturedDim.FamilyLabel = null; },
+                                    clear: () => { capturedDim.FamilyLabel = null; },
                                     assign: () => { capturedDim.FamilyLabel = capturedRef; }
                                 ));
                             }

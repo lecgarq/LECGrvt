@@ -7,6 +7,5 @@ namespace LECG.Services.Interfaces
     public interface ILinePatternCompactionService
     {
         LinePatternCompactionResult Compact(Document doc, CompactingStylesContext? context, IProgressReporter reporter);
-        LinePatternCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null);
     }
 }

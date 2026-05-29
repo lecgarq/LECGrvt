@@ -28,11 +28,6 @@ namespace LECG.Services
             _transactionService = transactionService;
         }
 
-        public void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback)
-        {
-            AssignMaterialsToElements(doc, elements, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
         public void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

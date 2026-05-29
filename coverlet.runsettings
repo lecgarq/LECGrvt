@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Coverage is gated on LECG.Core only — the Revit-free logic library where high coverage is
+     achievable and meaningful. LECG.csproj is mostly Revit UI/glue that cannot be exercised
+     outside a running Revit process (those tests are skip-gated), so including it would make the
+     line-rate meaningless. This preserves the original pre-CI-refactor coverage semantics. -->
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Include>[LECG.Core]*</Include>
+          <Format>cobertura</Format>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

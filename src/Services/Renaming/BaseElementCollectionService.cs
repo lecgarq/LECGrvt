@@ -13,15 +13,15 @@ namespace LECG.Services
     [System.Flags]
     internal enum ScopeMask
     {
-        None             = 0,
-        Types            = 1 << 0,
-        Families         = 1 << 1,
-        Views            = 1 << 2,
-        Sheets           = 1 << 3,
-        Materials        = 1 << 4,
-        ObjectStyles     = 1 << 5,
-        LineStyles       = 1 << 6,
-        FillPatterns     = 1 << 7,
+        None = 0,
+        Types = 1 << 0,
+        Families = 1 << 1,
+        Views = 1 << 2,
+        Sheets = 1 << 3,
+        Materials = 1 << 4,
+        ObjectStyles = 1 << 5,
+        LineStyles = 1 << 6,
+        FillPatterns = 1 << 7,
         FamilyParameters = 1 << 8,
     }
 
@@ -378,14 +378,14 @@ namespace LECG.Services
             bool fillPatterns, bool familyParameters)
         {
             var mask = ScopeMask.None;
-            if (types)            mask |= ScopeMask.Types;
-            if (families)         mask |= ScopeMask.Families;
-            if (views)            mask |= ScopeMask.Views;
-            if (sheets)           mask |= ScopeMask.Sheets;
-            if (materials)        mask |= ScopeMask.Materials;
-            if (objectStyles)     mask |= ScopeMask.ObjectStyles;
-            if (lineStyles)       mask |= ScopeMask.LineStyles;
-            if (fillPatterns)     mask |= ScopeMask.FillPatterns;
+            if (types) mask |= ScopeMask.Types;
+            if (families) mask |= ScopeMask.Families;
+            if (views) mask |= ScopeMask.Views;
+            if (sheets) mask |= ScopeMask.Sheets;
+            if (materials) mask |= ScopeMask.Materials;
+            if (objectStyles) mask |= ScopeMask.ObjectStyles;
+            if (lineStyles) mask |= ScopeMask.LineStyles;
+            if (fillPatterns) mask |= ScopeMask.FillPatterns;
             if (familyParameters) mask |= ScopeMask.FamilyParameters;
             return mask;
         }

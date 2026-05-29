@@ -12,10 +12,7 @@ namespace LECG.Services.Interfaces
         ElementId CreatePBRMaterial(Document doc, PbrMaterialCreateRequest request, Action<string>? logCallback = null);
         bool AssignMaterialToType(Document doc, ElementType type, ElementId materialId, Action<string>? logCallback = null);
         void SyncWithRenderAppearance(Document doc, Material mat, IProgressReporter reporter);
-        void SyncWithRenderAppearance(Document doc, Material mat, Action<string>? logCallback = null);
         void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, RenderAppearanceSettings settings, IProgressReporter reporter);
-        void BatchSyncWithRenderAppearance(Document doc, IEnumerable<Material> materials, RenderAppearanceSettings settings, Action<string>? logCallback = null, Action<double, string>? progressCallback = null);
         void AssignMaterialsToElements(Document doc, IList<Element> elements, IProgressReporter reporter);
-        void AssignMaterialsToElements(Document doc, IList<Element> elements, Action<string>? logCallback, Action<double, string>? progressCallback);
     }
 }

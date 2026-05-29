@@ -1,7 +1,6 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Structure;
 using LECG.Services.Interfaces;
-using System;
 
 namespace LECG.Services
 {
@@ -36,11 +35,6 @@ namespace LECG.Services
                 ?? string.Empty;
         }
 
-        public ElementId ConvertCadToFamily(Document doc, ImportInstance cadInstance, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
-        {
-            return ConvertCadToFamily(doc, cadInstance, familyName, templatePath, lineStyleName, lineColor, lineWeight, new LegacyProgressReporter(progress));
-        }
-
         public ElementId ConvertCadToFamily(Document doc, ImportInstance cadInstance, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)
         {
             if (cadInstance == null) return ElementId.InvalidElementId;
@@ -60,11 +54,6 @@ namespace LECG.Services
                 lineColor,
                 lineWeight,
                 reporter);
-        }
-
-        public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, Action<double, string>? progress = null)
-        {
-            return ConvertDwgToFamily(doc, dwgPath, familyName, templatePath, lineStyleName, lineColor, lineWeight, new LegacyProgressReporter(progress));
         }
 
         public ElementId ConvertDwgToFamily(Document doc, string dwgPath, string familyName, string templatePath, string lineStyleName, Color lineColor, int lineWeight, IProgressReporter reporter)

@@ -13,11 +13,6 @@ namespace LECG.Services
     {
         private const string CanonicalPrefix = "LECG-TT-";
 
-        public TextStyleCompactionResult Compact(Document doc, CompactingStylesContext? context = null, Action<string>? logCallback = null, Action<double, string>? progressCallback = null)
-        {
-            return Compact(doc, context, new LegacyProgressReporter(progressCallback, logCallback));
-        }
-
         public TextStyleCompactionResult Compact(Document doc, CompactingStylesContext? context, IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);

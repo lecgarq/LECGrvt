@@ -9,34 +9,21 @@ namespace LECG.Services
 {
     public class RenderAppearanceBatchSyncService : IRenderAppearanceBatchSyncService
     {
-        private readonly IRenderAppearanceRefreshService _refreshService;
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialSyncExecutionService _syncExecutionService;
         private readonly IRenderBatchProgressService _renderBatchProgressService;
         private readonly ITransactionService _transactionService;
 
         public RenderAppearanceBatchSyncService(
-            IRenderAppearanceRefreshService refreshService,
             IRenderSolidFillPatternService solidFillPatternService,
             IRenderMaterialSyncExecutionService syncExecutionService,
             IRenderBatchProgressService renderBatchProgressService,
             ITransactionService transactionService)
         {
-            _refreshService = refreshService;
             _solidFillPatternService = solidFillPatternService;
             _syncExecutionService = syncExecutionService;
             _renderBatchProgressService = renderBatchProgressService;
             _transactionService = transactionService;
-        }
-
-        public void BatchSync(
-            Document doc,
-            IEnumerable<Material> materials,
-            RenderAppearanceSettings settings,
-            Action<string>? logCallback = null,
-            Action<double, string>? progressCallback = null)
-        {
-            BatchSync(doc, materials, settings, new LegacyProgressReporter(progressCallback, logCallback));
         }
 
         public void BatchSync(
@@ -66,8 +53,6 @@ namespace LECG.Services
 
             _transactionService.Run(doc, "Sync Render Appearance", _ =>
             {
-                _refreshService.Refresh(doc, matsList, reporter.Log);
-
                 ElementId solidId = _solidFillPatternService.GetSolidFillPatternId(doc);
 
                 foreach (Material mat in matsList)
