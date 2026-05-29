@@ -2,8 +2,8 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
-    xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="LECG TOOLKIT" Height="650" Width="900" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Home}">
+    xmlns:utils="clr-namespace:LECG.Utilities"
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="LECG TOOLKIT" Height="650" Width="900" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Home}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary/>

@@ -29,16 +29,36 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(solidFillPatternId);
             ArgumentNullException.ThrowIfNull(settings);
 
-            Color renderColor = GetRenderAppearanceColor(material);
-            bool graphicsChanged = !_syncCheckService.IsMaterialSynced(material, renderColor, solidFillPatternId);
-
-            if (!graphicsChanged)
-            {
+            // Cheap in-memory check — skips image I/O for materials already fully synced.
+            // Focuses expensive extraction on materials missing the pipeline (no UseRenderAppearance,
+            // wrong fill IDs, or fill colors that have drifted from mat.Color).
+            if (IsFullySynced(material, solidFillPatternId))
                 return new RenderMaterialSyncResult(false, false, NormalMapSyncStatus.NotRequested);
-            }
 
+            Color renderColor = GetRenderAppearanceColor(material);
             _graphicsApplyService.Apply(material, renderColor, solidFillPatternId, logCallback);
             return new RenderMaterialSyncResult(true, true, NormalMapSyncStatus.NotRequested);
+        }
+
+        private static bool IsFullySynced(Material mat, ElementId solidId)
+        {
+            if (!mat.UseRenderAppearanceForShading) return false;
+            if (mat.SurfaceForegroundPatternId != solidId) return false;
+            if (mat.SurfaceBackgroundPatternId != solidId) return false;
+            if (mat.CutForegroundPatternId != solidId) return false;
+            if (mat.CutBackgroundPatternId != solidId) return false;
+            Color c = mat.Color;
+            if (!ColorEquals(mat.SurfaceForegroundPatternColor, c)) return false;
+            if (!ColorEquals(mat.SurfaceBackgroundPatternColor, c)) return false;
+            if (!ColorEquals(mat.CutForegroundPatternColor, c)) return false;
+            if (!ColorEquals(mat.CutBackgroundPatternColor, c)) return false;
+            return true;
+        }
+
+        private static bool ColorEquals(Color? a, Color? b)
+        {
+            if (a == null || b == null) return false;
+            return a.Red == b.Red && a.Green == b.Green && a.Blue == b.Blue;
         }
 
         private Color GetRenderAppearanceColor(Material material)

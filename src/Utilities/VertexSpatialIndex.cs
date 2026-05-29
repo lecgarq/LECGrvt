@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using g3;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     /// <summary>
     /// Spatial index for aligned vertex positions using geometry3Sharp's PointHashGrid2d.

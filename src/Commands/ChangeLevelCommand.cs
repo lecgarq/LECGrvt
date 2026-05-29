@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
-using LECG.Utils;
+using LECG.Utilities;
 using LECG.ViewModels;
 using LECG.Views;
 using System;

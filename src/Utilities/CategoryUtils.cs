@@ -2,7 +2,7 @@ using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     public static class CategoryUtils
     {

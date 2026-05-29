@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:behaviors="clr-namespace:LECG.Behaviors"
-    xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="UPDATE CONTOURS (LAYERS)" Width="500" Height="450" MinWidth="450" MinHeight="400" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Contours}">
+    xmlns:utils="clr-namespace:LECG.Utilities"
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="UPDATE CONTOURS (LAYERS)" Width="500" Height="450" MinWidth="450" MinHeight="400" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Contours}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>

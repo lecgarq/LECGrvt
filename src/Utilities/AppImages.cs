@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     /// <summary>
     /// Centralized image resources for the LECG WPF application.

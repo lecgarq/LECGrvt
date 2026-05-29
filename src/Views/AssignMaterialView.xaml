@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="ASSIGN MATERIAL" Width="400" Height="350" MinWidth="350" MinHeight="300" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Material}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="ASSIGN MATERIAL" Width="400" Height="350" MinWidth="350" MinHeight="300" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Material}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>

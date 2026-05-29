@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     public static class ImageUtils
     {

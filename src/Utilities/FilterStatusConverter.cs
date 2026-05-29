@@ -4,7 +4,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using LECG.ViewModels;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     public class FilterStatusConverter : IValueConverter
     {

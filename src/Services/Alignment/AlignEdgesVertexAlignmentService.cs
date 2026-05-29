@@ -4,7 +4,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Clipper2Lib;
 using LECG.Services.Interfaces;
-using LECG.Utils;
+using LECG.Utilities;
 using g3;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 

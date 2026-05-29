@@ -2,7 +2,7 @@ using System;
 using System.Reflection;
 using Autodesk.Revit.UI;
 using System.Windows.Media;
-using LECG.Utils;
+using LECG.Utilities;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Core.Ribbon

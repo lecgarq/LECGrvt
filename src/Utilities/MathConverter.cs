@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     [ValueConversion(typeof(double), typeof(double))]
     public class MathConverter : MarkupExtension, IMultiValueConverter, IValueConverter

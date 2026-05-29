@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using Clipper2Lib;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     public static class ClipperUtils
     {

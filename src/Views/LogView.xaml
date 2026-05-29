@@ -4,8 +4,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:base="clr-namespace:LECG.Views.Base"
-    xmlns:utils="clr-namespace:LECG.Utils"
-    xmlns:icons="clr-namespace:LECG.Utils"
+    xmlns:utils="clr-namespace:LECG.Utilities"
+    xmlns:icons="clr-namespace:LECG.Utilities"
     xmlns:vm="clr-namespace:LECG.ViewModels"
     xmlns:logging="clr-namespace:LECG.Services.Logging" mc:Ignorable="d" Title="{Binding Title}" Height="450" Width="600" MinWidth="400" MinHeight="300" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Layers}" WindowStartupLocation="CenterScreen" d:DataContext="{d:DesignInstance Type=vm:LogViewModel}">
 

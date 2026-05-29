@@ -1,7 +1,7 @@
 using System.Reflection;
 using Autodesk.Revit.UI;
 using LECG.Configuration;
-using LECG.Utils;
+using LECG.Utilities;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Core.Ribbon

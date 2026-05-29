@@ -6,7 +6,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 using Autodesk.Revit.UI;
 using LECG.Core;
-using LECG.Utils;
+using LECG.Utilities;
 using LECG.Models;
 using LECG.Services;
 using LECG.ViewModels;

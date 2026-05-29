@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="SIMPLIFY POINTS" Width="380" Height="300" MinWidth="350" MinHeight="250" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Simplify}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="SIMPLIFY POINTS" Width="380" Height="300" MinWidth="350" MinHeight="250" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Simplify}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>

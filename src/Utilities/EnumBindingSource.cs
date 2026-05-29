@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Markup;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     public class EnumBindingSource : MarkupExtension
     {

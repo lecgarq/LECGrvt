@@ -1,7 +1,7 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     public class FamilyInstanceFilter : ISelectionFilter
     {

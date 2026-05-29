@@ -2,7 +2,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Clipper2Lib;
 using LECG.Services.Interfaces;
-using LECG.Utils;
+using LECG.Utilities;
 using System.Collections.Generic;
 
 namespace LECG.Services

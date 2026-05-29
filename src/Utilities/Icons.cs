@@ -1,6 +1,6 @@
 using System.Windows.Media;
 
-namespace LECG.Utils
+namespace LECG.Utilities
 {
     /// <summary>
     /// Centralized icon geometries for the LECG WPF application.

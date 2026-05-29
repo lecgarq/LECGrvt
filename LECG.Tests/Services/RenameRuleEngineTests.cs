@@ -4,6 +4,7 @@ using Xunit;
 
 namespace LECG.Tests.Services;
 
+[Trait("Category", "Renaming")]
 public class RenameRuleEngineTests
 {
     [Fact]

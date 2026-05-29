@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utils" Title="CATEGORY CHANGER" Height="550" Width="450" MinWidth="400" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Category}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="CATEGORY CHANGER" Height="550" Width="450" MinWidth="400" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Category}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
