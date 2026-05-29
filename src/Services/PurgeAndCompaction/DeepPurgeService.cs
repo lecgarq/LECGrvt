@@ -179,12 +179,21 @@ namespace LECG.Services
             foreach (int passNumber in _purgePassSequenceService.GetPasses(passCount))
             {
                 reportPass(passNumber);
+                int deletedThisPass = 0;
                 _transactionService.RunWithWarningHandler(doc, transactionNameFactory(passNumber), currentDoc =>
                 {
-                    int deletedThisPass = _nativePurgeDocumentService.PurgeUnused(currentDoc, reporter);
+                    deletedThisPass = _nativePurgeDocumentService.PurgeUnused(currentDoc, reporter);
                     totalDeleted += deletedThisPass;
                     logDeleted(passNumber, deletedThisPass);
                 }, failureHandler);
+
+                // Revit's native purge is idempotent: once a pass removes nothing, no later
+                // pass will either. Stop early to avoid needless transactions/regens (and, for
+                // families, needless edit/reload churn).
+                if (deletedThisPass == 0)
+                {
+                    break;
+                }
             }
 
             return totalDeleted;
