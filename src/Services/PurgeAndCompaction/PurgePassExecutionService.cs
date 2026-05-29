@@ -1,5 +1,6 @@
 using System;
 using Autodesk.Revit.DB;
+using LECG.Core.Purge;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
@@ -32,24 +33,14 @@ namespace LECG.Services
             _purgePassMessagingService = purgePassMessagingService;
         }
 
-        public (int lineStylesDeleted, int linePatternsDeleted, int fillPatternsDeleted, int materialsDeleted, int levelsDeleted, int groupsDeleted, int gridTypesDeleted, int levelTypesDeleted, int constraintsDeleted, int unplacedRoomsDeleted, int viewTemplatesDeleted, int viewFiltersDeleted) ExecutePass(
+        public PurgeResult ExecutePass(
             Document doc,
             int passIndex,
-            bool lineStyles,
-            bool linePatterns,
-            bool fillPatterns,
-            bool materials,
-            bool levels,
-            bool groups,
-            bool gridTypes,
-            bool levelTypes,
-            bool constraints,
-            bool unplacedRooms,
-            bool viewTemplates,
-            bool viewFilters,
+            PurgeOptions options,
             IProgressReporter reporter)
         {
             ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(options);
             ArgumentNullException.ThrowIfNull(reporter);
 
             int lineStylesDeleted = 0;
@@ -67,82 +58,95 @@ namespace LECG.Services
 
             _purgePassMessagingService.LogPassStart(reporter, passIndex);
 
-            bool needsContext = lineStyles || linePatterns || fillPatterns || materials || levels;
+            bool needsContext = options.LineStyles || options.LinePatterns || options.FillPatterns || options.Materials || options.Levels;
             PurgeContext? context = needsContext ? PurgeContext.Create(doc) : null;
 
-            if (lineStyles)
+            if (options.LineStyles)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Line Styles", 10 + (passIndex * 10));
                 lineStylesDeleted += _purgeLineStyleService.PurgeUnusedLineStyles(doc, context!, reporter.Log);
             }
 
-            if (linePatterns)
+            if (options.LinePatterns)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Line Patterns", 15 + (passIndex * 10));
                 linePatternsDeleted += _purgeLinePatternService.PurgeUnusedLinePatterns(doc, context!, reporter.Log);
             }
 
-            if (fillPatterns)
+            if (options.FillPatterns)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Fill Patterns", 25 + (passIndex * 10));
                 fillPatternsDeleted += _purgeFillPatternService.PurgeUnusedFillPatterns(doc, context!, reporter.Log);
             }
 
-            if (materials)
+            if (options.Materials)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Materials", 35 + (passIndex * 10));
                 materialsDeleted += _purgeMaterialService.PurgeUnusedMaterials(doc, context!, reporter.Log);
             }
 
-            if (levels)
+            if (options.Levels)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Levels", 45 + (passIndex * 10));
                 levelsDeleted += _purgeLevelService.PurgeUnusedLevels(doc, context!, reporter.Log);
             }
 
-            if (groups)
+            if (options.Groups)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Groups", 50 + (passIndex * 10));
                 groupsDeleted += _purgeExtendedElementService.PurgeUnusedGroups(doc, reporter.Log);
             }
 
-            if (gridTypes)
+            if (options.GridTypes)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Grid Types", 55 + (passIndex * 10));
                 gridTypesDeleted += _purgeExtendedElementService.PurgeUnusedGridTypes(doc, reporter.Log);
             }
 
-            if (levelTypes)
+            if (options.LevelTypes)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Level Types", 60 + (passIndex * 10));
                 levelTypesDeleted += _purgeExtendedElementService.PurgeUnusedLevelTypes(doc, reporter.Log);
             }
 
-            if (constraints)
+            if (options.Constraints)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Constraints", 65 + (passIndex * 10));
                 constraintsDeleted += _purgeExtendedElementService.PurgeConstraints(doc, reporter.Log);
             }
 
-            if (unplacedRooms)
+            if (options.UnplacedRooms)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Unplaced Rooms", 70 + (passIndex * 10));
                 unplacedRoomsDeleted += _purgeExtendedElementService.PurgeUnplacedRooms(doc, reporter.Log);
             }
 
-            if (viewTemplates)
+            if (options.ViewTemplates)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "View Templates", 72 + (passIndex * 10));
                 viewTemplatesDeleted += _purgeExtendedElementService.PurgeUnusedViewTemplates(doc, reporter.Log);
             }
 
-            if (viewFilters)
+            if (options.ViewFilters)
             {
                 _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "View Filters", 74 + (passIndex * 10));
                 viewFiltersDeleted += _purgeExtendedElementService.PurgeUnusedViewFilters(doc, reporter.Log);
             }
 
-            return (lineStylesDeleted, linePatternsDeleted, fillPatternsDeleted, materialsDeleted, levelsDeleted, groupsDeleted, gridTypesDeleted, levelTypesDeleted, constraintsDeleted, unplacedRoomsDeleted, viewTemplatesDeleted, viewFiltersDeleted);
+            return new PurgeResult(
+                lineStylesDeleted,
+                linePatternsDeleted,
+                fillPatternsDeleted,
+                materialsDeleted,
+                levelsDeleted,
+                0,
+                groupsDeleted,
+                gridTypesDeleted,
+                levelTypesDeleted,
+                constraintsDeleted,
+                unplacedRoomsDeleted,
+                viewTemplatesDeleted,
+                viewFiltersDeleted);
         }
     }
 }

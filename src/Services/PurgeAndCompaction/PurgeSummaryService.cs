@@ -1,47 +1,35 @@
 using System;
+using LECG.Core.Purge;
 using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
     public class PurgeSummaryService : IPurgeSummaryService
     {
-        public void Report(
-            IProgressReporter reporter,
-            int lineStylesDeleted,
-            int linePatternsDeleted,
-            int fillPatternsDeleted,
-            int materialsDeleted,
-            int levelsDeleted,
-            int parametersDeleted,
-            int groupsDeleted,
-            int gridTypesDeleted,
-            int levelTypesDeleted,
-            int constraintsDeleted,
-            int unplacedRoomsDeleted,
-            int viewTemplatesDeleted,
-            int viewFiltersDeleted)
+        public void Report(IProgressReporter reporter, PurgeResult result)
         {
             ArgumentNullException.ThrowIfNull(reporter);
+            ArgumentNullException.ThrowIfNull(result);
+
             reporter.Report("Complete!", 100);
             reporter.Log("");
             reporter.Log("=== SUMMARY ===");
-            LogIfActive(reporter, "Line Styles", lineStylesDeleted);
-            LogIfActive(reporter, "Line Patterns", linePatternsDeleted);
-            LogIfActive(reporter, "Fill Patterns", fillPatternsDeleted);
-            LogIfActive(reporter, "Materials", materialsDeleted);
-            LogIfActive(reporter, "Levels", levelsDeleted);
-            LogIfActive(reporter, "Groups", groupsDeleted);
-            LogIfActive(reporter, "Grid Types", gridTypesDeleted);
-            LogIfActive(reporter, "Level Types", levelTypesDeleted);
-            LogIfActive(reporter, "Constraints", constraintsDeleted);
-            LogIfActive(reporter, "Unplaced Rooms", unplacedRoomsDeleted);
-            LogIfActive(reporter, "View Templates", viewTemplatesDeleted);
-            LogIfActive(reporter, "View Filters", viewFiltersDeleted);
-            LogIfActive(reporter, "Family Parameters", parametersDeleted);
+            LogIfActive(reporter, "Line Styles", result.LineStyles);
+            LogIfActive(reporter, "Line Patterns", result.LinePatterns);
+            LogIfActive(reporter, "Fill Patterns", result.FillPatterns);
+            LogIfActive(reporter, "Materials", result.Materials);
+            LogIfActive(reporter, "Levels", result.Levels);
+            LogIfActive(reporter, "Groups", result.Groups);
+            LogIfActive(reporter, "Grid Types", result.GridTypes);
+            LogIfActive(reporter, "Level Types", result.LevelTypes);
+            LogIfActive(reporter, "Constraints", result.Constraints);
+            LogIfActive(reporter, "Unplaced Rooms", result.UnplacedRooms);
+            LogIfActive(reporter, "View Templates", result.ViewTemplates);
+            LogIfActive(reporter, "View Filters", result.ViewFilters);
+            LogIfActive(reporter, "Family Parameters", result.Parameters);
             reporter.Log("");
 
-            int total = lineStylesDeleted + linePatternsDeleted + fillPatternsDeleted + materialsDeleted + levelsDeleted + parametersDeleted + groupsDeleted + gridTypesDeleted + levelTypesDeleted + constraintsDeleted + unplacedRoomsDeleted + viewTemplatesDeleted + viewFiltersDeleted;
-            reporter.Log($"Total items purged: {total}");
+            reporter.Log($"Total items purged: {result.Total}");
         }
 
         private static void LogIfActive(IProgressReporter reporter, string category, int count)

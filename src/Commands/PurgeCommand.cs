@@ -3,6 +3,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using LECG.Core;
+using LECG.Core.Purge;
 using LECG.Models;
 using LECG.Services;
 using LECG.Services.Interfaces;
@@ -79,7 +80,21 @@ namespace LECG.Commands
                 else
                 {
                     var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
-                    purgeService.PurgeAll(doc, settings.PassCount, settings.PurgeLineStyles, settings.PurgeLinePatterns, settings.PurgeFillPatterns, settings.PurgeMaterials, settings.PurgeLevels, settings.PurgeParameters, settings.PurgeGroups, settings.PurgeGridTypes, settings.PurgeLevelTypes, settings.PurgeConstraints, settings.PurgeUnplacedRooms, settings.PurgeViewTemplates, settings.PurgeViewFilters, reporter);
+                    var options = new PurgeOptions(
+                        settings.PurgeLineStyles,
+                        settings.PurgeLinePatterns,
+                        settings.PurgeFillPatterns,
+                        settings.PurgeMaterials,
+                        settings.PurgeLevels,
+                        settings.PurgeParameters,
+                        settings.PurgeGroups,
+                        settings.PurgeGridTypes,
+                        settings.PurgeLevelTypes,
+                        settings.PurgeConstraints,
+                        settings.PurgeUnplacedRooms,
+                        settings.PurgeViewTemplates,
+                        settings.PurgeViewFilters);
+                    purgeService.PurgeAll(doc, settings.PassCount, options, reporter);
                 }
             }
             finally
