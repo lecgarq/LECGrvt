@@ -94,8 +94,39 @@
 
 ## Traceability
 
-<!-- Filled by roadmap creation -->
-
 | Requirement | Phase |
 |-------------|-------|
-| (pending roadmap) | |
+| STATE-01 | Phase 3 — Reentrancy Guards (State & Modeless Commands) |
+| STATE-02 | Phase 3 — Reentrancy Guards (State & Modeless Commands) |
+| STATE-03 | Phase 3 — Reentrancy Guards (State & Modeless Commands) |
+| ERR-01 | Phase 1 — Test Scaffolding + Shared Error-Handling Helper |
+| ERR-02 | Phase 2 — Bare-Catch Audit & Enforcement |
+| ERR-03 | Phase 2 — Bare-Catch Audit & Enforcement |
+| ERR-04 | Phase 2 — Bare-Catch Audit & Enforcement |
+| BUG-01 | Phase 5 — Known Bug Fixes + BatchRename Decomposition |
+| REN-01 | Phase 5 — Known Bug Fixes + BatchRename Decomposition |
+| REN-02 | Phase 5 — Known Bug Fixes + BatchRename Decomposition |
+| REN-03 | Phase 5 — Known Bug Fixes + BatchRename Decomposition |
+| REN-04 | Phase 5 — Known Bug Fixes + BatchRename Decomposition |
+| UX-01 | Phase 4 — Ribbon Availability + Transaction Rollback UX |
+| UX-02 | Phase 4 — Ribbon Availability + Transaction Rollback UX |
+| SEC-01 | Phase 6 — Security — Path Sanitization & Log Hygiene |
+| SEC-02 | Phase 6 — Security — Path Sanitization & Log Hygiene |
+| DEP-01 | Phase 7 — Dependency Isolation (Clipper2 / DI.Abstractions) |
+| DEP-02 | Phase 7 — Dependency Isolation (Clipper2 / DI.Abstractions) |
+| DEP-03 | Phase 11 — Interactive Runtime Validation |
+| TEST-01 | Phase 8 — Test Coverage (High-Risk Focus) |
+| TEST-02 | Phase 8 — Test Coverage (High-Risk Focus) |
+| TEST-03 | Phase 8 — Test Coverage (High-Risk Focus) |
+| TEST-04 | Phase 1 — Test Scaffolding + Shared Error-Handling Helper |
+| PERF-01 | Phase 9 — Performance Profiling |
+| PERF-02 | Phase 9 — Performance Profiling |
+| DEPLOY-01 | Phase 10 — Deployment & Documentation Hardening |
+| DEPLOY-02 | Phase 10 — Deployment & Documentation Hardening |
+| DEPLOY-03 | Phase 10 — Deployment & Documentation Hardening |
+| DOC-01 | Phase 10 — Deployment & Documentation Hardening |
+| DOC-02 | Phase 10 — Deployment & Documentation Hardening |
+| VAL-01 | Phase 11 — Interactive Runtime Validation |
+| VAL-02 | Phase 11 — Interactive Runtime Validation |
+
+**Coverage:** 32/32 v1 requirements mapped. No orphans.

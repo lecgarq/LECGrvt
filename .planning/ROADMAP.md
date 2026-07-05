@@ -1,152 +1,195 @@
-# ROADMAP — LECG Revit Addins
+# Roadmap: LECG Codebase Hardening
 
-> **Current focus**: v2.0 Plugin Maturity — Phase 6 (Cross-cutting Foundation) next.
+## Overview
 
-## Milestones
-
-- ✅ **v1.1 Optimization** — Phases 1, 2, 2.5, 3, 4, 5 (shipped 2026-05-10) — see [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
-- 🚧 **v2.0 Plugin Maturity** — Phases 6–13 (planning complete, execution pending)
+This milestone hardens an existing, working Revit 2026 add-in by resolving every documented concern in `.planning/codebase/CONCERNS.md` — no new product features. The 11 phases below follow the dependency graph derived from research (`.planning/research/ARCHITECTURE.md`): shared helpers and test scaffolding land first so downstream audits aren't redone; state/reentrancy, UX, bug-fix/decomposition, and security fixes proceed as architecturally-isolated groups; dependency isolation lands before geometry tests so those tests run against a deterministic Clipper2 version; performance profiling targets the post-decomposition, post-test code shape; and the milestone closes with deployment/documentation hardening followed by interactive, user-assisted runtime validation that exercises the cumulative set of fixes in one live Revit session.
 
 ## Phases
 
-<details>
-<summary>✅ v1.1 Optimization (Phases 1–5) — SHIPPED 2026-05-10</summary>
+**Phase Numbering:**
+- Integer phases (1, 2, 3): Planned milestone work
+- Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
 
-- [x] Phase 1: Research & Foundation — completed pre-scope (REQ-06 service consolidation)
-- [x] Phase 2: FormulaAutoGrouping Bug Fix (2/2 plans) — completed 2026-04-28 (REQ-07; verification artifact partial)
-- [x] Phase 2.5: Silent Data-Loss Hotfixes (3/3 plans) — completed 2026-05-08 (REQ-08/09/10; INSERTED for 5-plugin audit)
-- [x] Phase 3: Grid & Collection Fixes (10/10 plans) — completed 2026-05-09 (REQ-01; 22/22 manual Revit PASS)
-- [x] Phase 4: Advanced Renaming Logic (6/6 plans) — completed 2026-05-10 (REQ-02/03/04; 131/131 unit tests + trust-based sign-off)
-- [x] Phase 5: Verification & Polish (5/5 plans) — completed 2026-05-10 (REQ-05; 175 GREEN xUnit + 3 polish helpers)
+Decimal phases appear between their surrounding integers in numeric order.
 
-Full details: [milestones/v1.1-ROADMAP.md](milestones/v1.1-ROADMAP.md)
-
-</details>
-
-### 🚧 v2.0 Plugin Maturity (Phases 6–13)
-
-> **Source**: `.planning/research/SYNTHESIS.md` (5-plugin audit, 2026-05-08) + `.planning/REQUIREMENTS.md` (32 reqs).
-> **Theme**: Land cross-cutting foundation first (logger, severity progress, dialog whitelist), mature each of the five core plugins on top of it, then layer shared UI/UX chrome. Carry-over gaps from v1.1 fold into adjacent phases.
-
-- [x] **Phase 6: Cross-cutting Foundation** — Unified `ILogger`, severity-preserving `IProgressReporter`, dialog whitelist; close v1.1 documentation gap (GAPS-01). (completed 2026-05-11)
-- [ ] **Phase 7: Purge Unused Maturity** — Deep-mode honors user selections; typed `PurgeOptions`; accurate deletion counts; dedup failure handlers.
-- [ ] **Phase 8: Compacting Styles Maturity** — Real view (scope toggles + dry-run); shared `CompactionPipeline` base; warnings reach `LogView`; v1.1 Phase 02.5 manual Revit checks executed (GAPS-02).
-- [ ] **Phase 9: Convert Family Maturity** — Blast-radius preview; collapse over-decomposition; typed `FamilyConversionResult`; face-hosted preservation via `HostFace` capture.
-- [ ] **Phase 10: Category Changer Maturity** — `IInstanceSwapService` extracted; real cancellation; typed `ChangeCategoryResult`; LocationCurve / hosted / face-hosted transplant.
-- [ ] **Phase 11: Batch Rename Maturity** — Collapse `SearchReplaceService` facade; async `CollectBaseElements`; scope-pills UX; per-column funnel; close v1.1 Phase 04 C1 dimension null-clear observation (GAPS-03).
-- [ ] **Phase 12: UI System** — Shared visual style across all command views; `LogView` filter/search/copy/groups; per-command ribbon icons + headers; uniform preview-then-execute pattern.
-- [ ] **Phase 13: UX Polish** — Inline actionable errors with retry; cancellation contract everywhere; keyboard/focus parity; tooltips + inline help.
+- [ ] **Phase 1: Test Scaffolding + Shared Error-Handling Helper** - Unblock `dotnet test` for Revit-dependent tests and build the `LogAndIgnore` helper the catch audit depends on
+- [ ] **Phase 2: Bare-Catch Audit & Enforcement** - Classify and fix all 54 bare catch blocks; activate analyzers so regressions are caught at build time
+- [ ] **Phase 3: Reentrancy Guards (State & Modeless Commands)** - Fix `s_projectRunActive` and add an `ExternalEventCommand` busy-guard covering all exit paths
+- [ ] **Phase 4: Ribbon Availability + Transaction Rollback UX** - Close the Align-pulldown availability gap; surface COMPLETED/ROLLED BACK to the user
+- [ ] **Phase 5: Known Bug Fixes + BatchRename Decomposition** - Fix CategoryChanger's error message and BatchRename's formula/dimension TODOs, extracting a testable sub-service in the process
+- [ ] **Phase 6: Security — Path Sanitization & Log Hygiene** - Sanitize user-influenced file paths and reduce sensitive path logging
+- [ ] **Phase 7: Dependency Isolation (Clipper2 / DI.Abstractions)** - Log actually-loaded versions and isolate LECG's dependencies via native Revit manifest settings
+- [ ] **Phase 8: Test Coverage (High-Risk Focus)** - Command-level tests for Purge/AlignEdges/FixPoints/CategoryChanger; alignment geometry tests; lock in this milestone's bug fixes
+- [ ] **Phase 9: Performance Profiling** - Profile BatchRename/Purge/Alignment; optimize only proven bottlenecks
+- [ ] **Phase 10: Deployment & Documentation Hardening** - Manifest recovery procedure, deploy guardrails, and open conventions documented
+- [ ] **Phase 11: Interactive Runtime Validation** - DialogWhitelist discovery, post-isolation pack:// check, and the full smoke-test checklist with the user at the keyboard
 
 ## Phase Details
 
-### Phase 6: Cross-cutting Foundation
-**Goal**: Establish the unified logging, progress, and dialog-suppression substrate every later v2.0 phase consumes — and close the one v1.1 documentation gap that lives in the same context.
-**Depends on**: v1.1 baseline (175 GREEN xUnit)
-**Requirements**: CROSS-01, CROSS-02, CROSS-03, GAPS-01
+### Phase 1: Test Scaffolding + Shared Error-Handling Helper
+**Goal**: A sanctioned test workflow exists and a reusable suppression-logging helper is ready before the catch-block audit begins.
+**Depends on**: Nothing (first phase)
+**Requirements**: ERR-01, TEST-04
 **Success Criteria** (what must be TRUE):
-  1. A developer can route any plugin log entry through a single structured `ILogger` interface (Info/Warn/Error severity, scope tag) and see it land in `LogView` with the original severity preserved.
-  2. A user running any command sees `LogWarning` / `LogError` from `IProgressReporter` rendered with their actual severity in `LogView` (never collapsed to plain `Log`).
-  3. A user running Purge or Convert Family sees only whitelisted dialogs auto-dismissed; any non-whitelisted dialog (including unexpected error dialogs) reaches the user.
-  4. A developer reviewing v1.1 Phase 02 finds a complete `02-VERIFICATION.md` artifact with wave-0 evidence for REQ-07 (FormulaAutoGrouping).
-**Plans:** 5/5 plans complete
-  - [x] 06-00-PLAN.md — Wave 0: test scaffolding (LoggerSeverityTests, DialogWhitelistTests) + DialogId runtime discovery checkpoint
-  - [x] 06-01-PLAN.md — Wave 1: extend ILogger contract with scope + rewrite IProgressReporter impls for severity preservation
-  - [x] 06-02-PLAN.md — Wave 2: Logger.Instance migration sweep across 45 files + singleton deletion + Bootstrapper rewire (CROSS-01 complete)
-  - [ ] 06-03-PLAN.md — Wave 3: DialogWhitelist class + IDialogOverride seam + PurgeCommand/ConvertFamilyCommand handler migration
-  - [x] 06-04-PLAN.md — Wave 1 (parallel, independent): retroactive 02-VERIFICATION.md compilation (GAPS-01)
-
-### Phase 7: Purge Unused Maturity
-**Goal**: Make Deep purge honor user intent and report truthfully — no silent ignored checkboxes, no undercounted deletions, no hidden swallowed failures.
-**Depends on**: Phase 6 (consumes unified logger + severity progress)
-**Requirements**: PURGE-01, PURGE-02, PURGE-03
-**Success Criteria** (what must be TRUE):
-  1. A user's Deep-mode checkbox selections drive the purge exactly — unchecked items are never purged, checked items are always attempted.
-  2. A user sees a final deletion count in `LogView` that matches the actual number of elements removed (no undercount, no bare `catch {}` swallowing failures).
-  3. A developer reading the Deep-purge code path sees one typed `PurgeOptions` parameter object passed into a single `PurgeContext` built outside the Revit transaction (no 13-bool sprawl, no duplicated failure-handler implementations).
+  1. Running the documented `dotnet test` invocation compiles and executes Revit-dependent tests in LECG.Tests without CI-mode errors.
+  2. A `LogAndIgnore`-style helper exists, designed against `ILogger`'s scope-string requirement, and can be called from any service to suppress an exception while still logging it with a reason.
+  3. The CI-mode compilation issue that previously blocked Revit-dependent test files is resolved or has a documented, sanctioned workaround.
 **Plans**: TBD
 
-### Phase 8: Compacting Styles Maturity
-**Goal**: Give Compact Styles a real user-facing view with scope control and dry-run, share the workflow across the four style families, and clear the v1.1 manual-Revit-verification debt that lives in this surface.
-**Depends on**: Phase 6 (consumes unified logger + severity progress)
-**Requirements**: COMPACT-01, COMPACT-02, COMPACT-03, GAPS-02
+Plans:
+- [ ] 01-01: TBD
+
+### Phase 2: Bare-Catch Audit & Enforcement
+**Goal**: Every intentional exception suppression in the codebase is explicit, logged, and enforced going forward — without regressing batch operations to all-or-nothing.
+**Depends on**: Phase 1 (LogAndIgnore helper)
+**Requirements**: ERR-02, ERR-03, ERR-04
 **Success Criteria** (what must be TRUE):
-  1. A user opens Compacting Styles and sees per-style-type scope toggles (text / line / dimension / object styles) and a dry-run preview listing merge candidates before any commit.
-  2. A user sees compaction warnings (locale fallbacks, sentinel-unreadable cases, skip reasons) surfaced in `LogView` with the correct severity.
-  3. A developer reading the four compaction services sees them share a `CompactionPipeline` base class; legacy callback overloads with zero callers are gone.
-  4. A reviewer can verify all four v1.1 Phase 02.5 manual Revit items (Spanish-locale Compact Styles, English regression, mixed-batch refuse-all, wall-hosted Convert Family) have been executed in Revit and logged with sign-off.
+  1. All 54 previously bare catch blocks now log, re-throw with context, or call `LogAndIgnore` with an explicit reason.
+  2. `CadTempFileCleanupService` and `FamilyTempFileCleanupService` write a Warning-level log entry before suppressing a deletion failure.
+  3. Batch operations (BatchRename, Purge) still complete partially when one item fails — per-item "skip and continue" catches were not converted into operation-aborting rethrows.
+  4. Introducing a new unlogged bare catch now triggers a CA1031/RCS1075 analyzer warning at build time.
 **Plans**: TBD
 
-### Phase 9: Convert Family Maturity
-**Goal**: Stop Convert Family from feeling like a black box — show the user what will be replaced, deliver a structured result they can read, preserve face-hosted placements, and collapse the over-decomposed service graph.
-**Depends on**: Phase 6 (logger + dialog whitelist)
-**Requirements**: CONVERT-01, CONVERT-02, CONVERT-03, CONVERT-04
+Plans:
+- [ ] 02-01: TBD
+
+### Phase 3: Reentrancy Guards (State & Modeless Commands)
+**Goal**: Users cannot corrupt state or trigger overlapping operations by re-invoking a modeless command or restarting a run that failed partway.
+**Depends on**: Nothing (architecturally independent of Phases 1-2)
+**Requirements**: STATE-01, STATE-02, STATE-03
 **Success Criteria** (what must be TRUE):
-  1. A user about to convert a family sees a blast-radius preview (instance count, categories impacted, hosted/face-hosted breakdown) before committing.
-  2. A user receives a typed `FamilyConversionResult` summary listing every family with per-family success / skip / refuse and a reason; reasons appear in the UI, not log-only.
-  3. A face-hosted family instance lands back on its original face after conversion — `FamilyInstanceData` captures `HostFace` and the placement pipeline uses it (closes v1.1 deferral).
-  4. A developer reads the Convert Family codebase with ~10 pass-through single-Revit-call wrappers gone, `FamilyConversionNamingService` deleted, and inert `customName` / `isTemporary` parameters removed.
+  1. Clicking CategoryChanger or ConvertCad a second time while the first invocation is still running shows a user-visible warning instead of starting a second overlapping operation.
+  2. After `FormulaAutoGroupingCommand` fails partway through a run, the user can immediately retry without restarting Revit.
+  3. Closing the CategoryChanger/ConvertCad window through any exit path (X button, Alt+F4, failed operation) still clears the busy state so the next invocation works normally.
+  4. `ExternalEventCommand`'s static handler/event lifecycle limitation is documented in the class itself.
 **Plans**: TBD
 
-### Phase 10: Category Changer Maturity
-**Goal**: Lift the v1.1 refuse-all gate now that placement is real — transplant `LocationCurve`, hosted, and face-hosted instances correctly, and give the user real cancellation and typed results.
-**Depends on**: Phase 6 (logger + severity progress)
-**Requirements**: CATEGORY-01, CATEGORY-02, CATEGORY-03, CATEGORY-04
+Plans:
+- [ ] 03-01: TBD
+
+### Phase 4: Ribbon Availability + Transaction Rollback UX
+**Goal**: Users always see accurate command availability and know whether an operation actually completed or was rolled back.
+**Depends on**: Nothing (architecturally independent of Phases 1-3)
+**Requirements**: UX-01, UX-02
 **Success Criteria** (what must be TRUE):
-  1. A user transplants `LocationCurve`, hosted (wall/floor/ceiling), and face-hosted instances across categories and sees them land in the correct geometric position with no silent loss; the v1.1 refuse-all gate is lifted.
-  2. A user pressing Cancel mid-run sees the batch stop on the current element and a "Cancelled after N of M elements" summary surface in the UI.
-  3. A user reads a typed `ChangeCategoryResult` per element (success / skip / refuse + reason) in the UI — no more boolean+log mishmash.
-  4. A developer reads `CategoryChangerCommand` with the instance-swap logic extracted into a dedicated `IInstanceSwapService` (proper separation of concerns).
+  1. Each of the 8 Align pulldown sub-buttons (AlignLeft/Center/Right/Top/Middle/Bottom, DistributeH/V) greys out when no project document is active.
+  2. When a transaction rolls back (Revit-forced or otherwise), the user sees an explicit "ROLLED BACK" message rather than silence or a generic error.
+  3. When an operation completes normally, the user sees explicit confirmation distinguishing it from a rollback.
 **Plans**: TBD
 
-### Phase 11: Batch Rename Maturity
-**Goal**: Finish the v1.1 Batch Rename consolidation — collapse the lingering facade, keep the UI responsive on big models, give scope selection visual chrome, and clear the v1.1 Phase 04 C1 live-observation gap that lives in this code.
-**Depends on**: Phase 6 (logger + severity progress); v1.1 Phase 04 helpers
-**Requirements**: BATCH-01, BATCH-02, BATCH-03, BATCH-04, GAPS-03
+Plans:
+- [ ] 04-01: TBD
+
+### Phase 5: Known Bug Fixes + BatchRename Decomposition
+**Goal**: Category-change failures are explainable, and batch rename correctly handles formula-referenced and dimension-labeled parameters.
+**Depends on**: Nothing (architecturally independent; decomposition is a consequence of these fixes, not a prerequisite)
+**Requirements**: BUG-01, REN-01, REN-02, REN-03, REN-04
 **Success Criteria** (what must be TRUE):
-  1. A user opens Batch Rename on a large model and the UI remains responsive — `CollectBaseElements` runs asynchronously with visible progress.
-  2. A user selects scope (categories, types, instances) via visual scope-pill chrome; the prior dropdown sprawl is gone.
-  3. A user clicks a column header and sees a funnel popup of distinct values for filtering; `SetColumnFilter` is functional.
-  4. A developer reads `BatchRenameExecutionService` with the `SearchReplaceService` facade collapsed to one clean delegation surface; the unused `IFormulaUpdateService` DI registration is removed if confirmed dead.
-  5. A reviewer can verify the v1.1 Phase 04 C1 `Dimension.FamilyLabel` null-clear pair-action overload has been observed live in Revit and signed off.
+  1. Attempting a category change that fails shows an actionable error explaining why, including the documented Generic Model retry workaround.
+  2. Renaming a family type with formula-referenced parameters no longer corrupts or silently skips those parameters.
+  3. Renaming a family type with dimension-label parameters handles them correctly instead of failing silently.
+  4. The formula/dimension-handling logic is callable and testable independent of the full `BatchRenameExecutionService` (extracted to a sibling service).
+  5. Automated tests cover both formula-dependent and dimension-labeled rename scenarios and pass.
 **Plans**: TBD
 
-### Phase 12: UI System
-**Goal**: After per-plugin maturity lands, unify the visual layer — one shared chrome, a competent `LogView`, ribbon identity, and a uniform preview-then-execute pattern for destructive commands.
-**Depends on**: Phases 7–11 (per-plugin command shapes settled before they get re-skinned)
-**Requirements**: UI-01, UI-02, UI-03, UI-04
+Plans:
+- [ ] 05-01: TBD
+
+### Phase 6: Security — Path Sanitization & Log Hygiene
+**Goal**: User-influenced file paths cannot escape their intended directory, and logs don't unnecessarily expose full directory structure.
+**Depends on**: Nothing (architecturally isolated, no shared files with other phases)
+**Requirements**: SEC-01, SEC-02
 **Success Criteria** (what must be TRUE):
-  1. A user opens any command view and sees the same shared visual style (colors, typography, control sizing) — no one-off chrome remains.
-  2. A user inside `LogView` can filter by severity, search by text, copy entries to the clipboard, and collapse scope groups.
-  3. A user finds each command in the Revit ribbon with a recognizable icon, and opening the command shows an in-view header matching LECG visual identity.
-  4. A user running any destructive command (Purge, Compact, Convert, Category, Batch Rename) follows the same preview-then-execute flow: preview pane → commit button.
+  1. Supplying a path with parent-directory traversal to `CadFamilySaveService`, `FamilyEditorService`, `LinkedModelExportService`, or `SettingsManager` is rejected or normalized rather than written outside the intended folder.
+  2. Legitimate UNC paths and deep folder structures used in production still work after sanitization (no regression on real path patterns).
+  3. Log entries show file names instead of full paths where directory structure would otherwise be exposed.
 **Plans**: TBD
 
-### Phase 13: UX Polish
-**Goal**: Close the interaction quality gaps — actionable errors with retry, cancellation everywhere, keyboard parity, and discoverable help.
-**Depends on**: Phases 7–12 (UX-02 cancellation contract needs per-plugin internals from 7–11; tooltips/help in 13 layer on 12's chrome)
-**Requirements**: UX-01, UX-02, UX-03, UX-04
+Plans:
+- [ ] 06-01: TBD
+
+### Phase 7: Dependency Isolation (Clipper2 / DI.Abstractions)
+**Goal**: LECG always runs against its own Clipper2 and DI.Abstractions versions regardless of what other add-ins in the shared AppDomain load.
+**Depends on**: Nothing (architecturally independent), but must complete before Phase 8's geometry tests
+**Requirements**: DEP-01, DEP-02
 **Success Criteria** (what must be TRUE):
-  1. A user with failed elements sees inline, actionable error messages and a selectable failed-element list they can retry (no more log-only feedback).
-  2. A user pressing Cancel mid-batch in Purge, Compact, Convert, or Batch Rename sees the same cancellation contract Category Changer ships in Phase 10 — stop on current element, surface "Cancelled after N of M".
-  3. A user navigates every command view via Tab order, commits with Enter where safe, cancels with Esc, and uses common shortcuts (Ctrl+A select-all, etc.).
-  4. A user hovers any option in any command view and sees a tooltip explaining its effect; scope toggles, dry-run, and refuse-all semantics carry inline help text.
+  1. Revit startup log shows the actually-loaded Clipper2 and Microsoft.Extensions.DependencyInjection.Abstractions versions as a diagnostic line.
+  2. `ManifestSettings` isolation (`UseRevitContext=False` + `ContextName`) is configured so LECG loads its own Clipper2 2.0 / DI.Abstractions 8.0 copies independent of other add-ins.
+  3. Alignment/geometry services (AlignEdges, FixPoints, SplitBoundaries) run against a deterministic Clipper2 version, ready for Phase 8 tests to depend on. (Live multi-add-in confirmation happens in Phase 11.)
 **Plans**: TBD
+
+Plans:
+- [ ] 07-01: TBD
+
+### Phase 8: Test Coverage (High-Risk Focus)
+**Goal**: The highest-blast-radius commands and alignment geometry logic have automated regression coverage, and this milestone's bug fixes are locked in.
+**Depends on**: Phase 1 (test scaffolding), Phase 7 (deterministic Clipper2 version for geometry tests)
+**Requirements**: TEST-01, TEST-02, TEST-03
+**Success Criteria** (what must be TRUE):
+  1. Purge, AlignEdges, FixPoints, and CategoryChanger each have command-level tests (via mocked service abstractions) covering availability, error handling, and result reporting.
+  2. Boundary-point and vertex-alignment geometry services have unit tests that pass deterministically.
+  3. Every bug fixed elsewhere in this milestone (Phases 2-6) has at least one test that would fail if the fix were reverted.
+  4. `dotnet test` runs the full expanded suite without CI-mode compile errors.
+**Plans**: TBD
+
+Plans:
+- [ ] 08-01: TBD
+
+### Phase 9: Performance Profiling
+**Goal**: Performance work is evidence-driven — only proven bottlenecks get optimized, targeting the final (post-decomposition, post-test) code shape.
+**Depends on**: Phase 5 (decomposition), Phase 8 (tests exist to catch regressions from any optimization)
+**Requirements**: PERF-01, PERF-02
+**Success Criteria** (what must be TRUE):
+  1. BatchRename, Purge, and Alignment operations have been profiled (dotnet-trace/Stopwatch) against realistic data, with `FilteredElementCollector` cost documented in findings.
+  2. Any optimization made is backed by a before/after measurement showing improvement; no speculative changes shipped without profiling evidence.
+**Plans**: TBD
+
+Plans:
+- [ ] 09-01: TBD
+
+### Phase 10: Deployment & Documentation Hardening
+**Goal**: The add-in's manifest and deployment story is recoverable and documented, and open conventions are settled.
+**Depends on**: Nothing (architecturally independent of all code-fix phases)
+**Requirements**: DEPLOY-01, DEPLOY-02, DEPLOY-03, DOC-01, DOC-02
+**Success Criteria** (what must be TRUE):
+  1. A new machine or a corrupted `.addin` manifest can be restored by following a documented script/procedure in docs/deployment.
+  2. App startup (or a setup script) surfaces a clear warning if the manifest is missing or structurally invalid.
+  3. SkipRevitDeploy conventions are documented/enforced so validation builds never overwrite the live add-in unintentionally.
+  4. Unit-conversion (ForgeTypeId vs UnitUtils), parameter StorageType validation, and linked-model-transform conventions are documented.
+  5. CONCERNS.md reflects the research corrections (e.g. ribbon availability status) so future work isn't misled by stale findings.
+**Plans**: TBD
+
+Plans:
+- [ ] 10-01: TBD
+
+### Phase 11: Interactive Runtime Validation
+**Goal**: The cumulative set of fixes from Phases 1-10 is validated in a live, multi-add-in Revit session with the user at the keyboard — this closes the milestone.
+**Depends on**: Phases 1-10 (validates the cumulative set of fixes; DEP-03 specifically requires Phase 7's isolation to be in place)
+**Requirements**: DEP-03, VAL-01, VAL-02
+**Success Criteria** (what must be TRUE):
+  1. The pack:// URI workaround still functions correctly after dependency isolation is enabled, confirmed in a live Revit 2026 session.
+  2. Each of DialogWhitelist's five low-confidence entries has a recorded concrete `DialogBoxShowingEventArgs` subtype and result code, and is confirmed, corrected, or removed accordingly.
+  3. The full Revit smoke-test checklist (docs/ai/revit-smoke-test.md) has been executed with the user at the keyboard, with the full add-in complement (Enscape, ModPlus, Forma) installed, and results recorded.
+**Plans**: TBD
+
+Plans:
+- [ ] 11-01: TBD
 
 ## Progress
 
-| Phase | Milestone | Plans Complete | Status | Completed |
-|-------|-----------|----------------|--------|-----------|
-| 1. Research & Foundation | v1.1 | — | Complete | pre-scope |
-| 2. FormulaAutoGrouping Bug Fix | v1.1 | 2/2 | Complete | 2026-04-28 |
-| 2.5. Silent Data-Loss Hotfixes | v1.1 | 3/3 | Complete | 2026-05-08 |
-| 3. Grid & Collection Fixes | v1.1 | 10/10 | Complete | 2026-05-09 |
-| 4. Advanced Renaming Logic | v1.1 | 6/6 | Complete | 2026-05-10 |
-| 5. Verification & Polish | v1.1 | 5/5 | Complete | 2026-05-10 |
-| 6. Cross-cutting Foundation | 5/5 | Complete   | 2026-05-11 | — |
-| 7. Purge Unused Maturity | v2.0 | 0/4 | Not started | — |
-| 8. Compacting Styles Maturity | v2.0 | 0/4 | Not started | — |
-| 9. Convert Family Maturity | v2.0 | 0/4 | Not started | — |
-| 10. Category Changer Maturity | v2.0 | 0/4 | Not started | — |
-| 11. Batch Rename Maturity | v2.0 | 0/4 | Not started | — |
-| 12. UI System | v2.0 | 0/4 | Not started | — |
-| 13. UX Polish | v2.0 | 0/4 | Not started | — |
+**Execution Order:**
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 10 → 11
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. Test Scaffolding + Shared Error-Handling Helper | 0/TBD | Not started | - |
+| 2. Bare-Catch Audit & Enforcement | 0/TBD | Not started | - |
+| 3. Reentrancy Guards (State & Modeless Commands) | 0/TBD | Not started | - |
+| 4. Ribbon Availability + Transaction Rollback UX | 0/TBD | Not started | - |
+| 5. Known Bug Fixes + BatchRename Decomposition | 0/TBD | Not started | - |
+| 6. Security — Path Sanitization & Log Hygiene | 0/TBD | Not started | - |
+| 7. Dependency Isolation (Clipper2 / DI.Abstractions) | 0/TBD | Not started | - |
+| 8. Test Coverage (High-Risk Focus) | 0/TBD | Not started | - |
+| 9. Performance Profiling | 0/TBD | Not started | - |
+| 10. Deployment & Documentation Hardening | 0/TBD | Not started | - |
+| 11. Interactive Runtime Validation | 0/TBD | Not started | - |
