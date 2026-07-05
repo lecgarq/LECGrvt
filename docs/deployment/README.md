@@ -1,44 +1,55 @@
 # LECG Plugin Deployment Guide
 
-## Installation
+> Updated 2026-07-04 to match the verified installed setup (live manifest + Revit journal + `LECG.csproj` deploy target). Previous revisions described a per-user `%AppData%` install that does not exist on the working machine.
 
-### 1. Copy Plugin Files
+## How Deployment Actually Works
 
-Copy the compiled plugin DLL and dependencies to a local directory:
+Deployment has two independent pieces:
+
+### 1. DLLs — deployed automatically by the build
+
+The `DeployToRevit` MSBuild target in `LECG.csproj` copies `*.dll`, `*.pdb`, and `*.deps.json` from the build output to:
+
 ```
-C:\LECG\RevitAddins\LECG\bin\Debug\net8.0-windows\
-```
-
-Or for production:
-```
-C:\Program Files\LECG\Revit 2026\
-```
-
-### 2. Create .addin Manifest
-
-1. Copy `LECG.addin.template` from this directory
-2. Rename to `LECG.addin`
-3. Replace `YOUR-GUID-HERE` with a unique GUID (use Visual Studio > Tools > Create GUID)
-4. Update the `<Assembly>` path to point to your LECG.dll location:
-   ```xml
-   <Assembly>C:\LECG\RevitAddins\LECG\bin\Debug\net8.0-windows\LECG.dll</Assembly>
-   ```
-
-### 3. Deploy .addin File
-
-Copy `LECG.addin` to the Revit addins directory:
-```
-%AppData%\Autodesk\Revit\Addins\2026\
+C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\
 ```
 
-Full path example:
+after **every** build, unless skipped. The build target does **not** generate, copy, or touch any `.addin` manifest.
+
+**Build commands:**
+
+- Validation / development build (safe, no deploy) — the default for agents and CI:
+  ```bash
+  dotnet build -p:SkipRevitDeploy=true
+  ```
+- Deploying build:
+  ```bash
+  dotnet build
+  ```
+  ⚠️ **Warning:** plain `dotnet build` overwrites the live add-in that Revit loads. Close Revit first — with Revit open the copy fails on locked files or leaves a mixed-version folder. Only run it when deployment is the intent.
+
+CI (`GITHUB_ACTIONS`/`CI` env vars) sets `SkipRevitDeploy=true` automatically (`LECG.csproj`).
+
+### 2. `.addin` Manifest — installed manually, once
+
+The manifest is **not** produced by the build. It lives machine-wide at:
+
 ```
-C:\Users\YourUsername\AppData\Roaming\Autodesk\Revit\Addins\2026\LECG.addin
+C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin
 ```
 
-### 4. Restart Revit
+and points Revit at `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll` (`Type="Application"`, `FullClassName=LECG.App`). Verified via Revit journal: Revit 2026 loads LECG from exactly this path. No per-user (`%AppData%`) manifest exists or is needed.
 
-The LECG ribbon tab should appear in Revit after restart.
+**Do not manually edit the live manifest** unless you are intentionally installing or updating the add-in.
+
+**Installing on a new machine:**
+
+1. Copy `LECG.addin.template` from this directory and rename it to `LECG.addin`.
+2. Set a unique GUID and update `<Assembly>` to the deployed DLL path (`C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll`).
+3. Place the file in `C:\ProgramData\Autodesk\Revit\Addins\2026\` (machine-wide — the canonical setup for this project). Revit also supports per-user `%AppData%\Autodesk\Revit\Addins\2026\`, but do not create both.
+4. Run a deploying build (`dotnet build`) with Revit closed, then start Revit — the LECG ribbon tab should appear.
+
+**Known quirk:** the working live manifest uses `<ClientId>` for its GUID element while the template uses `<AddInId>`. The live file demonstrably works; do not unify the two without testing in Revit.
 
 ---
 
@@ -46,7 +57,7 @@ The LECG ribbon tab should appear in Revit after restart.
 
 ### Plugin doesn't load
 - Check Revit's Add-In Manager (File > Options > Add-Ins)
-- Look for error messages in the Revit Journal file: `%AppData%\Autodesk\Revit\Journals\`
+- Look for error messages in the Revit Journal file: `%LocalAppData%\Autodesk\Revit\Autodesk Revit 2026\Journals\`
 
 ### Missing dependencies
 - Ensure all DLLs from the build output are in the same directory as LECG.dll
@@ -54,7 +65,7 @@ The LECG ribbon tab should appear in Revit after restart.
 
 ### AssemblyResolve conflicts
 - The plugin includes an AssemblyResolve handler in `App.cs` to handle version conflicts
-- If you see assembly load errors, check the Revit Journal file for details
+- Revit journals may log `API_ERROR { Assembly version conflict ... }` at LECG load time when other installed add-ins preload different versions of shared assemblies (observed: Clipper2Lib, Microsoft.Extensions.DependencyInjection.Abstractions). The add-in still loads, but check the journal when debugging behavior that only reproduces inside Revit.
 
 ---
 
@@ -62,19 +73,21 @@ The LECG ribbon tab should appear in Revit after restart.
 
 ### Debug Build
 ```bash
-dotnet build -c Debug
+dotnet build -c Debug -p:SkipRevitDeploy=true
 ```
-- Located at: `bin\Debug\net8.0-windows\`
+- Located at: `bin\x64\Debug\net8.0-windows\`
 - Includes debug symbols (.pdb files)
 - Enables `#if DEBUG` code paths
 
 ### Release Build
 ```bash
-dotnet build -c Release
+dotnet build -c Release -p:SkipRevitDeploy=true
 ```
-- Located at: `bin\Release\net8.0-windows\`
+- Located at: `bin\x64\Release\net8.0-windows\`
 - Optimized for performance
 - Code analysis warnings treated as errors (CI enforcement)
+
+(Omit `-p:SkipRevitDeploy=true` only when you intend to deploy to the live Revit addins folder.)
 
 ---
 
@@ -101,4 +114,4 @@ dotnet build -c Release
 | Revit 2025   | .NET 8.0     | ⚠️ Untested |
 | Revit 2024   | .NET 8.0     | ⚠️ Untested |
 
-To target multiple Revit versions, update `<Assembly>` path in the .addin file per version.
+To target multiple Revit versions, install a `.addin` manifest per version and update its `<Assembly>` path.
