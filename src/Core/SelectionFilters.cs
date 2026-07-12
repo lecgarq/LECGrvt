@@ -40,40 +40,6 @@ namespace LECG.Core
         }
 
         /// <summary>
-        /// Filter that allows Toposolid elements from linked models.
-        /// </summary>
-        public class LinkedToposolidFilter : ISelectionFilter
-        {
-            public bool AllowElement(Element elem)
-            {
-                // Allow the RevitLinkInstance container
-                return elem is RevitLinkInstance;
-            }
-
-            public bool AllowReference(Reference reference, XYZ position)
-            {
-                // Accept faces from linked Toposolids
-                return true;
-            }
-        }
-
-        /// <summary>
-        /// Filter that allows both native Toposolids and linked Toposolids (via their link instances).
-        /// </summary>
-        public class ToposolidOrLinkFilter : ISelectionFilter
-        {
-            public bool AllowElement(Element elem)
-            {
-                ArgumentNullException.ThrowIfNull(elem);
-                if (elem.GetType().Name == "Toposolid") return true;
-                if (elem is RevitLinkInstance) return true;
-                return false;
-            }
-
-            public bool AllowReference(Reference reference, XYZ position) => true;
-        }
-
-        /// <summary>
         /// Filter that allows native slab geometry and linked model containers.
         /// </summary>
         public class SlabOrLinkFilter : ISelectionFilter

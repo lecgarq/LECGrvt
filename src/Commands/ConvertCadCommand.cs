@@ -14,8 +14,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class ConvertCadCommand : ExternalEventCommand<ConvertCadEventHandler>
     {
-        protected override string? TransactionName => null; // Internal transactions used
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

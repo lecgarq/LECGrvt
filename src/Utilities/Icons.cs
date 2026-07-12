@@ -23,7 +23,6 @@ namespace LECG.Utilities
         public static Geometry Copy { get; } = Geometry.Parse("M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2 M8 8h10c1.1 0 2 .9 2 2v10c0 1.1-.9 2-2 2H8c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2z");
         public static Geometry Plus { get; } = Geometry.Parse("M5 12h14 M12 5v14");
         public static Geometry Minus { get; } = Geometry.Parse("M5 12h14");
-        public static Geometry Eraser { get; } = Geometry.Parse("m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21 M22 21H7 M5 11l9 9");
         public static Geometry Hammer { get; } = Geometry.Parse("m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9 M17.64 6.36 21 3l-3.36-3.36a1.5 1.5 0 0 0-2.12 0l-1.03 1.03a1.5 1.5 0 0 0 0 2.12l3.36 3.36a1.5 1.5 0 0 0 2.12 0 1.5 1.5 0 0 0 0-2.12ZM14 14l3-3");
 
         // Decorative & Visual
@@ -34,9 +33,7 @@ namespace LECG.Utilities
         public static Geometry Layers { get; } = Geometry.Parse("m12 2 9 4.9V17L12 22 3 17V6.9l9-4.9z M3 6.9l9 4.9 9-4.9 M12 22V11.8");
 
         // Align & Distribute
-        public static Geometry AlignLeft { get; } = Geometry.Parse("M21 6H3 M17 12H3 M13 18H3"); // Just generic align lines
         public static Geometry AlignCenter { get; } = Geometry.Parse("M3 6h18 M7 12h10 M10 18h4");
-        public static Geometry AlignRight { get; } = Geometry.Parse("M21 6H3 M21 12H7 M21 18H11");
 
         // Command Specifics
         public static Geometry Simplify { get; } = Geometry.Parse("M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z M12 10v4"); // Simple circle
@@ -60,16 +57,13 @@ namespace LECG.Utilities
             Copy.Freeze();
             Plus.Freeze();
             Minus.Freeze();
-            Eraser.Freeze();
             Hammer.Freeze();
             Sparkles.Freeze();
             Sun.Freeze();
             SearchReplace.Freeze();
             Palette.Freeze();
             Layers.Freeze();
-            AlignLeft.Freeze();
             AlignCenter.Freeze();
-            AlignRight.Freeze();
             Simplify.Freeze();
             Contours.Freeze();
             Level.Freeze();

@@ -45,11 +45,6 @@ namespace LECG.Services
             return null;
         }
 
-        public List<XYZ> GetEditorVertexPositions(Element element)
-        {
-            return GetVertexPositions(element, interiorOnly: false);
-        }
-
         public List<XYZ> GetInteriorVertexPositions(Element element)
         {
             return GetVertexPositions(element, interiorOnly: true);

@@ -1,6 +1,5 @@
 using System.Globalization;
 using System.Windows;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using LECG.Core;
@@ -42,11 +41,6 @@ namespace LECG.Views
 
             TxtValue.Focus();
             TxtValue.SelectAll();
-        }
-
-        public override void Initialize(UIDocument uiDoc)
-        {
-            base.Initialize(uiDoc);
         }
     }
 }

@@ -33,17 +33,6 @@ namespace LECG.Services
             new XYZ(D67, -D22, 0)
         };
 
-        public bool CheckHitsReference(ReferenceIntersector intersector, XYZ pt)
-        {
-            ArgumentNullException.ThrowIfNull(intersector);
-            ArgumentNullException.ThrowIfNull(pt);
-
-            // Downward-only — we want top-surface hits for alignment
-            XYZ rayStart = new XYZ(pt.X, pt.Y, RayStartCeiling);
-            ReferenceWithContext hit = intersector.FindNearest(rayStart, XYZ.BasisZ.Negate());
-            return hit != null;
-        }
-
         public AlignEdgesHitInfo? GetHitInfo(ReferenceIntersector intersector, XYZ pt)
         {
             ArgumentNullException.ThrowIfNull(intersector);
@@ -53,11 +42,6 @@ namespace LECG.Services
             XYZ rayDir = XYZ.BasisZ.Negate();
             ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);
             return hit != null ? CreateHitInfo(hit, rayStart, rayDir) : null;
-        }
-
-        public XYZ? GetHitPoint(ReferenceIntersector intersector, XYZ pt)
-        {
-            return GetHitInfo(intersector, pt)?.Point;
         }
 
         public AlignEdgesHitInfo? GetNearestHitInfo(ReferenceIntersector intersector, XYZ pt, double maxRadius)
@@ -131,11 +115,6 @@ namespace LECG.Services
             }
 
             return null;
-        }
-
-        public XYZ? GetNearestHitPoint(ReferenceIntersector intersector, XYZ pt, double maxRadius)
-        {
-            return GetNearestHitInfo(intersector, pt, maxRadius)?.Point;
         }
 
         private static AlignEdgesHitInfo CreateHitInfo(ReferenceWithContext hit, XYZ rayStart, XYZ rayDir)

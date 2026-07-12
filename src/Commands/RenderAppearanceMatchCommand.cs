@@ -20,9 +20,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class RenderAppearanceMatchCommand : RevitCommand
     {
-        // Manual transaction to allow selection before transaction start
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

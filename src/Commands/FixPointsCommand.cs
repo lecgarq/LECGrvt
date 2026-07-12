@@ -16,8 +16,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class FixPointsCommand : RevitCommand
     {
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

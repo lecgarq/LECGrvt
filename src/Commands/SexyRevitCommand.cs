@@ -17,16 +17,13 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class SexyRevitCommand : RevitCommand
     {
-        // Service handles logic, no main transaction needed
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
             View view = doc.ActiveView;
-            if (view == null) throw new Exception("No active view.");
+            if (view == null) throw new InvalidOperationException("No active view.");
 
             // 1. Load Settings
             var loadedSettings = SettingsManager.Load<SexyRevitViewModel>("SexyRevitSettings.json");

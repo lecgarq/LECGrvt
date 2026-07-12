@@ -13,8 +13,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class AlignEdgesCommand : RevitCommand
     {
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

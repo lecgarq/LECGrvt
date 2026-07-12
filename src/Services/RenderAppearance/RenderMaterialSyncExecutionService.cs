@@ -9,16 +9,13 @@ namespace LECG.Services
 {
     public class RenderMaterialSyncExecutionService : IRenderMaterialSyncExecutionService
     {
-        private readonly IRenderMaterialSyncCheckService _syncCheckService;
         private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;
         private readonly IImageColorExtractionService _imageColorExtractionService;
 
         public RenderMaterialSyncExecutionService(
-            IRenderMaterialSyncCheckService syncCheckService,
             IRenderMaterialGraphicsApplyService graphicsApplyService,
             IImageColorExtractionService imageColorExtractionService)
         {
-            _syncCheckService = syncCheckService;
             _graphicsApplyService = graphicsApplyService;
             _imageColorExtractionService = imageColorExtractionService;
         }

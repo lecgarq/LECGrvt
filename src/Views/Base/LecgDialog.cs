@@ -48,12 +48,6 @@ namespace LECG.Views.Base
         }
     }
 
-    public enum LecgDialogButtons
-    {
-        Ok,
-        OkCancel
-    }
-
     public enum LecgDialogResult
     {
         Ok,

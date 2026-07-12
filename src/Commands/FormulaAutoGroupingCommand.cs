@@ -26,8 +26,6 @@ namespace LECG.Commands
     {
         private static bool s_projectRunActive;
 
-        protected override string? TransactionName => null;
-
         private static void OnDialogShowing(object? sender, DialogBoxShowingEventArgs e)
         {
             e.OverrideResult(2);

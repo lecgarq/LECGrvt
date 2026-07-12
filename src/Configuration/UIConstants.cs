@@ -88,35 +88,27 @@ namespace LECG.Configuration
 
         // Align Elements
         public const string ButtonAlignLeft_Name = "btnAlignLeft";
-        public const string ButtonAlignLeft_Text = "Align\nLeft";
         public const string ButtonAlignLeft_Tooltip = "Align selected elements to the left of the reference element.";
 
         public const string ButtonAlignCenter_Name = "btnAlignCenter";
-        public const string ButtonAlignCenter_Text = "Align\nCenter";
         public const string ButtonAlignCenter_Tooltip = "Align selected elements to the horizontal center of the reference element.";
 
         public const string ButtonAlignRight_Name = "btnAlignRight";
-        public const string ButtonAlignRight_Text = "Align\nRight";
         public const string ButtonAlignRight_Tooltip = "Align selected elements to the right of the reference element.";
 
         public const string ButtonAlignTop_Name = "btnAlignTop";
-        public const string ButtonAlignTop_Text = "Align\nTop";
         public const string ButtonAlignTop_Tooltip = "Align selected elements to the top of the reference element.";
 
         public const string ButtonAlignMiddle_Name = "btnAlignMiddle";
-        public const string ButtonAlignMiddle_Text = "Align\nMiddle";
         public const string ButtonAlignMiddle_Tooltip = "Align selected elements to the vertical center of the reference element.";
 
         public const string ButtonAlignBottom_Name = "btnAlignBottom";
-        public const string ButtonAlignBottom_Text = "Align\nBottom";
         public const string ButtonAlignBottom_Tooltip = "Align selected elements to the bottom of the reference element.";
 
         public const string ButtonDistributeH_Name = "btnDistributeH";
-        public const string ButtonDistributeH_Text = "Distribute\nHorizontally";
         public const string ButtonDistributeH_Tooltip = "Distribute selected elements evenly horizontally.";
 
         public const string ButtonDistributeV_Name = "btnDistributeV";
-        public const string ButtonDistributeV_Text = "Distribute\nVertically";
         public const string ButtonDistributeV_Tooltip = "Distribute selected elements evenly vertically.";
 
         // Standards (Convert CAD)
@@ -168,5 +160,10 @@ namespace LECG.Configuration
         public const string ButtonTypeToLinked_Name = "btnTypeToLinked";
         public const string ButtonTypeToLinked_Text = "Type to\nLinked";
         public const string ButtonTypeToLinked_Tooltip = "Separate model content by type into individual linked Revit files.";
+
+        // Shared to Family Parameter
+        public const string ButtonSharedToFamilyParam_Name = "btnSharedToFamilyParam";
+        public const string ButtonSharedToFamilyParam_Text = "Shared to\nFamily Param";
+        public const string ButtonSharedToFamilyParam_Tooltip = "Bulk-convert shared parameters in families to non-shared family parameters, keeping the same name and behavior. Preserves placed instance values.";
     }
 }

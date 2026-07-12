@@ -18,8 +18,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class AssignMaterialCommand : RevitCommand
     {
-        protected override string? TransactionName => null; // Handled internally
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

@@ -25,8 +25,6 @@ namespace LECG.Core
 
         public abstract void Execute(UIDocument uiDoc, Document doc);
 
-        protected virtual string? TransactionName => null;
-
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             IDisposable? logScope = null;

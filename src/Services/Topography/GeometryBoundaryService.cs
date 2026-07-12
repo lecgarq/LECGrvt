@@ -9,12 +9,10 @@ namespace LECG.Services
 {
     public class GeometryBoundaryService : IGeometryBoundaryService
     {
-        private readonly ISlabService _slabService;
         private readonly IAppMemoryCache _appMemoryCache;
 
-        public GeometryBoundaryService(ISlabService slabService, IAppMemoryCache appMemoryCache)
+        public GeometryBoundaryService(IAppMemoryCache appMemoryCache)
         {
-            _slabService = slabService;
             _appMemoryCache = appMemoryCache;
         }
 

@@ -16,8 +16,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class UpdateContoursCommand : RevitCommand
     {
-        protected override string? TransactionName => null; // Command handles own transaction
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

@@ -11,8 +11,8 @@ namespace LECG.Controls
     /// <c>LECG.ViewModels.Components.ElementRowViewModel</c>.
     /// </summary>
     /// <remarks>
-    /// Wraps <see cref="LecgDataGrid"/> so callers inherit virtualization,
-    /// styling, and CheckPropertyName-based Select-All/None reflection without
+    /// Wraps <see cref="LecgDataGrid"/> so callers inherit virtualization and
+    /// styling without
     /// re-stating column XAML. Per-screen extra columns (e.g. Original/New for
     /// Batch Rename) keep using <see cref="LecgDataGrid"/> directly — see
     /// 03-05-SUMMARY.md for the column-shape decision.

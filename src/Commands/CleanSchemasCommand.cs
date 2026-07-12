@@ -15,9 +15,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class CleanSchemasCommand : RevitCommand
     {
-        // No automatic transaction needed for initial scan
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

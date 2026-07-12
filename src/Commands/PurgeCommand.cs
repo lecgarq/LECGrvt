@@ -25,9 +25,6 @@ namespace LECG.Commands
     {
         private const string PurgeSettingsFile = "PurgeDialogSettings.json";
 
-        // We handle the transaction internally due to conditional logic
-        protected override string? TransactionName => null;
-
         /// <summary>
         /// Auto-dismiss known-safe Revit TaskDialogs during purge operations via explicit whitelist.
         /// Unknown dialogs reach the user (reach-user default per CROSS-03).

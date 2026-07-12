@@ -15,8 +15,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class ConvertFamilyCommand : RevitCommand
     {
-        protected override string? TransactionName => null;
-
         /// <summary>
         /// Auto-dismiss known-safe Revit dialogs during conversion via explicit whitelist.
         /// Unknown dialogs reach the user (reach-user default per CROSS-03).

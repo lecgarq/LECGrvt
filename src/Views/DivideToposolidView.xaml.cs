@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System;
 using System.Windows;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
 using LECG.ViewModels;
@@ -52,11 +51,5 @@ namespace LECG.Views
                 }
             };
         }
-
-        public override void Initialize(UIDocument uiDoc)
-        {
-            base.Initialize(uiDoc);
-        }
-
     }
 }

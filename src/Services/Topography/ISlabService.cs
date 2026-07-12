@@ -9,12 +9,6 @@ namespace LECG.Services.Interfaces
         Element? DuplicateElement(Document doc, Element element);
 
         /// <summary>
-        /// Snapshots all SlabShapeVertex positions into a safe list before modification.
-        /// Enables the editor if it is not already enabled.
-        /// </summary>
-        List<XYZ> GetEditorVertexPositions(Element element);
-
-        /// <summary>
         /// Snapshots only interior SlabShapeVertex positions into a safe list before modification.
         /// Enables the editor if it is not already enabled.
         /// </summary>

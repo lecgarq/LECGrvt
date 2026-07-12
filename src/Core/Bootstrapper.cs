@@ -80,8 +80,6 @@ namespace LECG.Core
             services.AddSingleton<ISlabService, SlabService>();
             services.AddSingleton<IOffsetService, OffsetService>();
             services.AddSingleton<IRenderSolidFillPatternService, RenderSolidFillPatternService>();
-            services.AddSingleton<IRenderMaterialSyncCheckService, RenderMaterialSyncCheckService>();
-            services.AddSingleton<IRenderAppearanceRefreshService, RenderAppearanceRefreshService>();
             services.AddSingleton<IRenderBatchProgressService, RenderBatchProgressService>();
             services.AddSingleton<IRenderMaterialGraphicsApplyService, RenderMaterialGraphicsApplyService>();
             services.AddSingleton<IRenderMaterialSyncExecutionService, RenderMaterialSyncExecutionService>();
@@ -103,7 +101,6 @@ namespace LECG.Core
             services.AddSingleton<IMaterialTypeAssignmentProcessService, MaterialTypeAssignmentProcessService>();
             services.AddSingleton<IMaterialAssignmentExecutionService, MaterialAssignmentExecutionService>();
             services.AddSingleton<IMaterialService, MaterialService>();
-            services.AddSingleton<IPurgeReferenceScannerService, PurgeReferenceScannerService>();
             services.AddSingleton<IPurgeReferencedLevelService, PurgeReferencedLevelService>();
             services.AddSingleton<IPurgeDeleteElementService, PurgeDeleteElementService>();
             services.AddSingleton<ILinePatternCompactionService, LinePatternCompactionService>();
@@ -150,7 +147,6 @@ namespace LECG.Core
             services.AddSingleton<IFamilyConversionFinalizeService, FamilyConversionFinalizeService>();
             services.AddSingleton<IFamilyLoadOptionsFactory, FamilyLoadOptionsFactory>();
             services.AddSingleton<IFamilyParameterSetupService, FamilyParameterSetupService>();
-            services.AddSingleton<IFamilyConversionNamingService, FamilyConversionNamingService>();
             services.AddSingleton<IFamilyConversionLoggingService, FamilyConversionLoggingService>();
             services.AddSingleton<IFamilySourceDocumentService, FamilySourceDocumentService>();
             services.AddSingleton<IFamilyConversionExecutionService, FamilyConversionExecutionService>();
@@ -162,13 +158,11 @@ namespace LECG.Core
             services.AddSingleton<IFamilyConversionService, FamilyConversionService>();
             services.AddSingleton<IReferenceRaycastService, ReferenceRaycastService>();
             services.AddSingleton<IAlignEdgesCurveDivisionService, AlignEdgesCurveDivisionService>();
-            services.AddSingleton<IAlignEdgesCurveHitService, AlignEdgesCurveHitService>();
             services.AddSingleton<IAlignEdgesHitPointProjectionService, AlignEdgesHitPointProjectionService>();
             services.AddSingleton<IAlignEdgesIntersectorService, AlignEdgesIntersectorService>();
             services.AddSingleton<IAlignEdgesBoundaryPointService, AlignEdgesBoundaryPointService>();
             services.AddSingleton<IAlignEdgesBoundaryCollectionService, AlignEdgesBoundaryCollectionService>();
             services.AddSingleton<IAlignEdgesPointInsertionService, AlignEdgesPointInsertionService>();
-            services.AddSingleton<IToposolidBaseElevationService, ToposolidBaseElevationService>();
             services.AddSingleton<IAlignEdgesVertexAlignmentService, AlignEdgesVertexAlignmentService>();
             services.AddSingleton<IAlignEdgesToposolidProcessingService, AlignEdgesToposolidProcessingService>();
             services.AddSingleton<IAlignEdgesService, AlignEdgesService>();
@@ -217,6 +211,7 @@ namespace LECG.Core
             services.AddSingleton<ICadDwgFamilyCreationService, CadDwgFamilyCreationService>();
             services.AddSingleton<ICadConversionService, CadConversionService>();
             services.AddSingleton<IFamilyEditorService, FamilyEditorService>();
+            services.AddSingleton<ISharedToFamilyParameterService, SharedToFamilyParameterService>();
             services.AddSingleton<IConversionService, ConversionService>();
             services.AddSingleton<IGeometryBoundaryService, GeometryBoundaryService>();
             services.AddSingleton<ISplitBoundariesService, SplitBoundariesService>();

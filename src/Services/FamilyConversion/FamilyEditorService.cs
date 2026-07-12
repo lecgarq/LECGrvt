@@ -3,7 +3,6 @@ using Autodesk.Revit.ApplicationServices;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
@@ -109,7 +108,7 @@ namespace LECG.Services
             };
         }
 
-        public bool ProcessFamily(Autodesk.Revit.DB.Family family, Action<Autodesk.Revit.DB.Document> action)
+        private bool ProcessFamily(Autodesk.Revit.DB.Family family, Action<Autodesk.Revit.DB.Document> action)
         {
             if (family == null) return false;
             ArgumentNullException.ThrowIfNull(action);
@@ -161,7 +160,7 @@ namespace LECG.Services
             if (string.IsNullOrEmpty(templatePath))
             {
                 string baseDir = Configuration.RevitConstants.GetFamilyTemplatesBaseDir(app.VersionNumber);
-                throw new Exception($"Creator Engine Error: Could not find suitable .rft template in {baseDir}. Please ensure English or Spanish templates are installed.");
+                throw new InvalidOperationException($"Creator Engine Error: Could not find suitable .rft template in {baseDir}. Please ensure English or Spanish templates are installed.");
             }
 
             Document sourceDoc = projectDoc.EditFamily(sourceFamily);
@@ -207,7 +206,7 @@ namespace LECG.Services
                 }
                 catch (Exception nestEx) when (IsExpectedFamilyNestingException(nestEx))
                 {
-                    throw new Exception($"Nesting Failed: {nestEx.Message}. Harvesting logic exhausted.");
+                    throw new InvalidOperationException($"Nesting Failed: {nestEx.Message}. Harvesting logic exhausted.");
                 }
                 finally
                 {
@@ -242,19 +241,6 @@ namespace LECG.Services
             {
                 // Note: sourceDoc was closed earlier in the try block to avoid lock
                 TryCloseFamilyDocument(targetDoc);
-            }
-        }
-
-        public void BatchProcess(IEnumerable<Autodesk.Revit.DB.Family> families, Action<Autodesk.Revit.DB.Document> action)
-        {
-            ArgumentNullException.ThrowIfNull(families);
-            ArgumentNullException.ThrowIfNull(action);
-
-            // Future performance enhancement: consider batching transactions if Revit allows
-            // For now, iterate with individual family document management for memory safety
-            foreach (var family in families)
-            {
-                ProcessFamily(family, action);
             }
         }
 

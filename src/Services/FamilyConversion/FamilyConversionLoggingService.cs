@@ -21,11 +21,6 @@ namespace LECG.Services
             _logger.Log($"Temporary Mode: {isTemporary}", scope: "FamilyConversion");
         }
 
-        public void LogWarning(string message)
-        {
-            _logger.LogWarning($"Warning: {message}", scope: "FamilyConversion");
-        }
-
         public void LogCriticalError(string message, string stackTrace)
         {
             _logger.LogError($"Critical Error: {message}", scope: "FamilyConversion");

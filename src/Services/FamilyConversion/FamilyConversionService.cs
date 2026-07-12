@@ -15,7 +15,6 @@ namespace LECG.Services
         private readonly IFamilyTemplatePathService _templatePathService;
         private readonly IFamilySourceDocumentService _familySourceDocumentService;
         private readonly IFamilyConversionExecutionService _familyConversionExecutionService;
-        private readonly IFamilyConversionNamingService _familyConversionNamingService;
         private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
         private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
         private readonly ITransactionService _transactionService;
@@ -26,7 +25,6 @@ namespace LECG.Services
             IFamilyTemplatePathService templatePathService,
             IFamilySourceDocumentService familySourceDocumentService,
             IFamilyConversionExecutionService familyConversionExecutionService,
-            IFamilyConversionNamingService familyConversionNamingService,
             IFamilyConversionLoggingService familyConversionLoggingService,
             IFamilyConversionFinalizeService familyConversionFinalizeService,
             ITransactionService transactionService,
@@ -35,17 +33,10 @@ namespace LECG.Services
             _templatePathService = templatePathService;
             _familySourceDocumentService = familySourceDocumentService;
             _familyConversionExecutionService = familyConversionExecutionService;
-            _familyConversionNamingService = familyConversionNamingService;
             _familyConversionLoggingService = familyConversionLoggingService;
             _familyConversionFinalizeService = familyConversionFinalizeService;
             _transactionService = transactionService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-        public void ConvertFamily(Document doc, FamilyInstance instance, string customName, string templatePath, bool isTemporary)
-        {
-            if (instance == null) return;
-            ConvertFamilyBatch(doc, new[] { instance }, customName, templatePath, isTemporary, true);
         }
 
         public void ConvertFamilyBatch(Document doc, IEnumerable<FamilyInstance> instances, string customName, string templatePath, bool isTemporary, bool replaceInPlace, IProgressReporter? reporter = null)
@@ -74,11 +65,6 @@ namespace LECG.Services
                 }
                 reporter?.Report("Batch Conversion Complete.", 100);
             }
-        }
-
-        public string GetTargetTemplatePath(Autodesk.Revit.ApplicationServices.Application app, Category category)
-        {
-            return _templatePathService.GetTargetTemplatePath(app, category);
         }
 
         private int ProcessFamilyGroup(

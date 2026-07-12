@@ -56,10 +56,5 @@ namespace LECG.Services
 
             return _referenceRaycastService.GetNearestHitInfo(intersector, sketchPt, FallbackRadius);
         }
-
-        public XYZ? ResolveHitPoint(ReferenceIntersector intersector, XYZ sketchPt, XYZ curveMid)
-        {
-            return ResolveHit(intersector, sketchPt, curveMid)?.Point;
-        }
     }
 }

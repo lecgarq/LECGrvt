@@ -115,68 +115,6 @@ namespace LECG.Services
                     logCallback?.Invoke($"    -> Roughness: {System.IO.Path.GetFileName(request.RoughnessPath)}");
                 }
 
-                // Metallic
-                if (!string.IsNullOrEmpty(request.MetallicPath))
-                {
-                    // Set material to metallic mode
-                    SetAssetBoolean(asset, "generic_is_metal", true);
-                    AssetProperty? metalProp = asset.FindByName("generic_metalness")
-                        ?? asset.FindByName("generic_is_metal");
-                    if (metalProp != null)
-                    {
-                        _materialBitmapPropertyService.SetupBitmapProperty(metalProp, request.MetallicPath, sx, sy, ox, oy, rot, link);
-                    }
-                    logCallback?.Invoke($"    -> Metallic: {System.IO.Path.GetFileName(request.MetallicPath)}");
-                }
-
-                // Ambient Occlusion -> diffuse secondary or self-illumination channel
-                if (!string.IsNullOrEmpty(request.AoPath))
-                {
-                    // AO is typically baked into diffuse, but Revit has no dedicated AO slot.
-                    // Map to self-illumination filter map as closest equivalent for rendering hints.
-                    AssetProperty? aoProp = asset.FindByName("generic_self_illum_filter_map");
-                    if (aoProp != null)
-                    {
-                        _materialBitmapPropertyService.SetupBitmapProperty(aoProp, request.AoPath, sx, sy, ox, oy, rot, link);
-                    }
-                    logCallback?.Invoke($"    -> AO: {System.IO.Path.GetFileName(request.AoPath)}");
-                }
-
-                // Displacement / Height
-                if (!string.IsNullOrEmpty(request.DisplacementPath))
-                {
-                    // If there's no normal already, use bump_map with type = Bump (0)
-                    // If normal is already assigned, use a separate displacement approach
-                    if (string.IsNullOrEmpty(request.NormalPath))
-                    {
-                        AssetProperty? bumpProp = asset.FindByName("generic_bump_map");
-                        _materialBitmapPropertyService.SetupBumpBitmapProperty(asset, bumpProp, request.DisplacementPath, sx, sy, ox, oy, rot, link, request.BumpMapType);
-                    }
-                    else
-                    {
-                        // Displacement goes to a secondary channel when normal is already present
-                        AssetProperty? dispProp = asset.FindByName("generic_displacement")
-                            ?? asset.FindByName("generic_roundcorners_radius");
-                        if (dispProp != null)
-                        {
-                            _materialBitmapPropertyService.SetupBitmapProperty(dispProp, request.DisplacementPath, sx, sy, ox, oy, rot, link);
-                        }
-                    }
-                    logCallback?.Invoke($"    -> Displacement: {System.IO.Path.GetFileName(request.DisplacementPath)}");
-                }
-
-                // Opacity / Transparency
-                if (!string.IsNullOrEmpty(request.OpacityPath))
-                {
-                    AssetProperty? transparencyProp = asset.FindByName("generic_transparency")
-                        ?? asset.FindByName("generic_cutout_opacity");
-                    if (transparencyProp != null)
-                    {
-                        _materialBitmapPropertyService.SetupBitmapProperty(transparencyProp, request.OpacityPath, sx, sy, ox, oy, rot, link);
-                    }
-                    logCallback?.Invoke($"    -> Opacity: {System.IO.Path.GetFileName(request.OpacityPath)}");
-                }
-
                 editScope.Commit(true);
 
                 if (mat.AppearanceAssetId == ElementId.InvalidElementId)
@@ -206,52 +144,6 @@ namespace LECG.Services
             }
 
             return assetId;
-        }
-
-        /// <summary>
-        /// Sets the bump type to Normal Map (1) on <paramref name="bumpConnectedAsset"/> — the asset
-        /// that was just connected to the bump slot. Tries both <see cref="BumpMap.BumpmapType"/>
-        /// (BumpMap schema wrapper) and "unifiedbitmap_Bump_Type" (Generic / Ceramic / direct UnifiedBitmap).
-        /// </summary>
-        private static void SetBumpmapType(Asset? bumpConnectedAsset, int value)
-        {
-            if (bumpConnectedAsset == null) return;
-
-            // BumpMap schema wrapper
-            if (TrySetBumpmapTypeDirect(bumpConnectedAsset, BumpMap.BumpmapType, value)) return;
-
-            // Direct UnifiedBitmap in bump slot (Generic / Ceramic / most materials)
-            if (TrySetBumpmapTypeDirect(bumpConnectedAsset, "unifiedbitmap_Bump_Type", value)) return;
-
-            // One level deeper
-            for (int i = 0; i < bumpConnectedAsset.Size; i++)
-            {
-                Asset? nested = bumpConnectedAsset[i]?.GetSingleConnectedAsset();
-                if (nested == null) continue;
-                if (TrySetBumpmapTypeDirect(nested, BumpMap.BumpmapType, value)) return;
-                if (TrySetBumpmapTypeDirect(nested, "unifiedbitmap_Bump_Type", value)) return;
-            }
-        }
-
-        private static bool TrySetBumpmapTypeDirect(Asset asset, string propertyName, int value)
-        {
-            if (asset.FindByName(propertyName) is not AssetPropertyInteger prop
-                || prop.IsReadOnly
-                || prop.Value == value)
-                return false;
-
-            prop.Value = value;
-            return true;
-        }
-
-        private static void SetAssetInteger(Asset asset, string propName, int value)
-        {
-            try
-            {
-                AssetPropertyInteger? prop = asset.FindByName(propName) as AssetPropertyInteger;
-                if (prop != null && !prop.IsReadOnly) prop.Value = value;
-            }
-            catch { }
         }
 
         private static void SetAssetBoolean(Asset asset, string propName, bool value)

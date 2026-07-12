@@ -18,9 +18,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class SimplifyPointsCommand : RevitCommand
     {
-        // Manual handling to support selection within the command flow
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

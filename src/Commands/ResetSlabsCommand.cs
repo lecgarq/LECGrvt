@@ -20,8 +20,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class ResetSlabsCommand : RevitCommand
     {
-        protected override string? TransactionName => null; // Manual handling due to selection loop
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

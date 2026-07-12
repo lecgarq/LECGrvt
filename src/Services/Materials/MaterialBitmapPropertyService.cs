@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using System.Text;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
@@ -16,11 +16,6 @@ namespace LECG.Services
         public MaterialBitmapPropertyService(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
-
-        public void SetupBitmapProperty(AssetProperty? prop, string path)
-        {
-            SetupBitmapProperty(prop, path, MillimetersPerFoot, MillimetersPerFoot, 0, 0, 0, true);
         }
 
         public void SetupBitmapProperty(AssetProperty? prop, string path, double scaleXMillimeters, double scaleYMillimeters, double offsetXMillimeters, double offsetYMillimeters, double rotationDegrees, bool linkTextureTransforms)
@@ -70,9 +65,6 @@ namespace LECG.Services
             }
 
             if (bumpMapAsset == null) return;
-
-            // Dump the connected asset's property list to the log so we can see the runtime schema.
-            LogBumpAssetDiagnostics(bumpMapAsset);
 
             // Find the nested bitmap asset inside a BumpMap wrapper, if any.
             Asset? bitmapAsset = null;
@@ -136,20 +128,6 @@ namespace LECG.Services
             catch { return null; }
         }
 
-        private void LogBumpAssetDiagnostics(Asset asset)
-        {
-            var sb = new StringBuilder();
-            sb.Append($"[BumpDiag] schema='{asset.Name}' props={asset.Size}: ");
-            for (int i = 0; i < asset.Size; i++)
-            {
-                AssetProperty? p = asset[i];
-                if (p == null) continue;
-                string connectedName = p.GetSingleConnectedAsset()?.Name ?? "-";
-                sb.Append($"[{p.Name}|{p.Type}|ro={p.IsReadOnly}|conn={connectedName}] ");
-            }
-            _logger.Log(sb.ToString(), scope: "MaterialBitmapProperty");
-        }
-
         private void ApplyBitmapProperties(Asset asset, string path, double scaleXMillimeters, double scaleYMillimeters, double offsetXMillimeters, double offsetYMillimeters, double rotationDegrees, bool linkTextureTransforms)
         {
             // BumpMap schema stores the image as a plain string property (not a connected sub-asset).
@@ -161,10 +139,12 @@ namespace LECG.Services
             SetAssetBoolean(asset, "texture_LinkTextureTransforms", false);
             SetAssetBoolean(asset, "unifiedbitmap_LinkTextureTransforms", false);
 
-            // texture_UScale/VScale are Double1 and expect Revit internal units (feet).
+            // texture_UScale/VScale are unitless tiling multipliers, NOT distances — the physical
+            // sample size is carried by texture_RealWorldScaleX/Y below. Anything other than 1.0
+            // here multiplies the tiling and shrinks the apparent sample size.
             // They throw on BumpMap schema — TrySetAssetDouble swallows that silently.
-            TrySetAssetDouble(asset, "texture_UScale", scaleXMillimeters / MillimetersPerFoot);
-            TrySetAssetDouble(asset, "texture_VScale", scaleYMillimeters / MillimetersPerFoot);
+            TrySetAssetDouble(asset, "texture_UScale", 1.0);
+            TrySetAssetDouble(asset, "texture_VScale", 1.0);
             SetAssetDistance(asset, "texture_Scale_X", scaleXMillimeters);
             SetAssetDistance(asset, "texture_Scale_Y", scaleYMillimeters);
             SetAssetDistance(asset, "texture_RealWorldScaleX", scaleXMillimeters);
@@ -184,30 +164,6 @@ namespace LECG.Services
                 SetAssetBoolean(asset, "unifiedbitmap_LinkTextureTransforms", true);
             }
 
-            LogScaleDiag(asset);
-        }
-
-        private void LogScaleDiag(Asset asset)
-        {
-            string[] names = { "texture_UScale", "texture_VScale", "texture_RealWorldScaleX", "texture_RealWorldScaleY", "unifiedbitmap_RealWorldScaleX", "unifiedbitmap_RealWorldScaleY" };
-            var sb = new StringBuilder($"[ScaleDiag] '{asset.Name}': ");
-            bool any = false;
-            foreach (string name in names)
-            {
-                AssetProperty? p = asset.FindByName(name);
-                if (p == null) continue;
-                any = true;
-                string val = p switch
-                {
-                    AssetPropertyDouble dp => dp.Value.ToString("F4"),
-                    AssetPropertyDistance dp => $"{dp.Value:F4}ft={dp.Value * MillimetersPerFoot:F1}mm",
-                    AssetPropertyFloat fp => fp.Value.ToString("F4"),
-                    _ => $"({p.Type})"
-                };
-                sb.Append($"{name}={val} ");
-            }
-            if (!any) sb.Append("(none found)");
-            _logger.Log(sb.ToString(), scope: "MaterialBitmapProperty");
         }
 
         private Asset? TryAddConnectedAsset(AssetProperty prop, string schemaName)
@@ -236,7 +192,13 @@ namespace LECG.Services
 
                 if (baseProp is AssetPropertyDistance distProp)
                 {
-                    distProp.Value = valueMillimeters / MillimetersPerFoot;
+                    // AssetPropertyDistance.Value is NOT in Revit internal units (feet) — it is in
+                    // the unit reported by GetUnitTypeId() (inches for UnifiedBitmap real-world
+                    // scale/offset). Assuming feet made sample sizes come out 12x too small.
+                    ForgeTypeId unitTypeId = distProp.GetUnitTypeId();
+                    distProp.Value = unitTypeId != null && !unitTypeId.Empty() && UnitUtils.IsUnit(unitTypeId)
+                        ? UnitUtils.Convert(valueMillimeters, UnitTypeId.Millimeters, unitTypeId)
+                        : valueMillimeters / MillimetersPerFoot;
                 }
                 else if (baseProp is AssetPropertyDouble doubleProp)
                 {
@@ -301,19 +263,6 @@ namespace LECG.Services
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
                 _logger.LogWarning($"SetAssetBoolean '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
-            }
-        }
-
-        private void SetAssetInteger(Asset asset, string propName, int value)
-        {
-            try
-            {
-                AssetPropertyInteger? prop = asset.FindByName(propName) as AssetPropertyInteger;
-                if (prop != null && !prop.IsReadOnly) prop.Value = value;
-            }
-            catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
-            {
-                _logger.LogWarning($"SetAssetInteger '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
         }
 

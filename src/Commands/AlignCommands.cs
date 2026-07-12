@@ -68,7 +68,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public abstract class AlignCommandBase : RevitCommand
     {
-        protected override string? TransactionName => null; // Handled internally
         public abstract AlignMode Mode { get; }
 
         private bool IsDistributeMode => Mode == AlignMode.DistributeHorizontally || Mode == AlignMode.DistributeVertically;

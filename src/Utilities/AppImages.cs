@@ -53,9 +53,6 @@ namespace LECG.Utilities
         public static ImageSource ConvertFamily => LoadImage("ConvertFamily.png");
         public static ImageSource ConvertShared => LoadImage("ConvertFamily.png"); // Reusing for now
 
-        // Align Elements
-        public static ImageSource AlignPlaceholder => LoadImage("AlignPlaceholder.png");
-
         // Align Icons (16 and 32)
         public static ImageSource AlignMaster32 => LoadImage("AlignMaster_32.png");
         public static ImageSource AlignMaster16 => LoadImage("AlignMaster_16.png");

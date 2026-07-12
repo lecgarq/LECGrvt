@@ -33,77 +33,6 @@ namespace LECG.Services
             "unifiedbitmap_Bump_Type",
         };
 
-        internal static readonly string[] BumpSlotPropertyNames =
-        {
-            "generic_bump_map",
-            "ceramic_bump_map",
-            "concrete_bump_map",
-            "stone_bump_map",
-            "wood_bump_map",
-            "metal_bump_map",
-            "glazing_bump_map",
-            "masonry_bump_map",
-            "plastic_bump_map",
-            "hardwood_bump_map",
-            "solidglass_bump_map",
-        };
-
-        internal static BumpMapNormalizationResult NormalizeEditableAsset(Asset editableAsset, int desiredValue)
-        {
-            ArgumentNullException.ThrowIfNull(editableAsset);
-
-            BumpMapNormalizationResult? bestFailure = null;
-
-            foreach (string slotName in BumpSlotPropertyNames)
-            {
-                AssetProperty? slotProperty = editableAsset.FindByName(slotName);
-                if (slotProperty == null)
-                {
-                    continue;
-                }
-
-                List<BumpMapPropertyProbe> ownerAndSlotProbes = BuildOwnerAndSlotProbes(editableAsset, slotProperty);
-                List<Asset> connectedAssets = GetConnectedAssets(slotProperty);
-                if (connectedAssets.Count == 0)
-                {
-                    if (ownerAndSlotProbes.Count == 0)
-                    {
-                        bestFailure = PreferFailure(
-                            bestFailure,
-                            new BumpMapNormalizationResult(
-                                NormalMapSyncStatus.NoConnectedBumpAsset,
-                                slotName,
-                                Detail: "Bump slot has no connected asset."));
-                        continue;
-                    }
-
-                    BumpMapNormalizationResult ownerOnlyResult = NormalizeProbes(slotName, ownerAndSlotProbes, desiredValue);
-                    if (ownerOnlyResult.IsSuccessful)
-                    {
-                        return ownerOnlyResult;
-                    }
-
-                    bestFailure = PreferFailure(bestFailure, ownerOnlyResult);
-                    continue;
-                }
-
-                foreach (Asset connectedAsset in connectedAssets)
-                {
-                    BumpMapNormalizationResult result = NormalizeSlot(editableAsset, slotProperty, connectedAsset, desiredValue);
-                    if (result.IsSuccessful)
-                    {
-                        return result;
-                    }
-
-                    bestFailure = PreferFailure(bestFailure, result);
-                }
-            }
-
-            return bestFailure ?? new BumpMapNormalizationResult(
-                NormalMapSyncStatus.NoBumpSlot,
-                Detail: "No supported bump slot was found.");
-        }
-
         internal static BumpMapNormalizationResult NormalizeConnectedAsset(
             Asset ownerAsset,
             AssetProperty slotProperty,
@@ -322,35 +251,6 @@ namespace LECG.Services
             AddPropertyProbe(probes, asset.Name, property);
         }
 
-        private static List<Asset> GetConnectedAssets(AssetProperty property)
-        {
-            List<Asset> connectedAssets = new List<Asset>();
-
-            Asset? singleConnectedAsset = property.GetSingleConnectedAsset();
-            if (singleConnectedAsset != null)
-            {
-                connectedAssets.Add(singleConnectedAsset);
-            }
-
-            if (property.NumberOfConnectedProperties <= 0)
-            {
-                return connectedAssets;
-            }
-
-            foreach (AssetProperty connectedProperty in property.GetAllConnectedProperties())
-            {
-                Asset? connectedAsset = connectedProperty.GetSingleConnectedAsset();
-                if (connectedAsset == null || connectedAssets.Contains(connectedAsset))
-                {
-                    continue;
-                }
-
-                connectedAssets.Add(connectedAsset);
-            }
-
-            return connectedAssets;
-        }
-
         private static void AddPropertyProbe(List<BumpMapPropertyProbe> probes, string ownerName, AssetProperty property)
         {
             if (!IsCandidateBumpTypePropertyName(property.Name))
@@ -396,32 +296,6 @@ namespace LECG.Services
 
             return propertyName.Contains("bump", StringComparison.OrdinalIgnoreCase)
                 && propertyName.Contains("type", StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static BumpMapNormalizationResult PreferFailure(
-            BumpMapNormalizationResult? current,
-            BumpMapNormalizationResult candidate)
-        {
-            if (current == null)
-            {
-                return candidate;
-            }
-
-            return GetPriority(candidate.Status) > GetPriority(current.Status)
-                ? candidate
-                : current;
-        }
-
-        private static int GetPriority(NormalMapSyncStatus status)
-        {
-            return status switch
-            {
-                NormalMapSyncStatus.WriteFailed => 4,
-                NormalMapSyncStatus.NoWritableBumpTypeProperty => 3,
-                NormalMapSyncStatus.NoConnectedBumpAsset => 2,
-                NormalMapSyncStatus.NoBumpSlot => 1,
-                _ => 0,
-            };
         }
 
         private static bool LooksLikeUnifiedBitmapSchema(Asset asset)

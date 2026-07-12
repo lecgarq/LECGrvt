@@ -10,8 +10,6 @@ namespace LECG.Commands
     [Transaction(TransactionMode.Manual)]
     public class FilterCopyCommand : RevitCommand
     {
-        protected override string? TransactionName => null;
-
         public override void Execute(UIDocument uiDoc, Document doc)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);

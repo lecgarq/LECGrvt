@@ -1,5 +1,4 @@
 using System.Windows;
-using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
 using LECG.Core;
@@ -42,11 +41,6 @@ namespace LECG.Views
                     vm.SetSelection(el);
                 }
             };
-        }
-
-        public override void Initialize(UIDocument uiDoc)
-        {
-            base.Initialize(uiDoc);
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

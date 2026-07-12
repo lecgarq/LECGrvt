@@ -50,6 +50,9 @@ read_log.py
 # Legacy img/ folder (source art moved to design/)
 img/
 
+# Generated Revit API dumps (regenerable via tools/RevitApiExtractor)
+docs/review/revit-api/*.jsonl
+
 # Temp analysis
 docs/review/tmp/
 
