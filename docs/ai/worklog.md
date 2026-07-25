@@ -109,3 +109,40 @@
 
 ### Open Questions
 - GUID element name in the manifest template; interactive command-level smoke test (steps 3–8); collector conventions; unit-conversion helper; linked-model transforms; sanctioned `dotnet test` invocation. (Detailed in repo-context.md → Open Questions.)
+
+---
+
+## 2026-07-25 — GSD removal, Revit API index, WPF theme scoping
+
+Commits: `6c386ec` (tooling + theme scoping), `2cd13fe` (view merge fix + guard tests).
+
+### Changed
+- Removed the GSD plugin (20,063 lines of markdown, 33 slash commands); replaced with eight `lecg-*` skills in `.claude/skills/` (~620 lines).
+- Added `docs/ai/revit-api/` — 33,091 members / 2,670 types indexed from the 2026.4.10 reference assemblies, plus `SEMANTICS.md`. Generator: `scripts/revit-api-index`.
+- Fixed a process-wide UI leak: `LecgTheme.xaml` was merged into `Application.Current.Resources` (Revit's own WPF application), applying LECG's implicit `Button`/`TextBox`/`ComboBox`/`RadioButton`/`ProgressBar`/`TreeView`/`TreeViewItem` styles to Revit dialogs and every other loaded add-in. Theme now merges per window.
+
+### Validation
+
+- Build: `dotnet build -p:SkipRevitDeploy=true` — 0 errors, 5 pre-existing warnings.
+- Tests: 211 passed, 0 failed, 5 skipped.
+- **Revit runtime validation: EXECUTED** — first interactive smoke test recorded in this repo. Deployed build 2026-07-25 10:14, observed by the user in Revit 2026:
+  - `HomeView` renders styled (regressed and fixed mid-session — see below).
+  - `SearchReplaceView` renders styled.
+  - Other vendors' add-in dialogs render in their own style — **the leak is closed**.
+- Not covered by this run: the remaining 23 LECG views individually, the startup error dialog (`LecgDialogWindow`), and the explicit before/after ordering check (smoke test step B7).
+
+### Lessons Learned
+- **XAML `<X.Resources><ResourceDictionary>` REPLACES the dictionary, it does not merge into it.** A base-class constructor cannot reliably inject resources into derived views: `InitializeComponent()` discards them, and `StaticResource` then fails at parse time. `HomeView` and `SearchReplaceView` broke on `DashboardCardStyle` this way. Every view must merge `LecgTheme.xaml` in its own XAML — now enforced by `LECG.Tests/Views/ThemeScopingTests.cs`.
+- Neither compilation nor the unit suite can detect a WPF styling break; XAML compiles without its bindings or `StaticResource` lookups resolving. Only Revit shows it.
+- `ElementId.IntegerValue` and `DisplayUnitType` do not exist in Revit 2026 — confirmed by absence from the generated index, which reads exactly what the build compiles against.
+
+### Decisions to Preserve
+- No third-party WPF control library (WPF-UI, HandyControl, MaterialDesignInXAML) — all theme via application-level implicit styles, which is correct for an app owning its process and wrong for an add-in. WinUI 3 / WindowsAppSDK is a separate app model, not hostable here. Rationale in `docs/ai/ui-guide.md`.
+- The Revit API index is committed ground truth. Query it; do not recall API signatures.
+
+### Future-Agent Warnings
+- Never merge anything into `Application.Current.Resources`. The guard test will fail, and the real cost is other vendors' UI.
+- Regenerate the API index only on a Revit version bump, and pass the Revit install directory as a probe path — without it, `RibbonButton..ctor` and `PointCloudType.GetReCapProject` cannot be decoded.
+
+### Open Questions
+- The 23 untested views and the startup error dialog remain visually unverified after the scoping change (low risk: all merge the theme in XAML, unchanged by this work).

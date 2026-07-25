@@ -51,6 +51,17 @@ Log the run (date, Revit build, steps passed/failed, journal excerpts for failur
 
 ## Run History
 
+### 2026-07-25 — INTERACTIVE RUN (theme scoping), user-observed
+
+First interactive smoke test recorded in this repo. Deployed build 2026-07-25 10:14 (`dotnet build -c Release`, Revit closed during copy).
+
+- **A1 `HomeView`: PASS** — renders styled. Failed on the first deploy (`Cannot find resource named 'DashboardCardStyle'`), fixed in `2cd13fe`, re-verified after redeploy.
+- **A2 `SearchReplaceView`: PASS** — renders styled.
+- **B5 other vendors' add-in dialogs: PASS** — render in their own style. The process-wide style leak is closed.
+- **A3 (three other LECG dialogs), A4 (`LecgDialogWindow` startup error dialog), B7 (before/after ordering): NOT TESTED.** Low risk — all 23 remaining views merge the theme in their own XAML and were unchanged by this work.
+
+Regression guard added the same day: `LECG.Tests/Views/ThemeScopingTests.cs`.
+
 ### 2026-07-04 — journal-derived partial evidence (NOT an interactive checklist run)
 
 No GSD-driven interactive test was performed (agent cannot drive the Revit GUI). However, read-only inspection of the user's own Revit 2026 session that day (`%LOCALAPPDATA%\Autodesk\Revit\Autodesk Revit 2026\Journals\journal.0879.txt`, session 22:12–22:15) provides direct evidence for a subset of steps, running the currently deployed DLL (deployed 2026-07-02):
