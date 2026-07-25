@@ -111,18 +111,13 @@
 
 ---
 
-## GSD Model-Agnostic Principle
+## Model-agnostic principle
 
-GSD works with any capable LLM. The methodology compensates for model differences through:
+The `lecg-*` skills work with any capable model. They compensate for model differences through:
 
-1. **Structured plans** — Reduce ambiguity
-2. **Explicit verification** — Catch errors regardless of model
-3. **State persistence** — Enable model switching
-4. **Fresh context** — Prevent accumulation issues
+1. **Evidence-grounded plans** — reduce ambiguity
+2. **Explicit verification** — catch errors regardless of model
+3. **State in `.planning/`** — enable switching models mid-milestone
+4. **Fresh context per phase** — prevent accumulation
 
 Choose models based on task needs, not methodology requirements.
-
----
-
-*See PROJECT_RULES.md for canonical rules.*
-*See docs/runbook.md for operational procedures.*

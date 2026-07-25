@@ -20,9 +20,34 @@
 8. **Modeless / ExternalEvent** — For modeless commands (e.g. Category Changer, Convert CAD): confirm the window stays open while Revit remains responsive, and model changes triggered from the window occur via the `ExternalEventCommand<THandler>` pattern (no "outside API context" exceptions). Run the same modeless command twice in one session — static handler/event state is shared per command type, so a second run is the regression-prone case.
 9. **Shutdown** — Close Revit. Confirm no crash-on-exit dialog (Bootstrapper/Serilog shutdown path).
 
+## Targeted: WPF theme scoping (changed 2026-07-25)
+
+Run this in addition to the checklist above after the change that moved `LecgTheme.xaml` from `Application.Current.Resources` into `LecgWindow`. Build and tests cannot detect any of it — XAML compiles without its styles resolving.
+
+Deploy first: `dotnet build -c Release` with Revit closed.
+
+**A. Regression — do LECG windows still look right?**
+
+These two are the highest risk. They had **no** local theme merge in their XAML and relied entirely on the application-level merge that was removed. If the fix is wrong, these break and nothing else does.
+
+1. Open **Home** (`HomeView`). Buttons, text, and background must match the LECG style — dark text on the LECG surface color, accent-colored primary buttons. Unstyled = default grey Windows chrome, which is unmistakable.
+2. Open **Search & Replace** (`SearchReplaceView`). Same check, plus its `TextBox` and `ComboBox` styling.
+3. Open any three other LECG dialogs. These merge the theme in their own XAML too, so they should be unaffected — a difference here means the shared dictionary is interfering with the per-view merge.
+4. Trigger the **startup error dialog** if convenient (`LecgDialogWindow` is a `LecgWindow` constructed on the failure path before `Bootstrapper` runs). Its option buttons use `FindResource("OptionButtonStyle")`, defined in its own XAML — confirm they render styled.
+
+**B. The actual fix — is anything outside LECG still being restyled?**
+
+The bug was LECG's implicit styles for `Button`, `TextBox`, `ComboBox`, `RadioButton`, `ProgressBar`, `TreeView`, `TreeViewItem` applying process-wide.
+
+5. Open another vendor's add-in dialog (the journal shows at least one other add-in loaded — it preloads `Clipper2Lib` and `Microsoft.Extensions.DependencyInjection.Abstractions`). Its buttons and text boxes must look like **its own** design, not LECG's.
+6. Open a Revit dialog with WPF content and confirm native styling.
+7. Do steps 5–6 **before opening any LECG window**, then repeat **after** opening one. Identical both times. A difference means the theme is still escaping the window scope — the exact failure this change exists to prevent.
+
+Step 7 is the one that actually proves the fix. Do not skip it.
+
 ## Recording results
 
-Log the run (date, Revit build, steps passed/failed, journal excerpts for failures) as an entry in `docs/ai/gsd-log.md`. Until an interactive run happens, reports must state: `Revit runtime validation: not executed.`
+Log the run (date, Revit build, steps passed/failed, journal excerpts for failures) as an entry in `docs/ai/worklog.md`. Until an interactive run happens, reports must state: `Revit runtime validation: not executed.`
 
 ## Run History
 

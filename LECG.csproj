@@ -50,6 +50,7 @@
     <Compile Remove="LECG.Tests\**\*.cs" />
     <Compile Remove="LECG.Core\**\*.cs" />
     <Compile Remove="tools\**\*.cs" />
+    <Compile Remove="scripts\**\*.cs" />
   </ItemGroup>
 
   <Target Name="DeployToRevit" AfterTargets="Build" Condition="'$(SkipRevitDeploy)' != 'true'">

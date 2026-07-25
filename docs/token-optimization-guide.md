@@ -176,15 +176,13 @@ GOOD:
 
 ---
 
-## Integration with GSD
+## Integration with the lecg-* skills
 
-| GSD Workflow | Token Optimization |
-|--------------|-------------------|
-| `/map` | Generate outline, not full read |
-| `/plan` | Budget estimate per task |
-| `/execute` | Load minimal per task |
-| `/verify` | Targeted evidence only |
-| `/pause` | Compress and dump state |
+| Skill | Token Optimization |
+|-------|-------------------|
+| `/lecg-map` | Store edges once; refresh by diff, never re-grep |
+| `/lecg-discuss` | Read the repo before asking; every answered question is an unasked one |
+| `/lecg-phase` | Load only the files in the plan's "Files changing" list |
 
 ---
 
@@ -201,7 +199,4 @@ Track these for improvement:
 
 ---
 
-*See also:*
-- *[.agent/skills/token-budget/SKILL.md](.agent/skills/token-budget/SKILL.md)*
-- *[.agent/skills/context-compressor/SKILL.md](.agent/skills/context-compressor/SKILL.md)*
-- *[PROJECT_RULES.md](PROJECT_RULES.md) — Token Efficiency Rules*
+*See also: [.claude/skills/lecg-map/SKILL.md](../.claude/skills/lecg-map/SKILL.md)*

@@ -17,8 +17,6 @@
       "Bash(git check-ignore:*)",
       "Read(//tmp/**)",
       "Bash(dotnet run:*)",
-      "Skill(gsd:new-milestone)",
-      "Bash(node \"$USERPROFILE/.claude/get-shit-done/bin/gsd-tools.cjs\" commit \"docs: complete project research\" --files .planning/research/)",
       "Bash(dotnet add:*)",
       "Bash(dotnet package:*)",
       "Bash(dotnet restore:*)",
@@ -26,7 +24,15 @@
       "Bash(cygpath:*)",
       "Bash(dotnet tool:*)",
       "Bash(dotnet format:*)",
-      "Bash(powershell -Command \"\n\\\\$asm = [System.Reflection.Assembly]::LoadFrom\\('C:\\\\Users\\\\LECG Arquitectura\\\\.nuget\\\\packages\\\\geometry3sharp\\\\1.0.324\\\\lib\\\\netstandard2.0\\\\geometry3Sharp.dll'\\)\n\\\\$asm.GetTypes\\(\\) | Where-Object { \\\\$_.Name -match 'PointHash' } | ForEach-Object { Write-Host \\\\$_.FullName }\n\" 2>&1)"
+      "Bash(powershell -Command \"\n\\\\$asm = [System.Reflection.Assembly]::LoadFrom\\('C:\\\\Users\\\\LECG Arquitectura\\\\.nuget\\\\packages\\\\geometry3sharp\\\\1.0.324\\\\lib\\\\netstandard2.0\\\\geometry3Sharp.dll'\\)\n\\\\$asm.GetTypes\\(\\) | Where-Object { \\\\$_.Name -match 'PointHash' } | ForEach-Object { Write-Host \\\\$_.FullName }\n\" 2>&1)",
+      "WebSearch",
+      "Bash(node *)",
+      "Skill(lecg-shape)",
+      "Skill(lecg-map)",
+      "Skill(lecg-discuss)",
+      "Skill(lecg-phase)",
+      "Skill(lecg-milestone-new)",
+      "Skill(lecg-milestone-close)"
     ]
   }
 }

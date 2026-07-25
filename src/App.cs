@@ -65,32 +65,22 @@ namespace LECG
         {
             try
             {
-                System.Windows.Application app = System.Windows.Application.Current ?? new System.Windows.Application();
-
-                var uri = new Uri("pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml", UriKind.Absolute);
-                var dict = new System.Windows.ResourceDictionary { Source = uri };
-
-                // Add or merge dictionary to global application resources
-                bool exists = false;
-                foreach (var md in app.Resources.MergedDictionaries)
-                {
-                    if (md.Source == uri)
-                    {
-                        exists = true;
-                        break;
-                    }
-                }
-                if (!exists)
-                {
-                    app.Resources.MergedDictionaries.Add(dict);
-                }
+                // Ensure a WPF Application exists — Application.Current.Dispatcher is used across
+                // the add-in (RevitCommand, several ViewModels) and Revit does not always create one.
+                //
+                // The LECG theme is deliberately NOT merged here. Application.Current is Revit's own
+                // WPF application, so anything merged into it applies process-wide: LecgTheme.xaml
+                // carries implicit styles for Button/TextBox/ComboBox/RadioButton/ProgressBar/TreeView,
+                // which would restyle Revit's own dialogs and every other add-in's windows.
+                // LecgWindow merges the theme into each window instead — see LecgWindow.ApplyTheme().
+                _ = System.Windows.Application.Current ?? new System.Windows.Application();
             }
             catch (Exception ex) when (IsExpectedResourceInitializationException(ex))
             {
                 // App-lifecycle exception path; ServiceLocator may not be initialized yet
                 (Core.ServiceLocator.GetService<Services.Logging.ILogger>() as Services.Logging.ILogger)
-                    ?.Log($"Failed to load global WPF resources: {ex.Message}", scope: "App");
-                System.Diagnostics.Debug.WriteLine($"[App] Failed to load global WPF resources: {ex.Message}");
+                    ?.Log($"Failed to initialize WPF application: {ex.Message}", scope: "App");
+                System.Diagnostics.Debug.WriteLine($"[App] Failed to initialize WPF application: {ex.Message}");
             }
         }
 

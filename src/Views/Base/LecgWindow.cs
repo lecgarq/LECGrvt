@@ -30,8 +30,44 @@ namespace LECG.Views.Base
             set { SetValue(WindowIconProperty, value); }
         }
 
+        private const string ThemeUri =
+            "pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml";
+
+        // Loaded once and shared across windows. Scoped to LECG windows on purpose: merging this
+        // into Application.Current.Resources would push its implicit Button/TextBox/ComboBox styles
+        // onto Revit's own dialogs and every other add-in in the process.
+        private static readonly ResourceDictionary? SharedTheme = LoadTheme();
+
+        private static ResourceDictionary? LoadTheme()
+        {
+            try
+            {
+                return new ResourceDictionary { Source = new Uri(ThemeUri, UriKind.Absolute) };
+            }
+            catch (Exception ex)
+            {
+                // A missing theme must never stop a window from opening — the startup error
+                // dialog is itself a LecgWindow, and swallowing it would hide real failures.
+                System.Diagnostics.Debug.WriteLine($"[LecgWindow] Failed to load theme: {ex.Message}");
+                return null;
+            }
+        }
+
+        private void ApplyTheme()
+        {
+            if (SharedTheme is null) return;
+
+            // Most views also merge LecgTheme in their own XAML Resources; those merges are
+            // applied after this one and simply win. Adding it here guarantees every window
+            // is themed, including views that do not declare it (HomeView, SearchReplaceView)
+            // and any future one.
+            Resources.MergedDictionaries.Add(SharedTheme);
+        }
+
         public LecgWindow()
         {
+            ApplyTheme();
+
             // Set Default Icon if not set
             if (WindowIcon == null)
             {
