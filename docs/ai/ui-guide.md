@@ -16,6 +16,24 @@ Checks before any UI change:
 - New implicit styles go in `LecgTheme.xaml` (window-scoped), never in a globally merged dictionary.
 - New windows derive from `LecgWindow`. A raw `Window` will be unstyled *and* unscoped.
 
+Both rules are enforced by `LECG.Tests/Views/ThemeScopingTests.cs`.
+
+### The trap: XAML `Resources` replaces, it does not merge
+
+`LecgWindow.ApplyTheme()` populates `Resources` in the constructor, but a view declaring
+
+```xml
+<base:LecgWindow.Resources>
+    <ResourceDictionary> ... </ResourceDictionary>
+</base:LecgWindow.Resources>
+```
+
+**replaces** that dictionary when `InitializeComponent()` runs. The constructor's merge is discarded, and `StaticResource` lookups then fail at parse time with `Cannot find resource named '...'` — a runtime error the compiler and the test suite cannot see.
+
+So **every view merges `LecgTheme.xaml` in its own XAML**, exactly as all 25 now do. The constructor merge is only a fallback for a window that declares no `Resources` block at all.
+
+This is not theoretical: `HomeView` and `SearchReplaceView` declared their own dictionaries without the merge and broke on `DashboardCardStyle` the first time the theme was scoped.
+
 ## Design tokens
 
 Defined in `src/Resources/`, layered:

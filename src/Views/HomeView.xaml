@@ -6,7 +6,11 @@
     xmlns:icons="clr-namespace:LECG.Utilities" Title="LECG TOOLKIT" Height="650" Width="900" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Home}">
 
     <base:LecgWindow.Resources>
-        <ResourceDictionary/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </base:LecgWindow.Resources>
 
     <Grid Margin="{DynamicResource ViewContentMarginLarge}">

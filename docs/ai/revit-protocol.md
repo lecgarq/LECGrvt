@@ -64,3 +64,4 @@ Recorded because they cost real debugging time. Add to this list; don't repeat t
 - PBR sample size: `AssetPropertyDistance.Value` is in inches. `UScale`/`VScale` must stay `1.0`.
 - Family reload: `overwriteParameterValues` is parameterized on the factory. Category Changer and purge reloads pass `false`; CAD flows pass `true`.
 - The live `.addin` manifest uses `<ClientId>`; the tracked template uses `<AddInId>`. The live one works. Do not unify without an interactive Revit test.
+- A view declaring `<base:LecgWindow.Resources><ResourceDictionary>` **replaces** the dictionary the `LecgWindow` constructor populated — it does not merge into it. Every view must merge `LecgTheme.xaml` in its own XAML or `StaticResource` lookups fail at runtime. See `docs/ai/ui-guide.md`.
