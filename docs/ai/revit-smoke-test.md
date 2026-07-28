@@ -62,11 +62,13 @@ Measured baseline: 10 warnings · 1 distinct description (`"Highlighted toposoli
 | 5 | Count parity | Revit **Manage → Warnings** lists **10** — the same number |
 | 6 | **Select** | **11** elements selected — not 10, not 20. This is what proves distinct-id grouping (R3). |
 | 7 | **Show** | Zooms to the failing elements; record whether it behaves behind the modal dialog |
-| 8 | **Isolate** | Isolates the 11 toposolids — **highest-risk step**, see below |
+| 8 | **Isolate** | Isolates the 11 toposolids — see the note below |
 | 9 | Isolate is temporary | Blue temporary-isolate border appears; Revit's own *Reset Temporary Hide/Isolate* clears it |
-| 10 | Read-only | After Close, no new Undo entry from select/show/isolate |
+| 10 | Undo list | Exactly one new entry, `Isolate Warning Elements`, and only if Isolate was clicked. Select and Show must add none. |
 
-**Step 8 is the one that can fail.** `View.IsolateElementsTemporary` is called with no transaction open (`src/Services/Health/WarningsService.cs:75`). Whether that is legal was **not** settled by the MCP probe — the MCP harness holds its own open transaction (`Document.IsModifiable` was `True`), so the probe's success says nothing about the shipped path. If step 8 raises an `Isolate failed` dialog, the call needs a transaction, and the R6 "no `ITransactionService` anywhere" guarantee has to be restated as "no persistent model writes". The failure is contained — `WarningsViewModel` catches it and shows a dialog rather than crashing Revit.
+**Step 8 was a real bug, fixed before this checklist was first run.** `View.IsolateElementsTemporary` was originally called with no transaction open. Verified live on 2026-07-27 against a second open document that had no ambient transaction: the call throws `Autodesk.Revit.Exceptions.ModificationOutsideTransactionException` ("Attempt to modify the model outside of transaction"), and succeeds once wrapped in a transaction. `WarningsService.Isolate` now wraps it (`src/Services/Health/WarningsService.cs:77-91`).
+
+Consequence: Revit treats temporary isolate as a model modification, so the command is **not** entirely transaction-free. It performs no *persistent* write — a temporary view mode is not saved unless the user saves — but it does create one Undo entry, which is why check 10 is worded as it is. If Isolate ever throws again, `WarningsViewModel` catches it and shows a dialog rather than crashing Revit.
 
 **Known coverage gap:** this model has only one warning group, so count-descending group ordering cannot be observed here. That ordering is covered by `WarningGroupingPolicyTests`; do not report it as runtime-verified.
 

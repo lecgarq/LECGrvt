@@ -16,9 +16,30 @@ Prove the Warnings command against a real model with the user at the keyboard (R
 - Deployed DLL `C:\ProgramData\...\Addins\2026\LECG\LECG.dll` is dated **2026-07-25 10:14** — predates the entire Warnings feature. The running Revit session does **not** contain this command.
 - `docs/ai/repo-context.md:99-100` — plain `dotnet build` deploys; Revit must be closed or the copy fails with MSB3027.
 
+## Deviation (2026-07-27) — the plan's top risk fired before the smoke test
+
+The risk below was resolved by probe, not by the checklist, and it was a real bug.
+
+Two other project documents were open with no transaction of their own (`isModifiable=False`), which gave a transaction-free document to test against — the same condition the shipped modal path runs under.
+
+- **Without a transaction:** `View.IsolateElementsTemporary` threw `Autodesk.Revit.Exceptions.ModificationOutsideTransactionException: Attempt to modify the model outside of transaction.` The shipped Isolate button would have failed **every time**.
+- **With a transaction:** the same call succeeded, and `DisableTemporaryViewMode` restored the view.
+
+**Fix applied** in `src/Services/Health/WarningsService.cs:77-91`: `Isolate` now wraps the call in a named `Transaction` (`"Isolate Warning Elements"`).
+
+**Raw `Transaction`, not `ITransactionService`** — deliberate, against the usual repo convention. Injecting the interface was tried and reverted: implementing or taking `ITransactionService` forces the Revit type graph to load when the service is constructed, and the test runner has only Nice3point *reference* assemblies. It broke 7 tests with `FileNotFoundException: Could not load file or assembly 'RevitAPI'` and would have made `WarningsService` unconstructible outside Revit. Referencing `Transaction` inside the method body keeps type loading lazy. This is the same constraint already documented in `LECG.Tests/Services/FormulaUpdateServiceTests.cs:64-68`.
+
+**Consequences for the requirements:**
+
+- **R6 must be restated.** "No `ITransactionService` in the dependency graph" was satisfiable only because the code was broken. Revit classifies temporary isolate as a model modification. R6 now reads: *no persistent model writes* — Select and Show remain transaction-free; Isolate takes a transaction whose effect is a temporary view mode, not saved unless the user saves.
+- **Smoke-test check 11 changes.** Isolate now adds one `Isolate Warning Elements` entry to the Undo list. That is expected, not a failure. Select and Show still add none.
+
 ## Files changing
 
-No source changes planned. Documentation only:
+Source (deviation, above):
+- `src/Services/Health/WarningsService.cs` — `Isolate` wrapped in a transaction
+
+Documentation:
 
 - `docs/ai/revit-smoke-test.md` — new Run History entry + a Warnings-targeted section
 - `docs/ai/repo-context.md` — runtime-validation entry, once observed

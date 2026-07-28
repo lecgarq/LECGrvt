@@ -9,8 +9,10 @@ using LECG.Services.Logging;
 namespace LECG.Services
 {
     /// <summary>
-    /// Read-only warnings access: lists document warnings and acts on their failing
-    /// elements (select/show/isolate). No document writes anywhere in this flow.
+    /// Warnings access: lists document warnings and acts on their failing elements
+    /// (select/show/isolate). Nothing here writes persistent model data — but Revit
+    /// classifies temporary isolate as a model modification, so <see cref="Isolate"/>
+    /// needs a transaction. See the note on that method.
     /// </summary>
     public class WarningsService
     {
@@ -68,11 +70,25 @@ namespace LECG.Services
             uidoc.ShowElements(ToElementIds(elementIds));
         }
 
-        // Temporary view mode — reversible via Revit's own control, no document write.
+        // Temporary view mode: not persisted unless the user saves, and reversible via
+        // Revit's own Reset Temporary Hide/Isolate. It is still a model modification as
+        // far as Revit is concerned — calling it without a transaction throws
+        // ModificationOutsideTransactionException (verified live, 2026-07-27).
         public void Isolate(UIDocument uidoc, IEnumerable<long> elementIds)
         {
             ArgumentNullException.ThrowIfNull(uidoc);
-            uidoc.ActiveGraphicalView.IsolateElementsTemporary(ToElementIds(elementIds));
+            ICollection<ElementId> ids = ToElementIds(elementIds);
+            View view = uidoc.ActiveGraphicalView;
+
+            // Raw Transaction rather than ITransactionService on purpose: taking that
+            // interface as a constructor dependency forces the Revit type graph to load
+            // when the service is constructed, and the test runner has only reference
+            // assemblies — it would make this class untestable outside Revit. Referencing
+            // Transaction inside the method body keeps type loading lazy.
+            using Transaction transaction = new(uidoc.Document, "Isolate Warning Elements");
+            transaction.Start();
+            view.IsolateElementsTemporary(ids);
+            transaction.Commit();
         }
 
         private static ICollection<ElementId> ToElementIds(IEnumerable<long> elementIds)
