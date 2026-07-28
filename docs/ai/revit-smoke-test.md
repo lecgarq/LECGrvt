@@ -78,6 +78,37 @@ Log the run (date, Revit build, steps passed/failed, journal excerpts for failur
 
 ## Run History
 
+### 2026-07-28 — Warnings command, MCP-driven partial run (NOT a complete checklist run)
+
+Deployed build 2026-07-28 00:20 (`dotnet build -c Release`, Revit closed during copy; `LECG.dll` 996,864 bytes, `LECG.deps.json` unchanged and copy-skipped). Revit 2026 reopened by the user with `LECG_RVT_ARQUITECTURA`, MCP service on. Evidence is journal entries plus live execution of the **deployed** assembly via `mcp-server-for-revit`.
+
+**Confirmed the deployed binary is the fixed build** (the assembly version string is unchanged at 0.1.1.0, so version alone proves nothing):
+- Loaded from `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll`; `WarningsCommand`, `WarningsService`, `Isolate` all present via reflection.
+- `WarningsService` constructor takes a single `ILogger` — the reverted, intended signature.
+- `Isolate` method body is **76 IL bytes** (the pre-fix bare call was ~30).
+
+**PASS — startup (checklist step 1):** journal `API_SUCCESS { Starting External Application: LECG, Class: LECG.App, ... Assembly Version: 0.1.1.0 }`, and `Rvt.Attr.AddInLoadFailureMessage: NoError`.
+
+**PASS — ribbon, Warnings button (targeted check 1):** journal `API_SUCCESS { Added pushbutton Id: 6530, name: btnWarnings, text: Warnings, class: LECG.Commands.WarningsCommand, assembly: ...\LECG\LECG.dll, parentId: CustomCtrl_%LECG%Project Health }`.
+
+**PASS — read path, grouping, and Select (targeted checks 3, 4, 6), executed through the shipped service resolved from the live DI container:**
+- `ServiceLocator.GetRequiredService<WarningsService>()` resolved — DI registration works at runtime.
+- `ReadWarnings(document)` → **10** items.
+- `WarningGroupingPolicy.Group(...)` → **1** group, `Description = "Highlighted toposolids overlap."`, `Count = 10`, **11** distinct element ids.
+- `Select(uidoc, ids)` → `uidoc.Selection.GetElementIds().Count` = **11**. The distinct-id contract (R3) holds end to end against a real model.
+
+**PASS — the isolate fix is executing:** calling the shipped `Isolate` through MCP threw `Autodesk.Revit.Exceptions.InvalidOperationException: "Starting a new transaction is not permitted..."`. That error is only reachable if `Transaction.Start()` runs, which proves the transaction wrapper is live. It failed solely because the MCP harness holds its own transaction (`IsModifiable=True`) and Revit forbids nesting — a harness limitation, not a defect. Isolate's real behavior must be validated by clicking the button, where no ambient transaction exists.
+
+**NOT TESTED — needs a human at the keyboard:**
+- Targeted check 2: button greyed out with no document open (`ProjectDocumentAvailability`).
+- Targeted checks 3–4 *as rendered*: the dialog opening, header text, row layout, and WPF bindings. All of the above was exercised below the UI layer; XAML bindings remain unproven.
+- Targeted check 5: count parity against Revit's own **Manage → Warnings** dialog.
+- Targeted check 7: `Show` behaviour behind the modal dialog (the Phase 1 open question).
+- Targeted checks 8–9: `Isolate` by click, and that Revit's *Reset Temporary Hide/Isolate* clears it.
+- Targeted check 10: Undo list contains exactly one `Isolate Warning Elements` entry, and none from Select/Show.
+
+**Side effect of this run:** the model's selection was left set to the 11 toposolids. Harmless — click empty space to clear.
+
 ### 2026-07-25 — INTERACTIVE RUN (theme scoping), user-observed
 
 First interactive smoke test recorded in this repo. Deployed build 2026-07-25 10:14 (`dotnet build -c Release`, Revit closed during copy).
