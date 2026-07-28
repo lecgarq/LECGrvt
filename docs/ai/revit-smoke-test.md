@@ -45,6 +45,31 @@ The bug was LECG's implicit styles for `Button`, `TextBox`, `ComboBox`, `RadioBu
 
 Step 7 is the one that actually proves the fix. Do not skip it.
 
+## Targeted: Warnings command (added 2026-07-27, Phase 2 / R8)
+
+Run this in addition to the checklist above. The expected numbers below were measured live via `mcp-server-for-revit` on **2026-07-27** against `LECG_RVT_ARQUITECTURA` with `3D View 1` active — they are only valid for that model in that state. Re-measure if the model changed.
+
+Deploy first: `dotnet build -c Release` with Revit closed, then confirm `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll` has today's timestamp. The DLL deployed before this phase is dated 2026-07-25 and contains **no** Warnings command.
+
+Measured baseline: 10 warnings · 1 distinct description (`"Highlighted toposolids overlap."`) · severity `Warning` · 20 failing-element references resolving to **11 distinct** Toposolid ids.
+
+| # | Check | Expected |
+|---|---|---|
+| 1 | Ribbon | **Project Health** panel shows a **Warnings** button (eraser placeholder icon) |
+| 2 | Availability | With no document open the button is greyed out (`ProjectDocumentAvailability`) |
+| 3 | Dialog opens | Header reads **"10 warnings"**, one group row |
+| 4 | Group row | `Highlighted toposolids overlap.` · **10×** · `Warning` |
+| 5 | Count parity | Revit **Manage → Warnings** lists **10** — the same number |
+| 6 | **Select** | **11** elements selected — not 10, not 20. This is what proves distinct-id grouping (R3). |
+| 7 | **Show** | Zooms to the failing elements; record whether it behaves behind the modal dialog |
+| 8 | **Isolate** | Isolates the 11 toposolids — **highest-risk step**, see below |
+| 9 | Isolate is temporary | Blue temporary-isolate border appears; Revit's own *Reset Temporary Hide/Isolate* clears it |
+| 10 | Read-only | After Close, no new Undo entry from select/show/isolate |
+
+**Step 8 is the one that can fail.** `View.IsolateElementsTemporary` is called with no transaction open (`src/Services/Health/WarningsService.cs:75`). Whether that is legal was **not** settled by the MCP probe — the MCP harness holds its own open transaction (`Document.IsModifiable` was `True`), so the probe's success says nothing about the shipped path. If step 8 raises an `Isolate failed` dialog, the call needs a transaction, and the R6 "no `ITransactionService` anywhere" guarantee has to be restated as "no persistent model writes". The failure is contained — `WarningsViewModel` catches it and shows a dialog rather than crashing Revit.
+
+**Known coverage gap:** this model has only one warning group, so count-descending group ordering cannot be observed here. That ordering is covered by `WarningGroupingPolicyTests`; do not report it as runtime-verified.
+
 ## Recording results
 
 Log the run (date, Revit build, steps passed/failed, journal excerpts for failures) as an entry in `docs/ai/worklog.md`. Until an interactive run happens, reports must state: `Revit runtime validation: not executed.`
