@@ -46,7 +46,7 @@ Both `IExternalEventHandler` types are nested in their command files: `CategoryC
 
 ## Services
 
-All registered in `src/Core/Bootstrapper.cs` → `ConfigureServices()` (single method, everything **singleton**). "Writes doc" = injects ITransactionService — the only write path; no raw `new Transaction(` in services.
+All registered in `src/Core/Bootstrapper.cs` → `ConfigureServices()` (single method, everything **singleton**). "Writes doc" = injects ITransactionService — the usual write path. One deliberate exception: `WarningsService.Isolate` uses a raw `Transaction`, because injecting `ITransactionService` would load the Revit type graph at construction and make the service unconstructible in tests (see `src/Services/Health/WarningsService.cs:83-88`).
 
 ### Infrastructure
 | Service | Interface | Used by | Writes doc |
@@ -164,7 +164,7 @@ Top orchestrator: **CadConversionService : ICadConversionService** ← ConvertCa
 | ElementLabelService (static, not registered) | ViewModels (row labels) | no |
 | ValidationService (IValidationService) | ViewModels via ValidationServiceExtensions | no |
 | SelectionCoordinator (ISelectionCoordinator) | SelectionViewModel, several VMs | no |
-| WarningsService (src/Services/Health/) | WarningsViewModel | no — read-only by design (R6) |
+| WarningsService (src/Services/Health/) | WarningsViewModel | no persistent write — but `Isolate` needs a raw `Transaction` (Revit treats temporary isolate as a modification); R6 restated |
 
 ## ViewModels ↔ Views
 
