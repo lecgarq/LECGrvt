@@ -42,7 +42,7 @@ Report these separately. Never blur them.
 | Level | Proves | How |
 |-------|--------|-----|
 | Build | Compiles | `dotnet build -p:SkipRevitDeploy=true` — **always use this flag**; a plain build overwrites the live Revit 2026 add-in folder |
-| Tests | Logic that runs without Revit | `dotnet test` |
+| Tests | Logic that runs without Revit | `dotnet test -c Debug -p:SkipRevitDeploy=true` — the flag is mandatory here too; `dotnet test` builds the add-in and the deploy step fails with MSB3027 while Revit is open |
 | XAML compile | Markup parses. **Not** bindings. | Included in build |
 | Manifest / deploy | Output lands where Revit loads it | Inspect `LECG.csproj:61-72` + `C:\ProgramData\Autodesk\Revit\Addins\2026\` |
 | Revit runtime | It actually works | Only claimable if Revit was opened and the command run |

@@ -63,8 +63,8 @@ and points Revit at `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll` (`
 - Ensure all DLLs from the build output are in the same directory as LECG.dll
 - Check that .NET 8.0 Desktop Runtime is installed
 
-### AssemblyResolve conflicts
-- The plugin includes an AssemblyResolve handler in `App.cs` to handle version conflicts
+### Assembly version conflicts
+- There is no AssemblyResolve handler in `App.cs` — version resolution is left to Revit's default load order (first-loaded version wins in the shared AppDomain)
 - Revit journals may log `API_ERROR { Assembly version conflict ... }` at LECG load time when other installed add-ins preload different versions of shared assemblies (observed: Clipper2Lib, Microsoft.Extensions.DependencyInjection.Abstractions). The add-in still loads, but check the journal when debugging behavior that only reproduces inside Revit.
 
 ---

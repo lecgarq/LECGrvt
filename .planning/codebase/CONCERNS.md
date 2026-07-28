@@ -1,10 +1,24 @@
 # Codebase Concerns
 
-**Analysis Date:** 2026-07-04
+**Analysis Date:** 2026-07-04 · **Debt review:** 2026-07-27 (v1.0 hardening close audit — `.planning/archive/v1.0-hardening/AUDIT.md`)
+
+## Accepted debt (v1.0 hardening closed as-is, 2026-07-27)
+
+The v1.0 hardening milestone was closed with 16 of 32 requirements unmet and 9 partial. Its planning process (GSD) was retired mid-milestone; rename safety, the CI/test fix, deploy guardrails, and the CategoryChanger error message shipped, the rest is accepted debt. Accepted because the milestone tracking was stale, the suite is green (211 tests), and remaining items are better re-scoped into future milestones than executed from a dead roadmap. Outstanding, in the audit's wording:
+
+- **Reentrancy:** no `ExternalEvent.IsPending` guard in `ExternalEventCommand` (`src/Core/ExternalEventCommand.cs:19-27`); static handler lifecycle undocumented.
+- **Error handling:** no `LogAndIgnore` helper; 31 silent catch blocks remain across 20 files (down from 54); both temp-file cleanup services still swallow deletion failures; no CA1031/RCS1075 analyzers.
+- **UX:** no uniform COMPLETED/ROLLED BACK status reporting (rollback does throw and surface an error via `RevitCommand`); the 8 Align/Distribute pulldown sub-buttons pass an empty availability string (`src/Core/Ribbon/RibbonService.cs:246-247`).
+- **Security:** path sanitization only in `LinkedModelExportService`; no parent-dir rejection or containment checks in `CadFamilySaveService`, `FamilyEditorService`, `SettingsManager`; `LinkedModelExportService.cs:83` still logs a full path.
+- **Dependency isolation:** no startup version logging for Clipper2/DI.Abstractions; no `ManifestSettings` isolation in the manifest; pack:// post-isolation check moot until isolation exists.
+- **Tests:** no command-level tests for Purge/AlignEdges/FixPoints/CategoryChanger; no alignment-geometry tests.
+- **Perf:** no profiling of BatchRename/Purge/Alignment ever done.
+- **Deployment/docs:** no manifest presence validation at startup; unit-conversion / StorageType / link-transform conventions still open.
+- **Runtime validation:** DialogWhitelist's five entries still unverified in live Revit; smoke-test checklist never executed end-to-end (2026-07-25 run covered theme-scoping subset only).
 
 ## Tech Debt
 
-**FormulaAutoGroupingCommand static state management:**
+**FormulaAutoGroupingCommand static state management:** — RESOLVED (verified 2026-07-27: flag reset in job `Dispose()`, guaranteed by `RevitIdlingRunner.cs:59-65` `finally` on both complete and exception paths)
 - Issue: `s_projectRunActive` (static bool) tracks whether a project-wide formula auto-grouping pass is running. If an exception occurs during execution but BEFORE Dispose() is called, the flag remains true and blocks subsequent runs.
 - Files: `src/Commands/FormulaAutoGroupingCommand.cs:27,135,157,252`
 - Impact: User cannot retry a failed project-wide formula grouping operation without restarting Revit. RevitIdlingRunner's exception handling SHOULD guarantee Dispose is called (line 63 in finally block), but the pattern is fragile — state flag should be reset in a more defensive way.
@@ -16,7 +30,7 @@
 - Impact: If a dialog ID is incorrect or the result code is wrong, auto-dismiss will fail or dismiss with the wrong button, causing unexpected behavior in purge/conversion operations that rely on these dialogs. Users may experience stuck workflows if a modal dialog is not auto-dismissed as expected.
 - Fix approach: Execute a formal Revit runtime discovery pass (referenced in comments as `06-DIALOG-DISCOVERY.md`) to verify each DialogId and result code against actual Revit 2026 behavior. Update the whitelist only after confirming with an interactive Revit session.
 
-**BatchRenameExecutionService incomplete formula handling:**
+**BatchRenameExecutionService incomplete formula handling:** — RESOLVED (verified 2026-07-27: formula rewrite at `BatchRenameExecutionService.cs:321-344`, dimension-label reassignment at `:346-373`, covered by `LECG.Tests/Services/BatchRenameSafeRenameTests.cs`)
 - Issue: Two TODO comments at line 613 mark incomplete work: "TODO 04-03: hand formulaReferenced set to safe-rename loop; TODO 04-04: hand dimensionLabels set to dimension reassignment loop". Current code skips formula-referenced and dimension-label checks intentionally (per comment on line 628), delegating them to unimplemented safe-rename and dimension-reassignment paths.
 - Files: `src/Services/Renaming/BatchRenameExecutionService.cs:613,628-629`
 - Impact: Formula references and dimension labels attached to family parameters are NOT validated before rename. A rename operation could break formulas or dimension constraints if the parameter name change propagates incorrectly. The impact depends on whether Revit's API already prevents these (untested).
@@ -169,11 +183,10 @@
 
 ## Missing Critical Features
 
-**No runtime assertion/validation of command availability:**
-- Issue: Commands rely on `ProjectDocumentAvailability` and `FamilyDocumentAvailability` to prevent execution in invalid contexts. These availability classes are not integrated into the ribbon or command enable/disable UI.
-- Files: `src/Core/ProjectDocumentAvailability.cs`, `src/Core/FamilyDocumentAvailability.cs` — no references in ribbon code
-- Impact: User may click a button that is available in the ribbon but not applicable to the current document (e.g., a project-only command while editing a family). The command executes and either silently fails or shows a confusing error.
-- Fix approach: Integrate availability checks into RibbonService to disable/hide buttons dynamically based on current document. Cache availability state and update it on document/view change events.
+**Align pulldown sub-buttons missing availability classes:** (corrected 2026-07-27 — the original claim that availability classes have "no references in ribbon code" was stale: `RibbonService.cs:47,61,164,202,300-301` wires them for most commands)
+- Issue: Only the 8 Align/Distribute pulldown sub-buttons pass an empty availability string (`src/Core/Ribbon/RibbonService.cs:246-247`, comment "NO AVAILABILITY RESTRICTION"), even though `RibbonFactory.AddItemToPulldown` supports availability wiring (`RibbonFactory.cs:91-94`).
+- Impact: Those 8 buttons stay clickable with no project document active; the command then fails at execute time instead of greying out.
+- Fix approach: Pass `ProjectDocumentAvailability` for the 8 sub-buttons in `RibbonService.cs:250-294`.
 
 **No undo/rollback reporting to user:**
 - Issue: When a command modifies the document and encounters an error mid-transaction, the transaction is rolled back silently. User sees no clear indication of what happened or whether changes were applied.
