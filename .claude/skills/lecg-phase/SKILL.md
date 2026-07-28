@@ -70,7 +70,7 @@ Run what the plan said. Report per level, never blurred:
 
 - `dotnet build -p:SkipRevitDeploy=true` — **always this flag.** A plain build overwrites the live Revit 2026 add-in folder.
 - `dotnet test`
-- Revit runtime: only claimable if Revit was actually opened. Otherwise write `Revit runtime validation: not executed` and list the pending smoke-test steps from `docs/ai/revit-smoke-test.md`.
+- Revit runtime: only claimable if Revit was actually opened. If the `mcp-server-for-revit` tools are connected (Revit open with the MCP plugin service on), use them — query the document and execute the changed path in the live session; that counts as runtime validation *for what it exercised*. Ribbon presence, dialog binding, and undo grouping still need eyes on Revit. Otherwise write `Revit runtime validation: not executed` and list the pending smoke-test steps from `docs/ai/revit-smoke-test.md`.
 
 Paste real failing output. Never paraphrase a failure away. A phase with failing tests is not done — say it plainly.
 

@@ -37,6 +37,16 @@ Enum fields carry their literal value — often the thing being looked up.
 
 **Absence is evidence.** These are the assemblies the build compiles against, so a member that is not in `members.txt` does not exist in 2026 and will not compile. That is how `ElementId.IntegerValue` and `DisplayUnitType` were confirmed removed.
 
+## Descriptions
+
+`members.txt` holds signatures only. The prose (what a member does, remarks, parameter meaning — the text revitapidocs.com shows) is already on disk in the NuGet reference packages; grep it there instead of the web:
+
+```bash
+rg -A4 "M:Autodesk.Revit.DB.Wall.Create" "$HOME/.nuget/packages/nice3point.revit.api.revitapi/2026.4.10/ref/net8.0-windows7.0/RevitAPI.xml"
+```
+
+Same for `RevitAPIUI.xml` beside it. Member name format is standard .NET XML-doc (`M:`/`T:`/`P:` prefix, full namespace, `{}` for generics). Update the version segment when the package bumps — it must match `Nice3point.Revit.Api` in the csproj.
+
 ## Regenerate
 
 Only needed when the Revit version changes. Takes about a second.

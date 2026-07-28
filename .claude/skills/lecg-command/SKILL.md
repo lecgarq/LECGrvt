@@ -88,7 +88,7 @@ Build and tests prove wiring compiles and service logic works. They prove **noth
 3. Run it with a valid selection, with an empty selection, and cancel out of the dialog
 4. Confirm the change is one undo step
 
-Report per level. If Revit was not opened, say `Revit runtime validation: not executed` and list what remains.
+Report per level. If the `mcp-server-for-revit` tools are connected, verify the service path and resulting elements through them and say which of steps 2–4 that covered — button presence and dialog binding still need eyes on Revit. If Revit was not opened at all, say `Revit runtime validation: not executed` and list what remains.
 
 ## Rules
 

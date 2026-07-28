@@ -56,6 +56,8 @@ Without `-p:SkipRevitDeploy=true` — here you *want* the deploy. It copies dll/
 
 Then run `docs/ai/revit-smoke-test.md` in Revit: startup, ribbon loads, a representative command, empty-selection edge case, transaction behavior, a modeless flow.
 
+If the `mcp-server-for-revit` tools are connected, run the queryable parts through them (document state, service paths, element results) and record which steps they covered. The visual steps — ribbon, dialogs, undo — remain the user's; the gate is not passed until those are confirmed too.
+
 **This is the gate.** If Revit was not opened, the release does not go out. Say `Revit smoke test: not executed — release blocked` and stop. Never tag on a build result alone.
 
 ## 5. Tag and release

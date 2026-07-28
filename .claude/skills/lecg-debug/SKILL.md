@@ -37,6 +37,6 @@ Most Revit bugs are one of five things. Check the table before theorising — it
 ## Rules
 
 - Verify API assumptions against `docs/ai/revit-api/members.txt` — a signature you misremember can be the bug.
-- Never claim a fix works in Revit without opening Revit.
+- Never claim a fix works in Revit without opening Revit. If the `mcp-server-for-revit` tools are connected, reproducing and re-running the failing path through them in the live session counts.
 - If you cannot reproduce it, say so. Do not ship a speculative fix and call it done.
 - No debug scaffolding left behind. Remove the logging you added to find it, unless it earns its place.

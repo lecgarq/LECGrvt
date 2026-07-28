@@ -1,6 +1,6 @@
 ---
 name: lecg-milestone-new
-description: Open a new milestone — turn shaped pitches or a stated goal into a requirements list and a phased roadmap. Use when the user says "new milestone", "start v2", "what's next after this", "plan the next chunk of work", or types /lecg-milestone-new. Run after /lecg-shape for idea-driven milestones.
+description: Open a new milestone — turn a stated goal into a requirements list and a phased roadmap. Use when the user says "new milestone", "start v2", "what's next after this", "plan the next chunk of work", or types /lecg-milestone-new.
 ---
 
 # New milestone
@@ -11,9 +11,9 @@ Refuse to open a new one while the current milestone is unfinished — run `/lec
 
 ## 1. Source the goal
 
-From a shaped pitch (`.planning/shaped/*.md`), from `.planning/codebase/CONCERNS.md`, or from what the user just said. If it is vague, one round of questions — what does done look like, what is out of scope. Then stop.
+From `.planning/CANDIDATES.md` (shaped candidates), `.planning/codebase/CONCERNS.md`, or what the user just said. If it is vague, one round of questions — what does done look like, what is out of scope. Then stop. When a candidate drives the milestone, delete its entry from `CANDIDATES.md`.
 
-State the goal in one sentence a stranger could act on. If you cannot, it is not a milestone yet — send them to `/lecg-shape`.
+State the goal in one sentence a stranger could act on. If you cannot, it is not a milestone yet — keep talking with the user until it is.
 
 ## 2. Requirements
 
@@ -66,8 +66,6 @@ Prefer few phases. Eleven small phases and five real ones deliver the same thing
 ```
 
 `.planning/STATE.md` — reset to the new milestone, phase 1, status `planning`, today's date.
-
-If a shaped pitch drove this, mark it `**Status:** roadmapped` and note the milestone.
 
 ## 5. Report
 

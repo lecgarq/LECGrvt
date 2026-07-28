@@ -45,6 +45,7 @@ Services own Revit API work; `src/Services/` with `Services/Interfaces/` and `Se
 - Build (deploying — AVOID unless deployment is explicitly requested): plain `dotnet build` also copies DLLs into the live Revit 2026 addins folder — see Concerns.
 - `AGENTS.md:7` documents `dotnet build` as the standard per-step validation.
 - Tests: `LECG.Tests` compiles with real Revit API package refs (`LECG.Tests/LECG.Tests.csproj:34-36` notes the suite "compiles and runs on CI runners (no IsCiBuild split needed)"). Exact `dotnet test` invocation not yet exercised by a GSD run.
+- Live Revit access: `mcp-server-for-revit` MCP is registered for this project (installed 2026-07-27). Plugin manifest: `%AppData%\Autodesk\Revit\Addins\2026\mcp-servers-for-revit.addin`; server: `node ~\.mcp\revit\node_modules\mcp-server-for-revit\build\index.js` (installed with an npm override `better-sqlite3: ^12.4.1` — v11 has no Node 24 prebuild and source-builds fail here; keep the override if reinstalling). Requires Revit open with the plugin's MCP service enabled (its ribbon tab → Settings). Lets validation query/execute in the live session; ribbon/dialog/undo checks remain visual.
 
 ## As-Is Best Practices
 
