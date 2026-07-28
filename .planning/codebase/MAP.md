@@ -40,6 +40,7 @@ All in `src/Commands/`. No `[CommandAvailability]` attributes — availability i
 | SplitBoundariesCommand | RevitCommand | SplitBoundariesService | SplitBoundariesView | — |
 | TypeToLinkedModelsCommand | RevitCommand | ILinkedModelExportService | TypeToLinkedModelsView | — |
 | UpdateContoursCommand | RevitCommand | ToposolidService, ITransactionService | UpdateContoursView | — |
+| WarningsCommand | RevitCommand | (VM uses WarningsService) | WarningsView (modal) | WarningsService/ViewModel/GroupingPolicy tests |
 
 Both `IExternalEventHandler` types are nested in their command files: `CategoryChangerEventHandler` (CategoryChangerCommand.cs:56), `ConvertCadEventHandler` (ConvertCadCommand.cs:62).
 
@@ -163,10 +164,11 @@ Top orchestrator: **CadConversionService : ICadConversionService** ← ConvertCa
 | ElementLabelService (static, not registered) | ViewModels (row labels) | no |
 | ValidationService (IValidationService) | ViewModels via ValidationServiceExtensions | no |
 | SelectionCoordinator (ISelectionCoordinator) | SelectionViewModel, several VMs | no |
+| WarningsService (src/Services/Health/) | WarningsViewModel | no — read-only by design (R6) |
 
 ## ViewModels ↔ Views
 
-All VMs `AddTransient` in `Bootstrapper.ConfigureViewModels`, all Views `AddTransient` in `ConfigureViews`. Pattern: command resolves VM, then `ServiceLocator.CreateWith<View>(vm)`. Pairings are Name↔NameView for all 23 registered VMs. Exceptions worth knowing:
+All VMs `AddTransient` in `Bootstrapper.ConfigureViewModels`, all Views `AddTransient` in `ConfigureViews`. Pattern: command resolves VM, then `ServiceLocator.CreateWith<View>(vm)`. Pairings are Name↔NameView for all 24 registered VMs. Exceptions worth knowing:
 
 - FilterCopyViewModel — built via `CreateWith(doc)`, not resolved
 - PbrMaterialCreatorViewModel — registration bypassed; command `new`s it
@@ -181,7 +183,7 @@ All VMs `AddTransient` in `Bootstrapper.ConfigureViewModels`, all Views `AddTran
 | Panel | Buttons |
 |---|---|
 | Home | Home (P) |
-| Project Health | Clean Schemas (P), Compacting Styles (P), Purge (P), Formula Grouping (P) |
+| Project Health | Clean Schemas (P), Compacting Styles (P), Purge (P), Formula Grouping (P), Warnings (P) |
 | Standards | Convert CAD (P), Search/Replace (P), Convert Family (—), Convert Shared (F), Category Changer (P), Shared→Family Param (P), Filter Copy (P) |
 | Toposolids | Assign Material, Offset, Reset Slabs, Simplify Points, Align Edges, Update Contours, Change Level, Floor→Toposolid, Toposolid→Floor, Fix Points, Split Boundaries, Divide Toposolid (all P) |
 | Align | pulldown "Align Elements" → 8 align/distribute commands (—) |
@@ -199,6 +201,7 @@ Pure (no Revit API) policy project. Namespace `LECG.Core.*` merges with src's.
 | Rename | FormulaNameUpdater, RenameRuleEngine | FormulaAutoGroupingCommand, BatchRenameExecutionService, FormulaUpdateService, RenameRules, SearchReplacePreviewService |
 | Filtering | SearchTermPolicy | FilterCopyViewModel |
 | Graphics | SexyRevitGraphicsPolicy | SexyRevitService |
+| Warnings | WarningItem, WarningGroup, WarningGroupingPolicy | WarningsService, WarningsViewModel |
 | (root) | Result / Result\<T> | shared return type across services |
 
 ## Hot spots
@@ -221,7 +224,7 @@ Covered: Core policies (all 6 folders), Result, Renaming pipeline, PurgeSequence
 
 No covering test:
 
-- 28 of 29 command classes (incl. HomeCommand's string-keyed dispatch)
+- 29 of 30 command classes (incl. HomeCommand's string-keyed dispatch)
 - Entire CadConversion folder (~35 services) + ConvertCadViewModel (open CS0618 ILogger re-plumb)
 - Entire FamilyConversion folder incl. FamilyLoadOptionsFactory
 - Entire Topography folder
@@ -231,5 +234,5 @@ No covering test:
 - Entire RenderAppearance folder
 - Infrastructure: TransactionService, SettingsManager, FilterCopyService, LinkedModelExportService
 - SchemaCleanerService, RibbonService/RibbonFactory (button→command string mapping unverified)
-- 20 of 23 registered ViewModels
+- 20 of 24 registered ViewModels
 - Core plumbing: RevitCommand/ExternalEventCommand, SelectionCoordinator, SafeFailureHandler, WarningSwallower, RevitIdlingRunner
