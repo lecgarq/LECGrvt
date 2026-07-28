@@ -6,6 +6,12 @@ codex/
 bin/
 obj/
 TestResults/
+publish/
+dist/
+out/
+*.pdb
+*.nupkg
+*.zip
 *.user
 *.suo
 
@@ -55,6 +61,9 @@ docs/review/revit-api/*.jsonl
 
 # Temp analysis
 docs/review/tmp/
+*.tmp
+*.bak
+*.cache
 
 # Design source art (not needed in build)
 design/
