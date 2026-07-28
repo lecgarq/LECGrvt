@@ -152,6 +152,7 @@ namespace LECG.Core
             services.AddSingleton<AlignEdgesService>();
             services.AddSingleton<ToposolidService>();
             services.AddSingleton<ChangeLevelService>();
+            services.AddSingleton<WarningsService>();
             services.AddSingleton<SimplifyPointsService>();
             services.AddSingleton<FixPointsService>();
             services.AddSingleton<AlignElementsService>();
@@ -212,6 +213,7 @@ namespace LECG.Core
             services.AddTransient<AlignEdgesViewModel>();
             services.AddTransient<UpdateContoursViewModel>();
             services.AddTransient<ChangeLevelViewModel>();
+            services.AddTransient<WarningsViewModel>();
             services.AddTransient<AlignElementsViewModel>();
             services.AddTransient<SimplifyPointsViewModel>();
             services.AddTransient<FixPointsViewModel>();
@@ -240,6 +242,7 @@ namespace LECG.Core
             services.AddTransient<Views.AlignEdgesView>();
             services.AddTransient<Views.UpdateContoursView>();
             services.AddTransient<Views.ChangeLevelView>();
+            services.AddTransient<Views.WarningsView>();
             services.AddTransient<Views.AlignElementsView>();
             services.AddTransient<Views.SimplifyPointsView>();
             services.AddTransient<Views.FixPointsView>();

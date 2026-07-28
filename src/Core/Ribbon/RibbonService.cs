@@ -194,6 +194,14 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonFormulaGrouping_Tooltip,
                 AppImages.Sparkles
             ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonWarnings_Name,
+                UIConstants.ButtonWarnings_Text,
+                "LECG.Commands.WarningsCommand",
+                UIConstants.ButtonWarnings_Tooltip,
+                AppImages.Eraser // Placeholder icon
+            ), assemblyPath, availability);
         }
 
         private void CreateVisualizationPanel(UIControlledApplication app, string tabName, string assemblyPath)

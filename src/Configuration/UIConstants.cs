@@ -116,6 +116,11 @@ namespace LECG.Configuration
         public const string ButtonConvertCad_Text = "CAD\nBlocks";
         public const string ButtonConvertCad_Tooltip = "Convert Imported CAD to cleaned Detail Item families.";
 
+        // Warnings
+        public const string ButtonWarnings_Name = "btnWarnings";
+        public const string ButtonWarnings_Text = "Warnings";
+        public const string ButtonWarnings_Tooltip = "Review model warnings grouped by description, with select, show, and isolate actions. Read-only.";
+
         // Formula Auto Grouping
         public const string ButtonFormulaGrouping_Name = "btnFormulaGrouping";
         public const string ButtonFormulaGrouping_Text = "Formula\nGrouping";
