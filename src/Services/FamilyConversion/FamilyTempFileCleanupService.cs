@@ -5,7 +5,7 @@ using LECG.Services.Logging;
 
 namespace LECG.Services
 {
-    public class FamilyTempFileCleanupService : IFamilyTempFileCleanupService
+    public class FamilyTempFileCleanupService
     {
         private readonly ILogger _logger;
 

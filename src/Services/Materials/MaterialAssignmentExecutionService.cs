@@ -6,19 +6,19 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class MaterialAssignmentExecutionService : IMaterialAssignmentExecutionService
+    public class MaterialAssignmentExecutionService
     {
-        private readonly IMaterialElementGroupingService _materialElementGroupingService;
-        private readonly IMaterialAssignmentProgressService _materialAssignmentProgressService;
-        private readonly IMaterialElementTypeResolverService _materialElementTypeResolverService;
-        private readonly IMaterialTypeAssignmentProcessService _materialTypeAssignmentProcessService;
+        private readonly MaterialElementGroupingService _materialElementGroupingService;
+        private readonly MaterialAssignmentProgressService _materialAssignmentProgressService;
+        private readonly MaterialElementTypeResolverService _materialElementTypeResolverService;
+        private readonly MaterialTypeAssignmentProcessService _materialTypeAssignmentProcessService;
         private readonly ITransactionService _transactionService;
 
         public MaterialAssignmentExecutionService(
-            IMaterialElementGroupingService materialElementGroupingService,
-            IMaterialAssignmentProgressService materialAssignmentProgressService,
-            IMaterialElementTypeResolverService materialElementTypeResolverService,
-            IMaterialTypeAssignmentProcessService materialTypeAssignmentProcessService,
+            MaterialElementGroupingService materialElementGroupingService,
+            MaterialAssignmentProgressService materialAssignmentProgressService,
+            MaterialElementTypeResolverService materialElementTypeResolverService,
+            MaterialTypeAssignmentProcessService materialTypeAssignmentProcessService,
             ITransactionService transactionService)
         {
             _materialElementGroupingService = materialElementGroupingService;

@@ -31,11 +31,11 @@ namespace LECG.ViewModels
         public Action<string>? OnLog { get; set; }
         public Action? OnShowLog { get; set; }
         public Document? Doc { get; set; }
-        public LECG.Services.Interfaces.IFamilyEditorService FamilyService { get; }
+        public LECG.Services.FamilyEditorService FamilyService { get; }
         public Action? RequestRun { get; set; }
         public bool CanRun => Selection.HasSelection && SelectedCategory != null;
 
-        public CategoryChangerViewModel(LECG.Services.Interfaces.IFamilyEditorService familyService, ILogger logger)
+        public CategoryChangerViewModel(LECG.Services.FamilyEditorService familyService, ILogger logger)
         {
             FamilyService = familyService ?? throw new ArgumentNullException(nameof(familyService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

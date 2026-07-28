@@ -10,23 +10,23 @@ using System.Linq;
 
 namespace LECG.Services
 {
-    public class FamilyConversionService : IFamilyConversionService
+    public class FamilyConversionService
     {
-        private readonly IFamilyTemplatePathService _templatePathService;
-        private readonly IFamilySourceDocumentService _familySourceDocumentService;
-        private readonly IFamilyConversionExecutionService _familyConversionExecutionService;
-        private readonly IFamilyConversionLoggingService _familyConversionLoggingService;
-        private readonly IFamilyConversionFinalizeService _familyConversionFinalizeService;
+        private readonly FamilyTemplatePathService _templatePathService;
+        private readonly FamilySourceDocumentService _familySourceDocumentService;
+        private readonly FamilyConversionExecutionService _familyConversionExecutionService;
+        private readonly FamilyConversionLoggingService _familyConversionLoggingService;
+        private readonly FamilyConversionFinalizeService _familyConversionFinalizeService;
         private readonly ITransactionService _transactionService;
         private readonly LECG.Services.Logging.ILogger _logger;
 
 
         public FamilyConversionService(
-            IFamilyTemplatePathService templatePathService,
-            IFamilySourceDocumentService familySourceDocumentService,
-            IFamilyConversionExecutionService familyConversionExecutionService,
-            IFamilyConversionLoggingService familyConversionLoggingService,
-            IFamilyConversionFinalizeService familyConversionFinalizeService,
+            FamilyTemplatePathService templatePathService,
+            FamilySourceDocumentService familySourceDocumentService,
+            FamilyConversionExecutionService familyConversionExecutionService,
+            FamilyConversionLoggingService familyConversionLoggingService,
+            FamilyConversionFinalizeService familyConversionFinalizeService,
             ITransactionService transactionService,
             LECG.Services.Logging.ILogger logger)
         {

@@ -57,40 +57,38 @@ namespace LECG.Commands
                 // Active for the entire purge operation — single subscription, not per-family.
                 app.DialogBoxShowing += OnDialogShowing;
 
+                var purgeService = ServiceLocator.GetRequiredService<PurgeService>();
+                var options = new PurgeOptions(
+                    settings.PurgeLineStyles,
+                    settings.PurgeLinePatterns,
+                    settings.PurgeFillPatterns,
+                    settings.PurgeMaterials,
+                    settings.PurgeLevels,
+                    settings.PurgeParameters,
+                    settings.PurgeGroups,
+                    settings.PurgeGridTypes,
+                    settings.PurgeLevelTypes,
+                    settings.PurgeConstraints,
+                    settings.PurgeUnplacedRooms,
+                    settings.PurgeViewTemplates,
+                    settings.PurgeViewFilters);
+
                 if (settings.PassCount > 1)
                 {
+                    // Revit's native Purge Unused does not cover levels, grid/level types, groups,
+                    // constraints, unplaced rooms, view templates, or view filters — so deep purge
+                    // runs the native purge first, then the category-specific purges the user checked.
                     Log("Deep purge is using Revit native Purge Unused for every editable loaded family and for the project.");
-                    Log("Category-specific purge toggles are ignored during deep purge.");
 
-                    var deepPurgeService = ServiceLocator.GetRequiredService<IDeepPurgeService>();
+                    var deepPurgeService = ServiceLocator.GetRequiredService<DeepPurgeService>();
                     deepPurgeService.Purge(doc, settings.PassCount, reporter);
 
-                    if (settings.PurgeParameters)
-                    {
-                        Log("");
-                        Log("--- FAMILY PARAMETERS ---");
-                        var purgeParameterService = ServiceLocator.GetRequiredService<IPurgeParameterService>();
-                        int deleted = purgeParameterService.PurgeUnusedParameters(doc, Log);
-                        Log($"Family Parameters deleted: {deleted}");
-                    }
+                    Log("");
+                    Log("--- CATEGORY PURGE ---");
+                    purgeService.PurgeAll(doc, 1, options, reporter);
                 }
                 else
                 {
-                    var purgeService = ServiceLocator.GetRequiredService<IPurgeService>();
-                    var options = new PurgeOptions(
-                        settings.PurgeLineStyles,
-                        settings.PurgeLinePatterns,
-                        settings.PurgeFillPatterns,
-                        settings.PurgeMaterials,
-                        settings.PurgeLevels,
-                        settings.PurgeParameters,
-                        settings.PurgeGroups,
-                        settings.PurgeGridTypes,
-                        settings.PurgeLevelTypes,
-                        settings.PurgeConstraints,
-                        settings.PurgeUnplacedRooms,
-                        settings.PurgeViewTemplates,
-                        settings.PurgeViewFilters);
                     purgeService.PurgeAll(doc, settings.PassCount, options, reporter);
                 }
             }

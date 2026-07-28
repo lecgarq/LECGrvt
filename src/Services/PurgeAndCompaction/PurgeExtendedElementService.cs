@@ -8,17 +8,18 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgeExtendedElementService : IPurgeExtendedElementService
+    public class PurgeExtendedElementService
     {
-        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+        private readonly PurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeExtendedElementService(IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeExtendedElementService(PurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
         }
 
         public int PurgeUnusedGroups(Document doc, Action<string>? logCallback = null)
         {
+            ArgumentNullException.ThrowIfNull(doc);
             logCallback?.Invoke("Scanning for unused group types...");
 
             HashSet<ElementId> usedTypeIds = new FilteredElementCollector(doc)
@@ -27,6 +28,22 @@ namespace LECG.Services
                 .Select(group => group.GetTypeId())
                 .Where(id => id != ElementId.InvalidElementId)
                 .ToHashSet();
+
+            // Attached detail group types belong to a model group type and have no placed Group
+            // instance until shown in a view — treat them as used when their parent type is used.
+            foreach (ElementId usedTypeId in usedTypeIds.ToList())
+            {
+                if (doc.GetElement(usedTypeId) is not GroupType usedType) continue;
+
+                try
+                {
+                    usedTypeIds.UnionWith(usedType.GetAvailableAttachedDetailGroupTypeIds());
+                }
+                catch (Exception ex) when (IsExpectedRevitException(ex))
+                {
+                    // Detail group types themselves have no attached detail groups.
+                }
+            }
 
             return DeleteElements(
                 new FilteredElementCollector(doc).OfClass(typeof(GroupType)).Cast<GroupType>()
@@ -47,6 +64,17 @@ namespace LECG.Services
                 .Select(grid => grid.GetTypeId())
                 .Where(id => id != ElementId.InvalidElementId)
                 .ToHashSet();
+
+            // Multi-segment grids reference a GridType but are not Grid subclasses; deleting a
+            // type they use would cascade-delete the multi-segment grid itself.
+            foreach (Element multiSegmentGrid in new FilteredElementCollector(doc).OfClass(typeof(MultiSegmentGrid)))
+            {
+                ElementId typeId = multiSegmentGrid.GetTypeId();
+                if (typeId != ElementId.InvalidElementId)
+                {
+                    usedTypeIds.Add(typeId);
+                }
+            }
 
             return DeleteElements(
                 new FilteredElementCollector(doc).OfClass(typeof(GridType)).Cast<GridType>()
@@ -102,17 +130,9 @@ namespace LECG.Services
                     doc.Delete(id);
                     deleted++;
                 }
-                catch (ArgumentException)
+                catch (Exception ex) when (IsExpectedRevitException(ex))
                 {
                     // System/alignment constraints that Revit won't allow deleting are expected.
-                }
-                catch (InvalidOperationException)
-                {
-                    // System/alignment constraints that Revit won't allow deleting are expected.
-                }
-                catch (RevitExceptions.InvalidOperationException)
-                {
-                    // System/alignment constraints that Revit won't allow deleting — expected.
                 }
             }
 
@@ -146,6 +166,16 @@ namespace LECG.Services
                 .Where(view => !view.IsTemplate && view.ViewTemplateId != ElementId.InvalidElementId)
                 .Select(view => view.ViewTemplateId)
                 .ToHashSet();
+
+            // Templates assigned as the default for a view type are in use even if no view
+            // currently references them.
+            foreach (ViewFamilyType viewFamilyType in new FilteredElementCollector(doc).OfClass(typeof(ViewFamilyType)).Cast<ViewFamilyType>())
+            {
+                if (viewFamilyType.DefaultTemplateId != ElementId.InvalidElementId)
+                {
+                    usedTemplateIds.Add(viewFamilyType.DefaultTemplateId);
+                }
+            }
 
             return DeleteElements(
                 new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>()
@@ -181,18 +211,21 @@ namespace LECG.Services
             {
                 return view.GetFilters();
             }
-            catch (ArgumentException)
+            catch (Exception ex) when (IsExpectedRevitException(ex))
             {
                 return Array.Empty<ElementId>();
             }
-            catch (InvalidOperationException)
-            {
-                return Array.Empty<ElementId>();
-            }
-            catch (RevitExceptions.InvalidOperationException)
-            {
-                return Array.Empty<ElementId>();
-            }
+        }
+
+        // Revit's ArgumentException/InvalidOperationException derive from
+        // Autodesk.Revit.Exceptions.ApplicationException, not their System namesakes,
+        // so both families must be listed or Revit exceptions abort the purge pass.
+        private static bool IsExpectedRevitException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.ArgumentException
+                || ex is RevitExceptions.InvalidOperationException;
         }
 
         private int DeleteElements(IEnumerable<(ElementId id, string name)> candidates, Document doc, Action<string>? logCallback, string categoryName)

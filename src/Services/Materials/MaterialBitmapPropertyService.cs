@@ -8,7 +8,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class MaterialBitmapPropertyService : IMaterialBitmapPropertyService
+    public class MaterialBitmapPropertyService
     {
         private const double MillimetersPerFoot = 304.8;
         private readonly ILogger _logger;
@@ -49,13 +49,26 @@ namespace LECG.Services
             ArgumentNullException.ThrowIfNull(ownerAsset);
             if (prop == null) return;
 
-            Asset? bumpMapAsset = prop.GetSingleConnectedAsset();
-            if (bumpMapAsset == null)
+            // Connect a plain UnifiedBitmap directly to the bump slot — the same structure Revit's own UI
+            // creates and, crucially, the one Enscape reads (it looks for unifiedbitmap_Bitmap). A BumpMap
+            // ("Bump Texture") node stores the path in bumpmap_Bitmap, which Enscape ignores, leaving its
+            // Normal slot empty. If a non-UnifiedBitmap node is already connected, drop it first.
+            Asset? connected = prop.GetSingleConnectedAsset();
+            if (connected != null && connected.Name.IndexOf("UnifiedBitmap", StringComparison.OrdinalIgnoreCase) < 0)
+            {
+                try { prop.RemoveConnectedAsset(); }
+                catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
+                {
+                    _logger.LogWarning($"SetupBumpBitmapProperty RemoveConnectedAsset failed: {ex.Message}", scope: "MaterialBitmapProperty");
+                }
+                connected = prop.GetSingleConnectedAsset();
+            }
+
+            if (connected == null)
             {
                 try
                 {
-                    bumpMapAsset = TryAddConnectedAsset(prop, "BumpMap")
-                        ?? TryAddConnectedAsset(prop, "UnifiedBitmap")
+                    connected = TryAddConnectedAsset(prop, "UnifiedBitmap")
                         ?? TryAddConnectedAsset(prop, "UnifiedBitmapSchema");
                 }
                 catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
@@ -64,68 +77,13 @@ namespace LECG.Services
                 }
             }
 
-            if (bumpMapAsset == null) return;
+            connected ??= prop.GetSingleConnectedAsset();
+            if (connected == null) return;
 
-            // Find the nested bitmap asset inside a BumpMap wrapper, if any.
-            Asset? bitmapAsset = null;
-            for (int i = 0; i < bumpMapAsset.Size; i++)
-            {
-                Asset? nested = bumpMapAsset[i]?.GetSingleConnectedAsset();
-                if (nested == null) continue;
-                bitmapAsset = nested;
-                break;
-            }
+            ApplyBitmapProperties(connected, path, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms);
 
-            BumpMapNormalizationResult normalizationResult = MaterialBumpMapNormalizer.NormalizeConnectedAsset(ownerAsset, prop, bumpMapAsset, bumpmapType);
-            if (!normalizationResult.IsSuccessful)
-            {
-                _logger.LogWarning(
-                    $"Bump normalization unresolved for slot '{normalizationResult.SlotName}': {normalizationResult.Detail}",
-                    scope: "MaterialBitmapProperty");
-            }
-
-            // REFRESH: NormalizeConnectedAsset may have replaced the connected asset tree (re-wrapped as BumpMap).
-            // Re-read from the slot so we target the LIVE asset, not the old orphaned reference.
-            Asset? activeBumpAsset = prop.GetSingleConnectedAsset();
-            if (activeBumpAsset != null)
-            {
-                // For a BumpMap wrapper, the inner UnifiedBitmap lives under BumpMap.BumpmapBitmap.
-                // For a raw UnifiedBitmapSchema, the asset IS the bitmap target.
-                Asset bitmapTarget = ResolveBitmapTarget(activeBumpAsset);
-                ApplyBitmapProperties(bitmapTarget, path, scaleXMillimeters, scaleYMillimeters, offsetXMillimeters, offsetYMillimeters, rotationDegrees, linkTextureTransforms);
-            }
-        }
-
-        private static Asset ResolveBitmapTarget(Asset bumpAsset)
-        {
-            // BumpMap schema: inner UnifiedBitmap is connected to the BumpmapBitmap named property.
-            AssetProperty? bitmapProp = bumpAsset.FindByName(BumpMap.BumpmapBitmap);
-            if (bitmapProp != null)
-            {
-                Asset? inner = bitmapProp.GetSingleConnectedAsset();
-                if (inner != null) return inner;
-
-                // Inner not connected yet — add a UnifiedBitmap child so we have something to write to.
-                inner = TryStaticAddConnectedAsset(bitmapProp, "UnifiedBitmap")
-                    ?? TryStaticAddConnectedAsset(bitmapProp, "UnifiedBitmapSchema");
-                if (inner != null) return inner;
-            }
-
-            // Fallback: raw UnifiedBitmapSchema directly in the slot — it IS the target.
-            return bumpAsset;
-        }
-
-        private static Asset? TryStaticAddConnectedAsset(AssetProperty prop, string schemaName)
-        {
-            System.Reflection.MethodInfo? method = prop.GetType().GetMethod("AddConnectedAsset", new Type[] { typeof(string) })
-                ?? prop.GetType().GetMethods().FirstOrDefault(m => m.Name == "AddConnectedAsset" && m.GetParameters().Length == 1);
-            if (method == null) return null;
-            try
-            {
-                object? result = method.Invoke(prop, new object[] { schemaName });
-                return result as Asset ?? prop.GetSingleConnectedAsset();
-            }
-            catch { return null; }
+            // Set the Advanced -> Data Type = Normal(1)/Height(0) flag if this schema exposes it.
+            MaterialBumpMapNormalizer.ForceBumpTypeEverywhere(ownerAsset, prop, connected, bumpmapType);
         }
 
         private void ApplyBitmapProperties(Asset asset, string path, double scaleXMillimeters, double scaleYMillimeters, double offsetXMillimeters, double offsetYMillimeters, double rotationDegrees, bool linkTextureTransforms)

@@ -43,7 +43,7 @@ namespace LECG.Services
                     .FirstOrDefault(v => v.ViewType == ViewType.FloorPlan && !v.IsTemplate);
                 if (importView == null)
                 {
-                    throw new Exception("No valid import view found.");
+                    throw new InvalidOperationException("No valid import view found.");
                 }
 
                 reporter.Report("Importing DWG file...", 15);
@@ -51,13 +51,13 @@ namespace LECG.Services
                 bool success = tempDoc.Import(dwgPath, opt, importView, out impId);
                 if (!success || impId == ElementId.InvalidElementId)
                 {
-                    throw new Exception("DWG Import failed.");
+                    throw new InvalidOperationException("DWG Import failed.");
                 }
 
                 ImportInstance? imp = tempDoc.GetElement(impId) as ImportInstance;
                 if (imp == null)
                 {
-                    throw new Exception("Imported DWG instance could not be resolved.");
+                    throw new InvalidOperationException("Imported DWG instance could not be resolved.");
                 }
                 reporter.Report("Extracting geometry...", 30);
                 data = _geometryExtractionService.ExtractGeometry(tempDoc, imp);

@@ -34,7 +34,7 @@ namespace LECG.Commands
 
             // Line Patterns
             UpdateProgress(5, "Compacting Line Patterns...");
-            var linePatternService = ServiceLocator.GetRequiredService<ILinePatternCompactionService>();
+            var linePatternService = ServiceLocator.GetRequiredService<LinePatternCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Line Patterns", currentDoc =>
             {
                 CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
@@ -49,7 +49,7 @@ namespace LECG.Commands
 
             // Fill Patterns
             UpdateProgress(25, "Compacting Fill Patterns...");
-            var fillPatternService = ServiceLocator.GetRequiredService<IFillPatternCompactionService>();
+            var fillPatternService = ServiceLocator.GetRequiredService<FillPatternCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Fill Patterns", currentDoc =>
             {
                 CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
@@ -64,7 +64,7 @@ namespace LECG.Commands
 
             // Text Styles
             UpdateProgress(50, "Compacting Text Styles...");
-            var textStyleService = ServiceLocator.GetRequiredService<ITextStyleCompactionService>();
+            var textStyleService = ServiceLocator.GetRequiredService<TextStyleCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Text Styles", currentDoc =>
             {
                 CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);
@@ -79,7 +79,7 @@ namespace LECG.Commands
 
             // Line Styles
             UpdateProgress(75, "Compacting Line Styles...");
-            var lineStyleService = ServiceLocator.GetRequiredService<ILineStyleCompactionService>();
+            var lineStyleService = ServiceLocator.GetRequiredService<LineStyleCompactionService>();
             transactionService.RunWithWarningHandler(doc, "Compacting Styles - Line Styles", currentDoc =>
             {
                 CompactingStylesContext context = CompactingStylesContext.Create(currentDoc, reporter);

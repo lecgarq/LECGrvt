@@ -4,13 +4,13 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class AlignEdgesService : IAlignEdgesService
+    public class AlignEdgesService
     {
-        private readonly IAlignEdgesIntersectorService _intersectorService;
-        private readonly IAlignEdgesToposolidProcessingService _toposolidProcessingService;
+        private readonly AlignEdgesIntersectorService _intersectorService;
+        private readonly AlignEdgesToposolidProcessingService _toposolidProcessingService;
         private readonly ITransactionService _transactionService;
 
-        public AlignEdgesService(IAlignEdgesIntersectorService intersectorService, IAlignEdgesToposolidProcessingService toposolidProcessingService, ITransactionService transactionService)
+        public AlignEdgesService(AlignEdgesIntersectorService intersectorService, AlignEdgesToposolidProcessingService toposolidProcessingService, ITransactionService transactionService)
         {
             _intersectorService = intersectorService;
             _toposolidProcessingService = toposolidProcessingService;

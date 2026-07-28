@@ -104,11 +104,8 @@ namespace LECG.Services
                     logCallback?.Invoke($"    -> Material class: {request.MaterialClass}");
                 }
 
-                if (!string.IsNullOrEmpty(request.Description))
-                {
-                    TrySetDescription(material, request.Description);
-                    logCallback?.Invoke($"    -> Material description set");
-                }
+                TrySetDescription(material, "LECG Arquitectura");
+                logCallback?.Invoke($"    -> Material description set");
 
                 TrySetParameter(material, BuiltInParameter.ALL_MODEL_MODEL, "Arq. Luis Eduardo Cort\u00e9s");
                 TrySetParameter(material, BuiltInParameter.ALL_MODEL_MANUFACTURER, "LECG Arquitectura");

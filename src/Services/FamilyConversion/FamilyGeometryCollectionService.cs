@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class FamilyGeometryCollectionService : IFamilyGeometryCollectionService
+    public class FamilyGeometryCollectionService
     {
         public List<ElementId> CollectGeometryElementIds(Document sourceFamilyDoc)
         {

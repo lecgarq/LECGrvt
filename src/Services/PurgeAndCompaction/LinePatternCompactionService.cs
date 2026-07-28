@@ -11,7 +11,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class LinePatternCompactionService : ILinePatternCompactionService
+    public class LinePatternCompactionService
     {
         private const string CanonicalPrefix = "LECG-LP-";
         private const double GroupingToleranceMm = 1.0;

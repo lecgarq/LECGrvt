@@ -9,16 +9,16 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class SplitBoundariesService : ISplitBoundariesService
+    public class SplitBoundariesService
     {
         private readonly ITransactionService _transactionService;
-        private readonly IGeometryBoundaryService _geometryBoundaryService;
-        private readonly ISlabService _slabService;
+        private readonly GeometryBoundaryService _geometryBoundaryService;
+        private readonly SlabService _slabService;
 
         public SplitBoundariesService(
             ITransactionService transactionService,
-            IGeometryBoundaryService geometryBoundaryService,
-            ISlabService slabService)
+            GeometryBoundaryService geometryBoundaryService,
+            SlabService slabService)
         {
             _transactionService = transactionService;
             _geometryBoundaryService = geometryBoundaryService;

@@ -18,7 +18,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<IAlignEdgesService>();
+            var service = ServiceLocator.GetRequiredService<AlignEdgesService>();
 
             var vm = ServiceLocator.GetRequiredService<AlignEdgesViewModel>();
             var preselectedSources = SelectionSeedHelper.GetSelectedReferences(uiDoc, new SelectionFilters.SlabFilter());

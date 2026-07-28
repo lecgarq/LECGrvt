@@ -344,6 +344,15 @@ namespace LECG.Core.Ribbon
                 AppImages.Sparkles // Using Sparkles for now
             ), assemblyPath, projectAvailability);
 
+            // Shared to Family Parameter (project environment only)
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonSharedToFamilyParam_Name,
+                UIConstants.ButtonSharedToFamilyParam_Text,
+                "LECG.Commands.SharedToFamilyParameterCommand",
+                UIConstants.ButtonSharedToFamilyParam_Tooltip,
+                AppImages.ConvertShared
+            ), assemblyPath, projectAvailability);
+
             // Filter Copy
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonFilterCopy_Name,

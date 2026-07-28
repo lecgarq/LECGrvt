@@ -6,7 +6,7 @@ using LECG.Services.Logging;
 
 namespace LECG.Services
 {
-    public class FamilyProjectLoadService : IFamilyProjectLoadService
+    public class FamilyProjectLoadService
     {
         private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
         private readonly ITransactionService _transactionService;

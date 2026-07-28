@@ -6,11 +6,11 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgeLineStyleService : IPurgeLineStyleService
+    public class PurgeLineStyleService
     {
-        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+        private readonly PurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLineStyleService(IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeLineStyleService(PurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
         }

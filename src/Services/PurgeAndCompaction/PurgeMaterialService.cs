@@ -7,15 +7,13 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgeMaterialService : IPurgeMaterialService
+    public class PurgeMaterialService
     {
-        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
-        private readonly IPurgeMaterialUsageCollectorService _purgeMaterialUsageCollectorService;
+        private readonly PurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeMaterialService(IPurgeDeleteElementService purgeDeleteElementService, IPurgeMaterialUsageCollectorService purgeMaterialUsageCollectorService)
+        public PurgeMaterialService(PurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
-            _purgeMaterialUsageCollectorService = purgeMaterialUsageCollectorService;
         }
 
         public int PurgeUnusedMaterials(Document doc, Action<string>? logCallback = null)
@@ -37,7 +35,7 @@ namespace LECG.Services
                 .ToDictionary(m => m.Id, m => m.Name);
 
             var validMaterialIds = new HashSet<ElementId>(allMaterials.Keys);
-            var usedIds = _purgeMaterialUsageCollectorService.CollectUsedMaterialIds(context, validMaterialIds);
+            var usedIds = CollectUsedMaterialIds(context, validMaterialIds);
 
             int deleted = 0;
             foreach (var kvp in allMaterials)
@@ -50,6 +48,34 @@ namespace LECG.Services
 
             logCallback?.Invoke($"  Deleted {deleted} materials.");
             return deleted;
+        }
+
+        private static HashSet<ElementId> CollectUsedMaterialIds(
+            PurgeContext context,
+            HashSet<ElementId> validMaterialIds)
+        {
+            ArgumentNullException.ThrowIfNull(context);
+            ArgumentNullException.ThrowIfNull(validMaterialIds);
+
+            var usedIds = new HashSet<ElementId>();
+
+            foreach (ElementId usedMaterialId in context.UsedMaterialIds)
+            {
+                if (validMaterialIds.Contains(usedMaterialId))
+                {
+                    usedIds.Add(usedMaterialId);
+                }
+            }
+
+            foreach (ElementId referencedId in context.ParameterReferencedIds)
+            {
+                if (validMaterialIds.Contains(referencedId))
+                {
+                    usedIds.Add(referencedId);
+                }
+            }
+
+            return usedIds;
         }
     }
 }

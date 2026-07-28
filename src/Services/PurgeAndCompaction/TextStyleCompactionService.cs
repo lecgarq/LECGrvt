@@ -9,7 +9,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class TextStyleCompactionService : ITextStyleCompactionService
+    public class TextStyleCompactionService
     {
         private const string CanonicalPrefix = "LECG-TT-";
 

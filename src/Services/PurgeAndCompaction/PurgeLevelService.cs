@@ -6,14 +6,12 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgeLevelService : IPurgeLevelService
+    public class PurgeLevelService
     {
-        private readonly IPurgeReferencedLevelService _purgeReferencedLevelService;
-        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+        private readonly PurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeLevelService(IPurgeReferencedLevelService purgeReferencedLevelService, IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeLevelService(PurgeDeleteElementService purgeDeleteElementService)
         {
-            _purgeReferencedLevelService = purgeReferencedLevelService;
             _purgeDeleteElementService = purgeDeleteElementService;
         }
 
@@ -41,9 +39,10 @@ namespace LECG.Services
 
             var levelIdsToRemove = new HashSet<ElementId>();
             var validLevelIds = new HashSet<ElementId>(allLevels.Select(l => l.Id));
-            var referencedLevelIds = _purgeReferencedLevelService.CollectReferencedLevelIds(context, validLevelIds);
+            var referencedLevelIds = CollectReferencedLevelIds(context, validLevelIds);
+            CollectPlanViewLevelIds(doc, referencedLevelIds);
 
-            logCallback?.Invoke($"  Found {referencedLevelIds.Count} levels referenced by parameters.");
+            logCallback?.Invoke($"  Found {referencedLevelIds.Count} levels referenced by parameters or plan views.");
 
             foreach (var level in allLevels)
             {
@@ -71,6 +70,49 @@ namespace LECG.Services
 
             logCallback?.Invoke($"  Deleted {deleted} levels.");
             return deleted;
+        }
+
+        /// <summary>
+        /// A level that generates plan views is in use: deleting it would cascade-delete those
+        /// views (and empty any sheets they are placed on). ElementLevelFilter does not catch
+        /// views, so they are collected explicitly.
+        /// </summary>
+        private static void CollectPlanViewLevelIds(Document doc, HashSet<ElementId> referencedLevelIds)
+        {
+            foreach (ViewPlan viewPlan in new FilteredElementCollector(doc).OfClass(typeof(ViewPlan)).Cast<ViewPlan>())
+            {
+                try
+                {
+                    Level? genLevel = viewPlan.GenLevel;
+                    if (genLevel != null)
+                    {
+                        referencedLevelIds.Add(genLevel.Id);
+                    }
+                }
+                catch (Autodesk.Revit.Exceptions.InvalidOperationException)
+                {
+                    // Some plan views (e.g. area plans without a level) do not expose GenLevel.
+                }
+            }
+        }
+
+        private static HashSet<ElementId> CollectReferencedLevelIds(
+            PurgeContext context,
+            HashSet<ElementId> validLevelIds)
+        {
+            ArgumentNullException.ThrowIfNull(context);
+            ArgumentNullException.ThrowIfNull(validLevelIds);
+
+            var referencedLevelIds = new HashSet<ElementId>();
+            foreach (ElementId referencedId in context.ParameterReferencedIds)
+            {
+                if (validLevelIds.Contains(referencedId))
+                {
+                    referencedLevelIds.Add(referencedId);
+                }
+            }
+
+            return referencedLevelIds;
         }
     }
 }

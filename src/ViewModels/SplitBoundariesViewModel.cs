@@ -13,7 +13,7 @@ namespace LECG.ViewModels
 {
     public partial class SplitBoundariesViewModel : BaseViewModel
     {
-        private readonly IGeometryBoundaryService _geometryBoundaryService;
+        private readonly GeometryBoundaryService _geometryBoundaryService;
 
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public List<ElementId> SelectedElementIds { get; private set; } = new List<ElementId>();
@@ -27,7 +27,7 @@ namespace LECG.ViewModels
         private ICommand? _cancelCommandLocal;
         public override ICommand CancelCommand => _cancelCommandLocal ??= new CommunityToolkit.Mvvm.Input.RelayCommand(OnCancel);
 
-        public SplitBoundariesViewModel(IGeometryBoundaryService geometryBoundaryService)
+        public SplitBoundariesViewModel(GeometryBoundaryService geometryBoundaryService)
         {
             _geometryBoundaryService = geometryBoundaryService;
             Title = "SPLIT BOUNDARIES";

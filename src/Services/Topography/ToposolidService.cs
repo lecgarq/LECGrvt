@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace LECG.Services
 {
-    public class ToposolidService : IToposolidService
+    public class ToposolidService
     {
         private const double MetersToFeet = 3.28084;
         private const double MaxElevationFeet = 19685; // ~6000m in feet

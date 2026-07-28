@@ -6,12 +6,12 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class AlignEdgesBoundaryCollectionService : IAlignEdgesBoundaryCollectionService
+    public class AlignEdgesBoundaryCollectionService
     {
-        private readonly IAlignEdgesBoundaryPointService _boundaryPointService;
-        private readonly IGeometryBoundaryService _geometryBoundaryService;
+        private readonly AlignEdgesBoundaryPointService _boundaryPointService;
+        private readonly GeometryBoundaryService _geometryBoundaryService;
 
-        public AlignEdgesBoundaryCollectionService(IAlignEdgesBoundaryPointService boundaryPointService, IGeometryBoundaryService geometryBoundaryService)
+        public AlignEdgesBoundaryCollectionService(AlignEdgesBoundaryPointService boundaryPointService, GeometryBoundaryService geometryBoundaryService)
         {
             _boundaryPointService = boundaryPointService;
             _geometryBoundaryService = geometryBoundaryService;

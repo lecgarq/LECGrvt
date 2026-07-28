@@ -7,7 +7,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class GeometryBoundaryService : IGeometryBoundaryService
+    public class GeometryBoundaryService
     {
         private readonly IAppMemoryCache _appMemoryCache;
 

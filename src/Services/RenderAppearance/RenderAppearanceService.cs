@@ -6,14 +6,14 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class RenderAppearanceService : IRenderAppearanceService
+    public class RenderAppearanceService
     {
-        private readonly IRenderAppearanceSingleSyncService _singleSyncService;
-        private readonly IRenderAppearanceBatchSyncService _batchSyncService;
+        private readonly RenderAppearanceSingleSyncService _singleSyncService;
+        private readonly RenderAppearanceBatchSyncService _batchSyncService;
 
         public RenderAppearanceService(
-            IRenderAppearanceSingleSyncService singleSyncService,
-            IRenderAppearanceBatchSyncService batchSyncService)
+            RenderAppearanceSingleSyncService singleSyncService,
+            RenderAppearanceBatchSyncService batchSyncService)
         {
             _singleSyncService = singleSyncService;
             _batchSyncService = batchSyncService;

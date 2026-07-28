@@ -57,15 +57,7 @@ namespace LECG.ViewModels
         private bool _purgeLevels = false;
 
         [ObservableProperty]
-        [NotifyPropertyChangedFor(nameof(AreCategoryOptionsEnabled))]
         private bool _isDeepPurge = true;
-
-        /// <summary>
-        /// The per-category checkboxes only take effect in Safe mode. Deep Purge runs Revit's
-        /// native "remove everything unused" and ignores per-category selections, so the options
-        /// are disabled while Deep Purge is active to avoid implying they scope the operation.
-        /// </summary>
-        public bool AreCategoryOptionsEnabled => !IsDeepPurge;
 
         [ObservableProperty]
         private bool _purgeParameters = false;

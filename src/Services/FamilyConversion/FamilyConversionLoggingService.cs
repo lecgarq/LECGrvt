@@ -5,7 +5,7 @@ using LECG.Services.Logging;
 
 namespace LECG.Services
 {
-    public class FamilyConversionLoggingService : IFamilyConversionLoggingService
+    public class FamilyConversionLoggingService
     {
         private readonly ILogger _logger;
 

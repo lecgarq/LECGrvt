@@ -3,12 +3,12 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class FamilySaveLoadService : IFamilySaveLoadService
+    public class FamilySaveLoadService
     {
-        private readonly IFamilySaveService _familySaveService;
-        private readonly IFamilyProjectLoadService _familyProjectLoadService;
+        private readonly FamilySaveService _familySaveService;
+        private readonly FamilyProjectLoadService _familyProjectLoadService;
 
-        public FamilySaveLoadService(IFamilySaveService familySaveService, IFamilyProjectLoadService familyProjectLoadService)
+        public FamilySaveLoadService(FamilySaveService familySaveService, FamilyProjectLoadService familyProjectLoadService)
         {
             _familySaveService = familySaveService;
             _familyProjectLoadService = familyProjectLoadService;

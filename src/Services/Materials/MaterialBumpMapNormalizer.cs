@@ -46,6 +46,136 @@ namespace LECG.Services
             return NormalizeSlot(ownerAsset, slotProperty, connectedAsset, desiredValue);
         }
 
+        /// <summary>
+        /// Sets the bump-type flag on EVERY writable candidate property across the whole bump tree
+        /// (the owner sibling, a BumpMap wrapper's BumpmapType, and the inner UnifiedBitmap's
+        /// unifiedbitmap_Bump_Type). NormalizeConnectedAsset stops at the first writable property,
+        /// which can leave the property Enscape actually reads (the inner bitmap's) untouched — so
+        /// this forces them all. Returns the number of properties written.
+        /// </summary>
+        internal static int ForceBumpTypeEverywhere(
+            Asset ownerAsset,
+            AssetProperty slotProperty,
+            Asset connectedAsset,
+            int desiredValue)
+        {
+            ArgumentNullException.ThrowIfNull(ownerAsset);
+            ArgumentNullException.ThrowIfNull(slotProperty);
+            ArgumentNullException.ThrowIfNull(connectedAsset);
+
+            int written = TryForceProperty(ownerAsset.FindByName($"{slotProperty.Name}_type"), desiredValue);
+            written += ForceOnAssetTree(connectedAsset, desiredValue, new HashSet<Asset>());
+            return written;
+        }
+
+        private static int ForceOnAssetTree(Asset asset, int desiredValue, HashSet<Asset> visited)
+        {
+            if (!visited.Add(asset)) return 0;
+
+            int written = 0;
+            for (int i = 0; i < asset.Size; i++)
+            {
+                AssetProperty? property = asset[i];
+                if (property == null) continue;
+
+                if (IsCandidateBumpTypePropertyName(property.Name))
+                {
+                    written += TryForceProperty(property, desiredValue);
+                }
+
+                if (property.NumberOfConnectedProperties <= 0) continue;
+
+                foreach (AssetProperty connectedProperty in property.GetAllConnectedProperties())
+                {
+                    written += TryForceProperty(connectedProperty, desiredValue);
+
+                    Asset? child = connectedProperty.GetSingleConnectedAsset();
+                    if (child != null)
+                    {
+                        written += ForceOnAssetTree(child, desiredValue, visited);
+                    }
+                }
+            }
+
+            return written;
+        }
+
+        private static int TryForceProperty(AssetProperty? property, int desiredValue)
+        {
+            if (property == null || !IsCandidateBumpTypePropertyName(property.Name)) return 0;
+
+            try
+            {
+                switch (property)
+                {
+                    case AssetPropertyInteger integerProperty when !integerProperty.IsReadOnly:
+                        integerProperty.Value = desiredValue;
+                        return 1;
+                    case AssetPropertyEnum enumProperty when !enumProperty.IsReadOnly:
+                        enumProperty.Value = desiredValue;
+                        return 1;
+                }
+            }
+            catch
+            {
+                // Read-only / schema-rejected — ignore and try the next candidate.
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Replaces a BumpMap ("Bump Texture") node in a bump slot with a plain UnifiedBitmap, carrying
+        /// over the image path and transforms. Enscape reads the bump/normal image from a UnifiedBitmap's
+        /// unifiedbitmap_Bitmap; a BumpMap node stores it in bumpmap_Bitmap, which Enscape ignores (Normal
+        /// slot shows empty). Returns true if the slot was converted.
+        /// </summary>
+        internal static bool ConvertBumpMapToUnifiedBitmap(Asset ownerAsset, AssetProperty slotProperty, Asset bumpMapAsset)
+        {
+            ArgumentNullException.ThrowIfNull(ownerAsset);
+            ArgumentNullException.ThrowIfNull(slotProperty);
+            ArgumentNullException.ThrowIfNull(bumpMapAsset);
+
+            string? path = ReadStringProperty(bumpMapAsset, "bumpmap_Bitmap")
+                ?? ReadStringProperty(bumpMapAsset, "unifiedbitmap_Bitmap")
+                ?? ReadStringProperty(bumpMapAsset, "texture_Bitmap");
+            if (string.IsNullOrWhiteSpace(path)) return false;
+
+            Dictionary<string, object> snapshot = CaptureBitmapSnapshot(bumpMapAsset);
+
+            string slotName = slotProperty.Name;
+            slotProperty.RemoveConnectedAsset();
+
+            AssetProperty? refreshedSlot = ownerAsset.FindByName(slotName);
+            if (refreshedSlot == null) return false;
+
+            Asset? unified = TryAddConnectedAsset(refreshedSlot, "UnifiedBitmap")
+                ?? TryAddConnectedAsset(refreshedSlot, "UnifiedBitmapSchema");
+            if (unified == null) return false;
+
+            SetStringProperty(unified, "unifiedbitmap_Bitmap", path);
+            ApplyBitmapSnapshot(unified, snapshot);
+
+            // Set the Advanced -> Data Type = Normal flag if this schema exposes it (no-op otherwise).
+            TryForceProperty(unified.FindByName("unifiedbitmap_Bump_Type"), 1);
+            return true;
+        }
+
+        private static string? ReadStringProperty(Asset asset, string propertyName)
+        {
+            return asset.FindByName(propertyName) is AssetPropertyString s && !string.IsNullOrWhiteSpace(s.Value)
+                ? s.Value
+                : null;
+        }
+
+        private static void SetStringProperty(Asset asset, string propertyName, string value)
+        {
+            if (asset.FindByName(propertyName) is AssetPropertyString s && !s.IsReadOnly)
+            {
+                try { s.Value = value; } catch { /* schema-rejected */ }
+            }
+        }
+
         internal static BumpMapNormalizationResult NormalizeProbes(
             string slotName,
             IReadOnlyList<BumpMapPropertyProbe> probes,
@@ -446,16 +576,44 @@ namespace LECG.Services
             return bumpMapAsset;
         }
 
+        private static readonly string[] LinkTransformPropertyNames =
+        {
+            "texture_LinkTextureTransforms",
+            "unifiedbitmap_LinkTextureTransforms",
+        };
+
         private static void ApplyBitmapSnapshot(Asset asset, IReadOnlyDictionary<string, object> values)
         {
+            // While texture transforms are linked, Revit reports every scale/offset property as not
+            // editable and the write throws. Unlink first, write the values, then restore the captured
+            // link state — same order as MaterialBitmapPropertyService.ApplyBitmapProperties.
+            foreach (string linkName in LinkTransformPropertyNames)
+            {
+                TrySetProperty(asset, linkName, false);
+            }
+
             foreach ((string propertyName, object value) in values)
             {
-                AssetProperty? property = asset.FindByName(propertyName);
-                if (property == null || property.IsReadOnly)
-                {
-                    continue;
-                }
+                if (LinkTransformPropertyNames.Contains(propertyName, StringComparer.OrdinalIgnoreCase)) continue;
+                TrySetProperty(asset, propertyName, value);
+            }
 
+            foreach (string linkName in LinkTransformPropertyNames)
+            {
+                if (values.TryGetValue(linkName, out object? linked)) TrySetProperty(asset, linkName, linked);
+            }
+        }
+
+        private static void TrySetProperty(Asset asset, string propertyName, object value)
+        {
+            AssetProperty? property = asset.FindByName(propertyName);
+            if (property == null || property.IsReadOnly)
+            {
+                return;
+            }
+
+            try
+            {
                 switch (property)
                 {
                     case AssetPropertyString stringProperty when value is string stringValue:
@@ -480,6 +638,12 @@ namespace LECG.Services
                         integerProperty.Value = integerValue;
                         break;
                 }
+            }
+            catch (Exception ex) when (ex is InvalidOperationException or ArgumentException
+                or Autodesk.Revit.Exceptions.InvalidOperationException or Autodesk.Revit.Exceptions.ArgumentException)
+            {
+                // Schema-rejected for this target (e.g. a still-locked transform). One stubborn
+                // property must not abort the whole bump-slot conversion.
             }
         }
 

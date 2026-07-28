@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgePassSequenceService : IPurgePassSequenceService
+    public class PurgePassSequenceService
     {
         public IEnumerable<int> GetPasses(int passCount)
         {

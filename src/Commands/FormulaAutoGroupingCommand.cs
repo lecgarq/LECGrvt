@@ -5,6 +5,7 @@ using Autodesk.Revit.UI.Events;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 using LECG.Core;
 using LECG.Core.Rename;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using System;
@@ -382,7 +383,7 @@ namespace LECG.Commands
         {
             try
             {
-                IFamilySaveLoadService familySaveLoadService = ServiceLocator.GetRequiredService<IFamilySaveLoadService>();
+                FamilySaveLoadService familySaveLoadService = ServiceLocator.GetRequiredService<FamilySaveLoadService>();
                 familySaveLoadService.SaveAndLoad(projectDoc, famDoc, familyName);
                 return true;
             }

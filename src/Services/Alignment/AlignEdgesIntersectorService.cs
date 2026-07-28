@@ -6,7 +6,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class AlignEdgesIntersectorService : IAlignEdgesIntersectorService
+    public class AlignEdgesIntersectorService
     {
         public ReferenceIntersector Create(Document doc, IList<Reference> references)
         {

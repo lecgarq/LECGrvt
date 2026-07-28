@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class AlignEdgesBoundaryPointService : IAlignEdgesBoundaryPointService
+    public class AlignEdgesBoundaryPointService
     {
         private const double RefinementZThreshold = 0.1;
         private const double ProfileDeviationTolerance = 0.03;
@@ -12,10 +12,10 @@ namespace LECG.Services
         private const int MaxRefinementDepth = 8;
         private static readonly double[] HiddenTransitionProbeFractions = { 0.25, 0.5, 0.75 };
 
-        private readonly IAlignEdgesHitPointProjectionService _alignEdgesHitPointProjectionService;
-        private readonly IAlignEdgesCurveDivisionService _alignEdgesCurveDivisionService;
+        private readonly AlignEdgesHitPointProjectionService _alignEdgesHitPointProjectionService;
+        private readonly AlignEdgesCurveDivisionService _alignEdgesCurveDivisionService;
 
-        public AlignEdgesBoundaryPointService(IAlignEdgesHitPointProjectionService alignEdgesHitPointProjectionService, IAlignEdgesCurveDivisionService alignEdgesCurveDivisionService)
+        public AlignEdgesBoundaryPointService(AlignEdgesHitPointProjectionService alignEdgesHitPointProjectionService, AlignEdgesCurveDivisionService alignEdgesCurveDivisionService)
         {
             _alignEdgesHitPointProjectionService = alignEdgesHitPointProjectionService;
             _alignEdgesCurveDivisionService = alignEdgesCurveDivisionService;

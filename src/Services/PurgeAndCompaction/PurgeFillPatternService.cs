@@ -7,11 +7,11 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgeFillPatternService : IPurgeFillPatternService
+    public class PurgeFillPatternService
     {
-        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+        private readonly PurgeDeleteElementService _purgeDeleteElementService;
 
-        public PurgeFillPatternService(IPurgeDeleteElementService purgeDeleteElementService)
+        public PurgeFillPatternService(PurgeDeleteElementService purgeDeleteElementService)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
         }

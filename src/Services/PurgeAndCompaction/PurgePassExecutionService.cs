@@ -5,24 +5,22 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class PurgePassExecutionService : IPurgePassExecutionService
+    public class PurgePassExecutionService
     {
-        private readonly IPurgeLineStyleService _purgeLineStyleService;
-        private readonly IPurgeLinePatternService _purgeLinePatternService;
-        private readonly IPurgeFillPatternService _purgeFillPatternService;
-        private readonly IPurgeMaterialService _purgeMaterialService;
-        private readonly IPurgeLevelService _purgeLevelService;
-        private readonly IPurgeExtendedElementService _purgeExtendedElementService;
-        private readonly IPurgePassMessagingService _purgePassMessagingService;
+        private readonly PurgeLineStyleService _purgeLineStyleService;
+        private readonly PurgeLinePatternService _purgeLinePatternService;
+        private readonly PurgeFillPatternService _purgeFillPatternService;
+        private readonly PurgeMaterialService _purgeMaterialService;
+        private readonly PurgeLevelService _purgeLevelService;
+        private readonly PurgeExtendedElementService _purgeExtendedElementService;
 
         public PurgePassExecutionService(
-            IPurgeLineStyleService purgeLineStyleService,
-            IPurgeLinePatternService purgeLinePatternService,
-            IPurgeFillPatternService purgeFillPatternService,
-            IPurgeMaterialService purgeMaterialService,
-            IPurgeLevelService purgeLevelService,
-            IPurgeExtendedElementService purgeExtendedElementService,
-            IPurgePassMessagingService purgePassMessagingService)
+            PurgeLineStyleService purgeLineStyleService,
+            PurgeLinePatternService purgeLinePatternService,
+            PurgeFillPatternService purgeFillPatternService,
+            PurgeMaterialService purgeMaterialService,
+            PurgeLevelService purgeLevelService,
+            PurgeExtendedElementService purgeExtendedElementService)
         {
             _purgeLineStyleService = purgeLineStyleService;
             _purgeLinePatternService = purgeLinePatternService;
@@ -30,7 +28,6 @@ namespace LECG.Services
             _purgeMaterialService = purgeMaterialService;
             _purgeLevelService = purgeLevelService;
             _purgeExtendedElementService = purgeExtendedElementService;
-            _purgePassMessagingService = purgePassMessagingService;
         }
 
         public PurgeResult ExecutePass(
@@ -56,80 +53,80 @@ namespace LECG.Services
             int viewTemplatesDeleted = 0;
             int viewFiltersDeleted = 0;
 
-            _purgePassMessagingService.LogPassStart(reporter, passIndex);
+            LogPassStart(reporter, passIndex);
 
             bool needsContext = options.LineStyles || options.LinePatterns || options.FillPatterns || options.Materials || options.Levels;
             PurgeContext? context = needsContext ? PurgeContext.Create(doc) : null;
 
             if (options.LineStyles)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Line Styles", 10 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Line Styles", 10 + (passIndex * 10));
                 lineStylesDeleted += _purgeLineStyleService.PurgeUnusedLineStyles(doc, context!, reporter.Log);
             }
 
             if (options.LinePatterns)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Line Patterns", 15 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Line Patterns", 15 + (passIndex * 10));
                 linePatternsDeleted += _purgeLinePatternService.PurgeUnusedLinePatterns(doc, context!, reporter.Log);
             }
 
             if (options.FillPatterns)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Fill Patterns", 25 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Fill Patterns", 25 + (passIndex * 10));
                 fillPatternsDeleted += _purgeFillPatternService.PurgeUnusedFillPatterns(doc, context!, reporter.Log);
             }
 
             if (options.Materials)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Materials", 35 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Materials", 35 + (passIndex * 10));
                 materialsDeleted += _purgeMaterialService.PurgeUnusedMaterials(doc, context!, reporter.Log);
             }
 
             if (options.Levels)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Levels", 45 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Levels", 45 + (passIndex * 10));
                 levelsDeleted += _purgeLevelService.PurgeUnusedLevels(doc, context!, reporter.Log);
             }
 
             if (options.Groups)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Groups", 50 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Groups", 50 + (passIndex * 10));
                 groupsDeleted += _purgeExtendedElementService.PurgeUnusedGroups(doc, reporter.Log);
             }
 
             if (options.GridTypes)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Grid Types", 55 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Grid Types", 55 + (passIndex * 10));
                 gridTypesDeleted += _purgeExtendedElementService.PurgeUnusedGridTypes(doc, reporter.Log);
             }
 
             if (options.LevelTypes)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Level Types", 60 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Level Types", 60 + (passIndex * 10));
                 levelTypesDeleted += _purgeExtendedElementService.PurgeUnusedLevelTypes(doc, reporter.Log);
             }
 
             if (options.Constraints)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Constraints", 65 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Constraints", 65 + (passIndex * 10));
                 constraintsDeleted += _purgeExtendedElementService.PurgeConstraints(doc, reporter.Log);
             }
 
             if (options.UnplacedRooms)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "Unplaced Rooms", 70 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "Unplaced Rooms", 70 + (passIndex * 10));
                 unplacedRoomsDeleted += _purgeExtendedElementService.PurgeUnplacedRooms(doc, reporter.Log);
             }
 
             if (options.ViewTemplates)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "View Templates", 72 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "View Templates", 72 + (passIndex * 10));
                 viewTemplatesDeleted += _purgeExtendedElementService.PurgeUnusedViewTemplates(doc, reporter.Log);
             }
 
             if (options.ViewFilters)
             {
-                _purgePassMessagingService.LogCategoryCheck(reporter, passIndex, "View Filters", 74 + (passIndex * 10));
+                LogCategoryCheck(reporter, passIndex, "View Filters", 74 + (passIndex * 10));
                 viewFiltersDeleted += _purgeExtendedElementService.PurgeUnusedViewFilters(doc, reporter.Log);
             }
 
@@ -147,6 +144,25 @@ namespace LECG.Services
                 unplacedRoomsDeleted,
                 viewTemplatesDeleted,
                 viewFiltersDeleted);
+        }
+
+        private static void LogPassStart(IProgressReporter reporter, int passIndex, int totalPasses = 3)
+        {
+            ArgumentNullException.ThrowIfNull(reporter);
+            reporter.Log($"--- PASS {passIndex}/{totalPasses} ---");
+        }
+
+        private static void LogCategoryCheck(
+            IProgressReporter reporter,
+            int passIndex,
+            string categoryLabel,
+            double progressValue)
+        {
+            ArgumentNullException.ThrowIfNull(reporter);
+            ArgumentNullException.ThrowIfNull(categoryLabel);
+
+            reporter.Log($"Checking {categoryLabel}...");
+            reporter.Report($"Pass {passIndex}: Purging {categoryLabel.ToLower()}...", progressValue);
         }
     }
 }

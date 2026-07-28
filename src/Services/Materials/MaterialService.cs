@@ -10,14 +10,14 @@ namespace LECG.Services
 {
     public class MaterialService : IMaterialService
     {
-        private readonly IRenderAppearanceService _renderAppearanceService;
-        private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
+        private readonly RenderAppearanceService _renderAppearanceService;
+        private readonly MaterialTypeAssignmentService _materialTypeAssignmentService;
         private readonly IMaterialCreationService _materialCreationService;
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialPbrService _materialPbrService;
-        private readonly IMaterialAssignmentExecutionService _materialAssignmentExecutionService;
+        private readonly MaterialAssignmentExecutionService _materialAssignmentExecutionService;
 
-        public MaterialService(IRenderAppearanceService renderAppearanceService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService, IMaterialAssignmentExecutionService materialAssignmentExecutionService)
+        public MaterialService(RenderAppearanceService renderAppearanceService, MaterialTypeAssignmentService materialTypeAssignmentService, IMaterialCreationService materialCreationService, IMaterialColorSequenceService materialColorSequenceService, IMaterialPbrService materialPbrService, MaterialAssignmentExecutionService materialAssignmentExecutionService)
         {
             _renderAppearanceService = renderAppearanceService;
             _materialTypeAssignmentService = materialTypeAssignmentService;

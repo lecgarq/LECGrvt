@@ -9,11 +9,11 @@ namespace LECG.Services
 {
     public class MaterialAppearanceAssetService : IMaterialAppearanceAssetService
     {
-        private readonly IMaterialBitmapPropertyService _materialBitmapPropertyService;
+        private readonly MaterialBitmapPropertyService _materialBitmapPropertyService;
         private readonly ITransactionService _transactionService;
 
         public MaterialAppearanceAssetService(
-            IMaterialBitmapPropertyService materialBitmapPropertyService,
+            MaterialBitmapPropertyService materialBitmapPropertyService,
             ITransactionService transactionService)
         {
             _materialBitmapPropertyService = materialBitmapPropertyService;

@@ -12,7 +12,7 @@ namespace LECG.ViewModels
 {
     public partial class AlignElementsViewModel : BaseViewModel
     {
-        private readonly IAlignElementsService _service;
+        private readonly AlignElementsService _service;
 
         [ObservableProperty]
         private AlignMode _mode;
@@ -36,7 +36,7 @@ namespace LECG.ViewModels
             }
         }
 
-        public AlignElementsViewModel(IAlignElementsService service)
+        public AlignElementsViewModel(AlignElementsService service)
         {
             _service = service;
 

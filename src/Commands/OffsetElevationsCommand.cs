@@ -23,7 +23,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var offsetService = ServiceLocator.GetRequiredService<IOffsetService>();
+            var offsetService = ServiceLocator.GetRequiredService<OffsetService>();
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
 
             // 1. Settings & Dialog

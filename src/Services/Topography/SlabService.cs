@@ -6,7 +6,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class SlabService : ISlabService
+    public class SlabService
     {
         public bool TryResetSlabShape(Element element, out string statusMessage)
         {

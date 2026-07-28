@@ -30,7 +30,7 @@ namespace LECG.Commands
             Log("Removes third-party plugin data from the project.");
             Log("");
 
-            var cleaner = ServiceLocator.GetRequiredService<ISchemaCleanerService>();
+            var cleaner = ServiceLocator.GetRequiredService<SchemaCleanerService>();
 
             // STEP 1: Scan for schemas
             Log("STEP 1: Scanning project for third-party schemas...");

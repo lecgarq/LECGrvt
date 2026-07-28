@@ -20,7 +20,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<IConversionService>();
+            var service = ServiceLocator.GetRequiredService<ConversionService>();
 
             // 1. ViewModel & View
             var vm = ServiceLocator.GetRequiredService<ConvertToposolidToFloorViewModel>();

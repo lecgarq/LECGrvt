@@ -77,7 +77,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<IAlignElementsService>();
+            var service = ServiceLocator.GetRequiredService<AlignElementsService>();
 
             // Distribute shortcut: if >= 3 elements already selected, skip the dialog
             if (IsDistributeMode)

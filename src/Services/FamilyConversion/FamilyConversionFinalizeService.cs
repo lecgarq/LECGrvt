@@ -3,11 +3,11 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class FamilyConversionFinalizeService : IFamilyConversionFinalizeService
+    public class FamilyConversionFinalizeService
     {
-        private readonly IFamilyTempFileCleanupService _tempFileCleanupService;
+        private readonly FamilyTempFileCleanupService _tempFileCleanupService;
 
-        public FamilyConversionFinalizeService(IFamilyTempFileCleanupService tempFileCleanupService)
+        public FamilyConversionFinalizeService(FamilyTempFileCleanupService tempFileCleanupService)
         {
             _tempFileCleanupService = tempFileCleanupService;
         }

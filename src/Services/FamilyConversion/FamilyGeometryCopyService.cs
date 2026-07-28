@@ -7,17 +7,17 @@ using System.Collections.Generic;
 
 namespace LECG.Services
 {
-    public class FamilyGeometryCopyService : IFamilyGeometryCopyService
+    public class FamilyGeometryCopyService
     {
 
-        private readonly IFamilyGeometryCollectionService _geometryCollectionService;
-        private readonly IFamilyParameterSetupService _familyParameterSetupService;
+        private readonly FamilyGeometryCollectionService _geometryCollectionService;
+        private readonly FamilyParameterSetupService _familyParameterSetupService;
         private readonly ITransactionService _transactionService;
         private readonly ILogger _logger;
 
         public FamilyGeometryCopyService(
-            IFamilyGeometryCollectionService geometryCollectionService,
-            IFamilyParameterSetupService familyParameterSetupService,
+            FamilyGeometryCollectionService geometryCollectionService,
+            FamilyParameterSetupService familyParameterSetupService,
             ITransactionService transactionService,
             ILogger logger)
         {

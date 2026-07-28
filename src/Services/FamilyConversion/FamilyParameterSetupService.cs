@@ -7,7 +7,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class FamilyParameterSetupService : IFamilyParameterSetupService
+    public class FamilyParameterSetupService
     {
         private readonly ILogger _logger;
 

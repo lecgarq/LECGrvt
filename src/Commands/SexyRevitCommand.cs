@@ -53,7 +53,7 @@ namespace LECG.Commands
             Log($"View: {view.Name}");
             Log("");
 
-            var service = ServiceLocator.GetRequiredService<ISexyRevitService>();
+            var service = ServiceLocator.GetRequiredService<SexyRevitService>();
             var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);
             service.ApplyBeauty(doc, view, settings.ToSettings(), reporter);
 

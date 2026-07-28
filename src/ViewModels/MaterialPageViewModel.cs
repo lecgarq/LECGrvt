@@ -36,18 +36,6 @@ namespace LECG.ViewModels
         private string _normalPath = string.Empty;
 
         [ObservableProperty]
-        private string _metallicPath = string.Empty;
-
-        [ObservableProperty]
-        private string _aoPath = string.Empty;
-
-        [ObservableProperty]
-        private string _displacementPath = string.Empty;
-
-        [ObservableProperty]
-        private string _opacityPath = string.Empty;
-
-        [ObservableProperty]
         private BitmapImage? _diffusePreview;
 
         [ObservableProperty]
@@ -55,18 +43,6 @@ namespace LECG.ViewModels
 
         [ObservableProperty]
         private BitmapImage? _normalPreview;
-
-        [ObservableProperty]
-        private BitmapImage? _metallicPreview;
-
-        [ObservableProperty]
-        private BitmapImage? _aoPreview;
-
-        [ObservableProperty]
-        private BitmapImage? _displacementPreview;
-
-        [ObservableProperty]
-        private BitmapImage? _opacityPreview;
 
         [ObservableProperty]
         private int _pageNumber;
@@ -94,11 +70,7 @@ namespace LECG.ViewModels
             !string.IsNullOrWhiteSpace(DiffusePath) &&
             File.Exists(DiffusePath) &&
             HasValidOptionalPath(RoughnessPath) &&
-            HasValidOptionalPath(NormalPath) &&
-            HasValidOptionalPath(MetallicPath) &&
-            HasValidOptionalPath(AoPath) &&
-            HasValidOptionalPath(DisplacementPath) &&
-            HasValidOptionalPath(OpacityPath);
+            HasValidOptionalPath(NormalPath);
 
         public Action? CanRunNotifier { get; set; }
 
@@ -126,7 +98,12 @@ namespace LECG.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(value) && Directory.Exists(value))
             {
+                bool shouldAutofillName = string.IsNullOrWhiteSpace(MaterialName);
                 ScanFolderForTextures(value);
+                if (shouldAutofillName)
+                {
+                    AutofillMaterialName(value);
+                }
             }
         }
 
@@ -145,30 +122,6 @@ namespace LECG.ViewModels
         partial void OnNormalPathChanged(string value)
         {
             NormalPreview = LoadPreview(value);
-            NotifyCanRun();
-        }
-
-        partial void OnMetallicPathChanged(string value)
-        {
-            MetallicPreview = LoadPreview(value);
-            NotifyCanRun();
-        }
-
-        partial void OnAoPathChanged(string value)
-        {
-            AoPreview = LoadPreview(value);
-            NotifyCanRun();
-        }
-
-        partial void OnDisplacementPathChanged(string value)
-        {
-            DisplacementPreview = LoadPreview(value);
-            NotifyCanRun();
-        }
-
-        partial void OnOpacityPathChanged(string value)
-        {
-            OpacityPreview = LoadPreview(value);
             NotifyCanRun();
         }
 
@@ -222,10 +175,6 @@ namespace LECG.ViewModels
                 case "Diffuse": DiffusePath = value; break;
                 case "Roughness": RoughnessPath = value; break;
                 case "Normal": NormalPath = value; break;
-                case "Metallic": MetallicPath = value; break;
-                case "AO": AoPath = value; break;
-                case "Displacement": DisplacementPath = value; break;
-                case "Opacity": OpacityPath = value; break;
             }
         }
 
@@ -245,19 +194,19 @@ namespace LECG.ViewModels
             if (detected.TryGetValue("Normal", out string? normal) && normal != null)
             { NormalPath = normal; count++; }
 
-            if (detected.TryGetValue("Metallic", out string? metallic) && metallic != null)
-            { MetallicPath = metallic; count++; }
-
-            if (detected.TryGetValue("AO", out string? ao) && ao != null)
-            { AoPath = ao; count++; }
-
-            if (detected.TryGetValue("Displacement", out string? displacement) && displacement != null)
-            { DisplacementPath = displacement; count++; }
-
-            if (detected.TryGetValue("Opacity", out string? opacity) && opacity != null)
-            { OpacityPath = opacity; count++; }
-
             DetectedCount = count;
+        }
+
+        private void AutofillMaterialName(string folder)
+        {
+            string name = _textureLookup != null && !string.IsNullOrWhiteSpace(DiffusePath)
+                ? _textureLookup.DeriveMaterialName(DiffusePath)
+                : Path.GetFileName(Path.TrimEndingDirectorySeparator(folder));
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                MaterialName = name;
+            }
         }
 
         public PbrMaterialCreateRequest CreateRequest()
@@ -269,15 +218,11 @@ namespace LECG.ViewModels
             return new PbrMaterialCreateRequest(
                 MaterialName.Trim(),
                 MaterialName.Trim(),
-                string.IsNullOrWhiteSpace(Description) ? null : Description.Trim(),
+                "LECG Arquitectura",
                 string.IsNullOrWhiteSpace(MaterialClass) ? null : MaterialClass.Trim(),
                 DiffusePath.Trim(),
                 NormalizeOptionalPath(RoughnessPath),
                 NormalizeOptionalPath(NormalPath),
-                NormalizeOptionalPath(MetallicPath),
-                NormalizeOptionalPath(AoPath),
-                NormalizeOptionalPath(DisplacementPath),
-                NormalizeOptionalPath(OpacityPath),
                 true,
                 uvScaleMillimeters,
                 uvScaleMillimeters,

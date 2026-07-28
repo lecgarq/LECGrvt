@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class MaterialElementTypeResolverService : IMaterialElementTypeResolverService
+    public class MaterialElementTypeResolverService
     {
         public ElementType? Resolve(Document doc, ElementId typeId)
         {

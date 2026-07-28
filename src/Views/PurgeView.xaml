@@ -34,12 +34,12 @@
                         <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
                         <TextBlock Text="OPTIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="{Binding AreCategoryOptionsEnabled}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <Button Content="Check All" Command="{Binding CheckAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"/>
                         <Button Content="Uncheck All" Command="{Binding UncheckAllCommand}" Style="{DynamicResource LinkButtonStyle}"/>
                     </StackPanel>
                 </Grid>
-                <StackPanel IsEnabled="{Binding AreCategoryOptionsEnabled}">
+                <StackPanel>
                     <CheckBox Content="Unused Line Styles" IsChecked="{Binding PurgeLineStyles, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                     <CheckBox Content="Unused Line Patterns" IsChecked="{Binding PurgeLinePatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                     <CheckBox Content="Unused Fill Patterns" IsChecked="{Binding PurgeFillPatterns, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
@@ -53,11 +53,10 @@
                     <CheckBox Content="Unused View Templates" IsChecked="{Binding PurgeViewTemplates, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                     <CheckBox Content="Unused View Filters" IsChecked="{Binding PurgeViewFilters, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}"/>
                 </StackPanel>
-                <!-- Family Parameters is honoured in BOTH Safe and Deep mode, so it stays enabled regardless of Deep Purge. -->
                 <CheckBox Content="Unused Family Parameters (Warning)" IsChecked="{Binding PurgeParameters, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacing}" ToolTip="Opens each family and removes parameters with no formula, no constraint, and no association. This is destructive and slow. Runs in both Safe and Deep mode."/>
                 <Separator Margin="0,5,0,10" Background="{DynamicResource LecgBorderLight}"/>
-                <CheckBox Content="Deep Purge (3 Passes)" IsChecked="{Binding IsDeepPurge, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" ToolTip="Runs Revit's native Purge Unused (everything unused) across the project and every editable family. Ignores the category selections above. Family Parameters is still honoured if checked."/>
-                <TextBlock Text="Deep Purge removes ALL unused elements and ignores the category options above (Family Parameters still applies if checked). Uncheck it to choose specific categories." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap" Margin="0,6,0,0"/>
+                <CheckBox Content="Deep Purge (3 Passes)" IsChecked="{Binding IsDeepPurge, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" ToolTip="Runs Revit's native Purge Unused (everything unused) across the project and every editable family, then also applies the category selections above."/>
+                <TextBlock Text="Deep Purge removes ALL unused elements via Revit's native purge, then additionally runs the checked categories above (native purge does not cover levels, types, rooms, view templates, or filters)." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap" Margin="0,6,0,0"/>
             </StackPanel>
             </ScrollViewer>
         </Border>

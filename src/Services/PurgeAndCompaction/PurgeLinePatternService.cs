@@ -8,12 +8,12 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class PurgeLinePatternService : IPurgeLinePatternService
+    public class PurgeLinePatternService
     {
-        private readonly IPurgeDeleteElementService _purgeDeleteElementService;
+        private readonly PurgeDeleteElementService _purgeDeleteElementService;
         private readonly ILogger _logger;
 
-        public PurgeLinePatternService(IPurgeDeleteElementService purgeDeleteElementService, ILogger logger)
+        public PurgeLinePatternService(PurgeDeleteElementService purgeDeleteElementService, ILogger logger)
         {
             _purgeDeleteElementService = purgeDeleteElementService;
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -76,6 +76,13 @@ namespace LECG.Services
                     continue;
                 }
 
+                // Schedules, sheets, etc. don't support V/G overrides — querying them throws
+                // once per category per view, flooding the log with thousands of warnings.
+                if (!view.AreGraphicsOverridesAllowed())
+                {
+                    continue;
+                }
+
                 ScanViewCategoryOverrides(view, categories, validIds, usedIds);
                 ScanViewFilterOverrides(view, validIds, usedIds);
             }
@@ -125,18 +132,21 @@ namespace LECG.Services
             {
                 AddTrackedId(category.GetLinePatternId(styleType), validIds, usedIds);
             }
-            catch (ArgumentException ex)
+            catch (Exception ex) when (IsExpectedRevitException(ex))
             {
-                _logger.LogWarning($"TryAddCategoryPattern: {ex.Message}", scope: "PurgeLinePattern");
+                // Categories without line patterns for this style type — expected, skip.
             }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogWarning($"TryAddCategoryPattern: {ex.Message}", scope: "PurgeLinePattern");
-            }
-            catch (RevitExceptions.InvalidOperationException ex)
-            {
-                _logger.LogWarning($"TryAddCategoryPattern: {ex.Message}", scope: "PurgeLinePattern");
-            }
+        }
+
+        // Revit's ArgumentException/InvalidOperationException derive from
+        // Autodesk.Revit.Exceptions.ApplicationException, not their System namesakes,
+        // so both families must be listed or Revit exceptions abort the purge pass.
+        private static bool IsExpectedRevitException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.ArgumentException
+                || ex is RevitExceptions.InvalidOperationException;
         }
 
         private void ScanViewCategoryOverrides(
@@ -153,17 +163,10 @@ namespace LECG.Services
                     AddTrackedId(overrides.ProjectionLinePatternId, validIds, usedIds);
                     AddTrackedId(overrides.CutLinePatternId, validIds, usedIds);
                 }
-                catch (ArgumentException ex)
+                catch (Exception ex) when (IsExpectedRevitException(ex))
                 {
-                    _logger.LogWarning($"ScanViewCategoryOverrides: {ex.Message}", scope: "PurgeLinePattern");
-                }
-                catch (InvalidOperationException ex)
-                {
-                    _logger.LogWarning($"ScanViewCategoryOverrides: {ex.Message}", scope: "PurgeLinePattern");
-                }
-                catch (RevitExceptions.InvalidOperationException ex)
-                {
-                    _logger.LogWarning($"ScanViewCategoryOverrides: {ex.Message}", scope: "PurgeLinePattern");
+                    // Non-overridable categories in this view — expected, skip silently
+                    // (logging here produces one warning per category per view).
                 }
             }
         }
@@ -178,19 +181,9 @@ namespace LECG.Services
             {
                 filterIds = view.GetFilters();
             }
-            catch (ArgumentException ex)
+            catch (Exception ex) when (IsExpectedRevitException(ex))
             {
-                _logger.LogWarning($"GetFilters: {ex.Message}", scope: "PurgeLinePattern");
-                return;
-            }
-            catch (InvalidOperationException ex)
-            {
-                _logger.LogWarning($"GetFilters: {ex.Message}", scope: "PurgeLinePattern");
-                return;
-            }
-            catch (RevitExceptions.InvalidOperationException ex)
-            {
-                _logger.LogWarning($"GetFilters: {ex.Message}", scope: "PurgeLinePattern");
+                // Views that don't support filters — expected, skip.
                 return;
             }
 
@@ -202,15 +195,7 @@ namespace LECG.Services
                     AddTrackedId(overrides.ProjectionLinePatternId, validIds, usedIds);
                     AddTrackedId(overrides.CutLinePatternId, validIds, usedIds);
                 }
-                catch (ArgumentException ex)
-                {
-                    _logger.LogWarning($"ScanViewFilterOverrides: {ex.Message}", scope: "PurgeLinePattern");
-                }
-                catch (InvalidOperationException ex)
-                {
-                    _logger.LogWarning($"ScanViewFilterOverrides: {ex.Message}", scope: "PurgeLinePattern");
-                }
-                catch (RevitExceptions.InvalidOperationException ex)
+                catch (Exception ex) when (IsExpectedRevitException(ex))
                 {
                     _logger.LogWarning($"ScanViewFilterOverrides: {ex.Message}", scope: "PurgeLinePattern");
                 }

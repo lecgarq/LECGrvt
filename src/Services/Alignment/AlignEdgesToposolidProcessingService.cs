@@ -7,19 +7,19 @@ using System.Collections.Generic;
 
 namespace LECG.Services
 {
-    public class AlignEdgesToposolidProcessingService : IAlignEdgesToposolidProcessingService
+    public class AlignEdgesToposolidProcessingService
     {
         // Minimum boundary curve spacing for point sampling (~20mm)
         private const double MinBoundarySpacing = 0.0656;
         // Maximum boundary curve spacing for point sampling (~0.5m)
         private const double MaxBoundarySpacing = 1.64;
 
-        private readonly IAlignEdgesBoundaryCollectionService _boundaryCollectionService;
-        private readonly IAlignEdgesPointInsertionService _pointInsertionService;
-        private readonly ISlabService _slabService;
-        private readonly IAlignEdgesVertexAlignmentService _vertexAlignmentService;
+        private readonly AlignEdgesBoundaryCollectionService _boundaryCollectionService;
+        private readonly AlignEdgesPointInsertionService _pointInsertionService;
+        private readonly SlabService _slabService;
+        private readonly AlignEdgesVertexAlignmentService _vertexAlignmentService;
 
-        public AlignEdgesToposolidProcessingService(IAlignEdgesBoundaryCollectionService boundaryCollectionService, IAlignEdgesPointInsertionService pointInsertionService, ISlabService slabService, IAlignEdgesVertexAlignmentService vertexAlignmentService)
+        public AlignEdgesToposolidProcessingService(AlignEdgesBoundaryCollectionService boundaryCollectionService, AlignEdgesPointInsertionService pointInsertionService, SlabService slabService, AlignEdgesVertexAlignmentService vertexAlignmentService)
         {
             _boundaryCollectionService = boundaryCollectionService;
             _pointInsertionService = pointInsertionService;

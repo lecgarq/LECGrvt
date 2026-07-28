@@ -1,5 +1,6 @@
 using Autodesk.Revit.DB;
 using LECG.Utilities;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace LECG.ViewModels
     public partial class ChangeLevelViewModel : BaseViewModel
     {
         private Document? _doc;
-        private readonly IChangeLevelService _service;
+        private readonly ChangeLevelService _service;
 
         // Internal storage for elements to be processed
         private List<Element> _selectedElements = new List<Element>();
@@ -36,7 +37,7 @@ namespace LECG.ViewModels
         public bool CanRun => SelectedLevel != null && Selection.HasSelection;
         public bool HasValidationMessage => !string.IsNullOrWhiteSpace(ValidationMessage);
 
-        public ChangeLevelViewModel(IChangeLevelService service)
+        public ChangeLevelViewModel(ChangeLevelService service)
         {
             _service = service;
             Title = "CHANGE LEVEL";

@@ -6,7 +6,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class RenderAppearanceSingleSyncService : IRenderAppearanceSingleSyncService
+    public class RenderAppearanceSingleSyncService
     {
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
         private readonly IRenderMaterialGraphicsApplyService _graphicsApplyService;

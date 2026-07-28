@@ -4,14 +4,14 @@ using System;
 
 namespace LECG.Services
 {
-    public class MaterialTypeAssignmentProcessService : IMaterialTypeAssignmentProcessService
+    public class MaterialTypeAssignmentProcessService
     {
         private readonly IMaterialColorSequenceService _materialColorSequenceService;
         private readonly IMaterialCreationService _materialCreationService;
-        private readonly IMaterialTypeAssignmentService _materialTypeAssignmentService;
-        private readonly IMaterialTypeEligibilityService _materialTypeEligibilityService;
+        private readonly MaterialTypeAssignmentService _materialTypeAssignmentService;
+        private readonly MaterialTypeEligibilityService _materialTypeEligibilityService;
 
-        public MaterialTypeAssignmentProcessService(IMaterialColorSequenceService materialColorSequenceService, IMaterialCreationService materialCreationService, IMaterialTypeAssignmentService materialTypeAssignmentService, IMaterialTypeEligibilityService materialTypeEligibilityService)
+        public MaterialTypeAssignmentProcessService(IMaterialColorSequenceService materialColorSequenceService, IMaterialCreationService materialCreationService, MaterialTypeAssignmentService materialTypeAssignmentService, MaterialTypeEligibilityService materialTypeEligibilityService)
         {
             _materialColorSequenceService = materialColorSequenceService;
             _materialCreationService = materialCreationService;

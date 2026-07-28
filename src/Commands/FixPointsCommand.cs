@@ -22,7 +22,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             // 1. Service
-            var service = ServiceLocator.GetRequiredService<IFixPointsService>();
+            var service = ServiceLocator.GetRequiredService<FixPointsService>();
 
             // 2. VM
             var vm = ServiceLocator.GetRequiredService<FixPointsViewModel>();

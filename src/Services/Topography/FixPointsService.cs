@@ -15,16 +15,16 @@ namespace LECG.Services
     /// least-squares plane fitting against the Delaunay neighborhood and corrects
     /// them to the locally expected elevation.
     /// </summary>
-    public class FixPointsService : IFixPointsService
+    public class FixPointsService
     {
         private const int MaxIterations = 10;
         // Minimum scale floor for MAD-based std-dev estimate (~1.5 mm)
         private const double MinNeighborScale = 0.005;
 
         private readonly ITransactionService _transactionService;
-        private readonly ISlabService _slabService;
+        private readonly SlabService _slabService;
 
-        public FixPointsService(ITransactionService transactionService, ISlabService slabService)
+        public FixPointsService(ITransactionService transactionService, SlabService slabService)
         {
             _transactionService = transactionService;
             _slabService = slabService;

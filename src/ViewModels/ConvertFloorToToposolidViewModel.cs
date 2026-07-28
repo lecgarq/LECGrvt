@@ -14,7 +14,7 @@ namespace LECG.ViewModels
     public partial class ConvertFloorToToposolidViewModel : BaseViewModel
     {
         private Document? _doc;
-        private readonly IConversionService _service;
+        private readonly ConversionService _service;
         private List<ElementId> _selectedElementIds = new List<ElementId>();
 
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
@@ -36,7 +36,7 @@ namespace LECG.ViewModels
 
         public bool CanRun => _doc != null && SelectedType != null && SelectedLevel != null && Selection.HasSelection;
 
-        public ConvertFloorToToposolidViewModel(IConversionService service)
+        public ConvertFloorToToposolidViewModel(ConversionService service)
         {
             _service = service;
             Title = "FLOOR TO TOPOSOLID";

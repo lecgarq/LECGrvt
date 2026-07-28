@@ -2,7 +2,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class MaterialAssignmentProgressService : IMaterialAssignmentProgressService
+    public class MaterialAssignmentProgressService
     {
         public double ToProgressPercent(int processedTypes, int totalTypes)
         {

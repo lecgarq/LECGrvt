@@ -3,12 +3,13 @@ using Autodesk.Revit.ApplicationServices;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class FamilyEditorService : IFamilyEditorService
+    public class FamilyEditorService
     {
         private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
         private readonly ITransactionService _transactionService;
@@ -116,12 +117,23 @@ namespace LECG.Services
             Autodesk.Revit.DB.Document projectDoc = family.Document;
             Autodesk.Revit.DB.Document familyDoc = null!;
 
+            // Capture the name FIRST: LoadFamily invalidates the original Family handle
+            // (a category change recreates the family), so touching `family` after the
+            // reload throws InvalidObjectException.
+            string familyName = family.Name;
+
             try
             {
+                // A category change rebuilds the family's parameter set, so Revit re-creates
+                // parameters on reload and resets their values even with
+                // overwriteParameterValues = false. Snapshot every instance's and type's
+                // writable values BEFORE the edit and restore them AFTER the reload.
+                FamilyValueSnapshot snapshot = SnapshotFamilyParameterValues(projectDoc, family);
+
                 familyDoc = projectDoc.EditFamily(family);
                 if (familyDoc == null)
                 {
-                    _logger.LogError($"Could not enter Family Editor for '{family.Name}'.", scope: "FamilyEditor");
+                    _logger.LogError($"Could not enter Family Editor for '{familyName}'.", scope: "FamilyEditor");
                     return false;
                 }
 
@@ -130,9 +142,11 @@ namespace LECG.Services
                     action(familyDoc);
                 });
 
-                // Load back into project (LoadFamily manages its own transaction internally)
-                var options = _loadOptionsFactory.Create();
-                familyDoc.LoadFamily(projectDoc, options);
+                // Load back into project (LoadFamily manages its own transaction internally).
+                var options = _loadOptionsFactory.Create(overwriteParameterValues: false);
+                Family? reloadedFamily = familyDoc.LoadFamily(projectDoc, options);
+
+                RestoreFamilyParameterValues(projectDoc, snapshot, reloadedFamily, familyName);
 
                 return true;
             }
@@ -146,6 +160,167 @@ namespace LECG.Services
                 TryCloseFamilyDocument(familyDoc);
             }
         }
+
+        /// <summary>
+        /// Captures every writable parameter value on the family's placed instances and types.
+        /// Instances keep their element ids across a reload; family types (symbols) may be
+        /// recreated with NEW ids when the category changes, so they are keyed by name.
+        /// </summary>
+        private FamilyValueSnapshot SnapshotFamilyParameterValues(Document projectDoc, Family family)
+        {
+            var instanceValues = new Dictionary<ElementId, List<ParameterSnapshot>>();
+            var typeValues = new Dictionary<string, List<ParameterSnapshot>>(StringComparer.Ordinal);
+
+            foreach (ElementId symbolId in family.GetFamilySymbolIds())
+            {
+                if (projectDoc.GetElement(symbolId) is FamilySymbol symbol)
+                {
+                    typeValues[symbol.Name] = SnapshotElementParameters(symbol);
+                }
+            }
+
+            foreach (FamilyInstance instance in new FilteredElementCollector(projectDoc)
+                .OfClass(typeof(FamilyInstance))
+                .Cast<FamilyInstance>()
+                .Where(fi => fi.Symbol?.Family?.Id == family.Id))
+            {
+                instanceValues[instance.Id] = SnapshotElementParameters(instance);
+            }
+
+            return new FamilyValueSnapshot(instanceValues, typeValues);
+        }
+
+        private List<ParameterSnapshot> SnapshotElementParameters(Element element)
+        {
+            var values = new List<ParameterSnapshot>();
+            foreach (Parameter parameter in element.Parameters)
+            {
+                try
+                {
+                    if (parameter.IsReadOnly || !parameter.HasValue) continue;
+
+                    values.Add(parameter.StorageType switch
+                    {
+                        StorageType.Double => new ParameterSnapshot(parameter.Definition.Name, StorageType.Double, parameter.AsDouble(), null, null, null),
+                        StorageType.Integer => new ParameterSnapshot(parameter.Definition.Name, StorageType.Integer, null, parameter.AsInteger(), null, null),
+                        StorageType.String => new ParameterSnapshot(parameter.Definition.Name, StorageType.String, null, null, parameter.AsString(), null),
+                        StorageType.ElementId => new ParameterSnapshot(parameter.Definition.Name, StorageType.ElementId, null, null, null, parameter.AsElementId()),
+                        _ => null!
+                    });
+                }
+                catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
+                {
+                    _logger.LogWarning($"Could not snapshot parameter on element {element.Id}: {ex.Message}", scope: "FamilyEditor");
+                }
+            }
+
+            values.RemoveAll(snapshot => snapshot == null);
+            return values;
+        }
+
+        private void RestoreFamilyParameterValues(
+            Document projectDoc,
+            FamilyValueSnapshot snapshot,
+            Family? reloadedFamily,
+            string familyName)
+        {
+            if (snapshot.InstanceValues.Count == 0 && snapshot.TypeValues.Count == 0) return;
+
+            // Resolve the post-reload symbols by NAME (their ids may have changed).
+            var symbolsByName = new Dictionary<string, FamilySymbol>(StringComparer.Ordinal);
+            Family? currentFamily = reloadedFamily ?? FindFamilyByName(projectDoc, familyName);
+            if (currentFamily != null && currentFamily.IsValidObject)
+            {
+                foreach (ElementId symbolId in currentFamily.GetFamilySymbolIds())
+                {
+                    if (projectDoc.GetElement(symbolId) is FamilySymbol symbol)
+                    {
+                        symbolsByName[symbol.Name] = symbol;
+                    }
+                }
+            }
+
+            int restored = 0;
+            _transactionService.Run(projectDoc, "Restore Parameter Values", _ =>
+            {
+                foreach (var (typeName, parameterSnapshots) in snapshot.TypeValues)
+                {
+                    if (!symbolsByName.TryGetValue(typeName, out FamilySymbol? symbol)) continue;
+
+                    foreach (ParameterSnapshot parameterSnapshot in parameterSnapshots)
+                    {
+                        if (TryRestoreParameter(projectDoc, symbol, parameterSnapshot)) restored++;
+                    }
+                }
+
+                foreach (var (elementId, parameterSnapshots) in snapshot.InstanceValues)
+                {
+                    Element? element = projectDoc.GetElement(elementId);
+                    if (element == null || !element.IsValidObject) continue;
+
+                    foreach (ParameterSnapshot parameterSnapshot in parameterSnapshots)
+                    {
+                        if (TryRestoreParameter(projectDoc, element, parameterSnapshot)) restored++;
+                    }
+                }
+            });
+
+            _logger.Log($"Restored {restored} parameter value(s) on '{familyName}' after reload.", scope: "FamilyEditor");
+        }
+
+        private static Family? FindFamilyByName(Document projectDoc, string familyName)
+        {
+            return new FilteredElementCollector(projectDoc)
+                .OfClass(typeof(Family))
+                .Cast<Family>()
+                .FirstOrDefault(f => string.Equals(f.Name, familyName, StringComparison.Ordinal));
+        }
+
+        private bool TryRestoreParameter(Document projectDoc, Element element, ParameterSnapshot snapshot)
+        {
+            try
+            {
+                Parameter? parameter = element.LookupParameter(snapshot.Name);
+                if (parameter == null || parameter.IsReadOnly || parameter.StorageType != snapshot.Storage) return false;
+
+                switch (snapshot.Storage)
+                {
+                    case StorageType.Double when snapshot.DoubleValue is double d:
+                        if (parameter.HasValue && Math.Abs(parameter.AsDouble() - d) < 1e-9) return false;
+                        return parameter.Set(d);
+                    case StorageType.Integer when snapshot.IntValue is int i:
+                        if (parameter.HasValue && parameter.AsInteger() == i) return false;
+                        return parameter.Set(i);
+                    case StorageType.String when snapshot.StringValue != null:
+                        if (parameter.HasValue && string.Equals(parameter.AsString(), snapshot.StringValue, StringComparison.Ordinal)) return false;
+                        return parameter.Set(snapshot.StringValue);
+                    case StorageType.ElementId when snapshot.IdValue is ElementId id:
+                        if (parameter.HasValue && parameter.AsElementId() == id) return false;
+                        // Don't point a parameter at an element that no longer exists.
+                        if (id.Value > 0 && projectDoc.GetElement(id) == null) return false;
+                        return parameter.Set(id);
+                    default:
+                        return false;
+                }
+            }
+            catch (Exception ex) when (IsExpectedFamilyEditorException(ex))
+            {
+                _logger.LogWarning($"Could not restore parameter '{snapshot.Name}' on element {element.Id}: {ex.Message}", scope: "FamilyEditor");
+                return false;
+            }
+        }
+
+        private sealed record ParameterSnapshot(
+            string Name,
+            StorageType Storage,
+            double? DoubleValue,
+            int? IntValue,
+            string? StringValue,
+            ElementId? IdValue);
+
+        private sealed record FamilyValueSnapshot(
+            Dictionary<ElementId, List<ParameterSnapshot>> InstanceValues,
+            Dictionary<string, List<ParameterSnapshot>> TypeValues);
 
         public Family RecreateAs(Family sourceFamily, Category targetCategory)
         {
@@ -249,7 +424,8 @@ namespace LECG.Services
             return ex is ArgumentException
                 || ex is InvalidOperationException
                 || ex is RevitExceptions.ArgumentException
-                || ex is RevitExceptions.InvalidOperationException;
+                || ex is RevitExceptions.InvalidOperationException
+                || ex is RevitExceptions.InvalidObjectException;
         }
 
         private static bool IsExpectedFamilyNestingException(Exception ex)

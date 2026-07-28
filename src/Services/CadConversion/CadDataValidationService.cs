@@ -12,7 +12,7 @@ namespace LECG.Services
 
             if (!data.Curves.Any() && !data.Hatches.Any())
             {
-                throw new Exception(emptyDataMessage);
+                throw new InvalidOperationException(emptyDataMessage);
             }
         }
     }

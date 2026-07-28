@@ -7,7 +7,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class SimplifyPointsService : ISimplifyPointsService
+    public class SimplifyPointsService
     {
         private readonly ITransactionService _transactionService;
 

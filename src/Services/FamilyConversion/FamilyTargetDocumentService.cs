@@ -6,7 +6,7 @@ using LECG.Services.Logging;
 
 namespace LECG.Services
 {
-    public class FamilyTargetDocumentService : IFamilyTargetDocumentService
+    public class FamilyTargetDocumentService
     {
         private readonly ILogger _logger;
 

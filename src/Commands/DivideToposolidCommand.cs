@@ -20,7 +20,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<IDivideToposolidService>();
+            var service = ServiceLocator.GetRequiredService<DivideToposolidService>();
 
             Log($"[{DateTime.Now}] Starting Divide Toposolid Command...");
 

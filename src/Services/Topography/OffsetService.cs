@@ -5,7 +5,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class OffsetService : IOffsetService
+    public class OffsetService
     {
         public bool TryOffsetElement(Document doc, Element elem, double offset, Action<string>? logCallback = null)
         {

@@ -24,7 +24,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             // 1. Service
-            var service = ServiceLocator.GetRequiredService<ISimplifyPointsService>();
+            var service = ServiceLocator.GetRequiredService<SimplifyPointsService>();
 
             // 2. VM
             var vm = ServiceLocator.GetRequiredService<SimplifyPointsViewModel>();

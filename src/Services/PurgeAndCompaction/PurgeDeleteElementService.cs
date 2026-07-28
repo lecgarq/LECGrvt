@@ -5,7 +5,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class PurgeDeleteElementService : IPurgeDeleteElementService
+    public class PurgeDeleteElementService
     {
         public bool DeleteElement(Document doc, ElementId id, string name, Action<string>? logCallback)
         {
@@ -33,21 +33,22 @@ namespace LECG.Services
                 logCallback?.Invoke($"  Deleted: {name}");
                 return true;
             }
-            catch (ArgumentException ex)
+            catch (Exception ex) when (IsExpectedDeleteException(ex))
             {
                 logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
                 return false;
             }
-            catch (InvalidOperationException ex)
-            {
-                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
-                return false;
-            }
-            catch (RevitExceptions.InvalidOperationException ex)
-            {
-                logCallback?.Invoke($"  Could not delete '{name}': {ex.Message}");
-                return false;
-            }
+        }
+
+        // Revit's ArgumentException ("ElementId cannot be deleted") derives from
+        // Autodesk.Revit.Exceptions.ApplicationException, NOT System.ArgumentException,
+        // so it must be listed explicitly or it escapes and aborts the whole purge pass.
+        private static bool IsExpectedDeleteException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.ArgumentException
+                || ex is RevitExceptions.InvalidOperationException;
         }
     }
 }

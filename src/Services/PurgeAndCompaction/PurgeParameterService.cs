@@ -23,7 +23,7 @@ namespace LECG.Services
     ///  10. If shared: it is NOT registered at the project level (SharedParameterElement with matching GUID
     ///      indicates use in schedules, tags, or filters — those are KEPT)
     /// </summary>
-    public class PurgeParameterService : IPurgeParameterService
+    public class PurgeParameterService
     {
         private readonly ITransactionService _transactionService;
         private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
@@ -46,7 +46,7 @@ namespace LECG.Services
 
             // Build project-level shared parameter GUIDs ONCE (used across all families)
             var projectSharedGuids = BuildProjectSharedParameterGuids(doc);
-            logCallback?.Invoke($"  Found {projectSharedGuids.Count} shared parameters registered at project level.");
+            logCallback?.Invoke($"  Found {projectSharedGuids.Count} shared parameters in use at project level (bindings, schedules, filters).");
 
             List<ProjectFamilyTarget> families = CollectProjectFamilies(doc);
 
@@ -324,7 +324,8 @@ namespace LECG.Services
                 };
 
                 projectDoc.Application.FailuresProcessing += failureHandler;
-                famDoc.LoadFamily(projectDoc, _loadOptionsFactory.Create());
+                // Preserve placed instances' parameter values — purge only removes unused parameters.
+                famDoc.LoadFamily(projectDoc, _loadOptionsFactory.Create(overwriteParameterValues: false));
             }
             catch (Exception loadEx) when (IsExpectedFamilyPurgeException(loadEx))
             {
@@ -496,22 +497,69 @@ namespace LECG.Services
         }
 
         /// <summary>
-        /// Build a set of shared parameter GUIDs that are registered at the project level.
-        /// A SharedParameterElement exists when the parameter is bound to project categories
-        /// (used in schedules, tags, filters, or element instances). If a shared parameter
-        /// in a family has a matching GUID here, it's in active use and must NOT be deleted.
+        /// Build a set of shared parameter GUIDs that are actually USED at the project level.
+        /// A SharedParameterElement exists for EVERY shared parameter loaded into the document —
+        /// including ones that only arrived inside loaded families — so mere existence must not
+        /// count as usage (it would keep every shared family parameter forever). Real usage is:
+        /// category bindings (project parameters), schedule fields, and view filter rules.
+        /// ponytail: tag-label usage isn't detected (requires opening every tag family);
+        /// add that scan if users report tags going blank after a parameter purge.
         /// </summary>
         private static HashSet<Guid> BuildProjectSharedParameterGuids(Document projectDoc)
         {
-            var guids = new HashSet<Guid>();
+            var usedParamIds = new HashSet<ElementId>();
 
-            var sharedParamElements = new FilteredElementCollector(projectDoc)
-                .OfClass(typeof(SharedParameterElement))
-                .Cast<SharedParameterElement>();
-
-            foreach (var sp in sharedParamElements)
+            DefinitionBindingMapIterator iter = projectDoc.ParameterBindings.ForwardIterator();
+            while (iter.MoveNext())
             {
-                guids.Add(sp.GuidValue);
+                if (iter.Key is InternalDefinition internalDef && internalDef.Id != ElementId.InvalidElementId)
+                {
+                    usedParamIds.Add(internalDef.Id);
+                }
+            }
+
+            foreach (ViewSchedule schedule in new FilteredElementCollector(projectDoc)
+                .OfClass(typeof(ViewSchedule))
+                .Cast<ViewSchedule>())
+            {
+                try
+                {
+                    ScheduleDefinition definition = schedule.Definition;
+                    int fieldCount = definition.GetFieldCount();
+                    for (int i = 0; i < fieldCount; i++)
+                    {
+                        usedParamIds.Add(definition.GetField(i).ParameterId);
+                    }
+                }
+                catch (Exception ex) when (IsExpectedFamilyPurgeException(ex))
+                {
+                    // Some schedule types don't expose fields — skip.
+                }
+            }
+
+            foreach (ParameterFilterElement filter in new FilteredElementCollector(projectDoc)
+                .OfClass(typeof(ParameterFilterElement))
+                .Cast<ParameterFilterElement>())
+            {
+                try
+                {
+                    usedParamIds.UnionWith(filter.GetElementFilterParameters());
+                }
+                catch (Exception ex) when (IsExpectedFamilyPurgeException(ex))
+                {
+                    // Filters without rules — skip.
+                }
+            }
+
+            var guids = new HashSet<Guid>();
+            foreach (SharedParameterElement sp in new FilteredElementCollector(projectDoc)
+                .OfClass(typeof(SharedParameterElement))
+                .Cast<SharedParameterElement>())
+            {
+                if (usedParamIds.Contains(sp.Id))
+                {
+                    guids.Add(sp.GuidValue);
+                }
             }
 
             return guids;

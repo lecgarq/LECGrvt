@@ -25,7 +25,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var slabService = ServiceLocator.GetRequiredService<ISlabService>();
+            var slabService = ServiceLocator.GetRequiredService<SlabService>();
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
 
             Log($"[{DateTime.Now}] Starting Reset Slabs Command...");

@@ -38,7 +38,7 @@ namespace LECG.Commands
                 // Subscribe to smart dialog handler (accepts safe, cancels dangerous)
                 uiApp.DialogBoxShowing += OnDialogShowing;
 
-                var service = ServiceLocator.GetRequiredService<IFamilyConversionService>();
+                var service = ServiceLocator.GetRequiredService<FamilyConversionService>();
 
                 // 1. Get Selection
                 var selectedRefs = new List<Reference>();

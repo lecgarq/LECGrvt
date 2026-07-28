@@ -5,7 +5,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class MaterialTypeAssignmentService : IMaterialTypeAssignmentService
+    public class MaterialTypeAssignmentService
     {
         public bool AssignMaterialToType(Document doc, ElementType type, ElementId materialId, Action<string>? logCallback = null)
         {

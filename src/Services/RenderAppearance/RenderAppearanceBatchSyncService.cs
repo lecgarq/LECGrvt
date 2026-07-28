@@ -7,22 +7,19 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class RenderAppearanceBatchSyncService : IRenderAppearanceBatchSyncService
+    public class RenderAppearanceBatchSyncService
     {
         private readonly IRenderSolidFillPatternService _solidFillPatternService;
-        private readonly IRenderMaterialSyncExecutionService _syncExecutionService;
-        private readonly IRenderBatchProgressService _renderBatchProgressService;
+        private readonly RenderMaterialSyncExecutionService _syncExecutionService;
         private readonly ITransactionService _transactionService;
 
         public RenderAppearanceBatchSyncService(
             IRenderSolidFillPatternService solidFillPatternService,
-            IRenderMaterialSyncExecutionService syncExecutionService,
-            IRenderBatchProgressService renderBatchProgressService,
+            RenderMaterialSyncExecutionService syncExecutionService,
             ITransactionService transactionService)
         {
             _solidFillPatternService = solidFillPatternService;
             _syncExecutionService = syncExecutionService;
-            _renderBatchProgressService = renderBatchProgressService;
             _transactionService = transactionService;
         }
 
@@ -44,6 +41,7 @@ namespace LECG.Services
             int processed = 0;
             int unchanged = 0;
             int updated = 0;
+            int normalMapUpdated = 0;
             int normalMapAlreadyNormal = 0;
             int normalMapNotApplicable = 0;
             int normalMapFailures = 0;
@@ -58,9 +56,9 @@ namespace LECG.Services
                 foreach (Material mat in matsList)
                 {
                     processed++;
-                    if (_renderBatchProgressService.ShouldReport(processed))
+                    if (processed % 10 == 0)
                     {
-                        reporter.Report($"Processing: {mat.Name}", _renderBatchProgressService.ToPercent(processed, total));
+                        reporter.Report($"Processing: {mat.Name}", (double)processed / total * 100);
                     }
 
                     RenderMaterialSyncResult result = _syncExecutionService.TrySync(mat, solidId, settings, reporter.Log);
@@ -71,6 +69,11 @@ namespace LECG.Services
                     else
                     {
                         updated++;
+                    }
+
+                    if (result.NormalMapChanged)
+                    {
+                        normalMapUpdated++;
                     }
 
                     if (result.NormalMapStatus == NormalMapSyncStatus.AlreadyNormal)
@@ -91,7 +94,7 @@ namespace LECG.Services
                 }
             });
 
-            reporter.Log($"Sync Complete: {updated} updated, {unchanged} unchanged.");
+            reporter.Log($"Sync Complete: {updated} updated, {unchanged} unchanged. Normal maps set: {normalMapUpdated}.");
             reporter.Report("Done", 100);
         }
     }

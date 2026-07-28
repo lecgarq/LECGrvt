@@ -8,7 +8,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class LineStyleCompactionService : ILineStyleCompactionService
+    public class LineStyleCompactionService
     {
         public LineStyleCompactionResult Compact(Document doc, CompactingStylesContext? context, IProgressReporter reporter)
         {

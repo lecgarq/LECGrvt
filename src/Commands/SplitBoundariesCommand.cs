@@ -23,7 +23,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var splitService = ServiceLocator.GetRequiredService<ISplitBoundariesService>();
+            var splitService = ServiceLocator.GetRequiredService<SplitBoundariesService>();
 
             Log($"[{DateTime.Now}] Starting Split Boundaries Command...");
 

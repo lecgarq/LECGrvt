@@ -10,7 +10,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class FillPatternCompactionService : IFillPatternCompactionService
+    public class FillPatternCompactionService
     {
         private const string CanonicalPrefix = "LECG-FP-";
 

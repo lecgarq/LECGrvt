@@ -2,6 +2,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using LECG.Core;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.Utilities;
 using LECG.ViewModels;
@@ -21,7 +22,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<IFamilyEditorService>();
+            var service = ServiceLocator.GetRequiredService<FamilyEditorService>();
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
             var viewModel = ServiceLocator.GetRequiredService<CategoryChangerViewModel>();
 
@@ -55,10 +56,10 @@ namespace LECG.Commands
     public class CategoryChangerEventHandler : IExternalEventHandler
     {
         private CategoryChangerViewModel? _viewModel;
-        private IFamilyEditorService? _service;
+        private FamilyEditorService? _service;
         private ITransactionService? _transactionService;
 
-        public void Initialize(CategoryChangerViewModel vm, IFamilyEditorService svc, ITransactionService transactionService)
+        public void Initialize(CategoryChangerViewModel vm, FamilyEditorService svc, ITransactionService transactionService)
         {
             _viewModel = vm;
             _service = svc;
@@ -247,6 +248,8 @@ namespace LECG.Commands
                             ElementTransformUtils.RotateElement(doc, newFi.Id, axis, rot);
                         }
 
+                        CopyWritableInstanceParameters(oldFi, newFi);
+
                         doc.Delete(oldFi.Id);
                     }
                     catch (Exception ex) when (IsExpectedCategoryChangerException(ex))
@@ -257,11 +260,54 @@ namespace LECG.Commands
             });
         }
 
+        /// <summary>
+        /// Best-effort copy of instance parameter values from the old instance to its
+        /// replacement, matched by name and storage type. ElementId parameters (level/host
+        /// references) are owned by placement, and elevation/offset built-ins are derived from
+        /// the exact XYZ the replacement was placed at — copying either could move the instance.
+        /// </summary>
+        private void CopyWritableInstanceParameters(FamilyInstance source, FamilyInstance target)
+        {
+            foreach (Parameter sourceParam in source.Parameters)
+            {
+                try
+                {
+                    if (sourceParam.IsReadOnly || !sourceParam.HasValue) continue;
+                    if (sourceParam.StorageType == StorageType.ElementId) continue;
+
+                    var bip = (BuiltInParameter)sourceParam.Id.Value;
+                    if (bip == BuiltInParameter.INSTANCE_ELEVATION_PARAM ||
+                        bip == BuiltInParameter.INSTANCE_FREE_HOST_OFFSET_PARAM)
+                    {
+                        continue;
+                    }
+
+                    Parameter? targetParam = target.LookupParameter(sourceParam.Definition.Name);
+                    if (targetParam == null || targetParam.IsReadOnly || targetParam.StorageType != sourceParam.StorageType) continue;
+
+                    switch (sourceParam.StorageType)
+                    {
+                        case StorageType.Double: targetParam.Set(sourceParam.AsDouble()); break;
+                        case StorageType.Integer: targetParam.Set(sourceParam.AsInteger()); break;
+                        case StorageType.String: targetParam.Set(sourceParam.AsString()); break;
+                    }
+                }
+                catch (Exception ex) when (IsExpectedCategoryChangerException(ex))
+                {
+                    _viewModel?.OnLog?.Invoke($"    [WARN] Could not copy parameter '{sourceParam.Definition.Name}': {ex.Message}");
+                }
+            }
+        }
+
+        // Revit's ArgumentException derives from Autodesk.Revit.Exceptions.ApplicationException,
+        // not System.ArgumentException — it must be listed explicitly or it aborts the handler.
         private static bool IsExpectedCategoryChangerException(Exception ex)
         {
             return ex is ArgumentException
                 || ex is InvalidOperationException
-                || ex is RevitExceptions.InvalidOperationException;
+                || ex is RevitExceptions.ArgumentException
+                || ex is RevitExceptions.InvalidOperationException
+                || ex is RevitExceptions.InvalidObjectException;
         }
 
         private static string? GetUnsupportedReason(FamilyInstance fi)

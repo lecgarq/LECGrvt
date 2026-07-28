@@ -3,14 +3,14 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class AlignEdgesHitPointProjectionService : IAlignEdgesHitPointProjectionService
+    public class AlignEdgesHitPointProjectionService
     {
         // Radial fallback radius (~30cm) — only if inward nudge fails
         private const double FallbackRadius = 1.0;
 
-        private readonly IReferenceRaycastService _referenceRaycastService;
+        private readonly ReferenceRaycastService _referenceRaycastService;
 
-        public AlignEdgesHitPointProjectionService(IReferenceRaycastService referenceRaycastService)
+        public AlignEdgesHitPointProjectionService(ReferenceRaycastService referenceRaycastService)
         {
             _referenceRaycastService = referenceRaycastService;
         }

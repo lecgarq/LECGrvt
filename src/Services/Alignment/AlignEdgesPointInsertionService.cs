@@ -7,7 +7,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class AlignEdgesPointInsertionService : IAlignEdgesPointInsertionService
+    public class AlignEdgesPointInsertionService
     {
         public int AddPoints(Element slab, SlabShapeEditor editor, IEnumerable<XYZ> points)
         {

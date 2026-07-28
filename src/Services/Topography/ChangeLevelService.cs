@@ -5,14 +5,12 @@ using System.Linq;
 
 namespace LECG.Services
 {
-    public class ChangeLevelService : IChangeLevelService
+    public class ChangeLevelService
     {
-        private readonly IChangeLevelElementUpdateService _changeLevelElementUpdateService;
         private readonly ITransactionService _transactionService;
 
-        public ChangeLevelService(IChangeLevelElementUpdateService changeLevelElementUpdateService, ITransactionService transactionService)
+        public ChangeLevelService(ITransactionService transactionService)
         {
-            _changeLevelElementUpdateService = changeLevelElementUpdateService;
             _transactionService = transactionService;
         }
 
@@ -36,9 +34,46 @@ namespace LECG.Services
             {
                 foreach (var elem in elements)
                 {
-                    _changeLevelElementUpdateService.UpdateElementLevel(currentDoc, elem, newLevel);
+                    UpdateElementLevel(currentDoc, elem, newLevel);
                 }
             });
+        }
+
+        private static void UpdateElementLevel(Document doc, Element elem, Level newLevel)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(elem);
+            ArgumentNullException.ThrowIfNull(newLevel);
+
+            Parameter levelParam = elem.get_Parameter(BuiltInParameter.LEVEL_PARAM);
+            if (levelParam == null || levelParam.IsReadOnly) return;
+
+            Parameter offsetParam = elem.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM);
+            if (offsetParam == null)
+            {
+                offsetParam = elem.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM);
+            }
+
+            if (offsetParam == null || offsetParam.IsReadOnly)
+            {
+                levelParam.Set(newLevel.Id);
+                return;
+            }
+
+            ElementId oldLevelId = levelParam.AsElementId();
+            Level? oldLevel = doc.GetElement(oldLevelId) as Level;
+
+            if (oldLevel == null)
+            {
+                levelParam.Set(newLevel.Id);
+                return;
+            }
+
+            double absoluteElev = oldLevel.Elevation + offsetParam.AsDouble();
+            double newOffset = absoluteElev - newLevel.Elevation;
+
+            levelParam.Set(newLevel.Id);
+            offsetParam.Set(newOffset);
         }
     }
 }

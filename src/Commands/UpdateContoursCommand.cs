@@ -5,6 +5,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.UI;
 using LECG.Core;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using LECG.Views;
@@ -21,7 +22,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<IToposolidService>();
+            var service = ServiceLocator.GetRequiredService<ToposolidService>();
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
             var view = ServiceLocator.GetRequiredService<UpdateContoursView>();
             var vm = (UpdateContoursViewModel)view.DataContext;

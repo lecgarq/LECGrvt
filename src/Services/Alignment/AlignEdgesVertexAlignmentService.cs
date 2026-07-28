@@ -9,7 +9,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class AlignEdgesVertexAlignmentService : IAlignEdgesVertexAlignmentService
+    public class AlignEdgesVertexAlignmentService
     {
         private const double MinDeltaThreshold = 0.0164;
         private const double EdgeSearchRadius = 2.0;
@@ -42,9 +42,9 @@ namespace LECG.Services
             new XYZ(D67, -D22, 0)
         };
 
-        private readonly IReferenceRaycastService _raycastService;
+        private readonly ReferenceRaycastService _raycastService;
 
-        public AlignEdgesVertexAlignmentService(IReferenceRaycastService raycastService)
+        public AlignEdgesVertexAlignmentService(ReferenceRaycastService raycastService)
         {
             _raycastService = raycastService;
         }

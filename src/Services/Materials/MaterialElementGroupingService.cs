@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class MaterialElementGroupingService : IMaterialElementGroupingService
+    public class MaterialElementGroupingService
     {
         public Dictionary<ElementId, List<Element>> GroupByType(IList<Element> elements)
         {

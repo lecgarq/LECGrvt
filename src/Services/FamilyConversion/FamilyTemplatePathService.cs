@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace LECG.Services
 {
-    public class FamilyTemplatePathService : IFamilyTemplatePathService
+    public class FamilyTemplatePathService
     {
         private readonly ILogger _logger;
 

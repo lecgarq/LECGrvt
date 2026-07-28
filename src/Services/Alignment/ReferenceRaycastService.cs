@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class ReferenceRaycastService : IReferenceRaycastService
+    public class ReferenceRaycastService
     {
         private const double RayStartCeiling = 10000.0;
 

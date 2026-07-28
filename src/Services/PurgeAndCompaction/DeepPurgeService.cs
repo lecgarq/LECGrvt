@@ -8,20 +8,17 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class DeepPurgeService : IDeepPurgeService
+    public class DeepPurgeService
     {
-        private readonly INativePurgeDocumentService _nativePurgeDocumentService;
-        private readonly IPurgePassSequenceService _purgePassSequenceService;
+        private readonly PurgePassSequenceService _purgePassSequenceService;
         private readonly ITransactionService _transactionService;
         private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
 
         public DeepPurgeService(
-            INativePurgeDocumentService nativePurgeDocumentService,
-            IPurgePassSequenceService purgePassSequenceService,
+            PurgePassSequenceService purgePassSequenceService,
             ITransactionService transactionService,
             IFamilyLoadOptionsFactory familyLoadOptionsFactory)
         {
-            _nativePurgeDocumentService = nativePurgeDocumentService;
             _purgePassSequenceService = purgePassSequenceService;
             _transactionService = transactionService;
             _familyLoadOptionsFactory = familyLoadOptionsFactory;
@@ -182,7 +179,7 @@ namespace LECG.Services
                 int deletedThisPass = 0;
                 _transactionService.RunWithWarningHandler(doc, transactionNameFactory(passNumber), currentDoc =>
                 {
-                    deletedThisPass = _nativePurgeDocumentService.PurgeUnused(currentDoc, reporter);
+                    deletedThisPass = PurgeUnused(currentDoc, reporter);
                     totalDeleted += deletedThisPass;
                     logDeleted(passNumber, deletedThisPass);
                 }, failureHandler);
@@ -199,6 +196,64 @@ namespace LECG.Services
             return totalDeleted;
         }
 
+        private static int PurgeUnused(Document doc, IProgressReporter reporter)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(reporter);
+
+            // Empty category set = all categories. GetUnusedElements (unlike GetAllUnusedElements)
+            // returns only elements Revit will actually allow deleting.
+            ISet<ElementId> categories = new HashSet<ElementId>();
+            ICollection<ElementId> unusedIds = doc.GetUnusedElements(categories);
+            if (unusedIds.Count == 0)
+            {
+                return 0;
+            }
+
+            int deletedCount = 0;
+            int skippedCount = 0;
+            foreach (ElementId unusedId in unusedIds)
+            {
+                try
+                {
+                    // Already removed as a dependent of an earlier delete in this pass.
+                    Element? element = doc.GetElement(unusedId);
+                    if (element == null || !element.IsValidObject)
+                    {
+                        continue;
+                    }
+
+                    ICollection<ElementId> deletedIds = doc.Delete(unusedId);
+                    if (deletedIds.Count > 0)
+                    {
+                        deletedCount++;
+                    }
+                }
+                catch (Exception ex) when (IsExpectedDeleteException(ex))
+                {
+                    // Revit can report locked, system-owned, or still-required elements as unused.
+                    skippedCount++;
+                }
+            }
+
+            doc.Regenerate();
+
+            if (skippedCount > 0)
+            {
+                reporter.LogWarning($"  {skippedCount} unused element(s) could not be deleted (locked, system-owned, or still required) and were skipped.");
+            }
+
+            return deletedCount;
+        }
+
+        private static bool IsExpectedDeleteException(Exception ex)
+        {
+            return ex is ArgumentException
+                || ex is InvalidOperationException
+                || ex is RevitExceptions.ArgumentException
+                || ex is RevitExceptions.InvalidOperationException;
+        }
+
         private void ReloadPurgedFamily(Document projectDoc, Document familyDoc, string familyName, IProgressReporter reporter)
         {
             EventHandler<Autodesk.Revit.DB.Events.FailuresProcessingEventArgs>? reloadFailureHandler = null;
@@ -206,7 +261,8 @@ namespace LECG.Services
             {
                 reloadFailureHandler = CreateReloadFailureHandler();
                 projectDoc.Application.FailuresProcessing += reloadFailureHandler;
-                familyDoc.LoadFamily(projectDoc, _familyLoadOptionsFactory.Create());
+                // Preserve placed instances' parameter values — purge only removes unused content.
+                familyDoc.LoadFamily(projectDoc, _familyLoadOptionsFactory.Create(overwriteParameterValues: false));
                 reporter.Log($"  Reloaded '{familyName}' into project.");
             }
             catch (Exception reloadEx) when (IsExpectedDeepPurgeException(reloadEx))

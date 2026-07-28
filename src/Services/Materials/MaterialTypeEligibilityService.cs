@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class MaterialTypeEligibilityService : IMaterialTypeEligibilityService
+    public class MaterialTypeEligibilityService
     {
         public bool TryGetSkipReason(ElementType elemType, out string reason)
         {

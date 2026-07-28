@@ -1,4 +1,5 @@
 using Autodesk.Revit.Attributes;
+using LECG.Services;
 using LECG.Services.Interfaces;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -17,7 +18,7 @@ namespace LECG.Commands
         public override void Execute(UIDocument uidoc, Document doc)
         {
             // 1. Resolve Service
-            var service = ServiceLocator.GetRequiredService<IChangeLevelService>();
+            var service = ServiceLocator.GetRequiredService<ChangeLevelService>();
 
             // 2. ViewModel
             var vm = ServiceLocator.GetRequiredService<ChangeLevelViewModel>();

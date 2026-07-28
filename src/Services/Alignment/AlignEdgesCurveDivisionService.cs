@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace LECG.Services
 {
-    public class AlignEdgesCurveDivisionService : IAlignEdgesCurveDivisionService
+    public class AlignEdgesCurveDivisionService
     {
         public IReadOnlyList<double> GetInteriorParameters(double length, double minSpacing, double maxSpacing)
         {

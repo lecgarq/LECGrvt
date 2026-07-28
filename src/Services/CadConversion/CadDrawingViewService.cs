@@ -20,7 +20,7 @@ namespace LECG.Services
 
             if (planView == null)
             {
-                throw new Exception("Could not find a valid plan view in the family template to draw geometry.");
+                throw new InvalidOperationException("Could not find a valid plan view in the family template to draw geometry.");
             }
 
             return planView;

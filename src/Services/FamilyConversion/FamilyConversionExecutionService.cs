@@ -7,17 +7,17 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class FamilyConversionExecutionService : IFamilyConversionExecutionService
+    public class FamilyConversionExecutionService
     {
-        private readonly IFamilyTargetDocumentService _familyTargetDocumentService;
-        private readonly IFamilyGeometryCopyService _familyGeometryCopyService;
-        private readonly IFamilySaveLoadService _familySaveLoadService;
+        private readonly FamilyTargetDocumentService _familyTargetDocumentService;
+        private readonly FamilyGeometryCopyService _familyGeometryCopyService;
+        private readonly FamilySaveLoadService _familySaveLoadService;
         private readonly ILogger _logger;
 
         public FamilyConversionExecutionService(
-            IFamilyTargetDocumentService familyTargetDocumentService,
-            IFamilyGeometryCopyService familyGeometryCopyService,
-            IFamilySaveLoadService familySaveLoadService,
+            FamilyTargetDocumentService familyTargetDocumentService,
+            FamilyGeometryCopyService familyGeometryCopyService,
+            FamilySaveLoadService familySaveLoadService,
             ILogger logger)
         {
             _familyTargetDocumentService = familyTargetDocumentService;
