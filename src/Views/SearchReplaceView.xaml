@@ -467,6 +467,28 @@
                         </DataGrid.Columns>
                     </controls:LecgDataGrid>
 
+                    <!-- Busy overlay — covers the grid while CollectBaseElements runs.
+                         Declared after the DataGrid in the same cell so it paints on top.
+                         Deliberately static: CollectBaseElements is Revit API and blocks the
+                         UI thread, so an animated ProgressBar would sit frozen and read as a
+                         hang. A still panel that says what is happening is honest. -->
+                    <Border Grid.Row="1"
+                            Background="{DynamicResource PanelBackgroundBrush}"
+                            CornerRadius="{DynamicResource ContentCornerRadius}"
+                            Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
+                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="{Binding BusyMessage}"
+                                       HorizontalAlignment="Center"
+                                       FontSize="{DynamicResource FontSizeBody}"
+                                       Foreground="{DynamicResource LecgAccent}"/>
+                            <TextBlock Text="Revit is scanning the model — this runs once per scope."
+                                       HorizontalAlignment="Center"
+                                       Margin="0,6,0,0"
+                                       FontSize="{DynamicResource FontSizeSmall}"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </Border>
+
                     <!-- Status Bar -->
                     <Border Grid.Row="2" Margin="0,6,0,0" Padding="0,4,0,0" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderBrush}">
                         <TextBlock Style="{DynamicResource StatusBarTextStyle}">

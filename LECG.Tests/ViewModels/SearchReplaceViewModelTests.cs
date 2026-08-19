@@ -232,4 +232,57 @@ public class SearchReplaceViewModelTests
 
         skipped.IsChecked.Should().BeFalse();
     }
+
+    // -----------------------------------------------------------------------
+    // R12 — the per-scope cache key.
+    //
+    // Neither the cache HIT nor the ScopeKey property can be exercised through
+    // the VM: setting any scope property runs SetExclusiveScope -> RefreshScope,
+    // whose body references ISearchReplaceService, and resolving that interface
+    // loads RevitAPI. The JIT does that before the method's null guard runs, so
+    // the runner throws FileNotFoundException regardless. Same root cause as the
+    // five already-skipped Document-parametered tests.
+    //
+    // So the key is built by a pure static and tested there. That is the part
+    // that could silently be wrong and serve one scope's elements for another.
+    // The cache hit itself is a Revit smoke-test step.
+    // -----------------------------------------------------------------------
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void BuildScopeKey_is_distinct_for_every_single_scope()
+    {
+        var keys = new List<string>();
+        for (int i = 0; i < 9; i++)
+        {
+            keys.Add(SearchReplaceViewModel.BuildScopeKey(
+                i == 0, i == 1, i == 2, i == 3, i == 4, i == 5, i == 6, i == 7, i == 8));
+        }
+
+        keys.Should().HaveCount(9);
+        keys.Should().OnlyHaveUniqueItems();
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void BuildScopeKey_is_stable_for_the_same_flags()
+    {
+        // This is what makes a cache hit: leaving a scope and returning must produce
+        // the identical key, or the collect is paid twice.
+        string first = SearchReplaceViewModel.BuildScopeKey(true, false, false, false, false, false, false, false, false);
+        string again = SearchReplaceViewModel.BuildScopeKey(true, false, false, false, false, false, false, false, false);
+
+        again.Should().Be(first);
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void BuildScopeKey_distinguishes_combined_scopes()
+    {
+        // Guards the key against being under-specified if the scope control ever
+        // becomes genuinely multi-select.
+        string typesOnly = SearchReplaceViewModel.BuildScopeKey(true, false, false, false, false, false, false, false, false);
+        string typesAndViews = SearchReplaceViewModel.BuildScopeKey(true, false, true, false, false, false, false, false, false);
+
+        typesAndViews.Should().NotBe(typesOnly);
+    }
 }

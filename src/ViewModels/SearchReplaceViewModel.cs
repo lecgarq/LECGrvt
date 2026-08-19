@@ -29,6 +29,15 @@ namespace LECG.ViewModels
         // direction for a rename.
         private readonly HashSet<string> _uncheckedKeys = new HashSet<string>(StringComparer.Ordinal);
 
+        // R12: CollectBaseElements is pure Revit API and cannot leave the UI thread, so
+        // the only way to make a scope click cheap is to not repeat it. Keyed by the
+        // nine scope flags. Not invalidated mid-dialog: the window is modal
+        // (SearchReplaceCommand.cs:31 ShowDialog), so the document cannot change under it.
+        private readonly Dictionary<string, List<ElementData>> _scopeCache = new Dictionary<string, List<ElementData>>(StringComparer.Ordinal);
+
+        private string _busyMessage = string.Empty;
+        public string BusyMessage { get => _busyMessage; set => SetProperty(ref _busyMessage, value); }
+
         public ReplaceRule ReplaceRule { get; } = new ReplaceRule();
         public RemoveRule RemoveRule { get; } = new RemoveRule();
         public AddRule AddRule { get; } = new AddRule();
@@ -199,6 +208,7 @@ namespace LECG.ViewModels
         {
             _service = service;
             _doc = doc;
+            _scopeCache.Clear();
             RefreshScope();
         }
 
@@ -222,10 +232,81 @@ namespace LECG.ViewModels
         public bool IsParameterScope => ScopeFamilyParameterName;
         public bool IsViewScope => ScopeViewName;
 
+        /// <summary>
+        /// Identity of the current scope selection, used as the cache key.
+        /// Built from all nine flags rather than assuming exactly one is set, so it stays
+        /// correct if the scope control ever becomes genuinely multi-select.
+        /// </summary>
+        /// <remarks>
+        /// The key is built by a pure static so it can be unit-tested. Reading it through
+        /// the scope properties cannot be: setting one runs SetExclusiveScope -> RefreshScope,
+        /// whose body references ISearchReplaceService, and resolving that interface loads
+        /// RevitAPI. The JIT does that before the null guard runs, so the test runner throws
+        /// FileNotFoundException no matter what the guard says.
+        /// </remarks>
+        internal static string BuildScopeKey(
+            bool types, bool families, bool views, bool sheets, bool materials,
+            bool objectStyles, bool lineStyles, bool fillPatterns, bool familyParameters)
+            => string.Concat(
+                types ? "T" : "-",
+                families ? "F" : "-",
+                views ? "V" : "-",
+                sheets ? "S" : "-",
+                materials ? "M" : "-",
+                objectStyles ? "O" : "-",
+                lineStyles ? "L" : "-",
+                fillPatterns ? "P" : "-",
+                familyParameters ? "R" : "-");
+
+        private string ScopeKey => BuildScopeKey(
+            ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName, ScopeMaterialName,
+            ScopeObjectStyleName, ScopeLineStyleName, ScopeFillPatternName, ScopeFamilyParameterName);
+
+        /// <summary>
+        /// Returns the element set for the current scope, collecting it only on a cache miss.
+        /// </summary>
+        /// <remarks>
+        /// The collect runs synchronously on the UI thread and must: CollectBaseElements is
+        /// FilteredElementCollector plus a per-element label read
+        /// (<c>BaseElementCollectionService.cs:37-59</c>), and the Revit API is main-thread
+        /// only. Wrapping it in <c>Task.Run</c> is the crash that does not reproduce until it
+        /// does. So the wait is made visible instead of hidden, and paid once per scope.
+        /// </remarks>
+        private List<ElementData> CollectForCurrentScope()
+        {
+            string key = ScopeKey;
+            if (_scopeCache.TryGetValue(key, out List<ElementData>? cached)) return cached;
+
+            IsBusy = true;
+            BusyMessage = "Collecting elements…";
+
+            // Force a paint before the collector blocks the thread, otherwise the busy panel
+            // never appears. Render (7) outranks Input (5), so the overlay draws and no click
+            // is processed meanwhile — a repaint without the reentrancy Dispatcher.Yield()
+            // would open. Null-guarded: the test runner has no WPF Application.
+            System.Windows.Application.Current?.Dispatcher.Invoke(
+                () => { }, System.Windows.Threading.DispatcherPriority.Render);
+
+            try
+            {
+                List<ElementData> collected = _service!.CollectBaseElements(
+                    _doc!, ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName,
+                    ScopeMaterialName, ScopeObjectStyleName, ScopeLineStyleName,
+                    ScopeFillPatternName, ScopeFamilyParameterName);
+                _scopeCache[key] = collected;
+                return collected;
+            }
+            finally
+            {
+                IsBusy = false;
+                BusyMessage = string.Empty;
+            }
+        }
+
         private void RefreshScope()
         {
             if (_service == null || _doc == null) return;
-            _cachedElements = _service.CollectBaseElements(_doc, ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName, ScopeMaterialName, ScopeObjectStyleName, ScopeLineStyleName, ScopeFillPatternName, ScopeFamilyParameterName);
+            _cachedElements = CollectForCurrentScope();
             var cats = _service.GetUniqueCategories(_cachedElements);
             AvailableCategories.Clear(); AvailableCategories.Add("All"); foreach (var c in cats) AvailableCategories.Add(c);
             FilterCategory = "All";
