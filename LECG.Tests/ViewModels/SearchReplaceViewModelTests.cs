@@ -505,20 +505,23 @@ public class SearchReplaceViewModelTests
     [Trait("Category", "Unit")]
     public void Column_filters_narrow_the_view_and_AND_together()
     {
+        // Only Original, New and Status carry per-column filters. Type was dropped because
+        // scope is single-select, so every row holds the same value; Category was dropped
+        // because the multi-select dropdown already filters it, with counts.
         var vm = WithBoundRows(
-            new ElementRowViewModel { Type = "Type", Category = "Walls", Name = "A", OriginalValue = "W-A", NewValue = "X-A", Status = "" },
-            new ElementRowViewModel { Type = "Type", Category = "Doors", Name = "B", OriginalValue = "W-B", NewValue = "X-B", Status = "" },
-            new ElementRowViewModel { Type = "View", Category = "Walls", Name = "C", OriginalValue = "W-C", NewValue = "X-C", Status = "" });
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "W-A", NewValue = "X-A", Status = "ok" },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "W-B", NewValue = "Y-B", Status = "ok" },
+            new ElementRowViewModel { Category = "Walls", Name = "C", OriginalValue = "Z-C", NewValue = "X-C", Status = "skipped" });
 
         vm.FilterColOriginal = "W-";
-        vm.VisibleCount.Should().Be(3);
-
-        vm.FilterColType = "Type";
         vm.VisibleCount.Should().Be(2);
 
-        vm.FilterColCategory = "Walls";
+        vm.FilterColNew = "X-";
         vm.VisibleCount.Should().Be(1);
         vm.PreviewView.Cast<ElementRowViewModel>().Single().Name.Should().Be("A");
+
+        vm.FilterColStatus = "skipped";
+        vm.VisibleCount.Should().Be(0, "all three filters AND together");
     }
 
     [Fact]
@@ -529,10 +532,10 @@ public class SearchReplaceViewModelTests
             new ElementRowViewModel { Type = "Type", Category = "Walls", Name = "A", OriginalValue = "A" },
             new ElementRowViewModel { Type = "View", Category = "Walls", Name = "B", OriginalValue = "B" });
 
-        vm.FilterColType = "View";
+        vm.FilterColOriginal = "B";
         vm.VisibleCount.Should().Be(1);
 
-        vm.FilterColType = "";
+        vm.FilterColOriginal = "";
         vm.VisibleCount.Should().Be(2);
     }
 
@@ -605,7 +608,7 @@ public class SearchReplaceViewModelTests
             new ElementRowViewModel { Type = "View", Category = "Doors", Name = "B", OriginalValue = "B" });
 
         vm.CategoryOptions.Single(o => o.Name == "Walls").IsSelected = true;
-        vm.FilterColType = "Type";
+        vm.FilterColOriginal = "A";
         vm.HasActiveFilters.Should().BeTrue();
         vm.VisibleCount.Should().Be(1);
 

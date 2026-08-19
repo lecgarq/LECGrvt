@@ -210,12 +210,6 @@ namespace LECG.ViewModels
         // R8: per-column text filters. Each routes through SetColumnFilter, which
         // AND-combines them with the category selection in MatchesAllFilters. The plumbing
         // already existed and nothing in the XAML reached it.
-        private string _filterColType = "";
-        public string FilterColType { get => _filterColType; set { if (SetProperty(ref _filterColType, value)) SetTextFilter("Type", value, r => r.Type); } }
-
-        private string _filterColCategory = "";
-        public string FilterColCategory { get => _filterColCategory; set { if (SetProperty(ref _filterColCategory, value)) SetTextFilter("Category", value, r => r.Category); } }
-
         private string _filterColOriginal = "";
         public string FilterColOriginal { get => _filterColOriginal; set { if (SetProperty(ref _filterColOriginal, value)) SetTextFilter("Original", value, r => r.OriginalValue); } }
 
@@ -238,8 +232,6 @@ namespace LECG.ViewModels
         public bool HasActiveFilters =>
             _selectedCategories.Count > 0
             || !string.IsNullOrWhiteSpace(FilterName)
-            || !string.IsNullOrWhiteSpace(FilterColType)
-            || !string.IsNullOrWhiteSpace(FilterColCategory)
             || !string.IsNullOrWhiteSpace(FilterColOriginal)
             || !string.IsNullOrWhiteSpace(FilterColNew)
             || !string.IsNullOrWhiteSpace(FilterColStatus);
@@ -255,8 +247,6 @@ namespace LECG.ViewModels
             OnPropertyChanged(nameof(FilterCategory));
 
             CategorySearch = "";
-            FilterColType = "";
-            FilterColCategory = "";
             FilterColOriginal = "";
             FilterColNew = "";
             FilterColStatus = "";
@@ -275,6 +265,53 @@ namespace LECG.ViewModels
             OnPropertyChanged(nameof(ActiveFilterSummary));
         }
 
+        // Section collapse state is static on purpose: the ViewModel is registered
+        // transient (Bootstrapper.cs:210), so an instance field would reset every time the
+        // command is run and the user would re-collapse Operations on every open.
+        // ponytail: static means per-process, not per-user — it resets when Revit restarts.
+        // Persisting properly needs a settings round-trip; do that only if someone asks.
+        private static bool s_scopeExpanded = true;
+        private static bool s_filtersExpanded = true;
+        private static bool s_operationsExpanded;
+
+        public bool IsScopeExpanded
+        {
+            get => s_scopeExpanded;
+            set { if (s_scopeExpanded != value) { s_scopeExpanded = value; OnPropertyChanged(); } }
+        }
+
+        public bool IsFiltersExpanded
+        {
+            get => s_filtersExpanded;
+            set { if (s_filtersExpanded != value) { s_filtersExpanded = value; OnPropertyChanged(); } }
+        }
+
+        /// <summary>Collapsed by default — it is the largest block and is usually all switched off.</summary>
+        public bool IsOperationsExpanded
+        {
+            get => s_operationsExpanded;
+            set { if (s_operationsExpanded != value) { s_operationsExpanded = value; OnPropertyChanged(); } }
+        }
+
+        /// <summary>
+        /// What the Operations block is doing, so collapsing it is not collapsing it blind.
+        /// </summary>
+        public string ActiveOperationsSummary
+        {
+            get
+            {
+                var active = new List<string>();
+                if (ReplaceRule.IsActive) active.Add("Replace");
+                if (CaseRule.IsActive) active.Add("Case");
+                if (RemoveRule.IsActive) active.Add("Remove");
+                if (AddRule.IsActive) active.Add("Add");
+                if (NumberingRule.IsActive) active.Add("Numbering");
+
+                return active.Count == 0 ? "none active" : string.Join(" + ", active);
+            }
+        }
+
+        public ICommand ToggleSectionCommand { get; }
         public ICommand ClearFiltersCommand { get; }
         public ICommand ToggleCategoryDropDownCommand { get; }
         public ICommand SelectAllCommand { get; }
@@ -349,6 +386,15 @@ namespace LECG.ViewModels
             CaseRule.PropertyChanged += RuleChanged;
             Title = "Batch Rename";
 
+            ToggleSectionCommand = new CommunityToolkit.Mvvm.Input.RelayCommand<string>(section =>
+            {
+                switch (section)
+                {
+                    case "Scope": IsScopeExpanded = !IsScopeExpanded; break;
+                    case "Filters": IsFiltersExpanded = !IsFiltersExpanded; break;
+                    case "Operations": IsOperationsExpanded = !IsOperationsExpanded; break;
+                }
+            });
             ClearFiltersCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(ClearFilters);
             ToggleCategoryDropDownCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(
                 () => IsCategoryDropDownOpen = !IsCategoryDropDownOpen);
@@ -433,7 +479,11 @@ namespace LECG.ViewModels
         public RenameRuleContext ToContext() => new RenameRuleContext(ReplaceRule, RemoveRule, AddRule, NumberingRule, CaseRule, ScopeTypeName, ScopeFamilyName, ScopeViewName, ScopeSheetName, ScopeMaterialName, ScopeObjectStyleName, ScopeLineStyleName, ScopeFillPatternName, ScopeFamilyParameterName, FilterName, FilterCategory, SelectedFilterType, FilterParamGroup, FilterIsInstance, FilterIsReadOnly, FilterViewType);
         public SearchCriteria ToCriteria() => new SearchCriteria { FilterName = FilterName, FilterCategory = FilterCategory, SelectedFilterType = SelectedFilterType, FilterParamGroup = FilterParamGroup, FilterIsInstance = FilterIsInstance, FilterIsReadOnly = FilterIsReadOnly, FilterViewType = FilterViewType, ScopeTypeName = ScopeTypeName, ScopeFamilyName = ScopeFamilyName, ScopeViewName = ScopeViewName, ScopeSheetName = ScopeSheetName, ScopeMaterialName = ScopeMaterialName, ScopeObjectStyleName = ScopeObjectStyleName, ScopeLineStyleName = ScopeLineStyleName, ScopeFillPatternName = ScopeFillPatternName, ScopeFamilyParameterName = ScopeFamilyParameterName };
 
-        private void RuleChanged(object? sender, PropertyChangedEventArgs e) => _ = UpdatePreviewAsync();
+        private void RuleChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(ActiveOperationsSummary));
+            _ = UpdatePreviewAsync();
+        }
 
         private void SetExclusiveScope(Action activator)
         {

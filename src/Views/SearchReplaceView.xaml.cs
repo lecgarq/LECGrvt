@@ -92,6 +92,22 @@ namespace LECG.Views
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Lets a click land in a column-header filter box without also sorting the column.
+        /// </summary>
+        /// <remarks>
+        /// The header still sorts when you click its label. Only the first click is swallowed —
+        /// once the box has focus, later clicks pass through so the caret can be placed.
+        /// </remarks>
+        private void HeaderFilter_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is TextBox box && !box.IsKeyboardFocusWithin)
+            {
+                box.Focus();
+                e.Handled = true;
+            }
+        }
+
         private static T? FindAncestor<T>(DependencyObject start) where T : DependencyObject
         {
             DependencyObject? current = start;

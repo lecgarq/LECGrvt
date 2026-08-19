@@ -51,13 +51,18 @@
                     <!-- Scope section -->
                     <StackPanel Grid.Row="0">
                         <!-- Section Header with accent bar -->
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                            <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="SCOPE" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
-                        </StackPanel>
+                        <Button Command="{Binding ToggleSectionCommand}" CommandParameter="Scope"
+                                Style="{DynamicResource LinkButtonStyle}" HorizontalContentAlignment="Left"
+                                Margin="0,0,0,8" Padding="0" ToolTip="Show or hide the scope pills">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="SCOPE" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                                <TextBlock Text="&#x25BE;" Margin="6,0,0,0" FontSize="10" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            </StackPanel>
+                        </Button>
 
                         <!-- Pill Badges -->
-                        <WrapPanel Orientation="Horizontal">
+                        <WrapPanel Orientation="Horizontal" Visibility="{Binding IsScopeExpanded, Converter={StaticResource BoolToVis}}">
                             <CheckBox Content="Types" IsChecked="{Binding ScopeTypeName}" Style="{DynamicResource PillCheckboxStyle}"/>
                             <CheckBox Content="Families" IsChecked="{Binding ScopeFamilyName}" Style="{DynamicResource PillCheckboxStyle}"/>
                             <CheckBox Content="Views" IsChecked="{Binding ScopeViewName}" Style="{DynamicResource PillCheckboxStyle}"/>
@@ -73,12 +78,20 @@
                     <!-- Filters section -->
                     <StackPanel Grid.Row="1" Margin="0,12,0,0">
                         <!-- Section Header -->
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                            <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="FILTERS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
-                        </StackPanel>
+                        <Button Command="{Binding ToggleSectionCommand}" CommandParameter="Filters"
+                                Style="{DynamicResource LinkButtonStyle}" HorizontalContentAlignment="Left"
+                                Margin="0,0,0,8" Padding="0" ToolTip="Show or hide the name and category filters">
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="FILTERS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                                <TextBlock Text="&#x25BE;" Margin="6,0,0,0" FontSize="10" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock Text="{Binding ActiveFilterSummary}" Margin="10,0,0,0" VerticalAlignment="Center"
+                                           FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource LecgAccent}"/>
+                            </StackPanel>
+                        </Button>
 
-                        <Grid>
+                        <Grid Visibility="{Binding IsFiltersExpanded, Converter={StaticResource BoolToVis}}">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
@@ -254,12 +267,19 @@
             <Border Grid.Row="1" Background="Transparent" Margin="16,0,16,10">
                 <StackPanel>
                     <!-- Section Header -->
-                    <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                        <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                        <TextBlock Text="OPERATIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
-                    </StackPanel>
+                    <Button Command="{Binding ToggleSectionCommand}" CommandParameter="Operations"
+                            Style="{DynamicResource LinkButtonStyle}" HorizontalContentAlignment="Left"
+                            Margin="0,0,0,8" Padding="0" ToolTip="Show or hide the rename rules">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="OPERATIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                            <TextBlock Text="&#x25BE;" Margin="6,0,0,0" FontSize="10" VerticalAlignment="Center" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                            <TextBlock Text="{Binding ActiveOperationsSummary}" Margin="10,0,0,0" VerticalAlignment="Center"
+                                       FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                        </StackPanel>
+                    </Button>
 
-                    <Grid>
+                    <Grid Visibility="{Binding IsOperationsExpanded, Converter={StaticResource BoolToVis}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="8"/>
@@ -444,13 +464,6 @@
                             </StackPanel>
                         </Border>
 
-                        <!-- 6. Extension (Placeholder) -->
-                        <Border Grid.Row="2" Grid.Column="4" Background="{DynamicResource PanelBackgroundBrush}" CornerRadius="6" Padding="10" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" Opacity="0.5">
-                            <StackPanel>
-                                <CheckBox Content="Extension" IsChecked="False" IsEnabled="False" Style="{DynamicResource ToggleSwitchStyle}" Margin="0,0,0,8" FontSize="{DynamicResource FontSizeBody}"/>
-                                <TextBlock Text="(Coming Soon)" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="{DynamicResource FontSizeSmall}" FontStyle="Italic"/>
-                            </StackPanel>
-                        </Border>
                     </Grid>
                 </StackPanel>
             </Border>
@@ -466,12 +479,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <!-- Header row -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Column filter bar -->
                         <RowDefinition Height="*"/>
                         <!-- DataGrid -->
-                        <RowDefinition Height="Auto"/>
-                        <!-- Status bar -->
                     </Grid.RowDefinitions>
 
                     <!-- Preview Header + Select All/None Links -->
@@ -496,8 +505,11 @@
                                     ToolTip="Tick every row currently shown. Rows hidden by a filter are not touched."/>
                             <Button Content="Select None" Command="{Binding SelectNoneCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"
                                     ToolTip="Untick every row currently shown."/>
-                            <Button Content="Invert" Command="{Binding InvertSelectionCommand}" Style="{DynamicResource LinkButtonStyle}"
+                            <Button Content="Invert" Command="{Binding InvertSelectionCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,16,0"
                                     ToolTip="Flip the tick on every row currently shown."/>
+                            <Button Content="Clear filters" Command="{Binding ClearFiltersCommand}" Style="{DynamicResource LinkButtonStyle}"
+                                    IsEnabled="{Binding HasActiveFilters}"
+                                    ToolTip="Clear the name filter, every column filter, and the category selection."/>
                         </StackPanel>
                     </Grid>
 
@@ -505,66 +517,7 @@
                          SortDescriptions[0]=(Category, Asc) and the AND-combined Filter
                          (FilterCategory dropdown ∧ per-column predicates).
                          Column order locked by CONTEXT.md: ☑ | Type | Category | Original | New | Status. -->
-                    <!-- Per-column filters (R8). These route through SetColumnFilter, which
-                         already existed on the ViewModel and which nothing in this file
-                         reached — the feature was fully plumbed and unreachable. A bar rather
-                         than five header templates: same behaviour, far less XAML, and no
-                         fragile alignment against virtualized column widths. -->
-                    <Border Grid.Row="1" Margin="0,0,0,8" Padding="8,6" CornerRadius="4"
-                            Background="{DynamicResource LecgSurfaceBackground}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="6"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="6"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="6"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="6"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="10"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" Style="{DynamicResource LabelStyle}"/>
-                            <TextBox  Grid.Row="1" Grid.Column="0" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
-                                      Text="{Binding FilterColType, UpdateSourceTrigger=PropertyChanged}"/>
-
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Category" Style="{DynamicResource LabelStyle}"/>
-                            <TextBox  Grid.Row="1" Grid.Column="2" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
-                                      Text="{Binding FilterColCategory, UpdateSourceTrigger=PropertyChanged}"/>
-
-                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Original" Style="{DynamicResource LabelStyle}"/>
-                            <TextBox  Grid.Row="1" Grid.Column="4" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
-                                      Text="{Binding FilterColOriginal, UpdateSourceTrigger=PropertyChanged}"/>
-
-                            <TextBlock Grid.Row="0" Grid.Column="6" Text="New" Style="{DynamicResource LabelStyle}"/>
-                            <TextBox  Grid.Row="1" Grid.Column="6" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
-                                      Text="{Binding FilterColNew, UpdateSourceTrigger=PropertyChanged}"/>
-
-                            <TextBlock Grid.Row="0" Grid.Column="8" Text="Status" Style="{DynamicResource LabelStyle}"/>
-                            <TextBox  Grid.Row="1" Grid.Column="8" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
-                                      Text="{Binding FilterColStatus, UpdateSourceTrigger=PropertyChanged}"/>
-
-                            <StackPanel Grid.Row="1" Grid.Column="10" Orientation="Horizontal" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding ActiveFilterSummary}" VerticalAlignment="Center" Margin="0,0,8,0"
-                                           FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold"
-                                           Foreground="{DynamicResource LecgAccent}"
-                                           Visibility="{Binding HasActiveFilters, Converter={StaticResource BoolToVis}}"/>
-                                <Button Content="Clear filters" Command="{Binding ClearFiltersCommand}"
-                                        Style="{DynamicResource LinkButtonStyle}"
-                                        IsEnabled="{Binding HasActiveFilters}"
-                                        ToolTip="Clear the name filter, every column filter, and the category selection."/>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-
-                    <controls:LecgDataGrid Grid.Row="2" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True"
+                    <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True"
                                            PreviewKeyDown="PreviewGrid_PreviewKeyDown">
                         <!-- Muted-row Style: skipped rows (IsRenameable=false) rendered at reduced
                              opacity with muted text so users can distinguish them at a glance. -->
@@ -591,13 +544,53 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="80" IsReadOnly="True" SortMemberPath="Type"/>
-                            <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="Auto" IsReadOnly="True" SortMemberPath="Category"/>
-                            <DataGridTextColumn Header="Original" Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue"/>
-                            <DataGridTextColumn Header="New" Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue"/>
-                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="60" IsReadOnly="True" SortMemberPath="Id"/>
+                            <!-- The Type column is gone: scope is single-select, so every row carried
+                                 the identical value down 1,881 rows. Category still distinguishes rows. -->
+                            <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="160" IsReadOnly="True" SortMemberPath="Category"/>
+
+                            <!-- Filters live in the column headers, not in a bar above the grid.
+                                 The bar cost a row of height and, worse, its boxes did not line up
+                                 with the columns they filtered, so the labels lied. -->
+                            <DataGridTextColumn Binding="{Binding OriginalValue}" Width="*" IsReadOnly="True" SortMemberPath="OriginalValue">
+                                <DataGridTextColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="Original" FontWeight="SemiBold"/>
+                                            <TextBox Height="22" Margin="0,3,0,0" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                                     PreviewMouseLeftButtonDown="HeaderFilter_PreviewMouseLeftButtonDown"
+                                                     Text="{Binding DataContext.FilterColOriginal, RelativeSource={RelativeSource AncestorType=DataGrid}, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTextColumn.HeaderTemplate>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding NewValue}" Width="*" IsReadOnly="True" Foreground="{DynamicResource LecgAccent}" SortMemberPath="NewValue">
+                                <DataGridTextColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="New" FontWeight="SemiBold"/>
+                                            <TextBox Height="22" Margin="0,3,0,0" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                                     PreviewMouseLeftButtonDown="HeaderFilter_PreviewMouseLeftButtonDown"
+                                                     Text="{Binding DataContext.FilterColNew, RelativeSource={RelativeSource AncestorType=DataGrid}, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTextColumn.HeaderTemplate>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="70" IsReadOnly="True" SortMemberPath="Id"/>
                             <!-- Status: shows skip reason or side-effect count; tooltip for overflow -->
-                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="140" IsReadOnly="True" SortMemberPath="Status">
+                            <!-- Status was 140px and truncated every skip reason it had to show. -->
+                            <DataGridTextColumn Binding="{Binding Status}" Width="240" IsReadOnly="True" SortMemberPath="Status">
+                                <DataGridTextColumn.HeaderTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="Status" FontWeight="SemiBold"/>
+                                            <TextBox Height="22" Margin="0,3,0,0" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                                     PreviewMouseLeftButtonDown="HeaderFilter_PreviewMouseLeftButtonDown"
+                                                     Text="{Binding DataContext.FilterColStatus, RelativeSource={RelativeSource AncestorType=DataGrid}, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTextColumn.HeaderTemplate>
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="ToolTip" Value="{Binding Status}"/>
@@ -613,7 +606,7 @@
                          Deliberately static: CollectBaseElements is Revit API and blocks the
                          UI thread, so an animated ProgressBar would sit frozen and read as a
                          hang. A still panel that says what is happening is honest. -->
-                    <Border Grid.Row="2"
+                    <Border Grid.Row="1"
                             Background="{DynamicResource PanelBackgroundBrush}"
                             CornerRadius="{DynamicResource ContentCornerRadius}"
                             Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
@@ -630,17 +623,6 @@
                         </StackPanel>
                     </Border>
 
-                    <!-- Status Bar -->
-                    <Border Grid.Row="3" Margin="0,6,0,0" Padding="0,4,0,0" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderBrush}">
-                        <TextBlock Style="{DynamicResource StatusBarTextStyle}">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} rows shown · {1} will be renamed">
-                                    <Binding Path="VisibleCount"/>
-                                    <Binding Path="CheckedCount"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </Border>
                 </Grid>
             </Border>
 
