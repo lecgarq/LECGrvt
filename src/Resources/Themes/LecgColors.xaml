@@ -25,6 +25,14 @@
     <Color x:Key="LecgTextPrimaryColor">#323130</Color>
     <Color x:Key="LecgAccentColor">#708452</Color>
 
+    <!-- Functional (non-brand) colours. These sit outside the 9-colour palette on purpose:
+         they signal an action's consequence, not identity. LecgSuccessColor mirrors
+         ColorSuccess in Base/Colors.xaml so the repo has one success colour rather than two;
+         it is restated here because views merge LecgTheme.xaml, which merges this file, while
+         Base/* is only reachable through the separate Styles.xaml aggregate.
+         The matching red lives in LecgTheme.xaml as LecgError (#C53030). -->
+    <Color x:Key="LecgSuccessColor">#38A169</Color>
+
     <!-- SolidColorBrushes -->
     <SolidColorBrush x:Key="LecgBaseBackground" Color="{StaticResource LecgBaseBackgroundColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
     <SolidColorBrush x:Key="LecgSurfaceBackground" Color="{StaticResource LecgSurfaceBackgroundColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
@@ -35,5 +43,6 @@
     <SolidColorBrush x:Key="LecgTextSecondary" Color="{StaticResource LecgTextSecondaryColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
     <SolidColorBrush x:Key="LecgTextPrimary" Color="{StaticResource LecgTextPrimaryColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
     <SolidColorBrush x:Key="LecgAccent" Color="{StaticResource LecgAccentColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgSuccess" Color="{StaticResource LecgSuccessColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
 
 </ResourceDictionary>

@@ -27,19 +27,24 @@ namespace LECG.Tests.Views;
 public class XamlResourceTests
 {
     private static readonly Regex KeyDefinition = new(@"x:Key=""([^""]+)""", RegexOptions.Compiled);
-    private static readonly Regex StaticResourceUse = new(@"\{StaticResource ([A-Za-z0-9_]+)\}", RegexOptions.Compiled);
+    private static readonly Regex ResourceUse = new(@"\{(?:Dynamic|Static)Resource ([A-Za-z0-9_]+)\}", RegexOptions.Compiled);
     private static readonly Regex StyledElement = new(@"<([A-Za-z:]+)\b((?:[^<>]|\n)*?)/?>", RegexOptions.Compiled);
     private static readonly Regex StyleAttribute = new(@"Style=""\{(?:Dynamic|Static)Resource ([A-Za-z0-9_]+)\}""", RegexOptions.Compiled);
     private static readonly Regex TargetTypeAttribute = new(@"TargetType=""(?:\{x:Type )?([A-Za-z:]+)\}?""", RegexOptions.Compiled);
 
     [Fact]
     [Trait("Category", "Unit")]
-    public void EveryStaticResourceKey_IsDefined()
+    public void EveryResourceKey_IsDefined()
     {
-        // StaticResource is resolved once at parse time: a missing key throws
-        // "Cannot find resource named '...'" and the window never opens.
-        // DynamicResource is deliberately not checked here — a missing key there resolves to
-        // null and degrades silently, which is a cosmetic bug, not a crash.
+        // Both kinds are checked, for different reasons.
+        //
+        // A missing StaticResource throws "Cannot find resource named '...'" at parse time
+        // and the window never opens — loud, at least.
+        //
+        // A missing DynamicResource is worse, because it is silent: WPF resolves it to null
+        // and carries on. Paid for on 2026-08-18 — OffsetElevationsView's "Add" button bound
+        // its background to LecgSuccess, which was never defined, so a primary action button
+        // rendered white-on-white with no error anywhere. It had been shipping like that.
         HashSet<string> defined = DefinedResourceKeys();
 
         var offenders = new List<string>();
@@ -48,7 +53,7 @@ public class XamlResourceTests
             string text = File.ReadAllText(file);
             HashSet<string> local = KeyDefinition.Matches(text).Select(m => m.Groups[1].Value).ToHashSet(StringComparer.Ordinal);
 
-            offenders.AddRange(StaticResourceUse.Matches(text)
+            offenders.AddRange(ResourceUse.Matches(text)
                 .Select(m => m.Groups[1].Value)
                 .Distinct(StringComparer.Ordinal)
                 .Where(key => !defined.Contains(key) && !local.Contains(key))
@@ -56,8 +61,9 @@ public class XamlResourceTests
         }
 
         offenders.Should().BeEmpty(
-            "a StaticResource whose key is not defined throws at window construction — " +
-            "invisible to the compiler and to every test that does not open the window");
+            "an undefined resource key either throws at window construction (StaticResource) " +
+            "or silently renders nothing (DynamicResource) — neither is visible to the " +
+            "compiler or to any test that does not open the window");
     }
 
     [Fact]
