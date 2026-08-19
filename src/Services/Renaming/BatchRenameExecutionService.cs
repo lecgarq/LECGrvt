@@ -187,6 +187,26 @@ namespace LECG.Services
                     }
 
                     string familyName = family.Name;
+
+                    // EditFamily throws for families Revit will not open: in-place families
+                    // ("This family is in-place and is not supported for editing") and
+                    // non-editable ones such as system panels ("This family is not editable").
+                    // Both are knowable up front, so report them as skips rather than letting
+                    // them surface as errors from a failed edit.
+                    if (family.IsInPlace)
+                    {
+                        foreach (var item in kvp.Value)
+                            logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': in-place families cannot be edited.", "BatchRename");
+                        continue;
+                    }
+
+                    if (!family.IsEditable)
+                    {
+                        foreach (var item in kvp.Value)
+                            logger.LogWarning($"Skipped '{item.OriginalValue}' in '{familyName}': family is not editable.", "BatchRename");
+                        continue;
+                    }
+
                     reporter.Report($"Processing Family '{familyName}'...", percent);
 
                     Document? famDoc = null;
