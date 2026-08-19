@@ -9,6 +9,7 @@
 // IsInstance, IsReadOnly. The Wave-0 anchor (ReplaceItem-shaped) was deleted by
 // Plan 03-04 per its DisplayName marker.
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using LECG.Models;
@@ -16,6 +17,7 @@ using LECG.Services;
 using LECG.Services.Interfaces;
 using LECG.ViewModels;
 using NSubstitute;
+using Xunit.Abstractions;
 
 namespace LECG.Tests.Services;
 
@@ -25,6 +27,10 @@ namespace LECG.Tests.Services;
 /// </summary>
 public class SearchReplacePreviewServiceTests
 {
+    private readonly ITestOutputHelper _output;
+
+    public SearchReplacePreviewServiceTests(ITestOutputHelper output) => _output = output;
+
     private static RenameRuleContext MakeContext(SearchCriteria criteria) => new RenameRuleContext(
         new ReplaceRule(), new RemoveRule(), new AddRule(), new NumberingRule(), new CaseRule(),
         ScopeTypeName: criteria.ScopeTypeName,
@@ -302,5 +308,51 @@ public class SearchReplacePreviewServiceTests
         rows[1].IsRenameable.Should().BeFalse();
         rows[1].IsChecked.Should().BeFalse();
         rows[1].Status.Should().Contain("NewName");
+    }
+
+    // -----------------------------------------------------------------------
+    // R14a — pipeline cost at scale.
+    // Guards ProcessPreview against a super-linear regression and produces the
+    // recorded "before/after" number for Phase 1. Deliberately asserts the row
+    // COUNT and not the duration: a wall-clock assertion is flaky on shared CI
+    // and would fail for reasons that have nothing to do with this code. The
+    // timing is emitted to test output and transcribed into
+    // .planning/phases/01-preview-pipeline/PLAN.md.
+    // -----------------------------------------------------------------------
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ProcessPreview_handles_5000_rows()
+    {
+        const int rowCount = 5000;
+
+        var pipeline = Substitute.For<IRenameRulePipelineService>();
+        pipeline.ApplyRules(Arg.Any<string>(), Arg.Any<RenameRuleContext>(), Arg.Any<int>())
+            .Returns(ci => ci.ArgAt<string>(0) + "_r");
+
+        var sut = new SearchReplacePreviewService(pipeline);
+        var candidates = new List<ElementData>(rowCount);
+        for (int i = 0; i < rowCount; i++)
+        {
+            candidates.Add(new ElementData
+            {
+                Id = i,
+                Name = $"Type-{i:D5}",
+                Category = $"Cat-{i % 40}",
+                Type = "Type",
+                OriginalValue = $"Type-{i:D5}"
+            });
+        }
+        var criteria = new SearchCriteria { ScopeTypeName = true };
+        var context = MakeContext(criteria);
+
+        var sw = Stopwatch.StartNew();
+        var rows = sut.ProcessPreview(candidates, criteria, context);
+        sw.Stop();
+
+        _output.WriteLine($"R14a ProcessPreview {rowCount} rows: {sw.ElapsedMilliseconds} ms");
+
+        rows.Should().HaveCount(rowCount);
+        rows[0].NewValue.Should().Be("Type-00000_r");
+        rows[rowCount - 1].NewValue.Should().Be("Type-04999_r");
     }
 }
