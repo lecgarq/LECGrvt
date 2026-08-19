@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Data;
@@ -72,21 +73,108 @@ namespace LECG.ViewModels
         public bool ScopeFamilyParameterName { get => _scopeFamilyParameterName; set { if (SetProperty(ref _scopeFamilyParameterName, value)) { if (value) SetExclusiveScope(() => _scopeFamilyParameterName = true); } } }
 
         private string _filterName = "";
-        public string FilterName { get => _filterName; set { if (SetProperty(ref _filterName, value)) _ = UpdatePreviewAsync(); } }
+        public string FilterName { get => _filterName; set { if (SetProperty(ref _filterName, value)) { OnPropertyChanged(nameof(HasActiveFilters)); OnPropertyChanged(nameof(ActiveFilterSummary)); _ = UpdatePreviewAsync(); } } }
 
         private string _filterCategory = "All";
+
+        /// <summary>
+        /// Single-category shim kept for <see cref="ToCriteria"/> and existing callers.
+        /// Writing it replaces the multi-select set; "All" (or blank) clears it.
+        /// </summary>
         public string FilterCategory
         {
             get => _filterCategory;
             set
             {
-                if (SetProperty(ref _filterCategory, value))
+                if (!SetProperty(ref _filterCategory, value)) return;
+
+                _selectedCategories.Clear();
+                if (!string.IsNullOrWhiteSpace(value) && !value.Equals("All", StringComparison.OrdinalIgnoreCase))
                 {
-                    // FilterCategory now lives on the ICollectionView (Plan 03-05) — no
-                    // re-run of ProcessPreview, just refresh the view's predicate.
-                    _previewView?.Refresh();
-                    RaiseCountsChanged();
+                    _selectedCategories.Add(value);
                 }
+                SyncCategoryOptionFlags();
+                OnFiltersChanged();
+            }
+        }
+
+        // Multi-select category filter. Empty means "no category constraint" — the same thing
+        // "All" used to mean.
+        private readonly HashSet<string> _selectedCategories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        private ObservableCollection<CategoryFilterOption> _categoryOptions = new ObservableCollection<CategoryFilterOption>();
+        public ObservableCollection<CategoryFilterOption> CategoryOptions { get => _categoryOptions; set => SetProperty(ref _categoryOptions, value); }
+
+        private string _categorySearch = "";
+        /// <summary>Typeahead over <see cref="CategoryOptions"/> — reaches a category without scrolling.</summary>
+        public string CategorySearch
+        {
+            get => _categorySearch;
+            set { if (SetProperty(ref _categorySearch, value)) OnPropertyChanged(nameof(VisibleCategoryOptions)); }
+        }
+
+        public IEnumerable<CategoryFilterOption> VisibleCategoryOptions =>
+            string.IsNullOrWhiteSpace(CategorySearch)
+                ? CategoryOptions
+                : CategoryOptions.Where(o => o.Name.Contains(CategorySearch, StringComparison.OrdinalIgnoreCase));
+
+        /// <summary>Label for the collapsed dropdown button.</summary>
+        public string CategoryFilterSummary => _selectedCategories.Count switch
+        {
+            0 => "All categories",
+            1 => _selectedCategories.First(),
+            _ => $"{_selectedCategories.Count} categories"
+        };
+
+        private bool _isCategoryDropDownOpen;
+        public bool IsCategoryDropDownOpen { get => _isCategoryDropDownOpen; set => SetProperty(ref _isCategoryDropDownOpen, value); }
+
+        /// <summary>
+        /// Rebuilds the option list from the current preview rows, carrying the ticks over and
+        /// attaching per-category row counts.
+        /// </summary>
+        internal void RebuildCategoryOptions()
+        {
+            foreach (CategoryFilterOption existing in CategoryOptions) existing.PropertyChanged -= OnCategoryOptionChanged;
+
+            List<CategoryFilterOption> rebuilt = PreviewItems
+                .GroupBy(r => r.Category, StringComparer.OrdinalIgnoreCase)
+                .OrderBy(g => g.Key, StringComparer.OrdinalIgnoreCase)
+                .Select(g => new CategoryFilterOption
+                {
+                    Name = g.Key,
+                    Count = g.Count(),
+                    IsSelected = _selectedCategories.Contains(g.Key)
+                })
+                .ToList();
+
+            CategoryOptions = new ObservableCollection<CategoryFilterOption>(rebuilt);
+            foreach (CategoryFilterOption option in CategoryOptions) option.PropertyChanged += OnCategoryOptionChanged;
+
+            OnPropertyChanged(nameof(VisibleCategoryOptions));
+            OnPropertyChanged(nameof(CategoryFilterSummary));
+        }
+
+        private void OnCategoryOptionChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != nameof(CategoryFilterOption.IsSelected)) return;
+            if (sender is not CategoryFilterOption option) return;
+
+            if (option.IsSelected) _selectedCategories.Add(option.Name);
+            else _selectedCategories.Remove(option.Name);
+
+            _filterCategory = _selectedCategories.Count == 1 ? _selectedCategories.First() : "All";
+            OnPropertyChanged(nameof(FilterCategory));
+            OnFiltersChanged();
+        }
+
+        private void SyncCategoryOptionFlags()
+        {
+            foreach (CategoryFilterOption option in CategoryOptions)
+            {
+                option.PropertyChanged -= OnCategoryOptionChanged;
+                option.IsSelected = _selectedCategories.Contains(option.Name);
+                option.PropertyChanged += OnCategoryOptionChanged;
             }
         }
 
@@ -119,6 +207,75 @@ namespace LECG.ViewModels
 
         public bool HasValidationMessage => !string.IsNullOrWhiteSpace(ValidationMessage);
 
+        // R8: per-column text filters. Each routes through SetColumnFilter, which
+        // AND-combines them with the category selection in MatchesAllFilters. The plumbing
+        // already existed and nothing in the XAML reached it.
+        private string _filterColType = "";
+        public string FilterColType { get => _filterColType; set { if (SetProperty(ref _filterColType, value)) SetTextFilter("Type", value, r => r.Type); } }
+
+        private string _filterColCategory = "";
+        public string FilterColCategory { get => _filterColCategory; set { if (SetProperty(ref _filterColCategory, value)) SetTextFilter("Category", value, r => r.Category); } }
+
+        private string _filterColOriginal = "";
+        public string FilterColOriginal { get => _filterColOriginal; set { if (SetProperty(ref _filterColOriginal, value)) SetTextFilter("Original", value, r => r.OriginalValue); } }
+
+        private string _filterColNew = "";
+        public string FilterColNew { get => _filterColNew; set { if (SetProperty(ref _filterColNew, value)) SetTextFilter("New", value, r => r.NewValue); } }
+
+        private string _filterColStatus = "";
+        public string FilterColStatus { get => _filterColStatus; set { if (SetProperty(ref _filterColStatus, value)) SetTextFilter("Status", value, r => r.Status); } }
+
+        private void SetTextFilter(string key, string value, Func<ElementRowViewModel, string> selector)
+        {
+            SetColumnFilter(key, string.IsNullOrWhiteSpace(value)
+                ? null
+                : row => (selector(row) ?? string.Empty).Contains(value, StringComparison.OrdinalIgnoreCase));
+            OnPropertyChanged(nameof(HasActiveFilters));
+            OnPropertyChanged(nameof(ActiveFilterSummary));
+        }
+
+        /// <summary>True when anything is narrowing the grid — drives the "filters active" chip.</summary>
+        public bool HasActiveFilters =>
+            _selectedCategories.Count > 0
+            || !string.IsNullOrWhiteSpace(FilterName)
+            || !string.IsNullOrWhiteSpace(FilterColType)
+            || !string.IsNullOrWhiteSpace(FilterColCategory)
+            || !string.IsNullOrWhiteSpace(FilterColOriginal)
+            || !string.IsNullOrWhiteSpace(FilterColNew)
+            || !string.IsNullOrWhiteSpace(FilterColStatus);
+
+        public string ActiveFilterSummary => HasActiveFilters ? "Filters active" : string.Empty;
+
+        /// <summary>Clears every filter in one action (R11).</summary>
+        internal void ClearFilters()
+        {
+            _selectedCategories.Clear();
+            SyncCategoryOptionFlags();
+            _filterCategory = "All";
+            OnPropertyChanged(nameof(FilterCategory));
+
+            CategorySearch = "";
+            FilterColType = "";
+            FilterColCategory = "";
+            FilterColOriginal = "";
+            FilterColNew = "";
+            FilterColStatus = "";
+            FilterName = "";
+
+            OnFiltersChanged();
+        }
+
+        /// <summary>Re-evaluates the view and every derived count/indicator after a filter change.</summary>
+        private void OnFiltersChanged()
+        {
+            _previewView?.Refresh();
+            RaiseCountsChanged();
+            OnPropertyChanged(nameof(CategoryFilterSummary));
+            OnPropertyChanged(nameof(HasActiveFilters));
+            OnPropertyChanged(nameof(ActiveFilterSummary));
+        }
+
+        public ICommand ClearFiltersCommand { get; }
         public ICommand SelectAllCommand { get; }
         public ICommand SelectNoneCommand { get; }
         public ICommand InvertSelectionCommand { get; }
@@ -168,12 +325,10 @@ namespace LECG.ViewModels
 
         private bool MatchesAllFilters(ElementRowViewModel row)
         {
-            // 1. Top-of-grid FilterCategory dropdown
-            if (!string.IsNullOrEmpty(FilterCategory)
-                && !FilterCategory.Equals("All", StringComparison.OrdinalIgnoreCase))
+            // 1. Category dropdown — multi-select. Empty set means no constraint.
+            if (_selectedCategories.Count > 0 && !_selectedCategories.Contains(row.Category))
             {
-                if (!row.Category.Contains(FilterCategory, StringComparison.OrdinalIgnoreCase))
-                    return false;
+                return false;
             }
 
             // 2. AND-combined per-column predicates
@@ -184,9 +339,6 @@ namespace LECG.ViewModels
             return true;
         }
 
-        private ObservableCollection<string> _availableCategories = new ObservableCollection<string>();
-        public ObservableCollection<string> AvailableCategories { get => _availableCategories; set => SetProperty(ref _availableCategories, value); }
-
         public SearchReplaceViewModel()
         {
             ReplaceRule.PropertyChanged += RuleChanged;
@@ -196,6 +348,7 @@ namespace LECG.ViewModels
             CaseRule.PropertyChanged += RuleChanged;
             Title = "Batch Rename";
 
+            ClearFiltersCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(ClearFilters);
             SelectAllCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(SelectAll);
             InvertSelectionCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(InvertSelection);
             SelectNoneCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(SelectNone);
@@ -369,8 +522,8 @@ namespace LECG.ViewModels
         {
             if (_service == null || _doc == null) return;
             _cachedElements = CollectForCurrentScope();
-            var cats = _service.GetUniqueCategories(_cachedElements);
-            AvailableCategories.Clear(); AvailableCategories.Add("All"); foreach (var c in cats) AvailableCategories.Add(c);
+            // Category choices come from CategoryOptions, rebuilt from the preview rows with
+            // per-category counts. The old flat AvailableCategories list had no consumer left.
             FilterCategory = "All";
 
             if (ScopeFamilyParameterName)
@@ -420,6 +573,7 @@ namespace LECG.ViewModels
             foreach (ElementRowViewModel row in PreviewItems) row.PropertyChanged -= OnRowPropertyChanged;
             PreviewItems.ReplaceAll(rows);
             foreach (ElementRowViewModel row in PreviewItems) row.PropertyChanged += OnRowPropertyChanged;
+            RebuildCategoryOptions();
             RaiseCountsChanged();
         }
 
@@ -474,9 +628,41 @@ namespace LECG.ViewModels
             }
         }
 
+        /// <summary>
+        /// Returns a human-readable message when the Replace rule's pattern will not compile,
+        /// or null when it is fine.
+        /// </summary>
+        /// <remarks>
+        /// Without this, a half-typed pattern surfaced as "Error loading preview: parsing …"
+        /// from the catch-all — technically the regex message, buried under a generic prefix
+        /// that pointed at the wrong thing.
+        /// </remarks>
+        internal string? ValidateReplaceRegex()
+        {
+            if (!ReplaceRule.IsActive || !ReplaceRule.UseRegex) return null;
+            if (string.IsNullOrEmpty(ReplaceRule.FindText)) return null;
+
+            try
+            {
+                _ = new Regex(ReplaceRule.FindText);
+                return null;
+            }
+            catch (ArgumentException ex)
+            {
+                return $"Invalid regular expression: {ex.Message}";
+            }
+        }
+
         private async Task UpdatePreviewAsync()
         {
             if (_service == null || _cachedElements == null) return;
+
+            string? regexError = ValidateReplaceRegex();
+            if (regexError != null)
+            {
+                ValidationMessage = regexError;
+                return;
+            }
             _searchCts?.Cancel(); _searchCts = new CancellationTokenSource(); var ct = _searchCts.Token;
             try
             {

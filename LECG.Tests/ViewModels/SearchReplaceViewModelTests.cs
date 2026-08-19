@@ -445,4 +445,193 @@ public class SearchReplaceViewModelTests
         vm.PreviewItems.Single(r => r.Name == "B").IsChecked.Should().BeFalse();
         vm.PreviewItems.Where(r => r.Name != "B").Should().OnlyContain(r => r.IsChecked);
     }
+
+    // -----------------------------------------------------------------------
+    // Phase 3 — filtering that reaches every column, and says what went wrong.
+    // -----------------------------------------------------------------------
+    private static SearchReplaceViewModel WithBoundRows(params ElementRowViewModel[] rows)
+    {
+        var vm = new SearchReplaceViewModel();
+        _ = vm.PreviewView;
+        vm.SetPreviewRows(rows.ToList());
+        return vm;
+    }
+
+    // ---- R7: regex errors are named, not swallowed ----
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ValidateReplaceRegex_names_the_pattern_error()
+    {
+        var vm = new SearchReplaceViewModel();
+        vm.ReplaceRule.IsActive = true;
+        vm.ReplaceRule.UseRegex = true;
+        vm.ReplaceRule.FindText = "([unclosed";
+
+        string? error = vm.ValidateReplaceRegex();
+
+        error.Should().NotBeNull();
+        error.Should().StartWith("Invalid regular expression:");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ValidateReplaceRegex_passes_a_valid_pattern()
+    {
+        var vm = new SearchReplaceViewModel();
+        vm.ReplaceRule.IsActive = true;
+        vm.ReplaceRule.UseRegex = true;
+        vm.ReplaceRule.FindText = "^W-[0-9]+$";
+
+        vm.ValidateReplaceRegex().Should().BeNull();
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ValidateReplaceRegex_ignores_a_bad_pattern_when_regex_mode_is_off()
+    {
+        // "([unclosed" is a legitimate literal to search for when UseRegex is false.
+        var vm = new SearchReplaceViewModel();
+        vm.ReplaceRule.IsActive = true;
+        vm.ReplaceRule.UseRegex = false;
+        vm.ReplaceRule.FindText = "([unclosed";
+
+        vm.ValidateReplaceRegex().Should().BeNull();
+    }
+
+    // ---- R8: per-column filters ----
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Column_filters_narrow_the_view_and_AND_together()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Type = "Type", Category = "Walls", Name = "A", OriginalValue = "W-A", NewValue = "X-A", Status = "" },
+            new ElementRowViewModel { Type = "Type", Category = "Doors", Name = "B", OriginalValue = "W-B", NewValue = "X-B", Status = "" },
+            new ElementRowViewModel { Type = "View", Category = "Walls", Name = "C", OriginalValue = "W-C", NewValue = "X-C", Status = "" });
+
+        vm.FilterColOriginal = "W-";
+        vm.VisibleCount.Should().Be(3);
+
+        vm.FilterColType = "Type";
+        vm.VisibleCount.Should().Be(2);
+
+        vm.FilterColCategory = "Walls";
+        vm.VisibleCount.Should().Be(1);
+        vm.PreviewView.Cast<ElementRowViewModel>().Single().Name.Should().Be("A");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Clearing_a_column_filter_restores_its_rows()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Type = "Type", Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Type = "View", Category = "Walls", Name = "B", OriginalValue = "B" });
+
+        vm.FilterColType = "View";
+        vm.VisibleCount.Should().Be(1);
+
+        vm.FilterColType = "";
+        vm.VisibleCount.Should().Be(2);
+    }
+
+    // ---- R9 / R10: the category dropdown ----
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Category_options_carry_a_row_count_each()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B" },
+            new ElementRowViewModel { Category = "Doors", Name = "C", OriginalValue = "C" });
+
+        vm.CategoryOptions.Single(o => o.Name == "Walls").Count.Should().Be(2);
+        vm.CategoryOptions.Single(o => o.Name == "Doors").Count.Should().Be(1);
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Selecting_two_categories_shows_both()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B" },
+            new ElementRowViewModel { Category = "Roofs", Name = "C", OriginalValue = "C" });
+
+        vm.CategoryOptions.Single(o => o.Name == "Walls").IsSelected = true;
+        vm.CategoryOptions.Single(o => o.Name == "Doors").IsSelected = true;
+
+        vm.VisibleCount.Should().Be(2);
+        vm.CategoryFilterSummary.Should().Be("2 categories");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void No_category_selected_means_no_constraint()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B" });
+
+        vm.VisibleCount.Should().Be(2);
+        vm.CategoryFilterSummary.Should().Be("All categories");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void CategorySearch_narrows_the_option_list_without_filtering_rows()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B" },
+            new ElementRowViewModel { Category = "Wall Sweeps", Name = "C", OriginalValue = "C" });
+
+        vm.CategorySearch = "wall";
+
+        vm.VisibleCategoryOptions.Select(o => o.Name).Should().BeEquivalentTo("Walls", "Wall Sweeps");
+        vm.VisibleCount.Should().Be(3, "typeahead narrows the dropdown, not the grid");
+    }
+
+    // ---- R11: clear everything ----
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ClearFilters_restores_every_row_and_resets_the_indicator()
+    {
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Type = "Type", Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Type = "View", Category = "Doors", Name = "B", OriginalValue = "B" });
+
+        vm.CategoryOptions.Single(o => o.Name == "Walls").IsSelected = true;
+        vm.FilterColType = "Type";
+        vm.HasActiveFilters.Should().BeTrue();
+        vm.VisibleCount.Should().Be(1);
+
+        vm.ClearFiltersCommand.Execute(null);
+
+        vm.VisibleCount.Should().Be(2);
+        vm.HasActiveFilters.Should().BeFalse();
+        vm.CategoryFilterSummary.Should().Be("All categories");
+        vm.CategoryOptions.Should().OnlyContain(o => !o.IsSelected);
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void FilterCategory_shim_still_drives_the_selection_set()
+    {
+        // ToCriteria and older callers still write the single-string property.
+        var vm = WithBoundRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B" });
+
+        vm.FilterCategory = "Walls";
+        vm.VisibleCount.Should().Be(1);
+        vm.CategoryOptions.Single(o => o.Name == "Walls").IsSelected.Should().BeTrue();
+
+        vm.FilterCategory = "All";
+        vm.VisibleCount.Should().Be(2);
+        vm.CategoryOptions.Should().OnlyContain(o => !o.IsSelected);
+    }
 }

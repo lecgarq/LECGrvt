@@ -108,7 +108,63 @@
 
                             <StackPanel Grid.Column="2">
                                 <TextBlock Text="Filter by Category" FontWeight="SemiBold" Margin="0,0,0,5" Foreground="{DynamicResource TextSecondaryBrush}" FontSize="{DynamicResource FontSizeSmall}"/>
-                                <ComboBox ItemsSource="{Binding AvailableCategories}" SelectedItem="{Binding FilterCategory}" Height="30" VerticalContentAlignment="Center" Padding="5,0"/>
+
+                                <!-- Multi-select with per-category row counts and typeahead.
+                                     A plain ComboBox could only ever pick one category, and
+                                     picking blind told you nothing about whether it would
+                                     leave three rows or three thousand. -->
+                                <Grid>
+                                    <ToggleButton x:Name="CategoryDropDownButton"
+                                                  Height="30" Padding="8,0"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  IsChecked="{Binding IsCategoryDropDownOpen, Mode=TwoWay}"
+                                                  Style="{DynamicResource SecondaryButtonStyle}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding CategoryFilterSummary}" VerticalAlignment="Center"
+                                                       TextTrimming="CharacterEllipsis" FontSize="{DynamicResource FontSizeSmall}"/>
+                                            <TextBlock Grid.Column="1" Text="v" Margin="6,0,0,0" VerticalAlignment="Center"
+                                                       FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                        </Grid>
+                                    </ToggleButton>
+
+                                    <Popup IsOpen="{Binding IsCategoryDropDownOpen, Mode=TwoWay}"
+                                           PlacementTarget="{Binding ElementName=CategoryDropDownButton}"
+                                           Placement="Bottom" StaysOpen="False" AllowsTransparency="True"
+                                           Width="{Binding ActualWidth, ElementName=CategoryDropDownButton}">
+                                        <Border Background="{DynamicResource PanelBackgroundBrush}"
+                                                BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1"
+                                                CornerRadius="{DynamicResource ContentCornerRadius}" Padding="8">
+                                            <StackPanel>
+                                                <TextBox Text="{Binding CategorySearch, UpdateSourceTrigger=PropertyChanged}"
+                                                         Height="26" Margin="0,0,0,6" VerticalContentAlignment="Center"
+                                                         FontSize="{DynamicResource FontSizeSmall}"
+                                                         ToolTip="Type to narrow the list"/>
+                                                <ListBox ItemsSource="{Binding VisibleCategoryOptions}"
+                                                         MaxHeight="220" BorderThickness="0"
+                                                         Background="Transparent"
+                                                         ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                                    <ListBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}"
+                                                                      Style="{DynamicResource ModernCheckboxStyle}"
+                                                                      FontSize="{DynamicResource FontSizeSmall}">
+                                                                <TextBlock>
+                                                                    <Run Text="{Binding Name, Mode=OneWay}"/>
+                                                                    <Run Text="{Binding Count, Mode=OneWay, StringFormat=({0})}"
+                                                                         Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                                                </TextBlock>
+                                                            </CheckBox>
+                                                        </DataTemplate>
+                                                    </ListBox.ItemTemplate>
+                                                </ListBox>
+                                            </StackPanel>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
                             </StackPanel>
 
                             <!-- Advanced filters - parameters -->
@@ -399,6 +455,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <!-- Header row -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Column filter bar -->
                         <RowDefinition Height="*"/>
                         <!-- DataGrid -->
                         <RowDefinition Height="Auto"/>
@@ -436,7 +494,66 @@
                          SortDescriptions[0]=(Category, Asc) and the AND-combined Filter
                          (FilterCategory dropdown ∧ per-column predicates).
                          Column order locked by CONTEXT.md: ☑ | Type | Category | Original | New | Status. -->
-                    <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True">
+                    <!-- Per-column filters (R8). These route through SetColumnFilter, which
+                         already existed on the ViewModel and which nothing in this file
+                         reached — the feature was fully plumbed and unreachable. A bar rather
+                         than five header templates: same behaviour, far less XAML, and no
+                         fragile alignment against virtualized column widths. -->
+                    <Border Grid.Row="1" Margin="0,0,0,8" Padding="8,6" CornerRadius="4"
+                            Background="{DynamicResource LecgSurfaceBackground}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="6"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="10"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Type" Style="{DynamicResource LabelStyle}"/>
+                            <TextBox  Grid.Row="1" Grid.Column="0" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                      Text="{Binding FilterColType, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="Category" Style="{DynamicResource LabelStyle}"/>
+                            <TextBox  Grid.Row="1" Grid.Column="2" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                      Text="{Binding FilterColCategory, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Original" Style="{DynamicResource LabelStyle}"/>
+                            <TextBox  Grid.Row="1" Grid.Column="4" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                      Text="{Binding FilterColOriginal, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="6" Text="New" Style="{DynamicResource LabelStyle}"/>
+                            <TextBox  Grid.Row="1" Grid.Column="6" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                      Text="{Binding FilterColNew, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <TextBlock Grid.Row="0" Grid.Column="8" Text="Status" Style="{DynamicResource LabelStyle}"/>
+                            <TextBox  Grid.Row="1" Grid.Column="8" Height="24" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"
+                                      Text="{Binding FilterColStatus, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <StackPanel Grid.Row="1" Grid.Column="10" Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding ActiveFilterSummary}" VerticalAlignment="Center" Margin="0,0,8,0"
+                                           FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold"
+                                           Foreground="{DynamicResource LecgAccent}"
+                                           Visibility="{Binding HasActiveFilters, Converter={StaticResource BoolToVis}}"/>
+                                <Button Content="Clear filters" Command="{Binding ClearFiltersCommand}"
+                                        Style="{DynamicResource LinkButtonStyle}"
+                                        IsEnabled="{Binding HasActiveFilters}"
+                                        ToolTip="Clear the name filter, every column filter, and the category selection."/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <controls:LecgDataGrid Grid.Row="2" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True">
                         <!-- Muted-row Style: skipped rows (IsRenameable=false) rendered at reduced
                              opacity with muted text so users can distinguish them at a glance. -->
                         <DataGrid.RowStyle>
@@ -484,7 +601,7 @@
                          Deliberately static: CollectBaseElements is Revit API and blocks the
                          UI thread, so an animated ProgressBar would sit frozen and read as a
                          hang. A still panel that says what is happening is honest. -->
-                    <Border Grid.Row="1"
+                    <Border Grid.Row="2"
                             Background="{DynamicResource PanelBackgroundBrush}"
                             CornerRadius="{DynamicResource ContentCornerRadius}"
                             Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
@@ -502,7 +619,7 @@
                     </Border>
 
                     <!-- Status Bar -->
-                    <Border Grid.Row="2" Margin="0,6,0,0" Padding="0,4,0,0" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderBrush}">
+                    <Border Grid.Row="3" Margin="0,6,0,0" Padding="0,4,0,0" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderBrush}">
                         <TextBlock Style="{DynamicResource StatusBarTextStyle}">
                             <TextBlock.Text>
                                 <MultiBinding StringFormat="{}{0} rows shown · {1} will be renamed">
