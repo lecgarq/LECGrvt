@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -95,6 +96,68 @@ public class XamlResourceTests
         offenders.Should().BeEmpty(
             "WPF throws \"TargetType does not match type of element\" at window construction; " +
             "a derived type is not accepted");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void NoStyleThatDropsContent_IsAppliedToAnElementWithChildContent()
+    {
+        // A ControlTemplate with no ContentPresenter cannot render whatever it is given —
+        // it renders what its own markup hardcodes and silently discards the rest.
+        //
+        // Paid for on 2026-08-19: three collapsible section headers used LinkButtonStyle,
+        // whose template is a TextBlock bound to Content. Their accent bar, label, chevron
+        // and summary all vanished, so OPERATIONS had no header to click and the rename
+        // rules were unreachable. No exception, no warning, nothing in the log.
+        HashSet<string> dropping = StylesWithoutAContentHost();
+
+        var offenders = new List<string>();
+        foreach (string file in MarkupFiles())
+        {
+            XDocument doc;
+            try { doc = XDocument.Load(file); }
+            catch (System.Xml.XmlException) { continue; }
+
+            foreach (XElement element in doc.Descendants())
+            {
+                string style = (string?)element.Attribute("Style") ?? string.Empty;
+                Match m = StyleAttribute.Match($"Style=\"{style}\"");
+                if (!m.Success || !dropping.Contains(m.Groups[1].Value)) continue;
+
+                // Children whose tag carries a dot are property-element syntax
+                // (<Button.Template>), not content.
+                XElement? content = element.Elements()
+                    .FirstOrDefault(c => !c.Name.LocalName.Contains('.'));
+                if (content == null) continue;
+
+                offenders.Add($"{RepoRelative(file)}: <{element.Name.LocalName}> uses " +
+                              $"{m.Groups[1].Value} but has child content <{content.Name.LocalName}>");
+            }
+        }
+
+        offenders.Should().BeEmpty(
+            "a style whose ControlTemplate has no ContentPresenter renders nothing for " +
+            "element content — the control disappears with no error at all");
+    }
+
+    /// <summary>
+    /// Keyed styles whose ControlTemplate has nowhere to put the control's Content.
+    /// </summary>
+    private static HashSet<string> StylesWithoutAContentHost()
+    {
+        var dropping = new HashSet<string>(StringComparer.Ordinal);
+        foreach (string file in ResourceFiles())
+        {
+            string text = File.ReadAllText(file);
+            foreach (Match m in Regex.Matches(text, @"<Style\s+x:Key=""([^""]+)""(.*?)</Style>", RegexOptions.Singleline))
+            {
+                string body = m.Groups[2].Value;
+                if (!body.Contains("<ControlTemplate")) continue;
+                if (body.Contains("<ContentPresenter") || body.Contains("<ItemsPresenter") || body.Contains("<ContentControl")) continue;
+                dropping.Add(m.Groups[1].Value);
+            }
+        }
+        return dropping;
     }
 
     private static HashSet<string> DefinedResourceKeys() =>

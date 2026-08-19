@@ -52,7 +52,7 @@
                     <StackPanel Grid.Row="0">
                         <!-- Section Header with accent bar -->
                         <Button Command="{Binding ToggleSectionCommand}" CommandParameter="Scope"
-                                Style="{DynamicResource LinkButtonStyle}" HorizontalContentAlignment="Left"
+                                Style="{DynamicResource SectionHeaderButtonStyle}"
                                 Margin="0,0,0,8" Padding="0" ToolTip="Show or hide the scope pills">
                             <StackPanel Orientation="Horizontal">
                                 <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
@@ -79,7 +79,7 @@
                     <StackPanel Grid.Row="1" Margin="0,12,0,0">
                         <!-- Section Header -->
                         <Button Command="{Binding ToggleSectionCommand}" CommandParameter="Filters"
-                                Style="{DynamicResource LinkButtonStyle}" HorizontalContentAlignment="Left"
+                                Style="{DynamicResource SectionHeaderButtonStyle}"
                                 Margin="0,0,0,8" Padding="0" ToolTip="Show or hide the name and category filters">
                             <StackPanel Orientation="Horizontal">
                                 <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
@@ -268,7 +268,7 @@
                 <StackPanel>
                     <!-- Section Header -->
                     <Button Command="{Binding ToggleSectionCommand}" CommandParameter="Operations"
-                            Style="{DynamicResource LinkButtonStyle}" HorizontalContentAlignment="Left"
+                            Style="{DynamicResource SectionHeaderButtonStyle}"
                             Margin="0,0,0,8" Padding="0" ToolTip="Show or hide the rename rules">
                         <StackPanel Orientation="Horizontal">
                             <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
@@ -519,6 +519,15 @@
                          Column order locked by CONTEXT.md: ☑ | Type | Category | Original | New | Status. -->
                     <controls:LecgDataGrid Grid.Row="1" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True"
                                            PreviewKeyDown="PreviewGrid_PreviewKeyDown">
+                        <!-- Column headers must stretch, or a header template collapses to its
+                             content width and the filter boxes render as unusable stubs. -->
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                                <Setter Property="Padding" Value="6,4"/>
+                            </Style>
+                        </DataGrid.ColumnHeaderStyle>
                         <!-- Muted-row Style: skipped rows (IsRenameable=false) rendered at reduced
                              opacity with muted text so users can distinguish them at a glance. -->
                         <DataGrid.RowStyle>

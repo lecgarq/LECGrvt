@@ -656,6 +656,33 @@
         </Setter>
     </Style>
 
+    <!-- Section header button: a clickable collapse/expand header.
+         Deliberately NOT LinkButtonStyle. That style's template is a TextBlock bound to
+         Content, so it renders strings and silently drops anything else — a section header
+         needs an accent bar, a label, a chevron and a summary, and all four vanished. This
+         one uses a ContentPresenter, so it carries whatever content it is given. -->
+    <Style x:Key="SectionHeaderButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="bg" Background="Transparent" Padding="{TemplateBinding Padding}" CornerRadius="3">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Pill Checkbox -->
     <Style x:Key="PillCheckboxStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="Margin" Value="0,0,8,8"/>
