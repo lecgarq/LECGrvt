@@ -72,6 +72,45 @@ Consequence: Revit treats temporary isolate as a model modification, so the comm
 
 **Known coverage gap:** this model has only one warning group, so count-descending group ordering cannot be observed here. That ordering is covered by `WarningGroupingPolicyTests`; do not report it as runtime-verified.
 
+## Targeted: Batch Rename UX (added 2026-08-18, milestone batch-rename-ux phases 1-3)
+
+Deployed build **2026-08-18 23:47**, `LECG.dll` 1,046,016 bytes. Freshness confirmed by
+metadata, not by version: `BulkObservableCollection`, `CategoryFilterOption`,
+`ValidateReplaceRegex`, `ToggleRange`, `CheckedCount` and `BuildScopeKey` are all present in
+the deployed assembly. The previous deploy was 996,864 bytes (2026-07-28) and carried the same
+assembly version, which is exactly why size and member presence are the check.
+
+Open Batch Rename from the ribbon on a project document. A model with many families exercises
+the slow path best — Snowdon Towers Sample Architectural measured 1,881 Types rows and 1,171
+FamilyParameters rows.
+
+| # | Step | Pass when | Covers |
+|---|------|-----------|--------|
+| 1 | Open the dialog | Window renders; grid populates; the column filter bar and the category dropdown button are both visible and not blank | all bindings |
+| 2 | Click the **Parameters** scope pill | A busy panel covers the grid saying "Collecting elements…", then results appear | R12 |
+| 3 | Click another scope, then click **Parameters** again | Second visit returns with no busy panel and no perceptible wait | R12 cache |
+| 4 | Untick three rows, then edit the Replace text | The same three rows are still unticked after the preview rebuilds | R5 |
+| 5 | Untick a row, filter it out of the grid, clear the filter | The row returns still unticked | R5 |
+| 6 | Filter to a handful of rows, click **Select All** | Only the visible rows tick. Clear the filter and confirm the rest are untouched | R1 |
+| 7 | Click **Invert** with a filter active | Only visible rows flip | R3 |
+| 8 | Shift-click down the Sel column | Every row between the previous click and this one is set | R4 |
+| 9 | Watch the header and status bar while filtering and ticking | Both show shown-count and selected-count, and both change with the filter | R6 |
+| 10 | Type into each of the five column filter boxes | Grid narrows on each; combining two narrows further | R8 |
+| 11 | Open the category dropdown | Checkboxes with a row count beside each category | R9 |
+| 12 | Tick two categories | Both categories' rows show; button reads "2 categories" | R9 |
+| 13 | Type in the dropdown's search box | Option list narrows; the grid does **not** | R10 |
+| 14 | Click **Clear filters** | Every filter resets, all rows return, the indicator disappears | R11 |
+| 15 | Enable Replace + RegEx, type `([` | Message reads "Invalid regular expression: …", **not** "Error loading preview: …" | R7 |
+| 16 | Rename a small selection and check Undo | One undo entry; renamed elements correct | regression |
+
+Step 16 is the regression guard: phases 1-3 changed which rows `Apply` collects
+(`CheckedCount` instead of a walk over every row), so confirm the right elements are renamed.
+
+**Known display-only defect, do not report as new.** A row you untick can still cause another
+row to show a collision Status: `ProcessPreview` computes cross-batch collisions before the
+remembered deselections are re-applied. Execution renames ticked rows only. Marked with a
+`ponytail:` comment in `SearchReplaceViewModel.UpdatePreviewAsync`.
+
 ## Recording results
 
 Log the run (date, Revit build, steps passed/failed, journal excerpts for failures) as an entry in `docs/ai/worklog.md`. Until an interactive run happens, reports must state: `Revit runtime validation: not executed.`
