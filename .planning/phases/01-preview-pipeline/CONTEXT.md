@@ -39,5 +39,6 @@ Changing a rule or a scope no longer discards the user's checkboxes and no longe
 
 ## Open
 
-- **How slow is the first collect, actually?** Nobody has measured it. If Types or FamilyParameters on a real model takes 30 s, a busy overlay is not enough and the phase needs a cancel path. Resolved by the R14 measurement, which should be taken **first**, before the caching work — the number decides whether cancellation gets added to this phase or deferred.
-- Whether the per-scope cache needs invalidating if the user edits the model behind the modal dialog. The dialog is modal, so the document cannot change while it is open — but confirm `ShowDialog` is genuinely modal here before relying on it.
+- ~~**How slow is the first collect, actually?**~~ **RESOLVED 2026-08-18.** Measured live on Snowdon Towers Sample Architectural: worst scope is FamilyParameters at **437 ms** (1,171 rows); every other scope is under 11 ms. A busy panel is sufficient and **no cancel path is needed**. Full table in `PLAN.md` § R14b.
+- ~~Whether the per-scope cache needs invalidating…~~ **RESOLVED** — `SearchReplaceCommand.cs:31` calls `view.ShowDialog()`. Modal, so the document cannot change underneath it.
+- **New, from the R14b measurement:** the FamilyParameters Phase B scan is 86% of that scope's cost and enumerates all 7,598 `FamilyInstance`s to find instance-only parameters, though one instance per family would do. Optimising it is out of scope for phase 1 — carry it as a candidate.

@@ -3,9 +3,9 @@ state_version: 1.0
 milestone: batch-rename-ux
 milestone_name: Batch Rename UX
 status: executing
-stopped_at: Phase 1 steps 1–5 complete; steps 6 (live measurement + runtime check) blocked on Revit being open
+stopped_at: Phase 1 steps 1–6a complete (R14b measured live). Remaining: deploy the new build and run the 5 interactive smoke steps (R20)
 last_updated: "2026-08-18"
-last_activity: 2026-08-18 — phase 1 steps 1–5 shipped (R5, R12, R13, R14a). Suite 234 passed / 0 failed / 5 skipped
+last_activity: 2026-08-18 — R14b measured live on Snowdon Towers Sample Architectural; worst scope 437 ms, no cancel path needed
 progress:
   total_phases: 4
   completed_phases: 0
@@ -17,7 +17,7 @@ progress:
 
 Milestone: Batch Rename UX — make the Batch Rename dialog usable on a real-sized model: filter-aware selection and counts, filtering that reaches every column, a preview that stays responsive and keeps the user's checkboxes, and a layout that collapses to give the grid room.
 Phase: 1 of 4 (Preview pipeline — stops losing state, stops blocking)
-Status: **code complete, not done.** Steps 1–5 shipped and committed; step 6 (R14b live measurement, R20 runtime check) is blocked on Revit being open. The phase cannot be closed until those run — see the pending list in `PLAN.md`.
+Status: **code complete, not done.** Steps 1–5 shipped and committed; R14b measured live 2026-08-18. Remaining for R20: the deployed add-in is still the **2026-07-28 build** (`C:\ProgramData\...\Addins6\LECG\LECG.dll`, 996,864 bytes, Jul 28 00:20) and predates this phase, so none of the dialog behaviour has been seen. Deploying needs `dotnet build -c Release` with **Revit closed** — it copies over the DLL Revit holds open. Five interactive steps then remain; see `PLAN.md`.
 
 ## Context
 
@@ -31,7 +31,10 @@ Status: **code complete, not done.** Steps 1–5 shipped and committed; step 6 (
 - View constraint: `SearchReplaceView.xaml:15-22` declares its own `Resources` block, which **replaces** the one `LecgWindow`'s constructor populates. The `LecgTheme.xaml` merge inside it is load-bearing — remove it and every `StaticResource` fails at runtime, invisible to both compiler and tests.
 - Sanctioned validation: `dotnet build -p:SkipRevitDeploy=true` · `dotnet test -c Debug -p:SkipRevitDeploy=true` (**234 passed / 0 failed / 5 skipped**, 2026-08-18 after phase 1).
 - **Shipped in phase 1:** `BulkObservableCollection<T>` (`src/ViewModels/Components/`) replaces the preview rows with one `Reset` instead of N `Add`s; check-state memory keyed `(Type, Id, OriginalValue)` remembers deselections for the life of the dialog; elements are cached per scope with a busy panel on the first collect of each.
-- **Measured 2026-08-18:** `ProcessPreview` is 8 ms for 5,000 rows — it was never the bottleneck. The cost was the UI rebuild and `CollectBaseElements`, which is where phase 1 aimed. Do not spend effort optimising `ProcessPreview`.
+- **Measured 2026-08-18 (synthetic):** `ProcessPreview` is 8 ms for 5,000 rows — it was never the bottleneck. Do not spend effort optimising it.
+- **Measured 2026-08-18 (live, Snowdon Towers Sample Architectural — 1,881 types / 37,877 elements / 7,598 FamilyInstances / 7 links):** collector cost per scope is Types 10 ms, Families 7, Views+Sheets 7, Materials 6, FillPatterns 6, and **FamilyParameters 437 ms / 1,171 rows**. Worst case is 437 ms, so **no cancel path is needed**; the busy panel is sufficient. The cache pays off on essentially one scope.
+- **Next optimisation candidate (not phase 1):** 86% of the FamilyParameters cost is Phase B, which enumerates all 7,598 `FamilyInstance`s to find instance-only parameters when one instance per family would do. `BaseElementCollectionService` already tracks `processedInstanceFamilies` but still walks every instance.
+- **Largest real scope is 1,881 rows**, so the synthetic 5,000-row test is ~2.7× headroom — a regression guard, not a proxy for real load.
 - **New gotcha, recorded in `docs/ai/revit-protocol.md`:** a null guard does not stop the JIT loading Revit types. Any method body naming a Revit-typed interface loads it when JITed, before the guard runs — so a VM property setter that reaches such a service is untestable even with the service null. Fix pattern: extract the logic into a pure static taking primitives (`SearchReplaceViewModel.BuildScopeKey`).
 - **Known limitation carried forward:** `ProcessPreview` computes cross-batch collisions from `IsChecked` before restored deselections are applied, so an unchecked row still claims its name and can mark another row as colliding. Display-only; execution renames checked rows only. Marked with a `ponytail:` comment at the call site.
 - Live Revit access: `mcp-server-for-revit` is registered; requires Revit open with the plugin's MCP service toggled on (off by default after every Revit restart). It can drive service paths and document queries — it **cannot** confirm dialog rendering, bindings, or any interaction gesture. Every phase here needs eyes on Revit.

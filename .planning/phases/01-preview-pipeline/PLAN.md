@@ -134,7 +134,40 @@ to the pending list below.
 
 - **R14a before: 8 ms** for 5,000 rows through `ProcessPreview` (2026-08-18).
 - **R14a after: 8 ms** — unchanged, and expected: this phase did not touch `ProcessPreview`.
-- R14b live: **not taken** — Revit not running 2026-08-18 (`connect to revit client failed`).
+### R14b — live collector measurement (2026-08-18)
+
+Taken through `mcp-server-for-revit` against **Snowdon Towers Sample Architectural** (the
+largest document open: 1,881 types, 37,877 non-type elements, 7,598 `FamilyInstance`s, 286
+families, 7 linked models). Code mirrors `CollectBaseElements`'s real paths per scope. This
+measures the **collector**, not the dialog — the deployed add-in still predates this phase.
+
+| Scope | Rows | Collect ms |
+|---|---:|---:|
+| Types | 1,881 | 10 |
+| Families | 286 | 7 |
+| Views / Sheets | 304 / 55 | 7 |
+| Materials | 220 | 6 |
+| FillPatterns | 71 | 6 |
+| **FamilyParameters** | **1,171** | **437** |
+
+Breakdown of the FamilyParameters scope: grouping symbols 6 ms, Phase A (per-symbol parameter
+scan plus `LabelUtils.GetLabelForGroup` per row) +53 ms, **Phase B (scanning all 7,598
+`FamilyInstance`s for instance-only parameters) +378 ms — 86% of the total.**
+
+**Three conclusions.**
+
+1. **No cancel path is needed in this phase.** The worst scope is 437 ms, not tens of seconds.
+   The busy panel is the right answer and the CONTEXT.md open question is closed. Revisit only
+   if a model an order of magnitude larger shows up.
+2. **The cache earns its place on exactly one scope.** Eight scopes are single-digit
+   milliseconds; FamilyParameters is 437 ms and is the one a user pays for repeatedly today.
+3. **The largest real scope is 1,881 rows**, so the synthetic 5,000-row test is ~2.7× headroom
+   over anything this model produces. It is a regression guard, not a proxy for real load.
+
+**Phase B is the obvious next optimisation** — it does 86% of the work to find instance-only
+parameters, and one instance per family would do (the existing code already tracks
+`processedInstanceFamilies` for exactly that but still enumerates every instance). Out of scope
+here; recorded for a later phase.
 
 **What the measurement established.** `ProcessPreview` is not the bottleneck and never was.
 8 ms for 5,000 rows means the debounce and the `Task.Run` around it are essentially free, and
