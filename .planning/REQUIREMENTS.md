@@ -14,7 +14,7 @@ The rename **engine** is out of scope and stays as-is. `BatchRenameExecutionServ
 - R2: Select All never checks a row whose `IsRenameable` is `false`. The grid already disables those checkboxes; the command currently ticks them anyway.
 - R3: An Invert Selection action exists and inverts only the visible, renameable rows.
 - R4: The user can check or uncheck a contiguous range of rows in one gesture (shift-click or drag down the Sel column) rather than one click per row.
-- R5: Manual check state survives a preview refresh. Changing a rule or a filter re-runs `ProcessPreview`, which today does `PreviewItems.Clear()` then re-adds (`:250-252`) — every manual deselection is lost. Rows that still exist after a refresh keep their `IsChecked`, keyed by element id plus the `Type` discriminator.
+- R5: Manual check state is remembered for the life of the dialog. Changing a rule or a filter re-runs `ProcessPreview`, which today does `PreviewItems.Clear()` then re-adds (`:250-252`) — every manual deselection is lost. A row the user explicitly unchecked stays unchecked across any number of refreshes, including a filter round-trip that removes it from the grid and brings it back. Key is `(Type, Id, OriginalValue)` — **not** `Id` alone: FamilyParameter rows set `Id = familyId` (`src/Services/Renaming/BaseElementCollectionService.cs:264`), so every parameter of a family shares one id.
 
 ### Counts and feedback
 
@@ -30,9 +30,11 @@ The rename **engine** is out of scope and stays as-is. `BatchRenameExecutionServ
 
 ### Responsiveness
 
-- R12: Clicking a scope pill never blocks the UI thread. `RefreshScope()` calls `CollectBaseElements` synchronously on the dispatcher today (`SearchReplaceViewModel.cs:208`); it runs off-thread with a visible busy state.
+- R12: Clicking a scope pill either returns instantly from cache, or shows a busy state that names what it is doing. `CollectBaseElements` **cannot** move off the UI thread — it is pure Revit API (`FilteredElementCollector` + `ElementLabelService.GetLabels` per element, `src/Services/Renaming/BaseElementCollectionService.cs:37-59`) and the Revit API is main-thread only. The collected `List<ElementData>` is cached per scope, so returning to a scope already loaded costs nothing, and the first collect of each scope is a visible, explained wait rather than a frozen window.
+  - *Restated 2026-08-18 during `/lecg-discuss 1`. The original wording — "runs off-thread" — was not implementable; `Task.Run` around a `Document` read is the crash that does not reproduce until it does.*
 - R13: A preview refresh replaces the grid contents without raising one collection-changed notification per row.
-- R14: On a 5,000-row preview, a keystroke in the name filter produces an updated grid within 500 ms of the last keystroke, and no single UI-thread block exceeds 100 ms. The measured numbers are recorded, before and after.
+- R14: Preview responsiveness is measured, not asserted. Two measurements, both recorded before and after the phase's changes: (a) a synthetic 5,000-row unit test over `ProcessPreview` for pipeline cost; (b) a live run on the largest real model available, with its actual row count recorded alongside the timing. Target on the live run: an updated grid within 500 ms of the last keystroke, no single UI-thread block over 100 ms.
+  - *Restated 2026-08-18 during `/lecg-discuss 1`. The original wording assumed a 5,000-row real model exists; none has been confirmed. Recording the real row count keeps the number honest instead of asserting a scale nobody has reached.*
 
 ### Layout
 
