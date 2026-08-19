@@ -276,6 +276,7 @@ namespace LECG.ViewModels
         }
 
         public ICommand ClearFiltersCommand { get; }
+        public ICommand ToggleCategoryDropDownCommand { get; }
         public ICommand SelectAllCommand { get; }
         public ICommand SelectNoneCommand { get; }
         public ICommand InvertSelectionCommand { get; }
@@ -349,6 +350,8 @@ namespace LECG.ViewModels
             Title = "Batch Rename";
 
             ClearFiltersCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(ClearFilters);
+            ToggleCategoryDropDownCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(
+                () => IsCategoryDropDownOpen = !IsCategoryDropDownOpen);
             SelectAllCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(SelectAll);
             InvertSelectionCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(InvertSelection);
             SelectNoneCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(SelectNone);
