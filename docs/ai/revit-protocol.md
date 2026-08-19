@@ -67,6 +67,16 @@ Recorded because they cost real debugging time. Add to this list; don't repeat t
 - **Temporary view modes are model modifications.** `View.IsolateElementsTemporary` (and its `Hide*Temporary` siblings) throw `Autodesk.Revit.Exceptions.ModificationOutsideTransactionException` without an open transaction, despite being "temporary" and not persisted unless the document is saved. Verified live 2026-07-27. Do not assume "temporary" or "view-only" means transaction-free.
 - **A live MCP probe proves nothing about transaction requirements.** `send_code_to_revit` runs inside its own open transaction — `Document.IsModifiable` is `True` on entry. Code that needs a transaction will appear to work. To test the no-transaction path, find another open document with `IsModifiable == False` (`document.Application.Documents`) and run against a view there. Check `IsModifiable` at entry before drawing any conclusion.
 - **Revit-typed interfaces cannot be injected into anything tests construct.** The test runner has only Nice3point *reference* assemblies, so taking `ITransactionService` (or any interface whose signatures name Revit types) as a constructor parameter makes the class unconstructible in tests — `FileNotFoundException: Could not load file or assembly 'RevitAPI'`. Referencing `Transaction` inside a method body instead keeps type loading lazy. Precedent: `LECG.Tests/Services/FormulaUpdateServiceTests.cs:64-68`; applied in `src/Services/Health/WarningsService.cs:83-88`.
+- **A null guard does not stop the JIT from loading Revit types.** The known rule is that a
+  Revit-typed interface must not be a constructor parameter. The subtler variant: any *method
+  body* that references such an interface loads it when that method is JITed, which happens
+  **before** the method's own `if (_service == null) return;` guard executes. So a ViewModel
+  property setter that reaches a Revit-typed service is unreachable in tests even when the
+  service is null. Found 2026-08-18: setting any scope flag on `SearchReplaceViewModel` threw
+  `FileNotFoundException: RevitAPI` because `SetExclusiveScope` calls `RefreshScope`, whose
+  body names `ISearchReplaceService`. Fix pattern: extract the testable logic into a pure
+  static that takes primitives (`SearchReplaceViewModel.BuildScopeKey`), and leave the
+  Revit-touching path to the smoke test.
 - **Assembly version does not prove a deployed binary is fresh.** `Directory.Build.props` bumps rarely, so a
   redeployed DLL usually carries the same version as the stale one it replaced. Confirm the deploy behaviourally
   instead: check the IL byte count of the changed method, or execute a path that only exists in the new build.

@@ -33,7 +33,7 @@ All in `src/Commands/`. No `[CommandAvailability]` attributes — availability i
 | PurgeCommand | RevitCommand | PurgeService, DeepPurgeService, DialogWhitelist | PurgeView | PurgeSequenceTests (Core logic only) |
 | RenderAppearanceMatchCommand | RevitCommand | IMaterialService | RenderAppearanceView | — |
 | ResetSlabsCommand | RevitCommand | SlabService, ITransactionService | ResetSlabsView | — |
-| SearchReplaceCommand | RevitCommand | ISearchReplaceService | SearchReplaceView | SearchReplace* tests (service level) |
+| SearchReplaceCommand | RevitCommand | ISearchReplaceService | SearchReplaceView | SearchReplace* tests (service + VM level) |
 | SexyRevitCommand | RevitCommand | SexyRevitService | SexyRevitView | SexyRevitServiceTests |
 | SharedToFamilyParameterCommand | RevitCommand | ISharedToFamilyParameterService | LecgDialog | — |
 | SimplifyPointsCommand | RevitCommand | SimplifyPointsService | SimplifyPointsView | — |
@@ -149,6 +149,7 @@ Top orchestrator: **CadConversionService : ICadConversionService** ← ConvertCa
 | Service | Used by | Writes doc |
 |---|---|---|
 | SearchReplaceService (ISearchReplaceService, orchestrator) | SearchReplaceCommand, SearchReplaceViewModel | via children |
+| BulkObservableCollection&lt;T&gt; (src/ViewModels/Components/) | SearchReplaceViewModel.PreviewItems | no — ObservableCollection subclass, one Reset per bulk replace |
 | SearchReplacePreviewService | SearchReplaceService | no |
 | BatchRenameExecutionService | SearchReplaceService | yes |
 | BaseElementCollectionService | SearchReplaceService | no |
