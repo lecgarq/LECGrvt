@@ -2,6 +2,8 @@
 // VALIDATION row: 3-W0-04. Targets default Category-ascending sort + AND-combined
 // filter (FilterCategory dropdown ∧ per-column predicates) in
 // `LECG.ViewModels.SearchReplaceViewModel`.
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Data;
@@ -66,5 +68,45 @@ public class SearchReplaceViewModelTests
         visible.Should().HaveCount(1);
         visible[0].Category.Should().Be("Walls");
         visible[0].Name.Should().Be("B");
+    }
+
+    // -----------------------------------------------------------------------
+    // R13 — the preview rebuild must cost one collection notification, not one
+    // per row. Clear() + N x Add() made the bound ICollectionView re-filter and
+    // re-sort once per row; at a few thousand rows that was the freeze.
+    // -----------------------------------------------------------------------
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void PreviewItems_ReplaceAll_raises_a_single_Reset()
+    {
+        var sut = new SearchReplaceViewModel();
+        sut.PreviewItems.Add(new ElementRowViewModel { Category = "Old", Name = "old", OriginalValue = "old" });
+
+        var events = new List<NotifyCollectionChangedEventArgs>();
+        sut.PreviewItems.CollectionChanged += (_, e) => events.Add(e);
+
+        sut.PreviewItems.ReplaceAll(new[]
+        {
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B" },
+            new ElementRowViewModel { Category = "Doors", Name = "C", OriginalValue = "C" }
+        });
+
+        events.Should().HaveCount(1);
+        events[0].Action.Should().Be(NotifyCollectionChangedAction.Reset);
+        sut.PreviewItems.Should().HaveCount(3);
+        sut.PreviewItems.Select(r => r.Name).Should().Equal("A", "B", "C");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void PreviewItems_ReplaceAll_with_empty_sequence_clears()
+    {
+        var sut = new SearchReplaceViewModel();
+        sut.PreviewItems.Add(new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A" });
+
+        sut.PreviewItems.ReplaceAll(new ElementRowViewModel[0]);
+
+        sut.PreviewItems.Should().BeEmpty();
     }
 }

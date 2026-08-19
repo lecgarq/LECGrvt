@@ -108,8 +108,8 @@ namespace LECG.ViewModels
         public ICommand ReplaceSpacesCommand { get; }
         public ICommand ReplaceSpacesInReplaceTextCommand { get; }
 
-        private ObservableCollection<ElementRowViewModel> _previewItems = new ObservableCollection<ElementRowViewModel>();
-        public ObservableCollection<ElementRowViewModel> PreviewItems { get => _previewItems; set => SetProperty(ref _previewItems, value); }
+        private BulkObservableCollection<ElementRowViewModel> _previewItems = new BulkObservableCollection<ElementRowViewModel>();
+        public BulkObservableCollection<ElementRowViewModel> PreviewItems { get => _previewItems; set => SetProperty(ref _previewItems, value); }
 
         // Plan 03-05: ICollectionView wraps PreviewItems with default Category-ascending
         // sort and an AND-combined filter (FilterCategory dropdown ∧ per-column filters).
@@ -253,8 +253,9 @@ namespace LECG.ViewModels
                 {
                     if (ct.IsCancellationRequested) return;
                     ValidationMessage = string.Empty;
-                    PreviewItems.Clear();
-                    foreach (var r in results) PreviewItems.Add(r);
+                    // One Reset instead of one notification per row: the bound
+                    // ICollectionView re-filters and re-sorts once, not N times.
+                    PreviewItems.ReplaceAll(results);
                     // Materialize/refresh the ICollectionView so sort + filter apply.
                     _ = PreviewView; // ensure created
                     _previewView?.Refresh();
