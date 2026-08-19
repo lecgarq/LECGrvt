@@ -1,7 +1,7 @@
 # Codebase Map
 
-Generated at: 9343d2889e9123dfa6eddb6f5124fdbdb390addc
-Refreshed: 2026-07-27
+Generated at: d393c0f34e5a9a9f32972aa3ff828b231c217b7d
+Refreshed: 2026-08-18
 
 Edges, not prose. Query with `/lecg-map`; patch rows when you change the code they describe.
 

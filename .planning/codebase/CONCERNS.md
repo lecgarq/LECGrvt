@@ -16,6 +16,27 @@ The v1.0 hardening milestone was closed with 16 of 32 requirements unmet and 9 p
 - **Deployment/docs:** no manifest presence validation at startup; unit-conversion / StorageType / link-transform conventions still open.
 - **Runtime validation:** DialogWhitelist's five entries still unverified in live Revit; smoke-test checklist never executed end-to-end (2026-07-25 run covered theme-scoping subset only).
 
+## Accepted debt (warnings-review closed as-is, 2026-08-18)
+
+Audit: `.planning/archive/warnings-review/AUDIT.md`. 6 of 8 requirements met, 2 partial, 0 unmet.
+
+- **R8 — the Warnings command has never had a complete human smoke test.** Live evidence covers add-in start,
+  ribbon registration, `ReadWarnings` (10), grouping (1 group) and `Select` (11 distinct elements), all driven through
+  `mcp-server-for-revit` against the deployed build on 2026-07-28. Six items remain unverified: dialog rendering and
+  WPF bindings, availability greying with no document open, count parity against Revit's Manage → Warnings dialog,
+  `Show` behind the modal, `Isolate` by click plus Reset Temporary Hide/Isolate, and the Undo-list check.
+  - Why accepted: every remaining item needs a human at the keyboard, and `Isolate` is structurally unreachable from
+    MCP — the harness holds its own transaction and Revit forbids nesting. Blocking the milestone on keyboard time
+    was worse than recording the gap.
+  - Guardrail: do not describe the Warnings dialog as verified. The checklist is `docs/ai/revit-smoke-test.md` →
+    *Targeted: Warnings command*, steps for dialog/Show/Isolate/Undo.
+- **R6 was restated mid-milestone**, from "no document writes" to "no *persistent* model writes". `WarningsService.Isolate`
+  opens a raw `Transaction` and adds one `Isolate Warning Elements` Undo entry, because `View.IsolateElementsTemporary`
+  throws without one. This is correct and deliberate, not debt — recorded here so the original R6 wording is not read
+  later as an unmet promise.
+- **Group-ordering coverage is unit-test-only.** The available test model has a single warning group, so
+  count-descending ordering cannot be observed live on it at all.
+
 ## Tech Debt
 
 **FormulaAutoGroupingCommand static state management:** — RESOLVED (verified 2026-07-27: flag reset in job `Dispose()`, guaranteed by `RevitIdlingRunner.cs:59-65` `finally` on both complete and exception paths)
