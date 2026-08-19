@@ -17,7 +17,7 @@ progress:
 
 Milestone: Batch Rename UX — make the Batch Rename dialog usable on a real-sized model: filter-aware selection and counts, filtering that reaches every column, a preview that stays responsive and keeps the user's checkboxes, and a layout that collapses to give the grid room.
 Phase: 1 of 4 (Preview pipeline — stops losing state, stops blocking)
-Status: **code complete, not done.** Steps 1–5 shipped and committed; R14b measured live 2026-08-18. Remaining for R20: the deployed add-in is still the **2026-07-28 build** (`C:\ProgramData\...\Addins6\LECG\LECG.dll`, 996,864 bytes, Jul 28 00:20) and predates this phase, so none of the dialog behaviour has been seen. Deploying needs `dotnet build -c Release` with **Revit closed** — it copies over the DLL Revit holds open. Five interactive steps then remain; see `PLAN.md`.
+Status: **code complete, not done.** Steps 1–5 shipped and committed; R14b measured live 2026-08-18. Remaining for R20: the deployed add-in is still the **2026-07-28 build** (`C:/ProgramData/Autodesk/Revit/Addins/2026/LECG/LECG.dll`, 996,864 bytes, Jul 28 00:20) and predates this phase, so none of the dialog behaviour has been seen. Deploying needs `dotnet build -c Release` with **Revit closed** — it copies over the DLL Revit holds open. Five interactive steps then remain; see `PLAN.md`.
 
 ## Context
 
