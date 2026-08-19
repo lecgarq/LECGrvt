@@ -3,9 +3,9 @@ state_version: 1.0
 milestone: batch-rename-ux
 milestone_name: Batch Rename UX
 status: executing
-stopped_at: Phase 1 steps 1–6a complete (R14b measured live). Remaining: deploy the new build and run the 5 interactive smoke steps (R20)
+stopped_at: Phases 1, 2, 3 code complete (R1–R14 except R14b-dialog). One deploy + smoke run now validates all three; phase 4 not started
 last_updated: "2026-08-18"
-last_activity: 2026-08-18 — R14b measured live on Snowdon Towers Sample Architectural; worst scope 437 ms, no cancel path needed
+last_activity: 2026-08-18 — phases 2 and 3 built and committed; suite 254 passed / 0 failed / 5 skipped
 progress:
   total_phases: 4
   completed_phases: 0
@@ -16,8 +16,25 @@ progress:
 ## Current Position
 
 Milestone: Batch Rename UX — make the Batch Rename dialog usable on a real-sized model: filter-aware selection and counts, filtering that reaches every column, a preview that stays responsive and keeps the user's checkboxes, and a layout that collapses to give the grid room.
-Phase: 1 of 4 (Preview pipeline — stops losing state, stops blocking)
-Status: **code complete, not done.** Steps 1–5 shipped and committed; R14b measured live 2026-08-18. Remaining for R20: the deployed add-in is still the **2026-07-28 build** (`C:/ProgramData/Autodesk/Revit/Addins/2026/LECG/LECG.dll`, 996,864 bytes, Jul 28 00:20) and predates this phase, so none of the dialog behaviour has been seen. Deploying needs `dotnet build -c Release` with **Revit closed** — it copies over the DLL Revit holds open. Five interactive steps then remain; see `PLAN.md`.
+Phase: 3 of 4 code complete; 4 of 4 (Layout) not started
+Status: **phases 1–3 code complete, none validated in Revit.** All committed, suite green. R20 is unmet for all three: the deployed add-in is still the **2026-07-28 build** (`C:/ProgramData/Autodesk/Revit/Addins/2026/LECG/LECG.dll`, 996,864 bytes) and predates every line of this milestone. Deploy needs `dotnet build -c Release` with **Revit closed**. Deliberately batched: one deploy validates all three phases rather than closing Revit three times.
+
+### Shipped by phase
+
+- **Phase 1 (R5, R12, R13, R14a/b):** `BulkObservableCollection.ReplaceAll` (one Reset, not N Adds); deselections remembered for the life of the dialog keyed `(Type, Id, OriginalValue)`; elements cached per scope with a busy panel on first collect.
+- **Phase 2 (R1–R4, R6):** Select All/None/Invert act on the filtered view and never tick unrenameable rows; shift-click sets a contiguous range on the Sel column; header and status bar show visible-count and checked-count, both filter-aware; Apply judges on CheckedCount.
+- **Phase 3 (R7–R11):** filter bar wires all five columns to the previously unreachable `SetColumnFilter`; category dropdown is multi-select with per-category counts and typeahead; invalid regex named before the preview runs; one-action Clear filters with an active indicator. Removed dead `AvailableCategories`.
+
+### Pending smoke run (covers phases 1–3)
+
+1. Dialog renders; grid populates; filter bar and category dropdown appear.
+2. Slow scope (FamilyParameters, ~437 ms) → busy panel shows; returning to it is instant.
+3. Uncheck rows → change Replace text → still unchecked. Filter them away and back → still unchecked.
+4. Filter to a few rows → Select All → only those tick. Invert → flips only visible.
+5. Shift-click down the Sel column → contiguous range sets.
+6. Type in each column filter box → grid narrows, counts follow; Clear filters restores.
+7. Category dropdown → multi-select two, check counts, type to search.
+8. Replace + RegEx on, type `([` → field message names the regex error, not "Error loading preview".
 
 ## Context
 
