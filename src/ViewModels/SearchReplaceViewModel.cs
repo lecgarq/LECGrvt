@@ -85,6 +85,7 @@ namespace LECG.ViewModels
                     // FilterCategory now lives on the ICollectionView (Plan 03-05) — no
                     // re-run of ProcessPreview, just refresh the view's predicate.
                     _previewView?.Refresh();
+                    RaiseCountsChanged();
                 }
             }
         }
@@ -120,6 +121,7 @@ namespace LECG.ViewModels
 
         public ICommand SelectAllCommand { get; }
         public ICommand SelectNoneCommand { get; }
+        public ICommand InvertSelectionCommand { get; }
         public ICommand ReplaceSpacesCommand { get; }
         public ICommand ReplaceSpacesInReplaceTextCommand { get; }
 
@@ -161,6 +163,7 @@ namespace LECG.ViewModels
             if (predicate == null) _columnFilters.Remove(columnKey);
             else _columnFilters[columnKey] = predicate;
             _previewView?.Refresh();
+            RaiseCountsChanged();
         }
 
         private bool MatchesAllFilters(ElementRowViewModel row)
@@ -194,13 +197,72 @@ namespace LECG.ViewModels
             Title = "Batch Rename";
 
             SelectAllCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(SelectAll);
+            InvertSelectionCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(InvertSelection);
             SelectNoneCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(SelectNone);
             ReplaceSpacesCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(ReplaceSpaces);
             ReplaceSpacesInReplaceTextCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(ReplaceSpacesInReplaceText);
         }
 
-        private void SelectAll() { if (PreviewItems != null) foreach (var item in PreviewItems) item.IsChecked = true; }
-        private void SelectNone() { if (PreviewItems != null) foreach (var item in PreviewItems) item.IsChecked = false; }
+        /// <summary>
+        /// Rows the user can actually act on: currently visible through the filter, and not
+        /// skipped by ProcessPreview. Materialized because callers mutate while iterating.
+        /// </summary>
+        /// <remarks>
+        /// Deliberately reads <see cref="PreviewView"/>, not <c>PreviewItems</c>. Selecting
+        /// over the unfiltered collection is how "filter to 12 rows, hit Select All" used to
+        /// select four thousand.
+        /// </remarks>
+        internal List<ElementRowViewModel> VisibleActionableRows =>
+            PreviewView.Cast<ElementRowViewModel>().Where(r => r.IsRenameable).ToList();
+
+        private void SelectAll() => BulkSetChecked(VisibleActionableRows, _ => true);
+        private void SelectNone() => BulkSetChecked(VisibleActionableRows, _ => false);
+        private void InvertSelection() => BulkSetChecked(VisibleActionableRows, r => !r.IsChecked);
+
+        /// <summary>
+        /// Applies a check decision across many rows, raising the derived counts once at the
+        /// end rather than once per row.
+        /// </summary>
+        /// <remarks>
+        /// Without the suppression this is O(n^2): every row's IsChecked notification would
+        /// recompute CheckedCount by walking the whole view. At ~1,900 rows that is ~3.6M
+        /// operations for one Select All.
+        /// </remarks>
+        internal void BulkSetChecked(IEnumerable<ElementRowViewModel> rows, Func<ElementRowViewModel, bool> value)
+        {
+            _suppressCountNotifications = true;
+            try
+            {
+                foreach (ElementRowViewModel row in rows)
+                {
+                    if (!row.IsRenameable) continue;
+                    row.IsChecked = value(row);
+                }
+            }
+            finally
+            {
+                _suppressCountNotifications = false;
+                RaiseCountsChanged();
+            }
+        }
+
+        /// <summary>
+        /// Sets every row between <paramref name="from"/> and <paramref name="to"/> inclusive,
+        /// in the grid's current visual order, to <paramref name="value"/>. Backs shift-click
+        /// on the Sel column.
+        /// </summary>
+        internal void ToggleRange(ElementRowViewModel from, ElementRowViewModel to, bool value)
+        {
+            if (from == null || to == null) return;
+
+            List<ElementRowViewModel> visible = PreviewView.Cast<ElementRowViewModel>().ToList();
+            int a = visible.IndexOf(from);
+            int b = visible.IndexOf(to);
+            if (a < 0 || b < 0) return;
+            if (a > b) { int t = a; a = b; b = t; }
+
+            BulkSetChecked(visible.GetRange(a, b - a + 1), _ => value);
+        }
         private void ReplaceSpaces() { if (!string.IsNullOrEmpty(FilterName)) FilterName = FilterName.Replace(" ", "_"); }
         private void ReplaceSpacesInReplaceText() { if (ReplaceRule != null && !string.IsNullOrEmpty(ReplaceRule.ReplaceText)) ReplaceRule.ReplaceText = ReplaceRule.ReplaceText.Replace(" ", "_"); }
 
@@ -328,6 +390,39 @@ namespace LECG.ViewModels
             _ = UpdatePreviewAsync();
         }
 
+        /// <summary>Rows currently visible through the active filters.</summary>
+        public int VisibleCount => PreviewView.Cast<object>().Count();
+
+        /// <summary>Visible rows that are ticked — what Apply will actually rename.</summary>
+        public int CheckedCount => PreviewView.Cast<ElementRowViewModel>().Count(r => r.IsChecked);
+
+        private bool _suppressCountNotifications;
+
+        internal void RaiseCountsChanged()
+        {
+            if (_suppressCountNotifications) return;
+            OnPropertyChanged(nameof(VisibleCount));
+            OnPropertyChanged(nameof(CheckedCount));
+        }
+
+        private void OnRowPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(ElementRowViewModel.IsChecked)) RaiseCountsChanged();
+        }
+
+        /// <summary>
+        /// Swaps the preview rows and rebinds per-row change notification so the derived
+        /// counts follow individual checkbox clicks. Unsubscribes the outgoing rows first —
+        /// they outlive the collection otherwise and leak for the life of the dialog.
+        /// </summary>
+        internal void SetPreviewRows(IList<ElementRowViewModel> rows)
+        {
+            foreach (ElementRowViewModel row in PreviewItems) row.PropertyChanged -= OnRowPropertyChanged;
+            PreviewItems.ReplaceAll(rows);
+            foreach (ElementRowViewModel row in PreviewItems) row.PropertyChanged += OnRowPropertyChanged;
+            RaiseCountsChanged();
+        }
+
         /// <summary>
         /// Identity of a preview row, stable across rebuilds.
         /// </summary>
@@ -402,7 +497,7 @@ namespace LECG.ViewModels
                     ApplyCheckState(results);
                     // One Reset instead of one notification per row: the bound
                     // ICollectionView re-filters and re-sorts once, not N times.
-                    PreviewItems.ReplaceAll(results);
+                    SetPreviewRows(results);
                     // Materialize/refresh the ICollectionView so sort + filter apply.
                     _ = PreviewView; // ensure created
                     _previewView?.Refresh();
@@ -412,6 +507,14 @@ namespace LECG.ViewModels
             catch (Exception ex) { ValidationMessage = $"Error loading preview: {ex.Message}"; }
         }
 
-        public override void Apply() { if (PreviewItems == null || !PreviewItems.Any(i => i.IsChecked)) { ValidationMessage = "Select at least one item to rename."; return; } base.Apply(); }
+        public override void Apply()
+        {
+            if (CheckedCount == 0)
+            {
+                ValidationMessage = "Select at least one item to rename.";
+                return;
+            }
+            base.Apply();
+        }
     }
 }

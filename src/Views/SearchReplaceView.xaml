@@ -410,15 +410,25 @@
                         <StackPanel Orientation="Horizontal">
                             <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource AccentBrush}" Margin="0,0,8,0" VerticalAlignment="Center"/>
                             <TextBlock Text="PREVIEW" Style="{DynamicResource SectionHeaderStyle}" Margin="0,0,8,0"/>
+                            <!-- Counts follow the ACTIVE FILTER. Binding PreviewItems.Count
+                                 here reported the unfiltered total while the grid showed
+                                 filtered rows, so the number lied the moment you filtered. -->
                             <TextBlock Style="{DynamicResource StatusBarTextStyle}" VerticalAlignment="Center">
                                 <TextBlock.Text>
-                                    <Binding Path="PreviewItems.Count" StringFormat="({0} items)"/>
+                                    <MultiBinding StringFormat="({0} shown · {1} selected)">
+                                        <Binding Path="VisibleCount"/>
+                                        <Binding Path="CheckedCount"/>
+                                    </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <Button Content="Select All" Command="{Binding SelectAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"/>
-                            <Button Content="Select None" Command="{Binding SelectNoneCommand}" Style="{DynamicResource LinkButtonStyle}"/>
+                            <Button Content="Select All" Command="{Binding SelectAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"
+                                    ToolTip="Tick every row currently shown. Rows hidden by a filter are not touched."/>
+                            <Button Content="Select None" Command="{Binding SelectNoneCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"
+                                    ToolTip="Untick every row currently shown."/>
+                            <Button Content="Invert" Command="{Binding InvertSelectionCommand}" Style="{DynamicResource LinkButtonStyle}"
+                                    ToolTip="Flip the tick on every row currently shown."/>
                         </StackPanel>
                     </Grid>
 
@@ -446,6 +456,8 @@
                                     <DataTemplate>
                                         <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   IsEnabled="{Binding IsRenameable}"
+                                                  PreviewMouseLeftButtonDown="SelCheckBox_PreviewMouseLeftButtonDown"
+                                                  ToolTip="Shift-click to set every row between this and the last one you clicked."
                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -493,7 +505,10 @@
                     <Border Grid.Row="2" Margin="0,6,0,0" Padding="0,4,0,0" BorderThickness="0,1,0,0" BorderBrush="{DynamicResource BorderBrush}">
                         <TextBlock Style="{DynamicResource StatusBarTextStyle}">
                             <TextBlock.Text>
-                                <Binding Path="PreviewItems.Count" StringFormat="{}{0} items in preview"/>
+                                <MultiBinding StringFormat="{}{0} rows shown · {1} will be renamed">
+                                    <Binding Path="VisibleCount"/>
+                                    <Binding Path="CheckedCount"/>
+                                </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
                     </Border>

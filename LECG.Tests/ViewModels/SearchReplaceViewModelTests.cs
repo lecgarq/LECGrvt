@@ -285,4 +285,164 @@ public class SearchReplaceViewModelTests
 
         typesAndViews.Should().NotBe(typesOnly);
     }
+
+    // -----------------------------------------------------------------------
+    // Phase 2 — selection obeys the filter.
+    // The bug these guard: SelectAll/SelectNone walked PreviewItems (everything)
+    // instead of PreviewView (what you can see), so filtering to 12 rows and
+    // hitting Select All ticked all four thousand.
+    // -----------------------------------------------------------------------
+    private static SearchReplaceViewModel WithRows(params ElementRowViewModel[] rows)
+    {
+        var vm = new SearchReplaceViewModel();
+        vm.PreviewItems.ReplaceAll(rows);
+        _ = vm.PreviewView;
+        return vm;
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void SelectAll_ignores_rows_hidden_by_the_filter()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = false },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B", IsChecked = false });
+
+        vm.FilterCategory = "Walls";
+        vm.SelectAllCommand.Execute(null);
+
+        vm.PreviewItems.Single(r => r.Name == "A").IsChecked.Should().BeTrue();
+        vm.PreviewItems.Single(r => r.Name == "B").IsChecked.Should().BeFalse("it was hidden by the filter");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void SelectNone_ignores_rows_hidden_by_the_filter()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = true },
+            new ElementRowViewModel { Category = "Doors", Name = "B", OriginalValue = "B", IsChecked = true });
+
+        vm.FilterCategory = "Walls";
+        vm.SelectNoneCommand.Execute(null);
+
+        vm.PreviewItems.Single(r => r.Name == "A").IsChecked.Should().BeFalse();
+        vm.PreviewItems.Single(r => r.Name == "B").IsChecked.Should().BeTrue("it was hidden by the filter");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void SelectAll_never_ticks_a_row_ProcessPreview_marked_unrenameable()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = false },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B", IsChecked = false, IsRenameable = false });
+
+        vm.SelectAllCommand.Execute(null);
+
+        vm.PreviewItems.Single(r => r.Name == "A").IsChecked.Should().BeTrue();
+        vm.PreviewItems.Single(r => r.Name == "B").IsChecked.Should().BeFalse("the grid disables its checkbox");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void InvertSelection_flips_only_visible_renameable_rows()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = true },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B", IsChecked = false },
+            new ElementRowViewModel { Category = "Doors", Name = "C", OriginalValue = "C", IsChecked = true });
+
+        vm.FilterCategory = "Walls";
+        vm.InvertSelectionCommand.Execute(null);
+
+        vm.PreviewItems.Single(r => r.Name == "A").IsChecked.Should().BeFalse();
+        vm.PreviewItems.Single(r => r.Name == "B").IsChecked.Should().BeTrue();
+        vm.PreviewItems.Single(r => r.Name == "C").IsChecked.Should().BeTrue("hidden rows are untouched");
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Counts_track_the_active_filter()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = true },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B", IsChecked = false },
+            new ElementRowViewModel { Category = "Doors", Name = "C", OriginalValue = "C", IsChecked = true });
+
+        vm.VisibleCount.Should().Be(3);
+        vm.CheckedCount.Should().Be(2);
+
+        vm.FilterCategory = "Walls";
+
+        vm.VisibleCount.Should().Be(2);
+        vm.CheckedCount.Should().Be(1);
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void CheckedCount_follows_an_individual_checkbox_click()
+    {
+        var vm = new SearchReplaceViewModel();
+        var raised = new List<string>();
+        vm.PropertyChanged += (_, e) => raised.Add(e.PropertyName ?? "");
+
+        // Rows must go through the rebuild path to get their notification wired up.
+        vm.SetPreviewRows(new List<ElementRowViewModel>
+        {
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = true }
+        });
+        raised.Clear();
+
+        vm.PreviewItems[0].IsChecked = false;
+
+        vm.CheckedCount.Should().Be(0);
+        raised.Should().Contain(nameof(SearchReplaceViewModel.CheckedCount));
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ToggleRange_sets_every_row_between_the_two_in_view_order()
+    {
+        // Default sort is Category ascending, so view order is Doors(C), Walls(A), Walls(B).
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = false },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B", IsChecked = false },
+            new ElementRowViewModel { Category = "Doors", Name = "C", OriginalValue = "C", IsChecked = false });
+
+        var ordered = vm.PreviewView.Cast<ElementRowViewModel>().ToList();
+        vm.ToggleRange(ordered[0], ordered[2], true);
+
+        ordered.Should().OnlyContain(r => r.IsChecked);
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ToggleRange_works_when_the_anchor_is_below_the_target()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = true },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B", IsChecked = true });
+
+        var ordered = vm.PreviewView.Cast<ElementRowViewModel>().ToList();
+        vm.ToggleRange(ordered[1], ordered[0], false);
+
+        ordered.Should().OnlyContain(r => !r.IsChecked);
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ToggleRange_skips_unrenameable_rows_inside_the_range()
+    {
+        var vm = WithRows(
+            new ElementRowViewModel { Category = "Walls", Name = "A", OriginalValue = "A", IsChecked = false },
+            new ElementRowViewModel { Category = "Walls", Name = "B", OriginalValue = "B", IsChecked = false, IsRenameable = false },
+            new ElementRowViewModel { Category = "Walls", Name = "C", OriginalValue = "C", IsChecked = false });
+
+        var ordered = vm.PreviewView.Cast<ElementRowViewModel>().ToList();
+        vm.ToggleRange(ordered[0], ordered[2], true);
+
+        vm.PreviewItems.Single(r => r.Name == "B").IsChecked.Should().BeFalse();
+        vm.PreviewItems.Where(r => r.Name != "B").Should().OnlyContain(r => r.IsChecked);
+    }
 }
