@@ -109,4 +109,127 @@ public class SearchReplaceViewModelTests
 
         sut.PreviewItems.Should().BeEmpty();
     }
+
+    // -----------------------------------------------------------------------
+    // R5 — a deselection is a decision and survives every rebuild, including a
+    // filter round-trip that removes the row from the grid and brings it back.
+    // Drives the three seam methods directly: the VM's parameterless ctor needs
+    // no Revit, and UpdatePreviewAsync would need a Document.
+    // -----------------------------------------------------------------------
+    private static ElementRowViewModel Row(string type, long id, string original, bool renameable = true)
+        => new ElementRowViewModel
+        {
+            Type = type,
+            Id = id,
+            Name = original,
+            OriginalValue = original,
+            Category = "Cat",
+            IsRenameable = renameable
+        };
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void CheckKey_distinguishes_FamilyParameter_rows_that_share_one_Id()
+    {
+        // BaseElementCollectionService.cs:264 sets Id = familyId for every parameter of a
+        // family, so Id alone collides. OriginalValue is what separates them.
+        var a = Row("FamilyParameter", 40, "Param_A");
+        var b = Row("FamilyParameter", 40, "Param_B");
+
+        SearchReplaceViewModel.CheckKey(a).Should().NotBe(SearchReplaceViewModel.CheckKey(b));
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Unchecked_row_stays_unchecked_across_a_rebuild()
+    {
+        var sut = new SearchReplaceViewModel();
+        sut.PreviewItems.ReplaceAll(new[] { Row("Type", 1, "A"), Row("Type", 2, "B") });
+
+        sut.PreviewItems[0].IsChecked = false;   // user deselects A
+        sut.HarvestCheckState();
+
+        var rebuilt = new[] { Row("Type", 1, "A"), Row("Type", 2, "B") };
+        sut.ApplyCheckState(rebuilt);
+
+        rebuilt[0].IsChecked.Should().BeFalse();
+        rebuilt[1].IsChecked.Should().BeTrue();
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Unchecked_row_stays_unchecked_across_a_filter_round_trip()
+    {
+        var sut = new SearchReplaceViewModel();
+        sut.PreviewItems.ReplaceAll(new[] { Row("Type", 1, "A"), Row("Type", 2, "B") });
+
+        sut.PreviewItems[0].IsChecked = false;   // user deselects A
+        sut.HarvestCheckState();
+
+        // Filter narrows: A is gone from the rebuilt set entirely.
+        var filtered = new[] { Row("Type", 2, "B") };
+        sut.ApplyCheckState(filtered);
+        sut.PreviewItems.ReplaceAll(filtered);
+        sut.HarvestCheckState();                 // harvest while A is absent
+
+        // Filter widens again: A comes back and must still be unchecked.
+        var widened = new[] { Row("Type", 1, "A"), Row("Type", 2, "B") };
+        sut.ApplyCheckState(widened);
+
+        widened[0].IsChecked.Should().BeFalse();
+        widened[1].IsChecked.Should().BeTrue();
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Rechecking_a_row_clears_the_remembered_deselection()
+    {
+        var sut = new SearchReplaceViewModel();
+        sut.PreviewItems.ReplaceAll(new[] { Row("Type", 1, "A") });
+
+        sut.PreviewItems[0].IsChecked = false;
+        sut.HarvestCheckState();
+        sut.PreviewItems[0].IsChecked = true;    // user changes their mind
+        sut.HarvestCheckState();
+
+        var rebuilt = new[] { Row("Type", 1, "A") };
+        sut.ApplyCheckState(rebuilt);
+
+        rebuilt[0].IsChecked.Should().BeTrue();
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void Non_renameable_rows_are_not_remembered_as_user_deselections()
+    {
+        // ProcessPreview unchecks rows it marks non-renameable
+        // (SearchReplacePreviewService.cs:157,230). That is the service's decision, not the
+        // user's — if it were harvested, the row would stay unchecked forever once a later
+        // rule made it renameable again.
+        var sut = new SearchReplaceViewModel();
+        var skipped = Row("FamilyParameter", 40, "Param_A", renameable: false);
+        skipped.IsChecked = false;
+        sut.PreviewItems.ReplaceAll(new[] { skipped });
+
+        sut.HarvestCheckState();
+
+        var nowRenameable = Row("FamilyParameter", 40, "Param_A");
+        sut.ApplyCheckState(new[] { nowRenameable });
+
+        nowRenameable.IsChecked.Should().BeTrue();
+    }
+
+    [Fact]
+    [Trait("Category", "Unit")]
+    public void ApplyCheckState_never_rechecks_a_row_ProcessPreview_unchecked()
+    {
+        // Only ever clears a check, never sets one.
+        var sut = new SearchReplaceViewModel();
+        var skipped = Row("Type", 1, "A", renameable: false);
+        skipped.IsChecked = false;
+
+        sut.ApplyCheckState(new[] { skipped });
+
+        skipped.IsChecked.Should().BeFalse();
+    }
 }

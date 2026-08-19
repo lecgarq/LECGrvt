@@ -23,6 +23,12 @@ namespace LECG.ViewModels
         private bool _isSettingScope;
         private CancellationTokenSource? _searchCts;
 
+        // R5: keys of rows the USER explicitly unchecked, remembered for the life of
+        // the dialog. Held across rebuilds so a filter round-trip cannot silently
+        // re-arm a row that was deliberately excluded — re-arming is the dangerous
+        // direction for a rename.
+        private readonly HashSet<string> _uncheckedKeys = new HashSet<string>(StringComparer.Ordinal);
+
         public ReplaceRule ReplaceRule { get; } = new ReplaceRule();
         public RemoveRule RemoveRule { get; } = new RemoveRule();
         public AddRule AddRule { get; } = new AddRule();
@@ -241,6 +247,57 @@ namespace LECG.ViewModels
             _ = UpdatePreviewAsync();
         }
 
+        /// <summary>
+        /// Identity of a preview row, stable across rebuilds.
+        /// </summary>
+        /// <remarks>
+        /// <c>Id</c> alone is not unique: FamilyParameter rows carry the parent family's
+        /// id, so every parameter of one family shares it
+        /// (<c>BaseElementCollectionService.cs:264</c>). <c>OriginalValue</c> is the source
+        /// name and does not change when a rule rewrites <c>NewValue</c>.
+        /// </remarks>
+        internal static string CheckKey(ElementRowViewModel row)
+            => $"{row.Type}|{row.Id}|{row.OriginalValue}";
+
+        /// <summary>
+        /// Records the current rows' check state into <see cref="_uncheckedKeys"/>.
+        /// Call immediately before replacing the rows.
+        /// </summary>
+        /// <remarks>
+        /// Non-renameable rows are skipped: ProcessPreview unchecks those itself
+        /// (<c>SearchReplacePreviewService.cs:157,230</c>), so their state is the service's
+        /// decision, not the user's, and must not be remembered as one.
+        /// </remarks>
+        internal void HarvestCheckState()
+        {
+            foreach (ElementRowViewModel row in PreviewItems)
+            {
+                if (!row.IsRenameable) continue;
+
+                string key = CheckKey(row);
+                if (row.IsChecked) _uncheckedKeys.Remove(key);
+                else _uncheckedKeys.Add(key);
+            }
+        }
+
+        /// <summary>
+        /// Re-applies remembered deselections to freshly built rows.
+        /// Call immediately after replacing the rows.
+        /// </summary>
+        /// <remarks>
+        /// Only ever clears a check — never sets one. ProcessPreview unchecks rows it marks
+        /// non-renameable, and an <c>else</c> branch here would resurrect them.
+        /// </remarks>
+        internal void ApplyCheckState(IEnumerable<ElementRowViewModel> rows)
+        {
+            if (rows == null) return;
+
+            foreach (ElementRowViewModel row in rows)
+            {
+                if (_uncheckedKeys.Contains(CheckKey(row))) row.IsChecked = false;
+            }
+        }
+
         private async Task UpdatePreviewAsync()
         {
             if (_service == null || _cachedElements == null) return;
@@ -253,6 +310,15 @@ namespace LECG.ViewModels
                 {
                     if (ct.IsCancellationRequested) return;
                     ValidationMessage = string.Empty;
+                    // Remember what the user had unchecked before the rows are thrown away.
+                    HarvestCheckState();
+                    // ponytail: ProcessPreview computes cross-batch name collisions from
+                    // row.IsChecked (SearchReplacePreviewService.cs:212-213) BEFORE these
+                    // deselections are restored, so an unchecked row still claims its name
+                    // and can mark another row as colliding. Display-only — execution
+                    // renames checked rows only. Proper fix is to pass the memory into
+                    // ProcessPreview, which is out of scope for phase 1.
+                    ApplyCheckState(results);
                     // One Reset instead of one notification per row: the bound
                     // ICollectionView re-filters and re-sorts once, not N times.
                     PreviewItems.ReplaceAll(results);
