@@ -564,7 +564,8 @@
                         </Grid>
                     </Border>
 
-                    <controls:LecgDataGrid Grid.Row="2" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True">
+                    <controls:LecgDataGrid Grid.Row="2" ItemsSource="{Binding PreviewView}" CanUserSortColumns="True"
+                                           PreviewKeyDown="PreviewGrid_PreviewKeyDown">
                         <!-- Muted-row Style: skipped rows (IsRenameable=false) rendered at reduced
                              opacity with muted text so users can distinguish them at a glance. -->
                         <DataGrid.RowStyle>
@@ -585,7 +586,7 @@
                                         <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                                   IsEnabled="{Binding IsRenameable}"
                                                   PreviewMouseLeftButtonDown="SelCheckBox_PreviewMouseLeftButtonDown"
-                                                  ToolTip="Shift-click to set every row between this and the last one you clicked."
+                                                  ToolTip="Select several rows and click to set them all. Shift-click sets everything back to your last click. Space toggles the selection."
                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
