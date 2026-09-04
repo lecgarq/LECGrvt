@@ -35,5 +35,6 @@
     <Compile Remove="Caching\\**\\*.cs" />
     <Compile Remove="DependencyInjection\\**\\*.cs" />
     <Compile Remove="Validation\\**\\*.cs" />
+    <Compile Remove="Windows\\**\\*.cs" />
   </ItemGroup>
 </Project>

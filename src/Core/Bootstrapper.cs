@@ -85,6 +85,8 @@ namespace LECG.Core
             services.AddSingleton<IMaterialTextureLookupService, MaterialTextureLookupService>();
             services.AddSingleton<IMaterialBitmapPropertyService, MaterialBitmapPropertyService>();
             services.AddSingleton<IImageColorExtractionService, ImageColorExtractionService>();
+            services.AddSingleton<IPbrTextureBakeService, PbrTextureBakeService>();
+            services.AddSingleton<IMetallicProbeService, MetallicProbeService>();
             services.AddSingleton<IMaterialAppearanceAssetService, MaterialAppearanceAssetService>();
             services.AddSingleton<IMaterialPbrService, MaterialPbrService>();
             services.AddSingleton<IMaterialElementGroupingService, MaterialElementGroupingService>();
