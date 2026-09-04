@@ -21,7 +21,7 @@ namespace LECG.Services
                     var (gray, _, _) = PngIo.LoadGray8(p, ProbeSize);
                     return PbrBakeMath.IsMetallic(PbrBakeMath.MaxGray(gray));
                 }
-                catch (Exception ex) when (ex is System.IO.IOException || ex is NotSupportedException || ex is ArgumentException)
+                catch (Exception ex) when (ex is System.IO.IOException || ex is System.IO.FileFormatException || ex is NotSupportedException || ex is ArgumentException || ex is InvalidOperationException)
                 {
                     return false;
                 }

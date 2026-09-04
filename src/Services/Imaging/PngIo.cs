@@ -15,10 +15,16 @@ namespace LECG.Services.Imaging
             => Load(path, targetSize, PixelFormats.Gray8, 1);
 
         public static void SaveBgra32(string path, byte[] pixels, int width, int height)
-            => Save(path, BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgra32, null, pixels, width * 4));
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(path);
+            ArgumentNullException.ThrowIfNull(pixels);
+            Save(path, BitmapSource.Create(width, height, 96, 96, PixelFormats.Bgra32, null, pixels, width * 4));
+        }
 
         public static void SaveBgr24FromBgra(string path, byte[] bgra, int width, int height)
         {
+            ArgumentException.ThrowIfNullOrWhiteSpace(path);
+            ArgumentNullException.ThrowIfNull(bgra);
             var bgr = new byte[width * height * 3];
             for (int p = 0, s = 0, d = 0; p < width * height; p++, s += 4, d += 3)
             {
@@ -28,7 +34,11 @@ namespace LECG.Services.Imaging
         }
 
         public static void SaveGray8(string path, byte[] pixels, int width, int height)
-            => Save(path, BitmapSource.Create(width, height, 96, 96, PixelFormats.Gray8, null, pixels, width));
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(path);
+            ArgumentNullException.ThrowIfNull(pixels);
+            Save(path, BitmapSource.Create(width, height, 96, 96, PixelFormats.Gray8, null, pixels, width));
+        }
 
         private static (byte[] pixels, int width, int height) Load(string path, int targetSize, PixelFormat format, int bytesPerPixel)
         {

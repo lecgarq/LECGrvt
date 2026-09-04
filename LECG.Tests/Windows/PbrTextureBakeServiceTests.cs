@@ -128,4 +128,12 @@ public sealed class PbrTextureBakeServiceTests : IDisposable
         probe.IsMetallic(metal).Should().BeTrue();
         probe.IsMetallic(dull).Should().BeFalse();
     }
+
+    [Fact]
+    public void MetallicProbe_CorruptFile_ReturnsFalse()
+    {
+        string corrupt = Path.Combine(_root, "corrupt.png");
+        File.WriteAllBytes(corrupt, new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0, 0, 0, 0 });
+        new MetallicProbeService().IsMetallic(corrupt).Should().BeFalse();
+    }
 }
