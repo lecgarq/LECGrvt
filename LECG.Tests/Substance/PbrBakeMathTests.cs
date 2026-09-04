@@ -69,13 +69,13 @@ public class PbrBakeMathTests
     {
         // With m=1, f0Linear = DielectricF0 + (baseLinear - DielectricF0) * 1.0 = baseLinear
         // So encode(decode(x)) must equal x for every byte 0..255
-        for (byte b = 0; b < 255; b++)
+        for (int b = 0; b <= 255; b++)
         {
-            var px = Px(b, b, b, 255);
+            var px = Px((byte)b, (byte)b, (byte)b, 255);
             var f0 = PbrBakeMath.ComputeF0(px, new byte[] { 255 });
-            f0[0].Should().Be(b, $"byte {b} round-trip failed");
-            f0[1].Should().Be(b, $"byte {b} round-trip failed");
-            f0[2].Should().Be(b, $"byte {b} round-trip failed");
+            f0[0].Should().Be((byte)b, $"byte {b} round-trip failed");
+            f0[1].Should().Be((byte)b, $"byte {b} round-trip failed");
+            f0[2].Should().Be((byte)b, $"byte {b} round-trip failed");
         }
     }
 
