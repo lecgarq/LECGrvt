@@ -55,7 +55,9 @@
 
   <Target Name="DeployToRevit" AfterTargets="Build" Condition="'$(SkipRevitDeploy)' != 'true'">
     <PropertyGroup>
-      <RevitAddinsDir>C:\ProgramData\Autodesk\Revit\Addins\2026\LECG</RevitAddinsDir>
+      <!-- Per-user add-in folder (Autodesk's recommended developer deploy; needs no admin rights).
+           The manifest %APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin points at LECG\LECG.dll relative to itself. -->
+      <RevitAddinsDir>$(APPDATA)\Autodesk\Revit\Addins\2026\LECG</RevitAddinsDir>
     </PropertyGroup>
     <Message Text="Deploying to Revit addins: $(RevitAddinsDir)" Importance="high" />
     <ItemGroup>

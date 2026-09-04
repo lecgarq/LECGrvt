@@ -5,7 +5,7 @@ description: Ship a release of the add-in — version bump, changelog, validatio
 
 # Ship
 
-A Revit add-in that compiles and ships broken is worse than one that never shipped — it lands in `C:\ProgramData\...\Addins\2026\` and breaks Revit startup for whoever installed it. The smoke test is the gate.
+A Revit add-in that compiles and ships broken is worse than one that never shipped — it lands in `%APPDATA%\Autodesk\Revit\Addins\2026\` and breaks Revit startup for whoever installed it. The smoke test is the gate.
 
 ## 1. Preflight
 
@@ -55,15 +55,15 @@ Write for the person installing it, not for the person who wrote the diff. "Alig
 dotnet build -c Release
 ```
 
-Without `-p:SkipRevitDeploy=true` — here you *want* the deploy. **Revit must be closed first**: with it open the copy fails on locked DLLs (MSB3027) or leaves a stale mix. It copies dll/pdb/deps.json to `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`. It does not touch the `.addin` manifest; that is installed manually and already in place.
+Without `-p:SkipRevitDeploy=true` — here you *want* the deploy. **Revit must be closed first**: with it open the copy fails on locked DLLs (MSB3027) or leaves a stale mix. It copies dll/pdb/deps.json to `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\`. It does not touch the `.addin` manifest; that is installed manually beside that folder and already in place.
 
-Then open Revit and, before anything visual, confirm it loaded **the build you just deployed** — a second manifest in `%APPDATA%\Autodesk\Revit\Addins\2026\` silently wins over ProgramData:
+Then open Revit and, before anything visual, confirm it loaded **the build you just deployed** — a stray second manifest (e.g. under `C:\ProgramData\Autodesk\Revit\Addins\2026\`) makes Revit pick one silently:
 
 ```bash
 rg -n "Starting External Application: LECG|Duplicate addins|assembly: .*LECG\.dll" "$(ls -t "$LOCALAPPDATA/Autodesk/Revit/Autodesk Revit 2026/Journals/"journal.*.txt | head -1)"
 ```
 
-`Assembly Version` must match `VersionPrefix`, and the `assembly:` path must be the ProgramData folder. If `Duplicate addins:` appears, stop: the smoke test would validate the wrong binary.
+`Assembly Version` must match `VersionPrefix`, and the `assembly:` path must be the `%APPDATA%` folder. If `Duplicate addins:` appears, stop and remove the stray manifest: the smoke test would validate the wrong binary.
 
 Then run `docs/ai/revit-smoke-test.md` in Revit: startup, ribbon loads, a representative command, empty-selection edge case, transaction behavior, a modeless flow.
 

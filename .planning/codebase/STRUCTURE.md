@@ -442,7 +442,7 @@ public void DoWork(Document doc, SomeInput input)
 - Tracked: No; regenerated per GSD run
 
 ### `docs/deployment/` (Deployment Runbook)
-- `LECG.addin.template`: Revit add-in manifest template (not deployed; live at `C:\ProgramData\...`)
+- `LECG.addin.template`: Revit add-in manifest template (not deployed; live at `%APPDATA%\...`)
 - `README.md`: Deployment instructions and troubleshooting
 
 ### `docs/ai/` (GSD Context)
@@ -470,8 +470,8 @@ public void DoWork(Document doc, SomeInput input)
 
 ### Deployment Target
 
-- **Live Path:** `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`
-- **Manifest:** `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin` (manually installed)
+- **Live Path:** `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\`
+- **Manifest:** `%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin` (manually installed)
 - **Trigger:** MSBuild `DeployToRevit` target after build (unless `-p:SkipRevitDeploy=true`)
 
 ### CI Behavior

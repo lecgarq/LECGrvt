@@ -90,7 +90,7 @@ dotnet build -p:SkipRevitDeploy=true
 dotnet test -c Debug -p:SkipRevitDeploy=true
 ```
 
-Both flags are mandatory. A plain `dotnet build` — and `dotnet test`, which builds — copies output into `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`, overwriting the live add-in, and fails with MSB3027 while Revit holds the DLLs.
+Both flags are mandatory. A plain `dotnet build` — and `dotnet test`, which builds — copies output into `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\`, overwriting the live add-in, and fails with MSB3027 while Revit holds the DLLs.
 
 Put the testable logic where a test can reach it. The runner has only Nice3point *reference* assemblies: anything whose constructor, field, or method body names a Revit type is unconstructible in tests (`FileNotFoundException: 'RevitAPI'`). Pure logic goes in `LECG.Core` or a static that takes primitives; the Revit-touching shell stays thin. CI enforces 90 % line coverage on `LECG.Core`, so Core code without a test fails the build — run the coverage command in `/lecg-phase` step 4 if you touched Core.
 

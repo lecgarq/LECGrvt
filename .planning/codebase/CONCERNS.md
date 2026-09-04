@@ -189,14 +189,14 @@ Audit: `.planning/archive/warnings-review/AUDIT.md`. 6 of 8 requirements met, 2 
 ## Deployment & Build Risks
 
 **Plain dotnet build deploys to live add-in folder:**
-- Issue: `LECG.csproj:61-72` defines a `DeployToRevit` target that copies DLL/PDB/deps.json to `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG` after every build UNLESS `-p:SkipRevitDeploy=true` is passed.
+- Issue: `LECG.csproj:61-72` defines a `DeployToRevit` target that copies DLL/PDB/deps.json to `%APPDATA%\Autodesk\Revit\Addins\2026\LECG` after every build UNLESS `-p:SkipRevitDeploy=true` is passed.
 - Files: `LECG.csproj:61-72`
 - Impact: Running `dotnet build` without the flag will overwrite the live add-in. If Revit has the DLL locked, the build fails noisily. If Revit has exited or the DLL is not locked, the folder is silently updated, replacing a working version with a potentially broken debug build.
 - Fix approach: (Already documented in repo-context.md) Always build with `dotnet build -p:SkipRevitDeploy=true` for validation. Only use plain `dotnet build` when deployment is explicitly intended and Revit is closed.
 
 **`.addin` manifest not generated or deployed:**
-- Issue: The build does NOT generate or deploy the `.addin` manifest file. It is manually installed at `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin` and not tracked in the repo (only a template at `docs/deployment/LECG.addin.template`).
-- Files: No `.addin` file in repo; template at `docs/deployment/LECG.addin.template`; live manifest at machine-specific `C:\ProgramData\...`
+- Issue: The build does NOT generate or deploy the `.addin` manifest file. It is manually installed at `%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin` and not tracked in the repo (only a template at `docs/deployment/LECG.addin.template`).
+- Files: No `.addin` file in repo; template at `docs/deployment/LECG.addin.template`; live manifest at machine-specific `%APPDATA%\...`
 - Impact: If the live manifest is deleted, corrupted, or accidentally modified, Revit will not load LECG until it is reinstalled. The repo has no automated way to restore it. Developers who install LECG on a new machine must manually copy the manifest file.
 - Fix approach: (1) Add a manifest generation/installation step to a setup script or docs (not the build target, to preserve manual control). (2) Add a validation check in App.OnStartup to verify the manifest exists and is valid. (3) Document the install procedure clearly in `docs/deployment/README.md`.
 

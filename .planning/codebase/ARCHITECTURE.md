@@ -207,7 +207,7 @@
 
 **Revit Add-In Load:**
 - Location: `src/App.cs:13` — `App : IExternalApplication`
-- Triggers: Revit startup (reads `LECG.addin` manifest at `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin`)
+- Triggers: Revit startup (reads `LECG.addin` manifest at `%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin`)
 - Responsibilities: 
   - Register `pack://` URI scheme workaround for .NET 8 resource loading
   - Load global WPF resource dictionaries
@@ -277,11 +277,11 @@
 
 ### Add-in Registration
 
-**Manifest Location:** `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin` (machine-wide, manually installed)
+**Manifest Location:** `%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin` (per-user, manually installed)
 
 **Manifest Template:** `docs/deployment/LECG.addin.template` (tracked in repo; runtime version differs: uses `<ClientId>` instead of `<AddInId>`, but works)
 
-**Assembly Deployment:** `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\` directory
+**Assembly Deployment:** `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\` directory
 - Main DLL: `LECG.dll` (built to `bin/x64/{config}/net8.0-windows/`)
 - Deployed by: MSBuild `DeployToRevit` target after build (unless `-p:SkipRevitDeploy=true`)
 - On CI: Automatically skipped when `GITHUB_ACTIONS` or `CI` env vars set
@@ -533,9 +533,9 @@ if (el is FamilyInstance fi)
 **Build Output:** `bin/x64/{config}/net8.0-windows/`
 - LECG.dll, LECG.pdb, LECG.deps.json
 
-**Live Installation Path:** `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`
+**Live Installation Path:** `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\`
 - Deployed by MSBuild `DeployToRevit` target (default, unless `-p:SkipRevitDeploy=true`)
-- Manifest: `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin` (manually installed, not auto-deployed)
+- Manifest: `%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin` (manually installed, not auto-deployed)
 
 **Deployment Trigger:**
 - `DeployToRevit` target runs after `Build` (AfterTargets)
