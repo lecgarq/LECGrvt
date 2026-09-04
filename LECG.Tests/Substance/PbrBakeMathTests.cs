@@ -61,8 +61,22 @@ public class PbrBakeMathTests
     public void ComputeF0_Metallic255_IsBaseColor()
     {
         var f0 = PbrBakeMath.ComputeF0(Px(200, 100, 50), new byte[] { 255 });
-        // LUT round-trip quantization: 100 may become 99
-        f0.Should().Equal(50, 99, 200, 255);
+        f0.Should().Equal(50, 100, 200, 255);
+    }
+
+    [Fact]
+    public void ComputeF0_Metallic255_IsIdentityForAllBytes()
+    {
+        // With m=1, f0Linear = DielectricF0 + (baseLinear - DielectricF0) * 1.0 = baseLinear
+        // So encode(decode(x)) must equal x for every byte 0..255
+        for (byte b = 0; b < 255; b++)
+        {
+            var px = Px(b, b, b, 255);
+            var f0 = PbrBakeMath.ComputeF0(px, new byte[] { 255 });
+            f0[0].Should().Be(b, $"byte {b} round-trip failed");
+            f0[1].Should().Be(b, $"byte {b} round-trip failed");
+            f0[2].Should().Be(b, $"byte {b} round-trip failed");
+        }
     }
 
     [Fact]

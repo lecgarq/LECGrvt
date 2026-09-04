@@ -9,8 +9,7 @@ public static class PbrBakeMath
     public const double DielectricF0 = 0.04;
     public const byte MetallicThreshold = 26; // > 10 % of 255
 
-    private static readonly byte[] SrgbToLinearLut = BuildSrgbToLinear();
-    private static readonly byte[] LinearToSrgbLut = BuildLinearToSrgb();
+    private static readonly double[] SrgbToLinear = BuildSrgbToLinear();
 
     public static void InvertGreen(Span<byte> bgra)
     {
@@ -52,9 +51,9 @@ public static class PbrBakeMath
             double m = metallicGray[p] / 255.0;
             for (int c = 0; c < 3; c++)
             {
-                double baseLinear = SrgbToLinearLut[baseColorBgra[o + c]] / 255.0;
+                double baseLinear = SrgbToLinear[baseColorBgra[o + c]];
                 double f0Linear = DielectricF0 + (baseLinear - DielectricF0) * m;
-                f0[o + c] = LinearToSrgbLut[(int)Math.Round(Math.Clamp(f0Linear, 0, 1) * 255)];
+                f0[o + c] = EncodeSrgb(f0Linear);
             }
             f0[o + 3] = 255;
         }
@@ -76,6 +75,13 @@ public static class PbrBakeMath
 
     private static byte Mul(byte value, int factor255) => (byte)((value * factor255 + 127) / 255);
 
+    private static byte EncodeSrgb(double linear)
+    {
+        double clamped = Math.Clamp(linear, 0, 1);
+        double c = clamped <= 0.0031308 ? clamped * 12.92 : 1.055 * Math.Pow(clamped, 1 / 2.4) - 0.055;
+        return (byte)Math.Round(c * 255);
+    }
+
     private static void EnsureSameLength(ReadOnlySpan<byte> bgra, ReadOnlySpan<byte> gray)
     {
         if (bgra.Length != gray.Length * 4)
@@ -84,26 +90,13 @@ public static class PbrBakeMath
         }
     }
 
-    private static byte[] BuildSrgbToLinear()
+    private static double[] BuildSrgbToLinear()
     {
-        var lut = new byte[256];
+        var lut = new double[256];
         for (int i = 0; i < 256; i++)
         {
             double c = i / 255.0;
-            double lin = c <= 0.04045 ? c / 12.92 : Math.Pow((c + 0.055) / 1.055, 2.4);
-            lut[i] = (byte)Math.Round(lin * 255);
-        }
-        return lut;
-    }
-
-    private static byte[] BuildLinearToSrgb()
-    {
-        var lut = new byte[256];
-        for (int i = 0; i < 256; i++)
-        {
-            double lin = i / 255.0;
-            double c = lin <= 0.0031308 ? lin * 12.92 : 1.055 * Math.Pow(lin, 1 / 2.4) - 0.055;
-            lut[i] = (byte)Math.Round(Math.Clamp(c, 0, 1) * 255);
+            lut[i] = c <= 0.04045 ? c / 12.92 : Math.Pow((c + 0.055) / 1.055, 2.4);
         }
         return lut;
     }
