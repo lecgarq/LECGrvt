@@ -10,7 +10,6 @@ namespace LECG.Models
         string? NormalPath,
         string? MetallicPath,
         string? AoPath,
-        string? DisplacementPath,
         string? OpacityPath,
         bool UseRenderAppearanceForShading,
         double ScaleXMillimeters,

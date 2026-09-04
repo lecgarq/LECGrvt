@@ -34,7 +34,7 @@
         <!-- HEADER -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
             <TextBlock Text="PBR Material Creator" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
-            <TextBlock Text="Select a folder with PBR textures. Maps are auto-detected by filename keywords (basecolor, normal, roughness, metallic, ao, displacement, opacity). Enter a material name and create." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
+            <TextBlock Text="Select a folder with PBR textures. Maps are auto-detected by filename keywords (basecolor, normal, roughness, metallic, ao, opacity). Enter a material name and create." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
         </StackPanel>
 
         <!-- TAB BAR -->
@@ -208,7 +208,7 @@
                     </Grid>
 
                     <!-- Normal -->
-                    <TextBlock Text="Normal Map" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBlock Text="Normal Map (required)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -225,7 +225,7 @@
                     </Grid>
 
                     <!-- Roughness -->
-                    <TextBlock Text="Roughness" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBlock Text="Roughness (required)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -242,7 +242,7 @@
                     </Grid>
 
                     <!-- Metallic -->
-                    <TextBlock Text="Metallic" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBlock Text="Metallic (required)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -275,23 +275,6 @@
                         <Button Grid.Column="3" Content="X" Command="{Binding ClearPathCommand}" CommandParameter="AO" Margin="4,0,0,0" Width="36" Height="36"/>
                     </Grid>
 
-                    <!-- Displacement -->
-                    <TextBlock Text="Displacement / Height" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Text="{Binding DisplacementPath}" Height="36" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="4" Margin="6,0,0,0">
-                            <Image Source="{Binding DisplacementPreview}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        </Border>
-                        <Button Grid.Column="2" Content="..." Command="{Binding BrowseCommand}" CommandParameter="Displacement" Margin="6,0,0,0" Width="36" Height="36" Style="{DynamicResource SecondaryButtonStyle}"/>
-                        <Button Grid.Column="3" Content="X" Command="{Binding ClearPathCommand}" CommandParameter="Displacement" Margin="4,0,0,0" Width="36" Height="36"/>
-                    </Grid>
-
                     <!-- Opacity -->
                     <TextBlock Text="Opacity / Alpha" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,8">
@@ -311,7 +294,7 @@
 
                     <!-- INFO -->
                     <Border Background="{DynamicResource LecgBaseBackground}" CornerRadius="4" Padding="12" Margin="0,4,0,0">
-                        <TextBlock Text="Normal maps are flagged as type Normal (not Bump) in Revit's appearance asset. Metallic maps enable the metal mode. Displacement maps are assigned to the bump channel when no normal is present, or to the displacement channel otherwise. Average color is derived from the diffuse map."
+                        <TextBlock Text="Materials use Revit's Advanced Opaque schema. Textures are re-baked to 8-bit PNG under a _revit folder next to the sources: AO is multiplied into base color, the normal map's green channel is flipped to OpenGL, and a metallic map becomes a reflectance (F0) map. Height maps are not used."
                                    TextWrapping="Wrap"
                                    FontSize="11"
                                    Foreground="{DynamicResource LecgTextMuted}"/>

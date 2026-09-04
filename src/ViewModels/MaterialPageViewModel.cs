@@ -42,9 +42,6 @@ namespace LECG.ViewModels
         private string _aoPath = string.Empty;
 
         [ObservableProperty]
-        private string _displacementPath = string.Empty;
-
-        [ObservableProperty]
         private string _opacityPath = string.Empty;
 
         [ObservableProperty]
@@ -61,9 +58,6 @@ namespace LECG.ViewModels
 
         [ObservableProperty]
         private BitmapImage? _aoPreview;
-
-        [ObservableProperty]
-        private BitmapImage? _displacementPreview;
 
         [ObservableProperty]
         private BitmapImage? _opacityPreview;
@@ -83,11 +77,13 @@ namespace LECG.ViewModels
             !string.IsNullOrWhiteSpace(MaterialName) &&
             !string.IsNullOrWhiteSpace(DiffusePath) &&
             File.Exists(DiffusePath) &&
-            HasValidOptionalPath(RoughnessPath) &&
-            HasValidOptionalPath(NormalPath) &&
-            HasValidOptionalPath(MetallicPath) &&
+            !string.IsNullOrWhiteSpace(NormalPath) &&
+            File.Exists(NormalPath) &&
+            !string.IsNullOrWhiteSpace(RoughnessPath) &&
+            File.Exists(RoughnessPath) &&
+            !string.IsNullOrWhiteSpace(MetallicPath) &&
+            File.Exists(MetallicPath) &&
             HasValidOptionalPath(AoPath) &&
-            HasValidOptionalPath(DisplacementPath) &&
             HasValidOptionalPath(OpacityPath);
 
         public Action? CanRunNotifier { get; set; }
@@ -150,12 +146,6 @@ namespace LECG.ViewModels
             NotifyCanRun();
         }
 
-        partial void OnDisplacementPathChanged(string value)
-        {
-            DisplacementPreview = LoadPreview(value);
-            NotifyCanRun();
-        }
-
         partial void OnOpacityPathChanged(string value)
         {
             OpacityPreview = LoadPreview(value);
@@ -214,7 +204,6 @@ namespace LECG.ViewModels
                 case "Normal": NormalPath = value; break;
                 case "Metallic": MetallicPath = value; break;
                 case "AO": AoPath = value; break;
-                case "Displacement": DisplacementPath = value; break;
                 case "Opacity": OpacityPath = value; break;
             }
         }
@@ -241,9 +230,6 @@ namespace LECG.ViewModels
             if (detected.TryGetValue("AO", out string? ao) && ao != null)
             { AoPath = ao; count++; }
 
-            if (detected.TryGetValue("Displacement", out string? displacement) && displacement != null)
-            { DisplacementPath = displacement; count++; }
-
             if (detected.TryGetValue("Opacity", out string? opacity) && opacity != null)
             { OpacityPath = opacity; count++; }
 
@@ -262,7 +248,6 @@ namespace LECG.ViewModels
                 NormalizeOptionalPath(NormalPath),
                 NormalizeOptionalPath(MetallicPath),
                 NormalizeOptionalPath(AoPath),
-                NormalizeOptionalPath(DisplacementPath),
                 NormalizeOptionalPath(OpacityPath),
                 true,
                 2500,
