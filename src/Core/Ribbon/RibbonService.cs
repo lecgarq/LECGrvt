@@ -212,12 +212,21 @@ namespace LECG.Core.Ribbon
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
-                UIConstants.ButtonSexy_Name,
-                UIConstants.ButtonSexy_Text,
-                "LECG.Commands.SexyRevitCommand",
-                UIConstants.ButtonSexy_Tooltip,
-                AppImages.Sparkles
+                UIConstants.ButtonSubstanceBatch_Name,
+                UIConstants.ButtonSubstanceBatch_Text,
+                "LECG.Commands.SubstanceBatchCommand",
+                UIConstants.ButtonSubstanceBatch_Tooltip,
+                AppImages.Palette
             ), assemblyPath, availability);
+
+            // Sexy Revit button disabled — keep only the render/material buttons.
+            //RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+            //    UIConstants.ButtonSexy_Name,
+            //    UIConstants.ButtonSexy_Text,
+            //    "LECG.Commands.SexyRevitCommand",
+            //    UIConstants.ButtonSexy_Tooltip,
+            //    AppImages.Sparkles
+            //), assemblyPath, availability);
         }
 
         private void CreateAlignPanel(UIControlledApplication app, string tabName, string assemblyPath)

@@ -46,6 +46,11 @@ namespace LECG.Configuration
         public const string ButtonMaterialCreator_Text = "PBR\nMaterial";
         public const string ButtonMaterialCreator_Tooltip = "Create a render-ready material from diffuse, roughness, and bump textures.";
 
+        // Substance Batch
+        public const string ButtonSubstanceBatch_Name = "btnSubstanceBatch";
+        public const string ButtonSubstanceBatch_Text = "Substance\nBatch";
+        public const string ButtonSubstanceBatch_Tooltip = "Create Advanced Opaque materials in batch from a Substance bake library (basecolor, normal, roughness, metallic, AO).";
+
         // Reset Slabs
         public const string ButtonResetSlabs_Name = "cmdResetSlabs";
         public const string ButtonResetSlabs_Text = "Reset\nSlabs"; // Newline for ribbon layout

@@ -15,7 +15,7 @@
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- Converters if needed -->
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
             <!-- Log Item Template -->
             <DataTemplate DataType="{x:Type logging:LogEntry}">
@@ -171,6 +171,9 @@
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Command="{Binding CopyCommand}" Content="Copy Log" Style="{DynamicResource SecondaryButtonStyle}" Height="32" Padding="12,0"/>
+            <Button Grid.Column="1" Command="{Binding CancelCommand}" Content="Cancel" Style="{DynamicResource SecondaryButtonStyle}" Height="32" Padding="12,0" Margin="8,0,0,0"
+                    HorizontalAlignment="Right"
+                    Visibility="{Binding CanCancel, Converter={StaticResource BoolToVis}}"/>
             <Button Grid.Column="2" Click="Close_Click" Content="Close" Style="{DynamicResource AccentButtonStyle}" Height="32" MinWidth="80"/>
         </Grid>
     </Grid>
