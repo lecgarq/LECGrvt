@@ -26,7 +26,23 @@ public static class SubstanceLibraryScanner
             string category = Path.GetFileName(categoryDir);
             if (category.StartsWith('_')) continue;
 
-            foreach (string materialDir in Directory.EnumerateDirectories(categoryDir))
+            IEnumerable<string> materialDirs;
+            try
+            {
+                materialDirs = Directory.EnumerateDirectories(categoryDir).ToList();
+            }
+            catch (IOException ex)
+            {
+                warnings.Add($"{category}: cannot enumerate ({ex.Message})");
+                continue;
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                warnings.Add($"{category}: cannot enumerate ({ex.Message})");
+                continue;
+            }
+
+            foreach (string materialDir in materialDirs)
             {
                 string slugFolder = Path.GetFileName(materialDir);
                 if (slugFolder.StartsWith('_')) continue;
@@ -56,6 +72,10 @@ public static class SubstanceLibraryScanner
                     warnings.Add($"{category}/{slugFolder}: invalid manifest JSON ({ex.Message})");
                 }
                 catch (IOException ex)
+                {
+                    warnings.Add($"{category}/{slugFolder}: cannot read manifest ({ex.Message})");
+                }
+                catch (UnauthorizedAccessException ex)
                 {
                     warnings.Add($"{category}/{slugFolder}: cannot read manifest ({ex.Message})");
                 }

@@ -98,4 +98,38 @@ public sealed class SubstanceLibraryScannerTests : IDisposable
         result.Entries.Should().BeEmpty();
         result.Warnings.Should().ContainSingle();
     }
+
+    [Fact]
+    public void Scan_UnreadableManifest_WarnsAndContinues()
+    {
+        WriteManifest("Stone", "locked", Good("locked"));
+        WriteManifest("Stone", "ok", Good("ok"));
+
+        string lockedManifestPath = Path.Combine(_root, "Stone", "locked", "locked_manifest.json");
+
+        // Hold the file open to make ReadAllText fail with IOException (sharing violation on Windows)
+        using (new FileStream(lockedManifestPath, FileMode.Open, FileAccess.Read, FileShare.None))
+        {
+            var result = SubstanceLibraryScanner.Scan(_root);
+
+            // The ok entry should still be scanned
+            result.Entries.Should().ContainSingle(e => e.Slug == "ok");
+            // The locked entry should produce a warning
+            result.Warnings.Should().ContainSingle(w => w.Contains("locked", StringComparison.Ordinal)
+                && w.Contains("cannot read manifest", StringComparison.Ordinal));
+        }
+    }
+
+    [Fact]
+    public void Scan_SkipsUnderscoreSlugFolders()
+    {
+        WriteManifest("Stone", "_tmp", Good("_tmp"));
+        WriteManifest("Stone", "z", Good("z"));
+
+        var result = SubstanceLibraryScanner.Scan(_root);
+
+        // Should only contain the z entry, _tmp should be skipped
+        result.Entries.Should().ContainSingle(e => e.Slug == "z");
+        result.Warnings.Should().BeEmpty();
+    }
 }
