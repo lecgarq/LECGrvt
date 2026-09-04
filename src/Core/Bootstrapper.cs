@@ -274,6 +274,7 @@ namespace LECG.Core
             services.AddTransient<CategoryChangerViewModel>();
             services.AddTransient<RenderAppearanceViewModel>();
             services.AddTransient<PbrMaterialCreatorViewModel>();
+            services.AddTransient<SubstanceBatchViewModel>();
             services.AddTransient<SplitBoundariesViewModel>();
             services.AddTransient<TypeToLinkedModelsViewModel>();
             services.AddTransient<ConvertFloorToToposolidViewModel>();
@@ -309,6 +310,7 @@ namespace LECG.Core
             services.AddTransient<Views.AlignDashboardView>();
             services.AddTransient<Views.RenderAppearanceView>();
             services.AddTransient<Views.PbrMaterialCreatorView>();
+            services.AddTransient<Views.SubstanceBatchView>();
             services.AddTransient<Views.SplitBoundariesView>();
             services.AddTransient<Views.TypeToLinkedModelsView>();
             services.AddTransient<Views.ConvertFloorToToposolidView>();
