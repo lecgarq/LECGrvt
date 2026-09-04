@@ -13,8 +13,8 @@ Stop and report if any of these fail. Do not proceed and fix things silently.
 
 - Working tree clean (`git status --porcelain` empty)
 - On `main`, or a branch that is about to merge to it
-- `dotnet build -p:SkipRevitDeploy=true` — 0 errors
-- `dotnet test` — all pass
+- `dotnet build -p:SkipRevitDeploy=true` — 0 errors **and 0 warnings**; this repo builds clean, so a new warning is a finding, not noise
+- `dotnet test -c Debug -p:SkipRevitDeploy=true` — all pass. The flag is mandatory: `dotnet test` builds the add-in and the deploy step fails with MSB3027 while Revit is open
 
 A failing test blocks the release. Do not ship around it.
 

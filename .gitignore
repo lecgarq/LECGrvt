@@ -77,3 +77,6 @@ __pycache__/
 .gsd/STATE.md
 .gsd/JOURNAL.md
 .gsd/TODO.md
+
+# Local Claude Code settings — machine-specific permission allowlist, not shared
+.claude/settings.local.json

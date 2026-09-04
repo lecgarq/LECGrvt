@@ -7,7 +7,7 @@ description: Track down a bug systematically — reproduce, isolate, find the ro
 
 A bug report names a symptom. The fix goes at the root, not where the symptom surfaced.
 
-Most Revit bugs are one of five things. Check the table before theorising — it usually ends the investigation in one step.
+Almost every Revit bug here is one of the rows below. Check the table before theorising — it usually ends the investigation in one step.
 
 | Symptom | Almost always |
 |---------|---------------|
@@ -17,6 +17,10 @@ Most Revit bugs are one of five things. Check the table before theorising — it
 | Geometry off by a small constant, or in the wrong place | Unit conversion (internal units are feet; `AssetPropertyDistance` is inches), or link geometry not passed through `GetTotalTransform()` |
 | Works on a small model, unusable on a real one | `FilteredElementCollector` built inside a loop, slow filters before quick ones, or `Regenerate()` in a loop |
 | Revit's own dialogs or another add-in look wrong | Something merged into `Application.Current.Resources` — that is Revit's application, and implicit styles there go process-wide. See `docs/ai/ui-guide.md` |
+| `Cannot find resource named '...'` when a window opens | The view declared its own `<base:LecgWindow.Resources>` block, which **replaces** the constructor's dictionary instead of merging. Every view must merge `LecgTheme.xaml` in its own XAML |
+| A test throws `FileNotFoundException: ... 'RevitAPI'` constructing a service | The service takes a Revit-typed interface in its constructor. Reference `Transaction` inside a method body instead — type loading stays lazy. `src/Services/Health/WarningsService.cs:83-88` |
+| Reproduces only in Revit, never in tests | Check the Revit journal for `Assembly version conflict` before anything else. In Revit's shared AppDomain the first-loaded version wins — Clipper2Lib and `Microsoft.Extensions.DependencyInjection.Abstractions` both load from other add-ins, so the running code may not be the version LECG compiled against |
+| Something "temporary" or "view-only" throws `ModificationOutsideTransactionException` | Temporary view modes **are** model modifications. `View.IsolateElementsTemporary` and its `Hide*Temporary` siblings need an open transaction |
 
 ## Steps
 
@@ -36,7 +40,10 @@ Most Revit bugs are one of five things. Check the table before theorising — it
 
 ## Rules
 
-- Verify API assumptions against `docs/ai/revit-api/members.txt` — a signature you misremember can be the bug.
+- Verify API assumptions against `docs/ai/revit-api/members.txt` — a signature you misremember can be the bug. Absence is evidence: the index is built from the assemblies the build compiles against.
+- Read *Gotchas already paid for* in `docs/ai/revit-protocol.md` before theorising. Someone already lost a day to it.
 - Never claim a fix works in Revit without opening Revit. If the `mcp-server-for-revit` tools are connected, reproducing and re-running the failing path through them in the live session counts.
+- **An MCP probe cannot answer a transaction question.** `send_code_to_revit` runs inside its own open transaction, so `Document.IsModifiable` is `True` on entry and code that needs a transaction appears to work. To exercise the no-transaction path, target another open document with `IsModifiable == False` (`document.Application.Documents`). Check `IsModifiable` at entry before drawing any conclusion.
+- Rebuild with `dotnet build -p:SkipRevitDeploy=true` and `dotnet test -c Debug -p:SkipRevitDeploy=true`. Without the flag you overwrite the add-in you are debugging.
 - If you cannot reproduce it, say so. Do not ship a speculative fix and call it done.
 - No debug scaffolding left behind. Remove the logging you added to find it, unless it earns its place.

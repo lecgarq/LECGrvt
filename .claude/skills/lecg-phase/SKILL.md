@@ -20,7 +20,15 @@ Read, in this order, stopping when you have enough:
 - `.planning/codebase/MAP.md` — structure and blast radius
 - **The actual files this touches.** Never plan from documents alone.
 
-If the change touches the Revit API or deployment, also read `docs/ai/revit-protocol.md`. If it touches WPF views, styles, or resources, read `docs/ai/ui-guide.md` — its scoping rule is not optional.
+If the change touches the Revit API or deployment, also read `docs/ai/revit-protocol.md` — including its *Gotchas already paid for* list. If it touches WPF views, styles, or resources, read `docs/ai/ui-guide.md` — its scoping rule is not optional.
+
+**Every Revit type or overload not already used in `src/` gets looked up before it reaches the plan**, not after the build fails:
+
+```bash
+rg "^Autodesk\.Revit\.DB\.TransactionGroup\." docs/ai/revit-api/members.txt
+```
+
+Absence is evidence. Read `docs/ai/revit-api/SEMANTICS.md` as well if the phase mutates documents in bulk or touches units, geometry tolerance, links, or parameters.
 
 ## 2. Plan
 
@@ -42,7 +50,7 @@ Write `.planning/phases/<NN-slug>/PLAN.md`. Short. Every claim cites `file:line`
 1. <ordered, each independently verifiable>
 
 ## Risks
-<what could break, and how the plan avoids it. Revit rows from revit-protocol.md if applicable.>
+<every applicable row from the revit-protocol.md risk table — transactions, API context, modeless WPF, units, tolerance, links, parameters, collectors, XAML binding, deployment — and how the plan avoids it. Write "N/A — reason" for the rest; never silently drop a row.>
 
 ## Validation
 <the exact commands that will prove this works>
@@ -69,7 +77,8 @@ One step at a time.
 Run what the plan said. Report per level, never blurred:
 
 - `dotnet build -p:SkipRevitDeploy=true` — **always this flag.** A plain build overwrites the live Revit 2026 add-in folder.
-- `dotnet test`
+- `dotnet test -c Debug -p:SkipRevitDeploy=true` — **the flag is mandatory here too.** `dotnet test` builds the add-in, and the deploy step fails with MSB3027 while Revit is open.
+- XAML compiles as part of the build. That proves the markup parses and proves **nothing** about bindings or `StaticResource` lookups — both fail only at runtime.
 - Revit runtime: only claimable if Revit was actually opened. If the `mcp-server-for-revit` tools are connected (Revit open with the MCP plugin service on), use them — query the document and execute the changed path in the live session; that counts as runtime validation *for what it exercised*. Ribbon presence, dialog binding, and undo grouping still need eyes on Revit. Otherwise write `Revit runtime validation: not executed` and list the pending smoke-test steps from `docs/ai/revit-smoke-test.md`.
 
 Paste real failing output. Never paraphrase a failure away. A phase with failing tests is not done — say it plainly.

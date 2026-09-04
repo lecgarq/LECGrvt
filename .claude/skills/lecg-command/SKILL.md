@@ -55,9 +55,16 @@ public class ThingCommand : RevitCommand
 ## Service shape
 
 - All document writes through `ITransactionService` — never `new Transaction(` outside `Services/Infrastructure`.
+- **Never take a Revit-typed interface as a constructor parameter.** `ITransactionService` — or any interface whose signatures name Revit types — in a ctor makes the class unconstructible in tests: `FileNotFoundException: Could not load file or assembly 'RevitAPI'`. Resolve it inside the method body instead; type loading stays lazy. Precedent: `src/Services/Health/WarningsService.cs:83-88`.
 - Return a result the command can report on. Do not show UI from a service.
-- Check `docs/ai/revit-api/SEMANTICS.md` before anything that mutates in bulk or touches units, geometry tolerance, or linked models.
-- Verify unfamiliar API calls against `docs/ai/revit-api/members.txt` before writing them.
+- Read `docs/ai/revit-api/SEMANTICS.md` before anything that mutates in bulk or touches units, geometry tolerance, links, or parameters. The rules that bite here: one transaction per batch (not per element), never a `FilteredElementCollector` inside a loop, quick filters before slow ones, `StorageType` and `IsReadOnly` checked before parameter access, internal units are feet, no `==` on `double` or `XYZ`.
+- **Look the API up; never recall it.** Any type or overload not already used in `src/`:
+
+```bash
+rg "^Autodesk\.Revit\.DB\.Wall\.Create" docs/ai/revit-api/members.txt
+```
+
+  Absence is evidence — the index is generated from the assemblies the build compiles against, so a member that is not there does not exist in 2026 and will not compile. For what a member actually *does*, grep the NuGet XML docs rather than the web: `rg -A4 "M:Autodesk.Revit.DB.Wall.Create" "$HOME/.nuget/packages/nice3point.revit.api.revitapi/2026.4.10/ref/net8.0-windows7.0/RevitAPI.xml"`.
 
 ## View shape
 
@@ -65,6 +72,7 @@ Read `docs/ai/ui-guide.md` before writing XAML. Two rules carry the weight:
 
 - **Root element is `<base:LecgWindow>`**, never a raw `Window`. The base merges the theme into that window only.
 - **Never merge anything into `Application.Current.Resources`** — that is Revit's application, and implicit styles there restyle Revit's own dialogs and every other add-in.
+- **A view that declares a `<base:LecgWindow.Resources>` block must merge `LecgTheme.xaml` itself.** A declared `Resources` dictionary *replaces* the one the `LecgWindow` constructor populated; it does not merge into it. Every `StaticResource` lookup then fails at runtime with `Cannot find resource named '...'` — invisible to both the compiler and the test suite. All 25 existing views do the merge; copy one.
 
 Use the tokens in `src/Resources/` (`Base/Colors`, `Base/Brushes`, `Base/Sizes`, `Base/Fonts`). A literal hex value or hardcoded margin in a view is a bug.
 
@@ -78,8 +86,10 @@ Then add the button in `RibbonService`, copying an adjacent `CreateButton` call 
 
 ```bash
 dotnet build -p:SkipRevitDeploy=true
-dotnet test
+dotnet test -c Debug -p:SkipRevitDeploy=true
 ```
+
+Both flags are mandatory. A plain `dotnet build` — and `dotnet test`, which builds — copies output into `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`, overwriting the live add-in, and fails with MSB3027 while Revit holds the DLLs.
 
 Build and tests prove wiring compiles and service logic works. They prove **nothing** about whether the button appears or the dialog binds — XAML compiles without its bindings resolving. That needs Revit:
 
