@@ -116,8 +116,16 @@ namespace LECG.Services
 
         private static string SanitizeSlug(string name)
         {
-            var chars = name.Trim().ToLowerInvariant().Select(c => char.IsLetterOrDigit(c) ? c : '_').ToArray();
-            return new string(chars).Trim('_');
+            string trimmed = name.Trim();
+            var chars = trimmed.ToLowerInvariant().Select(c => char.IsLetterOrDigit(c) ? c : '_').ToArray();
+            string slug = new string(chars).Trim('_');
+            if (slug.Length > 0)
+            {
+                return slug;
+            }
+
+            byte[] hash = System.Security.Cryptography.SHA256.HashData(System.Text.Encoding.UTF8.GetBytes(trimmed));
+            return "material_" + Convert.ToHexString(hash, 0, 4).ToLowerInvariant();
         }
 
         private ElementId EnsureAppearanceAsset(Document doc, Material mat, string name, Action<string>? logCallback)
