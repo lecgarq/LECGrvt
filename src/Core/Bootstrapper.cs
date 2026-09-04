@@ -89,6 +89,7 @@ namespace LECG.Core
             services.AddSingleton<IMetallicProbeService, MetallicProbeService>();
             services.AddSingleton<IMaterialAppearanceAssetService, MaterialAppearanceAssetService>();
             services.AddSingleton<IAdvancedAppearanceAssetService, AdvancedAppearanceAssetService>();
+            services.AddSingleton<ISubstanceMaterialCreateService, SubstanceMaterialCreateService>();
             services.AddSingleton<IMaterialPbrService, MaterialPbrService>();
             services.AddSingleton<IMaterialElementGroupingService, MaterialElementGroupingService>();
             services.AddSingleton<IMaterialTypeEligibilityService, MaterialTypeEligibilityService>();
