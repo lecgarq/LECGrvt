@@ -40,7 +40,12 @@ public sealed class BakeSidecar
         ArgumentNullException.ThrowIfNull(json);
         try
         {
-            return JsonSerializer.Deserialize<BakeSidecar>(json, Options);
+            var sidecar = JsonSerializer.Deserialize<BakeSidecar>(json, Options);
+            if (sidecar is not null)
+            {
+                sidecar.SourceTicks = new Dictionary<string, long>(sidecar.SourceTicks, StringComparer.OrdinalIgnoreCase);
+            }
+            return sidecar;
         }
         catch (JsonException)
         {

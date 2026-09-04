@@ -59,4 +59,12 @@ public class BakeSidecarTests
     {
         BakeSidecar.FromJson("nope").Should().BeNull();
     }
+
+    [Fact]
+    public void IsFresh_AfterJsonRoundTrip_IgnoresPathCase()
+    {
+        var s = BakeSidecar.Build(2048, new[] { (@"C:\Lib\A.png", 100L) }, false, false);
+        var back = BakeSidecar.FromJson(s.ToJson())!;
+        BakeSidecar.IsFresh(back, 2048, new[] { (@"c:\lib\a.png", 100L) }).Should().BeTrue();
+    }
 }
