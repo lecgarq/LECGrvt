@@ -51,6 +51,11 @@ namespace LECG.Configuration
         public const string ButtonSubstanceBatch_Text = "Substance\nBatch";
         public const string ButtonSubstanceBatch_Tooltip = "Create Advanced Opaque materials in batch from a Substance bake library (basecolor, normal, roughness, metallic, AO).";
 
+        // Dump Asset (diagnostic)
+        public const string ButtonDumpAsset_Name = "btnDumpAsset";
+        public const string ButtonDumpAsset_Text = "Dump\nAsset";
+        public const string ButtonDumpAsset_Tooltip = "Diagnostic: log the appearance asset tree of a picked face's material.";
+
         // Reset Slabs
         public const string ButtonResetSlabs_Name = "cmdResetSlabs";
         public const string ButtonResetSlabs_Text = "Reset\nSlabs"; // Newline for ribbon layout

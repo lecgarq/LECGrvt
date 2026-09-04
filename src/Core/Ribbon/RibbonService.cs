@@ -220,6 +220,14 @@ namespace LECG.Core.Ribbon
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+                UIConstants.ButtonDumpAsset_Name,
+                UIConstants.ButtonDumpAsset_Text,
+                "LECG.Commands.DumpAppearanceAssetCommand",
+                UIConstants.ButtonDumpAsset_Tooltip,
+                AppImages.SearchReplace
+            ), assemblyPath, availability);
+
+            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonSexy_Name,
                 UIConstants.ButtonSexy_Text,
                 "LECG.Commands.SexyRevitCommand",

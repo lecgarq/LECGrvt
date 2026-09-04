@@ -295,3 +295,10 @@ command and one real batch of a small category (Ceiling, 2 materials).
 - Thumbnails in the batch grid.
 - Height/displacement anywhere.
 - Regenerating bakes from `.sbsar`.
+
+## Runtime findings (Task 13)
+
+Pending user run of the "Dump Asset" button in Revit 2026 on an Autodesk library material with a normal map (e.g. a metal mesh). Record here:
+- Advanced Opaque template: library asset `Name` = ?, `BaseSchema` = ?
+- `surface_normal` connected asset `Name`/`BaseSchema` = ? (expected BumpMap), `bumpmap_Type` = ? (expected 1)
+If the schema differs from BumpMap, update `MaterialBitmapPropertyService.BumpMapSchema`; if the template heuristic misses, update `AdvancedAppearanceAssetService.IsOpaqueSchema`.
