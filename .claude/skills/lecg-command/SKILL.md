@@ -1,6 +1,6 @@
 ---
 name: lecg-command
-description: Add a new Revit command to the add-in — command class, service, ViewModel, View, DI registration, and ribbon button, wired the way this repo already does it. Use when the user says "add a command", "new tool", "new ribbon button", "I want a command that...", or types /lecg-command. This is the most repeated task in the repo; follow the existing wiring exactly.
+description: Add a new Revit command to the add-in — command class, service, ViewModel, View, DI registration, and ribbon button, wired the way this repo already does it. Use when the user says "add a command", "new ribbon button", "add a button to the X panel", "I want a command that...", "new dialog for...", or types /lecg-command. Not for changing an existing command's behaviour — that is a plain edit or /lecg-debug. This is the most repeated task in the repo; follow the existing wiring exactly.
 ---
 
 # New command
@@ -15,9 +15,9 @@ Read one existing command end to end first and copy its shape. `src/Commands/Ali
 | 2 | `src/Services/<Name>Service.cs` + `Services/Interfaces/` | The actual work | Revit logic leaks into the command |
 | 3 | `src/ViewModels/<Name>ViewModel.cs` | `: BaseViewModel`, `partial` | — |
 | 4 | `src/Views/<Name>View.xaml` (+ `.cs`) | Root must be `<base:LecgWindow>`, tokens from `src/Resources/` | Raw `Window` is unstyled and unscoped |
-| 5 | `Bootstrapper.ConfigureServices/ViewModels/Views` | `AddSingleton<...>` | `ServiceLocator.GetRequiredService` throws at runtime |
-| 6 | `RibbonService` | `RibbonFactory.CreateButton(panel, new RibbonButtonConfig(...))` | Command exists but no button appears |
-| 7 | `LECG.Tests/` | Cover the service, not the command | — |
+| 5 | `Bootstrapper.ConfigureServices/ViewModels/Views` | Services `AddSingleton<...>`; ViewModels and Views `AddTransient<...>` | `ServiceLocator.GetRequiredService` throws at runtime; a singleton VM shows last run's state |
+| 6 | `RibbonService` | `RibbonFactory.CreateButton(panel, new RibbonButtonConfig(...), assemblyPath, availabilityClassName)` | Command exists but no button appears |
+| 7 | `LECG.Tests/` | Cover the service, not the command | CI coverage gate drops if the logic landed in `LECG.Core` |
 
 Skip 3 and 4 for a command with no UI. Never skip 5 or 6.
 
@@ -38,10 +38,11 @@ public class ThingCommand : RevitCommand
         var vm = ServiceLocator.GetRequiredService<ThingViewModel>();
 
         var view = ServiceLocator.CreateWith<ThingView>(vm);
+        view.Initialize(uiDoc);
         if (view.ShowDialog() == true && vm.ShouldRun)
         {
             var result = service.DoThing(doc, vm.Selection);
-            // report outcome to the user — never fail silently
+            LecgDialog.Show("Thing", BuildCompletionMessage(result)); // never fail silently
         }
     }
 }
@@ -54,7 +55,7 @@ public class ThingCommand : RevitCommand
 
 ## Service shape
 
-- All document writes through `ITransactionService` — never `new Transaction(` outside `Services/Infrastructure`.
+- All document writes through `ITransactionService` — never `new Transaction(` outside `Services/Infrastructure`. One legacy violation exists (`FormulaAutoGroupingCommand`); do not add a second.
 - **Never take a Revit-typed interface as a constructor parameter.** `ITransactionService` — or any interface whose signatures name Revit types — in a ctor makes the class unconstructible in tests: `FileNotFoundException: Could not load file or assembly 'RevitAPI'`. Resolve it inside the method body instead; type loading stays lazy. Precedent: `src/Services/Health/WarningsService.cs:83-88`.
 - Return a result the command can report on. Do not show UI from a service.
 - Read `docs/ai/revit-api/SEMANTICS.md` before anything that mutates in bulk or touches units, geometry tolerance, links, or parameters. The rules that bite here: one transaction per batch (not per element), never a `FilteredElementCollector` inside a loop, quick filters before slow ones, `StorageType` and `IsReadOnly` checked before parameter access, internal units are feet, no `==` on `double` or `XYZ`.
@@ -78,9 +79,9 @@ Use the tokens in `src/Resources/` (`Base/Colors`, `Base/Brushes`, `Base/Sizes`,
 
 ## Registration
 
-Add to the matching `Configure*` method in `Bootstrapper` — services, ViewModels, and Views each have one. Follow the surrounding `AddSingleton<Interface, Impl>()` or `AddSingleton<Concrete>()` style already in that method.
+Add to the matching `Configure*` method in `Bootstrapper` — services, ViewModels, and Views each have one. Lifetimes differ and it matters: `ConfigureServices` uses `AddSingleton<Interface, Impl>()` / `AddSingleton<Concrete>()`; `ConfigureViewModels` and `ConfigureViews` use `AddTransient<>()` so every dialog opens fresh. Copy the surrounding line.
 
-Then add the button in `RibbonService`, copying an adjacent `CreateButton` call for panel, icon, and tooltip conventions.
+Then add the button in `RibbonService`, copying an adjacent `CreateButton` call for panel, icon, and tooltip conventions. Button text and tooltip strings live in `src/Configuration/UIConstants.cs`, panel names in `AppConstants.cs`, icons in `AppImages` — add there, not inline. The fourth argument is the availability class **name as a string** (`"LECG.Core.ProjectDocumentAvailability"`), `""` for always-on.
 
 ## Validate
 
@@ -90,6 +91,8 @@ dotnet test -c Debug -p:SkipRevitDeploy=true
 ```
 
 Both flags are mandatory. A plain `dotnet build` — and `dotnet test`, which builds — copies output into `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`, overwriting the live add-in, and fails with MSB3027 while Revit holds the DLLs.
+
+Put the testable logic where a test can reach it. The runner has only Nice3point *reference* assemblies: anything whose constructor, field, or method body names a Revit type is unconstructible in tests (`FileNotFoundException: 'RevitAPI'`). Pure logic goes in `LECG.Core` or a static that takes primitives; the Revit-touching shell stays thin. CI enforces 90 % line coverage on `LECG.Core`, so Core code without a test fails the build — run the coverage command in `/lecg-phase` step 4 if you touched Core.
 
 Build and tests prove wiring compiles and service logic works. They prove **nothing** about whether the button appears or the dialog binds — XAML compiles without its bindings resolving. That needs Revit:
 

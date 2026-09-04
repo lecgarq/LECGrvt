@@ -1,6 +1,6 @@
 ---
 name: lecg-discuss
-description: Gather context for a roadmap phase before planning it — surface the decisions, unknowns, and assumptions that would otherwise be guessed. Use before /lecg-phase on anything non-obvious, when the user says "let's talk about phase N", "what do you need to know", or types /lecg-discuss. Skip for phases whose approach is already unambiguous.
+description: Gather context for a roadmap phase before planning it — surface the decisions, unknowns, and assumptions that would otherwise be guessed. Use before /lecg-phase on anything non-obvious, when the user says "let's talk about phase N", "what do you need to know before phase N", "assumptions for phase N", or types /lecg-discuss. Skip for phases whose approach is already unambiguous.
 ---
 
 # Discuss
