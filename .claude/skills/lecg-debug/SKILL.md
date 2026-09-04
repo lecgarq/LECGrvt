@@ -1,13 +1,13 @@
 ---
 name: lecg-debug
-description: Track down a bug systematically — reproduce, isolate, find the root cause, fix it once where all callers route through. Use when the user reports something broken, says "it crashes", "it doesn't work", "why is this happening", "debug this", pastes a stack trace or Revit error dialog, or types /lecg-debug.
+description: Track down a bug systematically — reproduce, isolate, find the root cause, fix it once where all callers route through. Use when the user reports something broken, says "it crashes", "it doesn't work", "why is this happening", "debug this", "test fails", "binding doesn't update", pastes a stack trace, a journal excerpt, or a Revit error dialog, or types /lecg-debug.
 ---
 
 # Debug
 
 A bug report names a symptom. The fix goes at the root, not where the symptom surfaced.
 
-Almost every Revit bug here is one of the rows below. Check the table before theorising — it usually ends the investigation in one step.
+Almost every Revit bug here is one of the rows below. Check the table first, before step 1 — it usually ends the investigation in one step. Commands are bash (`rg` = ripgrep); in PowerShell swap `$LOCALAPPDATA/` for `$env:LOCALAPPDATA\`.
 
 | Symptom | Almost always |
 |---------|---------------|
@@ -21,12 +21,25 @@ Almost every Revit bug here is one of the rows below. Check the table before the
 | A test throws `FileNotFoundException: ... 'RevitAPI'` constructing a service | The service takes a Revit-typed interface in its constructor. Reference `Transaction` inside a method body instead — type loading stays lazy. `src/Services/Health/WarningsService.cs:83-88` |
 | Reproduces only in Revit, never in tests | Check the Revit journal for `Assembly version conflict` before anything else. In Revit's shared AppDomain the first-loaded version wins — Clipper2Lib and `Microsoft.Extensions.DependencyInjection.Abstractions` both load from other add-ins, so the running code may not be the version LECG compiled against |
 | Something "temporary" or "view-only" throws `ModificationOutsideTransactionException` | Temporary view modes **are** model modifications. `View.IsolateElementsTemporary` and its `Hide*Temporary` siblings need an open transaction |
+| Rebuilt, redeployed, restarted Revit — behaviour unchanged | Revit is running a different `LECG.dll`. The deploy target is `%APPDATA%\Autodesk\Revit\Addins\2026\LECG`; if a second `LECG.addin` exists (e.g. `C:\ProgramData\Autodesk\Revit\Addins\2026\`), the journal logs `Duplicate addins:` and, per ribbon button, the `assembly:` path it bound. Compare that file's timestamp with your build; remove the stray manifest. Seen 2026-09-04: both present, Revit loaded `%APPDATA%` while a stale ProgramData copy still existed |
+| `FileNotFoundException: 'RevitAPI'` and the constructor has **no** Revit-typed parameter | Any method body that names a Revit-typed interface loads it at JIT time — before that method's own `if (_service == null) return;` runs. Extract the testable logic into a pure static that takes primitives (`SearchReplaceViewModel.BuildScopeKey`) and leave the Revit-touching path to the smoke test |
+| `A compatible .NET SDK was not found` / `Requested SDK version: 8.0.x` | `global.json` pins 8.0.x; `C:\Program Files\dotnet` is first on PATH and only has 9.x. The 8.0 SDK lives in `%LOCALAPPDATA%\Microsoft\dotnet`. Prepend it for the session — PowerShell `$env:PATH = "$env:LOCALAPPDATA\Microsoft\dotnet;$env:PATH"`, bash `export PATH="$LOCALAPPDATA/Microsoft/dotnet:$PATH"` — then rerun. Do not edit `global.json` |
+| CI fails `Line coverage NN% is below threshold 90%` while every test passes | The gate counts `[LECG.Core]*` lines only (`coverlet.runsettings`); new Core code without tests drags it down. Reproduce locally with the coverage command in `/lecg-phase` step 4 before pushing |
 
 ## Steps
 
 **1. Reproduce.** Get the exact trigger — which command, which selection, which document, project or family. A bug you cannot reproduce is a bug you cannot verify fixed. If it only happens in Revit, say so and get the steps from the user.
 
-**2. Read the evidence.** Full stack trace, not the top line. `Autodesk.Revit.Exceptions.*` types are specific and name the cause. Check the Serilog output — this repo logs through a command-scoped logger.
+**2. Read the evidence.** Full stack trace, not the top line. `Autodesk.Revit.Exceptions.*` types are specific and name the cause. Two files hold what the error dialog does not:
+
+- **LECG log** — `%APPDATA%\LECG\Logs\lecg-YYYYMMDD.log` (Serilog, daily file, command-scoped). The command name is on every line; the exception and its stack are on the `[ERR]` line.
+- **Revit journal** — `%LOCALAPPDATA%\Autodesk\Revit\Autodesk Revit 2026\Journals\journal.NNNN.txt`, highest number is the latest session. Read-only evidence of what Revit actually did:
+
+```bash
+rg -n "Starting External Application: LECG|Duplicate addins|assembly: .*LECG\.dll|Assembly version conflict|API_ERROR" "$LOCALAPPDATA/Autodesk/Revit/Autodesk Revit 2026/Journals/journal.NNNN.txt"
+```
+
+  That one grep answers: did LECG load, from which DLL, with which version, and what failed.
 
 **3. Locate.** Use `/lecg-map` for blast radius rather than grepping blind. Read the failing path end to end before forming a hypothesis.
 

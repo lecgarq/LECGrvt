@@ -1,6 +1,6 @@
 ---
 name: lecg-phase
-description: Plan and execute a roadmap phase end to end — evidence-grounded plan, surgical edits, honest validation, atomic commits, state and memory updated. Use when the user says "do phase N", "next phase", "let's build it", "execute the plan", or types /lecg-phase. This is the main build loop.
+description: Plan and execute a roadmap phase end to end — evidence-grounded plan, surgical edits, honest validation, atomic commits, state and memory updated. Use when the user says "do phase N", "next phase", "let's build it", "execute the plan", or types /lecg-phase. Not for a single new command with no roadmap phase — that is /lecg-command. This is the main build loop.
 ---
 
 # Phase
@@ -78,6 +78,14 @@ Run what the plan said. Report per level, never blurred:
 
 - `dotnet build -p:SkipRevitDeploy=true` — **always this flag.** A plain build overwrites the live Revit 2026 add-in folder.
 - `dotnet test -c Debug -p:SkipRevitDeploy=true` — **the flag is mandatory here too.** `dotnet test` builds the add-in, and the deploy step fails with MSB3027 while Revit is open.
+- **Coverage gate** — CI fails below **90 % line coverage of `LECG.Core`** (`ci.yml` `COVERAGE_MIN`, scope `[LECG.Core]*` from `coverlet.runsettings`). Any phase that adds or changes Core code runs this before pushing:
+
+```bash
+dotnet test LECG.Tests/LECG.Tests.csproj -c Debug -p:SkipRevitDeploy=true --collect:"XPlat Code Coverage" --settings coverlet.runsettings
+rg -o -m1 'line-rate="[0-9.]+"' "$(ls -t LECG.Tests/TestResults/*/coverage.cobertura.xml | head -1)"
+```
+
+  Report the number. Below `0.90` is a failing phase — add tests for the Core code you touched, not for whatever is easiest. `LECG.csproj` code does not count either way. Baseline 2026-09-04: `0.9555`, 269 passed / 5 skipped.
 - XAML compiles as part of the build. That proves the markup parses and proves **nothing** about bindings or `StaticResource` lookups — both fail only at runtime.
 - Revit runtime: only claimable if Revit was actually opened. If the `mcp-server-for-revit` tools are connected (Revit open with the MCP plugin service on), use them — query the document and execute the changed path in the live session; that counts as runtime validation *for what it exercised*. Ribbon presence, dialog binding, and undo grouping still need eyes on Revit. Otherwise write `Revit runtime validation: not executed` and list the pending smoke-test steps from `docs/ai/revit-smoke-test.md`.
 
@@ -85,7 +93,7 @@ Paste real failing output. Never paraphrase a failure away. A phase with failing
 
 ## 5. Record
 
-- `.planning/STATE.md` — phase status, what's next, date.
+- `.planning/STATE.md` — phase status, what's next, date. The YAML frontmatter (`status`, `stopped_at`, `last_updated`, `last_activity`, `progress.completed_phases`) is what the next session reads first; update it, not only the prose.
 - `docs/ai/repo-context.md` — only **stable** knowledge: a convention confirmed, a command that works, a verified risk. Skip transient detail. Correct anything the code proved wrong.
 - `docs/ai/revit-protocol.md` — append to *Gotchas already paid for* if this phase cost real debugging time.
 - `.planning/codebase/MAP.md` — patch the edges you changed.
@@ -101,6 +109,10 @@ Paste real failing output. Never paraphrase a failure away. A phase with failing
 
 ## Validation
 <per level, actual results, including failures and "not run">
+- build: <0 errors / 0 warnings, or the real output>
+- tests: <passed / failed / skipped>
+- coverage: <line-rate, or "not run — no Core change">
+- Revit runtime: <what was exercised, or "not executed" + pending steps>
 
 ## Next
 <the next phase, or what is blocking>

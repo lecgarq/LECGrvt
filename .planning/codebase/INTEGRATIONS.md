@@ -39,7 +39,7 @@
 ## CI/CD & Deployment
 
 **Hosting:**
-- Revit add-in (standalone executable plugin). Deployed as a set of files to `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\`:
+- Revit add-in (standalone executable plugin). Deployed as a set of files to `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\`:
   - `LECG.dll` (main assembly)
   - `LECG.pdb` (debug symbols, optional for production)
   - `LECG.deps.json` (dependency manifest for .NET runtime)
@@ -93,10 +93,10 @@
   - Why it matters: Logs are user-local; sensitive Revit document info stays off-cloud; no privacy/compliance risk; no external service dependency for observability
   - Preserve by: When adding new logging, write to Serilog context (injected logger); never add cloud telemetry or external API logging without explicit request and security review
 
-**[Observed]** (scope: project) Deployment is manual MSBuild target, not automatic CI/CD pipeline push: `DeployToRevit` target copies files to local ProgramData folder.
+**[Observed]** (scope: project) Deployment is manual MSBuild target, not automatic CI/CD pipeline push: `DeployToRevit` target copies files to the per-user `%APPDATA%\Autodesk\Revit\Addins6\LECG` folder.
   - Evidence: `LECG.csproj:61-72`; CI disables deploy via `SkipRevitDeploy=true`; live `.addin` manifest is not git-tracked (stored only in `docs/deployment/LECG.addin.template`)
   - Why it matters: Enables offline development; prevents accidental overwrites during normal CI/CD; explicit deployment step for manual testing
-  - Preserve by: To deploy to Revit, run `dotnet build` locally (no `-p:SkipRevitDeploy=true` flag); do not add auto-push to ProgramData in CI; manifest updates require manual verification
+  - Preserve by: To deploy to Revit, run `dotnet build` locally (no `-p:SkipRevitDeploy=true` flag); do not add auto-push to the add-in folder in CI; manifest updates require manual verification
 
 **[Inferred]** (scope: repo-wide) No external integrations = no credential/secret management needed in code, config, or `.env` files.
   - Evidence: No `.env` files, no credential stores, no API key handling anywhere in `src/`; `docs/ai/repo-context.md` confirms no external services

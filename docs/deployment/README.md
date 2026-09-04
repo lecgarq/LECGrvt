@@ -11,7 +11,7 @@ Deployment has two independent pieces:
 The `DeployToRevit` MSBuild target in `LECG.csproj` copies `*.dll`, `*.pdb`, and `*.deps.json` from the build output to:
 
 ```
-C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\
+%APPDATA%\Autodesk\Revit\Addins\2026\LECG\
 ```
 
 after **every** build, unless skipped. The build target does **not** generate, copy, or touch any `.addin` manifest.
@@ -32,24 +32,24 @@ CI (`GITHUB_ACTIONS`/`CI` env vars) sets `SkipRevitDeploy=true` automatically (`
 
 ### 2. `.addin` Manifest — installed manually, once
 
-The manifest is **not** produced by the build. It lives machine-wide at:
+The manifest is **not** produced by the build. It lives per-user at:
 
 ```
-C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin
+%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin
 ```
 
-and points Revit at `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll` (`Type="Application"`, `FullClassName=LECG.App`). Verified via Revit journal: Revit 2026 loads LECG from exactly this path. No per-user (`%AppData%`) manifest exists or is needed.
+and points Revit at `LECG\LECG.dll` relative to itself, i.e. the folder the build deploys into (`Type="Application"`, `FullClassName=LECG.App`, `<AddInId>9B0AB379-D085-4F8A-AA18-A89A4C8180FF</AddInId>`). Verified via Revit journal 2026-09-04. A machine-wide copy under `C:\ProgramData\...` was retired the same day: Revit logs `Duplicate addins:` when both exist and the per-user one wins — never keep both.
 
 **Do not manually edit the live manifest** unless you are intentionally installing or updating the add-in.
 
 **Installing on a new machine:**
 
 1. Copy `LECG.addin.template` from this directory and rename it to `LECG.addin`.
-2. Set a unique GUID and update `<Assembly>` to the deployed DLL path (`C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll`).
-3. Place the file in `C:\ProgramData\Autodesk\Revit\Addins\2026\` (machine-wide — the canonical setup for this project). Revit also supports per-user `%AppData%\Autodesk\Revit\Addins\2026\`, but do not create both.
+2. Keep `<Assembly>LECG\LECG.dll</Assembly>` (relative to the manifest) and the `<AddInId>` from the template.
+3. Place the file in `%APPDATA%\Autodesk\Revit\Addins\2026\` (per-user — the canonical setup for this project; no admin rights needed). Revit also supports machine-wide `%APPDATA%\Autodesk\Revit\Addins\2026\`, but do not create both — Revit warns `Duplicate addins` and you will smoke-test the wrong binary.
 4. Run a deploying build (`dotnet build`) with Revit closed, then start Revit — the LECG ribbon tab should appear.
 
-**Known quirk:** the working live manifest uses `<ClientId>` for its GUID element while the template uses `<AddInId>`. The live file demonstrably works; do not unify the two without testing in Revit.
+**Resolved 2026-09-04:** the live per-user manifest uses `<AddInId>`, matching the template. The old `<ClientId>` variant lived only in the retired ProgramData copy.
 
 ---
 

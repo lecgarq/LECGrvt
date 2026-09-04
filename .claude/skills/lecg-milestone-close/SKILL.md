@@ -1,6 +1,6 @@
 ---
 name: lecg-milestone-close
-description: Close a milestone — audit what actually shipped against what was promised, archive the phase artifacts, and harvest the lessons. Use when the user says "close the milestone", "we're done with v1", "wrap this up", "audit the milestone", or types /lecg-milestone-close.
+description: Close a milestone — audit what actually shipped against what was promised, archive the phase artifacts, and harvest the lessons. Use when the user says "close the milestone", "we're done with v1", "wrap up the milestone", "audit the milestone", "is v2 done", or types /lecg-milestone-close. Not for finishing a single phase or task.
 ---
 
 # Close milestone

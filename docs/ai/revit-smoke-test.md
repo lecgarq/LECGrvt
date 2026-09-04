@@ -4,8 +4,8 @@
 
 ## Preconditions
 
-- Deployed DLLs present in `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\` (a deploying build has run).
-- Live manifest present: `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG.addin` pointing at that folder's `LECG.dll`.
+- Deployed DLLs present in `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\` (a deploying build has run).
+- Live manifest present: `%APPDATA%\Autodesk\Revit\Addins\2026\LECG.addin` pointing at `LECG\LECG.dll`. No second `LECG.addin` under `C:\ProgramData\Autodesk\Revit\Addins\2026\` — Revit would log `Duplicate addins:` and the test would run against whichever copy it picked.
 - Revit was NOT running during the deploying build (locked DLLs make the copy fail or leave a stale mix).
 
 ## Checklist
@@ -49,7 +49,7 @@ Step 7 is the one that actually proves the fix. Do not skip it.
 
 Run this in addition to the checklist above. The expected numbers below were measured live via `mcp-server-for-revit` on **2026-07-27** against `LECG_RVT_ARQUITECTURA` with `3D View 1` active — they are only valid for that model in that state. Re-measure if the model changed.
 
-Deploy first: `dotnet build -c Release` with Revit closed, then confirm `C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll` has today's timestamp. The DLL deployed before this phase is dated 2026-07-25 and contains **no** Warnings command.
+Deploy first: `dotnet build -c Release` with Revit closed, then confirm `%APPDATA%\Autodesk\Revit\Addins\2026\LECG\LECG.dll` has today's timestamp. The DLL deployed before this phase is dated 2026-07-25 and contains **no** Warnings command.
 
 Measured baseline: 10 warnings · 1 distinct description (`"Highlighted toposolids overlap."`) · severity `Warning` · 20 failing-element references resolving to **11 distinct** Toposolid ids.
 

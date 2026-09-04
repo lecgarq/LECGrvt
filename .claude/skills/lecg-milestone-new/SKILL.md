@@ -1,6 +1,6 @@
 ---
 name: lecg-milestone-new
-description: Open a new milestone — turn a stated goal into a requirements list and a phased roadmap. Use when the user says "new milestone", "start v2", "what's next after this", "plan the next chunk of work", or types /lecg-milestone-new.
+description: Open a new milestone — turn a stated goal into a requirements list and a phased roadmap. Use when the user says "new milestone", "start v2", "what's the next milestone", "plan the next chunk of work", or types /lecg-milestone-new. Not for "next phase" — that is /lecg-phase.
 ---
 
 # New milestone
@@ -65,7 +65,22 @@ Prefer few phases. Eleven small phases and five real ones deliver the same thing
 **Done when:** <verifiable condition>
 ```
 
-`.planning/STATE.md` — reset to the new milestone, phase 1, status `planning`, today's date.
+`.planning/STATE.md` — reset to the new milestone. Keep the frontmatter shape; the next session reads it before the prose:
+
+```yaml
+---
+state_version: 1.0
+milestone: <slug>
+milestone_name: <name>
+status: planning
+stopped_at: Phase 1 not started
+last_updated: "<YYYY-MM-DD>"
+last_activity: <YYYY-MM-DD> — milestone opened
+progress:
+  total_phases: <N>
+  completed_phases: 0
+---
+```
 
 ## 5. Report
 
