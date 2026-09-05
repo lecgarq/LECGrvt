@@ -94,10 +94,17 @@ namespace LECG.ViewModels
             var dialog = new Microsoft.Win32.OpenFolderDialog { Title = "Select Substance bake library root" };
             if (dialog.ShowDialog() == true)
             {
-                LibraryRoot = dialog.FolderName;
-                OutputRoot = BakeOutputPaths.DefaultOutputRoot(LibraryRoot);
-                Rescan();
+                LoadLibrary(dialog.FolderName);
             }
+        }
+
+        public void LoadLibrary(string root)
+        {
+            ArgumentNullException.ThrowIfNull(root);
+            LibraryRoot = root;
+            OutputRoot = BakeOutputPaths.DefaultOutputRoot(root);
+            SizeMillimeters = 2500;
+            Rescan();
         }
 
         [RelayCommand]

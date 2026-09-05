@@ -56,7 +56,17 @@ namespace LECG
 
         private static System.Reflection.Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
         {
-            string assemblyName = new System.Reflection.AssemblyName(args.Name).Name + ".dll";
+            var requestedAssemblyName = new System.Reflection.AssemblyName(args.Name);
+
+            foreach (System.Reflection.Assembly loadedAssembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                if (System.Reflection.AssemblyName.ReferenceMatchesDefinition(requestedAssemblyName, loadedAssembly.GetName()))
+                {
+                    return loadedAssembly;
+                }
+            }
+
+            string assemblyName = requestedAssemblyName.Name + ".dll";
             string folder = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "";
             string assemblyPath = Path.Combine(folder, assemblyName);
 

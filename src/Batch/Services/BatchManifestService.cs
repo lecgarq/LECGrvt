@@ -46,8 +46,7 @@ namespace LECG.Batch.Services
         {
             foreach (ApsVersion v in versions)
             {
-                bool duplicate = manifest.Jobs.Any(j =>
-                    j.ItemId == v.ItemId && j.VersionId == v.Id);
+                bool duplicate = manifest.Jobs.Any(j => j.ItemId == v.ItemId);
 
                 if (duplicate) continue;
 
@@ -67,6 +66,7 @@ namespace LECG.Batch.Services
                     Region           = v.Region ?? "US",
                     DisplayName      = v.DisplayName,
                     FileName         = v.FileName,
+                    FolderPath       = v.FolderPath,
                     ModelType        = v.IsWorkshared ? ModelType.CloudWorkshared : ModelType.NonWorkshared,
                     PublishAfterSync = publishAfterSync,
                     MaxRetries       = BatchConstants.DefaultMaxRetries,

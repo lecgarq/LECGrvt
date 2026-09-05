@@ -18,13 +18,16 @@ namespace LECG.Commands
     {
         protected override string? TransactionName => null;
 
-        public override void Execute(UIDocument uiDoc, Document doc)
+        public override void Execute(UIDocument uiDoc, Document doc) => Execute(uiDoc, doc, null);
+
+        public void Execute(UIDocument uiDoc, Document doc, string? libraryRoot)
         {
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
             var createService = ServiceLocator.GetRequiredService<ISubstanceMaterialCreateService>();
             var viewModel = ServiceLocator.GetRequiredService<SubstanceBatchViewModel>();
+            if (libraryRoot != null) viewModel.LoadLibrary(libraryRoot);
             viewModel.SetExistingNames(createService.ExistingMaterialNames(doc));
 
             var view = ServiceLocator.CreateWith<SubstanceBatchView>(viewModel);

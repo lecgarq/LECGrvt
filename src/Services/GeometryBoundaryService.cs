@@ -78,7 +78,17 @@ namespace LECG.Services
 
         private static string BuildExtractLoopsCacheKey(Document doc, ElementId elementId, ElementId sketchId)
         {
-            string documentKey = string.IsNullOrWhiteSpace(doc.PathName) ? doc.Title : doc.PathName;
+            string documentKey;
+            if (doc.IsModelInCloud)
+            {
+                var cloudPath = doc.GetCloudModelPath();
+                documentKey = cloudPath.GetModelGUID().ToString();
+            }
+            else
+            {
+                documentKey = string.IsNullOrWhiteSpace(doc.PathName) ? doc.Title : doc.PathName;
+            }
+
             return $"GeometryBoundaryService:ExtractLoops:{documentKey}:{elementId.Value}:{sketchId.Value}";
         }
 

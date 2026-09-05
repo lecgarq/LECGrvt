@@ -16,5 +16,28 @@ namespace LECG.Batch.Models
         public string? Region { get; set; }
         public string ProjectGuid { get; set; } = "";
         public bool IsWorkshared { get; set; }
+
+        // Enriched by search API
+        public long? FileSizeBytes { get; set; }
+        public DateTime? LastModified { get; set; }
+        public string FolderPath { get; set; } = "";
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string FileSizeDisplay => FileSizeBytes.HasValue
+            ? $"{FileSizeBytes.Value / (1024.0 * 1024.0):F1} MB"
+            : "";
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string LastModifiedDisplay => LastModified.HasValue
+            ? LastModified.Value.ToString("MMM d, yyyy")
+            : "";
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string FolderPathDisplay => string.IsNullOrWhiteSpace(FolderPath)
+            ? "Project root"
+            : FolderPath;
+
+        [System.Text.Json.Serialization.JsonIgnore]
+        public string ModelTypeDisplay => IsWorkshared ? "Workshared" : "Single-user";
     }
 }

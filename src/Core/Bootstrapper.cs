@@ -9,7 +9,6 @@ using LECG.Validation;
 using LECG.Validation.Validators;
 using MsLoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 using FluentValidation;
-using Microsoft.Extensions.Caching.Memory;
 using LECG.Batch.Services;
 using LECG.Batch.Services.Interfaces;
 using LECG.Batch.Handlers;
@@ -50,6 +49,19 @@ namespace LECG.Core
             _provider = null;
         }
 
+        private static T ResolveRequired<T>(IServiceProvider serviceProvider) where T : notnull
+        {
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+
+            object? service = serviceProvider.GetService(typeof(T));
+            if (service == null)
+            {
+                throw new InvalidOperationException($"Service of type '{typeof(T).FullName}' could not be resolved.");
+            }
+
+            return (T)service;
+        }
+
         private static void ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection services, MsLoggerFactory loggerFactory)
         {
             // Core
@@ -58,7 +70,6 @@ namespace LECG.Core
             services.AddSingleton<IRibbonService, RibbonService>();
             services.AddSingleton<LECG.Services.Logging.ILogger>(_ => Logger.Instance);
             services.AddSingleton<IValidationService, ValidationService>();
-            services.AddSingleton<IMemoryCache>(_ => new MemoryCache(new MemoryCacheOptions()));
             services.AddSingleton<IAppMemoryCache, AppMemoryCache>();
             services.AddSingleton<ISelectionCoordinator, SelectionCoordinator>();
             services.AddSingleton<ITransactionService, TransactionService>();
@@ -221,26 +232,21 @@ namespace LECG.Core
             // Shared HttpClient for all APS HTTP calls
             services.AddSingleton<System.Net.Http.HttpClient>(_ => new System.Net.Http.HttpClient());
 
-            // APS credentials — placeholder values; replace with your app's Client ID
-            const string apsClientId   = "boQ3IUTZHC5ffcvjaiAmvwX4IjCG0IixxJhBAHrk4W228hIC";
-            const string apsRedirectUri = "http://localhost:8090/callback";
-            string[] apsScopes = ["openid", "user-profile:read", "data:read", "data:create", "data:write"];
-
+            // APS auth settings are resolved from local config and environment overrides.
             services.AddSingleton<IApsSessionStore, ApsSessionStore>();
+            services.AddSingleton<IApsAuthSettingsProvider>(_ => new ApsAuthSettingsProvider());
             services.AddSingleton<IApsTokenProvider>(sp => new ApsTokenProvider(
-                sp.GetRequiredService<IApsSessionStore>(),
-                sp.GetRequiredService<System.Net.Http.HttpClient>(),
-                apsClientId,
-                apsRedirectUri));
+                ResolveRequired<IApsSessionStore>(sp),
+                ResolveRequired<System.Net.Http.HttpClient>(sp),
+                ResolveRequired<IApsAuthSettingsProvider>(sp)));
             services.AddSingleton<IApsAuthService>(sp => new ApsAuthService(
-                sp.GetRequiredService<IApsSessionStore>(),
-                sp.GetRequiredService<System.Net.Http.HttpClient>(),
-                apsClientId,
-                apsRedirectUri,
-                apsScopes));
+                ResolveRequired<IApsSessionStore>(sp),
+                ResolveRequired<System.Net.Http.HttpClient>(sp),
+                ResolveRequired<IApsAuthSettingsProvider>(sp)));
             services.AddSingleton<IApsDataManagementService>(sp => new ApsDataManagementService(
-                sp.GetRequiredService<IApsTokenProvider>(),
-                sp.GetRequiredService<System.Net.Http.HttpClient>()));
+                ResolveRequired<IApsTokenProvider>(sp),
+                ResolveRequired<System.Net.Http.HttpClient>(sp)));
+            services.AddSingleton<IApsCloudModelIndexStore, ApsCloudModelIndexStore>();
             services.AddSingleton<IBatchManifestService, BatchManifestService>();
             services.AddSingleton<IBatchReportService, BatchReportService>();
             services.AddSingleton<IBatchOrchestrationService, BatchOrchestrationService>();
@@ -248,9 +254,19 @@ namespace LECG.Core
             services.AddSingleton<ISynchronizeWithCentralService, SynchronizeWithCentralService>();
             services.AddSingleton<ICloudSaveService, CloudSaveService>();
             services.AddSingleton<IApsPublishService>(sp => new ApsPublishService(
-                sp.GetRequiredService<IApsTokenProvider>(),
-                sp.GetRequiredService<System.Net.Http.HttpClient>()));
-            services.AddSingleton<IBatchJobRoutine, DefaultBatchJobRoutine>();
+                ResolveRequired<IApsTokenProvider>(sp),
+                ResolveRequired<System.Net.Http.HttpClient>(sp)));
+            // Concrete routines registered by type
+            services.AddSingleton<DefaultBatchJobRoutine>();
+            services.AddSingleton<PublishToCloudJobRoutine>();
+            // Selector holds all routines; registered both as itself and as IBatchJobRoutine
+            services.AddSingleton<BatchRoutineSelector>(sp => new BatchRoutineSelector(
+                new IBatchJobRoutine[]
+                {
+                    ResolveRequired<DefaultBatchJobRoutine>(sp),
+                    ResolveRequired<PublishToCloudJobRoutine>(sp)
+                }));
+            services.AddSingleton<IBatchJobRoutine>(sp => ResolveRequired<BatchRoutineSelector>(sp));
             services.AddSingleton<RevitBatchJobHandler>();
         }
 

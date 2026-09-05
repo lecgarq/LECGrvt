@@ -8,9 +8,33 @@ namespace LECG.Batch.Services
     {
         public void Save(Document doc)
         {
-            Logger.Instance.Log("[Batch] Saving non-workshared cloud model.");
-            doc.Save();
-            Logger.Instance.Log("[Batch] Cloud save complete.");
+            // Models opened directly from a cloud path must be saved back with SaveCloudModel().
+            // Models opened from a local path use the regular Save().
+            if (IsCloudModel(doc))
+            {
+                Logger.Instance.Log("[Batch] Saving cloud model (SaveCloudModel).");
+                doc.SaveCloudModel();
+                Logger.Instance.LogSuccess("[Batch] Cloud model saved.");
+            }
+            else
+            {
+                Logger.Instance.Log("[Batch] Saving local model.");
+                doc.Save();
+                Logger.Instance.LogSuccess("[Batch] Local save complete.");
+            }
+        }
+
+        private static bool IsCloudModel(Document doc)
+        {
+            try
+            {
+                ModelPath? cloudPath = doc.GetCloudModelPath();
+                return cloudPath != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace LECG.Batch.Configuration
         public static string AuthDir       => Path.Combine(Environment.GetFolderPath(
             Environment.SpecialFolder.ApplicationData), "LECG", "Auth");
         public static string SessionPath   => Path.Combine(AuthDir, "session.json");
+        public static string ApsSettingsPath => Path.Combine(AuthDir, "aps-settings.json");
 
         public const int DefaultMaxRetries      = 2;
         public const int SyncRetryDelayMs       = 30_000;

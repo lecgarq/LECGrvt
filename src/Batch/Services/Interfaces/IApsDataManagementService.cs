@@ -11,5 +11,16 @@ namespace LECG.Batch.Services.Interfaces
         Task<IReadOnlyList<ApsVersion>> GetVersionsAsync(string projectId, string itemId, CancellationToken cancellationToken = default);
         Task<ApsVersion?> GetVersionAsync(string projectId, string versionId, CancellationToken cancellationToken = default);
         bool IsRevitCloudModel(ApsVersion version);
+
+        /// <summary>
+        /// Recursively searches all top folders in a project for .rvt files using the APS folder search API.
+        /// Updates the caller incrementally via the onModelsFound callback.
+        /// </summary>
+        Task SearchRevitModelsInProjectAsync(
+            string hubId,
+            string projectId,
+            Action<IReadOnlyList<ApsVersion>> onModelsFound,
+            string? searchText = null,
+            CancellationToken cancellationToken = default);
     }
 }

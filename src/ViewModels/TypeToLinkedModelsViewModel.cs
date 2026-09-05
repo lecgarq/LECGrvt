@@ -53,15 +53,24 @@ namespace LECG.ViewModels
                 TypeGroups.Add(item);
             }
 
-            // Default output folder: same directory as the project file
-            string? docPath = doc.PathName;
-            if (!string.IsNullOrEmpty(docPath))
+            // Default output folder: same directory as the project file, or Documents if cloud
+            if (doc.IsModelInCloud)
             {
-                string? dir = System.IO.Path.GetDirectoryName(docPath);
-                string projectName = System.IO.Path.GetFileNameWithoutExtension(docPath);
-                if (dir != null)
+                string myDocs = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                string projectName = doc.Title;
+                OutputFolder = System.IO.Path.Combine(myDocs, "LECG_Export", $"{projectName}_Links");
+            }
+            else
+            {
+                string? docPath = doc.PathName;
+                if (!string.IsNullOrEmpty(docPath))
                 {
-                    OutputFolder = System.IO.Path.Combine(dir, $"{projectName}_Links");
+                    string? dir = System.IO.Path.GetDirectoryName(docPath);
+                    string projectName = System.IO.Path.GetFileNameWithoutExtension(docPath);
+                    if (dir != null)
+                    {
+                        OutputFolder = System.IO.Path.Combine(dir, $"{projectName}_Links");
+                    }
                 }
             }
         }

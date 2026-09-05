@@ -1,4 +1,5 @@
 using System;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
 using LECG.Models;
 using LECG.Services.Interfaces;
@@ -102,7 +103,7 @@ namespace LECG.Services
                 if (p == null || p.IsReadOnly) return;
                 switch (p)
                 {
-                    case AssetPropertyDistance d: d.Value = feet; break;
+                    case AssetPropertyDistance d: d.Value = UnitUtils.ConvertFromInternalUnits(feet, d.GetUnitTypeId()); break;
                     case AssetPropertyDouble d: d.Value = feet; break;
                     case AssetPropertyFloat f: f.Value = (float)feet; break;
                 }

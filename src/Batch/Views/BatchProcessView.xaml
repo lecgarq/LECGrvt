@@ -3,8 +3,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:icons="clr-namespace:LECG.Utils"
+    xmlns:utils="clr-namespace:LECG.Utils"
     Title="Batch Cloud Process"
-    Width="700" Height="600" MinWidth="550" MinHeight="450"
+    Width="980" Height="680" MinWidth="760" MinHeight="560"
     UseLayoutRounding="True" SnapsToDevicePixels="True"
     WindowIcon="{x:Static icons:Icons.Home}">
 
@@ -13,7 +14,9 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <utils:BoolToVisibilityConverter x:Key="BoolToVis"/>
+            <utils:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis"/>
+            <BooleanToVisibilityConverter x:Key="SysBoolToVis"/>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
@@ -21,65 +24,241 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MinHeight="120"/>
+            <RowDefinition Height="Auto" MaxHeight="260"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Batch Cloud Process" FontWeight="{DynamicResource WeightBold}"
-                       FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}"
+            <TextBlock Text="Batch Cloud Process"
+                       FontWeight="{DynamicResource WeightBold}"
+                       FontSize="{DynamicResource FontSizeExtraLarge}"
+                       Foreground="{DynamicResource LecgTextPrimary}"
                        Margin="{DynamicResource TitleMarginSmall}"/>
-            <TextBlock Text="Open, process, sync, and optionally publish multiple cloud Revit models in sequence."
-                       FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
+            <TextBlock Text="Queue Autodesk Docs Revit models, then process, sync, and optionally publish them in sequence."
+                       FontSize="{DynamicResource FontSizeBody}"
+                       Foreground="{DynamicResource LecgTextSecondary}"
+                       TextWrapping="Wrap"/>
+            <TextBlock Text="{Binding HostCompatibilityMessage}"
+                       Margin="0,8,0,0"
+                       FontSize="{DynamicResource FontSizeSmall}"
+                       Foreground="{DynamicResource LecgTextSecondary}"
+                       TextWrapping="Wrap"
+                       Visibility="{Binding HasHostCompatibilityMessage, Converter={StaticResource BoolToVis}}"/>
         </StackPanel>
 
-        <!-- Auth + Options Bar -->
-        <Grid Grid.Row="1" Margin="0,8,0,8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="12"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0" Content="Sign In"
-                    Style="{DynamicResource ModernButtonStyle}"
-                    Command="{Binding SignInCommand}"
-                    Visibility="{Binding IsSignedIn, Converter={StaticResource BoolToVis}, ConverterParameter=Inverse}"/>
-            <Button Grid.Column="0" Content="Sign Out"
-                    Style="{DynamicResource ModernButtonSecondaryStyle}"
-                    Command="{Binding SignOutCommand}"
-                    Visibility="{Binding IsSignedIn, Converter={StaticResource BoolToVis}}"/>
-
-            <Button Grid.Column="2" Content="Browse Models"
-                    Style="{DynamicResource ModernButtonStyle}"
-                    Click="OnBrowseModelsClick"
-                    IsEnabled="{Binding IsSignedIn}"/>
-
-            <CheckBox Grid.Column="4" Content="Publish after sync"
-                      IsChecked="{Binding PublishAfterSync}"
-                      Style="{DynamicResource ModernCheckboxStyle}"
-                      VerticalAlignment="Center"/>
-        </Grid>
-
-        <!-- Job Queue -->
-        <Border Grid.Row="2" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="4">
+        <Border Grid.Row="1"
+                Background="{DynamicResource LecgSurfaceBackground}"
+                BorderBrush="{DynamicResource LecgBorderLight}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Padding="16"
+                Margin="0,0,0,16">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            Content="{Binding SignInButtonText}"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            Command="{Binding SignInCommand}"
+                            IsEnabled="{Binding CanSignIn}"
+                            Visibility="{Binding IsSignedIn, Converter={StaticResource InverseBoolToVis}}"/>
+
+                    <Button Grid.Column="0"
+                            Content="Sign Out"
+                            Style="{DynamicResource SecondaryButtonStyle}"
+                            Command="{Binding SignOutCommand}"
+                            IsEnabled="{Binding CanSignOut}"
+                            Visibility="{Binding IsSignedIn, Converter={StaticResource BoolToVis}}"/>
+
+                    <Button Grid.Column="2"
+                            Content="Browse Models"
+                            Style="{DynamicResource AccentButtonStyle}"
+                            Click="OnBrowseModelsClick"
+                            IsEnabled="{Binding CanBrowseModels}"/>
+
+                    <CheckBox Grid.Column="4"
+                              Content="Publish after sync"
+                              IsChecked="{Binding PublishAfterSync}"
+                              Style="{DynamicResource ModernCheckboxStyle}"
+                              VerticalAlignment="Center"/>
+                </Grid>
+
+                <TextBlock Grid.Row="1"
+                           Margin="0,12,0,0"
+                           Text="{Binding AuthStatusMessage}"
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           TextWrapping="Wrap">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSigningIn}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource LecgAccent}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSignedIn}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource LecgAccent}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding AuthHasError}" Value="True">
+                                    <Setter Property="Foreground" Value="{DynamicResource LecgError}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <Grid Grid.Row="2" Margin="0,16,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Border Grid.Column="0"
+                            Background="{DynamicResource LecgBaseBackground}"
+                            BorderBrush="{DynamicResource LecgBorderLight}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12">
+                        <StackPanel>
+                            <TextBlock Text="Queued"
+                                       Style="{DynamicResource SectionHeaderStyle}"/>
+                            <TextBlock Text="{Binding QueuedJobsCount}"
+                                       FontSize="22"
+                                       FontWeight="{DynamicResource WeightBold}"
+                                       Foreground="{DynamicResource LecgTextPrimary}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="2"
+                            Background="{DynamicResource LecgBaseBackground}"
+                            BorderBrush="{DynamicResource LecgBorderLight}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12">
+                        <StackPanel>
+                            <TextBlock Text="Completed"
+                                       Style="{DynamicResource SectionHeaderStyle}"/>
+                            <TextBlock Text="{Binding CompletedJobsCount}"
+                                       FontSize="22"
+                                       FontWeight="{DynamicResource WeightBold}"
+                                       Foreground="{DynamicResource LecgTextPrimary}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="4"
+                            Background="{DynamicResource LecgBaseBackground}"
+                            BorderBrush="{DynamicResource LecgBorderLight}"
+                            BorderThickness="1"
+                            CornerRadius="4"
+                            Padding="12">
+                        <StackPanel>
+                            <TextBlock Text="Attention"
+                                       Style="{DynamicResource SectionHeaderStyle}"/>
+                            <TextBlock Text="{Binding AttentionJobsCount}"
+                                       FontSize="22"
+                                       FontWeight="{DynamicResource WeightBold}"
+                                       Foreground="{DynamicResource LecgTextPrimary}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- Routine Selector Row -->
+                <Border Grid.Row="3"
+                        BorderBrush="{DynamicResource LecgBorderLight}"
+                        BorderThickness="0,1,0,0"
+                        Margin="0,16,0,0"
+                        Padding="0,14,0,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="260"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0"
+                                   Text="Routine"
+                                   FontWeight="{DynamicResource WeightSemiBold}"
+                                   FontSize="{DynamicResource FontSizeBody}"
+                                   Foreground="{DynamicResource LecgTextPrimary}"
+                                   VerticalAlignment="Center"/>
+
+                        <ComboBox Grid.Column="2" Grid.Row="0"
+                                  ItemsSource="{Binding AvailableRoutines}"
+                                  SelectedItem="{Binding SelectedRoutine, Mode=TwoWay}"
+                                  DisplayMemberPath="Name"/>
+
+                        <TextBlock Grid.Column="2" Grid.Row="1"
+                                   Grid.ColumnSpan="2"
+                                   Margin="0,6,0,0"
+                                   Text="{Binding SelectedRoutineDescription}"
+                                   FontSize="{DynamicResource FontSizeSmall}"
+                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                   TextWrapping="Wrap"
+                                   Visibility="{Binding HasSelectedRoutine, Converter={StaticResource BoolToVis}}"/>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="2"
+                Background="{DynamicResource LecgSurfaceBackground}"
+                BorderBrush="{DynamicResource LecgBorderLight}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Padding="16">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Column headers -->
-                <Grid Grid.Row="0" Background="{DynamicResource LecgSurface}" Margin="8,4">
+                <DockPanel Grid.Row="0" LastChildFill="False">
+                    <StackPanel DockPanel.Dock="Left">
+                        <TextBlock Text="Queue"
+                                   FontWeight="{DynamicResource WeightBold}"
+                                   FontSize="{DynamicResource FontSizeMediumLarge}"
+                                   Foreground="{DynamicResource LecgTextPrimary}"/>
+                        <TextBlock Text="Models will stay queued between sessions until they complete."
+                                   FontSize="{DynamicResource FontSizeSmall}"
+                                   Foreground="{DynamicResource LecgTextSecondary}"/>
+                    </StackPanel>
+                    <TextBlock DockPanel.Dock="Right"
+                               Text="{Binding QueueSummary}"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource LecgTextSecondary}"
+                               VerticalAlignment="Bottom"/>
+                </DockPanel>
+
+                <Grid Grid.Row="1" Margin="0,14,0,10" Visibility="{Binding HasJobs, Converter={StaticResource BoolToVis}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="100"/>
-                        <ColumnDefinition Width="90"/>
-                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="70"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Model" Style="{DynamicResource SectionHeaderStyle}"/>
                     <TextBlock Grid.Column="1" Text="Status" Style="{DynamicResource SectionHeaderStyle}"/>
@@ -87,68 +266,373 @@
                     <TextBlock Grid.Column="3" Text="Retries" Style="{DynamicResource SectionHeaderStyle}"/>
                 </Grid>
 
-                <!-- Job rows -->
-                <ListView Grid.Row="1" ItemsSource="{Binding Jobs}" BorderThickness="0">
+                <Grid Grid.Row="2">
+                    <ListView ItemsSource="{Binding Jobs}"
+                              BorderThickness="0"
+                              Background="Transparent"
+                              Visibility="{Binding HasJobs, Converter={StaticResource BoolToVis}}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="{DynamicResource LecgBorderLight}"
+                                        BorderThickness="0,0,0,1"
+                                        Padding="0,0,0,10"
+                                        Margin="0,0,0,10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="110"/>
+                                            <ColumnDefinition Width="70"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock Grid.Row="0"
+                                                   Grid.Column="0"
+                                                   Text="{Binding DisplayName}"
+                                                   FontWeight="{DynamicResource WeightSemiBold}"
+                                                   Foreground="{DynamicResource LecgTextPrimary}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0,0,12,0"/>
+
+                                        <Border Grid.Row="0"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Left"
+                                                Padding="10,4"
+                                                CornerRadius="10"
+                                                BorderThickness="1">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Completed">
+                                                            <Setter Property="Background" Value="#E5F4EA"/>
+                                                            <Setter Property="BorderBrush" Value="#9DCCAA"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Queued">
+                                                            <Setter Property="Background" Value="#F2F0EA"/>
+                                                            <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Opening">
+                                                            <Setter Property="Background" Value="#E8F0FA"/>
+                                                            <Setter Property="BorderBrush" Value="#9DB9E2"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Processing">
+                                                            <Setter Property="Background" Value="#E8F0FA"/>
+                                                            <Setter Property="BorderBrush" Value="#9DB9E2"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Saving">
+                                                            <Setter Property="Background" Value="#E8F0FA"/>
+                                                            <Setter Property="BorderBrush" Value="#9DB9E2"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Synced">
+                                                            <Setter Property="Background" Value="#EDF5E6"/>
+                                                            <Setter Property="BorderBrush" Value="#B8D39C"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="PublishQueued">
+                                                            <Setter Property="Background" Value="#F8EEDC"/>
+                                                            <Setter Property="BorderBrush" Value="#E1BE7A"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Published">
+                                                            <Setter Property="Background" Value="#EDF5E6"/>
+                                                            <Setter Property="BorderBrush" Value="#B8D39C"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Failed">
+                                                            <Setter Property="Background" Value="#FBEAEA"/>
+                                                            <Setter Property="BorderBrush" Value="#E2A4A4"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Poisoned">
+                                                            <Setter Property="Background" Value="#FBEAEA"/>
+                                                            <Setter Property="BorderBrush" Value="#E2A4A4"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Status}" Value="Cancelled">
+                                                            <Setter Property="Background" Value="#F6F2EC"/>
+                                                            <Setter Property="BorderBrush" Value="#D5C7B8"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <TextBlock Text="{Binding Status}"
+                                                       FontSize="{DynamicResource FontSizeSmall}"
+                                                       FontWeight="{DynamicResource WeightSemiBold}"
+                                                       Foreground="{DynamicResource LecgTextPrimary}"/>
+                                        </Border>
+
+                                        <TextBlock Grid.Row="0"
+                                                   Grid.Column="2"
+                                                   Text="{Binding ModelType}"
+                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <TextBlock Grid.Row="0"
+                                                   Grid.Column="3"
+                                                   Text="{Binding RetryCount}"
+                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                                   VerticalAlignment="Center"/>
+
+                                        <TextBlock Grid.Row="1"
+                                                   Grid.Column="0"
+                                                   Text="{Binding FolderPath}"
+                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   Margin="0,2,12,0"/>
+
+                                        <TextBlock Grid.Row="2"
+                                                   Grid.Column="0"
+                                                   Grid.ColumnSpan="4"
+                                                   Text="{Binding ErrorMessage}"
+                                                   Foreground="{DynamicResource LecgError}"
+                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                   Margin="0,6,0,0"
+                                                   TextWrapping="Wrap">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="Text" Value="">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </Trigger>
+                                                        <Trigger Property="Text" Value="{x:Null}">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Visibility="{Binding HasJobs, Converter={StaticResource InverseBoolToVis}}">
+                        <TextBlock Text="No models in queue"
+                                   FontSize="{DynamicResource FontSizeMediumLarge}"
+                                   FontWeight="{DynamicResource WeightBold}"
+                                   Foreground="{DynamicResource LecgTextPrimary}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Use Browse Models after signing in to load Revit models from Autodesk Docs."
+                                   Margin="0,8,0,0"
+                                   FontSize="{DynamicResource FontSizeBody}"
+                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   MaxWidth="420"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- Log Panel (Grid.Row="3") -->
+        <Border Grid.Row="3"
+                Background="{DynamicResource LecgSurfaceBackground}"
+                BorderBrush="{DynamicResource LecgBorderLight}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="0,8,0,0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Log Header -->
+                <DockPanel Grid.Row="0" LastChildFill="False" Margin="12,8,12,8">
+                    <ToggleButton x:Name="LogToggleButton"
+                                  DockPanel.Dock="Left"
+                                  Content="▼ Log"
+                                  IsChecked="False"
+                                  Style="{DynamicResource SecondaryToggleButtonStyle}"
+                                  FontSize="{DynamicResource FontSizeSmall}"
+                                  Checked="OnLogToggled"
+                                  Unchecked="OnLogToggled"/>
+                    <Button DockPanel.Dock="Right"
+                            Content="Copy All"
+                            Style="{DynamicResource SecondaryButtonStyle}"
+                            FontSize="{DynamicResource FontSizeSmall}"
+                            Padding="10,3"
+                            Click="OnCopyAllLog"/>
+                </DockPanel>
+
+                <!-- Log Entries List -->
+                <ListView x:Name="LogListView"
+                          Grid.Row="1"
+                          ItemsSource="{Binding LogEntries}"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          Padding="12,0,12,8"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          Visibility="Collapsed">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
+                            <Setter Property="Padding" Value="0"/>
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Padding" Value="8,4"/>
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Focusable" Value="False"/>
                         </Style>
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="0,2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="90"/>
                                     <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="8"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding DisplayName}"
-                                           TextTrimming="CharacterEllipsis"
-                                           ToolTip="{Binding ErrorMessage}"/>
-                                <TextBlock Grid.Column="1" Text="{Binding Status}"
-                                           Foreground="{DynamicResource LecgAccent}"/>
-                                <TextBlock Grid.Column="2" Text="{Binding ModelType}"
-                                           FontSize="{DynamicResource FontSizeSmall}"/>
-                                <TextBlock Grid.Column="3" Text="{Binding RetryCount}"
-                                           FontSize="{DynamicResource FontSizeSmall}"/>
+
+                                <!-- Timestamp -->
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                                           Text="{Binding FormattedTime}"
+                                           FontSize="{DynamicResource FontSizeSmall}"
+                                           Foreground="{DynamicResource LecgTextSecondary}"
+                                           VerticalAlignment="Center"/>
+
+                                <!-- Level dot -->
+                                <Ellipse Grid.Row="0" Grid.Column="2"
+                                         Width="7" Height="7"
+                                         VerticalAlignment="Center">
+                                    <Ellipse.Style>
+                                        <Style TargetType="Ellipse">
+                                            <Setter Property="Fill" Value="#AAAAAA"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Level}" Value="Success">
+                                                    <Setter Property="Fill" Value="#4CAF50"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Level}" Value="Warning">
+                                                    <Setter Property="Fill" Value="#FFC107"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Level}" Value="Error">
+                                                    <Setter Property="Fill" Value="#F44336"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Ellipse.Style>
+                                </Ellipse>
+
+                                <!-- Message -->
+                                <TextBlock Grid.Row="0" Grid.Column="4"
+                                           Text="{Binding Message}"
+                                           FontSize="{DynamicResource FontSizeSmall}"
+                                           Foreground="{DynamicResource LecgTextPrimary}"
+                                           TextWrapping="Wrap"/>
+
+                                <!-- Expand toggle (only for entries with Detail) -->
+                                <ToggleButton Grid.Row="0" Grid.Column="5"
+                                              x:Name="EntryExpander"
+                                              Content="▸"
+                                              FontSize="10"
+                                              Padding="4,2"
+                                              Margin="6,0,0,0"
+                                              VerticalAlignment="Center"
+                                              Style="{DynamicResource SecondaryToggleButtonStyle}"
+                                              Visibility="{Binding HasDetail, Converter={StaticResource BoolToVis}}"/>
+
+                                <!-- Detail block (exception message) -->
+                                <TextBlock Grid.Row="1" Grid.Column="4"
+                                           Grid.ColumnSpan="2"
+                                           Text="{Binding Detail}"
+                                           FontSize="{DynamicResource FontSizeSmall}"
+                                           Foreground="{DynamicResource LecgError}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,4,0,0"
+                                           Visibility="{Binding IsChecked, ElementName=EntryExpander, Converter={StaticResource SysBoolToVis}}"/>
+
+                                <!-- Stack trace block -->
+                                <TextBox Grid.Row="2" Grid.Column="4"
+                                         Grid.ColumnSpan="2"
+                                         Text="{Binding StackTrace, Mode=OneWay}"
+                                         FontFamily="Consolas, Courier New"
+                                         FontSize="10"
+                                         Foreground="{DynamicResource LecgTextSecondary}"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         IsReadOnly="True"
+                                         TextWrapping="Wrap"
+                                         Margin="0,4,0,4"
+                                         Visibility="{Binding IsChecked, ElementName=EntryExpander, Converter={StaticResource SysBoolToVis}}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
+                    <ListView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Copy entry" Click="OnCopyLogEntry"/>
+                        </ContextMenu>
+                    </ListView.ContextMenu>
                 </ListView>
             </Grid>
         </Border>
 
-        <!-- Status -->
-        <TextBlock Grid.Row="3" Text="{Binding StatusMessage}"
-                   FontSize="{DynamicResource FontSizeSmall}"
-                   Foreground="{DynamicResource LecgTextSecondary}"
-                   Margin="0,6,0,4" TextWrapping="Wrap"/>
+        <StackPanel Grid.Row="4" Margin="0,12,0,0">
+            <TextBlock Text="{Binding StatusMessage}"
+                       FontSize="{DynamicResource FontSizeSmall}"
+                       Foreground="{DynamicResource LecgTextSecondary}"
+                       TextWrapping="Wrap"/>
+            <ProgressBar Margin="0,10,0,0"
+                         Height="6"
+                         IsIndeterminate="True"
+                         Visibility="{Binding IsBatchActive, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
 
-        <!-- Control Buttons -->
-        <Grid Grid.Row="4" Margin="{DynamicResource ButtonRowMargin}">
+        <Grid Grid.Row="5" Margin="{DynamicResource ButtonRowMarginSmall}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Start"
-                    Style="{DynamicResource ModernButtonStyle}"
-                    Command="{Binding StartBatchCommand}"/>
-            <Button Grid.Column="2" Content="Pause"
-                    Style="{DynamicResource ModernButtonSecondaryStyle}"
-                    Command="{Binding PauseBatchCommand}"/>
-            <Button Grid.Column="4" Content="Resume"
-                    Style="{DynamicResource ModernButtonStyle}"
-                    Command="{Binding ResumeBatchCommand}"/>
-            <Button Grid.Column="6" Content="Cancel"
-                    Style="{DynamicResource ModernButtonSecondaryStyle}"
-                    Command="{Binding CancelBatchCommand}"/>
+
+            <Button Grid.Column="0"
+                    Content="Start"
+                    Style="{DynamicResource AccentButtonStyle}"
+                    Command="{Binding StartBatchCommand}"
+                    IsEnabled="{Binding CanStartBatch}"/>
+
+            <Button Grid.Column="2"
+                    Content="Pause"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Command="{Binding PauseBatchCommand}"
+                    IsEnabled="{Binding CanPauseBatch}"/>
+
+            <Button Grid.Column="4"
+                    Content="Resume"
+                    Style="{DynamicResource AccentButtonStyle}"
+                    Command="{Binding ResumeBatchCommand}"
+                    IsEnabled="{Binding CanResumeBatch}"/>
+
+            <Button Grid.Column="6"
+                    Content="Cancel"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Command="{Binding CancelBatchCommand}"
+                    IsEnabled="{Binding CanCancelBatch}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

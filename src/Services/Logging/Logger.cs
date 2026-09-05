@@ -116,6 +116,12 @@ namespace LECG.Services.Logging
         public void LogWarning(string message, string categoryName, Exception? exception = null) => AddEntry(new LogEntry(message, LogLevel.Warning), exception, categoryName);
         public void LogError(string message, string categoryName, Exception? exception = null) => AddEntry(new LogEntry(message, LogLevel.Error), exception, categoryName);
 
+        /// <summary>
+        /// Logs an error with expandable detail (exception message) and stack trace for the log panel.
+        /// </summary>
+        public void LogError(string message, string? detail, string? stackTrace)
+            => AddEntry(new LogEntry(message, LogLevel.Error, detail, stackTrace));
+
         public void Clear()
         {
             void ClearCore()

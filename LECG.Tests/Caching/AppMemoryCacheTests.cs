@@ -1,6 +1,5 @@
 using LECG.Services;
 using LECG.Services.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
 using FluentAssertions;
 
 namespace LECG.Tests.Caching;
@@ -10,8 +9,7 @@ public class AppMemoryCacheTests
     [Fact]
     public void GetOrCreate_reuses_cached_value_until_removed()
     {
-        using var memoryCache = new MemoryCache(new MemoryCacheOptions());
-        IAppMemoryCache cache = new AppMemoryCache(memoryCache);
+        IAppMemoryCache cache = new AppMemoryCache();
         int factoryCalls = 0;
 
         string first = cache.GetOrCreate("cache-key", () =>

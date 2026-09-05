@@ -21,6 +21,7 @@ namespace LECG.Batch.Commands
 
             var vm = ServiceLocator.GetRequiredService<BatchProcessViewModel>();
             vm.RaiseExternalEvent = () => _externalEvent?.Raise();
+            vm.SetHostRevitVersion(uiDoc.Application.Application.VersionNumber);
             vm.Initialize();
 
             var view = ServiceLocator.CreateWith<BatchProcessView>(vm);

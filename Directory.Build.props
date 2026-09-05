@@ -1,11 +1,9 @@
 <Project>
-  <PropertyGroup>
-    <Platform Condition="'$(Platform)' == ''">x64</Platform>
-    <VersionPrefix>0.1.1</VersionPrefix>
-    <VersionSuffix Condition="'$(VersionSuffix)'==''"></VersionSuffix>
-    <Version>$(VersionPrefix)$(VersionSuffix)</Version>
-    <AssemblyVersion>$(VersionPrefix).0</AssemblyVersion>
-    <FileVersion>$(VersionPrefix).0</FileVersion>
-    <InformationalVersion>$(Version)</InformationalVersion>
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == 'LECG'">
+    <SupportedRevitVersions>2026;2027</SupportedRevitVersions>
+    <RevitVersion Condition="'$(RevitVersion)' == ''">2026</RevitVersion>
+    <BaseOutputPath>bin\$(RevitVersion)\</BaseOutputPath>
+    <BaseIntermediateOutputPath>obj\$(RevitVersion)\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(BaseIntermediateOutputPath)</MSBuildProjectExtensionsPath>
   </PropertyGroup>
 </Project>

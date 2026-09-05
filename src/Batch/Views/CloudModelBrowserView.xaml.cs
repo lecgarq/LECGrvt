@@ -7,6 +7,7 @@ namespace LECG.Batch.Views
     public partial class CloudModelBrowserView : LECG.Views.Base.LecgWindow
     {
         private readonly CloudModelBrowserViewModel _vm;
+        private bool _isInitialized;
 
         public IReadOnlyList<ApsVersion> SelectedVersions => _vm.SelectedVersions.ToList();
 
@@ -18,12 +19,27 @@ namespace LECG.Batch.Views
             _vm = vm;
         }
 
-        private void OnAddToQueueClick(object sender, RoutedEventArgs e)
+        private async void OnLoaded(object sender, RoutedEventArgs e)
         {
-            foreach (ApsVersion version in VersionsList.SelectedItems.OfType<ApsVersion>())
-                _vm.AddSelectedToQueue(version);
+            if (_isInitialized)
+                return;
+
+            _isInitialized = true;
+            await _vm.EnsureInitializedAsync();
         }
 
-        private void OnCloseClick(object sender, RoutedEventArgs e) => Close();
+        private void OnAddToQueueClick(object sender, RoutedEventArgs e)
+        {
+            if (_vm.SelectedCount == 0)
+            {
+                _vm.StatusMessage = "Check at least one model to add to the queue.";
+                return;
+            }
+
+            _vm.ConfirmSelection();
+            DialogResult = true;
+        }
+
+        private void OnCloseClick(object sender, RoutedEventArgs e) => DialogResult = false;
     }
 }

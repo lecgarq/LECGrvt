@@ -30,6 +30,7 @@
 14. `14-current-debt-audit.md` - current technical debt and bug-risk audit.
 15. `15-revit-api-export.md` - offline Revit API export summary and usage.
 16. `master-context.jsonl` - canonical machine-readable architecture, state, and inventory summary.
+17. `16-substance-batch-validation.md` - Substance root-folder integration, 2500 mm fix, and runtime evidence.
 
 ## Recommended Read Order
 

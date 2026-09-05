@@ -11,6 +11,9 @@ namespace LECG.Batch.Services
     /// </summary>
     public class DefaultBatchJobRoutine : IBatchJobRoutine
     {
+        public string Name => "Default";
+        public string Description => "No additional processing. Opens, syncs/saves, and optionally publishes.";
+
         public void Execute(UIApplication app, Document doc, BatchJob job)
         {
             // No-op: override by registering a custom IBatchJobRoutine in Bootstrapper

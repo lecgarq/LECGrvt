@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using LECG.Core.Substance;
 using LECG.Models;
 using LECG.Services.Interfaces;
 using Microsoft.Win32;
@@ -71,6 +72,8 @@ namespace LECG.ViewModels
         [ObservableProperty]
         private int _detectedCount;
 
+        public int BatchMaterialCount { get; private set; }
+
         public string TabHeader => $"Material {PageNumber}";
 
         public bool CanRun =>
@@ -110,10 +113,13 @@ namespace LECG.ViewModels
 
         partial void OnFolderPathChanged(string value)
         {
-            if (!string.IsNullOrWhiteSpace(value) && Directory.Exists(value))
+            bool exists = !string.IsNullOrWhiteSpace(value) && Directory.Exists(value);
+            BatchMaterialCount = exists ? SubstanceLibraryScanner.Scan(value).Entries.Count : 0;
+            if (exists && BatchMaterialCount == 0)
             {
                 ScanFolderForTextures(value);
             }
+            NotifyCanRun();
         }
 
         partial void OnDiffusePathChanged(string value)

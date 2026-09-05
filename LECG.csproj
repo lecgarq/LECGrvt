@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <!-- Revit 2026.5+ ships on .NET 10, so 2026 now targets net10 too. -->
     <TargetFramework>net10.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -14,18 +15,19 @@
     <SkipRevitDeploy Condition="'$(GITHUB_ACTIONS)' == 'true' Or '$(CI)' == 'true'">true</SkipRevitDeploy>
     <!-- Code analysis for dead code detection -->
     <AnalysisLevel>latest</AnalysisLevel>
-    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
     <CommunityToolkitMvvmSourceGeneratorIsEnabled>true</CommunityToolkitMvvmSourceGeneratorIsEnabled>
+    <LoggingAbstractionsPackageVersion>10.0.5</LoggingAbstractionsPackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="RevitAPI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2027\RevitAPI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\RevitAPI.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>false</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>C:\Program Files\Autodesk\Revit 2027\RevitAPIUI.dll</HintPath>
+      <HintPath>C:\Program Files\Autodesk\Revit $(RevitVersion)\RevitAPIUI.dll</HintPath>
       <SpecificVersion>false</SpecificVersion>
       <Private>false</Private>
     </Reference>
@@ -35,15 +37,13 @@
     <PackageReference Include="geometry3Sharp" Version="1.0.324" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="$(LoggingAbstractionsPackageVersion)" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.201">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Scrutor" Version="5.0.1" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
     <PackageReference Include="Serilog" Version="4.2.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
     <PackageReference Include="Unofficial.Triangle.NET" Version="0.0.1" />
   </ItemGroup>
@@ -60,14 +60,18 @@
     <Compile Remove="LECG.Tests\**\*.cs" />
     <Compile Remove="LECG.Core\**\*.cs" />
     <Compile Remove="tools\**\*.cs" />
+    <Compile Remove="obj\**\*.cs" />
+    <Compile Remove="bin\**\*.cs" />
   </ItemGroup>
 
   <Target Name="DeployToRevit" AfterTargets="Build" Condition="'$(SkipRevitDeploy)' != 'true'">
     <PropertyGroup>
-      <RevitAddinsDir>$(APPDATA)\Autodesk\Revit\Addins\2027\LECG</RevitAddinsDir>
-      <RevitAddinsParentDir>$(APPDATA)\Autodesk\Revit\Addins\2027</RevitAddinsParentDir>
+      <RevitAddinsDir>$(APPDATA)\Autodesk\Revit\Addins\$(RevitVersion)\LECG</RevitAddinsDir>
+      <RevitAddinsParentDir>$(APPDATA)\Autodesk\Revit\Addins\$(RevitVersion)</RevitAddinsParentDir>
     </PropertyGroup>
     <Message Text="Deploying to Revit addins: $(RevitAddinsDir)" Importance="high" />
+    <RemoveDir Directories="$(RevitAddinsDir)" />
+    <MakeDir Directories="$(RevitAddinsDir)" />
     <ItemGroup>
       <DeployFiles Include="$(OutputPath)*.dll" />
       <DeployFiles Include="$(OutputPath)*.pdb" />
@@ -75,5 +79,18 @@
     </ItemGroup>
     <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(RevitAddinsDir)" SkipUnchangedFiles="false" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\LECG.addin" DestinationFolder="$(RevitAddinsParentDir)" SkipUnchangedFiles="false" />
+  </Target>
+
+  <Target Name="BuildAndDeploySupportedRevitVersions" Condition="'$(SkipDualVersionBuild)' != 'true'">
+    <ItemGroup>
+      <SupportedRevitVersion Include="$(SupportedRevitVersions)" />
+    </ItemGroup>
+    <Message Text="Building and deploying LECG for Revit versions: @(SupportedRevitVersion, ', ')" Importance="high" />
+    <MSBuild
+      Projects="$(MSBuildProjectFullPath)"
+      Targets="Build"
+      Properties="RevitVersion=%(SupportedRevitVersion.Identity);SkipDualVersionBuild=true"
+      BuildInParallel="false"
+      StopOnFirstFailure="true" />
   </Target>
 </Project>

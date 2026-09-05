@@ -20,6 +20,9 @@ namespace LECG.Batch.Handlers
         // Set by BatchProcessCommand after ExternalEvent is created
         public ExternalEvent? ExternalEvent { get; set; }
 
+        // Tracks the job currently being opened so the dialog handler can check its type.
+        private BatchJob? _currentOpeningJob;
+
         public RevitBatchJobHandler(
             IBatchOrchestrationService orchestrator,
             ICloudModelOpenService openService,
@@ -52,20 +55,43 @@ namespace LECG.Batch.Handlers
 
             try
             {
-                // Open
+                // Open — subscribe to dialog handler before Open() so upgrade dialogs during file-open
+                // are handled (the FailuresProcessing handler below fires only after open succeeds).
                 _orchestrator.Transition(job, JobStatus.Opening);
-                doc = _openService.Open(app, job);
+                _currentOpeningJob = job;
+                app.DialogBoxShowing += OnModelOpenDialogShowing;
+                try
+                {
+                    doc = _openService.Open(app, job);
+                }
+                finally
+                {
+                    app.DialogBoxShowing -= OnModelOpenDialogShowing;
+                    _currentOpeningJob = null;
+                }
+
                 if (doc == null)
-                    throw new InvalidOperationException($"Failed to open cloud model: {job.DisplayName}");
+                    throw new InvalidOperationException(
+                        job.ModelType == ModelType.NonWorkshared
+                            ? $"Failed to open '{job.DisplayName}'. Non-workshared models cannot be opened across Revit versions without upgrading. Process this model in the Revit version it was created with."
+                            : $"Failed to open cloud model: {job.DisplayName}");
 
                 isWorkshared = doc.IsWorkshared;
 
                 // Subscribe failure handler to suppress non-critical warnings
                 app.Application.FailuresProcessing += OnFailuresProcessing;
 
-                // Process
+                // Process — suppress printer dialogs that may appear when configuring PrintManager
                 _orchestrator.Transition(job, JobStatus.Processing);
-                _routine.Execute(app, doc, job);
+                app.DialogBoxShowing += OnPrinterDialogShowing;
+                try
+                {
+                    _routine.Execute(app, doc, job);
+                }
+                finally
+                {
+                    app.DialogBoxShowing -= OnPrinterDialogShowing;
+                }
 
                 // Save / Sync
                 _orchestrator.Transition(job, JobStatus.Saving);
@@ -93,7 +119,10 @@ namespace LECG.Batch.Handlers
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log($"[Batch] Job failed ({job.DisplayName}): {ex.Message}");
+                Logger.Instance.LogError(
+                    $"[{job.DisplayName}] Failed — {ex.Message}",
+                    ex.Message,
+                    ex.ToString());
                 job.ErrorMessage = ex.Message;
 
                 if (job.RetryCount < job.MaxRetries)
@@ -144,6 +173,64 @@ namespace LECG.Batch.Handlers
             }
 
             doc.Close(false);
+        }
+
+        /// <summary>
+        /// Suppresses model-version-upgrade dialogs to preserve cloud model versions across Revit releases.
+        /// For workshared (C4R) models: chooses "Open without upgrading" (CommandLink1 = 1001).
+        /// For non-workshared models: cancels (0) — they cannot be saved in an older format.
+        /// Mirrors the pattern used in PurgeCommand.OnDialogShowing.
+        /// </summary>
+        private void OnModelOpenDialogShowing(object? sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)
+        {
+            string dialogId = e.DialogId ?? "";
+            bool isVersionDialog =
+                dialogId.Contains("upgrade", StringComparison.OrdinalIgnoreCase) ||
+                dialogId.Contains("version", StringComparison.OrdinalIgnoreCase) ||
+                dialogId.Contains("older", StringComparison.OrdinalIgnoreCase);
+
+            if (!isVersionDialog)
+                return;
+
+            bool isWorkshared = _currentOpeningJob?.ModelType == ModelType.CloudWorkshared;
+            int result = isWorkshared ? 1001 : 0; // 1001 = CommandLink1 ("Open without upgrading"), 0 = Cancel
+
+            Logger.Instance.Log($"[Batch] Version dialog '{dialogId}' during open of '{_currentOpeningJob?.DisplayName}'. " +
+                $"IsWorkshared={isWorkshared}. Overriding result to {result}.");
+
+            e.OverrideResult(result);
+        }
+
+        /// <summary>
+        /// Suppresses printer/print-settings dialogs that Revit may show when PrintManager
+        /// is configured during the Publish To Cloud routine. Tries OK → custom button 1001 → YES.
+        /// </summary>
+        private static void OnPrinterDialogShowing(object? sender, Autodesk.Revit.UI.Events.DialogBoxShowingEventArgs e)
+        {
+            string text = (e.DialogId ?? "").ToLowerInvariant();
+            // Also check message if accessible
+            string? message = null;
+            try { message = (e as Autodesk.Revit.UI.Events.TaskDialogShowingEventArgs)?.Message?.ToLowerInvariant(); } catch { }
+            string combined = text + " " + (message ?? string.Empty);
+
+            bool isPrinterDialog =
+                combined.Contains("printer") ||
+                combined.Contains("print setup") ||
+                combined.Contains("print settings") ||
+                combined.Contains("print driver") ||
+                combined.Contains("paper size") ||
+                combined.Contains("paper source") ||
+                combined.Contains("no printer") ||
+                combined.Contains("printing") ||
+                combined.Contains("print resource");
+
+            if (!isPrinterDialog)
+                return;
+
+            // Try OK → custom button → YES
+            try { e.OverrideResult(1); return; } catch { }
+            try { e.OverrideResult(1001); return; } catch { }
+            try { e.OverrideResult(6); } catch { }
         }
 
         private static void OnFailuresProcessing(object? sender, Autodesk.Revit.DB.Events.FailuresProcessingEventArgs e)

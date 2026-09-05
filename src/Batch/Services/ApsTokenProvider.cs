@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using LECG.Batch.Configuration;
@@ -10,16 +11,14 @@ namespace LECG.Batch.Services
     public class ApsTokenProvider : IApsTokenProvider
     {
         private readonly IApsSessionStore _sessionStore;
+        private readonly IApsAuthSettingsProvider _settingsProvider;
         private readonly HttpClient _http;
-        private readonly string _clientId;
-        private readonly string _redirectUri;
 
-        public ApsTokenProvider(IApsSessionStore sessionStore, HttpClient http, string clientId, string redirectUri)
+        public ApsTokenProvider(IApsSessionStore sessionStore, HttpClient http, IApsAuthSettingsProvider settingsProvider)
         {
             _sessionStore = sessionStore;
             _http = http;
-            _clientId = clientId;
-            _redirectUri = redirectUri;
+            _settingsProvider = settingsProvider;
         }
 
         public async Task<string> GetValidTokenAsync(CancellationToken cancellationToken = default)
@@ -31,23 +30,39 @@ namespace LECG.Batch.Services
             if (!session.IsExpired(BatchConstants.TokenRefreshBufferMin))
                 return session.AccessToken;
 
+            if (!_settingsProvider.TryGetValidSettings(out ApsAuthSettings settings, out string errorMessage))
+                throw new ApsAuthConfigurationException(errorMessage);
+
             var form = new Dictionary<string, string>
             {
-                ["grant_type"]    = "refresh_token",
+                ["grant_type"] = "refresh_token",
                 ["refresh_token"] = session.RefreshToken,
-                ["client_id"]     = _clientId,
-                ["redirect_uri"]  = _redirectUri,
+                ["client_id"] = settings.ClientId,
+                ["redirect_uri"] = settings.RedirectUri,
             };
+            if (!string.IsNullOrWhiteSpace(settings.ClientSecret))
+                form["client_secret"] = settings.ClientSecret;
 
             HttpResponseMessage response = await _http.PostAsync(
                 $"{BatchConstants.ApsBaseUrl}/authentication/v2/token",
                 new FormUrlEncodedContent(form),
                 cancellationToken);
 
-            response.EnsureSuccessStatusCode();
             string body = await response.Content.ReadAsStringAsync(cancellationToken);
-            JsonElement doc = JsonDocument.Parse(body).RootElement;
+            if (!response.IsSuccessStatusCode)
+            {
+                Logger.Instance.LogWarning($"[APS] Token refresh failed ({(int)response.StatusCode} {response.ReasonPhrase}): {body}");
 
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    _sessionStore.Delete();
+
+                throw new InvalidOperationException(
+                    response.StatusCode == HttpStatusCode.Unauthorized
+                        ? "APS session refresh failed with 401 Unauthorized. Please sign in again."
+                        : $"APS session refresh failed ({(int)response.StatusCode} {response.ReasonPhrase}).");
+            }
+
+            JsonElement doc = JsonDocument.Parse(body).RootElement;
             ApsSession refreshed = ApsSession.FromTokenResponse(
                 doc.GetProperty("access_token").GetString()!,
                 doc.TryGetProperty("refresh_token", out JsonElement rt) ? rt.GetString()! : session.RefreshToken,

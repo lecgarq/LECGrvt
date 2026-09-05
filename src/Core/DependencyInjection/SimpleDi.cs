@@ -162,7 +162,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 return ResolveDescriptor(descriptor, callStack);
             }
 
-            if (!serviceType.IsAbstract && !serviceType.IsInterface)
+            if (CanAutoConstruct(serviceType))
             {
                 return CreateInstance(serviceType, Array.Empty<object>(), callStack);
             }
@@ -298,6 +298,32 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             return provider.GetService(type);
+        }
+
+        private static bool CanAutoConstruct(Type serviceType)
+        {
+            if (!serviceType.IsClass || serviceType.IsAbstract || serviceType.IsInterface)
+            {
+                return false;
+            }
+
+            if (serviceType == typeof(string) || serviceType.IsArray || serviceType.IsPointer || serviceType.IsByRef)
+            {
+                return false;
+            }
+
+            if (typeof(Delegate).IsAssignableFrom(serviceType))
+            {
+                return false;
+            }
+
+            string? ns = serviceType.Namespace;
+            if (!string.IsNullOrWhiteSpace(ns) && ns.StartsWith("System", StringComparison.Ordinal))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

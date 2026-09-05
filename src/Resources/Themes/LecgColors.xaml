@@ -35,5 +35,6 @@
     <SolidColorBrush x:Key="LecgTextSecondary" Color="{StaticResource LecgTextSecondaryColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
     <SolidColorBrush x:Key="LecgTextPrimary" Color="{StaticResource LecgTextPrimaryColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
     <SolidColorBrush x:Key="LecgAccent" Color="{StaticResource LecgAccentColor}" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
+    <SolidColorBrush x:Key="LecgHoverBackground" Color="#D8D4CB" options:Freeze="True" xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options" />
 
 </ResourceDictionary>

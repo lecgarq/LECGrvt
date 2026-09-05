@@ -24,15 +24,17 @@ namespace LECG.Core.Ribbon
             {
             }
 
-            // 2. Build Panels (Alphabetical Order)
-            CreateHomePanel(app, tabName, assemblyPath);
-            CreateHealthPanel(app, tabName, assemblyPath);
-            CreateStandardsPanel(app, tabName, assemblyPath);
-            CreateToposolidsPanel(app, tabName, assemblyPath);
-            CreateAlignPanel(app, tabName, assemblyPath);
-            CreateModelOrganizationPanel(app, tabName, assemblyPath);
+            // 2. Build Panels
+            // NOTE: Simplified UI — only the render/material (Visualization) panel is shown.
+            // Other panels are temporarily disabled. Uncomment to restore full ribbon.
+            //CreateHomePanel(app, tabName, assemblyPath);
+            //CreateHealthPanel(app, tabName, assemblyPath);
+            //CreateStandardsPanel(app, tabName, assemblyPath);
+            //CreateToposolidsPanel(app, tabName, assemblyPath);
+            //CreateAlignPanel(app, tabName, assemblyPath);
+            //CreateModelOrganizationPanel(app, tabName, assemblyPath);
             CreateVisualizationPanel(app, tabName, assemblyPath);
-            CreateCloudPanel(app, tabName, assemblyPath);
+            //CreateCloudPanel(app, tabName, assemblyPath);
         }
 
         private static bool IsExpectedRibbonInitializationException(Exception ex)
@@ -194,7 +196,7 @@ namespace LECG.Core.Ribbon
             RibbonPanel panel = GetOrCreatePanel(app, tabName, AppConstants.Panels.Visualization);
             string availability = "LECG.Core.ProjectDocumentAvailability";
 
-            // Alphabetical: Render Match, Sexy Revit
+            // Batch library creation is available through PBR Material.
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonRenderMatch_Name,
                 UIConstants.ButtonRenderMatch_Text,
@@ -211,29 +213,14 @@ namespace LECG.Core.Ribbon
                 AppImages.AssignMaterial
             ), assemblyPath, availability);
 
-            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
-                UIConstants.ButtonSubstanceBatch_Name,
-                UIConstants.ButtonSubstanceBatch_Text,
-                "LECG.Commands.SubstanceBatchCommand",
-                UIConstants.ButtonSubstanceBatch_Tooltip,
-                AppImages.Palette
-            ), assemblyPath, availability);
-
-            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
-                UIConstants.ButtonDumpAsset_Name,
-                UIConstants.ButtonDumpAsset_Text,
-                "LECG.Commands.DumpAppearanceAssetCommand",
-                UIConstants.ButtonDumpAsset_Tooltip,
-                AppImages.SearchReplace
-            ), assemblyPath, availability);
-
-            RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
-                UIConstants.ButtonSexy_Name,
-                UIConstants.ButtonSexy_Text,
-                "LECG.Commands.SexyRevitCommand",
-                UIConstants.ButtonSexy_Tooltip,
-                AppImages.Sparkles
-            ), assemblyPath, availability);
+            // Sexy Revit button disabled — keep only the render/material buttons.
+            //RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
+            //    UIConstants.ButtonSexy_Name,
+            //    UIConstants.ButtonSexy_Text,
+            //    "LECG.Commands.SexyRevitCommand",
+            //    UIConstants.ButtonSexy_Tooltip,
+            //    AppImages.Sparkles
+            //), assemblyPath, availability);
         }
 
         private void CreateAlignPanel(UIControlledApplication app, string tabName, string assemblyPath)

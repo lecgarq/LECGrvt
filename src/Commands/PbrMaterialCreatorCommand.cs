@@ -33,6 +33,14 @@ namespace LECG.Commands
                 return;
             }
 
+            if (viewModel.BatchLibraryRoot is string libraryRoot)
+            {
+                var batch = new SubstanceBatchCommand();
+                batch.PrepareAsSubCommand(CommandData);
+                batch.Execute(uiDoc, doc, libraryRoot);
+                return;
+            }
+
             List<PbrMaterialCreateRequest> requests = viewModel.CreateRequests();
             ShowLogWindow($"Creating {requests.Count} PBR Material{(requests.Count > 1 ? "s" : "")}...");
 

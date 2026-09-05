@@ -235,6 +235,53 @@
         </Setter>
     </Style>
 
+    <!-- SecondaryToggleButtonStyle: Subtle bordered toggle button -->
+    <Style x:Key="SecondaryToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="16,6"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="4"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter Focusable="False"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccent}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- PrimaryButtonStyle: Dark earth fill -->
     <Style x:Key="PrimaryButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource LecgControlBackground}"/>

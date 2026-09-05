@@ -3,116 +3,468 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:icons="clr-namespace:LECG.Utils"
+    xmlns:utils="clr-namespace:LECG.Utils"
+    xmlns:vm="clr-namespace:LECG.Batch.ViewModels"
     Title="Browse Cloud Models"
-    Width="700" Height="550" MinWidth="550" MinHeight="400"
+    Width="760" Height="680" MinWidth="620" MinHeight="500"
     UseLayoutRounding="True" SnapsToDevicePixels="True"
-    WindowIcon="{x:Static icons:Icons.Home}">
+    WindowIcon="{x:Static icons:Icons.Home}"
+    Loaded="OnLoaded">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <utils:BoolToVisibilityConverter        x:Key="BoolToVis"/>
+            <utils:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis"/>
+
+            <!-- Hub card container -->
+            <Style x:Key="HubCardStyle" TargetType="Border">
+                <Setter Property="Background"    Value="{DynamicResource LecgSurfaceBackground}"/>
+                <Setter Property="BorderBrush"   Value="{DynamicResource LecgBorderLight}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius"  Value="6"/>
+                <Setter Property="Margin"        Value="0,0,0,8"/>
+            </Style>
+
+            <!-- Flat button used inside card rows -->
+            <Style x:Key="FlatRowButtonStyle" TargetType="Button">
+                <Setter Property="Background"   Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Cursor"       Value="Hand"/>
+                <Setter Property="Padding"      Value="12,10"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}"
+                                    CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bd" Property="Background"
+                                            Value="{DynamicResource LecgHoverBackground}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Model card -->
+            <Style x:Key="ModelCardStyle" TargetType="Border">
+                <Setter Property="Background"    Value="{DynamicResource LecgSurfaceBackground}"/>
+                <Setter Property="BorderBrush"   Value="{DynamicResource LecgBorderLight}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius"  Value="6"/>
+                <Setter Property="Margin"        Value="0,0,0,6"/>
+                <Setter Property="Padding"       Value="12,10"/>
+            </Style>
+
+            <!-- Folder badge -->
+            <Style x:Key="FolderBadgeStyle" TargetType="Border">
+                <Setter Property="Background"    Value="{DynamicResource LecgSurfaceBackground}"/>
+                <Setter Property="BorderBrush"   Value="{DynamicResource LecgBorderLight}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius"  Value="3"/>
+                <Setter Property="Padding"       Value="5,2"/>
+            </Style>
+
+            <!-- Active sort button -->
+            <Style x:Key="SortButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="Padding"       Value="8,4"/>
+                <Setter Property="FontSize"      Value="11"/>
+                <Setter Property="MinWidth"      Value="44"/>
+            </Style>
+
+            <!-- ItemContainerStyle: bind ContentPresenter Visibility to item's Visibility property -->
+            <Style x:Key="VisibilityContainerStyle" TargetType="ContentPresenter">
+                <Setter Property="Visibility" Value="{Binding Visibility}"/>
+            </Style>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
     <Grid Margin="{DynamicResource ViewContentMargin}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>  <!-- Header -->
+            <RowDefinition Height="Auto"/>  <!-- Search + sort toolbar -->
+            <RowDefinition Height="*"/>     <!-- Content (hubs or models) -->
+            <RowDefinition Height="Auto"/>  <!-- Status + progress -->
+            <RowDefinition Height="Auto"/>  <!-- Footer buttons -->
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Browse Cloud Models" FontWeight="{DynamicResource WeightBold}"
-                       FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}"
-                       Margin="{DynamicResource TitleMarginSmall}"/>
-            <TextBlock Text="Browse Autodesk Docs hubs, projects, and folders to select Revit models for the batch queue."
-                       FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
-        </StackPanel>
+        <!-- ═══════════════════════════════════════════════════════════════
+             Row 0 — Header
+        ════════════════════════════════════════════════════════════════ -->
+        <DockPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}" LastChildFill="True">
+            <!-- Back button — models view only -->
+            <Button DockPanel.Dock="Left"
+                    Content="← Back"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    Command="{Binding BackToHubsCommand}"
+                    Visibility="{Binding IsModelsView, Converter={StaticResource BoolToVis}}"
+                    Margin="0,0,12,0"
+                    VerticalAlignment="Center"/>
 
-        <!-- Browser Columns -->
-        <Grid Grid.Row="1" Margin="0,8,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <!-- Hubs-view title -->
+                <TextBlock Visibility="{Binding IsHubsView, Converter={StaticResource BoolToVis}}"
+                           Text="Browse Cloud Models"
+                           FontWeight="{DynamicResource WeightBold}"
+                           FontSize="{DynamicResource FontSizeExtraLarge}"
+                           Foreground="{DynamicResource LecgTextPrimary}"
+                           Margin="{DynamicResource TitleMarginSmall}"/>
+                <TextBlock Visibility="{Binding IsHubsView, Converter={StaticResource BoolToVis}}"
+                           Text="Expand a hub, select a project, then check the models to add to the batch queue."
+                           FontSize="{DynamicResource FontSizeBody}"
+                           Foreground="{DynamicResource LecgTextSecondary}"
+                           TextWrapping="Wrap"/>
 
-            <!-- Hubs / Projects -->
-            <Grid Grid.Column="0">
+                <!-- Models-view title -->
+                <TextBlock Visibility="{Binding IsModelsView, Converter={StaticResource BoolToVis}}"
+                           Text="{Binding ActiveProject.ProjectName}"
+                           FontWeight="{DynamicResource WeightBold}"
+                           FontSize="{DynamicResource FontSizeExtraLarge}"
+                           Foreground="{DynamicResource LecgTextPrimary}"
+                           Margin="{DynamicResource TitleMarginSmall}"/>
+                <TextBlock Visibility="{Binding IsModelsView, Converter={StaticResource BoolToVis}}"
+                           Text="Check one or more models to add them to the batch queue."
+                           FontSize="{DynamicResource FontSizeBody}"
+                           Foreground="{DynamicResource LecgTextSecondary}"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             Row 1 — Search + sort + hub-only controls
+        ════════════════════════════════════════════════════════════════ -->
+        <Border Grid.Row="1"
+                Background="{DynamicResource LecgSurfaceBackground}"
+                BorderBrush="{DynamicResource LecgBorderLight}"
+                BorderThickness="1" CornerRadius="4"
+                Padding="12,10" Margin="0,0,0,10">
+            <StackPanel>
+                <!-- Search + sort icons row -->
+                <DockPanel LastChildFill="True">
+                    <!-- Sort buttons (right-docked) -->
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Margin="8,0,0,0">
+                        <Button Content="↑A"  ToolTip="Sort by name"
+                                Style="{StaticResource SortButtonStyle}"
+                                Command="{Binding SortByCommand}" CommandParameter="Name"
+                                Margin="0,0,2,0"/>
+                        <Button Content="📅"  ToolTip="Sort by date"
+                                Style="{StaticResource SortButtonStyle}"
+                                Command="{Binding SortByCommand}" CommandParameter="Date"
+                                Margin="0,0,2,0"/>
+                        <Button Content="💾"  ToolTip="Sort by size"
+                                Style="{StaticResource SortButtonStyle}"
+                                Command="{Binding SortByCommand}" CommandParameter="Size"/>
+                    </StackPanel>
+
+                    <!-- Search box -->
+                    <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="Filter by model name or folder path"/>
+                </DockPanel>
+
+                <!-- Hubs-view-only: hide-empty toggle + scan progress -->
+                <DockPanel Visibility="{Binding IsHubsView, Converter={StaticResource BoolToVis}}"
+                           Margin="0,8,0,0" LastChildFill="False">
+                    <ToggleButton DockPanel.Dock="Left"
+                                  Content="Hide Empty Projects"
+                                  IsChecked="{Binding FilterEmptyProjects}"
+                                  Style="{DynamicResource SecondaryToggleButtonStyle}"
+                                  Padding="8,3"
+                                  FontSize="11"/>
+                    <StackPanel DockPanel.Dock="Left"
+                                Orientation="Horizontal"
+                                Margin="10,0,0,0"
+                                VerticalAlignment="Center"
+                                Visibility="{Binding IsScanning, Converter={StaticResource BoolToVis}}">
+                        <Ellipse Width="6" Height="6" Fill="{DynamicResource LecgAccent}" Margin="0,0,5,0"/>
+                        <TextBlock Text="{Binding ScanProgressText}"
+                                   FontSize="{DynamicResource FontSizeSmall}"
+                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                   VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DockPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             Row 2 — Content: Hubs view OR Models view
+        ════════════════════════════════════════════════════════════════ -->
+        <Grid Grid.Row="2">
+
+            <!-- ─── HUBS VIEW ──────────────────────────────────────────── -->
+            <ScrollViewer Visibility="{Binding IsHubsView, Converter={StaticResource BoolToVis}}"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+                <StackPanel>
+                    <!-- Loading indicator -->
+                    <ProgressBar IsIndeterminate="True" Height="4" Margin="0,0,0,8"
+                                 Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"/>
+
+                    <!-- Empty state -->
+                    <StackPanel HorizontalAlignment="Center" Margin="0,40,0,0"
+                                Visibility="{Binding IsLoading, Converter={StaticResource InverseBoolToVis}}">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HubNodes.Count}" Value="0">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="No hubs found"
+                                   FontWeight="{DynamicResource WeightBold}"
+                                   FontSize="{DynamicResource FontSizeMediumLarge}"
+                                   Foreground="{DynamicResource LecgTextPrimary}"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding StatusMessage}"
+                                   FontSize="{DynamicResource FontSizeBody}"
+                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                   HorizontalAlignment="Center" Margin="0,6,0,0" TextWrapping="Wrap" MaxWidth="360"/>
+                    </StackPanel>
+
+                    <!-- Hub accordion cards -->
+                    <ItemsControl ItemsSource="{Binding HubNodes}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type vm:HubNodeViewModel}">
+                                <Border Style="{StaticResource HubCardStyle}">
+                                    <StackPanel>
+                                        <!-- Hub header row -->
+                                        <Button Style="{StaticResource FlatRowButtonStyle}"
+                                                Command="{Binding ToggleCommand}">
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Width="18"
+                                                           Text="▼" VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource LecgTextSecondary}"
+                                                           Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVis}}"/>
+                                                <TextBlock DockPanel.Dock="Left" Width="18"
+                                                           Text="▶" VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource LecgTextSecondary}"
+                                                           Visibility="{Binding IsExpanded, Converter={StaticResource InverseBoolToVis}}"/>
+                                                <TextBlock Text="{Binding HubName}"
+                                                           FontWeight="{DynamicResource WeightBold}"
+                                                           FontSize="{DynamicResource FontSizeMedium}"
+                                                           Foreground="{DynamicResource LecgTextPrimary}"
+                                                           VerticalAlignment="Center"/>
+                                            </DockPanel>
+                                        </Button>
+
+                                        <!-- Project list (visible when expanded) -->
+                                        <ItemsControl ItemsSource="{Binding Projects}"
+                                                      Visibility="{Binding IsExpanded, Converter={StaticResource BoolToVis}}"
+                                                      Margin="0,2,0,4">
+                                            <ItemsControl.ItemContainerStyle>
+                                                <Style TargetType="ContentPresenter">
+                                                    <Setter Property="Visibility" Value="{Binding Visibility}"/>
+                                                </Style>
+                                            </ItemsControl.ItemContainerStyle>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate DataType="{x:Type vm:ProjectNodeViewModel}">
+                                                    <Button Style="{StaticResource FlatRowButtonStyle}"
+                                                            Command="{Binding DataContext.BrowseProjectCommand,
+                                                                      RelativeSource={RelativeSource AncestorType=Window}}"
+                                                            CommandParameter="{Binding}"
+                                                            Margin="18,0,0,0">
+                                                        <DockPanel>
+                                                            <TextBlock DockPanel.Dock="Right"
+                                                                       Text="{Binding StatusLabel}"
+                                                                       FontSize="{DynamicResource FontSizeSmall}"
+                                                                       Foreground="{DynamicResource LecgTextSecondary}"
+                                                                       VerticalAlignment="Center" Margin="8,0,0,0"/>
+                                                            <TextBlock DockPanel.Dock="Right" Width="8"
+                                                                       Text="→" VerticalAlignment="Center"
+                                                                       Foreground="{DynamicResource LecgTextSecondary}"/>
+                                                            <TextBlock Text="{Binding ProjectName}"
+                                                                       FontSize="{DynamicResource FontSizeBody}"
+                                                                       Foreground="{DynamicResource LecgTextPrimary}"
+                                                                       VerticalAlignment="Center"/>
+                                                        </DockPanel>
+                                                    </Button>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- ─── MODELS VIEW ────────────────────────────────────────── -->
+            <Grid Visibility="{Binding IsModelsView, Converter={StaticResource BoolToVis}}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="HUBS" Style="{DynamicResource SectionHeaderStyle}" Margin="0,0,0,4"/>
-                <ListBox Grid.Row="1" ItemsSource="{Binding Hubs}"
-                         SelectedItem="{Binding SelectedHub}"
-                         DisplayMemberPath="Name"
-                         BorderBrush="{DynamicResource LecgBorderLight}"/>
-                <Button Grid.Row="2" Content="Load Hubs" Margin="0,4,0,0"
-                        Style="{DynamicResource ModernButtonStyle}"
-                        Command="{Binding LoadHubsCommand}"/>
-            </Grid>
 
-            <!-- Projects -->
-            <Grid Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="PROJECTS" Style="{DynamicResource SectionHeaderStyle}" Margin="0,0,0,4"/>
-                <ListBox Grid.Row="1" ItemsSource="{Binding Projects}"
-                         SelectedItem="{Binding SelectedProject}"
-                         DisplayMemberPath="Name"
-                         BorderBrush="{DynamicResource LecgBorderLight}"/>
-            </Grid>
+                <ScrollViewer Grid.Row="0"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel>
+                        <!-- Scanning indicator for the active project -->
+                        <ProgressBar IsIndeterminate="True" Height="4" Margin="0,0,0,8">
+                            <ProgressBar.Style>
+                                <Style TargetType="ProgressBar">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ActiveProject.ScanStatus}"
+                                                     Value="{x:Static vm:ScanStatus.Scanning}">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ProgressBar.Style>
+                        </ProgressBar>
 
-            <!-- Folders + Versions -->
-            <Grid Grid.Column="4">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="FOLDERS / ITEMS" Style="{DynamicResource SectionHeaderStyle}" Margin="0,0,0,4"/>
-                <ListBox Grid.Row="1" ItemsSource="{Binding FolderItems}"
-                         SelectedItem="{Binding SelectedFolder}"
-                         DisplayMemberPath="Name"
-                         BorderBrush="{DynamicResource LecgBorderLight}"/>
-                <TextBlock Grid.Row="2" Text="REVIT VERSIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0,8,0,4"/>
-                <ListBox Grid.Row="3" x:Name="VersionsList"
-                         ItemsSource="{Binding Versions}"
-                         DisplayMemberPath="DisplayName"
-                         SelectionMode="Extended"
-                         BorderBrush="{DynamicResource LecgBorderLight}"/>
+                        <!-- Empty state -->
+                        <StackPanel HorizontalAlignment="Center" Margin="0,40,0,0">
+                            <StackPanel.Style>
+                                <Style TargetType="StackPanel">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FilteredModels.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </StackPanel.Style>
+                            <TextBlock Text="No Revit models"
+                                       FontWeight="{DynamicResource WeightBold}"
+                                       FontSize="{DynamicResource FontSizeMediumLarge}"
+                                       Foreground="{DynamicResource LecgTextPrimary}"
+                                       HorizontalAlignment="Center"/>
+                            <TextBlock Text="This project has no .rvt files, or the scan is still in progress."
+                                       FontSize="{DynamicResource FontSizeBody}"
+                                       Foreground="{DynamicResource LecgTextSecondary}"
+                                       HorizontalAlignment="Center" Margin="0,6,0,0"
+                                       TextWrapping="Wrap" MaxWidth="320"/>
+                        </StackPanel>
+
+                        <!-- Model cards -->
+                        <ItemsControl ItemsSource="{Binding FilteredModels}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type vm:ModelCardViewModel}">
+                                    <Border Style="{StaticResource ModelCardStyle}">
+                                        <DockPanel>
+                                            <!-- Checkbox -->
+                                            <CheckBox DockPanel.Dock="Left"
+                                                      IsChecked="{Binding IsSelected}"
+                                                      VerticalAlignment="Center"
+                                                      Margin="0,0,12,0"/>
+                                            <!-- Model info -->
+                                            <StackPanel VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding DisplayName}"
+                                                           FontWeight="{DynamicResource WeightBold}"
+                                                           FontSize="{DynamicResource FontSizeBody}"
+                                                           Foreground="{DynamicResource LecgTextPrimary}"
+                                                           TextTrimming="CharacterEllipsis"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <!-- Folder badge -->
+                                                    <Border Style="{StaticResource FolderBadgeStyle}">
+                                                        <TextBlock Text="{Binding FolderPathDisplay}"
+                                                                   FontSize="{DynamicResource FontSizeSmall}"
+                                                                   Foreground="{DynamicResource LecgTextSecondary}"
+                                                                   TextTrimming="CharacterEllipsis"
+                                                                   MaxWidth="220"/>
+                                                    </Border>
+                                                    <!-- Size -->
+                                                    <TextBlock Text="{Binding FileSizeDisplay}"
+                                                               FontSize="{DynamicResource FontSizeSmall}"
+                                                               Foreground="{DynamicResource LecgAccent}"
+                                                               VerticalAlignment="Center"
+                                                               Margin="8,0,0,0"/>
+                                                    <!-- Last modified -->
+                                                    <TextBlock Text="{Binding LastModifiedDisplay}"
+                                                               FontSize="{DynamicResource FontSizeSmall}"
+                                                               Foreground="{DynamicResource LecgTextSecondary}"
+                                                               VerticalAlignment="Center"
+                                                               Margin="8,0,0,0"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <!-- Select all / clear row above footer -->
+                <DockPanel Grid.Row="1" Margin="0,10,0,0" LastChildFill="False">
+                    <CheckBox DockPanel.Dock="Left"
+                              IsChecked="{Binding AllSelected}"
+                              VerticalAlignment="Center"
+                              ToolTip="Check/Uncheck all visible models"/>
+
+                    <TextBlock DockPanel.Dock="Left"
+                               Text="Check All"
+                               VerticalAlignment="Center"
+                               Margin="5,0,15,0"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource LecgTextPrimary}"/>
+
+                    <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Content="Select All" Style="{DynamicResource LinkButtonStyle}"
+                                Command="{Binding SelectAllCommand}" FontSize="11"/>
+                        <TextBlock Text="|" Margin="6,0" Foreground="{DynamicResource LecgBorderLight}"/>
+                        <Button Content="Clear" Style="{DynamicResource LinkButtonStyle}"
+                                Command="{Binding UnselectAllCommand}" FontSize="11"/>
+                    </StackPanel>
+
+                    <TextBlock DockPanel.Dock="Right"
+                               VerticalAlignment="Center"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource LecgTextSecondary}">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="{}{0} of {1} selected">
+                                <Binding Path="SelectedCount"/>
+                                <Binding Path="FilteredModels.Count"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </DockPanel>
             </Grid>
         </Grid>
 
-        <!-- Status -->
-        <TextBlock Grid.Row="2" Text="{Binding StatusMessage}"
-                   FontSize="{DynamicResource FontSizeSmall}"
-                   Foreground="{DynamicResource LecgTextSecondary}"
-                   Margin="0,6,0,4" TextWrapping="Wrap"/>
+        <!-- ═══════════════════════════════════════════════════════════════
+             Row 3 — Status bar + loading progress
+        ════════════════════════════════════════════════════════════════ -->
+        <StackPanel Grid.Row="3" Margin="0,8,0,0">
+            <TextBlock Text="{Binding StatusMessage}"
+                       FontSize="{DynamicResource FontSizeSmall}"
+                       Foreground="{DynamicResource LecgTextSecondary}"
+                       TextWrapping="Wrap"/>
+            <ProgressBar Margin="0,6,0,0" Height="4" IsIndeterminate="True"
+                         Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}"/>
+        </StackPanel>
 
-        <!-- Buttons -->
-        <Grid Grid.Row="3" Margin="{DynamicResource ButtonRowMargin}">
+        <!-- ═══════════════════════════════════════════════════════════════
+             Row 4 — Footer buttons
+        ════════════════════════════════════════════════════════════════ -->
+        <Grid Grid.Row="4" Margin="{DynamicResource ButtonRowMarginSmall}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="12"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Add Selected to Queue"
-                    Style="{DynamicResource ModernButtonStyle}"
-                    Click="OnAddToQueueClick"/>
-            <Button Grid.Column="2" Content="Close"
-                    Style="{DynamicResource ModernButtonSecondaryStyle}"
+
+            <Button Grid.Column="0"
+                    Content="{Binding AddToQueueButtonText}"
+                    Style="{DynamicResource AccentButtonStyle}"
+                    IsEnabled="{Binding CanAddToQueue}"
+                    Click="OnAddToQueueClick"
+                    Visibility="{Binding IsModelsView, Converter={StaticResource BoolToVis}}"/>
+
+            <Button Grid.Column="2"
+                    Content="Close"
+                    Style="{DynamicResource SecondaryButtonStyle}"
                     Click="OnCloseClick"/>
         </Grid>
     </Grid>

@@ -298,7 +298,6 @@ command and one real batch of a small category (Ceiling, 2 materials).
 
 ## Runtime findings (Task 13)
 
-Pending user run of the "Dump Asset" button in Revit 2026 on an Autodesk library material with a normal map (e.g. a metal mesh). Record here:
-- Advanced Opaque template: library asset `Name` = ?, `BaseSchema` = ?
-- `surface_normal` connected asset `Name`/`BaseSchema` = ? (expected BumpMap), `bumpmap_Type` = ? (expected 1)
-If the schema differs from BumpMap, update `MaterialBitmapPropertyService.BumpMapSchema`; if the template heuristic misses, update `AdvancedAppearanceAssetService.IsOpaqueSchema`.
+Verified in Revit 2026.5: Advanced Opaque `Name`/`BaseSchema` = `PrismOpaqueSchema`; `surface_normal` connected `Name`/`BaseSchema` = `BumpMapSchema`, `bumpmap_Type` = 1. The `BumpMap` creation string works. Appearance distance units are inches on this template; the shared bitmap service now converts internal feet into the property's units, preserving the requested 2500 mm size.
+
+The runtime smoke passed for 2 Ceiling, 28 Metal, and 1 opacity material. The source Ceiling manifests have no opacity channel, so a construction rebar grid tested cutout wiring. Visual relief direction remains unverified after the user stopped desktop control. Full evidence and PBR root-folder integration: [validation report](../../review/16-substance-batch-validation.md).

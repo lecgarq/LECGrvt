@@ -19,7 +19,15 @@ namespace LECG.ViewModels
         [ObservableProperty]
         private MaterialPageViewModel? _selectedPage;
 
-        public bool CanRun => MaterialPages.Count > 0 && MaterialPages.All(p => p.CanRun);
+        public string? BatchLibraryRoot => SelectedPage?.BatchMaterialCount > 0 ? SelectedPage.FolderPath : null;
+
+        public bool CanRun => BatchLibraryRoot != null || (MaterialPages.Count > 0 && MaterialPages.All(p => p.CanRun));
+
+        public string CreateButtonText => BatchLibraryRoot != null ? "Review Batch" : "Create Materials";
+
+        public string Instructions => BatchLibraryRoot != null
+            ? $"{SelectedPage!.BatchMaterialCount} materials found in this library. Review Batch opens all materials selected at 2,500 mm; choose categories and create them together."
+            : "Select a folder with PBR textures, or select the SubstanceBakes library to batch create its materials at 2,500 mm.";
 
         public bool CanRemovePage => MaterialPages.Count > 1;
 
@@ -37,7 +45,7 @@ namespace LECG.ViewModels
         private void AddPage()
         {
             var page = new MaterialPageViewModel(MaterialPages.Count + 1, _textureLookup);
-            page.CanRunNotifier = () => OnPropertyChanged(nameof(CanRun));
+            page.CanRunNotifier = NotifySelection;
             MaterialPages.Add(page);
             SelectedPage = page;
         }
@@ -68,6 +76,16 @@ namespace LECG.ViewModels
         public List<PbrMaterialCreateRequest> CreateRequests()
         {
             return MaterialPages.Select(p => p.CreateRequest()).ToList();
+        }
+
+        partial void OnSelectedPageChanged(MaterialPageViewModel? value) => NotifySelection();
+
+        private void NotifySelection()
+        {
+            OnPropertyChanged(nameof(CanRun));
+            OnPropertyChanged(nameof(BatchLibraryRoot));
+            OnPropertyChanged(nameof(CreateButtonText));
+            OnPropertyChanged(nameof(Instructions));
         }
 
         private void OnPagesCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

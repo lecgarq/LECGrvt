@@ -225,8 +225,14 @@ namespace LECG.Views.Base
             }
             else
             {
-                // Fallback to primary screen center if no owner set
-                this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                // Revit owns the HWND, not a WPF Window. StartupLocation alone does not
+                // move an already initialized window back from a saved off-screen position.
+                Rect work = SystemParameters.WorkArea;
+                Width = Math.Min(double.IsFinite(Width) ? Width : Math.Max(ActualWidth, MinWidth), work.Width);
+                Height = Math.Min(double.IsFinite(Height) ? Height : Math.Max(ActualHeight, MinHeight), work.Height);
+                WindowStartupLocation = WindowStartupLocation.Manual;
+                Left = work.Left + (work.Width - Width) / 2;
+                Top = work.Top + (work.Height - Height) / 2;
             }
         }
 

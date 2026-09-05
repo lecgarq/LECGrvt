@@ -16,6 +16,7 @@ namespace LECG.Batch.Models
         public string Region { get; set; } = "";
         public string DisplayName { get; set; } = "";
         public string FileName { get; set; } = "";
+        public string FolderPath { get; set; } = "";
         public ModelType ModelType { get; set; }
         public bool PublishAfterSync { get; set; }
         public int RetryCount { get; set; }
