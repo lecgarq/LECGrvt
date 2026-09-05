@@ -32,8 +32,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsCiBuild)' == 'true'">
+    <Compile Remove="Batch\\**\\*.cs" />
     <Compile Remove="Caching\\**\\*.cs" />
     <Compile Remove="DependencyInjection\\**\\*.cs" />
+    <Compile Remove="Services\\ApsAuthSettingsProviderTests.cs" />
     <Compile Remove="Validation\\**\\*.cs" />
     <Compile Remove="Windows\\**\\*.cs" />
   </ItemGroup>
