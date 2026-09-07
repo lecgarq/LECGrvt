@@ -62,6 +62,18 @@ namespace LECG.Views.Base
             // is themed, including views that do not declare it (HomeView, SearchReplaceView)
             // and any future one.
             Resources.MergedDictionaries.Add(SharedTheme);
+
+            // Brand ground and type for the whole window. These are inherited properties, so
+            // every TextBlock, control and template inside picks them up — including views that
+            // replace Resources in XAML, because property values survive that replacement.
+            SetResourceReference(BackgroundProperty, "LecgBaseBackground");
+            SetResourceReference(ForegroundProperty, "LecgTextPrimary");
+            SetResourceReference(FontFamilyProperty, "FontFamilyBody");
+            SetResourceReference(FontSizeProperty, "FontSizeBody");
+            TextOptions.SetTextFormattingMode(this, TextFormattingMode.Display);
+            TextOptions.SetTextRenderingMode(this, TextRenderingMode.ClearType);
+            UseLayoutRounding = true;
+            SnapsToDevicePixels = true;
         }
 
         public LecgWindow()

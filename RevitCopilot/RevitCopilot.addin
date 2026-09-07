@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>LECG Revit Copilot</Name>
+    <Assembly>RevitCopilot\RevitCopilot.dll</Assembly>
+    <AddInId>C680C2C2-D551-4C4F-9BF8-72D4E6F3A57D</AddInId>
+    <FullClassName>LECG.RevitCopilot.RevitCopilotApp</FullClassName>
+    <VendorId>LECG</VendorId>
+    <VendorDescription>LECG Arquitectura</VendorDescription>
+  </AddIn>
+</RevitAddIns>

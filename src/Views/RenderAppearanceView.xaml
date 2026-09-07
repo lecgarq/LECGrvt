@@ -24,7 +24,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Sync Render Appearance" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Sync Render Appearance" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
             <TextBlock Text="Update graphic settings to match appearance asset." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
@@ -32,7 +32,7 @@
         <Border Grid.Row="1" Padding="16">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="INFO" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <TextBlock Text="This command will process all materials in the project." TextWrapping="Wrap" Margin="0,0,0,8" Foreground="{DynamicResource LecgTextPrimary}"/>

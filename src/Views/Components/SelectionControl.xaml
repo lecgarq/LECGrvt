@@ -22,7 +22,7 @@
                 <TextBlock Text="Click to add or change" FontSize="{DynamicResource FontSizeExtraSmall}" Foreground="{DynamicResource LecgTextMuted}"/>
             </StackPanel>
 
-            <Button Grid.Column="1" Content="Select..." Command="{Binding SelectCommand}" Style="{DynamicResource SecondaryButtonStyle}" Width="80" Height="32"/>
+            <Button Grid.Column="1" Content="Select..." Command="{Binding SelectCommand}" Style="{DynamicResource SecondaryButtonStyle}" MinWidth="88" Height="32"/>
         </Grid>
 
         <controls:ElementGridControl RowItems="{Binding RowItems}"

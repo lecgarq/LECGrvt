@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:utils="clr-namespace:LECG.Utilities"
-    xmlns:icons="clr-namespace:LECG.Utilities" Title="SEXY REVIT" Width="400" Height="550" MinWidth="350" MinHeight="450" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Sparkles}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="SEXY REVIT" Width="460" Height="550" MinWidth="350" MinHeight="450" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Sparkles}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -23,8 +23,12 @@
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
             <Grid>
-                <TextBlock Text="View Beautification" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="View Beautification" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0,0,0">
                     <Button Content="Check All" Command="{Binding CheckAllCommand}" Style="{DynamicResource LinkButtonStyle}" Margin="0,0,10,0"/>
                     <Button Content="Uncheck All" Command="{Binding UncheckAllCommand}" Style="{DynamicResource LinkButtonStyle}"/>
                 </StackPanel>
@@ -39,7 +43,7 @@
                 <Border Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                            <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <Border Style="{DynamicResource AccentBarStyle}"/>
                             <TextBlock Text="GRAPHICS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                         </StackPanel>
                         <CheckBox Content="Consistent Colors (Flat shading)" IsChecked="{Binding UseConsistentColors, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacingMedium}"/>
@@ -52,7 +56,7 @@
                 <Border Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                            <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <Border Style="{DynamicResource AccentBarStyle}"/>
                             <TextBlock Text="HIDE ELEMENTS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                         </StackPanel>
                         <CheckBox Content="Levels" IsChecked="{Binding HideLevels, Mode=TwoWay}" Style="{DynamicResource ModernCheckboxStyle}" Margin="{DynamicResource CheckboxSpacingSmall}"/>
@@ -67,7 +71,7 @@
                 <Border Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                            <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                            <Border Style="{DynamicResource AccentBarStyle}"/>
                             <TextBlock Text="LIGHTING (3D VIEWS)" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,0">

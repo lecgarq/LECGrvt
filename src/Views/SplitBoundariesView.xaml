@@ -24,7 +24,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Split Boundaries" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Split Boundaries" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
             <TextBlock Text="Separate multi-boundary elements into independent instances." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
@@ -32,11 +32,11 @@
         <Border Grid.Row="1" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <comp:SelectionControl DataContext="{Binding Selection}" Margin="0,0,0,12"/>
-                <Border Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="8" Padding="8">
+                <Border Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource ContentCornerRadius}" Padding="8">
                     <controls:ElementGridControl RowItems="{Binding RowItems}" Height="160"/>
                 </Border>
             </StackPanel>

@@ -2,206 +2,140 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <!--
+        LECG UI theme — the Graphic Standard (LECG-GS-01) applied to WPF.
+        Merged per window by LecgWindow, never application-wide (see docs/ai/ui-guide.md).
+
+        Colour  : Themes/LecgColors.xaml. Paper ground, Chalk panels, Ink type, Blue mark.
+        Type    : Poppins SemiBold for titles (embedded), Century Gothic for everything else
+                  (ships with Office; Segoe UI fallback), a mono face for figures.
+                  Screen sizes from Part 8: title 20, subhead 16, body 14, caption 13, label 12.
+        Spacing : Part 9 screen scale, base 8 px — 4 / 8 / 12 / 16 / 24 / 32.
+        Shape   : hairline rules and 2 px corners; no shadows, no gradients (C5: fills carry no line).
+    -->
+
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgColors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!-- ============================================================ -->
-    <!-- BRUSH ALIASES (referenced by older views)                     -->
+    <!-- TYPOGRAPHY                                                    -->
     <!-- ============================================================ -->
-    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource LecgTextPrimaryColor}"/>
-    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource LecgTextSecondaryColor}"/>
-    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource LecgTextMutedColor}"/>
-    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource LecgAccentColor}"/>
-    <SolidColorBrush x:Key="AccentMutedBrush" Color="#9AAD7A"/>
-    <SolidColorBrush x:Key="AccentGradientBrush" Color="{StaticResource LecgAccentColor}"/>
-    <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource LecgBorderLightColor}"/>
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource LecgBaseBackgroundColor}"/>
-    <SolidColorBrush x:Key="PanelBackgroundBrush" Color="{StaticResource LecgSurfaceBackgroundColor}"/>
-    <SolidColorBrush x:Key="ContentBackgroundBrush" Color="{StaticResource LecgSurfaceBackgroundColor}"/>
-    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource LecgSurfaceBackgroundColor}"/>
-    <SolidColorBrush x:Key="PrimaryAccentBrush" Color="{StaticResource LecgAccentColor}"/>
-    <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#5B6D42"/>
-    <SolidColorBrush x:Key="AlertBrush" Color="#C53030"/>
-    <SolidColorBrush x:Key="LecgError" Color="#C53030"/>
+    <FontFamily x:Key="FontFamilyHeading">pack://application:,,,/LECG;component/src/Resources/Fonts/#Poppins</FontFamily>
+    <!-- WPF walks a comma list left to right and uses the first family it can resolve, so this
+         is the standard's own substitution order (Part 8): Century Gothic where Office is
+         installed, otherwise Jost — the standard's named substitute, embedded here under the OFL
+         (Regular and Bold), so every machine gets a geometric face. Century Gothic is Monotype and
+         cannot be embedded. The relative path resolves against this dictionary's location, and
+         the family name really is "Jost*" — that is how the upstream TTFs are named. -->
+    <FontFamily x:Key="FontFamilyBody">Century Gothic, ../Fonts/#Jost*, Segoe UI, Arial</FontFamily>
+    <FontFamily x:Key="FontFamilyMono">IBM Plex Mono, Cascadia Mono, Consolas, Courier New</FontFamily>
 
-    <!-- Color aliases for FilterCopyView and other views -->
-    <Color x:Key="ColorTextPrimary">#323130</Color>
-    <Color x:Key="ColorTextSecondary">#4E4B44</Color>
-    <Color x:Key="ColorTextMuted">#96938C</Color>
-    <Color x:Key="ColorAccent">#708452</Color>
-    <Color x:Key="ColorAccentHover">#5B6D42</Color>
-    <Color x:Key="ColorAccentLight">#9AAD7A</Color>
-    <Color x:Key="ColorAccentMuted">#C0CEAF</Color>
-    <Color x:Key="ColorBorder">#C8C0B4</Color>
-    <Color x:Key="ColorPrimary">#7A634F</Color>
-    <Color x:Key="ColorPrimaryHover">#5F4D3D</Color>
-    <Color x:Key="ColorCardBackground">#E6E3DA</Color>
-    <Color x:Key="ColorContentBackground">#E6E3DA</Color>
-    <Color x:Key="ColorPanelBackground">#E6E3DA</Color>
-    <Color x:Key="ColorWindowBackground">#E9E9E6</Color>
-    <Color x:Key="ColorSurfaceElevated">#F0EFEB</Color>
-    <Color x:Key="ColorGlassOverlay">#40E9E9E6</Color>
-    <Color x:Key="ColorAlert">#C53030</Color>
-    <Color x:Key="ColorSuccess">#38A169</Color>
-    <Color x:Key="ColorLogBackground">#F7F6F3</Color>
-    <Color x:Key="ColorLogText">#323130</Color>
-    <Color x:Key="ColorDataGridRowAlt">#F5F4F0</Color>
-    <Color x:Key="ColorDataGridRowHover">#E6E3DA</Color>
-    <Color x:Key="ColorDataGridAdded">#C6F6D5</Color>
-    <Color x:Key="ColorDataGridRemoved">#FED7D7</Color>
-    <Color x:Key="ColorDataGridMeta">#EDF2F7</Color>
-    <Color x:Key="ColorScopeActive">#708452</Color>
-    <Color x:Key="ColorScopeActiveBorder">#5B6D42</Color>
-    <Color x:Key="ColorScopeActiveText">#FFFFFF</Color>
-    <Color x:Key="ColorScopeInactive">#E6E3DA</Color>
-    <Color x:Key="ColorScopeInactiveBorder">#C8C0B4</Color>
-    <Color x:Key="ColorScopeInactiveText">#4E4B44</Color>
-    <SolidColorBrush x:Key="ScopeActiveBrush" Color="{StaticResource ColorScopeActive}"/>
-    <SolidColorBrush x:Key="ScopeActiveBorderBrush" Color="{StaticResource ColorScopeActiveBorder}"/>
-    <SolidColorBrush x:Key="ScopeActiveTextBrush" Color="{StaticResource ColorScopeActiveText}"/>
-    <SolidColorBrush x:Key="ScopeInactiveBrush" Color="{StaticResource ColorScopeInactive}"/>
-    <SolidColorBrush x:Key="ScopeInactiveBorderBrush" Color="{StaticResource ColorScopeInactiveBorder}"/>
-    <SolidColorBrush x:Key="ScopeInactiveTextBrush" Color="{StaticResource ColorScopeInactiveText}"/>
+    <sys:Double x:Key="FontSizeExtraSmall">12</sys:Double>   <!-- Label, uppercase -->
+    <sys:Double x:Key="FontSizeSmall">13</sys:Double>        <!-- Caption / note -->
+    <sys:Double x:Key="FontSizeBody">14</sys:Double>         <!-- Body: the Century Gothic floor (T2) -->
+    <sys:Double x:Key="FontSizeMedium">14</sys:Double>
+    <sys:Double x:Key="FontSizeMediumLarge">16</sys:Double>  <!-- Subhead -->
+    <sys:Double x:Key="FontSizeTitle">20</sys:Double>        <!-- Dialog title -->
+    <sys:Double x:Key="FontSizeExtraLarge">24</sys:Double>   <!-- Dashboard title -->
 
-    <!-- ============================================================ -->
-    <!-- SIZING CONSTANTS                                              -->
-    <!-- ============================================================ -->
-    <sys:Double x:Key="ButtonHeight">36</sys:Double>
-    <sys:Double x:Key="ButtonHeightMedium">32</sys:Double>
-    <sys:Double x:Key="ButtonHeightLarge">44</sys:Double>
-    <sys:Double x:Key="FontSizeTitle">16</sys:Double>
-    <sys:Double x:Key="FontSizeExtraLarge">20</sys:Double>
-    <sys:Double x:Key="FontSizeMediumLarge">14</sys:Double>
-    <sys:Double x:Key="FontSizeMedium">13</sys:Double>
-    <sys:Double x:Key="FontSizeBody">13</sys:Double>
-    <sys:Double x:Key="FontSizeSmall">11</sys:Double>
-    <sys:Double x:Key="FontSizeExtraSmall">10</sys:Double>
-    <sys:Double x:Key="IconSizeMedium">18</sys:Double>
-    <sys:Double x:Key="IconSizeButton">14</sys:Double>
-    <sys:Double x:Key="IconSizeAction">24</sys:Double>
-
-    <!-- ============================================================ -->
-    <!-- FONT WEIGHTS                                                  -->
-    <!-- ============================================================ -->
     <FontWeight x:Key="WeightBold">Bold</FontWeight>
     <FontWeight x:Key="WeightSemiBold">SemiBold</FontWeight>
 
     <!-- ============================================================ -->
-    <!-- LAYOUT CONSTANTS (Thickness)                                  -->
+    <!-- SPACING, SIZING, SHAPE                                        -->
     <!-- ============================================================ -->
-    <Thickness x:Key="ViewContentMargin">20</Thickness>
-    <Thickness x:Key="ViewContentMarginLarge">30</Thickness>
-    <Thickness x:Key="HeaderMarginSmall">0,0,0,12</Thickness>
+    <Thickness x:Key="ViewContentMargin">24</Thickness>
+    <Thickness x:Key="ViewContentMarginLarge">32</Thickness>
+    <Thickness x:Key="HeaderMarginSmall">0,0,0,16</Thickness>
     <Thickness x:Key="TitleMarginSmall">0,0,0,4</Thickness>
-    <Thickness x:Key="ButtonRowMargin">0,20,0,0</Thickness>
-    <Thickness x:Key="ButtonRowMarginSmall">0,12,0,0</Thickness>
-    <Thickness x:Key="ButtonRowMarginLarge">0,24,0,0</Thickness>
-    <Thickness x:Key="CheckboxSpacing">0,0,0,6</Thickness>
+    <Thickness x:Key="ButtonRowMargin">0,24,0,0</Thickness>
+    <Thickness x:Key="ButtonRowMarginSmall">0,16,0,0</Thickness>
+    <Thickness x:Key="ButtonRowMarginLarge">0,32,0,0</Thickness>
+    <Thickness x:Key="CheckboxSpacing">0,0,0,8</Thickness>
     <Thickness x:Key="CheckboxSpacingSmall">0,0,0,4</Thickness>
-    <Thickness x:Key="CheckboxSpacingMedium">0,0,0,8</Thickness>
+    <Thickness x:Key="CheckboxSpacingMedium">0,0,0,12</Thickness>
     <Thickness x:Key="CardMarginNone">0</Thickness>
     <Thickness x:Key="IconMarginRight">0,0,8,0</Thickness>
 
-    <!-- ============================================================ -->
-    <!-- CORNER RADII                                                  -->
-    <!-- ============================================================ -->
+    <sys:Double x:Key="ButtonHeight">36</sys:Double>
+    <sys:Double x:Key="ButtonHeightMedium">32</sys:Double>
+    <sys:Double x:Key="ButtonHeightLarge">44</sys:Double>
+    <sys:Double x:Key="IconSizeButton">14</sys:Double>
+    <sys:Double x:Key="IconSizeMedium">18</sys:Double>
+    <sys:Double x:Key="IconSizeAction">24</sys:Double>
+
     <CornerRadius x:Key="SmallCornerRadius">2</CornerRadius>
-    <CornerRadius x:Key="ContentCornerRadius">4</CornerRadius>
-    <CornerRadius x:Key="ButtonCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="ContentCornerRadius">2</CornerRadius>
+    <CornerRadius x:Key="ButtonCornerRadius">2</CornerRadius>
 
     <!-- ============================================================ -->
-    <!-- GLOBAL BUTTON STYLE                                           -->
+    <!-- TEXT STYLES                                                   -->
     <!-- ============================================================ -->
-    <Style TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource LecgControlBackground}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Padding" Value="12,6"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter x:Name="contentPresenter"
-                                          Focusable="False"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgTextSecondary}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgTextPrimary}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
 
-    <!-- AccentButtonStyle: Green accent background -->
-    <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource LecgAccent}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Padding" Value="16,6"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="12"/>
+    <!-- Dialog title: Poppins SemiBold, Ink. -->
+    <Style x:Key="TitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyHeading}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeTitle}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="4"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter Focusable="False"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryHoverBrush}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgTextPrimary}"/>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
     </Style>
 
-    <!-- SecondaryButtonStyle: Subtle bordered -->
-    <Style x:Key="SecondaryButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+    <!-- Subhead: Century Gothic Bold 16. -->
+    <Style x:Key="SubheadStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeMediumLarge}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+    </Style>
+
+    <!-- Label (uppercase in the view): Century Gothic Bold 12, Graphite. Section headers and field labels. -->
+    <Style x:Key="SectionHeaderStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeExtraSmall}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource SectionHeaderStyle}"/>
+
+    <!-- Caption: 13, Graphite. -->
+    <Style x:Key="CaptionStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+    <Style x:Key="StatusBarTextStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource CaptionStyle}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+    </Style>
+
+    <!-- Figures: mono face, tabular. -->
+    <Style x:Key="MonoStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMono}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
+    </Style>
+
+    <!-- ============================================================ -->
+    <!-- BUTTONS                                                       -->
+    <!-- One primary action per dialog in Blue; everything else is an  -->
+    <!-- outlined Paper button. Ghost buttons carry no rule at all.    -->
+    <!-- ============================================================ -->
+
+    <!-- Secondary (the default): Paper well, Stone rule, Ink type. -->
+    <Style x:Key="SecondaryButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="16,6"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -209,7 +143,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4"
+                            CornerRadius="{DynamicResource ButtonCornerRadius}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter Focusable="False"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -219,14 +153,18 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
                             <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -234,22 +172,22 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButtonStyle}"/>
 
-    <!-- PrimaryButtonStyle: Dark earth fill -->
-    <Style x:Key="PrimaryButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource LecgControlBackground}"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Padding" Value="16,6"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Cursor" Value="Hand"/>
+    <!-- Accent / Primary: Paper on Blue — the approved dark colourway of the mark. -->
+    <Style x:Key="AccentButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButtonStyle}">
+        <Setter Property="Background" Value="{DynamicResource LecgAccent}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgOnAccent}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border"
                             Background="{TemplateBinding Background}"
-                            CornerRadius="4"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{DynamicResource ButtonCornerRadius}"
                             SnapsToDevicePixels="True">
                         <ContentPresenter Focusable="False"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -259,13 +197,19 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgTextSecondary}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccentHover}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccentHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgTextPrimary}"/>
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgTextPrimary}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccentPressed}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccentPressed}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
                             <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -273,35 +217,39 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="PrimaryButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource AccentButtonStyle}"/>
 
-    <!-- TertiaryButtonStyle: Ghost/text-only button -->
-    <Style x:Key="TertiaryButtonStyle" TargetType="{x:Type Button}">
+    <!-- Tertiary: ghost. Graphite type, no rule until hovered. -->
+    <Style x:Key="TertiaryButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource SecondaryButtonStyle}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="10,4"/>
-        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Padding" Value="12,4"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+    </Style>
+
+    <!-- Link: Blue type, underline on hover. -->
+    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgAccent}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border"
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4"
-                            SnapsToDevicePixels="True">
-                        <ContentPresenter Focusable="False"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}"
-                                          RecognizesAccessKey="True"/>
-                    </Border>
+                    <TextBlock x:Name="text" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center"/>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
+                            <Setter TargetName="text" Property="TextDecorations" Value="Underline"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="text" Property="TextDecorations" Value="Underline"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="text" Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -309,18 +257,81 @@
         </Setter>
     </Style>
 
-    <!-- ============================================================ -->
-    <!-- GLOBAL TEXTBOX STYLE                                          -->
-    <!-- ============================================================ -->
-    <Style TargetType="{x:Type TextBox}">
+    <!-- Section header button: a clickable collapse/expand header. Carries whatever content it
+         is given (accent bar, label, chevron, summary) — a TextBlock template would drop them. -->
+    <Style x:Key="SectionHeaderButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="bg" Background="Transparent" Padding="{TemplateBinding Padding}" CornerRadius="{DynamicResource SmallCornerRadius}">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Dashboard card: a Chalk tile with a Stone rule; the mark colour arrives on hover. -->
+    <Style x:Key="DashboardCardStyle" TargetType="{x:Type Button}">
         <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
         <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8,5"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{DynamicResource ContentCornerRadius}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccentSoft}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================================ -->
+    <!-- TEXT INPUT                                                    -->
+    <!-- ============================================================ -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="CaretBrush" Value="{DynamicResource LecgTextPrimary}"/>
         <Setter Property="SelectionBrush" Value="{DynamicResource LecgAccent}"/>
+        <Setter Property="SelectionOpacity" Value="0.35"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
@@ -328,19 +339,21 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="4"
+                            CornerRadius="{DynamicResource SmallCornerRadius}"
                             SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Margin="{TemplateBinding Padding}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="True">
+                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
                             <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
                             <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -350,47 +363,200 @@
     </Style>
 
     <!-- ============================================================ -->
-    <!-- MODERN CHECKBOX STYLE                                         -->
+    <!-- COMBOBOX                                                      -->
+    <!-- ============================================================ -->
+    <ControlTemplate x:Key="LecgComboBoxToggle" TargetType="{x:Type ToggleButton}">
+        <Border x:Name="border"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="{DynamicResource SmallCornerRadius}"
+                SnapsToDevicePixels="True">
+            <Path x:Name="arrow" Data="M 0 0 L 4 4 L 8 0" Stroke="{DynamicResource LecgTextSecondary}" StrokeThickness="1.5"
+                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+                <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource LecgTextMuted}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border x:Name="bd" Background="Transparent" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgAccentSoft}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}">
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="8,5"/>
+        <Setter Property="MinHeight" Value="32"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid x:Name="root" SnapsToDevicePixels="True">
+                        <ToggleButton x:Name="toggle"
+                                      Template="{StaticResource LecgComboBoxToggle}"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Focusable="False"
+                                      ClickMode="Press"
+                                      IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        <ContentPresenter x:Name="content"
+                                          Content="{TemplateBinding SelectionBoxItem}"
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                          ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                          Margin="8,5,28,5"
+                                          IsHitTestVisible="False"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <TextBox x:Name="PART_EditableTextBox"
+                                 Visibility="Collapsed"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 MinHeight="0"
+                                 Padding="0"
+                                 Margin="8,0,28,0"
+                                 VerticalContentAlignment="Center"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"
+                                 Focusable="True"/>
+                        <Popup x:Name="PART_Popup"
+                               AllowsTransparency="True"
+                               Placement="Bottom"
+                               VerticalOffset="4"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               PopupAnimation="None"
+                               Focusable="False">
+                            <Border x:Name="dropDownBorder"
+                                    Background="{DynamicResource LecgInputBackground}"
+                                    BorderBrush="{DynamicResource LecgBorderDark}"
+                                    BorderThickness="1"
+                                    CornerRadius="{DynamicResource SmallCornerRadius}"
+                                    MinWidth="{Binding ActualWidth, ElementName=root}"
+                                    MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                    SnapsToDevicePixels="True">
+                                <ScrollViewer x:Name="DropDownScrollViewer" Margin="0,4">
+                                    <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                </ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEditable" Value="True">
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="content" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="False">
+                            <Setter TargetName="dropDownBorder" Property="MinHeight" Value="32"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================================ -->
+    <!-- CHECKBOX, RADIO, TOGGLE, CHIP                                 -->
     <!-- ============================================================ -->
     <Style x:Key="ModernCheckboxStyle" TargetType="{x:Type CheckBox}">
         <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
                         <Border x:Name="box" Width="16" Height="16"
-                                Background="{DynamicResource LecgSurfaceBackground}"
+                                Background="{DynamicResource LecgInputBackground}"
                                 BorderBrush="{DynamicResource LecgBorderDark}"
-                                BorderThickness="1.5"
-                                CornerRadius="3"
+                                BorderThickness="1"
+                                CornerRadius="{DynamicResource SmallCornerRadius}"
                                 SnapsToDevicePixels="True"
-                                Margin="0,0,8,0">
+                                VerticalAlignment="Center">
                             <Path x:Name="check"
-                                  Data="M 3 8 L 6 11 L 13 4"
-                                  Stroke="White"
+                                  Data="M 3 8 L 6.5 11.5 L 13 4.5"
+                                  Stroke="{DynamicResource LecgOnAccent}"
                                   StrokeThickness="2"
+                                  StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"
                                   Stretch="Uniform"
                                   Width="10" Height="10"
                                   Visibility="Collapsed"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"/>
                         </Border>
-                        <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True"/>
-                    </StackPanel>
+                        <ContentPresenter Grid.Column="1" Margin="8,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="False">
+                            <Setter TargetName="box" Property="HorizontalAlignment" Value="Center"/>
+                        </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="box" Property="Background" Value="{DynamicResource LecgAccent}"/>
                             <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
                             <Setter TargetName="check" Property="Visibility" Value="Visible"/>
                         </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="box" Property="Background" Value="{DynamicResource LecgAccentSoft}"/>
+                            <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource LecgTextSecondary}"/>
+                            <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource LecgTextPrimary}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="box" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+                            <Setter TargetName="box" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
                             <Setter TargetName="box" Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+                            <Setter TargetName="check" Property="Stroke" Value="{DynamicResource LecgTextMuted}"/>
                             <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -398,35 +564,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource ModernCheckboxStyle}"/>
 
-    <!-- ============================================================ -->
-    <!-- GLOBAL COMBOBOX STYLE                                         -->
-    <!-- ============================================================ -->
-    <Style TargetType="{x:Type ComboBox}">
-        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
-        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="8,4"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-    </Style>
-
-    <!-- ============================================================ -->
-    <!-- GLOBAL RADIOBUTTON STYLE                                      -->
-    <!-- ============================================================ -->
     <Style TargetType="{x:Type RadioButton}">
         <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" Background="Transparent" VerticalAlignment="Center">
                         <Border x:Name="outer" Width="16" Height="16"
-                                Background="{DynamicResource LecgSurfaceBackground}"
+                                Background="{DynamicResource LecgInputBackground}"
                                 BorderBrush="{DynamicResource LecgBorderDark}"
-                                BorderThickness="1.5"
+                                BorderThickness="1"
                                 CornerRadius="8"
                                 SnapsToDevicePixels="True"
                                 Margin="0,0,8,0">
@@ -444,7 +596,84 @@
                             <Setter TargetName="dot" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="outer" Property="BorderBrush" Value="{DynamicResource LecgTextSecondary}"/>
+                            <Setter TargetName="outer" Property="BorderBrush" Value="{DynamicResource LecgTextPrimary}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="outer" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="outer" Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+                            <Setter TargetName="dot" Property="Fill" Value="{DynamicResource LecgTextMuted}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Toggle switch (CheckBox): Stone track, Blue when on, Paper thumb. -->
+    <Style x:Key="ToggleSwitchStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeBody}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <StackPanel Orientation="Horizontal" Background="Transparent" VerticalAlignment="Center">
+                        <Border x:Name="track" Width="34" Height="18"
+                                Background="{DynamicResource LecgBorderLight}"
+                                CornerRadius="9"
+                                SnapsToDevicePixels="True"
+                                Margin="0,0,8,0">
+                            <Ellipse x:Name="thumb" Width="12" Height="12"
+                                     Fill="{DynamicResource LecgInputBackground}" HorizontalAlignment="Left" Margin="3,0,0,0"/>
+                        </Border>
+                        <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="track" Property="Background" Value="{DynamicResource LecgAccent}"/>
+                            <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
+                            <Setter TargetName="thumb" Property="Margin" Value="0,0,3,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="track" Property="Opacity" Value="0.85"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="track" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Chip (CheckBox): a tag. Chalk with a Stone rule; checked is Paper on Blue. -->
+    <Style x:Key="PillCheckboxStyle" TargetType="{x:Type CheckBox}">
+        <Setter Property="Margin" Value="0,0,8,8"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Border x:Name="border" Background="{DynamicResource LecgInputBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource SmallCornerRadius}" Padding="10,4" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="content" VerticalAlignment="Center" TextElement.Foreground="{DynamicResource LecgTextSecondary}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccent}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                            <Setter TargetName="content" Property="TextElement.Foreground" Value="{DynamicResource LecgOnAccent}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgTextPrimary}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -453,10 +682,10 @@
     </Style>
 
     <!-- ============================================================ -->
-    <!-- GLOBAL PROGRESSBAR STYLE                                      -->
+    <!-- PROGRESS, SEPARATOR, TOOLTIP                                  -->
     <!-- ============================================================ -->
     <Style TargetType="{x:Type ProgressBar}">
-        <Setter Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
+        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
         <Setter Property="Foreground" Value="{DynamicResource LecgAccent}"/>
         <Setter Property="Height" Value="4"/>
         <Setter Property="Template">
@@ -465,23 +694,193 @@
                     <Grid SnapsToDevicePixels="True">
                         <Border CornerRadius="2" Background="{TemplateBinding Background}"/>
                         <Border x:Name="PART_Track"/>
-                        <Border x:Name="PART_Indicator"
-                                CornerRadius="2"
-                                Background="{TemplateBinding Foreground}"
-                                HorizontalAlignment="Left"/>
+                        <Border x:Name="PART_Indicator" CornerRadius="2" Background="{TemplateBinding Foreground}" HorizontalAlignment="Left"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type Separator}">
+        <Setter Property="Background" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="0,8"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Border Background="{TemplateBinding Background}" Height="{TemplateBinding Height}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Paper on Ink: the mark's dark colourway. -->
+    <Style TargetType="{x:Type ToolTip}">
+        <Setter Property="Background" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgOnAccent}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="MaxWidth" Value="360"/>
+        <Setter Property="HasDropShadow" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Background="{TemplateBinding Background}" CornerRadius="{DynamicResource SmallCornerRadius}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter TextElement.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- ============================================================ -->
-    <!-- GLOBAL TREEVIEW STYLES                                        -->
+    <!-- SCROLLBAR — a thin Stone thumb, no buttons                    -->
     <!-- ============================================================ -->
+    <Style x:Key="LecgScrollThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border x:Name="bd" Background="{DynamicResource LecgBorderLight}" CornerRadius="3" Margin="2"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgBorderDark}"/>
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgTextSecondary}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LecgScrollPage" TargetType="{x:Type RepeatButton}">
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="MinWidth" Value="10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Track x:Name="PART_Track" IsDirectionReversed="True">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource LecgScrollPage}" Command="ScrollBar.PageUpCommand"/>
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Style="{StaticResource LecgScrollThumb}"/>
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource LecgScrollPage}" Command="ScrollBar.PageDownCommand"/>
+                            </Track.IncreaseRepeatButton>
+                        </Track>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="Width" Value="Auto"/>
+                <Setter Property="MinWidth" Value="0"/>
+                <Setter Property="Height" Value="10"/>
+                <Setter Property="MinHeight" Value="10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ScrollBar}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <Track x:Name="PART_Track" IsDirectionReversed="False">
+                                    <Track.DecreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource LecgScrollPage}" Command="ScrollBar.PageLeftCommand"/>
+                                    </Track.DecreaseRepeatButton>
+                                    <Track.Thumb>
+                                        <Thumb Style="{StaticResource LecgScrollThumb}"/>
+                                    </Track.Thumb>
+                                    <Track.IncreaseRepeatButton>
+                                        <RepeatButton Style="{StaticResource LecgScrollPage}" Command="ScrollBar.PageRightCommand"/>
+                                    </Track.IncreaseRepeatButton>
+                                </Track>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ============================================================ -->
+    <!-- LISTS: ListBox, ListView, TreeView                            -->
+    <!-- Selection is a Water wash with Ink type (C1: Water is the     -->
+    <!-- blue surface; the mark stays a mark).                         -->
+    <!-- ============================================================ -->
+    <Style TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
+        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling"/>
+    </Style>
+    <Style TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
+        <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling"/>
+    </Style>
+
+    <ControlTemplate x:Key="LecgListItemTemplate" TargetType="{x:Type ListBoxItem}">
+        <Border x:Name="bd" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgAccentSoft}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template" Value="{StaticResource LecgListItemTemplate}"/>
+    </Style>
+    <Style TargetType="{x:Type ListViewItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template" Value="{StaticResource LecgListItemTemplate}"/>
+    </Style>
+
     <Style TargetType="{x:Type TreeView}">
-        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Padding" Value="4"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
@@ -490,7 +889,8 @@
 
     <Style TargetType="{x:Type TreeViewItem}">
         <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
-        <Setter Property="Padding" Value="2"/>
+        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TreeViewItem}">
@@ -506,13 +906,15 @@
 
                         <ToggleButton x:Name="Expander"
                                       ClickMode="Press"
+                                      Focusable="False"
                                       IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}">
                             <ToggleButton.Template>
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                                     <Border Background="Transparent" Width="16" Height="16">
                                         <Path x:Name="Arrow"
-                                              Data="M 0 0 L 4 4 L 0 8 Z"
-                                              Fill="{DynamicResource LecgTextMuted}"
+                                              Data="M 0 0 L 4 4 L 0 8"
+                                              Stroke="{DynamicResource LecgTextMuted}"
+                                              StrokeThickness="1.5"
                                               HorizontalAlignment="Center"
                                               VerticalAlignment="Center"
                                               RenderTransformOrigin="0.5,0.5">
@@ -525,13 +927,13 @@
                                         <Trigger Property="IsChecked" Value="True">
                                             <Setter TargetName="Arrow" Property="RenderTransform">
                                                 <Setter.Value>
-                                                    <RotateTransform Angle="45"/>
+                                                    <RotateTransform Angle="90"/>
                                                 </Setter.Value>
                                             </Setter>
-                                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource LecgAccent}"/>
+                                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource LecgTextSecondary}"/>
                                         </Trigger>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Arrow" Property="Fill" Value="{DynamicResource LecgTextSecondary}"/>
+                                            <Setter TargetName="Arrow" Property="Stroke" Value="{DynamicResource LecgTextPrimary}"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -542,7 +944,8 @@
                                 Grid.Column="1"
                                 Padding="{TemplateBinding Padding}"
                                 Background="Transparent"
-                                CornerRadius="2">
+                                CornerRadius="{DynamicResource SmallCornerRadius}"
+                                SnapsToDevicePixels="True">
                             <ContentPresenter x:Name="PART_Header" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
                         </Border>
 
@@ -555,17 +958,18 @@
                         <Trigger Property="IsExpanded" Value="False">
                             <Setter TargetName="ItemsHost" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
+                        <Trigger SourceName="SelectionGrid" Property="IsMouseOver" Value="True">
+                            <Setter TargetName="SelectionGrid" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+                        </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="SelectionGrid" Property="Background" Value="{DynamicResource LecgAccent}"/>
-                            <Setter Property="Foreground" Value="White"/>
+                            <Setter TargetName="SelectionGrid" Property="Background" Value="{DynamicResource LecgAccentSoft}"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="Selector.IsSelectionActive" Value="False"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="SelectionGrid" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+                            <Setter TargetName="SelectionGrid" Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -574,168 +978,192 @@
     </Style>
 
     <!-- ============================================================ -->
-    <!-- NAMED STYLES                                                  -->
+    <!-- DATAGRID — a table: label-weight heads, hairline rules,       -->
+    <!-- Chalk alternate rows (the standard's own table treatment).    -->
+    <!-- ============================================================ -->
+    <Style TargetType="{x:Type DataGrid}">
+        <Setter Property="Background" Value="{DynamicResource LecgInputBackground}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="RowBackground" Value="Transparent"/>
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource LecgSurfaceBackground}"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="Transparent"/>
+        <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="RowHeaderWidth" Value="0"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="SelectionUnit" Value="FullRow"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+        <Setter Property="VirtualizingPanel.IsVirtualizing" Value="True"/>
+        <Setter Property="VirtualizingPanel.VirtualizationMode" Value="Recycling"/>
+    </Style>
+    <Style TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeExtraSmall}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Padding" Value="8,6"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                    <Grid>
+                        <Border x:Name="bd" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}">
+                            <StackPanel Orientation="Horizontal">
+                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                <Path x:Name="sort" Data="M 0 0 L 3 3 L 6 0" Stroke="{DynamicResource LecgTextSecondary}" StrokeThickness="1.5" Margin="6,0,0,0" VerticalAlignment="Center" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5"/>
+                            </StackPanel>
+                        </Border>
+                        <Thumb x:Name="PART_RightHeaderGripper" HorizontalAlignment="Right" Width="6" Cursor="SizeWE">
+                            <Thumb.Template>
+                                <ControlTemplate TargetType="{x:Type Thumb}">
+                                    <Border Background="Transparent"/>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Ascending">
+                            <Setter TargetName="sort" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="sort" Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="180"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="SortDirection" Value="Descending">
+                            <Setter TargetName="sort" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type DataGridRow}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource LecgAccentSoft}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type DataGridCell}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- ============================================================ -->
+    <!-- EXPANDER — a chevron and a label; the content hangs below      -->
+    <!-- ============================================================ -->
+    <Style TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <StackPanel Background="{TemplateBinding Background}">
+                        <ToggleButton x:Name="header"
+                                      IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Cursor="Hand"
+                                      FocusVisualStyle="{x:Null}"
+                                      HorizontalContentAlignment="Left">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border x:Name="bd" Background="Transparent" Padding="4" CornerRadius="{DynamicResource SmallCornerRadius}">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path x:Name="arrow" Data="M 0 0 L 4 4 L 0 8" Stroke="{DynamicResource LecgTextSecondary}" StrokeThickness="1.5"
+                                                  VerticalAlignment="Center" Margin="2,0,8,0" RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <RotateTransform Angle="0"/>
+                                                </Path.RenderTransform>
+                                            </Path>
+                                            <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True"/>
+                                        </StackPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter TargetName="arrow" Property="RenderTransform">
+                                                <Setter.Value>
+                                                    <RotateTransform Angle="90"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                            <ContentPresenter ContentSource="Header" TextElement.FontWeight="Bold" TextElement.FontSize="{DynamicResource FontSizeSmall}"/>
+                        </ToggleButton>
+                        <ContentPresenter x:Name="content" Visibility="Collapsed" Margin="18,8,0,0"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="True">
+                            <Setter TargetName="content" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ============================================================ -->
+    <!-- CONTAINERS                                                    -->
     <!-- ============================================================ -->
 
-    <!-- Section Header -->
-    <Style x:Key="SectionHeaderStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="11"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
-    </Style>
-
-    <!-- Label Style -->
-    <Style x:Key="LabelStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="10"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
-    </Style>
-
-    <!-- StatusBar Text -->
-    <Style x:Key="StatusBarTextStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="11"/>
-        <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-    </Style>
-
-    <!-- Card Style (Border) -->
+    <!-- Card: a Chalk panel on the Paper sheet, a Stone hairline, 12 px inset. -->
     <Style x:Key="CardStyle" TargetType="{x:Type Border}">
         <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="4"/>
-        <Setter Property="Padding" Value="16"/>
-        <Setter Property="Margin" Value="0,0,0,12"/>
+        <Setter Property="CornerRadius" Value="{DynamicResource ContentCornerRadius}"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Margin" Value="0,0,0,16"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
-    <!-- Dashboard Card Button -->
-    <Style x:Key="DashboardCardStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="Padding" Value="10"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBaseBackground}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Link Button -->
-    <Style x:Key="LinkButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource LecgAccent}"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <TextBlock x:Name="text" Text="{TemplateBinding Content}" TextDecorations="Underline"/>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="text" Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Section header button: a clickable collapse/expand header.
-         Deliberately NOT LinkButtonStyle. That style's template is a TextBlock bound to
-         Content, so it renders strings and silently drops anything else — a section header
-         needs an accent bar, a label, a chevron and a summary, and all four vanished. This
-         one uses a ContentPresenter, so it carries whatever content it is given. -->
-    <Style x:Key="SectionHeaderButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="bg" Background="Transparent" Padding="{TemplateBinding Padding}" CornerRadius="3">
-                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="bg" Property="Background" Value="{DynamicResource LecgBorderLight}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Pill Checkbox -->
-    <Style x:Key="PillCheckboxStyle" TargetType="{x:Type CheckBox}">
-        <Setter Property="Margin" Value="0,0,8,8"/>
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Border x:Name="border" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="12" Padding="10,4">
-                        <ContentPresenter x:Name="content" TextElement.Foreground="{DynamicResource LecgTextMuted}"/>
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccent}"/>
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
-                            <Setter TargetName="content" Property="TextElement.Foreground" Value="White"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource LecgTextSecondary}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Toggle Switch Style (CheckBox as toggle) -->
-    <Style x:Key="ToggleSwitchStyle" TargetType="{x:Type CheckBox}">
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Border x:Name="track" Width="36" Height="20"
-                                Background="{DynamicResource LecgBorderLight}"
-                                CornerRadius="10"
-                                SnapsToDevicePixels="True"
-                                Margin="0,0,8,0">
-                            <Ellipse x:Name="thumb" Width="14" Height="14"
-                                     Fill="White" HorizontalAlignment="Left" Margin="3,0,0,0"/>
-                        </Border>
-                        <ContentPresenter VerticalAlignment="Center" RecognizesAccessKey="True"
-                                          TextElement.Foreground="{DynamicResource LecgTextPrimary}"/>
-                    </StackPanel>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="track" Property="Background" Value="{DynamicResource LecgAccent}"/>
-                            <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right"/>
-                            <Setter TargetName="thumb" Property="Margin" Value="0,0,3,0"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <!-- Accent bar: the 3 px blue mark that opens a section header. -->
+    <Style x:Key="AccentBarStyle" TargetType="{x:Type Border}">
+        <Setter Property="Width" Value="3"/>
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="Background" Value="{DynamicResource LecgAccent}"/>
+        <Setter Property="Margin" Value="0,0,8,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
 </ResourceDictionary>

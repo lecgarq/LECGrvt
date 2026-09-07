@@ -14,7 +14,6 @@
             </ResourceDictionary.MergedDictionaries>
             <utils:BoolToVisibilityConverter x:Key="BoolToVis"/>
             <utils:InverseBoolToVisibilityConverter x:Key="InverseBoolToVis"/>
-            <utils:FilterStatusConverter x:Key="StatusColor"/>
 
             <Style x:Key="BulkActionButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent"/>
@@ -26,12 +25,12 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" CornerRadius="6">
+                            <Border Background="{TemplateBinding Background}" CornerRadius="{DynamicResource ContentCornerRadius}">
                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#F1F5F9"/>
+                                    <Setter Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -47,12 +46,12 @@
                 <Style.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
                     <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
-                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource ColorTextPrimary}" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{DynamicResource LecgTextPrimaryColor}" />
                 </Style.Resources>
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding IsSelected}" Value="True">
                         <Setter Property="FontWeight" Value="SemiBold"/>
-                        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -74,7 +73,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- Source Panel -->
-            <Border Grid.Column="0" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="8" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" Padding="20">
+            <Border Grid.Column="0" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="{DynamicResource ContentCornerRadius}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" Padding="20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -87,7 +86,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.ColumnSpan="2" Text="SOURCE REPOSITORY" FontWeight="ExtraBold" FontSize="11" Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,15"/>
+                    <TextBlock Grid.ColumnSpan="2" Text="SOURCE REPOSITORY" FontWeight="Bold" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,15"/>
 
                     <ComboBox Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SourceTypes}" SelectedItem="{Binding LeftSourceType}" Margin="0,0,0,12" Height="36" VerticalContentAlignment="Center"/>
 
@@ -97,7 +96,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="LeftSearchBox" Text="{Binding LeftFilterText, UpdateSourceTrigger=PropertyChanged}" Tag="Search views or filters..." VerticalContentAlignment="Center" Height="36" Padding="10,0"/>
-                        <Button Grid.Column="1" Content="ACTIVE VIEW" Command="{Binding SetActiveViewCommand}" CommandParameter="Left" Margin="8,0,0,0" Width="90" Height="36" Style="{DynamicResource TertiaryButtonStyle}" FontSize="10" FontWeight="Bold"/>
+                        <Button Grid.Column="1" Content="ACTIVE VIEW" Command="{Binding SetActiveViewCommand}" CommandParameter="Left" Margin="8,0,0,0" Width="90" Height="36" Style="{DynamicResource TertiaryButtonStyle}" FontSize="{DynamicResource FontSizeSmall}" FontWeight="Bold"/>
                     </Grid>
 
                     <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Top">
@@ -111,7 +110,7 @@
                             <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource LecgAccent}" Stretch="Uniform" Width="16"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Left:Uncheck" ToolTip="Unselect All">
-                            <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
+                            <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource LecgTextMuted}" Stretch="Uniform" Width="16"/>
                         </Button>
                     </StackPanel>
 
@@ -120,16 +119,16 @@
                             <HierarchicalDataTemplate DataType="{x:Type vm:ViewContainer}" ItemsSource="{Binding Filters}">
                                 <Border Background="Transparent" Padding="4">
                                     <StackPanel Orientation="Horizontal">
-                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=Foreground}"/>
-                                        <Border Visibility="{Binding IsTemplate, Converter={StaticResource BoolToVis}}" Background="#EEF2FF" CornerRadius="6" Padding="6,2" Margin="10,0,0,0">
-                                            <TextBlock Text="TEMPLATE" FontSize="9" FontWeight="Black" Foreground="#4F46E5"/>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeBody}" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=Foreground}"/>
+                                        <Border Visibility="{Binding IsTemplate, Converter={StaticResource BoolToVis}}" Background="{DynamicResource LecgAccentSoft}" CornerRadius="{DynamicResource SmallCornerRadius}" Padding="6,2" Margin="10,0,0,0">
+                                            <TextBlock Text="TEMPLATE" FontSize="{DynamicResource FontSizeSmall}" FontWeight="Bold" Foreground="{DynamicResource LecgAccent}"/>
                                         </Border>
                                     </StackPanel>
                                 </Border>
                             </HierarchicalDataTemplate>
 
                             <DataTemplate DataType="{x:Type vm:FilterItem}">
-                                <Border Background="Transparent" Padding="8,4" Margin="2,1,0,1" CornerRadius="8">
+                                <Border Background="Transparent" Padding="8,4" Margin="2,1,0,1" CornerRadius="{DynamicResource ContentCornerRadius}">
                                     <StackPanel Orientation="Horizontal">
                                         <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center" behaviors:MultiSelectCheckboxBehavior.EnableRangeSelection="True"/>
                                         <TextBlock Text="{Binding Name}" Margin="12,0,0,0" VerticalAlignment="Center" Foreground="{DynamicResource LecgTextSecondary}"/>
@@ -147,7 +146,7 @@
                 </Button>
             </StackPanel>
 
-            <Border Grid.Column="2" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="8" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" Padding="20">
+            <Border Grid.Column="2" Background="{DynamicResource LecgSurfaceBackground}" CornerRadius="{DynamicResource ContentCornerRadius}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" Padding="20">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -160,7 +159,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.ColumnSpan="2" Text="TARGET DESTINATIONS" FontWeight="ExtraBold" FontSize="11" Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,15"/>
+                    <TextBlock Grid.ColumnSpan="2" Text="TARGET DESTINATIONS" FontWeight="Bold" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,15"/>
 
                     <ComboBox Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding SourceTypes}" SelectedItem="{Binding RightSourceType}" Margin="0,0,0,12" Height="36" VerticalContentAlignment="Center"/>
 
@@ -170,7 +169,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox x:Name="RightSearchBox" Text="{Binding RightFilterText, UpdateSourceTrigger=PropertyChanged}" Tag="Search views or filters..." VerticalContentAlignment="Center" Height="36" Padding="10,0"/>
-                        <Button Grid.Column="1" Content="ACTIVE VIEW" Command="{Binding SetActiveViewCommand}" CommandParameter="Right" Margin="8,0,0,0" Width="90" Height="36" Style="{DynamicResource TertiaryButtonStyle}" FontSize="10" FontWeight="Bold"/>
+                        <Button Grid.Column="1" Content="ACTIVE VIEW" Command="{Binding SetActiveViewCommand}" CommandParameter="Right" Margin="8,0,0,0" Width="90" Height="36" Style="{DynamicResource TertiaryButtonStyle}" FontSize="{DynamicResource FontSizeSmall}" FontWeight="Bold"/>
                     </Grid>
 
                     <TreeView Grid.Row="3" Grid.Column="0" ItemsSource="{Binding RightItems}" BorderThickness="0" Background="Transparent" ItemContainerStyle="{DynamicResource FilterTreeViewItemStyle}" VirtualizingStackPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
@@ -179,19 +178,36 @@
                                 <Border Background="Transparent" Padding="4">
                                     <StackPanel Orientation="Horizontal">
                                         <CheckBox IsChecked="{Binding IsSelected}" Style="{DynamicResource ModernCheckboxStyle}" VerticalAlignment="Center" behaviors:MultiSelectCheckboxBehavior.EnableRangeSelection="True"/>
-                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="13" Margin="8,0,0,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=Foreground}"/>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeBody}" Margin="8,0,0,0" Foreground="{Binding RelativeSource={RelativeSource AncestorType=TreeViewItem}, Path=Foreground}"/>
                                     </StackPanel>
                                 </Border>
                             </HierarchicalDataTemplate>
 
                             <DataTemplate DataType="{x:Type vm:FilterItem}">
-                                <Border BorderThickness="4,0,0,0" BorderBrush="{Binding Status, Converter={StaticResource StatusColor}}" Background="#F8FAFC" CornerRadius="6" Margin="25,2,5,2" Padding="12,8">
+                                <Border BorderThickness="3,0,0,0" Background="{DynamicResource LecgInputBackground}" CornerRadius="{DynamicResource SmallCornerRadius}" Margin="25,2,5,2" Padding="12,8">
+                                    <!-- Status mark on the left edge: Sage created, Blue modified, error red removable. -->
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderLight}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Created">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource LecgSuccess}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Modified">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource LecgAccent}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Removable">
+                                                    <Setter Property="BorderBrush" Value="{DynamicResource LecgError}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12" Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextPrimary}"/>
                                         <Button Grid.Column="1" Command="{Binding DataContext.ToggleRemoveCommand, RelativeSource={RelativeSource AncestorType=Window}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Width="28" Height="28" Cursor="Hand">
                                             <Path Stretch="Uniform" Width="12" Height="12">
                                                 <Path.Style>
@@ -201,7 +217,7 @@
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Status}" Value="Removable">
                                                                 <Setter Property="Data" Value="{x:Static icons:Icons.ResetSlabs}"/>
-                                                                <Setter Property="Fill" Value="{DynamicResource TextSecondaryBrush}"/>
+                                                                <Setter Property="Fill" Value="{DynamicResource LecgTextSecondary}"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -225,7 +241,7 @@
                             <Path Data="{x:Static icons:Icons.CircleCheck}" Fill="{DynamicResource LecgAccent}" Stretch="Uniform" Width="16"/>
                         </Button>
                         <Button Style="{DynamicResource BulkActionButtonStyle}" Command="{Binding BulkCommand}" CommandParameter="Right:Uncheck" ToolTip="Unselect All">
-                            <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource TextMutedBrush}" Stretch="Uniform" Width="16"/>
+                            <Path Data="{x:Static icons:Icons.Circle}" Fill="{DynamicResource LecgTextMuted}" Stretch="Uniform" Width="16"/>
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -234,10 +250,10 @@
 
         <!-- Footer Actions -->
         <Grid Grid.Row="1" Margin="0,30,0,0">
-            <TextBlock Text="Modified filters Blue. New filters Green. Deleted Red." VerticalAlignment="Center" FontSize="11" FontStyle="Italic" Foreground="{DynamicResource LecgTextMuted}"/>
+            <TextBlock Text="Modified filters Blue. New filters Green. Deleted Red." VerticalAlignment="Center" FontSize="{DynamicResource FontSizeSmall}" FontStyle="Italic" Foreground="{DynamicResource LecgTextMuted}"/>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Content="CANCEL" Command="{Binding CancelCommand}" IsCancel="True" Width="110" Height="44" Margin="0,0,12,0" FontWeight="SemiBold"/>
-                <Button Content="APPLY CHANGES" Command="{Binding ApplyCommand}" Width="190" Height="44" Style="{DynamicResource PrimaryButtonStyle}" FontSize="12" FontWeight="Black"/>
+                <Button Content="APPLY CHANGES" Command="{Binding ApplyCommand}" Width="190" Height="44" Style="{DynamicResource PrimaryButtonStyle}" FontSize="{DynamicResource FontSizeSmall}" FontWeight="Bold"/>
             </StackPanel>
         </Grid>
     </Grid>

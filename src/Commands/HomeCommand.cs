@@ -20,18 +20,6 @@ namespace LECG.Commands
 
             string selectedTool = view.Tag as string ?? "";
 
-            if (selectedTool == "AlignMaster")
-            {
-                var alignView = ServiceLocator.GetRequiredService<AlignDashboardView>();
-
-                if (alignView.ShowDialog() != true)
-                {
-                    return;
-                }
-
-                selectedTool = alignView.Tag as string ?? "";
-            }
-
             RevitCommand? command = CreateCommand(selectedTool);
             if (command == null)
             {
@@ -70,6 +58,15 @@ namespace LECG.Commands
             "ConvertFamily" => ServiceLocator.CreateWith<ConvertFamilyCommand>(),
             "ConvertCad" => ServiceLocator.CreateWith<ConvertCadCommand>(),
             "BatchRename" => ServiceLocator.CreateWith<SearchReplaceCommand>(),
+            "CompactStyles" => ServiceLocator.CreateWith<CompactingStylesCommand>(),
+            "FormulaGrouping" => ServiceLocator.CreateWith<FormulaAutoGroupingCommand>(),
+            "Warnings" => ServiceLocator.CreateWith<WarningsCommand>(),
+            "CategoryChanger" => ServiceLocator.CreateWith<CategoryChangerCommand>(),
+            "SharedToFamilyParam" => ServiceLocator.CreateWith<SharedToFamilyParameterCommand>(),
+            "FilterCopy" => ServiceLocator.CreateWith<FilterCopyCommand>(),
+            "TypeToLinked" => ServiceLocator.CreateWith<TypeToLinkedModelsCommand>(),
+            "PbrMaterial" => ServiceLocator.CreateWith<PbrMaterialCreatorCommand>(),
+            "DivideToposolid" => ServiceLocator.CreateWith<DivideToposolidCommand>(),
             _ => null,
         };
     }

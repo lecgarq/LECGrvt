@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">CAD Blocks</title>
+  <polygon points="7,8 35,8 43,16 43,31 35,31 35,16 27,8" fill="none" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="13" y="16" width="10" height="10" rx="2" fill="none" stroke="#1E4257" stroke-width="2.5"/>
+  <polyline points="27,42 39,42" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="35.4645,45.5355 39,42 35.4645,38.4645" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="43" y="34" width="13" height="13" rx="2" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <ellipse cx="50.5" cy="55.5" rx="5.5" ry="5.5" fill="#1E4257" stroke="none" stroke-width="4"/>
+</svg>

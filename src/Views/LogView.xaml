@@ -28,40 +28,40 @@
                         </Grid.ColumnDefinitions>
 
                         <!-- Time -->
-                        <TextBlock Text="{Binding FormattedTime}" Foreground="{DynamicResource LecgTextMuted}" FontSize="11" Margin="0,0,12,0" VerticalAlignment="Center" FontFamily="Consolas, Monospace"/>
+                        <TextBlock Text="{Binding FormattedTime}" Foreground="{DynamicResource LecgTextMuted}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,12,0" VerticalAlignment="Center" FontFamily="{DynamicResource FontFamilyMono}"/>
 
                         <!-- Level Indicator -->
-                        <Border Grid.Column="1" CornerRadius="4" Margin="0,0,12,0" Padding="6,2" VerticalAlignment="Center" MinWidth="60">
+                        <Border Grid.Column="1" CornerRadius="{DynamicResource ContentCornerRadius}" Margin="0,0,12,0" Padding="6,2" VerticalAlignment="Center" MinWidth="60">
                             <Border.Style>
                                 <Style TargetType="Border">
-                                    <Setter Property="Background" Value="#EDF2F7"/>
+                                    <Setter Property="Background" Value="{DynamicResource LecgSurfaceBackground}"/>
                                     <!-- Default Gray -->
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Level}" Value="Success">
-                                            <Setter Property="Background" Value="#C6F6D5"/>
+                                            <Setter Property="Background" Value="{DynamicResource LecgSuccessSoft}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Level}" Value="Warning">
-                                            <Setter Property="Background" Value="#FEEBC8"/>
+                                            <Setter Property="Background" Value="{DynamicResource LecgWarningSoft}"/>
                                         </DataTrigger>
                                         <DataTrigger Binding="{Binding Level}" Value="Error">
-                                            <Setter Property="Background" Value="#FED7D7"/>
+                                            <Setter Property="Background" Value="{DynamicResource LecgErrorSoft}"/>
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </Border.Style>
-                            <TextBlock Text="{Binding Level}" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="10">
+                            <TextBlock Text="{Binding Level}" HorizontalAlignment="Center" FontWeight="SemiBold" FontSize="{DynamicResource FontSizeSmall}">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Foreground" Value="{DynamicResource LecgTextSecondary}"/>
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Level}" Value="Success">
-                                                <Setter Property="Foreground" Value="#22543D"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource LecgTextPrimary}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Level}" Value="Warning">
-                                                <Setter Property="Foreground" Value="#744210"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource LecgWarning}"/>
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Level}" Value="Error">
-                                                <Setter Property="Foreground" Value="#822727"/>
+                                                <Setter Property="Foreground" Value="{DynamicResource LecgError}"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -70,7 +70,7 @@
                         </Border>
 
                         <!-- Message -->
-                        <TextBlock Grid.Column="2" Text="{Binding Message}" TextWrapping="Wrap" Foreground="{DynamicResource LecgTextPrimary}" FontSize="12" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding Message}" TextWrapping="Wrap" Foreground="{DynamicResource LecgTextPrimary}" FontSize="{DynamicResource FontSizeSmall}" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
             </DataTemplate>
@@ -91,10 +91,10 @@
             <!-- Progress Bar — dual-text contrast (dark on track, white on fill) -->
             <Grid x:Name="ProgressBarContainer" Height="22">
                 <!-- Track -->
-                <Border CornerRadius="4" Background="{DynamicResource LecgBaseBackground}"/>
+                <Border CornerRadius="{DynamicResource SmallCornerRadius}" Background="{DynamicResource LecgSurfaceBackground}"/>
 
                 <!-- Dark percentage text (below fill, visible on empty track) -->
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextMuted}">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextMuted}">
                     <TextBlock.Style>
                         <Style TargetType="TextBlock">
                             <Style.Triggers>
@@ -110,21 +110,15 @@
                 </TextBlock>
 
                 <!-- Fill with gradient + clipped white text -->
-                <Border CornerRadius="4" HorizontalAlignment="Left" ClipToBounds="True">
+                <Border CornerRadius="{DynamicResource SmallCornerRadius}" Background="{DynamicResource LecgAccent}" HorizontalAlignment="Left" ClipToBounds="True">
                     <Border.Width>
                         <MultiBinding Converter="{utils:MathConverter}" ConverterParameter="x/100*y">
                             <Binding Path="ProgressValue"/>
                             <Binding Path="ActualWidth" ElementName="ProgressBarContainer"/>
                         </MultiBinding>
                     </Border.Width>
-                    <Border.Background>
-                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Color="{StaticResource ColorAccentLight}" Offset="0"/>
-                            <GradientStop Color="{StaticResource ColorAccent}" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Border.Background>
                     <Grid Width="{Binding ActualWidth, ElementName=ProgressBarContainer}">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="11" FontWeight="SemiBold" Foreground="White">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeSmall}" FontWeight="SemiBold" Foreground="{DynamicResource LecgOnAccent}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>

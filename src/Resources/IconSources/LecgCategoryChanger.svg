@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Category Changer</title>
+  <polygon points="8,21 22,13 36,21 36,39 22,47 8,39" fill="#CFE0EB" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="42" y="12" width="14" height="12" rx="2" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <rect x="42" y="40" width="14" height="12" rx="2" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="49,29 49,38" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="45.4645,34.4645 49,38 52.5355,34.4645" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

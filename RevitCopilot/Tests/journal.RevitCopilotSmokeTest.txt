@@ -1,0 +1,13 @@
+' Revit journal: LECG Copilot ribbon and dockable pane smoke test.
+Dim Jrn
+Set Jrn = CrsJournalScript
+Jrn.Directive "DebugMode", "PermissiveJournal", 1
+
+Jrn.Command "Ribbon", "Create a new project , ID_FILE_NEW_CHOOSE_TEMPLATE"
+Jrn.ComboBox "Modal , New Project , Dialog_Revit_NewProject", "Control_Revit_TemplateCombo", "SelEndOk", "<None>"
+Jrn.ComboBox "Modal , New Project , Dialog_Revit_NewProject", "Control_Revit_TemplateCombo", "Select", "<None>"
+Jrn.PushButton "Modal , New Project , Dialog_Revit_NewProject", "OK, IDOK"
+Jrn.Data "TaskDialogResult", "Which system of measurement do you want to use in your project?", "Metric", "1002"
+Jrn.RibbonEvent "Execute external command:CustomCtrl_%CustomCtrl_%Add-Ins%LECG Copilot%LECG.RevitCopilot.Show:LECG.RevitCopilot.RevitCopilotCommand"
+Jrn.Data "APIStringStringMapJournalData", 0
+' The smoke-test application verifies tools on this scratch document, saves it locally, then exits.

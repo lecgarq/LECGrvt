@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Convert Shared</title>
+  <polygon points="9,21 22,13 35,21 35,38 22,46 9,38" fill="#CFE0EB" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <ellipse cx="40" cy="25" rx="7" ry="7" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <ellipse cx="50" cy="35" rx="7" ry="7" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="38,43 55,17" fill="none" stroke="#1E1E1C" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

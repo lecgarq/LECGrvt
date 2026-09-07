@@ -51,7 +51,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonHome_Text,
                 "LECG.Commands.HomeCommand",
                 UIConstants.ButtonHome_Tooltip,
-                AppImages.Home
+                AppImages.Home32,
+                AppImages.Home16
             ), assemblyPath, availability);
         }
 
@@ -66,7 +67,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonAssignMaterial_Text,
                 "LECG.Commands.AssignMaterialCommand",
                 UIConstants.ButtonAssignMaterial_Tooltip,
-                AppImages.AssignMaterial
+                AppImages.AssignMaterial32,
+                AppImages.AssignMaterial16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -74,7 +76,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonOffset_Text,
                 "LECG.Commands.OffsetElevationsCommand",
                 UIConstants.ButtonOffset_Tooltip,
-                AppImages.ArrowUpDown
+                AppImages.OffsetElevations32,
+                AppImages.OffsetElevations16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -82,7 +85,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonResetSlabs_Text,
                 "LECG.Commands.ResetSlabsCommand",
                 UIConstants.ButtonResetSlabs_Tooltip,
-                AppImages.ResetSlabs
+                AppImages.ResetSlabs32,
+                AppImages.ResetSlabs16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -90,7 +94,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonSimplifyPoints_Text,
                 "LECG.Commands.SimplifyPointsCommand",
                 UIConstants.ButtonSimplifyPoints_Tooltip,
-                AppImages.SimplifyPoints
+                AppImages.SimplifyPoints32,
+                AppImages.SimplifyPoints16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -98,7 +103,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonAlignEdges_Text,
                 "LECG.Commands.AlignEdgesCommand",
                 UIConstants.ButtonAlignEdges_Tooltip,
-                AppImages.AlignEdges
+                AppImages.AlignEdges32,
+                AppImages.AlignEdges16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -106,7 +112,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonUpdateContours_Text,
                 "LECG.Commands.UpdateContoursCommand",
                 UIConstants.ButtonUpdateContours_Tooltip,
-                AppImages.UpdateContours
+                AppImages.UpdateContours32,
+                AppImages.UpdateContours16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -114,7 +121,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonChangeLevel_Text,
                 "LECG.Commands.ChangeLevelCommand",
                 UIConstants.ButtonChangeLevel_Tooltip,
-                AppImages.ChangeLevel
+                AppImages.ChangeLevel32,
+                AppImages.ChangeLevel16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -122,7 +130,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonConvertFloorToTopo_Text,
                 "LECG.Commands.ConvertFloorToToposolidCommand",
                 UIConstants.ButtonConvertFloorToTopo_Tooltip,
-                AppImages.ConvertFamily
+                AppImages.FloorToToposolid32,
+                AppImages.FloorToToposolid16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -130,7 +139,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonConvertTopoToFloor_Text,
                 "LECG.Commands.ConvertToposolidToFloorCommand",
                 UIConstants.ButtonConvertTopoToFloor_Tooltip,
-                AppImages.ConvertFamily
+                AppImages.ToposolidToFloor32,
+                AppImages.ToposolidToFloor16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -138,7 +148,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonFixPoints_Text,
                 "LECG.Commands.FixPointsCommand",
                 UIConstants.ButtonFixPoints_Tooltip,
-                AppImages.SimplifyPoints
+                AppImages.FixPoints32,
+                AppImages.FixPoints16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -146,7 +157,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonSplitBoundaries_Text,
                 "LECG.Commands.SplitBoundariesCommand",
                 UIConstants.ButtonSplitBoundaries_Tooltip,
-                AppImages.ResetSlabs
+                AppImages.SplitBoundaries32,
+                AppImages.SplitBoundaries16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -154,7 +166,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonDivideToposolid_Text,
                 "LECG.Commands.DivideToposolidCommand",
                 UIConstants.ButtonDivideToposolid_Tooltip,
-                AppImages.ResetSlabs
+                AppImages.DivideToposolid32,
+                AppImages.DivideToposolid16
             ), assemblyPath, availability);
         }
 
@@ -168,7 +181,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonClean_Text,
                 "LECG.Commands.CleanSchemasCommand",
                 UIConstants.ButtonClean_Tooltip,
-                AppImages.Eraser
+                AppImages.CleanSchemas32,
+                AppImages.CleanSchemas16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -176,7 +190,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonCompactingStyles_Text,
                 "LECG.Commands.CompactingStylesCommand",
                 UIConstants.ButtonCompactingStyles_Tooltip,
-                AppImages.Trash
+                AppImages.CompactStyles32,
+                AppImages.CompactStyles16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -184,7 +199,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonPurge_Text,
                 "LECG.Commands.PurgeCommand",
                 UIConstants.ButtonPurge_Tooltip,
-                AppImages.Trash
+                AppImages.PurgeUnused32,
+                AppImages.PurgeUnused16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -192,7 +208,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonFormulaGrouping_Text,
                 "LECG.Commands.FormulaAutoGroupingCommand",
                 UIConstants.ButtonFormulaGrouping_Tooltip,
-                AppImages.Sparkles
+                AppImages.FormulaGrouping32,
+                AppImages.FormulaGrouping16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -200,7 +217,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonWarnings_Text,
                 "LECG.Commands.WarningsCommand",
                 UIConstants.ButtonWarnings_Tooltip,
-                AppImages.Eraser // Placeholder icon
+                AppImages.Warnings32,
+                AppImages.Warnings16
             ), assemblyPath, availability);
         }
 
@@ -215,7 +233,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonRenderMatch_Text,
                 "LECG.Commands.RenderAppearanceMatchCommand",
                 UIConstants.ButtonRenderMatch_Tooltip,
-                AppImages.Palette
+                AppImages.RenderMatch32,
+                AppImages.RenderMatch16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -223,7 +242,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonMaterialCreator_Text,
                 "LECG.Commands.PbrMaterialCreatorCommand",
                 UIConstants.ButtonMaterialCreator_Tooltip,
-                AppImages.AssignMaterial
+                AppImages.PbrMaterial32,
+                AppImages.PbrMaterial16
             ), assemblyPath, availability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -231,7 +251,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonSexy_Text,
                 "LECG.Commands.SexyRevitCommand",
                 UIConstants.ButtonSexy_Tooltip,
-                AppImages.Sparkles
+                AppImages.SexyRevit32,
+                AppImages.SexyRevit16
             ), assemblyPath, availability);
         }
 
@@ -314,7 +335,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonConvertCad_Text,
                 "LECG.Commands.ConvertCadCommand",
                 UIConstants.ButtonConvertCad_Tooltip,
-                AppImages.ConvertFamily // Reusing ConvertFamily icon
+                AppImages.CadBlocks32,
+                AppImages.CadBlocks16
             ), assemblyPath, projectAvailability);
 
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
@@ -322,7 +344,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonSearchReplace_Text,
                 "LECG.Commands.SearchReplaceCommand",
                 UIConstants.ButtonSearchReplace_Tooltip,
-                AppImages.SearchReplace
+                AppImages.BatchRename32,
+                AppImages.BatchRename16
             ), assemblyPath, projectAvailability);
 
             // Convert Family: Now available in both Project and Family environments
@@ -331,7 +354,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonConvertFamily_Text,
                 "LECG.Commands.ConvertFamilyCommand",
                 UIConstants.ButtonConvertFamily_Tooltip,
-                AppImages.ConvertFamily
+                AppImages.ConvertFamily32,
+                AppImages.ConvertFamily16
             ), assemblyPath, anyAvailability);
 
             // Convert Shared: Only available in Family environment
@@ -340,7 +364,8 @@ namespace LECG.Core.Ribbon
                 "Convert\nShared",
                 "LECG.Commands.ConvertSharedCommand",
                 "Convert Shared Family to Non-Shared",
-                AppImages.ConvertShared
+                AppImages.ConvertShared32,
+                AppImages.ConvertShared16
             ), assemblyPath, familyAvailability);
 
             // Category Changer
@@ -349,7 +374,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonCategoryChanger_Text,
                 "LECG.Commands.CategoryChangerCommand",
                 UIConstants.ButtonCategoryChanger_Tooltip,
-                AppImages.Sparkles // Using Sparkles for now
+                AppImages.CategoryChanger32,
+                AppImages.CategoryChanger16
             ), assemblyPath, projectAvailability);
 
             // Shared to Family Parameter (project environment only)
@@ -358,7 +384,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonSharedToFamilyParam_Text,
                 "LECG.Commands.SharedToFamilyParameterCommand",
                 UIConstants.ButtonSharedToFamilyParam_Tooltip,
-                AppImages.ConvertShared
+                AppImages.SharedToFamilyParam32,
+                AppImages.SharedToFamilyParam16
             ), assemblyPath, projectAvailability);
 
             // Filter Copy
@@ -367,7 +394,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonFilterCopy_Text,
                 "LECG.Commands.FilterCopyCommand",
                 UIConstants.ButtonFilterCopy_Tooltip,
-                AppImages.SearchReplace // Placeholder icon
+                AppImages.FilterCopy32,
+                AppImages.FilterCopy16
             ), assemblyPath, projectAvailability);
         }
 
@@ -381,7 +409,8 @@ namespace LECG.Core.Ribbon
                 UIConstants.ButtonTypeToLinked_Text,
                 "LECG.Commands.TypeToLinkedModelsCommand",
                 UIConstants.ButtonTypeToLinked_Tooltip,
-                AppImages.ConvertFamily
+                AppImages.TypeToLinked32,
+                AppImages.TypeToLinked16
             ), assemblyPath, availability);
         }
 

@@ -22,7 +22,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Type to Linked Models" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Type to Linked Models" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
             <TextBlock Text="Separate model content by type into individual Revit files. Each file preserves shared coordinates. The host model becomes a coordination container." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
         </StackPanel>
 
@@ -36,7 +36,7 @@
 
                 <Grid Grid.Row="0" Margin="0,0,0,8">
                     <StackPanel Orientation="Horizontal">
-                        <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <Border Style="{DynamicResource AccentBarStyle}"/>
                         <TextBlock Text="ELEMENT TYPES" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -77,7 +77,7 @@
         <Border Grid.Row="2" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="OUTPUT FOLDER" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <Grid>
@@ -86,7 +86,7 @@
                         <ColumnDefinition Width="8"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Text="{Binding OutputFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource ModernTextBoxStyle}" VerticalAlignment="Center"/>
+                    <TextBox Grid.Column="0" Text="{Binding OutputFolder, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
                     <Button Grid.Column="2" Content="Browse" Command="{Binding BrowseFolderCommand}" Style="{DynamicResource SecondaryButtonStyle}" Height="{DynamicResource ButtonHeight}" Padding="16,0"/>
                 </Grid>
             </StackPanel>

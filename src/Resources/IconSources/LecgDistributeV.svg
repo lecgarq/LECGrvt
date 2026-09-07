@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Distribute Vertically</title>
+  <rect x="20" y="8" width="24" height="8" rx="1.5" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <rect x="20" y="28" width="24" height="8" rx="1.5" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <rect x="20" y="48" width="24" height="8" rx="1.5" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="13,18 13,26" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="10.8787,23.8787 13,26 15.1213,23.8787" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="13,26 13,18" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="15.1213,20.1213 13,18 10.8787,20.1213" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="13,38 13,46" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="10.8787,43.8787 13,46 15.1213,43.8787" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="13,46 13,38" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="15.1213,40.1213 13,38 10.8787,40.1213" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

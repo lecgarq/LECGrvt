@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Agent\CapabilityCatalog.cs" Link="CapabilityCatalog.cs" />
+    <Compile Include="..\Agent\RevitApiCatalog.cs" Link="RevitApiCatalog.cs" />
+    <Compile Include="..\Agent\ApiValidationEvidence.cs" Link="ApiValidationEvidence.cs" />
+    <EmbeddedResource Include="..\Agent\Knowledge\revit2026-validation.json" LogicalName="LECG.Revit2026.Validation" />
+    <Compile Include="..\Agent\ReviewedDiscovery.cs" Link="ReviewedDiscovery.cs" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.8.0" />
+  </ItemGroup>
+</Project>

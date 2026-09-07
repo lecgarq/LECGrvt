@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <Resource Include="src\Resources\Images\**" />
+    <Resource Include="src\Resources\Fonts\*.ttf" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,8 +50,10 @@
   <ItemGroup>
     <Compile Remove="LECG.Tests\**\*.cs" />
     <Compile Remove="LECG.Core\**\*.cs" />
+    <Compile Remove="RevitCopilot\**\*.cs" />
     <Compile Remove="tools\**\*.cs" />
     <Compile Remove="scripts\**\*.cs" />
+    <Page Remove="RevitCopilot\**\*.xaml" />
   </ItemGroup>
 
   <Target Name="DeployToRevit" AfterTargets="Build" Condition="'$(SkipRevitDeploy)' != 'true'">
