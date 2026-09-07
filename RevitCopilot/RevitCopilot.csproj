@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <RootNamespace>LECG.RevitCopilot</RootNamespace>
+    <AssemblyName>RevitCopilot</AssemblyName>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <RevitInstallDir Condition="'$(RevitInstallDir)' == ''">C:\Program Files\Autodesk\Revit 2026</RevitInstallDir>
+    <SkipRevitDeploy Condition="'$(SkipRevitDeploy)' == ''">false</SkipRevitDeploy>
+    <SkipRevitDeploy Condition="'$(CI)' == 'true' Or '$(GITHUB_ACTIONS)' == 'true'">true</SkipRevitDeploy>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="McpServer\RevitCopilot.McpServer.csproj"
+                      ReferenceOutputAssembly="false" AdditionalProperties="SkipRevitDeploy=true" />
+    <Reference Include="RevitAPI">
+      <HintPath>$(RevitInstallDir)\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>$(RevitInstallDir)\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Agent\Knowledge\revit2026-reference.json" LogicalName="LECG.Revit2026.Knowledge" />
+    <EmbeddedResource Include="Agent\Knowledge\revit2026-validation.json" LogicalName="LECG.Revit2026.Validation" />
+    <Compile Include="..\LECG.Core\Rename\RenameRuleEngine.cs" Link="Shared\RenameRuleEngine.cs" />
+    <Compile Include="..\src\Services\RenderAppearance\RenderMaterialGraphicsApplyService.cs" Link="Shared\RenderMaterialGraphicsApplyService.cs" />
+    <Compile Include="..\src\Services\RenderAppearance\IRenderMaterialGraphicsApplyService.cs" Link="Shared\IRenderMaterialGraphicsApplyService.cs" />
+    <Compile Include="..\src\Services\RenderAppearance\RenderSolidFillPatternService.cs" Link="Shared\RenderSolidFillPatternService.cs" />
+    <Compile Include="..\src\Services\RenderAppearance\IRenderSolidFillPatternService.cs" Link="Shared\IRenderSolidFillPatternService.cs" />
+    <Compile Include="..\src\Services\Topography\OffsetService.cs" Link="Shared\OffsetService.cs" />
+    <Compile Include="..\src\Services\Topography\SlabService.cs" Link="Shared\SlabService.cs" />
+    <Compile Remove="Tests\**\*.cs" />
+    <Compile Remove="Research\**\*.cs" />
+    <Compile Remove="McpServer\**\*.cs" />
+    <None Include="RevitCopilot.addin" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <Target Name="BundleMcpServer" AfterTargets="Build" BeforeTargets="DeployToRevit">
+    <MSBuild Projects="McpServer\RevitCopilot.McpServer.csproj" Targets="GetTargetPath"
+             Properties="Configuration=$(Configuration);Platform=$(Platform);SkipRevitDeploy=true">
+      <Output TaskParameter="TargetOutputs" ItemName="McpAssembly" />
+    </MSBuild>
+    <PropertyGroup>
+      <McpSourceDir>@(McpAssembly->'%(RootDir)%(Directory)')</McpSourceDir>
+    </PropertyGroup>
+    <ItemGroup>
+      <BundledMcpFiles Include="$(McpSourceDir)**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(BundledMcpFiles)"
+          DestinationFiles="@(BundledMcpFiles->'$(TargetDir)mcp\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+  <Target Name="DeployToRevit" AfterTargets="Build" DependsOnTargets="BundleMcpServer" Condition="'$(SkipRevitDeploy)' != 'true'">
+    <PropertyGroup>
+      <RevitAddinsRoot>$(APPDATA)\Autodesk\Revit\Addins\2026</RevitAddinsRoot>
+      <RevitCopilotDir>$(RevitAddinsRoot)\RevitCopilot</RevitCopilotDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(RevitCopilotDir)" />
+    <ItemGroup>
+      <DeployFiles Include="$(OutputPath)*.dll" />
+      <DeployFiles Include="$(OutputPath)*.pdb" />
+      <DeployFiles Include="$(OutputPath)*.deps.json" />
+      <DeployFiles Include="$(OutputPath)*.runtimeconfig.json" />
+      <DeployBundledMcpFiles Include="$(TargetDir)mcp\**\*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="$(RevitCopilotDir)" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(DeployBundledMcpFiles)"
+          DestinationFiles="@(DeployBundledMcpFiles->'$(RevitCopilotDir)\mcp\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <Copy SourceFiles="RevitCopilot.addin" DestinationFolder="$(RevitAddinsRoot)" SkipUnchangedFiles="false" />
+  </Target>
+</Project>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Type to Linked</title>
+  <polygon points="6,23 17,16 28,23 28,37 17,44 6,37" fill="#CFE0EB" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <rect x="42" y="10" width="14" height="10" rx="2" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="28,30 42,15" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="42.1378,18.9976 42,15 38.0024,15.1378" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="48" y="27" width="14" height="10" rx="2" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="28,30 48,32" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="44.9042,34.533 48,32 45.467,28.9042" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="42" y="44" width="14" height="10" rx="2" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="28,30 42,49" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="38.0451,48.4008 42,49 42.5992,45.0451" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

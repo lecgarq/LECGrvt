@@ -61,9 +61,14 @@ docs/review/revit-api/*.jsonl
 
 # Temp analysis
 docs/review/tmp/
+.tmp-*/
 *.tmp
 *.bak
 *.cache
+
+# Local deployment recovery and generated protocol inventories
+outputs/deployment-backups/
+outputs/copilot-session-protocol/
 
 # Design source art (not needed in build)
 design/

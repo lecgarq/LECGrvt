@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Change Level</title>
+  <polyline points="7,15 11,15" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="15,15 19,15" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="23,15 27,15" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="31,15 35,15" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="39,15 43,15" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="7,49 11,49" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="15,49 19,49" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="23,49 27,49" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="31,49 35,49" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="39,49 43,49" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="10" y="29" width="28" height="7" rx="2" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="52,20 52,44" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="48.4645,40.4645 52,44 55.5355,40.4645" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="52,44 52,20" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="55.5355,23.5355 52,20 48.4645,23.5355" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

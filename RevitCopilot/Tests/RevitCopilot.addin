@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>LECG Revit Copilot</Name>
+    <Assembly>bin\x64\Release\net10.0-windows\RevitCopilot.dll</Assembly>
+    <AddInId>C680C2C2-D551-4C4F-9BF8-72D4E6F3A57D</AddInId>
+    <FullClassName>LECG.RevitCopilot.RevitCopilotApp</FullClassName>
+    <VendorId>LECG</VendorId>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>LECG Copilot smoke tests</Name>
+    <Assembly>bin\x64\Release\net10.0-windows\RevitCopilot.SmokeTests.dll</Assembly>
+    <AddInId>ED886B97-5FE6-46E9-8CAA-A91F5796CE41</AddInId>
+    <FullClassName>LECG.RevitCopilot.SmokeTests.SmokeApplication</FullClassName>
+    <VendorId>LECG</VendorId>
+  </AddIn>
+</RevitAddIns>

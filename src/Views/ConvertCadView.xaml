@@ -25,7 +25,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Convert CAD to Detail Item" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Convert CAD to Detail Item" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
             <TextBlock Text="Convert an imported CAD instance or an external DWG file into a Revit Detail Item family." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
@@ -43,7 +43,7 @@
                     <Border Grid.Row="1" Padding="0" Margin="0,0,0,16">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <Border Style="{DynamicResource AccentBarStyle}"/>
                                 <TextBlock Text="SOURCE" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
@@ -76,7 +76,7 @@
                     <Border Grid.Row="1" Padding="0" Margin="0,0,0,16">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <Border Style="{DynamicResource AccentBarStyle}"/>
                                 <TextBlock Text="FAMILY SETTINGS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                             </StackPanel>
                             
@@ -89,7 +89,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBox Text="{Binding TemplatePath, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,8,0" IsReadOnly="True" FontSize="11" VerticalContentAlignment="Center"/>
+                                <TextBox Text="{Binding TemplatePath, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,8,0" IsReadOnly="True" FontSize="{DynamicResource FontSizeSmall}" VerticalContentAlignment="Center"/>
                                 <Button Grid.Column="1" Content="..." Command="{Binding BrowseTemplateCommand}" Width="40" Height="32" Style="{DynamicResource SecondaryButtonStyle}"/>
                             </Grid>
                         </StackPanel>
@@ -99,7 +99,7 @@
                     <Border Padding="0" Margin="0,0,0,16">
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                                <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                <Border Style="{DynamicResource AccentBarStyle}"/>
                                 <TextBlock Text="GRAPHIC OVERRIDES" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                             </StackPanel>
                             <Grid>
@@ -144,12 +144,12 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Background="{DynamicResource LecgBaseBackground}" Padding="15,10">
-                        <TextBlock Text="OPERATIONAL LOG" Foreground="{DynamicResource LecgTextSecondary}" FontWeight="{DynamicResource WeightBold}" FontSize="11" Opacity="0.7"/>
+                        <TextBlock Text="OPERATIONAL LOG" Foreground="{DynamicResource LecgTextSecondary}" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeSmall}" Opacity="0.7"/>
                     </Border>
                     <ListBox Grid.Row="1" ItemsSource="{Binding Logs}" Background="Transparent" BorderThickness="0" Padding="10">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding}" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,4" Foreground="{DynamicResource TextSecondaryBrush}"/>
+                                <TextBlock Text="{Binding}" FontSize="{DynamicResource FontSizeSmall}" TextWrapping="Wrap" Margin="0,0,0,4" Foreground="{DynamicResource LecgTextSecondary}"/>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -160,7 +160,7 @@
         <!-- Progress -->
         <Border Grid.Row="2" Margin="0,15,0,0" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVis}}">
             <StackPanel>
-                <TextBlock Text="{Binding StatusMessage}" FontSize="11" Margin="0,0,0,5" HorizontalAlignment="Center" Foreground="{DynamicResource LecgAccent}"/>
+                <TextBlock Text="{Binding StatusMessage}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,5" HorizontalAlignment="Center" Foreground="{DynamicResource LecgAccent}"/>
                 <ProgressBar Value="{Binding Progress}" Height="4" Style="{DynamicResource {x:Type ProgressBar}}"/>
             </StackPanel>
         </Border>

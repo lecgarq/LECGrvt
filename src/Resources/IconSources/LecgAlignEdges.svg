@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Align Edges</title>
+  <polyline points="32,8 32,12" fill="none" stroke="#1E1E1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="32,16 32,20" fill="none" stroke="#1E1E1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="32,24 32,28" fill="none" stroke="#1E1E1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="32,32 32,36" fill="none" stroke="#1E1E1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="32,40 32,44" fill="none" stroke="#1E1E1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="32,48 32,52" fill="none" stroke="#1E1E1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="9,18 24,18 24,30 32,30" fill="none" stroke="#1E4257" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="55,46 40,46 40,36 32,36" fill="none" stroke="#1E4257" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

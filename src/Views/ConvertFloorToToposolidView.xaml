@@ -4,7 +4,7 @@
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:icons="clr-namespace:LECG.Utilities"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:controls="clr-namespace:LECG.Controls" Title="FLOOR TO TOPOSOLID" Width="400" Height="620" MinWidth="360" MinHeight="560" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.ArrowUpDown}">
+    xmlns:controls="clr-namespace:LECG.Controls" Title="FLOOR TO TOPOSOLID" Width="400" Height="660" MinWidth="360" MinHeight="560" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.ArrowUpDown}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -24,7 +24,7 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Floor to Toposolid" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Floor to Toposolid" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
             <TextBlock Text="Convert Floor elements to Toposolid elements, preserving boundary shape and vertex positions." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
         </StackPanel>
 
@@ -33,32 +33,32 @@
             <StackPanel>
                 <!-- Selection Section -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                 <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
 
                 <comp:SelectionControl DataContext="{Binding Selection}" Margin="0,0,0,16"/>
-                <Border Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="8" Padding="8" Margin="0,0,0,16">
+                <Border Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource ContentCornerRadius}" Padding="8" Margin="0,0,0,16">
                     <controls:ElementGridControl RowItems="{Binding RowItems}" Height="120"/>
                 </Border>
 
                 <!-- Target Type Section -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="TARGET TYPE" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <ComboBox ItemsSource="{Binding TargetTypes}" SelectedItem="{Binding SelectedType}" DisplayMemberPath="Name" Height="32" Padding="8,0" VerticalContentAlignment="Center" Margin="0,0,0,16"/>
 
                 <!-- Target Level Section -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="TARGET LEVEL" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <ComboBox ItemsSource="{Binding Levels}" SelectedItem="{Binding SelectedLevel}" DisplayMemberPath="Name" Height="32" Padding="8,0" VerticalContentAlignment="Center" Margin="0,0,0,16"/>
 
                 <!-- Options Section -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="OPTIONS" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <CheckBox Content="Delete source floors after conversion" IsChecked="{Binding DeleteSource}" Margin="0,0,0,4"/>

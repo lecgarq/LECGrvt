@@ -2,14 +2,40 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
-    xmlns:utils="clr-namespace:LECG.Utilities"
-    xmlns:icons="clr-namespace:LECG.Utilities" Title="LECG TOOLKIT" Height="650" Width="900" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Home}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="LECG TOOLKIT" Height="760" Width="900" MinWidth="800" MinHeight="600" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Home}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- A tool card: icon and name. The Tag is the key HomeCommand dispatches on. -->
+            <Style x:Key="ToolCardStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource DashboardCardStyle}">
+                <Setter Property="Width" Value="184"/>
+                <Setter Property="Height" Value="56"/>
+                <Setter Property="Padding" Value="12,0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            </Style>
+            <Style x:Key="ToolIconStyle" TargetType="{x:Type Image}">
+                <Setter Property="Width" Value="24"/>
+                <Setter Property="Height" Value="24"/>
+                <Setter Property="Margin" Value="0,0,12,0"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality"/>
+            </Style>
+            <Style x:Key="ToolNameStyle" TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="LineHeight" Value="18"/>
+                <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+            </Style>
+            <!-- Group header: 24 above, 8 below (S2). -->
+            <Style x:Key="GroupHeaderStyle" TargetType="{x:Type StackPanel}">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="4,24,0,8"/>
+            </Style>
         </ResourceDictionary>
     </base:LecgWindow.Resources>
 
@@ -19,166 +45,276 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
-            <TextBlock Text="LECG TOOLKIT" FontWeight="Bold" FontSize="24" Foreground="{DynamicResource LecgTextPrimary}" Margin="0,0,0,4"/>
-            <TextBlock Text="Select a tool to begin." FontSize="14" Foreground="{DynamicResource LecgTextSecondary}"/>
-        </StackPanel>
+        <!-- Header: the mark (Blue on Paper, its default colourway) with its clear space, then the title. -->
+        <Grid Grid.Row="0" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgMark_Blue.png"
+                   Height="56" VerticalAlignment="Center" Margin="0,0,48,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="Toolkit" Style="{DynamicResource TitleStyle}" FontSize="{DynamicResource FontSizeExtraLarge}" Margin="0,0,0,2"/>
+                <TextBlock Text="Select a tool to begin." Style="{DynamicResource CaptionStyle}"/>
+            </StackPanel>
+        </Grid>
 
-        <!-- Tool Grid -->
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <WrapPanel Margin="0,0,8,0">
-                <WrapPanel.Resources>
-                    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource DashboardCardStyle}">
-                        <Setter Property="Width" Value="200"/>
-                        <Setter Property="Height" Value="100"/>
-                    </Style>
-                </WrapPanel.Resources>
+        <!-- Tools, grouped as on the ribbon. -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Padding="0,0,8,0">
+            <StackPanel Margin="-4,0,0,0">
 
-                <!-- 1. Align (Master) -->
-                <Button ToolTip="Alignment &amp; Distribution Tools" Click="AlignMaster_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/AlignMaster_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Align" FontWeight="Bold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <StackPanel Style="{StaticResource GroupHeaderStyle}" Margin="4,0,0,8">
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
+                    <TextBlock Text="PROJECT HEALTH" Style="{DynamicResource SectionHeaderStyle}"/>
+                </StackPanel>
+                <WrapPanel>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="CleanSchemas" Click="Tool_Click" ToolTip="Remove third-party plugin schemas from the project.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgCleanSchemas_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Clean Schemas"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="CompactStyles" Click="Tool_Click" ToolTip="Normalise duplicated line, fill and text styles into canonical definitions.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgCompactStyles_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Compact Styles"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="Purge" Click="Tool_Click" ToolTip="Purge unused line styles, line patterns, fill patterns and materials.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgPurgeUnused_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Purge Unused"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="FormulaGrouping" Click="Tool_Click" ToolTip="Move formula-driven parameters to the General/Other group across all families.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgFormulaGrouping_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Formula Grouping"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="Warnings" Click="Tool_Click" ToolTip="Review model warnings grouped by description, with select, show and isolate actions. Read-only.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgWarnings_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Warnings"/>
+                        </DockPanel>
+                    </Button>
+                </WrapPanel>
 
-                <!-- 2. Assign Material -->
-                <Button ToolTip="Assign Material by Type" Click="AssignMaterial_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/AssignMaterial.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Assign Mat." FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <StackPanel Style="{StaticResource GroupHeaderStyle}">
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
+                    <TextBlock Text="STANDARDS" Style="{DynamicResource SectionHeaderStyle}"/>
+                </StackPanel>
+                <WrapPanel>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="ConvertCad" Click="Tool_Click" ToolTip="Convert imported CAD to cleaned Detail Item families.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgCadBlocks_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="CAD Blocks"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="BatchRename" Click="Tool_Click" ToolTip="Find and replace text or remove characters from element names.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgBatchRename_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Batch Rename"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="ConvertFamily" Click="Tool_Click" ToolTip="Convert a hosted family instance to a work plane-based generic model.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgConvertFamily_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Convert Family"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="CategoryChanger" Click="Tool_Click" ToolTip="Switch instance categories by modifying the family definition silently.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgCategoryChanger_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Category Changer"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="SharedToFamilyParam" Click="Tool_Click" ToolTip="Bulk-convert shared parameters in families to non-shared family parameters.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgSharedToFamilyParam_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Shared to Family Param"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="FilterCopy" Click="Tool_Click" ToolTip="Copy view filters between views and templates.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgFilterCopy_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Filter Copy"/>
+                        </DockPanel>
+                    </Button>
+                </WrapPanel>
 
-                <!-- 3. Sexy Revit -->
-                <Button ToolTip="View Beautification" Click="SexyRevit_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/SexyRevit.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Sexy Revit" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <StackPanel Style="{StaticResource GroupHeaderStyle}">
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
+                    <TextBlock Text="TOPOSOLIDS" Style="{DynamicResource SectionHeaderStyle}"/>
+                </StackPanel>
+                <WrapPanel>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AssignMaterial" Click="Tool_Click" ToolTip="Create and assign materials based on Floor and Toposolid type names.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAssignMaterial_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Assign Material"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="Offsets" Click="Tool_Click" ToolTip="Offset height from level for Toposolids and Floors.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgOffsetElevations_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Offset Elevations"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="ResetSlabs" Click="Tool_Click" ToolTip="Reset slab shapes for Toposolids and Floors.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgResetSlabs_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Reset Slabs"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="SimplifyPoints" Click="Tool_Click" ToolTip="Remove redundant sub-element points from Toposolids while preserving shape.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgSimplifyPoints_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Simplify Points"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignEdges" Click="Tool_Click" ToolTip="Align points of one Toposolid to the surface of another.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignEdges_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Edges"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="UpdateContours" Click="Tool_Click" ToolTip="Apply or remove contour display on Toposolids.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgUpdateContours_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Update Contours"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="ChangeLevel" Click="Tool_Click" ToolTip="Move Toposolids to a new level while maintaining absolute elevation.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgChangeLevel_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Change Level"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="ConvertFloorToToposolid" Click="Tool_Click" ToolTip="Convert Floors to Toposolids preserving shape points and elevations.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgFloorToToposolid_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Floor to Toposolid"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="ConvertToposolidToFloor" Click="Tool_Click" ToolTip="Convert Toposolids to Floors preserving edited points and elevations.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgToposolidToFloor_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Toposolid to Floor"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="FixPoints" Click="Tool_Click" ToolTip="Repair inconsistent edge and transition points on Floors and Toposolids.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgFixPoints_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Fix Points"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="SplitBoundaries" Click="Tool_Click" ToolTip="Separate multi-boundary elements into independent instances.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgSplitBoundaries_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Split Boundaries"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="DivideToposolid" Click="Tool_Click" ToolTip="Split multi-layer toposolids into individual single-layer toposolids.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgDivideToposolid_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Divide Toposolid"/>
+                        </DockPanel>
+                    </Button>
+                </WrapPanel>
 
-                <!-- 4. Purge -->
-                <Button ToolTip="Project Health" Click="Purge_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/Purge.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Purge" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <StackPanel Style="{StaticResource GroupHeaderStyle}">
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
+                    <TextBlock Text="ALIGN" Style="{DynamicResource SectionHeaderStyle}"/>
+                </StackPanel>
+                <WrapPanel>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignLeft" Click="Tool_Click" ToolTip="Align selected elements to the left of the reference element.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignLeft_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Left"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignCenter" Click="Tool_Click" ToolTip="Align selected elements to the horizontal centre of the reference element.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignCenter_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Center"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignRight" Click="Tool_Click" ToolTip="Align selected elements to the right of the reference element.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignRight_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Right"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignTop" Click="Tool_Click" ToolTip="Align selected elements to the top of the reference element.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignTop_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Top"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignMiddle" Click="Tool_Click" ToolTip="Align selected elements to the vertical centre of the reference element.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignMiddle_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Middle"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignBottom" Click="Tool_Click" ToolTip="Align selected elements to the bottom of the reference element.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignBottom_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Bottom"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="DistributeH" Click="Tool_Click" ToolTip="Distribute selected elements evenly horizontally.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgDistributeH_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Distribute Horizontally"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="DistributeV" Click="Tool_Click" ToolTip="Distribute selected elements evenly vertically.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgDistributeV_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Distribute Vertically"/>
+                        </DockPanel>
+                    </Button>
+                </WrapPanel>
 
-                <!-- 5. Offsets -->
-                <Button ToolTip="Offset Elevations" Click="Offsets_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/OffsetElevations.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Offsets" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+                <StackPanel Style="{StaticResource GroupHeaderStyle}">
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
+                    <TextBlock Text="MODEL ORGANIZATION" Style="{DynamicResource SectionHeaderStyle}"/>
+                </StackPanel>
+                <WrapPanel>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="TypeToLinked" Click="Tool_Click" ToolTip="Separate model content by type into individual linked Revit files.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgTypeToLinked_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Type to Linked"/>
+                        </DockPanel>
+                    </Button>
+                </WrapPanel>
 
-                <!-- 6. Reset Slabs -->
-                <Button ToolTip="Reset Shape Edited Slabs" Click="ResetSlabs_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ResetSlabs.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Reset Slabs" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 7. Simplify Points -->
-                <Button ToolTip="Simplify Toposolid Points" Click="SimplifyPoints_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/simplify_points_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Simplify Pts" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 8. Align Edges -->
-                <Button ToolTip="Align Toposolid Edges" Click="AlignEdges_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/align_edges_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Align Edges" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 9. Update Contours -->
-                <Button ToolTip="Update Contours" Click="UpdateContours_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/update_contours_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Contours" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 10. Change Level -->
-                <Button ToolTip="Change Level" Click="ChangeLevel_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/change_level_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Change Lvl" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 11. Clean Schemas -->
-                <Button ToolTip="Clean Schemas" Click="CleanSchemas_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/CleanSchemas.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Clean" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 12. Render Match -->
-                <Button ToolTip="Render Selection Match" Click="RenderMatch_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/RenderMatch.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Render Match" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 13. Fix Points -->
-                <Button ToolTip="Repair inconsistent edge and transition points on Floors and Toposolids" Click="FixPoints_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/simplify_points_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Fix Points" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 14. Split Boundaries -->
-                <Button ToolTip="Separate multi-boundary elements into independent instances" Click="SplitBoundaries_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ResetSlabs.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Split Bound." FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 15. Floor to Toposolid -->
-                <Button ToolTip="Convert Floor elements to Toposolid elements" Click="ConvertFloorToToposolid_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Floor to Topo" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 16. Toposolid to Floor -->
-                <Button ToolTip="Convert Toposolid elements to Floor elements" Click="ConvertToposolidToFloor_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Topo to Floor" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 17. Convert Family -->
-                <Button ToolTip="Convert Family" Click="ConvertFamily_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/ConvertFamily_32.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Convert Fam" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-
-                <!-- 18. Batch Rename -->
-                <Button ToolTip="Batch Rename" Click="BatchRename_Click">
-                    <StackPanel HorizontalAlignment="Center">
-                        <Image Source="pack://application:,,,/LECG;component/src/Resources/Images/SearchReplace.png" Width="32" Height="32" Margin="0,0,0,8" HorizontalAlignment="Center" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBlock Text="Rename" FontWeight="SemiBold" Foreground="{DynamicResource LecgTextPrimary}" HorizontalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-            </WrapPanel>
+                <StackPanel Style="{StaticResource GroupHeaderStyle}">
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
+                    <TextBlock Text="VISUALIZATION" Style="{DynamicResource SectionHeaderStyle}"/>
+                </StackPanel>
+                <WrapPanel Margin="0,0,0,8">
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="RenderMatch" Click="Tool_Click" ToolTip="Sync graphics and identity with render appearance.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgRenderMatch_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Render Match"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="PbrMaterial" Click="Tool_Click" ToolTip="Create a render-ready material from diffuse, roughness and bump textures.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgPbrMaterial_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="PBR Material"/>
+                        </DockPanel>
+                    </Button>
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="SexyRevit" Click="Tool_Click" ToolTip="Optimise the view for presentation.">
+                        <DockPanel>
+                            <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgSexyRevit_32.png"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Sexy Revit"/>
+                        </DockPanel>
+                    </Button>
+                </WrapPanel>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </base:LecgWindow>

@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:icons="clr-namespace:LECG.Utilities" Title="CATEGORY CHANGER" Height="550" Width="450" MinWidth="400" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Category}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="CATEGORY CHANGER" Height="620" Width="450" MinWidth="400" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Category}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -23,15 +23,15 @@
 
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="Change Family Category" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource TextPrimaryBrush}" Margin="{DynamicResource TitleMarginSmall}"/>
-            <TextBlock Text="Modify the category of selected family instances in-place." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource TextSecondaryBrush}"/>
+            <TextBlock Text="Change Family Category" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="Modify the category of selected family instances in-place." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
         </StackPanel>
 
         <!-- Selection -->
         <Border Grid.Row="1" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <comp:SelectionControl DataContext="{Binding Selection}"/>
@@ -48,7 +48,7 @@
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="16,12,16,4">
-                    <Border Width="3" Height="12" CornerRadius="1.5" Background="{DynamicResource LecgAccent}" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                    <Border Style="{DynamicResource AccentBarStyle}"/>
                     <TextBlock Text="TARGET CATEGORY" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
                 </StackPanel>
                 <TextBox Grid.Row="1" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Margin="16,4,16,8"/>
@@ -57,7 +57,7 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="10,8">
-                                <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="{DynamicResource FontSizeMedium}"/>
+                                <TextBlock Text="{Binding Name}" Foreground="{DynamicResource LecgTextPrimary}" FontSize="{DynamicResource FontSizeMedium}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
@@ -67,12 +67,12 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
-                                        <Border Name="border" Background="{TemplateBinding Background}" CornerRadius="4" Margin="2">
+                                        <Border Name="border" Background="{TemplateBinding Background}" CornerRadius="{DynamicResource ContentCornerRadius}" Margin="2">
                                             <ContentPresenter />
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter TargetName="border" Property="Background" Value="#10000000"/>
+                                                <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgHoverBackground}"/>
                                             </Trigger>
                                             <Trigger Property="IsSelected" Value="True">
                                                 <Setter TargetName="border" Property="Background" Value="{DynamicResource LecgAccent}"/>

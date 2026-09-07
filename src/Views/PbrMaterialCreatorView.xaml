@@ -33,7 +33,7 @@
 
         <!-- HEADER -->
         <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
-            <TextBlock Text="PBR Material Creator" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="PBR Material Creator" Style="{DynamicResource TitleStyle}" Margin="{DynamicResource TitleMarginSmall}"/>
             <TextBlock Text="Select a folder with PBR textures. Maps are auto-detected by filename keywords (basecolor, normal, roughness, metallic, ao, displacement, opacity). Enter a material name and create." FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}" TextWrapping="Wrap"/>
         </StackPanel>
 
@@ -95,9 +95,9 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding TabHeader}" FontSize="12" Foreground="{DynamicResource LecgTextPrimary}" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="{Binding TabHeader}" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextPrimary}" VerticalAlignment="Center" Margin="0,0,6,0"/>
                             <Button Content="&#xD7;"
-                                    FontSize="14"
+                                    FontSize="{DynamicResource FontSizeBody}"
                                     FontWeight="Bold"
                                     Padding="2,0"
                                     MinWidth="20"
@@ -121,12 +121,12 @@
                         Command="{Binding ImportFolderCommand}"
                         Style="{DynamicResource SecondaryButtonStyle}"
                         Padding="10,4"
-                        FontSize="11"/>
+                        FontSize="{DynamicResource FontSizeSmall}"/>
                 <Button Content="+ Add"
                         Command="{Binding AddPageCommand}"
                         Style="{DynamicResource SecondaryButtonStyle}"
                         Padding="10,4"
-                        FontSize="11"
+                        FontSize="{DynamicResource FontSizeSmall}"
                         Margin="6,0,0,0"/>
             </StackPanel>
 
@@ -166,7 +166,7 @@
                     <TextBlock Text="MATERIAL IDENTITY" Style="{DynamicResource SectionHeaderStyle}" Margin="0,0,0,8"/>
 
                     <StackPanel Margin="0,0,0,10">
-                        <TextBlock Text="Material Name" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                        <TextBlock Text="Material Name" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
                         <TextBox Text="{Binding MaterialName, UpdateSourceTrigger=PropertyChanged}" Height="34" VerticalContentAlignment="Center"/>
                     </StackPanel>
 
@@ -177,11 +177,11 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
-                            <TextBlock Text="Description" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                            <TextBlock Text="Description" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
                             <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" Height="34" VerticalContentAlignment="Center"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2">
-                            <TextBlock Text="Material Class" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                            <TextBlock Text="Material Class" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
                             <ComboBox IsEditable="True"
                                       Text="{Binding MaterialClass, UpdateSourceTrigger=PropertyChanged}"
                                       ItemsSource="{Binding DefaultMaterialClasses}"
@@ -212,8 +212,8 @@
                                 Style="{DynamicResource SecondaryButtonStyle}"/>
                     </Grid>
 
-                    <Border Background="{DynamicResource LecgBaseBackground}" CornerRadius="4" Padding="10,6" Margin="0,0,0,10">
-                        <TextBlock FontSize="11" Foreground="{DynamicResource LecgTextMuted}" TextWrapping="Wrap">
+                    <Border Background="{DynamicResource LecgBaseBackground}" CornerRadius="{DynamicResource ContentCornerRadius}" Padding="10,6" Margin="0,0,0,10">
+                        <TextBlock FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextMuted}" TextWrapping="Wrap">
                             <Run Text="Auto-detected"/>
                             <Run Text="{Binding DetectedCount, Mode=OneWay}" FontWeight="Bold"/>
                             <Run Text="texture maps from folder. You can still override any channel manually below."/>
@@ -223,7 +223,7 @@
                     <!-- TEXTURE SCALE -->
                     <TextBlock Text="TEXTURE SCALE" Style="{DynamicResource SectionHeaderStyle}" Margin="0,4,0,8"/>
                     <StackPanel Margin="0,0,0,10">
-                        <TextBlock Text="UV Scale (m)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                        <TextBlock Text="UV Scale (m)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
                         <ComboBox ItemsSource="{Binding UvScaleOptions}"
                                   SelectedItem="{Binding SelectedUvScaleMeters}"
                                   Height="34"
@@ -234,7 +234,7 @@
                     <TextBlock Text="PBR CHANNELS" Style="{DynamicResource SectionHeaderStyle}" Margin="0,4,0,8"/>
 
                     <!-- Diffuse -->
-                    <TextBlock Text="Diffuse / Albedo (required)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBlock Text="Diffuse / Albedo (required)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -243,7 +243,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Text="{Binding DiffusePath}" Height="36" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="4" Margin="6,0,0,0">
+                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource ContentCornerRadius}" Margin="6,0,0,0">
                             <Image Source="{Binding DiffusePreview}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Border>
                         <Button Grid.Column="2" Content="..." Command="{Binding BrowseCommand}" CommandParameter="Diffuse" Margin="6,0,0,0" Width="36" Height="36" Style="{DynamicResource SecondaryButtonStyle}"/>
@@ -252,12 +252,12 @@
 
                     <!-- Normal -->
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
-                        <TextBlock Text="Relief Pattern" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Relief Pattern" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,8,0" VerticalAlignment="Center"/>
                         <ComboBox ItemsSource="{Binding ReliefPatternOptions}"
                                   SelectedItem="{Binding SelectedReliefPattern}"
                                   Height="24"
                                   Width="110"
-                                  FontSize="11"
+                                  FontSize="{DynamicResource FontSizeSmall}"
                                   VerticalContentAlignment="Center"/>
                     </StackPanel>
                     <Grid Margin="0,0,0,8">
@@ -268,7 +268,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Text="{Binding NormalPath}" Height="36" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="4" Margin="6,0,0,0">
+                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource ContentCornerRadius}" Margin="6,0,0,0">
                             <Image Source="{Binding NormalPreview}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Border>
                         <Button Grid.Column="2" Content="..." Command="{Binding BrowseCommand}" CommandParameter="Normal" Margin="6,0,0,0" Width="36" Height="36" Style="{DynamicResource SecondaryButtonStyle}"/>
@@ -276,7 +276,7 @@
                     </Grid>
 
                     <!-- Roughness -->
-                    <TextBlock Text="Roughness" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+                    <TextBlock Text="Roughness" Foreground="{DynamicResource LecgTextSecondary}" FontSize="{DynamicResource FontSizeSmall}" Margin="0,0,0,4"/>
                     <Grid Margin="0,0,0,8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -285,7 +285,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBox Grid.Column="0" Text="{Binding RoughnessPath}" Height="36" VerticalContentAlignment="Center" IsReadOnly="True"/>
-                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="4" Margin="6,0,0,0">
+                        <Border Grid.Column="1" Width="36" Height="36" Background="{DynamicResource LecgBaseBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource ContentCornerRadius}" Margin="6,0,0,0">
                             <Image Source="{Binding RoughnessPreview}" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Border>
                         <Button Grid.Column="2" Content="..." Command="{Binding BrowseCommand}" CommandParameter="Roughness" Margin="6,0,0,0" Width="36" Height="36" Style="{DynamicResource SecondaryButtonStyle}"/>
@@ -293,10 +293,10 @@
                     </Grid>
 
                     <!-- INFO -->
-                    <Border Background="{DynamicResource LecgBaseBackground}" CornerRadius="4" Padding="12" Margin="0,4,0,0">
+                    <Border Background="{DynamicResource LecgBaseBackground}" CornerRadius="{DynamicResource ContentCornerRadius}" Padding="12" Margin="0,4,0,0">
                         <TextBlock Text="Relief pattern maps are applied to Revit's bump slot. Average color is derived from the diffuse map."
                                    TextWrapping="Wrap"
-                                   FontSize="11"
+                                   FontSize="{DynamicResource FontSizeSmall}"
                                    Foreground="{DynamicResource LecgTextMuted}"/>
                     </Border>
                 </StackPanel>

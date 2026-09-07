@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Convert Family</title>
+  <rect x="7" y="10" width="7" height="37" rx="2" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <rect x="14" y="24" width="13" height="11" rx="2" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="30,29 43,29" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="39.4645,32.5355 43,29 39.4645,25.4645" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="38,45 42,45" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="46,45 50,45" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="54,45 58,45" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="45" y="34" width="11" height="11" rx="2" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+</svg>

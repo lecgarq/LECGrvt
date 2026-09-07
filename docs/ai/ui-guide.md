@@ -36,17 +36,32 @@ This is not theoretical: `HomeView` and `SearchReplaceView` declared their own d
 
 ## Design tokens
 
-Defined in `src/Resources/`, layered:
+The UI is the LECG Graphic Standard (`C:\LECG\Brand\STANDARD\LECG_STANDARD.md`, LECG-GS-01) on screen. Two files in `src/Resources/Themes/` carry all of it:
 
 | File | Holds |
 |------|-------|
-| `Base/Colors.xaml`, `Themes/LecgColors.xaml` | Raw colors |
-| `Base/Brushes.xaml` | Brushes over those colors |
-| `Base/Fonts.xaml`, `Base/Sizes.xaml` | Type scale, spacing |
-| `Buttons.xaml`, `Containers.xaml`, `Controls.xaml` | Control styles |
-| `Themes/LecgTheme.xaml` | Aggregate + implicit base-control styles |
+| `LecgColors.xaml` | The sixteen brand colours (`Brand*`) and the roles views use (`Lecg*` colours and brushes): Paper ground, Chalk panels, Paper input wells, Ink / Graphite / Slate type, Blue accent with a Water wash, Sage / Walnut / red status with soft fills. |
+| `LecgTheme.xaml` | Type (embedded Poppins for `TitleStyle`, Century Gothic body, mono for figures), the screen type scale (20 / 16 / 14 / 13 / 12), the 8 px spacing scale, 2 px corners, and implicit styles for every control the views use. |
 
-Use the tokens. A literal `#RRGGBB` or a hardcoded margin in a view is a bug — it will not follow a theme change.
+Rules that follow from the standard:
+
+- Views paint with `Lecg*` brushes only. A `#RRGGBB` in a view is a seventeenth colour (rule C6) and fails `BrandTokenTests`.
+- One Blue action per dialog (`AccentButtonStyle`); everything else is the default outlined button. Blue is a mark, never a surface — selection and checked chips use Water (`LecgAccentSoft`).
+- No shadows, no gradients: fills carry no line (C5). Depth is a hairline Stone rule and a Chalk panel.
+- Titles are `TitleStyle`; section labels are `SectionHeaderStyle` behind an `AccentBarStyle` border; helper text is `CaptionStyle`.
+- Spacing is the 8 px scale: 4 / 8 / 12 / 16 / 24 / 32. Body type never goes below 14 px (T2), captions 13, labels 12.
+- The window itself sets ground, foreground, face and size in `LecgWindow` — do not repeat them per view.
+
+### Seeing a window without Revit
+
+`tools/UiSnapshot` renders every view to PNG from the built assembly (loose-XAML load, null DataContext) and reports content that overflows the window's default size:
+
+```bash
+dotnet build tools/UiSnapshot -p:SkipRevitDeploy=true
+tools/UiSnapshot/bin/x64/Debug/net8.0-windows/UiSnapshot.exe src/Views out/shots
+```
+
+Run it after any theme or layout change; it is the only visual check that does not need a Revit session.
 
 ## Third-party control libraries
 

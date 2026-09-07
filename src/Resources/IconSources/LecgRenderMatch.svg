@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Render Match</title>
+  <rect x="7" y="13" width="19" height="38" rx="2" fill="#CFE0EB" stroke="#1E4257" stroke-width="4"/>
+  <ellipse cx="47.5" cy="22.5" rx="9.5" ry="9.5" fill="none" stroke="#1E4257" stroke-width="4"/>
+  <polyline points="47.5,13 47.5,32" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="38,22.5 57,22.5" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="28,37 41,37" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="37.4645,40.5355 41,37 37.4645,33.4645" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="41,44 28,44" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="31.5355,40.4645 28,44 31.5355,47.5355" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

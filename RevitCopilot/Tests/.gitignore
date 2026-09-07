@@ -1,0 +1,4 @@
+AddInsSettings.json
+journal.[0-9]*
+results/
+!journal.RevitCopilotSmokeTest.txt

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Floor to Toposolid</title>
+  <polygon points="10,15 22,10 54,10 44,15 44,23 10,23" fill="#CFE0EB" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <polyline points="32,29 32,38" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="29.1716,35.1716 32,38 34.8284,35.1716" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polygon points="10,46 22,41 38,44 54,40 54,51 38,55 22,52 10,56" fill="#CFE0EB" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <polyline points="16,47 25,45 35,48 46,44" fill="none" stroke="#1E4257" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

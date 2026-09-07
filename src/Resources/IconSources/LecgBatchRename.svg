@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Batch Rename</title>
+  <polygon points="7,14 31,14 37,20 31,26 7,26" fill="#CFE0EB" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <polygon points="27,38 51,38 57,44 51,50 27,50" fill="none" stroke="#1E4257" stroke-width="4" stroke-linejoin="round"/>
+  <polyline points="18,33 46,33" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="42.4645,36.5355 46,33 42.4645,29.4645" fill="none" stroke="#1E4257" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

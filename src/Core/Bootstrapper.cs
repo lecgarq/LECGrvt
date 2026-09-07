@@ -251,7 +251,6 @@ namespace LECG.Core
             services.AddTransient<Views.CategoryChangerView>();
             services.AddTransient<Views.LogView>();
             services.AddTransient<Views.HomeView>();
-            services.AddTransient<Views.AlignDashboardView>();
             services.AddTransient<Views.RenderAppearanceView>();
             services.AddTransient<Views.PbrMaterialCreatorView>();
             services.AddTransient<Views.SplitBoundariesView>();
