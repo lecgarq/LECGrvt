@@ -1,0 +1,112 @@
+{
+  "started_at": "2026-09-09T05:47:46.3219015Z",
+  "revision": "f0464656b458827206ca3632a42fcf99248af091",
+  "runtime": "10.0.11",
+  "revit_build": "26.5.0.55",
+  "manifest_sha256": "9C59E11AAC8D6F868B8E03C64A5C3757E31DED8407552B9AEB40146ABFD3F4AD",
+  "project_sha256": "BE8256D786C510DD8C8A3405493DF852328B3A458673ABDDFC75140943F0C166",
+  "protocol_amendment_sha256": "2182B6DC444827A72FEAABCA345C09F5BEC7D8F7A7BCEC477F3E60352DA57578",
+  "models": [
+    {
+      "name": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222"
+    },
+    {
+      "name": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2"
+    },
+    {
+      "name": "Snowdon Towers Sample Architectural.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Architectural.rvt",
+      "sha256": "931EEEF58311D87AD5B15EB2622A4A7CD2737091D295C24E625C67E445AD65D1"
+    },
+    {
+      "name": "Snowdon Towers Sample Electrical.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Electrical.rvt",
+      "sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A"
+    },
+    {
+      "name": "Snowdon Towers Sample Facades.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Facades.rvt",
+      "sha256": "A3A1FB79871D2B537A6D0D80E9D662EB7FB9748E2A89032B3DEF6322FED09A3C"
+    },
+    {
+      "name": "Snowdon Towers Sample HVAC.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample HVAC.rvt",
+      "sha256": "2793230A685E08A4511899CCE4D8148C96B5860A52CE50EE10815C13743FC280"
+    },
+    {
+      "name": "Snowdon Towers Sample Plumbing.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Plumbing.rvt",
+      "sha256": "53886EFC2B0B50DA53794F670A325F9CE0D04D196CA3858F01439632268A05BA"
+    },
+    {
+      "name": "Snowdon Towers Sample Site.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Site.rvt",
+      "sha256": "87116705D83F45871E2E51C9AEDB1509132F2B2E771D699E38E8F9F8CAFD0617"
+    },
+    {
+      "name": "Snowdon Towers Sample Structural.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Structural.rvt",
+      "sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F"
+    },
+    {
+      "name": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+      "sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A"
+    },
+    {
+      "name": "\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+      "sha256": "C267DA0DCD17DA89A66AF10855C90701E03C98BF8749ADDEA2D475F851AF8386"
+    },
+    {
+      "name": "\u30B5\u30F3\u30D7\u30EB\u8A2D\u5099.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u8A2D\u5099.rvt",
+      "sha256": "205A4B00D7FB6656F9E327F459E6DB76EB672E232EF25DBB1696C2EE78CDF5C8"
+    }
+  ],
+  "binaries": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\RevitAPI.dll",
+      "sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285"
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\RevitAPIUI.dll",
+      "sha256": "8D769989B3C1B6875EB397518A4B71AE205B38D36C6F5DFFDB1D4F641DE54B6B"
+    },
+    {
+      "path": "C:\\Users\\LECG Arquitectura\\AppData\\Local\\Temp\\dd29a471-c2d3-403b-9edd-03e3386d1949\\RevitTest\\SetterValidationProbe\\SetterValidationProbe.dll",
+      "sha256": "3BDC7A8C56951518FB7FDEEC9F48029940D88069070841D5217AC327F086CF5B"
+    },
+    {
+      "path": "C:\\Users\\LECG Arquitectura\\AppData\\Local\\Temp\\dd29a471-c2d3-403b-9edd-03e3386d1949\\Costura\\21DD5762ADC8302FBDC115F22DE7B0D9\\nunit.framework.dll",
+      "sha256": "8209DDE828B2FD6BB89AFFF760916208FB8C0C3D91732676C3213E46C94AADE0"
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Revit.exe",
+      "sha256": "55C7CC183FC5555A5E1E40FB5405AD99104D7D1BCE9CE585E092461EF1E6F47D"
+    }
+  ],
+  "sources": [
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ChangedValuePilot.cs",
+      "sha256": "2B7873AA077256CD60A17940F2FAC8F04DB7325BF20199FAD9E3A3219F2CA554"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\CompatibilityProbe.cs",
+      "sha256": "D6F839D5A796E3CACB87E92C21EDA1C6D2C720AB4A9D5AA0D1A447D4115699E3"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DedicatedCollectionBatch.cs",
+      "sha256": "E6C03D6FABF593120A75292AAE833558A5FEDD04EEEE33C6B34C55D67B26B486"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\PilotValues.cs",
+      "sha256": "05588B4094B76DE26E3383F6BD61982226DF5DE2D04AB17C8F992758718BC432"
+    }
+  ],
+  "isolation": "Fresh detached disposable copy per operation; never saved; observable rollback checks are not a proof of all internal state."
+}

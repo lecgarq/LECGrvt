@@ -2,10 +2,12 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Structure;
+using Autodesk.Revit.DB.Analysis;
+using Autodesk.Revit.DB.Architecture;
 
 namespace LECG.SetterValidationProbe;
 
-// Only the eight preregistered policies. No generic same-class ElementId swap.
+// Preregistered pilot and dedicated-collection policies. No generic same-class ID swap.
 internal static class PilotValues
 {
     internal static Element[] Elements(Document doc) => new FilteredElementCollector(doc)
@@ -18,8 +20,31 @@ internal static class PilotValues
         switch (property)
         {
             case "Electrical.CableType.ConductorMaterial":
+            case "Electrical.WireType.WireMaterial":
                 return ConductorMaterial.GetConductorMaterialIds(doc).OrderBy(id => id.Value)
                     .FirstOrDefault(id => id.Value != ((ElementId)before).Value);
+            case "Electrical.CableType.InsulationMaterial":
+            case "Electrical.WireType.Insulation":
+                return Alternative(InsulationMaterial.GetInsulationMaterialIds(doc), before);
+            case "Electrical.CableType.TemperatureRating":
+            case "Electrical.WireType.TemperatureRating":
+                return Alternative(TemperatureRating.GetTemperatureRatingIds(doc), before);
+            case "Electrical.ElectricalSystem.CableSize":
+                return doc.GetElement(((ElectricalSystem)target).CableType) is CableType cable
+                    ? Alternative(cable.GetUsableCableSizeIds(), before) : null;
+            case "Analysis.MassLevelData.ConceptualConstructionId":
+                return Alternative(ConceptualConstructionType.GetAllConceptualConstructionsForCategory(doc, new ElementId(BuiltInCategory.OST_MassFloor)), before);
+            case "Architecture.StairsRunType.NosingProfile":
+                return ((StairsRunType)target).HasTreads ? Alternative(FamilyUtils.GetProfileSymbols(doc, ProfileFamilyUsage.StairNosing, true), before) : null;
+            case "Architecture.StairsRunType.TreadProfile":
+                return ((StairsRunType)target).HasTreads ? Alternative(FamilyUtils.GetProfileSymbols(doc, ProfileFamilyUsage.StairTread, true), before) : null;
+            case "Architecture.StairsRunType.RiserProfile":
+                return ((StairsRunType)target).HasRisers ? Alternative(FamilyUtils.GetProfileSymbols(doc, ProfileFamilyUsage.StairRiser, true), before) : null;
+            case "Part.OriginalCategoryId": return Alternative(((Part)target).GetSourceElementOriginalCategoryIds(), before);
+            case "Structure.FabricArea.TagViewId": return Alternative(((FabricArea)target).GetValidViewsForTags(), before);
+            case "Structure.StructuralConnectionHandler.ApprovalTypeId":
+                StructuralConnectionApprovalType.GetAllStructuralConnectionApprovalTypes(doc, out var approvals);
+                return Alternative(approvals, before);
             case "Material.CutBackgroundPatternId":
                 return new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>()
                     .Where(p => p.GetFillPattern().Target == FillPatternTarget.Drafting && p.Id.Value != ((ElementId)before).Value)
@@ -55,9 +80,12 @@ internal static class PilotValues
                     circuit.BaseEquipment.get_Parameter(BuiltInParameter.RBS_ELEC_PANEL_FEED_THRU_LUGS_PARAM)?.AsInteger() == 1)
                     return CircuitConnectionType.FeedThruLugs;
                 return null;
-            default: throw new InvalidOperationException("Property is outside the eight-case pilot.");
+            default: throw new InvalidOperationException("Property is outside the preregistered cases.");
         }
     }
+
+    private static ElementId? Alternative(IEnumerable<ElementId> eligible, object before) => eligible
+        .Where(id => id.Value != ((ElementId)before).Value).OrderBy(id => id.Value).FirstOrDefault();
 
     internal static bool Equal(object? a, object? b) => (a, b) switch
     {

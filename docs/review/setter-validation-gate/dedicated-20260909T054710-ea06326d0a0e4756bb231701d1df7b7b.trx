@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="ee49d9ea-bc8c-493c-94c1-c1caaaa9d422" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-08 23:48:15" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-08T23:48:15.0356258-06:00" queuing="2026-09-08T23:48:15.0356259-06:00" start="2026-09-08T23:47:10.8755170-06:00" finish="2026-09-08T23:48:17.0360167-06:00" />
+  <TestSettings name="default" id="3be6bb94-da8d-4056-adb1-5f8770691e44">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-08_23_48_15" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="0223505c-fa9b-454e-9ead-4530200992ae" testId="16448479-45b1-6b24-24a2-a07185393322" testName="RunDedicated(&quot;Part.OriginalCategoryId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0404500" startTime="2026-09-08T23:48:15.1608076-06:00" endTime="2026-09-08T23:48:15.1608079-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0223505c-fa9b-454e-9ead-4530200992ae">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="99343575-afc5-4aff-9f8b-a946ea02ad28" testId="98be4b2d-231b-95f0-5703-5ea6728e0182" testName="RunDedicated(&quot;Structure.StructuralConnectionHandler.ApprovalTypeId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0816500" startTime="2026-09-08T23:48:15.3854167-06:00" endTime="2026-09-08T23:48:15.3854169-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="99343575-afc5-4aff-9f8b-a946ea02ad28">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="801c0a98-0b18-415c-9297-6f4f4dc325d3" testId="7329ca16-1cb5-b1df-e11c-324fa58c559c" testName="RunDedicated(&quot;Electrical.WireType.Insulation&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0133300" startTime="2026-09-08T23:48:14.9349516-06:00" endTime="2026-09-08T23:48:14.9349518-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="801c0a98-0b18-415c-9297-6f4f4dc325d3">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2174ace8-2e81-4ad1-b360-fe81096385b3" testId="cbc2bad5-83bd-7360-2013-c9b9f8c5edb2" testName="RunDedicated(&quot;Architecture.StairsRunType.RiserProfile&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0129000" startTime="2026-09-08T23:48:14.5230790-06:00" endTime="2026-09-08T23:48:14.5230795-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2174ace8-2e81-4ad1-b360-fe81096385b3">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fe05fb74-873f-4ea9-8c75-28f16fe03f36" testId="88fffc16-fc93-2cf8-889e-4f15909229c4" testName="RunDedicated(&quot;Analysis.MassLevelData.ConceptualConstructionId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:28.0862600" startTime="2026-09-08T23:48:14.4526405-06:00" endTime="2026-09-08T23:48:14.4526664-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fe05fb74-873f-4ea9-8c75-28f16fe03f36">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.&#xD;
+NUnit.Framework.AssertionException: Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.&#xD;
+   at NUnit.Framework.Assert.ReportFailure(String message)&#xD;
+   at NUnit.Framework.Assert.Fail(String message, Object[] args)&#xD;
+   at NUnit.Framework.Assert.Fail(String message)&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 190&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)&#xD;
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="10943834-ffce-45d1-8b62-b41335d2a289" testId="caead80a-adea-4d9c-49b7-f4fde2b6de94" testName="RunDedicated(&quot;Electrical.WireType.TemperatureRating&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0119300" startTime="2026-09-08T23:48:15.0007526-06:00" endTime="2026-09-08T23:48:15.0007529-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="10943834-ffce-45d1-8b62-b41335d2a289">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9e7d018f-cf53-4b2c-ae4d-5c79eb6cda65" testId="7c3d2829-c148-64e2-fca0-d68dd8a38968" testName="RunDedicated(&quot;Electrical.CableType.InsulationMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0135700" startTime="2026-09-08T23:48:14.7224423-06:00" endTime="2026-09-08T23:48:14.7224426-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9e7d018f-cf53-4b2c-ae4d-5c79eb6cda65">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="964d8d52-c6b9-4cc7-b16f-7ba80c105865" testId="2fb7060f-9269-74f7-e460-472fcffdb173" testName="RunDedicated(&quot;Electrical.WireType.WireMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0121600" startTime="2026-09-08T23:48:15.0665739-06:00" endTime="2026-09-08T23:48:15.0665742-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="964d8d52-c6b9-4cc7-b16f-7ba80c105865">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f3348df7-19ec-4fd5-b1c3-32f533122719" testId="c0eb3c27-306b-6528-34ba-46086efb19bc" testName="RunDedicated(&quot;Architecture.StairsRunType.TreadProfile&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0128900" startTime="2026-09-08T23:48:14.5878927-06:00" endTime="2026-09-08T23:48:14.5878932-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f3348df7-19ec-4fd5-b1c3-32f533122719">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d31a670f-c1a2-4034-9eb2-e1caf8e5e02e" testId="a7606266-b407-69c2-b261-541d99a0e6f9" testName="RunDedicated(&quot;Electrical.CableType.ConductorMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0141500" startTime="2026-09-08T23:48:14.6546046-06:00" endTime="2026-09-08T23:48:14.6546049-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d31a670f-c1a2-4034-9eb2-e1caf8e5e02e">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a091905e-b308-48ce-bc14-e61a314de7a6" testId="5e3cc95b-507b-f21c-23e5-24d777ab6464" testName="RunDedicated(&quot;Architecture.StairsRunType.NosingProfile&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0135500" startTime="2026-09-08T23:48:14.4586118-06:00" endTime="2026-09-08T23:48:14.4586120-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a091905e-b308-48ce-bc14-e61a314de7a6">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d6d45e4f-e966-405b-84e6-43334477eb6a" testId="fab03f3e-3037-6442-9fbe-e1e9b6c04f5b" testName="RunDedicated(&quot;Electrical.CableType.TemperatureRating&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0136200" startTime="2026-09-08T23:48:14.7881806-06:00" endTime="2026-09-08T23:48:14.7881809-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d6d45e4f-e966-405b-84e6-43334477eb6a">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1471ed79-48c0-4244-8408-843411e55083" testId="0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c" testName="RunDedicated(&quot;Structure.FabricArea.TagViewId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0793900" startTime="2026-09-08T23:48:15.2951110-06:00" endTime="2026-09-08T23:48:15.2951113-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1471ed79-48c0-4244-8408-843411e55083">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="50a2a7e7-443e-4c91-a6f1-e46063132294" testId="52635263-4d22-3ed4-4273-cbd96238e446" testName="RunDedicated(&quot;Electrical.ElectricalSystem.CableSize&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0289300" startTime="2026-09-08T23:48:14.8690658-06:00" endTime="2026-09-08T23:48:14.8690669-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="50a2a7e7-443e-4c91-a6f1-e46063132294">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80&#xD;
+   at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34&#xD;
+   at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDedicated(&quot;Electrical.CableType.InsulationMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7c3d2829-c148-64e2-fca0-d68dd8a38968">
+      <Execution id="9e7d018f-cf53-4b2c-ae4d-5c79eb6cda65" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.WireType.TemperatureRating&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="caead80a-adea-4d9c-49b7-f4fde2b6de94">
+      <Execution id="10943834-ffce-45d1-8b62-b41335d2a289" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.ElectricalSystem.CableSize&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="52635263-4d22-3ed4-4273-cbd96238e446">
+      <Execution id="50a2a7e7-443e-4c91-a6f1-e46063132294" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Analysis.MassLevelData.ConceptualConstructionId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="88fffc16-fc93-2cf8-889e-4f15909229c4">
+      <Execution id="fe05fb74-873f-4ea9-8c75-28f16fe03f36" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.CableType.TemperatureRating&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="fab03f3e-3037-6442-9fbe-e1e9b6c04f5b">
+      <Execution id="d6d45e4f-e966-405b-84e6-43334477eb6a" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Part.OriginalCategoryId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="16448479-45b1-6b24-24a2-a07185393322">
+      <Execution id="0223505c-fa9b-454e-9ead-4530200992ae" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.WireType.WireMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="2fb7060f-9269-74f7-e460-472fcffdb173">
+      <Execution id="964d8d52-c6b9-4cc7-b16f-7ba80c105865" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Architecture.StairsRunType.TreadProfile&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="c0eb3c27-306b-6528-34ba-46086efb19bc">
+      <Execution id="f3348df7-19ec-4fd5-b1c3-32f533122719" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.CableType.ConductorMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="a7606266-b407-69c2-b261-541d99a0e6f9">
+      <Execution id="d31a670f-c1a2-4034-9eb2-e1caf8e5e02e" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Architecture.StairsRunType.NosingProfile&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="5e3cc95b-507b-f21c-23e5-24d777ab6464">
+      <Execution id="a091905e-b308-48ce-bc14-e61a314de7a6" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Architecture.StairsRunType.RiserProfile&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="cbc2bad5-83bd-7360-2013-c9b9f8c5edb2">
+      <Execution id="2174ace8-2e81-4ad1-b360-fe81096385b3" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.WireType.Insulation&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7329ca16-1cb5-b1df-e11c-324fa58c559c">
+      <Execution id="801c0a98-0b18-415c-9297-6f4f4dc325d3" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Structure.StructuralConnectionHandler.ApprovalTypeId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="98be4b2d-231b-95f0-5703-5ea6728e0182">
+      <Execution id="99343575-afc5-4aff-9f8b-a946ea02ad28" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Structure.FabricArea.TagViewId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c">
+      <Execution id="1471ed79-48c0-4244-8408-843411e55083" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="16448479-45b1-6b24-24a2-a07185393322" executionId="0223505c-fa9b-454e-9ead-4530200992ae" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98be4b2d-231b-95f0-5703-5ea6728e0182" executionId="99343575-afc5-4aff-9f8b-a946ea02ad28" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7329ca16-1cb5-b1df-e11c-324fa58c559c" executionId="801c0a98-0b18-415c-9297-6f4f4dc325d3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cbc2bad5-83bd-7360-2013-c9b9f8c5edb2" executionId="2174ace8-2e81-4ad1-b360-fe81096385b3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88fffc16-fc93-2cf8-889e-4f15909229c4" executionId="fe05fb74-873f-4ea9-8c75-28f16fe03f36" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="caead80a-adea-4d9c-49b7-f4fde2b6de94" executionId="10943834-ffce-45d1-8b62-b41335d2a289" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c3d2829-c148-64e2-fca0-d68dd8a38968" executionId="9e7d018f-cf53-4b2c-ae4d-5c79eb6cda65" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2fb7060f-9269-74f7-e460-472fcffdb173" executionId="964d8d52-c6b9-4cc7-b16f-7ba80c105865" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c0eb3c27-306b-6528-34ba-46086efb19bc" executionId="f3348df7-19ec-4fd5-b1c3-32f533122719" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a7606266-b407-69c2-b261-541d99a0e6f9" executionId="d31a670f-c1a2-4034-9eb2-e1caf8e5e02e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e3cc95b-507b-f21c-23e5-24d777ab6464" executionId="a091905e-b308-48ce-bc14-e61a314de7a6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fab03f3e-3037-6442-9fbe-e1e9b6c04f5b" executionId="d6d45e4f-e966-405b-84e6-43334477eb6a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c" executionId="1471ed79-48c0-4244-8408-843411e55083" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="52635263-4d22-3ed4-4273-cbd96238e446" executionId="50a2a7e7-443e-4c91-a6f1-e46063132294" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="14" executed="14" passed="0" failed="14" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 14]&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.NosingProfile")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.RiserProfile")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.TreadProfile")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.ConductorMaterial")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.InsulationMaterial")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.TemperatureRating")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.ElectricalSystem.CableSize")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.Insulation")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.TemperatureRating")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.WireMaterial")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Part.OriginalCategoryId")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.FabricArea.TagViewId")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.NosingProfile")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.RiserProfile")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.TreadProfile")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.ConductorMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.InsulationMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.TemperatureRating")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.ElectricalSystem.CableSize")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.Insulation")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.TemperatureRating")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.WireMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Part.OriginalCategoryId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.FabricArea.TagViewId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 14]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Analysis.MassLevelData.ConceptualConstructionId\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Architecture.StairsRunType.NosingProfile\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Architecture.StairsRunType.RiserProfile\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Architecture.StairsRunType.TreadProfile\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.CableType.ConductorMaterial\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.CableType.InsulationMaterial\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.CableType.TemperatureRating\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.ElectricalSystem.CableSize\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.WireType.Insulation\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.WireType.TemperatureRating\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.WireType.WireMaterial\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Part.OriginalCategoryId\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Structure.FabricArea.TagViewId\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Structure.StructuralConnectionHandler.ApprovalTypeId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 28086.26 	 RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")[RunDedicated]	 Failed	 Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.  NUnit.Framework.AssertionException: Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.     at NUnit.Framework.Assert.ReportFailure(String message)     at NUnit.Framework.Assert.Fail(String message, Object[] args)     at NUnit.Framework.Assert.Fail(String message)     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 190     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)     at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)     at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")] 	88fffc16-fc93-2cf8-889e-4f15909229c4&#xD;
+OutputConsole:  Revit 2026: 13.55 	 RunDedicated("Architecture.StairsRunType.NosingProfile")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Architecture.StairsRunType.NosingProfile")] 	5e3cc95b-507b-f21c-23e5-24d777ab6464&#xD;
+OutputConsole:  Revit 2026: 12.9 	 RunDedicated("Architecture.StairsRunType.RiserProfile")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Architecture.StairsRunType.RiserProfile")] 	cbc2bad5-83bd-7360-2013-c9b9f8c5edb2&#xD;
+OutputConsole:  Revit 2026: 12.89 	 RunDedicated("Architecture.StairsRunType.TreadProfile")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Architecture.StairsRunType.TreadProfile")] 	c0eb3c27-306b-6528-34ba-46086efb19bc&#xD;
+OutputConsole:  Revit 2026: 14.15 	 RunDedicated("Electrical.CableType.ConductorMaterial")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.CableType.ConductorMaterial")] 	a7606266-b407-69c2-b261-541d99a0e6f9&#xD;
+OutputConsole:  Revit 2026: 13.57 	 RunDedicated("Electrical.CableType.InsulationMaterial")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.CableType.InsulationMaterial")] 	7c3d2829-c148-64e2-fca0-d68dd8a38968&#xD;
+OutputConsole:  Revit 2026: 13.62 	 RunDedicated("Electrical.CableType.TemperatureRating")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.CableType.TemperatureRating")] 	fab03f3e-3037-6442-9fbe-e1e9b6c04f5b&#xD;
+OutputConsole:  Revit 2026: 28.93 	 RunDedicated("Electrical.ElectricalSystem.CableSize")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.ElectricalSystem.CableSize")] 	52635263-4d22-3ed4-4273-cbd96238e446&#xD;
+OutputConsole:  Revit 2026: 13.33 	 RunDedicated("Electrical.WireType.Insulation")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.WireType.Insulation")] 	7329ca16-1cb5-b1df-e11c-324fa58c559c&#xD;
+OutputConsole:  Revit 2026: 11.93 	 RunDedicated("Electrical.WireType.TemperatureRating")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.WireType.TemperatureRating")] 	caead80a-adea-4d9c-49b7-f4fde2b6de94&#xD;
+OutputConsole:  Revit 2026: 12.16 	 RunDedicated("Electrical.WireType.WireMaterial")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.WireType.WireMaterial")] 	2fb7060f-9269-74f7-e460-472fcffdb173&#xD;
+OutputConsole:  Revit 2026: 40.45 	 RunDedicated("Part.OriginalCategoryId")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Part.OriginalCategoryId")] 	16448479-45b1-6b24-24a2-a07185393322&#xD;
+OutputConsole:  Revit 2026: 79.39 	 RunDedicated("Structure.FabricArea.TagViewId")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Structure.FabricArea.TagViewId")] 	0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c&#xD;
+OutputConsole:  Revit 2026: 81.65 	 RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")[RunDedicated]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 32     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 80     at LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\DedicatedCollectionBatch.cs:line 34     at InvokeStub_DedicatedCollectionBatch.RunDedicated(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")] 	98be4b2d-231b-95f0-5703-5ea6728e0182&#xD;
+OutputConsole:  Revit 2026: 29214.8 	 SetterValidationProbe 14 False 0% 29214.8ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

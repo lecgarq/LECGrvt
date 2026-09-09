@@ -25,7 +25,7 @@ test('no receipt or test-runner success substitutes for a committed and restored
   const good = { status: 'validated', setter_attempted: true, commit_status: 'Committed', before: 1,
     desired: 2, after_commit: 2, rollback_verified: true, cleanup_verified: true, model_sha256: 'A' };
   assert.equal(receiptAttempt(good).state, 'changed_value_tested');
-  for (const patch of [{ cleanup_verified: false }, { infrastructure_failure: true }, { rollback_verified: false },
+  for (const patch of [{ classification_only: true }, { cleanup_verified: false }, { infrastructure_failure: true }, { rollback_verified: false },
     { commit_status: 'RolledBack' }, { after_commit: 1 }, { desired: 3 }, { setter_attempted: false }, { status: 'NUnit passed' }])
     assert.throws(() => receiptAttempt({ ...good, ...patch }));
   assert.equal(receiptAttempt({ status: 'rejected-with-reason', cleanup_verified: true,

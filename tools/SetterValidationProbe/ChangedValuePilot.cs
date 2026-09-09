@@ -13,13 +13,21 @@ using NUnit.Framework;
 namespace LECG.SetterValidationProbe;
 
 [NonParallelizable]
-public sealed class ChangedValuePilot
+public abstract class SetterHarness
 {
     private const string Root = @"C:\LECG\RevitAddins\LECG";
     private const string Evidence = Root + @"\docs\review\setter-validation-gate";
     private UIApplication _ui = null!;
-    private JsonDocument _manifest = null!;
-    private string _run = "", _source = "", _modelHash = "";
+    protected JsonDocument Manifest = null!;
+    protected string RunDirectory = "";
+    protected Dictionary<string, object?> LastReceipt = new();
+    protected virtual string ManifestName => "pilot-manifest.json";
+    protected virtual string PreregistrationName => "pilot-preregistration.md";
+    protected virtual string RunKind => "pilot-runs";
+    protected virtual bool PersistenceProbe => false;
+    protected virtual long? RestorationWatchId => null;
+    protected bool NoWriteControl;
+    private string _source = "", _modelHash = "";
     private bool _abort;
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
     internal static string Hash(string path) => Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(path)));
@@ -33,26 +41,24 @@ public sealed class ChangedValuePilot
         Require(Process.GetCurrentProcess().ProcessName == "Revit" && application.Application.VersionNumber == "2026"
             && Environment.Version.Major == 10, "Runner/runtime gate failed.");
         Require(application.Application.Documents.Size == 0, "Pilot refuses to run alongside any open model.");
-        _manifest = JsonDocument.Parse(File.ReadAllText(Path.Combine(Evidence, "pilot-manifest.json")));
-        var m = _manifest.RootElement;
+        Manifest = JsonDocument.Parse(File.ReadAllText(Path.Combine(Evidence, ManifestName)));
+        var m = Manifest.RootElement;
         Require(Hash(typeof(Element).Assembly.Location) == m.GetProperty("api_sha256").GetString(), "API binary changed.");
-        Require(Hash(Path.Combine(Evidence, "pilot-preregistration.md")) == m.GetProperty("preregistration_sha256").GetString(), "Preregistration changed.");
+        Require(Hash(Path.Combine(Evidence, PreregistrationName)) == m.GetProperty("preregistration_sha256").GetString(), "Preregistration changed.");
         Require(Hash(Path.Combine(Evidence, "elementid-classification.csv")) == m.GetProperty("classification_sha256").GetString(), "Classification changed.");
         var model = m.GetProperty("models").EnumerateArray().Single(x => x.GetProperty("name").GetString() == m.GetProperty("pilot_model").GetString());
-        _source = model.GetProperty("path").GetString()!;
-        _modelHash = model.GetProperty("sha256").GetString()!;
-        Require(Path.GetFullPath(_source) == @"C:\Program Files\Autodesk\Revit 2026\Samples\Snowdon Towers Sample Electrical.rvt", "Unapproved source path.");
-        Require(Hash(_source) == _modelHash, "Sample hash changed.");
-        _run = Path.Combine(Evidence, "pilot-runs", DateTime.UtcNow.ToString("yyyyMMddTHHmmss") + "-" + Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(_run);
+        UseModel(model.GetProperty("name").GetString()!);
+        RunDirectory = Path.Combine(Evidence, RunKind, DateTime.UtcNow.ToString("yyyyMMddTHHmmss") + "-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(RunDirectory);
         var binaries = new[] { typeof(Element).Assembly.Location, typeof(UIApplication).Assembly.Location,
             Assembly.GetExecutingAssembly().Location, typeof(Assert).Assembly.Location, Process.GetCurrentProcess().MainModule!.FileName };
-        File.WriteAllText(Path.Combine(_run, "provenance.json"), JsonSerializer.Serialize(new {
+        File.WriteAllText(Path.Combine(RunDirectory, "provenance.json"), JsonSerializer.Serialize(new {
             started_at = DateTime.UtcNow, revision = m.GetProperty("revision").GetString(),
             runtime = Environment.Version.ToString(), revit_build = application.Application.VersionBuild,
-            manifest_sha256 = Hash(Path.Combine(Evidence, "pilot-manifest.json")),
+            manifest_sha256 = Hash(Path.Combine(Evidence, ManifestName)),
+            project_sha256 = Hash(Path.Combine(Root, "tools/SetterValidationProbe/SetterValidationProbe.csproj")),
             protocol_amendment_sha256 = Hash(Path.Combine(Evidence, "pilot-protocol-amendment.md")),
-            model = Path.GetFileName(_source), model_sha256 = _modelHash,
+            models = m.GetProperty("models"),
             binaries = binaries.Select(p => new { path = p, sha256 = Hash(p) }),
             sources = Directory.GetFiles(Path.Combine(Root, "tools/SetterValidationProbe"), "*.cs")
                 .Select(p => new { path = p, sha256 = Hash(p) }),
@@ -60,27 +66,33 @@ public sealed class ChangedValuePilot
         }, JsonOptions));
     }
 
-    [TestCase("Electrical.CableType.ConductorMaterial")]
-    [TestCase("Material.CutBackgroundPatternId")]
-    [TestCase("TextElement.Text")]
-    [TestCase("Plumbing.PipingSystemType.FluidTemperature")]
-    [TestCase("Structure.LoadCase.Number")]
-    [TestCase("ReferencePlane.BubbleEnd")]
-    [TestCase("ViewSheetSet.IsAutomatic")]
-    [TestCase("Electrical.ElectricalSystem.CircuitConnectionType")]
-    public void RecordsChangedValueAndRestoration(string property)
+    protected void UseModel(string name)
+    {
+        var model = Manifest.RootElement.GetProperty("models").EnumerateArray().Single(m => m.GetProperty("name").GetString() == name);
+        _source = model.GetProperty("path").GetString()!;
+        _modelHash = model.GetProperty("sha256").GetString()!;
+        Require(Path.GetDirectoryName(Path.GetFullPath(_source)) == @"C:\Program Files\Autodesk\Revit 2026\Samples"
+            && Path.GetExtension(_source) == ".rvt", "Unapproved source path.");
+        Require(Hash(_source) == _modelHash, "Sample hash changed.");
+    }
+
+    protected void Record(string property)
     {
         ArgumentNullException.ThrowIfNull(property);
         Require(!_abort, "Earlier isolation failure aborted the pilot; no further document opens.");
         Require(_ui.Application.Documents.Size == 0, "Unexpected document open; refusing pilot.");
         string operation = "api.set:Autodesk.Revit.DB." + property;
-        string directory = Path.Combine(_run, property);
+        string directory = RunKind == "pilot-runs" ? Path.Combine(RunDirectory, property)
+            : Path.Combine(RunDirectory, property, Path.GetFileNameWithoutExtension(_source));
         Directory.CreateDirectory(directory);
         string copy = Path.Combine(directory, "disposable.rvt");
         var result = new Dictionary<string, object?> {
             ["operation"] = operation, ["model"] = Path.GetFileName(_source), ["model_sha256"] = _modelHash,
             ["status"] = "rejected-with-reason", ["stage"] = "opening", ["setter_attempted"] = false,
             ["copy"] = copy, ["rollback_verified"] = false, ["cleanup_verified"] = false };
+        LastReceipt = result;
+        result["classification_only"] = PersistenceProbe || NoWriteControl;
+        result["no_write_control"] = NoWriteControl;
         void Checkpoint() => File.WriteAllText(Path.Combine(directory, "checkpoint.json"), JsonSerializer.Serialize(result, JsonOptions));
         Checkpoint();
         Document? doc = null;
@@ -158,6 +170,7 @@ public sealed class ChangedValuePilot
         catch (Exception ex)
         {
             result["reason"] = Error(ex);
+            result["status"] = "rejected-with-reason";
             result["infrastructure_failure"] = true;
             _abort = true;
             throw;
@@ -188,7 +201,8 @@ public sealed class ChangedValuePilot
         result["target"] = uid;
         result["before"] = PilotValues.Snapshot(before);
         result["desired"] = PilotValues.Snapshot(desired);
-        var snapshot = State(doc, out var unobservedBefore);
+        string? watchedBefore = null, watchedAfter = null;
+        var snapshot = State(doc, out var unobservedBefore, (id, value) => { if (id == RestorationWatchId) watchedBefore = value; });
         var warnings = Warnings(doc);
         var events = new List<object>();
         void Changed(object? sender, DocumentChangedEventArgs args)
@@ -209,8 +223,18 @@ public sealed class ChangedValuePilot
             Require(transaction.Start() == TransactionStatus.Started, "Transaction did not start.");
             var failures = new RejectFailures();
             transaction.SetFailureHandlingOptions(transaction.GetFailureHandlingOptions().SetFailuresPreprocessor(failures).SetClearAfterRollback(true));
-            result["setter_attempted"] = true;
-            property.SetValue(target, desired);
+            result["setter_attempted"] = !NoWriteControl;
+            if (!NoWriteControl) property.SetValue(target, desired);
+            if (PersistenceProbe)
+            {
+                result["same_wrapper_after_set"] = property.GetValue(target);
+                result["fresh_wrapper_before_save"] = property.GetValue(doc.GetElement(uid));
+                var manager = doc.PrintManager;
+                manager.PrintRange = PrintRange.Select; // Local setting only: never Apply or SubmitPrint.
+                var setting = manager.ViewSheetSetting;
+                setting.CurrentViewSheetSet = (ViewSheetSet)target;
+                result["view_sheet_setting_save"] = setting.Save();
+            }
             doc.Regenerate();
             result["after_regenerate"] = PilotValues.Snapshot(property.GetValue(target));
             result["stage"] = "commit";
@@ -229,6 +253,12 @@ public sealed class ChangedValuePilot
                 : PilotValues.Equal(desired, after) ? "validated" : "rejected-with-reason";
             result["reason"] = PilotValues.Equal(before, after) ? "committed_but_unchanged"
                 : PilotValues.Equal(desired, after) ? null : "committed_value_does_not_match_requested_value";
+            if (PersistenceProbe)
+            {
+                result["persistence_probe_changed"] = !PilotValues.Equal(before, after) && PilotValues.Equal(desired, after);
+                result["status"] = "rejected-with-reason";
+                result["reason"] = "classification_probe_only_no_standalone_setter_credit";
+            }
         }
         catch (Exception ex) { result["reason"] = Error(ex); }
         finally
@@ -237,7 +267,9 @@ public sealed class ChangedValuePilot
             {
                 var rollback = group.RollBack();
                 result["rollback_status"] = rollback.ToString();
-                var restored = State(doc, out var unobservedAfter);
+                var restored = State(doc, out var unobservedAfter, (id, value) => { if (id == RestorationWatchId) watchedAfter = value; });
+                if (RestorationWatchId is not null)
+                    result["restoration_detail"] = new { element_id = RestorationWatchId, before = watchedBefore, after = watchedAfter };
                 long[] changedIds = snapshot.Keys.Union(restored.Keys).Where(id => snapshot.GetValueOrDefault(id) != restored.GetValueOrDefault(id)).ToArray();
                 result["restoration"] = new { before_elements = snapshot.Count, after_elements = restored.Count,
                     different_elements = changedIds, warning_set_restored = warnings == Warnings(doc),
@@ -254,7 +286,7 @@ public sealed class ChangedValuePilot
         }
     }
 
-    private static Dictionary<long, string> State(Document doc, out List<string> unobserved)
+    private static Dictionary<long, string> State(Document doc, out List<string> unobserved, Action<long, string>? observe = null)
     {
         var gaps = new List<string>();
         unobserved = gaps;
@@ -284,6 +316,7 @@ public sealed class ChangedValuePilot
         parameters.Sort(StringComparer.Ordinal);
         string text = JsonSerializer.Serialize(new { e.UniqueId, type = e.GetTypeId().Value, group = e.GroupId.Value,
             category = e.Category?.Id.Value, e.Pinned, parameters });
+        observe?.Invoke(e.Id.Value, text);
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text)));
         });
     }
@@ -304,5 +337,18 @@ public sealed class ChangedValuePilot
     }
 
     [OneTimeTearDown]
-    public void Teardown() => _manifest?.Dispose();
+    public void Teardown() => Manifest?.Dispose();
+}
+
+public sealed class ChangedValuePilot : SetterHarness
+{
+    [TestCase("Electrical.CableType.ConductorMaterial")]
+    [TestCase("Material.CutBackgroundPatternId")]
+    [TestCase("TextElement.Text")]
+    [TestCase("Plumbing.PipingSystemType.FluidTemperature")]
+    [TestCase("Structure.LoadCase.Number")]
+    [TestCase("ReferencePlane.BubbleEnd")]
+    [TestCase("ViewSheetSet.IsAutomatic")]
+    [TestCase("Electrical.ElectricalSystem.CircuitConnectionType")]
+    public void RecordsChangedValueAndRestoration(string property) => Record(property);
 }
