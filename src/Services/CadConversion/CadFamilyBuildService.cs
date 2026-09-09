@@ -4,15 +4,15 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFamilyBuildService : ICadFamilyBuildService
+    public class CadFamilyBuildService
     {
-        private readonly ICadDataDrawService _cadDataDrawService;
-        private readonly ICadFamilySaveService _familySaveService;
+        private readonly CadDataDrawService _cadDataDrawService;
+        private readonly CadFamilySaveService _familySaveService;
         private readonly ITransactionService _transactionService;
 
         public CadFamilyBuildService(
-            ICadDataDrawService cadDataDrawService,
-            ICadFamilySaveService familySaveService,
+            CadDataDrawService cadDataDrawService,
+            CadFamilySaveService familySaveService,
             ITransactionService transactionService)
         {
             _cadDataDrawService = cadDataDrawService;

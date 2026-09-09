@@ -27,7 +27,7 @@
 - Tool: coverlet.collector 6.0.2
 - Config: `LECG.Tests/LECG.Tests.csproj:19`
 - Requirements: None enforced (no explicit coverage % gates found)
-- View: `dotnet test --collect:"XPlat Code Coverage"` (inferred; not yet verified by GSD run)
+- View: `dotnet test --collect:"XPlat Code Coverage"` (inferred; not yet verified by an automated run)
 
 **Run Commands:**
 

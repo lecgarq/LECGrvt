@@ -26,7 +26,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             // 1. Initial Setup
-            var matService = ServiceLocator.GetRequiredService<IMaterialService>();
+            var matService = ServiceLocator.GetRequiredService<RenderAppearanceService>();
 
             // 2. VM & View
             var vm = ServiceLocator.GetRequiredService<RenderAppearanceViewModel>();

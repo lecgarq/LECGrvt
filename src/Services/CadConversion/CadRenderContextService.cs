@@ -3,12 +3,12 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadRenderContextService : ICadRenderContextService
+    public class CadRenderContextService
     {
-        private readonly ICadLineStyleService _lineStyleService;
-        private readonly ICadDrawingViewService _drawingViewService;
+        private readonly CadLineStyleService _lineStyleService;
+        private readonly CadDrawingViewService _drawingViewService;
 
-        public CadRenderContextService(ICadLineStyleService lineStyleService, ICadDrawingViewService drawingViewService)
+        public CadRenderContextService(CadLineStyleService lineStyleService, CadDrawingViewService drawingViewService)
         {
             _lineStyleService = lineStyleService;
             _drawingViewService = drawingViewService;

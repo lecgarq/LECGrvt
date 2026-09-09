@@ -2,7 +2,7 @@
 
 **Closed:** 2026-07-27 · **Decision:** closed as-is (gaps recorded as accepted debt in `.planning/codebase/CONCERNS.md`)
 
-Context: the milestone was planned 2026-07-05 under the GSD process, which was retired 2026-07-25. No phase was ever formally executed, but real work landed untracked (rename safety, CI/test fix, deploy guardrails, bug fixes). Verdicts below are grounded in code read directly on 2026-07-27, not phase summaries.
+Context: the milestone was planned 2026-07-05 under an earlier process that was retired 2026-07-25. No phase was ever formally executed, but real work landed untracked (rename safety, CI/test fix, deploy guardrails, bug fixes). Verdicts below are grounded in code read directly on 2026-07-27, not phase summaries.
 
 **Test suite at close:** `dotnet test -c Debug -p:SkipRevitDeploy=true` → 211 passed, 0 failed, 5 skipped (Revit-runtime tests that skip by design outside Revit).
 

@@ -1,6 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using LECG.Services;
-using LECG.Services.Interfaces;
 using LECG.ViewModels.Components;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
@@ -10,16 +8,13 @@ namespace LECG.ViewModels
 {
     public partial class AssignMaterialViewModel : BaseViewModel
     {
-        private readonly IMaterialService _service;
-
         public SelectionViewModel Selection { get; } = new SelectionViewModel();
         public List<Reference> SelectedRefs { get; private set; } = new List<Reference>();
 
         public bool CanRun => Selection.HasSelection;
 
-        public AssignMaterialViewModel(IMaterialService service)
+        public AssignMaterialViewModel()
         {
-            _service = service;
             Title = "ASSIGN MATERIAL";
             Selection.ElementName = "Elements";
 

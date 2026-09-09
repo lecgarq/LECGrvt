@@ -2,7 +2,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadTempFileCleanupService : ICadTempFileCleanupService
+    public class CadTempFileCleanupService
     {
         public void Cleanup(string path)
         {

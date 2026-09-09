@@ -29,7 +29,6 @@
     <PackageReference Include="Clipper2" Version="2.0.0" />
     <PackageReference Include="geometry3Sharp" Version="1.0.324" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
     <PackageReference Include="Roslynator.Analyzers" Version="4.15.0" PrivateAssets="all" />
     <PackageReference Include="Serilog" Version="4.2.0" />

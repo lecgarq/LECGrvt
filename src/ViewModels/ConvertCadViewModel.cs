@@ -17,7 +17,7 @@ namespace LECG.ViewModels
 {
     public partial class ConvertCadViewModel : BaseViewModel
     {
-        private readonly ICadConversionService _service;
+        private readonly CadConversionService _service;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CanRun))]
@@ -113,7 +113,7 @@ namespace LECG.ViewModels
             && !string.IsNullOrWhiteSpace(NewFamilyName)
             && !string.IsNullOrWhiteSpace(TemplatePath);
 
-        public ConvertCadViewModel(ICadConversionService service)
+        public ConvertCadViewModel(CadConversionService service)
         {
             _service = service;
             Title = "CAD TO DETAIL ITEM";

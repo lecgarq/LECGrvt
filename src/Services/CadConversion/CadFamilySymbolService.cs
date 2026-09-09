@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFamilySymbolService : ICadFamilySymbolService
+    public class CadFamilySymbolService
     {
         public FamilySymbol? GetPrimarySymbol(Document doc, Family family)
         {

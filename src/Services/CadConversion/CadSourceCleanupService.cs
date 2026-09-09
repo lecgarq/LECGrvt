@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadSourceCleanupService : ICadSourceCleanupService
+    public class CadSourceCleanupService
     {
         public void DeleteOriginalIfPresent(Document doc, ElementId deleteId)
         {

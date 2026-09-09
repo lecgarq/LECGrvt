@@ -4,22 +4,22 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadConversionService : ICadConversionService
+    public class CadConversionService
     {
-        private readonly ICadImportDataPreparationService _cadImportDataPreparationService;
-        private readonly ICadImportFamilyCreationService _cadImportFamilyCreationService;
-        private readonly ICadTempDwgExtractionService _cadTempDwgExtractionService;
-        private readonly ICadDwgFamilyCreationService _cadDwgFamilyCreationService;
-        private readonly ICadDataValidationService _cadDataValidationService;
-        private readonly ICadImportInstanceCenterService _cadImportInstanceCenterService;
+        private readonly CadImportDataPreparationService _cadImportDataPreparationService;
+        private readonly CadImportFamilyCreationService _cadImportFamilyCreationService;
+        private readonly CadTempDwgExtractionService _cadTempDwgExtractionService;
+        private readonly CadDwgFamilyCreationService _cadDwgFamilyCreationService;
+        private readonly CadDataValidationService _cadDataValidationService;
+        private readonly CadImportInstanceCenterService _cadImportInstanceCenterService;
 
         public CadConversionService(
-            ICadImportDataPreparationService cadImportDataPreparationService,
-            ICadImportFamilyCreationService cadImportFamilyCreationService,
-            ICadTempDwgExtractionService cadTempDwgExtractionService,
-            ICadDwgFamilyCreationService cadDwgFamilyCreationService,
-            ICadDataValidationService cadDataValidationService,
-            ICadImportInstanceCenterService cadImportInstanceCenterService)
+            CadImportDataPreparationService cadImportDataPreparationService,
+            CadImportFamilyCreationService cadImportFamilyCreationService,
+            CadTempDwgExtractionService cadTempDwgExtractionService,
+            CadDwgFamilyCreationService cadDwgFamilyCreationService,
+            CadDataValidationService cadDataValidationService,
+            CadImportInstanceCenterService cadImportInstanceCenterService)
         {
             _cadImportDataPreparationService = cadImportDataPreparationService;
             _cadImportFamilyCreationService = cadImportFamilyCreationService;

@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadPointFlattenService : ICadPointFlattenService
+    public class CadPointFlattenService
     {
         public XYZ Flatten(XYZ p)
         {

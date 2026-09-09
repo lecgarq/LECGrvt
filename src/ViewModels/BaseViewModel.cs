@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Input;
-using LECG.Core;
 using LECG.Validation;
 using LECG.Views.Base;
 
@@ -45,8 +44,7 @@ namespace LECG.ViewModels
 
         protected bool CanApply()
         {
-            IValidationService? validationService = ServiceLocator.GetService<IValidationService>();
-            if (validationService == null || validationService.TryValidate(this, out string message))
+            if (ValidationRules.TryValidate(this, out string message))
             {
                 return true;
             }

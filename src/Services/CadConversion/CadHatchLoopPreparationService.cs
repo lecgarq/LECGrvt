@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace LECG.Services
 {
-    public class CadHatchLoopPreparationService : ICadHatchLoopPreparationService
+    public class CadHatchLoopPreparationService
     {
-        private readonly ICadCurveFlattenService _curveFlattenService;
+        private readonly CadCurveFlattenService _curveFlattenService;
 
-        public CadHatchLoopPreparationService(ICadCurveFlattenService curveFlattenService)
+        public CadHatchLoopPreparationService(CadCurveFlattenService curveFlattenService)
         {
             _curveFlattenService = curveFlattenService;
         }

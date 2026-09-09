@@ -5,10 +5,7 @@ using LECG.Services;
 using LECG.Core.Ribbon;
 using LECG.Models;
 using LECG.Services.Logging;
-using LECG.Validation;
-using LECG.Validation.Validators;
 using MsLoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
-using FluentValidation;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace LECG.Core
@@ -64,17 +61,11 @@ namespace LECG.Core
         {
             // Core
             services.AddSingleton<MsLoggerFactory>(_ => loggerFactory);
-            services.AddSingleton<IRibbonService, RibbonService>();
+            services.AddSingleton<RibbonService>();
             services.AddSingleton<LECG.Services.Logging.ILogger, Logger>();
-            services.AddSingleton<IValidationService, ValidationService>();
             services.AddSingleton<IMemoryCache>(_ => new MemoryCache(new MemoryCacheOptions()));
-            services.AddSingleton<IAppMemoryCache, AppMemoryCache>();
             services.AddSingleton<ISelectionCoordinator, SelectionCoordinator>();
             services.AddSingleton<ITransactionService, TransactionService>();
-
-            // Keep most registrations manual. Closed-generic validator scanning is safe
-            // because implementations map 1:1 to their interfaces and lifetimes stay singleton.
-            services.AddValidatorsFromAssemblyContaining<OffsetElevationsViewModelValidator>();
 
             // Domain Services
             services.AddSingleton<SlabService>();
@@ -95,11 +86,8 @@ namespace LECG.Core
             services.AddSingleton<IMaterialPbrService, MaterialPbrService>();
             services.AddSingleton<MaterialElementGroupingService>();
             services.AddSingleton<MaterialTypeEligibilityService>();
-            services.AddSingleton<MaterialAssignmentProgressService>();
-            services.AddSingleton<MaterialElementTypeResolverService>();
             services.AddSingleton<MaterialTypeAssignmentProcessService>();
             services.AddSingleton<MaterialAssignmentExecutionService>();
-            services.AddSingleton<IMaterialService, MaterialService>();
             services.AddSingleton<PurgeDeleteElementService>();
             services.AddSingleton<LinePatternCompactionService>();
             services.AddSingleton<FillPatternCompactionService>();
@@ -112,7 +100,6 @@ namespace LECG.Core
             services.AddSingleton<PurgeLevelService>();
             services.AddSingleton<PurgeExtendedElementService>();
             services.AddSingleton<PurgeParameterService>();
-            services.AddSingleton<PurgePassSequenceService>();
             services.AddSingleton<PurgePassExecutionService>();
             services.AddSingleton<DeepPurgeService>();
             services.AddSingleton<PurgeService>();
@@ -129,7 +116,7 @@ namespace LECG.Core
             services.AddSingleton<FamilyGeometryCollectionService>();
             services.AddSingleton<FamilyTempFileCleanupService>();
             services.AddSingleton<FamilyConversionFinalizeService>();
-            services.AddSingleton<IFamilyLoadOptionsFactory, FamilyLoadOptionsFactory>();
+            services.AddSingleton<FamilyLoadOptionsFactory>();
             services.AddSingleton<FamilyParameterSetupService>();
             services.AddSingleton<FamilyConversionLoggingService>();
             services.AddSingleton<FamilySourceDocumentService>();
@@ -156,41 +143,41 @@ namespace LECG.Core
             services.AddSingleton<SimplifyPointsService>();
             services.AddSingleton<FixPointsService>();
             services.AddSingleton<AlignElementsService>();
-            services.AddSingleton<ICadPlacementViewService, CadPlacementViewService>();
-            services.AddSingleton<ICadFamilySymbolService, CadFamilySymbolService>();
-            services.AddSingleton<ICadFamilyLoadResolveService, CadFamilyLoadResolveService>();
-            services.AddSingleton<ICadFamilyInstancePlacementService, CadFamilyInstancePlacementService>();
-            services.AddSingleton<ICadLineStyleService, CadLineStyleService>();
-            services.AddSingleton<ICadLineMergeService, CadLineMergeService>();
-            services.AddSingleton<ICadPointFlattenService, CadPointFlattenService>();
-            services.AddSingleton<ICadDoubleArrayConversionService, CadDoubleArrayConversionService>();
-            services.AddSingleton<ICadCurveTessellationService, CadCurveTessellationService>();
-            services.AddSingleton<ICadSplineFlattenService, CadSplineFlattenService>();
-            services.AddSingleton<ICadCurveFlattenService, CadCurveFlattenService>();
-            services.AddSingleton<ICadFilledRegionTypeService, CadFilledRegionTypeService>();
-            services.AddSingleton<ICadFamilyLoadPlacementService, CadFamilyLoadPlacementService>();
-            services.AddSingleton<ICadTempFileCleanupService, CadTempFileCleanupService>();
-            services.AddSingleton<ICadSolidHatchExtractionService, CadSolidHatchExtractionService>();
-            services.AddSingleton<ICadPolylineExtractionService, CadPolylineExtractionService>();
-            services.AddSingleton<ICadGeometryExtractionService, CadGeometryExtractionService>();
-            services.AddSingleton<ICadGeometryOptimizationService, CadGeometryOptimizationService>();
-            services.AddSingleton<ICadImportDataPreparationService, CadImportDataPreparationService>();
-            services.AddSingleton<ICadImportFamilyCreationService, CadImportFamilyCreationService>();
-            services.AddSingleton<ICadDataValidationService, CadDataValidationService>();
-            services.AddSingleton<ICadImportInstanceCenterService, CadImportInstanceCenterService>();
-            services.AddSingleton<ICadDrawingViewService, CadDrawingViewService>();
-            services.AddSingleton<ICadSourceCleanupService, CadSourceCleanupService>();
-            services.AddSingleton<ICadRenderContextService, CadRenderContextService>();
-            services.AddSingleton<ICadCurveRenderService, CadCurveRenderService>();
-            services.AddSingleton<ICadHatchProgressService, CadHatchProgressService>();
-            services.AddSingleton<ICadHatchLoopPreparationService, CadHatchLoopPreparationService>();
-            services.AddSingleton<ICadHatchRenderService, CadHatchRenderService>();
-            services.AddSingleton<ICadDataDrawService, CadDataDrawService>();
-            services.AddSingleton<ICadFamilySaveService, CadFamilySaveService>();
-            services.AddSingleton<ICadTempDwgExtractionService, CadTempDwgExtractionService>();
-            services.AddSingleton<ICadFamilyBuildService, CadFamilyBuildService>();
-            services.AddSingleton<ICadDwgFamilyCreationService, CadDwgFamilyCreationService>();
-            services.AddSingleton<ICadConversionService, CadConversionService>();
+            services.AddSingleton<CadPlacementViewService>();
+            services.AddSingleton<CadFamilySymbolService>();
+            services.AddSingleton<CadFamilyLoadResolveService>();
+            services.AddSingleton<CadFamilyInstancePlacementService>();
+            services.AddSingleton<CadLineStyleService>();
+            services.AddSingleton<CadLineMergeService>();
+            services.AddSingleton<CadPointFlattenService>();
+            services.AddSingleton<CadDoubleArrayConversionService>();
+            services.AddSingleton<CadCurveTessellationService>();
+            services.AddSingleton<CadSplineFlattenService>();
+            services.AddSingleton<CadCurveFlattenService>();
+            services.AddSingleton<CadFilledRegionTypeService>();
+            services.AddSingleton<CadFamilyLoadPlacementService>();
+            services.AddSingleton<CadTempFileCleanupService>();
+            services.AddSingleton<CadSolidHatchExtractionService>();
+            services.AddSingleton<CadPolylineExtractionService>();
+            services.AddSingleton<CadGeometryExtractionService>();
+            services.AddSingleton<CadGeometryOptimizationService>();
+            services.AddSingleton<CadImportDataPreparationService>();
+            services.AddSingleton<CadImportFamilyCreationService>();
+            services.AddSingleton<CadDataValidationService>();
+            services.AddSingleton<CadImportInstanceCenterService>();
+            services.AddSingleton<CadDrawingViewService>();
+            services.AddSingleton<CadSourceCleanupService>();
+            services.AddSingleton<CadRenderContextService>();
+            services.AddSingleton<CadCurveRenderService>();
+            services.AddSingleton<CadHatchProgressService>();
+            services.AddSingleton<CadHatchLoopPreparationService>();
+            services.AddSingleton<CadHatchRenderService>();
+            services.AddSingleton<CadDataDrawService>();
+            services.AddSingleton<CadFamilySaveService>();
+            services.AddSingleton<CadTempDwgExtractionService>();
+            services.AddSingleton<CadFamilyBuildService>();
+            services.AddSingleton<CadDwgFamilyCreationService>();
+            services.AddSingleton<CadConversionService>();
             services.AddSingleton<FamilyEditorService>();
             services.AddSingleton<ISharedToFamilyParameterService, SharedToFamilyParameterService>();
             services.AddSingleton<ConversionService>();

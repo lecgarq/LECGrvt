@@ -35,7 +35,7 @@ namespace LECG.Commands
 
             var service = ServiceLocator.GetRequiredService<ISharedToFamilyParameterService>();
 
-            List<Family> families = ResolveTargetFamilies(uiDoc, doc);
+            List<Family>? families = ResolveTargetFamilies(uiDoc, doc);
             if (families == null)
             {
                 // User cancelled selection.

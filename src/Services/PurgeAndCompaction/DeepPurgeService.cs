@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using LECG.Core;
+using LECG.Core.Purge;
 using LECG.Services.Interfaces;
 using RevitExceptions = Autodesk.Revit.Exceptions;
 
@@ -10,16 +11,13 @@ namespace LECG.Services
 {
     public class DeepPurgeService
     {
-        private readonly PurgePassSequenceService _purgePassSequenceService;
         private readonly ITransactionService _transactionService;
-        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly FamilyLoadOptionsFactory _familyLoadOptionsFactory;
 
         public DeepPurgeService(
-            PurgePassSequenceService purgePassSequenceService,
             ITransactionService transactionService,
-            IFamilyLoadOptionsFactory familyLoadOptionsFactory)
+            FamilyLoadOptionsFactory familyLoadOptionsFactory)
         {
-            _purgePassSequenceService = purgePassSequenceService;
             _transactionService = transactionService;
             _familyLoadOptionsFactory = familyLoadOptionsFactory;
         }
@@ -173,7 +171,7 @@ namespace LECG.Services
         {
             int totalDeleted = 0;
 
-            foreach (int passNumber in _purgePassSequenceService.GetPasses(passCount))
+            foreach (int passNumber in PurgeSequence.GetPasses(passCount))
             {
                 reportPass(passNumber);
                 int deletedThisPass = 0;

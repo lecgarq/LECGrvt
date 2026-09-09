@@ -53,7 +53,6 @@ Active milestone planning no longer lives in this document. Use `.planning/ROADM
 
 - `docs/review/` is the maintained architecture and operations review set.
 - `.planning/` is the live roadmap, requirements, and session-state source.
-- Legacy `.gsd` project state is compatibility-only and not an active planning authority.
 
 ## Final CI Decision
 

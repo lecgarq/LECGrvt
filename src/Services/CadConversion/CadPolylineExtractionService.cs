@@ -6,7 +6,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class CadPolylineExtractionService : ICadPolylineExtractionService
+    public class CadPolylineExtractionService
     {
         private readonly ILogger _logger;
 

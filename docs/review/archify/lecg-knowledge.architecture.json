@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "LECG Plugin Knowledge Map",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/lecgarq/LECGrvt",
+      "revision": "d3a105199a04aa7295b634dba829397b805cd18e",
+      "provider": "github"
+    },
+    "viewBox": [1390, 760]
+  },
+  "layout": { "mode": "grid", "origin": [50, 70], "cols": 4, "gapX": 130, "gapY": 155, "cellW": 230, "cellH": 84 },
+  "components": [
+    { "id": "lecg-plugin", "type": "backend", "label": "LECG Plugin", "sublabel": "Revit 2026 / C#", "size": [230, 84], "row": 1, "col": 0, "sources": [{ "path": "src/App.cs", "label": "Main add-in entrypoint" }, { "path": "LECG.csproj", "label": "Main build and deployment" }] },
+    { "id": "bim-tools", "type": "backend", "label": "BIM Toolset", "sublabel": "Rename / clean / materials", "size": [230, 84], "row": 1, "col": 1, "sources": [{ "path": "src/Core/Ribbon/RibbonService.cs", "label": "Available ribbon commands" }, { "path": "src/Core/Bootstrapper.cs", "label": "Registered services" }] },
+    { "id": "agent-knowledge", "type": "backend", "label": "Copilot & MCP", "sublabel": "Discovery / batch / approvals", "size": [230, 84], "row": 1, "col": 2, "sources": [{ "path": "RevitCopilot/Agent/CapabilityCatalog.cs", "label": "Executable operation contracts" }, { "path": "RevitCopilot/McpServer/AgentTools.cs", "label": "Agent tool entrypoints" }, { "path": "RevitCopilot/RevitCopilot.csproj", "label": "Explicit native service reuse" }] },
+    { "id": "assurance", "type": "security", "label": "Validation", "sublabel": "Preview / rollback / receipts", "size": [230, 84], "row": 1, "col": 3, "sources": [{ "path": "RevitCopilot/Revit/ToolExecutor.Changes.cs", "label": "Production change controls" }, { "path": "RevitCopilot/Agent/ApiValidationEvidence.cs", "label": "API validation evidence" }] },
+    { "id": "experience", "type": "frontend", "label": "Interface & Brand", "sublabel": "Ribbon / WPF / icons", "size": [230, 84], "row": 0, "col": 0, "sources": [{ "path": "src/Resources/Themes/LecgTheme.xaml", "label": "Shared visual theme" }, { "path": "RevitCopilot/UI/DockablePanel.xaml", "label": "Copilot panel" }, { "path": "docs/review/LECG-icon-system.md", "label": "Icon system contract" }] },
+    { "id": "platform", "type": "backend", "label": "Core Infrastructure", "sublabel": "Selection / jobs / logging", "size": [230, 84], "row": 2, "col": 0, "sources": [{ "path": "src/Core/RevitIdlingRunner.cs", "label": "Revit job execution" }, { "path": "src/Core/SelectionCoordinator.cs", "label": "Shared selection" }, { "path": "src/Services/Infrastructure/TransactionService.cs", "label": "Transaction helper" }] },
+    { "id": "terrain", "type": "backend", "label": "Terrain & Alignment", "sublabel": "Toposolids / slabs / edges", "size": [230, 84], "row": 0, "col": 1, "sources": [{ "path": "src/Services/Topography/ToposolidService.cs", "label": "Toposolid services" }, { "path": "src/Services/Alignment/AlignEdgesService.cs", "label": "Edge alignment" }, { "path": "src/Services/Topography/SlabService.cs", "label": "Slab operations" }] },
+    { "id": "families-cad", "type": "backend", "label": "Families & CAD", "sublabel": "Conversion / parameters / DWG", "size": [230, 84], "row": 2, "col": 1, "sources": [{ "path": "src/Services/FamilyConversion/FamilyConversionService.cs", "label": "Family conversion" }, { "path": "src/Services/FamilyConversion/FamilyEditorService.cs", "label": "Family editor services" }, { "path": "src/Services/CadConversion/CadConversionService.cs", "label": "CAD conversion" }] },
+    { "id": "api-reference", "type": "database", "label": "API Knowledge", "sublabel": "References / property bindings", "size": [230, 84], "row": 0, "col": 2, "sources": [{ "path": "RevitCopilot/Agent/KnowledgeLibrary.cs", "label": "Bounded reference retrieval" }, { "path": "RevitCopilot/Agent/RevitApiCatalog.cs", "label": "Executable property bindings" }, { "path": "docs/review/RevitCopilot-Validation-Release.md", "label": "Coverage and execution limits" }] },
+    { "id": "procedures", "type": "database", "label": "Recipes & Sessions", "sublabel": "Shared steps / project history", "size": [230, 84], "row": 2, "col": 2, "sources": [{ "path": "RevitCopilot/Agent/WorkflowLibrary.cs", "label": "Reusable recipe library" }, { "path": "RevitCopilot/Services/ProjectConversationStore.cs", "label": "Project conversation storage" }, { "path": "RevitCopilot/Agent/AgentBatch.cs", "label": "Batch argument contracts" }] },
+    { "id": "tests", "type": "security", "label": "Tests & Coverage", "sublabel": "Unit / scratch / sample suites", "size": [230, 84], "row": 0, "col": 3, "sources": [{ "path": "LECG.Tests/LECG.Tests.csproj", "label": "Main add-in tests" }, { "path": "RevitCopilot/Tests/SampleBenchmark.cs", "label": "Autodesk sample harness" }, { "path": "RevitCopilot/Tests/ConnectionTests/Program.cs", "label": "Offline and connection checks" }] },
+    { "id": "handoff", "type": "database", "label": "Docs & Delivery", "sublabel": "Decisions / builds / recovery", "size": [230, 84], "row": 2, "col": 3, "sources": [{ "path": "docs/review/README.md", "label": "Engineering documentation" }, { "path": "docs/review/RevitCopilot-Combined-Deployment.md", "label": "Combined installation" }, { "path": "docs/review/RevitCopilot-Validation-Release.md", "label": "Dated validation report" }] }
+  ],
+  "connections": [
+    { "id": "organize-tools", "from": "lecg-plugin", "to": "bim-tools", "label": "organizes", "variant": "emphasis" },
+    { "id": "reuse-subset", "from": "bim-tools", "to": "agent-knowledge", "label": "subset reused", "variant": "emphasis" },
+    { "id": "change-controls", "from": "agent-knowledge", "to": "assurance", "label": "change checks", "variant": "security" },
+    { "id": "plugin-ui", "from": "lecg-plugin", "to": "experience", "label": "presents" },
+    { "id": "plugin-core", "from": "lecg-plugin", "to": "platform", "label": "runs on", "labelDy": 24 },
+    { "id": "tool-terrain", "from": "bim-tools", "to": "terrain", "label": "includes" },
+    { "id": "tool-family", "from": "bim-tools", "to": "families-cad", "label": "includes", "labelDy": 24 },
+    { "id": "agent-reference", "from": "agent-knowledge", "to": "api-reference", "label": "retrieves" },
+    { "id": "agent-recipes", "from": "agent-knowledge", "to": "procedures", "label": "reuses steps", "labelDy": 24 },
+    { "id": "validation-tests", "from": "assurance", "to": "tests", "label": "tested by" },
+    { "id": "validation-record", "from": "assurance", "to": "handoff", "label": "documented in", "labelDy": 24 }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Find the knowledge", "items": ["Select SRC for revision-pinned code and documentation.", "A knowledge overview, not a complete runtime call graph."] },
+    { "dot": "emerald", "title": "Reuse across projects", "items": ["Procedures are shared; project inputs must be resolved again.", "References and recipes are distinct from executable tools."] },
+    { "dot": "amber", "title": "Read the evidence", "items": ["Source links describe commit d3a1051; reports are dated.", "Sample passes do not certify every Revit context."] }
+  ]
+}

@@ -80,8 +80,7 @@ namespace LECG.Services
 
         private static bool TryValidateSettings<T>(T settings, string fileName)
         {
-            IValidationService? validationService = ServiceLocator.GetService<IValidationService>();
-            if (validationService == null || validationService.TryValidate(settings!, out string message))
+            if (ValidationRules.TryValidate(settings!, out string message))
             {
                 return true;
             }

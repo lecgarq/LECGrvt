@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFilledRegionTypeService : ICadFilledRegionTypeService
+    public class CadFilledRegionTypeService
     {
         public FilledRegionType? GetOrCreateFilledRegionType(Document doc, Color color)
         {

@@ -5,16 +5,16 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadDataDrawService : ICadDataDrawService
+    public class CadDataDrawService
     {
-        private readonly ICadRenderContextService _renderContextService;
-        private readonly ICadCurveRenderService _curveRenderService;
-        private readonly ICadHatchRenderService _hatchRenderService;
+        private readonly CadRenderContextService _renderContextService;
+        private readonly CadCurveRenderService _curveRenderService;
+        private readonly CadHatchRenderService _hatchRenderService;
 
         public CadDataDrawService(
-            ICadRenderContextService renderContextService,
-            ICadCurveRenderService curveRenderService,
-            ICadHatchRenderService hatchRenderService)
+            CadRenderContextService renderContextService,
+            CadCurveRenderService curveRenderService,
+            CadHatchRenderService hatchRenderService)
         {
             _renderContextService = renderContextService;
             _curveRenderService = curveRenderService;

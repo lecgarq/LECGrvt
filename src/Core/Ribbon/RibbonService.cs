@@ -6,7 +6,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Core.Ribbon
 {
-    public class RibbonService : IRibbonService
+    public class RibbonService
     {
         public void InitializeRibbon(UIControlledApplication app)
         {

@@ -24,7 +24,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(doc);
 
             // 1. Resolve Service
-            var service = ServiceLocator.GetRequiredService<IMaterialService>();
+            var service = ServiceLocator.GetRequiredService<MaterialAssignmentExecutionService>();
 
             // 2. Initialize VM & View
             var vm = ServiceLocator.GetRequiredService<AssignMaterialViewModel>();

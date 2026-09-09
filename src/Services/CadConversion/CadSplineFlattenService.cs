@@ -5,16 +5,16 @@ using System.Linq;
 
 namespace LECG.Services
 {
-    public class CadSplineFlattenService : ICadSplineFlattenService
+    public class CadSplineFlattenService
     {
-        private readonly ICadCurveTessellationService _cadCurveTessellationService;
-        private readonly ICadPointFlattenService _cadPointFlattenService;
-        private readonly ICadDoubleArrayConversionService _cadDoubleArrayConversionService;
+        private readonly CadCurveTessellationService _cadCurveTessellationService;
+        private readonly CadPointFlattenService _cadPointFlattenService;
+        private readonly CadDoubleArrayConversionService _cadDoubleArrayConversionService;
 
         public CadSplineFlattenService(
-            ICadCurveTessellationService cadCurveTessellationService,
-            ICadPointFlattenService cadPointFlattenService,
-            ICadDoubleArrayConversionService cadDoubleArrayConversionService)
+            CadCurveTessellationService cadCurveTessellationService,
+            CadPointFlattenService cadPointFlattenService,
+            CadDoubleArrayConversionService cadDoubleArrayConversionService)
         {
             _cadCurveTessellationService = cadCurveTessellationService;
             _cadPointFlattenService = cadPointFlattenService;

@@ -3,7 +3,7 @@ using System;
 
 namespace LECG.Services
 {
-    public class CadHatchProgressService : ICadHatchProgressService
+    public class CadHatchProgressService
     {
         public bool ShouldReport(int total, int current)
         {

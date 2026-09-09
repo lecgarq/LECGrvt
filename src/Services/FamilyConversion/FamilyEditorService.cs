@@ -11,12 +11,12 @@ namespace LECG.Services
 {
     public class FamilyEditorService
     {
-        private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
+        private readonly FamilyLoadOptionsFactory _loadOptionsFactory;
         private readonly ITransactionService _transactionService;
         private readonly ILogger _logger;
 
         public FamilyEditorService(
-            IFamilyLoadOptionsFactory loadOptionsFactory,
+            FamilyLoadOptionsFactory loadOptionsFactory,
             ITransactionService transactionService,
             ILogger logger)
         {

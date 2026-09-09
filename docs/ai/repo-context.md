@@ -1,7 +1,7 @@
 # Repo Context
 
-> Maintained by GSD runs. Stable repo knowledge — corrected whenever the code proves it wrong. Current code beats this file.
-> Seeded 2026-07-04 by a GSD protocol smoke test (see gsd-log.md).
+> Stable repository knowledge — corrected whenever the code proves it wrong. Current code beats this file.
+> Seeded 2026-07-04 from a documentation and protocol review.
 
 ## Product Summary
 
@@ -41,7 +41,7 @@ Services own Revit API work; `src/Services/` with `Services/Interfaces/` and `Se
 
 ## Build / Validation Commands
 
-- Build (agent-safe, DEFAULT for validation): `dotnet build -p:SkipRevitDeploy=true` — verified 2026-07-04 (twice, incl. this stabilization run): succeeded, 0 warnings/0 errors, all 3 projects, no deploy step ran. Future GSD runs must use this as the default validation build unless repo evidence later proves otherwise.
+- Build (agent-safe, DEFAULT for validation): `dotnet build -p:SkipRevitDeploy=true` — verified 2026-07-04 (twice, incl. this stabilization run): succeeded, 0 warnings/0 errors, all 3 projects, no deploy step ran. Future validation runs must use this as the default unless repository evidence later proves otherwise.
 - Build (deploying — AVOID unless deployment is explicitly requested): plain `dotnet build` also copies DLLs into the live Revit 2026 addins folder — see Concerns.
 - `AGENTS.md:7` documents `dotnet build` as the standard per-step validation.
 - Tests (sanctioned invocation, validated 2026-07-27): `dotnet test -c Debug -p:SkipRevitDeploy=true` — 234 passed / 0 failed / 5 skipped (2026-08-18, after batch-rename-ux phase 1) (the skips are Revit-runtime tests that skip by design outside Revit). The flag is mandatory whenever Revit is open: `dotnet test` builds LECG.csproj, which triggers `DeployToRevit`, and the copy fails with MSB3027 because Revit locks the deployed DLLs.
@@ -87,7 +87,7 @@ Services own Revit API work; `src/Services/` with `Services/Interfaces/` and `Se
 
 ### Runtime Validation
 - [Observed] (scope: startup/ribbon only — NOT commands) LECG loads in actual Revit 2026: external application `LECG.App` starts successfully and the full ribbon (all panels/pushbuttons) registers, loading from the machine-wide ProgramData install.
-  - Evidence: Revit journal `journal.0879.txt` (user session 2026-07-04 22:12–22:15, DLL deployed 2026-07-02): `API_SUCCESS { Starting External Application: LECG, Class: LECG.App, ... Assembly Version: 0.1.1.0 }` + per-button `API_SUCCESS` entries; clean session shutdown. Details: `docs/ai/revit-smoke-test.md` Run History; `docs/ai/gsd-log.md` 2026-07-04 runtime pass.
+  - Evidence: Revit journal `journal.0879.txt` (user session 2026-07-04 22:12–22:15, DLL deployed 2026-07-02): `API_SUCCESS { Starting External Application: LECG, Class: LECG.App, ... Assembly Version: 0.1.1.0 }` + per-button `API_SUCCESS` entries; clean session shutdown. Details: `docs/ai/revit-smoke-test.md` Run History.
   - Why it matters: confirms the add-in loads and the ribbon builds in actual Revit, not only at compile time — and proves the ProgramData manifest is the one Revit reads.
   - Preserve by: future runtime claims must name the Revit version, command tested, document context, and smoke-test result. This entry covers startup/ribbon ONLY — no LECG command has ever been runtime-validated (journal shows none executed); do not generalize.
 

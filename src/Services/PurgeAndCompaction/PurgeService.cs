@@ -17,7 +17,6 @@ namespace LECG.Services
         private readonly PurgeFillPatternService _purgeFillPatternService;
         private readonly PurgeLevelService _purgeLevelService;
         private readonly PurgeParameterService _purgeParameterService;
-        private readonly PurgePassSequenceService _purgePassSequenceService;
         private readonly PurgePassExecutionService _purgePassExecutionService;
         private readonly ITransactionService _transactionService;
 
@@ -28,7 +27,6 @@ namespace LECG.Services
             PurgeFillPatternService purgeFillPatternService,
             PurgeLevelService purgeLevelService,
             PurgeParameterService purgeParameterService,
-            PurgePassSequenceService purgePassSequenceService,
             PurgePassExecutionService purgePassExecutionService,
             ITransactionService transactionService)
         {
@@ -38,7 +36,6 @@ namespace LECG.Services
             _purgeFillPatternService = purgeFillPatternService;
             _purgeLevelService = purgeLevelService;
             _purgeParameterService = purgeParameterService;
-            _purgePassSequenceService = purgePassSequenceService;
             _purgePassExecutionService = purgePassExecutionService;
             _transactionService = transactionService;
         }
@@ -65,7 +62,7 @@ namespace LECG.Services
 
             // Use one transaction per pass to reduce memory pressure on large models.
             var failureHandler = new SafeFailureHandler();
-            foreach (int i in _purgePassSequenceService.GetPasses(passCount))
+            foreach (int i in PurgeSequence.GetPasses(passCount))
             {
                 _transactionService.RunWithWarningHandler(doc, $"Purge Unused Elements - Pass {i + 1}", currentDoc =>
                 {

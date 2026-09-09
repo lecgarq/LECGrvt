@@ -5,13 +5,13 @@ using System;
 
 namespace LECG.Services
 {
-    public class CadImportDataPreparationService : ICadImportDataPreparationService
+    public class CadImportDataPreparationService
     {
-        private readonly ICadGeometryExtractionService _geometryExtractionService;
-        private readonly ICadGeometryOptimizationService _geometryOptimizationService;
-        private readonly ICadDataValidationService _cadDataValidationService;
+        private readonly CadGeometryExtractionService _geometryExtractionService;
+        private readonly CadGeometryOptimizationService _geometryOptimizationService;
+        private readonly CadDataValidationService _cadDataValidationService;
 
-        public CadImportDataPreparationService(ICadGeometryExtractionService geometryExtractionService, ICadGeometryOptimizationService geometryOptimizationService, ICadDataValidationService cadDataValidationService)
+        public CadImportDataPreparationService(CadGeometryExtractionService geometryExtractionService, CadGeometryOptimizationService geometryOptimizationService, CadDataValidationService cadDataValidationService)
         {
             _geometryExtractionService = geometryExtractionService;
             _geometryOptimizationService = geometryOptimizationService;

@@ -1,9 +1,8 @@
 using Autodesk.Revit.DB;
-using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class FamilyLoadOptionsFactory : IFamilyLoadOptionsFactory
+    public class FamilyLoadOptionsFactory
     {
         public IFamilyLoadOptions Create(bool overwriteParameterValues = true)
         {

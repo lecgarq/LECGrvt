@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadLineStyleService : ICadLineStyleService
+    public class CadLineStyleService
     {
         public GraphicsStyle CreateOrUpdateDetailLineStyle(Document familyDoc, string styleName, Color color, int weight)
         {

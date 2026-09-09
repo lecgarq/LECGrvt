@@ -8,12 +8,12 @@ namespace LECG.Services
 {
     public class FamilyProjectLoadService
     {
-        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly FamilyLoadOptionsFactory _familyLoadOptionsFactory;
         private readonly ITransactionService _transactionService;
         private readonly ILogger _logger;
 
         public FamilyProjectLoadService(
-            IFamilyLoadOptionsFactory familyLoadOptionsFactory,
+            FamilyLoadOptionsFactory familyLoadOptionsFactory,
             ITransactionService transactionService,
             ILogger logger)
         {

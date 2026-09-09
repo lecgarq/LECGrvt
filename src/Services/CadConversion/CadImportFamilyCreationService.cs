@@ -4,12 +4,12 @@ using System;
 
 namespace LECG.Services
 {
-    public class CadImportFamilyCreationService : ICadImportFamilyCreationService
+    public class CadImportFamilyCreationService
     {
-        private readonly ICadFamilyBuildService _cadFamilyBuildService;
-        private readonly ICadFamilyLoadPlacementService _familyLoadPlacementService;
+        private readonly CadFamilyBuildService _cadFamilyBuildService;
+        private readonly CadFamilyLoadPlacementService _familyLoadPlacementService;
 
-        public CadImportFamilyCreationService(ICadFamilyBuildService cadFamilyBuildService, ICadFamilyLoadPlacementService familyLoadPlacementService)
+        public CadImportFamilyCreationService(CadFamilyBuildService cadFamilyBuildService, CadFamilyLoadPlacementService familyLoadPlacementService)
         {
             _cadFamilyBuildService = cadFamilyBuildService;
             _familyLoadPlacementService = familyLoadPlacementService;

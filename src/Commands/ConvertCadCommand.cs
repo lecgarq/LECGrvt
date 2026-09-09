@@ -4,6 +4,7 @@ using Autodesk.Revit.UI;
 using LECG.Core;
 using LECG.Services;
 using LECG.Services.Interfaces;
+using LECG.Services.Logging;
 using LECG.ViewModels;
 using LECG.Views;
 using System;
@@ -19,12 +20,12 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var service = ServiceLocator.GetRequiredService<ICadConversionService>();
+            var service = ServiceLocator.GetRequiredService<CadConversionService>();
             var transactionService = ServiceLocator.GetRequiredService<ITransactionService>();
             var viewModel = ServiceLocator.GetRequiredService<ConvertCadViewModel>();
 
             ConvertCadEventHandler handler = GetOrCreateHandler();
-            handler.Initialize(viewModel, service, transactionService);
+            handler.Initialize(viewModel, service, transactionService, _logger);
 
             // Initialize ViewModel with Selection
             foreach (Element preselectedElement in SelectionSeedHelper.GetSelectedElements(uiDoc, null))
@@ -62,15 +63,17 @@ namespace LECG.Commands
     public class ConvertCadEventHandler : IExternalEventHandler
     {
         private ConvertCadViewModel? _viewModel;
-        private ICadConversionService? _service;
+        private CadConversionService? _service;
         private ITransactionService? _transactionService;
+        private ILogger? _logger;
         private CadOpType _requestedOp = CadOpType.None;
 
-        public void Initialize(ConvertCadViewModel vm, ICadConversionService svc, ITransactionService transactionService)
+        public void Initialize(ConvertCadViewModel vm, CadConversionService svc, ITransactionService transactionService, ILogger logger)
         {
             _viewModel = vm;
             _service = svc;
             _transactionService = transactionService;
+            _logger = logger;
         }
 
         public void RequestOperation(CadOpType op) => _requestedOp = op;
@@ -79,7 +82,7 @@ namespace LECG.Commands
         {
             ArgumentNullException.ThrowIfNull(app);
 
-            if (_viewModel == null || _service == null || _transactionService == null || _requestedOp == CadOpType.None)
+            if (_viewModel == null || _service == null || _transactionService == null || _logger == null || _requestedOp == CadOpType.None)
             {
                 return;
             }
@@ -111,7 +114,7 @@ namespace LECG.Commands
             }
         }
 
-        private void RunConversion(Document doc, ConvertCadViewModel viewModel, ICadConversionService service)
+        private void RunConversion(Document doc, ConvertCadViewModel viewModel, CadConversionService service)
         {
             viewModel.AddLog("Starting conversion...");
             viewModel.Progress = 0;
@@ -120,12 +123,12 @@ namespace LECG.Commands
             var mColor = viewModel.LineColor;
             var rColor = new Autodesk.Revit.DB.Color(mColor.R, mColor.G, mColor.B);
             ElementId createdId = ElementId.InvalidElementId;
-            var reporter = new SimpleProgressReporter(report =>
+            var reporter = new RevitCommandProgressReporter(_logger!, (percentage, message) =>
             {
-                viewModel.Progress = report.Percentage;
-                if (!string.IsNullOrWhiteSpace(report.Message))
+                viewModel.Progress = percentage;
+                if (!string.IsNullOrWhiteSpace(message))
                 {
-                    viewModel.AddLog(report.Message);
+                    viewModel.AddLog(message);
                 }
             });
 

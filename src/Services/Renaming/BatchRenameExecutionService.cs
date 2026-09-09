@@ -13,10 +13,10 @@ namespace LECG.Services
     public class BatchRenameExecutionService : IBatchRenameExecutionService
     {
         private readonly ITransactionService _transactionService;
-        private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
+        private readonly FamilyLoadOptionsFactory _loadOptionsFactory;
         private readonly IFormulaUpdateService _formulaUpdateService;
 
-        public BatchRenameExecutionService(ITransactionService transactionService, IFamilyLoadOptionsFactory loadOptionsFactory, IFormulaUpdateService formulaUpdateService)
+        public BatchRenameExecutionService(ITransactionService transactionService, FamilyLoadOptionsFactory loadOptionsFactory, IFormulaUpdateService formulaUpdateService)
         {
             _transactionService = transactionService;
             _loadOptionsFactory = loadOptionsFactory;

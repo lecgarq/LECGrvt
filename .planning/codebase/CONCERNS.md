@@ -4,7 +4,7 @@
 
 ## Accepted debt (v1.0 hardening closed as-is, 2026-07-27)
 
-The v1.0 hardening milestone was closed with 16 of 32 requirements unmet and 9 partial. Its planning process (GSD) was retired mid-milestone; rename safety, the CI/test fix, deploy guardrails, and the CategoryChanger error message shipped, the rest is accepted debt. Accepted because the milestone tracking was stale, the suite is green (211 tests), and remaining items are better re-scoped into future milestones than executed from a dead roadmap. Outstanding, in the audit's wording:
+The v1.0 hardening milestone was closed with 16 of 32 requirements unmet and 9 partial. Its earlier planning process was retired mid-milestone; rename safety, the CI/test fix, deploy guardrails, and the CategoryChanger error message shipped, and the rest is accepted debt. The remaining items are better re-scoped into future milestones than executed from a stale roadmap. Outstanding, in the audit's wording:
 
 - **Reentrancy:** no `ExternalEvent.IsPending` guard in `ExternalEventCommand` (`src/Core/ExternalEventCommand.cs:19-27`); static handler lifecycle undocumented.
 - **Error handling:** no `LogAndIgnore` helper; 31 silent catch blocks remain across 20 files (down from 54); both temp-file cleanup services still swallow deletion failures; no CA1031/RCS1075 analyzers.
@@ -259,7 +259,7 @@ Audit: `.planning/archive/warnings-review/AUDIT.md`. 6 of 8 requirements met, 2 
 
 - [Open] **Linked model transform conventions:** How are coordinates from linked models transformed into project coordinates? `LinkedModelExportService` exists but no `GetTotalTransform` / `GetTransform(` calls found in src. (Need clarification on linked model handling.)
 
-- [Open] **Sanctioned `dotnet test` invocation:** Test project builds locally and claims CI compatibility, but the exact `dotnet test` command and pass/fail expectations have never been validated by a GSD run. (Pending first CI/automated test execution.)
+- [Open] **Sanctioned `dotnet test` invocation:** Test project builds locally and claims CI compatibility, but the exact `dotnet test` command and pass/fail expectations have never been validated by an automated run. (Pending first CI/automated test execution.)
 
 - [Open] **Interactive Revit command validation:** The smoke-test checklist in `docs/ai/revit-smoke-test.md` has never been executed by a human. Command-level behavior (selection handling, transaction commit/rollback, modeless dialog workflows) remains unvalidated. (Pending first interactive Revit run covering steps 3–8 of the checklist.)
 

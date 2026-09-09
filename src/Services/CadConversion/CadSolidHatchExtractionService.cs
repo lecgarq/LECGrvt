@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadSolidHatchExtractionService : ICadSolidHatchExtractionService
+    public class CadSolidHatchExtractionService
     {
         public List<HatchData> Extract(Document doc, GeometryObject sourceObject, Solid solid, Transform currentTransform)
         {

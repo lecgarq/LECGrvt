@@ -6,13 +6,13 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class CadCurveFlattenService : ICadCurveFlattenService
+    public class CadCurveFlattenService
     {
-        private readonly ICadCurveTessellationService _cadCurveTessellationService;
-        private readonly ICadPointFlattenService _cadPointFlattenService;
-        private readonly ICadSplineFlattenService _cadSplineFlattenService;
+        private readonly CadCurveTessellationService _cadCurveTessellationService;
+        private readonly CadPointFlattenService _cadPointFlattenService;
+        private readonly CadSplineFlattenService _cadSplineFlattenService;
 
-        public CadCurveFlattenService(ICadCurveTessellationService cadCurveTessellationService, ICadPointFlattenService cadPointFlattenService, ICadSplineFlattenService cadSplineFlattenService)
+        public CadCurveFlattenService(CadCurveTessellationService cadCurveTessellationService, CadPointFlattenService cadPointFlattenService, CadSplineFlattenService cadSplineFlattenService)
         {
             _cadCurveTessellationService = cadCurveTessellationService;
             _cadPointFlattenService = cadPointFlattenService;

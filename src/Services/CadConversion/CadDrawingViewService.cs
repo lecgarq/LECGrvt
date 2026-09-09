@@ -5,7 +5,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadDrawingViewService : ICadDrawingViewService
+    public class CadDrawingViewService
     {
         public View ResolveFamilyDrawingView(Document familyDoc)
         {

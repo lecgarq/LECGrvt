@@ -3,19 +3,19 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFamilyLoadPlacementService : ICadFamilyLoadPlacementService
+    public class CadFamilyLoadPlacementService
     {
-        private readonly ICadFamilyLoadResolveService _cadFamilyLoadResolveService;
-        private readonly ICadTempFileCleanupService _cadTempFileCleanupService;
-        private readonly ICadSourceCleanupService _cadSourceCleanupService;
-        private readonly ICadFamilyInstancePlacementService _cadFamilyInstancePlacementService;
+        private readonly CadFamilyLoadResolveService _cadFamilyLoadResolveService;
+        private readonly CadTempFileCleanupService _cadTempFileCleanupService;
+        private readonly CadSourceCleanupService _cadSourceCleanupService;
+        private readonly CadFamilyInstancePlacementService _cadFamilyInstancePlacementService;
         private readonly ITransactionService _transactionService;
 
         public CadFamilyLoadPlacementService(
-            ICadFamilyLoadResolveService cadFamilyLoadResolveService,
-            ICadTempFileCleanupService cadTempFileCleanupService,
-            ICadSourceCleanupService cadSourceCleanupService,
-            ICadFamilyInstancePlacementService cadFamilyInstancePlacementService,
+            CadFamilyLoadResolveService cadFamilyLoadResolveService,
+            CadTempFileCleanupService cadTempFileCleanupService,
+            CadSourceCleanupService cadSourceCleanupService,
+            CadFamilyInstancePlacementService cadFamilyInstancePlacementService,
             ITransactionService transactionService)
         {
             _cadFamilyLoadResolveService = cadFamilyLoadResolveService;

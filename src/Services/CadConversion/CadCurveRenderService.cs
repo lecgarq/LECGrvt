@@ -5,11 +5,11 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadCurveRenderService : ICadCurveRenderService
+    public class CadCurveRenderService
     {
-        private readonly ICadCurveFlattenService _curveFlattenService;
+        private readonly CadCurveFlattenService _curveFlattenService;
 
-        public CadCurveRenderService(ICadCurveFlattenService curveFlattenService)
+        public CadCurveRenderService(CadCurveFlattenService curveFlattenService)
         {
             _curveFlattenService = curveFlattenService;
         }
