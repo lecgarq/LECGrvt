@@ -77,7 +77,11 @@ design/
 _archive/
 
 # Python bytecode
+.code-review-graph/
 __pycache__/
 *.pyc
 # Local Claude Code settings — machine-specific permission allowlist, not shared
 .claude/settings.local.json
+
+# Disposable pilot copies are local test inputs, never repository artifacts.
+docs/review/setter-validation-gate/pilot-runs/**/*.rvt

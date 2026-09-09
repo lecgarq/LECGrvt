@@ -1,0 +1,47 @@
+{
+  "case_id": 1,
+  "repository_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "scope": "Live read-only routing check, not Revit execution or a full run of all acceptance cases.",
+  "result": "CEILING HIT, not an efficiency pass: eight calls on a known-answer case, stale inventory inadmissible.",
+  "superseded_by": "live-rerun.json",
+  "calls": [
+    "freshness.mjs",
+    "Serena get_current_config",
+    "dotnet msbuild RevitCopilot/RevitCopilot.csproj -getProperty:TargetFramework,DefineConstants -p:SkipRevitDeploy=true -nologo",
+    "Serena find_symbol ToolExecutor/ValidateChangeDocument with body",
+    "Serena find_referencing_symbols ToolExecutor/ValidateChangeDocument",
+    "Serena find_symbol CapabilityCatalog/All without body",
+    "Serena search_for_pattern rename_elements within CapabilityCatalog.cs",
+    "query-index.mjs operation rename_elements"
+  ],
+  "cost": {
+    "tool_calls": 8,
+    "evidence_utf8_bytes": 5688,
+    "measurement": "Sum of each shell output or Serena structured result string, retaining all returned evidence, excluding duplicate protocol envelopes. No extra packet-checker call after ceiling."
+  },
+  "packet": {
+    "FRESHNESS": "Index d3a105199a04aa7295b634dba829397b805cd18e vs HEAD 774354b4d1d745b42ea2b73a73ad17cf68aebf58: STALE, recorded/live input checks false. Rendered snapshot one commit behind. Serena LECG LSP ready; matching local workspace verified.",
+    "ORIENTATION": [
+      "Native Revit 2026 changes; RevitCopilot/RevitCopilot.csproj, net10.0-windows.",
+      "Evaluated defines: TRACE;DEBUG;NET;NET10_0;NETCOREAPP. The catalog is also linked into the MCP project."
+    ],
+    "EVIDENCE": [
+      "[registered-operation] rename_elements is a change registration in CapabilityCatalog.All; registration row read within the resolved field at RevitCopilot/Agent/CapabilityCatalog.cs:45.",
+      "[source-implementation] ValidateChangeDocument rejects IsFamilyDocument at RevitCopilot/Revit/ToolExecutor.Changes.cs:52: native changes require an editable project document.",
+      "[compiler] Resolved references from PreviewChange and ApplyChange invoke ValidateChangeDocument before proceeding."
+    ],
+    "SYMBOLS": [
+      "LECG.RevitCopilot.Agent.CapabilityCatalog.All — RevitCopilot/Agent/CapabilityCatalog.cs:7; source shared by RevitCopilot and MCP server.",
+      "LECG.RevitCopilot.Revit.ToolExecutor.ValidateChangeDocument — RevitCopilot/Revit/ToolExecutor.Changes.cs:50; RevitCopilot, net10.0-windows.",
+      "LECG.RevitCopilot.Revit.ToolExecutor.PreviewChange — RevitCopilot/Revit/ToolExecutor.Changes.cs:24; RevitCopilot, net10.0-windows.",
+      "LECG.RevitCopilot.Revit.ToolExecutor.ApplyChange — RevitCopilot/Revit/ToolExecutor.Changes.cs:39; RevitCopilot, net10.0-windows."
+    ],
+    "READ NEXT": [
+      "1. RevitCopilot/Revit/ToolExecutor.Changes.cs — actual document guard and preview/apply paths.",
+      "2. RevitCopilot/Agent/CapabilityCatalog.cs — registered rename contract.",
+      "3. RevitCopilot/McpServer/RevitCopilot.McpServer.csproj — linked catalog compilation boundary."
+    ],
+    "UNRESOLVED": "Inventory cross-check is stale and cannot independently support registration. Serena did not report which compilation of the shared catalog field supplied its symbol; no cross-project semantic equivalence is asserted. Next query: Serena find_referencing_symbols for CapabilityCatalog.All scoped to its source path, requesting compilation-identifying references; if that tool still cannot identify the compilation, retain this uncertainty.",
+    "COST": "8/8 tool calls | 5.55 KB evidence"
+  }
+}

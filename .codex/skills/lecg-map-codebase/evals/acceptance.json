@@ -1,0 +1,124 @@
+{
+  "scope": "Query/report cases 1–10; case 11 retired; offline CRG qualification comparisons 12–13, never query routing rows. Historical live artifacts are preserved.",
+  "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "evaluation_rule": "Routes and evidence tiers are the contract. Baseline answers are not current evidence. Stale, unavailable, ambiguous or budget-exhausted routes must emit UNRESOLVED, not guess. Manual end-to-end evaluation is separate from script unit tests.",
+  "cases": [
+    {
+      "id": 1,
+      "question": "Can the agent rename elements inside a family document?",
+      "expected_route": ["freshness", "Serena health and project context", "CapabilityCatalog via Serena", "operation rename_elements", "ToolExecutor.ValidateChangeDocument via Serena and references"],
+      "expected_tier": ["registered-operation", "source-implementation"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "No: rename is registered, but the executor rejects family documents.",
+      "failure_mode": "Answer from README, or claim the catalog contains the executor guard.",
+      "contract_note": "User approved actual-guard evidence instead of the original catalog-only tier."
+    },
+    {
+      "id": 2,
+      "question": "What runs when AssignMaterialCommand executes?",
+      "expected_route": ["freshness", "Serena health and project context", "Serena find_symbol", "Serena references and resolved bodies"],
+      "expected_tier": ["compiler"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": null,
+      "failure_mode": "Folder-structure inference or unverified call edges.",
+      "baseline_note": "Resolve live; no full call-chain baseline asserted. Use measured first body caps of 2100 characters, not the known undersized 1800-character service-body request. Charge every response including retries."
+    },
+    {
+      "id": 3,
+      "question": "Which setters have no validated changed-value edit?",
+      "expected_route": ["freshness", "classify full enumeration as a report", "export-report.mjs unvalidated-setters", "packet cites receipt count/path/revision/checksum; do not open full report"],
+      "expected_tier": ["inventory"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": 187,
+      "failure_mode": "Paginate or enumerate the report in context, silently write during an ordinary summary query, overwrite a report, count only displayed entries, treat recorded validation as universal correctness, or export stale inventory."
+    },
+    {
+      "id": 4,
+      "question": "Every class implementing IExternalCommand.",
+      "expected_route": ["freshness", "resolve exact IExternalCommand through Serena (including declaration at a known usage for external metadata)", "Serena find_implementations", "verify result completeness and indirect inheritance coverage; stop unresolved if provider cannot resolve metadata"],
+      "expected_tier": ["compiler"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": null,
+      "failure_mode": "Misroute semantic completeness to ast-grep, replace IExternalCommand with a base class, copy an external declaration into source, or present truncated/blocked results as all implementations.",
+      "baseline_note": "Prior two direct base-list matches were a misroute, not a semantic completeness baseline."
+    },
+    {
+      "id": 5,
+      "question": "Is delete_elements equivalent to native purge?",
+      "expected_route": ["freshness", "Serena health and project context", "CapabilityCatalog via Serena", "operation delete_elements"],
+      "expected_tier": ["registered-operation"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "No; the registered contract deletes explicit elements, not an unused-content purge.",
+      "failure_mode": "Conflate explicit deletion and unused-content purge based on names or prose."
+    },
+    {
+      "id": 6,
+      "question": "ICadFamilyBuildService — which concrete class handles it?",
+      "expected_route": ["freshness", "Serena health and project context", "Serena find_symbol ICadFamilyBuildService", "Bootstrapper registration if symbol resolves"],
+      "expected_tier": [],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "Abstention check: UNRESOLVED when the requested interface does not resolve; no implementation evidence is admitted.",
+      "failure_mode": "Pick CadFamilyBuildService because the name matches or rely on the old interface convention."
+    },
+    {
+      "id": 7,
+      "question": "Does the presence of a service file mean the MCP can invoke it?",
+      "expected_route": ["freshness", "Serena health and project context", "catalog registration lookup", "operation and mcp-tool cross-check"],
+      "expected_tier": ["registered-operation"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "No; source presence alone does not establish agent registration.",
+      "failure_mode": "Treat source-implementation or a file listing as sufficient exposure evidence."
+    },
+    {
+      "id": 8,
+      "question": "Where are all material-related services?",
+      "expected_route": ["freshness", "query-index service Materials"],
+      "expected_tier": ["inventory"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "Current Materials-domain inventory returns 19 entries; not every cross-domain material reference. Recheck freshness live.",
+      "failure_mode": "Recursive filesystem crawl, silent stale-index use, or treating one domain as cross-domain completeness."
+    },
+    {
+      "id": 9,
+      "question": "Why does operation X reject family documents?",
+      "expected_route": ["freshness", "Serena health and project context", "catalog for registration", "actual eligibility guard via Serena", ".planning for rationale"],
+      "expected_tier": ["registered-operation", "source-implementation", "doc-assertion"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": null,
+      "failure_mode": "Documentation establishes behavior, or unsupported rationale is invented.",
+      "baseline_note": "X must be supplied; explain what from code and why only from explicit rationale."
+    },
+    {
+      "id": 10,
+      "question": "What breaks if I change ExecuteAsync on an interface?",
+      "expected_route": ["freshness", "identify exact interface and signature", "Serena health and project context", "Serena find_referencing_symbols"],
+      "expected_tier": ["compiler"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "Abstention check: request the exact interface/signature before making an impact claim.",
+      "failure_mode": "Invent an interface, merge same-named methods, or infer impact from inventory/grep.",
+      "baseline_note": "Interface is unspecified; require resolution before impact claims. A future provider qualification must test explicit missing/ambiguous target results, not treat an empty lookup as a successful caller comparison."
+    },
+    {
+      "id": 12,
+      "question": "Which implementations handle IProgressReporter, and how are they selected in the command and legacy paths?",
+      "expected_route": ["offline qualification only", "live Serena resolution of IProgressReporter", "Serena implementations and constructor references; inspect Bootstrapper", "CRG inheritors_of the qualified IProgressReporter target", "compare implementation sets"],
+      "expected_tier": ["CRG candidate only", "compiler if Serena resolves"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "Exact two-implementation match: LegacyProgressReporter and RevitCommandProgressReporter. Concrete creation occurs in different manual construction paths; do not invent a container registration or global default.",
+      "failure_mode": "Pick ProgressReporter by name, collapse the two implementations, or mistake inheritance for context-specific runtime selection.",
+      "evidence": "crg-live-comparison.json#/case12",
+      "previous_probe": "ICadFamilyBuildService was absent; that did not execute the intended qualification case."
+    },
+    {
+      "id": 13,
+      "question": "Compare callers of the non-generic ITransactionService.Run(Document,string,Action<Document>) in CRG and Serena.",
+      "expected_route": ["offline qualification only", "live Serena resolution of exact interface overload", "Serena find_referencing_symbols", "CRG callers_of qualified ITransactionService.Run", "normalize by file and declaration location; compare complete sets", "resolve extra candidates against Run<T> and inspect unrelated targets"],
+      "expected_tier": ["CRG candidate only", "compiler if Serena resolves"],
+      "baseline_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "expected_answer_at_baseline": "Serena: 35 call sites, 29 callers. CRG: 33 callers, 25 shared, 4 missing, 8 extra (6 generic-overload callers, 2 unrelated unresolved candidates). Not a superset; promotion fails.",
+      "failure_mode": "Label a non-superset usable over-breadth, hide missing callers, merge overloaded declarations, or accept SetterSweep.Run/Task.Run as transaction callers.",
+      "evidence": "crg-live-comparison.json#/case13",
+      "previous_probe": "ExecuteAsync was absent; that did not execute the intended qualification case."
+    }
+  ]
+}
