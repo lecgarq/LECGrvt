@@ -1,0 +1,19 @@
+{
+  "revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "scope": "Compatibility gate only; newly added probe/audit sources are uncommitted and binary hashes identify the executed probe.",
+  "revit": {"version": "2026.5", "file_version": "26.5.0.55", "product_build": "20260731_1210(x64)", "runtime_major_asserted_inside_revit": 10},
+  "test": {"adapter": "ricaun.RevitTest.TestAdapter 1.11.1", "nunit": "3.13.3", "test_sdk": "17.8.0", "sdk": "10.0.400", "target": "net10.0-windows", "passed": 1, "failed": 0, "total_seconds": 49.5521, "open_documents_asserted": 0, "models": [], "setter_attempts": 0, "runner_closed_fresh_revit_process": true},
+  "triage": {"same_value_only": 70, "missing_fixture": 82, "context_rejected": 35},
+  "ledger": {"before": 618, "after": 618, "denominator": 805, "updated": false},
+  "sha256": {
+    "C:/Program Files/Autodesk/Revit 2026/Revit.exe": "55C7CC183FC5555A5E1E40FB5405AD99104D7D1BCE9CE585E092461EF1E6F47D",
+    "C:/Program Files/Autodesk/Revit 2026/RevitAPI.dll": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285",
+    "C:/Program Files/Autodesk/Revit 2026/RevitAPIUI.dll": "8D769989B3C1B6875EB397518A4B71AE205B38D36C6F5DFFDB1D4F641DE54B6B",
+    "C:/Program Files/Autodesk/Revit 2026/RevitAPI.runtimeconfig.json": "78EEFA3CC1587A0E03B652445F13BEF175FD42380D8013E5A61D3DBD287A265E",
+    "tools/SetterValidationProbe/bin/x64/Debug/net10.0-windows/SetterValidationProbe.dll": "81BD54387D04C9E706080DF87D3937ACBDB3886DAA8056EAA119F3999E18DDE2",
+    "C:/Users/LECG Arquitectura/.nuget/packages/ricaun.revittest.testadapter/1.11.1/lib/net8.0/ricaun.RevitTest.TestAdapter.dll": "1290C7C6D06D6F4646951B68919901E8C419E833015590678C7A39BF798D38F5",
+    "docs/review/setter-validation-gate/ricaun-net10-revit2026.trx": "C1DDFB93184F10D082C664171DE1AC0CD445360D3D45F3F2B0F62B36D987A631",
+    "docs/review/unvalidated-setters-12c46a90-96ae-46dc-b14d-01bf45655121.json": "1C835FEFCA84D2AF5C28E5621DFD185F6C76FDE93010ADDAE3BF2BCDD7883C32",
+    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "90AD166CC4C6994B651186F2BFDD87EED1C45749D04974009D95AC55F72B88F5"
+  }
+}

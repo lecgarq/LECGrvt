@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="d260c6f1-7b41-4678-babe-c500269604fd" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-08 23:13:34" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-08T23:13:34.4967044-06:00" queuing="2026-09-08T23:13:34.4967047-06:00" start="2026-09-08T23:12:41.7196876-06:00" finish="2026-09-08T23:15:16.9136659-06:00" />
+  <TestSettings name="default" id="e009aa2a-568d-4ead-b5f7-49eff18a658c">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-08_23_13_34" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="54c359ec-e755-4f4d-8c8b-31fd4c6c1b98" testId="031c5b04-f610-b7d1-2ca3-560247b743c0" testName="RecordsChangedValueAndRestoration(&quot;ReferencePlane.BubbleEnd&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:15.1215700" startTime="2026-09-08T23:14:29.8321179-06:00" endTime="2026-09-08T23:14:29.8321182-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="54c359ec-e755-4f4d-8c8b-31fd4c6c1b98">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="df6ebd57-27b8-4090-9c79-b57a64ae6a22" testId="12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7" testName="RecordsChangedValueAndRestoration(&quot;ViewSheetSet.IsAutomatic&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:14.9071200" startTime="2026-09-08T23:15:14.9518375-06:00" endTime="2026-09-08T23:15:14.9518381-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="df6ebd57-27b8-4090-9c79-b57a64ae6a22">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2924fe12-bc43-46b3-b271-8ce31cca07e2" testId="bb1cf2c1-b6be-9ffe-fe92-f090e23a6996" testName="RecordsChangedValueAndRestoration(&quot;Material.CutBackgroundPatternId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:16.0422700" startTime="2026-09-08T23:13:59.7364070-06:00" endTime="2026-09-08T23:13:59.7364073-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2924fe12-bc43-46b3-b271-8ce31cca07e2">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d1f5280b-a90a-40f1-ad24-79cb4140aa77" testId="bc30db86-b9d4-f4fa-9e64-475aded7e944" testName="RecordsChangedValueAndRestoration(&quot;Structure.LoadCase.Number&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:15.1087900" startTime="2026-09-08T23:14:44.9432681-06:00" endTime="2026-09-08T23:14:44.9432684-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d1f5280b-a90a-40f1-ad24-79cb4140aa77">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="eacaf928-62ef-441d-844a-0d72e8fba141" testId="b9aa0303-7f1b-949d-a53a-2e2bac60bf5d" testName="RecordsChangedValueAndRestoration(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.9565000" startTime="2026-09-08T23:13:43.6925044-06:00" endTime="2026-09-08T23:13:43.6925048-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eacaf928-62ef-441d-844a-0d72e8fba141">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6613f767-bac4-4838-8573-d8440eebe235" testId="06c1ccfe-f099-0430-c27d-44609aa7ad83" testName="RecordsChangedValueAndRestoration(&quot;TextElement.Text&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:15.0957900" startTime="2026-09-08T23:15:00.0416140-06:00" endTime="2026-09-08T23:15:00.0416144-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6613f767-bac4-4838-8573-d8440eebe235">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b35e4fca-c54c-4bbc-9c28-ce80b1c689a3" testId="75babf97-1d51-3908-1d8a-2b8b6d26c3f3" testName="RecordsChangedValueAndRestoration(&quot;Plumbing.PipingSystemType.FluidTemperature&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:14.9694200" startTime="2026-09-08T23:14:14.7083905-06:00" endTime="2026-09-08T23:14:14.7083912-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b35e4fca-c54c-4bbc-9c28-ce80b1c689a3">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="de0f13e8-fd76-47b5-976e-711d12bc4949" testId="a2fca983-7ec6-8f11-45c4-4578396145af" testName="RecordsChangedValueAndRestoration(&quot;Electrical.CableType.ConductorMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:16.8237400" startTime="2026-09-08T23:13:33.7445669-06:00" endTime="2026-09-08T23:13:33.7445975-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="de0f13e8-fd76-47b5-976e-711d12bc4949">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Structure.LoadCase.Number&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="bc30db86-b9d4-f4fa-9e64-475aded7e944">
+      <Execution id="d1f5280b-a90a-40f1-ad24-79cb4140aa77" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b9aa0303-7f1b-949d-a53a-2e2bac60bf5d">
+      <Execution id="eacaf928-62ef-441d-844a-0d72e8fba141" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Electrical.CableType.ConductorMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="a2fca983-7ec6-8f11-45c4-4578396145af">
+      <Execution id="de0f13e8-fd76-47b5-976e-711d12bc4949" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Material.CutBackgroundPatternId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="bb1cf2c1-b6be-9ffe-fe92-f090e23a6996">
+      <Execution id="2924fe12-bc43-46b3-b271-8ce31cca07e2" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;ViewSheetSet.IsAutomatic&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7">
+      <Execution id="df6ebd57-27b8-4090-9c79-b57a64ae6a22" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;TextElement.Text&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="06c1ccfe-f099-0430-c27d-44609aa7ad83">
+      <Execution id="6613f767-bac4-4838-8573-d8440eebe235" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Plumbing.PipingSystemType.FluidTemperature&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="75babf97-1d51-3908-1d8a-2b8b6d26c3f3">
+      <Execution id="b35e4fca-c54c-4bbc-9c28-ce80b1c689a3" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;ReferencePlane.BubbleEnd&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="031c5b04-f610-b7d1-2ca3-560247b743c0">
+      <Execution id="54c359ec-e755-4f4d-8c8b-31fd4c6c1b98" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="031c5b04-f610-b7d1-2ca3-560247b743c0" executionId="54c359ec-e755-4f4d-8c8b-31fd4c6c1b98" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7" executionId="df6ebd57-27b8-4090-9c79-b57a64ae6a22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb1cf2c1-b6be-9ffe-fe92-f090e23a6996" executionId="2924fe12-bc43-46b3-b271-8ce31cca07e2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bc30db86-b9d4-f4fa-9e64-475aded7e944" executionId="d1f5280b-a90a-40f1-ad24-79cb4140aa77" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9aa0303-7f1b-949d-a53a-2e2bac60bf5d" executionId="eacaf928-62ef-441d-844a-0d72e8fba141" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="06c1ccfe-f099-0430-c27d-44609aa7ad83" executionId="6613f767-bac4-4838-8573-d8440eebe235" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="75babf97-1d51-3908-1d8a-2b8b6d26c3f3" executionId="b35e4fca-c54c-4bbc-9c28-ce80b1c689a3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a2fca983-7ec6-8f11-45c4-4578396145af" executionId="de0f13e8-fd76-47b5-976e-711d12bc4949" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="8" executed="8" passed="8" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 8]&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Structure.LoadCase.Number")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("TextElement.Text")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 10&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":10.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Structure.LoadCase.Number")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("TextElement.Text")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 8]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Electrical.CableType.ConductorMaterial\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Electrical.ElectricalSystem.CircuitConnectionType\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Material.CutBackgroundPatternId\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Plumbing.PipingSystemType.FluidTemperature\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022ReferencePlane.BubbleEnd\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Structure.LoadCase.Number\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022TextElement.Text\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022ViewSheetSet.IsAutomatic\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 16823.74 	 RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")] 	a2fca983-7ec6-8f11-45c4-4578396145af&#xD;
+OutputConsole:  Revit 2026: 9956.5 	 RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")] 	b9aa0303-7f1b-949d-a53a-2e2bac60bf5d&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 10 minutes.&#xD;
+OutputConsole:  Revit 2026: 16042.27 	 RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")] 	bb1cf2c1-b6be-9ffe-fe92-f090e23a6996&#xD;
+OutputConsole:  Revit 2026: 14969.42 	 RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")] 	75babf97-1d51-3908-1d8a-2b8b6d26c3f3&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 10 minutes.&#xD;
+OutputConsole:  Revit 2026: 15121.57 	 RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")] 	031c5b04-f610-b7d1-2ca3-560247b743c0&#xD;
+OutputConsole:  Revit 2026: 15108.79 	 RecordsChangedValueAndRestoration("Structure.LoadCase.Number")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Structure.LoadCase.Number")] 	bc30db86-b9d4-f4fa-9e64-475aded7e944&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 10 minutes.&#xD;
+OutputConsole:  Revit 2026: 15095.79 	 RecordsChangedValueAndRestoration("TextElement.Text")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("TextElement.Text")] 	06c1ccfe-f099-0430-c27d-44609aa7ad83&#xD;
+OutputConsole:  Revit 2026: 14907.12 	 RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")[RecordsChangedValueAndRestoration]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")] 	12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7&#xD;
+OutputConsole:  Revit 2026: 118153.97 	 SetterValidationProbe 8 True 100% 118153.97ms&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 10 minutes.&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

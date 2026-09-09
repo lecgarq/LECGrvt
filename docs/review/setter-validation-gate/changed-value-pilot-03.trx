@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="bde1561b-f7c1-4aa5-8015-8af96f7e2e7d" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-08 23:04:29" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-08T23:04:29.2391476-06:00" queuing="2026-09-08T23:04:29.2391479-06:00" start="2026-09-08T23:03:42.4683666-06:00" finish="2026-09-08T23:04:31.5925630-06:00" />
+  <TestSettings name="default" id="32cd24d5-b217-4854-a8fc-f5f2e2983317">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-08_23_04_29" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="c3195536-88db-4f4d-b417-e8fdd1ceba14" testId="06c1ccfe-f099-0430-c27d-44609aa7ad83" testName="RecordsChangedValueAndRestoration(&quot;TextElement.Text&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0002800" startTime="2026-09-08T23:04:29.2358981-06:00" endTime="2026-09-08T23:04:29.2358993-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c3195536-88db-4f4d-b417-e8fdd1ceba14">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c34ac955-f426-447f-b010-b65555294632" testId="75babf97-1d51-3908-1d8a-2b8b6d26c3f3" testName="RecordsChangedValueAndRestoration(&quot;Plumbing.PipingSystemType.FluidTemperature&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0002700" startTime="2026-09-08T23:04:29.0778878-06:00" endTime="2026-09-08T23:04:29.0778882-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c34ac955-f426-447f-b010-b65555294632">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="706ad6c9-19c2-4f5f-ad3d-0ef2d17b1619" testId="b9aa0303-7f1b-949d-a53a-2e2bac60bf5d" testName="RecordsChangedValueAndRestoration(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0004300" startTime="2026-09-08T23:04:28.9814886-06:00" endTime="2026-09-08T23:04:28.9814887-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="706ad6c9-19c2-4f5f-ad3d-0ef2d17b1619">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2d56475d-d4f9-445c-a678-8530f9667d51" testId="bc30db86-b9d4-f4fa-9e64-475aded7e944" testName="RecordsChangedValueAndRestoration(&quot;Structure.LoadCase.Number&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0003900" startTime="2026-09-08T23:04:29.1834633-06:00" endTime="2026-09-08T23:04:29.1834636-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2d56475d-d4f9-445c-a678-8530f9667d51">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="236dfc99-bb1e-4b7a-8fbf-554cb352df32" testId="bb1cf2c1-b6be-9ffe-fe92-f090e23a6996" testName="RecordsChangedValueAndRestoration(&quot;Material.CutBackgroundPatternId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0002600" startTime="2026-09-08T23:04:29.0247786-06:00" endTime="2026-09-08T23:04:29.0247790-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="236dfc99-bb1e-4b7a-8fbf-554cb352df32">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7afaee65-f8bc-477b-99e7-3f1524fdbcb5" testId="031c5b04-f610-b7d1-2ca3-560247b743c0" testName="RecordsChangedValueAndRestoration(&quot;ReferencePlane.BubbleEnd&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0003200" startTime="2026-09-08T23:04:29.1300468-06:00" endTime="2026-09-08T23:04:29.1300472-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7afaee65-f8bc-477b-99e7-3f1524fdbcb5">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a9d319a0-5018-4ce9-8c87-cbe812031011" testId="12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7" testName="RecordsChangedValueAndRestoration(&quot;ViewSheetSet.IsAutomatic&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0002500" startTime="2026-09-08T23:04:29.2894657-06:00" endTime="2026-09-08T23:04:29.2894662-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a9d319a0-5018-4ce9-8c87-cbe812031011">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73&#xD;
+   at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c01290b4-451e-40c0-8b83-ad59848a66ce" testId="a2fca983-7ec6-8f11-45c4-4578396145af" testName="RecordsChangedValueAndRestoration(&quot;Electrical.CableType.ConductorMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:10.9037300" startTime="2026-09-08T23:04:28.9794483-06:00" endTime="2026-09-08T23:04:28.9794674-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c01290b4-451e-40c0-8b83-ad59848a66ce">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.&#xD;
+NUnit.Framework.AssertionException: Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.&#xD;
+   at NUnit.Framework.Assert.ReportFailure(String message)&#xD;
+   at NUnit.Framework.Assert.Fail(String message, Object[] args)&#xD;
+   at NUnit.Framework.Assert.Fail(String message)&#xD;
+   at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 180&#xD;
+   at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)&#xD;
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Structure.LoadCase.Number&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="bc30db86-b9d4-f4fa-9e64-475aded7e944">
+      <Execution id="2d56475d-d4f9-445c-a678-8530f9667d51" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b9aa0303-7f1b-949d-a53a-2e2bac60bf5d">
+      <Execution id="706ad6c9-19c2-4f5f-ad3d-0ef2d17b1619" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Electrical.CableType.ConductorMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="a2fca983-7ec6-8f11-45c4-4578396145af">
+      <Execution id="c01290b4-451e-40c0-8b83-ad59848a66ce" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Material.CutBackgroundPatternId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="bb1cf2c1-b6be-9ffe-fe92-f090e23a6996">
+      <Execution id="236dfc99-bb1e-4b7a-8fbf-554cb352df32" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;ViewSheetSet.IsAutomatic&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7">
+      <Execution id="a9d319a0-5018-4ce9-8c87-cbe812031011" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;TextElement.Text&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="06c1ccfe-f099-0430-c27d-44609aa7ad83">
+      <Execution id="c3195536-88db-4f4d-b417-e8fdd1ceba14" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;Plumbing.PipingSystemType.FluidTemperature&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="75babf97-1d51-3908-1d8a-2b8b6d26c3f3">
+      <Execution id="c34ac955-f426-447f-b010-b65555294632" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+    <UnitTest name="RecordsChangedValueAndRestoration(&quot;ReferencePlane.BubbleEnd&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="031c5b04-f610-b7d1-2ca3-560247b743c0">
+      <Execution id="7afaee65-f8bc-477b-99e7-3f1524fdbcb5" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ChangedValuePilot" name="RecordsChangedValueAndRestoration" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="06c1ccfe-f099-0430-c27d-44609aa7ad83" executionId="c3195536-88db-4f4d-b417-e8fdd1ceba14" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="75babf97-1d51-3908-1d8a-2b8b6d26c3f3" executionId="c34ac955-f426-447f-b010-b65555294632" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9aa0303-7f1b-949d-a53a-2e2bac60bf5d" executionId="706ad6c9-19c2-4f5f-ad3d-0ef2d17b1619" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bc30db86-b9d4-f4fa-9e64-475aded7e944" executionId="2d56475d-d4f9-445c-a678-8530f9667d51" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="bb1cf2c1-b6be-9ffe-fe92-f090e23a6996" executionId="236dfc99-bb1e-4b7a-8fbf-554cb352df32" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="031c5b04-f610-b7d1-2ca3-560247b743c0" executionId="7afaee65-f8bc-477b-99e7-3f1524fdbcb5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7" executionId="a9d319a0-5018-4ce9-8c87-cbe812031011" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a2fca983-7ec6-8f11-45c4-4578396145af" executionId="c01290b4-451e-40c0-8b83-ad59848a66ce" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="8" executed="8" passed="0" failed="8" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 8]&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Structure.LoadCase.Number")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("TextElement.Text")&#xD;
+Test: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 10&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":10.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("Structure.LoadCase.Number")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("TextElement.Text")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 8]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Electrical.CableType.ConductorMaterial\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Electrical.ElectricalSystem.CircuitConnectionType\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Material.CutBackgroundPatternId\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Plumbing.PipingSystemType.FluidTemperature\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022ReferencePlane.BubbleEnd\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022Structure.LoadCase.Number\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022TextElement.Text\u0022)","LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration.RecordsChangedValueAndRestoration(\u0022ViewSheetSet.IsAutomatic\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 10903.73 	 RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")[RecordsChangedValueAndRestoration]	 Failed	 Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.  NUnit.Framework.AssertionException: Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.     at NUnit.Framework.Assert.ReportFailure(String message)     at NUnit.Framework.Assert.Fail(String message, Object[] args)     at NUnit.Framework.Assert.Fail(String message)     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 180     at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)     at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)     at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Electrical.CableType.ConductorMaterial")] 	a2fca983-7ec6-8f11-45c4-4578396145af&#xD;
+OutputConsole:  Revit 2026: 0.43 	 RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Electrical.ElectricalSystem.CircuitConnectionType")] 	b9aa0303-7f1b-949d-a53a-2e2bac60bf5d&#xD;
+OutputConsole:  Revit 2026: 0.26 	 RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Material.CutBackgroundPatternId")] 	bb1cf2c1-b6be-9ffe-fe92-f090e23a6996&#xD;
+OutputConsole:  Revit 2026: 0.27 	 RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Plumbing.PipingSystemType.FluidTemperature")] 	75babf97-1d51-3908-1d8a-2b8b6d26c3f3&#xD;
+OutputConsole:  Revit 2026: 0.32 	 RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("ReferencePlane.BubbleEnd")] 	031c5b04-f610-b7d1-2ca3-560247b743c0&#xD;
+OutputConsole:  Revit 2026: 0.39 	 RecordsChangedValueAndRestoration("Structure.LoadCase.Number")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("Structure.LoadCase.Number")] 	bc30db86-b9d4-f4fa-9e64-475aded7e944&#xD;
+OutputConsole:  Revit 2026: 0.28 	 RecordsChangedValueAndRestoration("TextElement.Text")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("TextElement.Text")] 	06c1ccfe-f099-0430-c27d-44609aa7ad83&#xD;
+OutputConsole:  Revit 2026: 0.25 	 RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")[RecordsChangedValueAndRestoration]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.ChangedValuePilot.Require(Boolean value, String message) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 26     at LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration(String property) in C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\ChangedValuePilot.cs:line 73     at InvokeStub_ChangedValuePilot.RecordsChangedValueAndRestoration(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ChangedValuePilot.RecordsChangedValueAndRestoration [RecordsChangedValueAndRestoration("ViewSheetSet.IsAutomatic")] 	12f09dcd-a7bd-23bb-1c9d-992b1e4d7ec7&#xD;
+OutputConsole:  Revit 2026: 11396.77 	 SetterValidationProbe 8 False 0% 11396.77ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

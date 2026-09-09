@@ -1,0 +1,1513 @@
+{
+  "report": "unvalidated-setters",
+  "tier": "inventory",
+  "exported_at": "2026-09-09T04:14:29.253Z",
+  "repository_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "head": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "source_inputs_match_revision": true,
+  "inputs_match_working_tree": true,
+  "input_set_matches": true,
+  "status": "CURRENT",
+  "inventory_admissible": true,
+  "records_source": "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
+  "predicate": "operation starts api.set: and state is not changed_value_tested",
+  "total": 187,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 10,
+      "same_value_models": 2
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.GenericZone.LevelOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.ClosingTime",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.OpeningTime",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathEnd",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 10,
+      "same_value_models": 2
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathStart",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 10,
+      "same_value_models": 2
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.AllowInteractiveSettings",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.CurrentMeasurement",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendPosition",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendShowConfigurationName",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendShowDescription",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendTextTypeId",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.ResultsVisibleInView",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.UseRangeForAllMeasurements",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.ViewSystemsAnalysisReport.ReportStyle",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.EndOrTopTermination",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.StartOrBottomTermination",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.SupportNumber",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Stairs.Height",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 3,
+      "unsupported_models": 9,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.ExtensionBelowTreadBase",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 3,
+      "unsupported_models": 9,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.LeftLateralOffset",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MiddleSupportType",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MiddleSupportsNumber",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.RightLateralOffset",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.TopographySurface.MaterialId",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Blend.BottomOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Blend.TopOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillLegend.Origin",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 8,
+      "same_value_models": 4
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ComponentRepeater.DefaultFamilyType",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ComponentRepeaterSlot.FamilyType",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ConnectorElement.SystemClassification",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurveByPoints.IsReferenceLine",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurveByPoints.ReferenceType",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurveByPoints.Visible",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.Name",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DisplacementPath.AncestorIdx",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.BeginningIndent",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.DisplayNodeNumbers",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.DisplayNodes",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.DisplayReferenceCurves",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.Distance",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.EndIndent",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.FixedNumberOfPoints",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.MaximumDistance",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.MeasurementType",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.MinimumDistance",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.SpacingRuleJustification",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.SpacingRuleLayout",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.AllGridRotation",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.BorderTile",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.ComponentRotation",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.IsComponentFlipped",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.IsComponentMirrored",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.UPatternIndent",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.VPatternIndent",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 10,
+      "same_value_models": 2
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.DistributionSysType.HighLegPhase",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalAnalyticalLoadSet.QuantityOnStandBy",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Extrusion.EndOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Extrusion.StartOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.HangerRodKit",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.InsulationSpecification",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.ItemNumber",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.Material",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.Notes",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.PartStatus",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.ProductListEntry",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.ServiceId",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.Specification",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.SpoolName",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.CurtainPanelHorizontalSpacing",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.CurtainPanelVerticalSpacing",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.FamilyCategoryId",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.StructuralCodeName",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.StructuralFamilyNameKey",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.StructuralSectionShape",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 11,
+      "unsupported_models": 0,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralMaterialId",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralUsage",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 0,
+      "same_value_models": 11
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.AreProfilesConstrained",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.BaseOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.IsInXRayMode",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.TopOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 3,
+      "same_value_models": 9
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillPatternId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LinePatternId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.MaterialId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MechanicalEquipmentSet.OnDuty",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MechanicalEquipmentSet.OnStandby",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.AreaperPerson",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 6,
+      "unsupported_models": 6,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignLightingLoad",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 6,
+      "unsupported_models": 6,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignPowerLoad",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 6,
+      "unsupported_models": 6,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.LatentHeatGainperPerson",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 6,
+      "unsupported_models": 6,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.NumberofPeople",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 6,
+      "unsupported_models": 6,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.SensibleHeatGainperPerson",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 6,
+      "unsupported_models": 6,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ModelCurve.TrussCurveType",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 2,
+      "same_value_models": 10
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.DimensionStyleId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.JustifyOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.JustifyOption",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.NumberDisplayRule",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.NumberOrientation",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.ReferenceOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 8,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidTemperature",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.PointCloudInstance.FilterAction",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.PointCloudType.Scale",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.PrintSetting.Name",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RadialArray.NumMembers",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.BubbleEnd",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.FreeEnd",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revolution.EndAngle",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revolution.StartAngle",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ScheduleSheetInstance.SegmentIndex",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 0,
+      "same_value_models": 11
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SiteLocation.PlaceName",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementCalculationPoint.Position",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementFromToCalculationPoints.FromPosition",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementFromToCalculationPoints.ToPosition",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.LeaderEnd",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 9,
+      "unsupported_models": 3,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.RotationAngle",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 9,
+      "unsupported_models": 3,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaLoad.ForceVector2",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaLoad.ForceVector3",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.BoundaryConditions.AssociatedLoadId",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.BentFabricBendDirection",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.BentFabricLongitudinalCutLength",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.BentFabricStraightWiresLocation",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.CoverOffset",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.FabricHostReference",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.FabricLocation",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.Material",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.Number",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.AdditionalOffset",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.AlternatingBarOrientation",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.AlternatingBarShapeId",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.PrimaryBarOrientation",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.PrimaryBarShapeId",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PointLoad.Point",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarCoupler.CouplerMark",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarCoupler.RotationAngle",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.SingleElementEndIndex",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 11,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Sweep.IsTrajectorySegmentationEnabled",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Sweep.MaxSegmentAngle",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SymbolicCurve.IsDrawnInForeground",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SymbolicCurve.ReferenceType",
+      "state": "missing_fixture",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 12,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TableView.TargetId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.Text",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.Name",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 12,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+  "model": "Snowdon Towers Sample Electrical.rvt",
+  "model_sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T050806-128678fa5f734740b10846e32ddb21b8\\Electrical.ElectricalSystem.CircuitConnectionType\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false
+}

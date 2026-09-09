@@ -1,0 +1,79 @@
+{
+  "report": "eight-setter-pilot",
+  "source_model": "Snowdon Towers Sample Electrical.rvt",
+  "source_model_sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A",
+  "ledger_reconciliation_sha256": "AC8DC43315F0BE661CF257D4EEBEFDE1EC1D84ACA37CAF67A1FDA894802CF67A",
+  "total": 8,
+  "counts_by_outcome": {
+    "validated": 6,
+    "still-same-value": 1,
+    "rejected-with-reason": 1,
+    "out-of-contract": 0
+  },
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "state": "context_rejected",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidTemperature",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.BubbleEnd",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.Number",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.Text",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 0
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 1
+    }
+  ]
+}

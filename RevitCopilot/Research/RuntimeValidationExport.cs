@@ -22,7 +22,10 @@ internal static class RuntimeValidationExport
                 .Select(a => a.GetProperty("model").GetString()).Distinct().Count();
             int changed = attempts.Where(a => a.GetProperty("status").GetString() == "passed" &&
                 a.TryGetProperty("verification", out var v) && v.GetString()!.StartsWith("Changed-value", StringComparison.Ordinal)).Count();
+            if (Count("out_of_contract") > 0 && Count("passed") > 0)
+                throw new InvalidDataException("Contradictory out-of-contract and passed evidence for " + operation);
             string state = kind == "read" ? Count("passed") > 0 ? "read_invoked" : Count("failed") > 0 ? "read_failed" : "unsupported_context"
+                : Count("out_of_contract") > 0 ? "out_of_contract"
                 : changed > 0 ? "changed_value_tested" : Count("passed") > 0 ? "reviewed_fixture_passed"
                 : Count("roundtrip_only") > 0 ? "same_value_only" : Count("context_rejected") > 0 ? "context_rejected"
                 : Count("missing_fixture") > 0 ? "missing_fixture" : "not_tested";

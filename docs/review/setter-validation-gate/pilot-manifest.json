@@ -1,0 +1,430 @@
+{
+  "prepared_at": "2026-09-09T04:54:29.9714839Z",
+  "revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "ledger_sha256": "90AD166CC4C6994B651186F2BFDD87EED1C45749D04974009D95AC55F72B88F5",
+  "baseline_path": "C:\\LECG\\RevitAddins\\LECG\\RevitCopilot\\Tests\\bin\\x64\\Release\\net10.0-windows\\benchmarks\\20260905_203238\\benchmark-results.json",
+  "baseline_sha256": "DD10BE0BE4772B3B3A4ADC04432A97D07E7D7872222BC7D3309BABD3B14DAE83",
+  "api_sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285",
+  "api_xml_sha256": "16F6AC77BEEE5E88591675E1F06D78C45209B354B4AC8C161AFB9EC9ACA039ED",
+  "classification_sha256": "088DB62397D66E6FAAC21F52DBBD1C9391DD19D3859E3AB73EC17A6E233620BD",
+  "preregistration_sha256": "FDA519BDC9A42C18DA6881D6080682AC62C33BEA254D8E58A5B7E67450791BFE",
+  "models": [
+    {
+      "name": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222"
+    },
+    {
+      "name": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2"
+    },
+    {
+      "name": "Snowdon Towers Sample Architectural.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Architectural.rvt",
+      "sha256": "931EEEF58311D87AD5B15EB2622A4A7CD2737091D295C24E625C67E445AD65D1"
+    },
+    {
+      "name": "Snowdon Towers Sample Electrical.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Electrical.rvt",
+      "sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A"
+    },
+    {
+      "name": "Snowdon Towers Sample Facades.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Facades.rvt",
+      "sha256": "A3A1FB79871D2B537A6D0D80E9D662EB7FB9748E2A89032B3DEF6322FED09A3C"
+    },
+    {
+      "name": "Snowdon Towers Sample HVAC.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample HVAC.rvt",
+      "sha256": "2793230A685E08A4511899CCE4D8148C96B5860A52CE50EE10815C13743FC280"
+    },
+    {
+      "name": "Snowdon Towers Sample Plumbing.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Plumbing.rvt",
+      "sha256": "53886EFC2B0B50DA53794F670A325F9CE0D04D196CA3858F01439632268A05BA"
+    },
+    {
+      "name": "Snowdon Towers Sample Site.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Site.rvt",
+      "sha256": "87116705D83F45871E2E51C9AEDB1509132F2B2E771D699E38E8F9F8CAFD0617"
+    },
+    {
+      "name": "Snowdon Towers Sample Structural.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Structural.rvt",
+      "sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F"
+    },
+    {
+      "name": "サンプル意匠.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\サンプル意匠.rvt",
+      "sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A"
+    },
+    {
+      "name": "サンプル構造.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\サンプル構造.rvt",
+      "sha256": "C267DA0DCD17DA89A66AF10855C90701E03C98BF8749ADDEA2D475F851AF8386"
+    },
+    {
+      "name": "サンプル設備.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\サンプル設備.rvt",
+      "sha256": "205A4B00D7FB6656F9E327F459E6DB76EB672E232EF25DBB1696C2EE78CDF5C8"
+    }
+  ],
+  "pilot_model": "Snowdon Towers Sample Electrical.rvt",
+  "classification_counts": [
+    {
+      "Name": "category_constrained",
+      "Count": 4
+    },
+    {
+      "Name": "collector_by_class",
+      "Count": 18
+    },
+    {
+      "Name": "dedicated_collection",
+      "Count": 14
+    },
+    {
+      "Name": "nothing_documented",
+      "Count": 6
+    }
+  ],
+  "classifications": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+      "bucket": "category_constrained",
+      "selection_rule": "OST_Rooms or OST_MEPSpaces",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory\"><summary>\n   Export elements of this category in energy analysis.\n</summary><remarks>\n   Export will be based on the space type associated with the product creating it.\n   Valid categories are Rooms or MEP Spaces.\n</remarks><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
+      "bucket": "category_constrained",
+      "selection_rule": "OST_Rooms or OST_MEPSpaces",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory\"><summary>\n   Value is a category indicating which discipline model will be used for GreenBuildingXML export.\n</summary><remarks>\n   OST_Rooms will use the architectural 3d rooms for export.\n   OST_MEPSpaces will use the MEP 3d Spaces for export.\n</remarks><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The export category is neither OST_Rooms nor OST_MEPSpaces.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2011\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+      "bucket": "dedicated_collection",
+      "selection_rule": "GetAllConceptualConstructionsForCategory for OST_MassFloor",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Analysis.ConceptualConstructionType.GetAllConceptualConstructionsForCategory(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId)\"><summary>\n   Get all the ids of constructions applicable to the input massSubCategory\n</summary><param name=\"ccda\">\n   The document.\n</param><param name=\"massSubCategoryId\">\n   The ElementId of the mass subcategory.\n</param><returns>\n   Returns a set of ElementIds that for the ConceptualConstructionTypes that are appropriate for the subcategory.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   The mass sub-category is none of the\n   OST_MassInteriorWall,\n   OST_MassExteriorWall,\n   OST_MassExteriorWallUnderground,\n   OST_MassWallsAll,\n   OST_MassRoof,\n   OST_MassFloor,\n   OST_MassSlab,\n   OST_MassFloorsAll,\n   OST_MassShade,\n   OST_MassGlazing,\n   OST_MassSkylights,\n   OST_MassGlazingAll\n   or OST_MassOpening.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialId",
+      "bucket": "collector_by_class",
+      "selection_rule": "Material",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialId\"><summary>\n   The ElementId of the visualization material used for the MassLevelData (Mass Floor)\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The input element materialId is not a material element.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.EndOrTopTermination",
+      "bucket": "nothing_documented",
+      "selection_rule": "no_proven_valid_alternative: valid termination symbol subset not established",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Architecture.ContinuousRailType.EndOrTopTermination\"><summary>\n   The termination of the rail at the end or top.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The termination is not a valid termination symbol for continuous rail.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2013\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.StartOrBottomTermination",
+      "bucket": "nothing_documented",
+      "selection_rule": "no_proven_valid_alternative: valid termination symbol subset not established",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Architecture.ContinuousRailType.StartOrBottomTermination\"><summary>\n   The termination of the rail at the beginning or bottom.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The termination is not a valid termination symbol for continuous rail.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2013\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+      "bucket": "dedicated_collection",
+      "selection_rule": "FamilyUtils.GetProfileSymbols with StairNosing and single-loop; require tread",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.FamilyUtils.GetProfileSymbols(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ProfileFamilyUsage,System.Boolean)\"><summary>\n   Gets the profile Family Symbols of the document.\n</summary><param name=\"document\">\n   The document.\n</param><param name=\"profileFamilyUsage\">\n   The profile family usage.\n</param><param name=\"oneCurveLoopOnly\">\n   Whether or not to return only profiles with one curve loop.\n</param><returns>\n   The set of profile Family Symbol element ids.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentOutOfRangeException\">\n   A value passed for an enumeration argument is not a member of that enumeration\n</exception><since>\n   2014\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+      "bucket": "dedicated_collection",
+      "selection_rule": "FamilyUtils.GetProfileSymbols with StairRiser and single-loop; require riser",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.FamilyUtils.GetProfileSymbols(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ProfileFamilyUsage,System.Boolean)\"><summary>\n   Gets the profile Family Symbols of the document.\n</summary><param name=\"document\">\n   The document.\n</param><param name=\"profileFamilyUsage\">\n   The profile family usage.\n</param><param name=\"oneCurveLoopOnly\">\n   Whether or not to return only profiles with one curve loop.\n</param><returns>\n   The set of profile Family Symbol element ids.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentOutOfRangeException\">\n   A value passed for an enumeration argument is not a member of that enumeration\n</exception><since>\n   2014\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+      "bucket": "dedicated_collection",
+      "selection_rule": "FamilyUtils.GetProfileSymbols with StairTread and single-loop; require tread",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.FamilyUtils.GetProfileSymbols(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ProfileFamilyUsage,System.Boolean)\"><summary>\n   Gets the profile Family Symbols of the document.\n</summary><param name=\"document\">\n   The document.\n</param><param name=\"profileFamilyUsage\">\n   The profile family usage.\n</param><param name=\"oneCurveLoopOnly\">\n   Whether or not to return only profiles with one curve loop.\n</param><returns>\n   The set of profile Family Symbol element ids.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentOutOfRangeException\">\n   A value passed for an enumeration argument is not a member of that enumeration\n</exception><since>\n   2014\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+      "bucket": "category_constrained",
+      "selection_rule": "Member categories filtered by AssemblyInstance.IsValidNamingCategory",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.AssemblyInstance.IsValidNamingCategory(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId})\"><summary>\n   Identifies if the naming category is valid for an assembly instance.\n</summary><param name=\"document\">\n   The document for the assembly instance.\n</param><param name=\"namingCategoryId\">\n   The id of the naming category for the assembly instance.\n</param><param name=\"assemblyMemberIds\">\n   Member ids to check validity of naming category\n</param><returns>\n   True if the naming category is valid, false otherwise.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+      "bucket": "dedicated_collection",
+      "selection_rule": "ConductorMaterial.GetConductorMaterialIds",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.ConductorMaterial.GetConductorMaterialIds(Autodesk.Revit.DB.Document)\"><summary>\n   Gets all the Conductor Material ids in the given document, sorted by name.\n</summary><param name=\"document\">\n   The document.\n</param><returns>\n   All the Conductor Material ids in this document.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   document is not a project document.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   The document is in failure mode: an operation has failed,\n   and Revit requires the user to either cancel the operation\n   or fix the problem (usually by deleting certain elements).\n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+      "bucket": "dedicated_collection",
+      "selection_rule": "InsulationMaterial.GetInsulationMaterialIds",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.InsulationMaterial.GetInsulationMaterialIds(Autodesk.Revit.DB.Document)\"><summary>\n   Gets all the Conductor Insulation Material ids in the given document, sorted by name.\n</summary><param name=\"document\">\n   The document.\n</param><returns>\n   All the Conductor Insulation Material ids in this document.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   document is not a project document.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   The document is in failure mode: an operation has failed,\n   and Revit requires the user to either cancel the operation\n   or fix the problem (usually by deleting certain elements).\n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+      "bucket": "dedicated_collection",
+      "selection_rule": "TemperatureRating.GetTemperatureRatingIds",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.TemperatureRating.GetTemperatureRatingIds(Autodesk.Revit.DB.Document)\"><summary>\n   Gets all the Conductor Temperature Rating ids in the given document, sorted by name.\n</summary><param name=\"document\">\n   The document.\n</param><returns>\n   All the Conductor Temperature Rating ids in this document.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   document is not a project document.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   The document is in failure mode: an operation has failed,\n   and Revit requires the user to either cancel the operation\n   or fix the problem (usually by deleting certain elements).\n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+      "bucket": "collector_by_class",
+      "selection_rule": "CircuitNamingScheme filtered by IsValidCircuitNamingSchemeId",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.IsValidCircuitNamingSchemeId(Autodesk.Revit.DB.Document,Autodesk.Revit.DB.ElementId)\"><summary>\n   Verifies that the circuit naming scheme id can be used with CircuitNamingSchemeSettings.\n</summary><param name=\"aDocument\">\n   The document.\n</param><param name=\"circuitNamingSchemeId\">\n   The circuit naming scheme id to be checked.\n</param><returns>\n   True if the circuit naming scheme id is valid for CircuitNamingSchemeSettings.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><since>\n   2021\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+      "bucket": "dedicated_collection",
+      "selection_rule": "Current CableType.GetUsableCableSizeIds only; do not change CableType",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.CableType.GetUsableCableSizeIds\"><summary>\n   Gets all the Cable Sizes that can be used by this Cable Type, sorted by name.\n</summary><returns>\n   All the Cable Size ids that can be used by this Cable Type.\n</returns><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+      "bucket": "dedicated_collection",
+      "selection_rule": "InsulationMaterial.GetInsulationMaterialIds",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.InsulationMaterial.GetInsulationMaterialIds(Autodesk.Revit.DB.Document)\"><summary>\n   Gets all the Conductor Insulation Material ids in the given document, sorted by name.\n</summary><param name=\"document\">\n   The document.\n</param><returns>\n   All the Conductor Insulation Material ids in this document.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   document is not a project document.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   The document is in failure mode: an operation has failed,\n   and Revit requires the user to either cancel the operation\n   or fix the problem (usually by deleting certain elements).\n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+      "bucket": "dedicated_collection",
+      "selection_rule": "TemperatureRating.GetTemperatureRatingIds",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.TemperatureRating.GetTemperatureRatingIds(Autodesk.Revit.DB.Document)\"><summary>\n   Gets all the Conductor Temperature Rating ids in the given document, sorted by name.\n</summary><param name=\"document\">\n   The document.\n</param><returns>\n   All the Conductor Temperature Rating ids in this document.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   document is not a project document.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   The document is in failure mode: an operation has failed,\n   and Revit requires the user to either cancel the operation\n   or fix the problem (usually by deleting certain elements).\n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+      "bucket": "dedicated_collection",
+      "selection_rule": "ConductorMaterial.GetConductorMaterialIds",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Electrical.ConductorMaterial.GetConductorMaterialIds(Autodesk.Revit.DB.Document)\"><summary>\n   Gets all the Conductor Material ids in the given document, sorted by name.\n</summary><param name=\"document\">\n   The document.\n</param><returns>\n   All the Conductor Material ids in this document.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   document is not a project document.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   The document is in failure mode: an operation has failed,\n   and Revit requires the user to either cancel the operation\n   or fix the problem (usually by deleting certain elements).\n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternId",
+      "bucket": "collector_by_class",
+      "selection_rule": "FillPatternElement with FillPatternTarget.Drafting; project only",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternId\"><summary>\n   The background fill pattern Id.\n</summary><remarks>\n   The FillPattern used for a background pattern must have a 'Drafting' target.\n   This applies to both project and family elements.\n   In addition, when the FilledRegionAttributes element is in a family, the pattern\n   cannot be the solid fill pattern unless the 'IsMasking' property is set to true.\n   InvalidElementId is used when there is no background pattern\n</remarks><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The patternId must either be InvalidElementId or represent a valid FillPatternElement.\n   -or-\n   When setting this property: The patternId must be a 'Drafting' pattern.\n   -or-\n   When setting this property: In a family the patternId can not be a solid fill pattern if the 'IsMasking' property is false.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2019\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+      "bucket": "nothing_documented",
+      "selection_rule": "no_proven_valid_alternative: structural-layer applicability and compatible structural material subset not established",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.FloorType.StructuralMaterialId\"><summary>\n   Returns the identifier of the material that defines the element's structural analysis properties.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   When setting this property: the floor does not have a structural material\n</exception><since>\n   2014\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillPatternId",
+      "bucket": "collector_by_class",
+      "selection_rule": "FillPatternElement; no undocumented sentinel or cross-kind ID",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.MEPSystemType.FillPatternId\"><summary>\n   Indicates the fill pattern id that should override the fill pattern id for all components in the system.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LinePatternId",
+      "bucket": "collector_by_class",
+      "selection_rule": "LinePatternElement; no undocumented sentinel or cross-kind ID",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.MEPSystemType.LinePatternId\"><summary>\n   Indicates the line pattern id that should override the line pattern id for all components in the system.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.MaterialId",
+      "bucket": "collector_by_class",
+      "selection_rule": "Material",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.MEPSystemType.MaterialId\"><summary>\n   Indicates the material id that should override the material for all components in the system.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2012\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+      "bucket": "collector_by_class",
+      "selection_rule": "FillPatternElement with FillPatternTarget.Drafting",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Material.CutBackgroundPatternId\"><summary>\n   The id of the FillPatternElement used as the background pattern of faces with this material in cut views.\n</summary><remarks>\n   The FillPattern used for a cut pattern must have a 'Drafting' target.\n</remarks><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The element id must represent a valid FillPatternElement.\n   -or-\n   When setting this property: The FillPattern target must be a drafting pattern.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2019\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternId",
+      "bucket": "collector_by_class",
+      "selection_rule": "FillPatternElement with FillPatternTarget.Drafting",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternId\"><summary>\n   The id of the FillPatternElement used as the background pattern of faces with this material in normal views.\n</summary><remarks>\n   The FillPattern used for a background pattern must have a 'Drafting' target.\n</remarks><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The element id must represent a valid FillPatternElement.\n   -or-\n   When setting this property: The FillPattern target must be a drafting pattern.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2019\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+      "bucket": "nothing_documented",
+      "selection_rule": "no_proven_valid_alternative: hidden-line-compatible style subset not established",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle\"><summary>\n   The line style that determines how the lines of a hidden segment display at the point where the segments cross.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The line style is invalid for hidden line display.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2022\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.DimensionStyleId",
+      "bucket": "collector_by_class",
+      "selection_rule": "DimensionType with Linear style and IsAllowedDimensionStyle",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.MultiReferenceAnnotationType.IsAllowedDimensionStyle(Autodesk.Revit.DB.ElementId)\"><summary>\n   Checks if the dimension style can be used with multi-reference annotations.\n</summary><remarks>\n   Only linear dimension styles are allowed.\n</remarks><param name=\"dimensionStyleId\">\n   The dimension style to check.\n</param><returns>\n   True if the dimension style can be used by multi-reference annotations.\n</returns><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><since>\n   2014\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "bucket": "dedicated_collection",
+      "selection_rule": "Part.GetSourceElementOriginalCategoryIds; returns category IDs not material elements",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Part.GetSourceElementOriginalCategoryIds\"><summary>\n   Gets the category ids of the source elements which were used to form this part.\n</summary><returns>\n   The category ids.\n</returns><since>\n   2013\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+      "bucket": "dedicated_collection",
+      "selection_rule": "FabricArea.GetValidViewsForTags",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Structure.FabricArea.GetValidViewsForTags\"><summary>\n   Gets ids of the views where tags and symbols can be placed for the FabricArea and/or FabricSheets\n</summary><returns>\n   The collection of View ElementIds.\n</returns><since>\n   2013\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.Material",
+      "bucket": "collector_by_class",
+      "selection_rule": "Material",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Structure.FabricSheetType.Material\"><summary>\n   The id of the material assigned to wires.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: The sheetMaterial cannot map to a valid material element.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2013\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+      "bucket": "category_constrained",
+      "selection_rule": "Document.Settings.Categories OST_LoadCases.SubCategories",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId\"><summary>\n   Build-in or user defined subcategory of Structural Load Cases (<see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCases\" />) category.\n</summary><remarks>\n   Build-in Structural Load Cases (<see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCases\" />) subcategories are:\n   <see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesDead\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesLive\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesWind\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesSnow\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesRoofLive\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesAccidental\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesTemperature\" /><see cref=\"F:Autodesk.Revit.DB.BuiltInCategory.OST_LoadCasesSeismic\" /></remarks><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: the subcategoryId does not refer to predefined nor user defined load case category element.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2017\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId",
+      "bucket": "collector_by_class",
+      "selection_rule": "DimensionType with Angular StyleType",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId\"><summary>\n   Identifies the Id of the angular dimension type which is used to show dimensions.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: \n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2024\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId",
+      "bucket": "collector_by_class",
+      "selection_rule": "DimensionType with Diameter StyleType",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId\"><summary>\n   Identifies the Id of the diameter dimension type which is used to show dimensions.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: \n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2024\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId",
+      "bucket": "collector_by_class",
+      "selection_rule": "DimensionType with Radial StyleType",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId\"><summary>\n   Identifies the Id of the radial dimension type which is used to show dimensions.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: \n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2024\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
+      "bucket": "collector_by_class",
+      "selection_rule": "DimensionType with Linear StyleType",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId\"><summary>\n   Identifies the Id of the linear dimension type which is used to show segments length.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: \n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2024\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "bucket": "dedicated_collection",
+      "selection_rule": "StructuralConnectionApprovalType.GetAllStructuralConnectionApprovalTypes",
+      "evidence": [
+        "<member name=\"M:Autodesk.Revit.DB.Structure.StructuralConnectionApprovalType.GetAllStructuralConnectionApprovalTypes(Autodesk.Revit.DB.Document,System.Collections.Generic.ICollection{Autodesk.Revit.DB.ElementId}@)\"><summary>\n   Collects the ids of all StructuralConnectionApprovalTypes in the document.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   A non-optional argument was null\n</exception><since>\n   2017\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TableView.TargetId",
+      "bucket": "nothing_documented",
+      "selection_rule": "no_proven_valid_alternative: table-specific allowable target set not established",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.TableView.TargetId\"><summary>\n   the element id of the element that is being viewed\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+      "bucket": "collector_by_class",
+      "selection_rule": "AnalysisDisplayStyle; view applicability remains a runtime gate",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.View.AnalysisDisplayStyleId\"><summary>\n   Element id of Analysis Display Style associated with the view.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   When setting this property: Cannot set the AnalysisDisplayStyleId for the specified view.\n</exception><since>\n   2011\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+      "bucket": "nothing_documented",
+      "selection_rule": "no_proven_valid_alternative: applicable view contexts not established by the empty exception documentation",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.View.ViewPositionId\"><summary>\n   The id of the view's saved position. Default is set to ElementId.InvalidElementId.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.InvalidOperationException\">\n   When setting this property: \n</exception><since>\n   2026\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+      "bucket": "collector_by_class",
+      "selection_rule": "SheetCollection; reject assembly sheets",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.ViewSheet.SheetCollectionId\"><summary>\n   The ID of the sheet collection this sheet is associated with.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\n   When setting this property: Assembly Sheets can't be SheetCollections.\n   -or-\n   When setting this property: The ElementId sheetCollectionId does not correspond to the SheetCollection.\n</exception><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentNullException\">\n   When setting this property: A non-optional argument was null\n</exception><since>\n   2025\n</since></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+      "bucket": "collector_by_class",
+      "selection_rule": "BrowserOrganization Type=Sheets; require existing IsAutomatic true",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId\"><summary><see cref=\"T:Autodesk.Revit.DB.ElementId\" /> to the <see cref=\"T:Autodesk.Revit.DB.BrowserOrganization\" /> for sheets.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\nThrown when the <see cref=\"T:Autodesk.Revit.DB.ElementId\" /> does not reference to <see cref=\"T:Autodesk.Revit.DB.BrowserOrganization\" />, or the target type of <see cref=\"T:Autodesk.Revit.DB.BrowserOrganization\" /> is incompatible.\n</exception><remarks>\nIgnored when <see cref=\"!:Autodesk::Revit::DB::PrintSetup::IsAutomatic\" /> is <see langword=\"false\" />.\n</remarks></member>"
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+      "bucket": "collector_by_class",
+      "selection_rule": "BrowserOrganization Type=Views; require existing IsAutomatic true",
+      "evidence": [
+        "<member name=\"P:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId\"><summary><see cref=\"T:Autodesk.Revit.DB.ElementId\" /> to the <see cref=\"T:Autodesk.Revit.DB.BrowserOrganization\" /> for non-sheet views.\n</summary><exception cref=\"T:Autodesk.Revit.Exceptions.ArgumentException\">\nThrown when the <see cref=\"T:Autodesk.Revit.DB.ElementId\" /> does not reference to <see cref=\"T:Autodesk.Revit.DB.BrowserOrganization\" />, or the target type of <see cref=\"T:Autodesk.Revit.DB.BrowserOrganization\" /> is incompatible.\n</exception><remarks>\nIgnored when <see cref=\"!:Autodesk::Revit::DB::PrintSetup::IsAutomatic\" /> is <see langword=\"false\" />.\n</remarks></member>"
+      ]
+    }
+  ]
+}
