@@ -9,21 +9,15 @@ namespace LECG.Services
     public class MaterialAssignmentExecutionService
     {
         private readonly MaterialElementGroupingService _materialElementGroupingService;
-        private readonly MaterialAssignmentProgressService _materialAssignmentProgressService;
-        private readonly MaterialElementTypeResolverService _materialElementTypeResolverService;
         private readonly MaterialTypeAssignmentProcessService _materialTypeAssignmentProcessService;
         private readonly ITransactionService _transactionService;
 
         public MaterialAssignmentExecutionService(
             MaterialElementGroupingService materialElementGroupingService,
-            MaterialAssignmentProgressService materialAssignmentProgressService,
-            MaterialElementTypeResolverService materialElementTypeResolverService,
             MaterialTypeAssignmentProcessService materialTypeAssignmentProcessService,
             ITransactionService transactionService)
         {
             _materialElementGroupingService = materialElementGroupingService;
-            _materialAssignmentProgressService = materialAssignmentProgressService;
-            _materialElementTypeResolverService = materialElementTypeResolverService;
             _materialTypeAssignmentProcessService = materialTypeAssignmentProcessService;
             _transactionService = transactionService;
         }
@@ -52,9 +46,9 @@ namespace LECG.Services
                 foreach (var kvp in elementsByType)
                 {
                     processedTypes++;
-                    double pct = _materialAssignmentProgressService.ToProgressPercent(processedTypes, totalTypes);
+                    double pct = 20 + processedTypes * 70.0 / totalTypes;
 
-                    ElementType? elemType = _materialElementTypeResolverService.Resolve(currentDoc, kvp.Key);
+                    ElementType? elemType = currentDoc.GetElement(kvp.Key) as ElementType;
                     if (elemType == null) continue;
 
                     reporter.Report($"Processing: {elemType.Name}", pct);

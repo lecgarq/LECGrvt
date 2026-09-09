@@ -88,7 +88,7 @@ A sanctioned, safe `dotnet test` workflow exists (TEST-04) and a reusable suppre
 - CS0618 SimpleProgressReporter obsolete-API cleanup (remaining call sites incl. ConvertCadCommand, SearchReplaceServiceTests) — pre-existing Bucket B migration track, not test scaffolding.
 - `TreatWarningsAsErrors` for LECG.Tests — revisit after warning cleanup lands.
 - Actively unifying ci.yml's test step with the sanctioned invocation — Phase 10 (deploy/guardrail documentation) territory if wanted.
-- STATE.md stale blocker (CI-mode compile issue) should be cleared when this phase completes — housekeeping, handled by GSD state updates.
+- STATE.md stale blocker (CI-mode compile issue) should be cleared when this phase completes as project-state housekeeping.
 
 </deferred>
 

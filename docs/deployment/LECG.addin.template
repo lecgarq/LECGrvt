@@ -2,8 +2,8 @@
 <RevitAddIns>
   <AddIn Type="Application">
     <Name>LECG</Name>
-    <Assembly>LECG.dll</Assembly>
-    <AddInId>YOUR-GUID-HERE</AddInId>
+    <Assembly>LECG\LECG.dll</Assembly>
+    <AddInId>9B0AB379-D085-4F8A-AA18-A89A4C8180FF</AddInId>
     <FullClassName>LECG.App</FullClassName>
     <VendorId>LECG</VendorId>
     <VendorDescription>LECG, https://lecg.com</VendorDescription>

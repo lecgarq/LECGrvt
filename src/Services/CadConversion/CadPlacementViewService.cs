@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadPlacementViewService : ICadPlacementViewService
+    public class CadPlacementViewService
     {
         public View? ResolvePlacementView(Document doc, View? preferredView)
         {

@@ -64,7 +64,7 @@ public class FormulaUpdateServiceTests
     {
         // Verify via reflection that BatchRenameExecutionService has a constructor
         // that accepts IFormulaUpdateService as a parameter. This avoids constructing
-        // Revit-API-dependent mocks (ITransactionService/IFamilyLoadOptionsFactory) which
+        // Revit-API-dependent collaborators (ITransactionService/FamilyLoadOptionsFactory) which
         // Castle DynamicProxy cannot proxy without RevitAPI.dll loaded in the test runner.
         var ctors = typeof(BatchRenameExecutionService).GetConstructors();
         bool hasFormulaUpdateServiceParam = ctors.Any(ctor =>

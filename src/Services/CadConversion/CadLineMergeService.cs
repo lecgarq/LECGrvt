@@ -7,7 +7,7 @@ using RevitExceptions = Autodesk.Revit.Exceptions;
 
 namespace LECG.Services
 {
-    public class CadLineMergeService : ICadLineMergeService
+    public class CadLineMergeService
     {
         public List<Line> MergeCollinearLines(List<Line> sourceLines)
         {

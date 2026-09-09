@@ -4,11 +4,11 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFamilyInstancePlacementService : ICadFamilyInstancePlacementService
+    public class CadFamilyInstancePlacementService
     {
-        private readonly ICadPlacementViewService _placementViewService;
+        private readonly CadPlacementViewService _placementViewService;
 
-        public CadFamilyInstancePlacementService(ICadPlacementViewService placementViewService)
+        public CadFamilyInstancePlacementService(CadPlacementViewService placementViewService)
         {
             _placementViewService = placementViewService;
         }

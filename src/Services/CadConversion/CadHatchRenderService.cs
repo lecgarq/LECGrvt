@@ -6,13 +6,13 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadHatchRenderService : ICadHatchRenderService
+    public class CadHatchRenderService
     {
-        private readonly ICadFilledRegionTypeService _filledRegionTypeService;
-        private readonly ICadHatchProgressService _cadHatchProgressService;
-        private readonly ICadHatchLoopPreparationService _cadHatchLoopPreparationService;
+        private readonly CadFilledRegionTypeService _filledRegionTypeService;
+        private readonly CadHatchProgressService _cadHatchProgressService;
+        private readonly CadHatchLoopPreparationService _cadHatchLoopPreparationService;
 
-        public CadHatchRenderService(ICadFilledRegionTypeService filledRegionTypeService, ICadHatchProgressService cadHatchProgressService, ICadHatchLoopPreparationService cadHatchLoopPreparationService)
+        public CadHatchRenderService(CadFilledRegionTypeService filledRegionTypeService, CadHatchProgressService cadHatchProgressService, CadHatchLoopPreparationService cadHatchLoopPreparationService)
         {
             _filledRegionTypeService = filledRegionTypeService;
             _cadHatchProgressService = cadHatchProgressService;

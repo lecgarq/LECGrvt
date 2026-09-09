@@ -179,8 +179,13 @@ namespace LECG.Commands
 
         private static bool TryValidateSettings(PurgeDialogSettings settings)
         {
-            IValidationService? validationService = ServiceLocator.GetService<IValidationService>();
-            return validationService == null || validationService.TryValidateAndShow(settings, "Purge Validation");
+            if (ValidationRules.TryValidate(settings, out string message))
+            {
+                return true;
+            }
+
+            LecgDialog.Show("Purge Validation", message);
+            return false;
         }
 
         private static bool IsExpectedPurgeDialogException(Exception ex)

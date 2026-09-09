@@ -4,12 +4,12 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadGeometryExtractionService : ICadGeometryExtractionService
+    public class CadGeometryExtractionService
     {
-        private readonly ICadSolidHatchExtractionService _cadSolidHatchExtractionService;
-        private readonly ICadPolylineExtractionService _cadPolylineExtractionService;
+        private readonly CadSolidHatchExtractionService _cadSolidHatchExtractionService;
+        private readonly CadPolylineExtractionService _cadPolylineExtractionService;
 
-        public CadGeometryExtractionService(ICadSolidHatchExtractionService cadSolidHatchExtractionService, ICadPolylineExtractionService cadPolylineExtractionService)
+        public CadGeometryExtractionService(CadSolidHatchExtractionService cadSolidHatchExtractionService, CadPolylineExtractionService cadPolylineExtractionService)
         {
             _cadSolidHatchExtractionService = cadSolidHatchExtractionService;
             _cadPolylineExtractionService = cadPolylineExtractionService;

@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFamilySaveService : ICadFamilySaveService
+    public class CadFamilySaveService
     {
         public string Save(Document familyDoc, string name)
         {

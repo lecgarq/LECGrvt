@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.IFC;
-using LECG.Services.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace LECG.Services
 {
     public class GeometryBoundaryService
     {
-        private readonly IAppMemoryCache _appMemoryCache;
+        private readonly IMemoryCache _memoryCache;
 
-        public GeometryBoundaryService(IAppMemoryCache appMemoryCache)
+        public GeometryBoundaryService(IMemoryCache memoryCache)
         {
-            _appMemoryCache = appMemoryCache;
+            _memoryCache = memoryCache;
         }
 
         public IList<CurveLoop> ExtractLoops(Element element)
@@ -39,11 +39,12 @@ namespace LECG.Services
 
             // The key includes document identity, element id, and sketch id. We still keep the
             // expiration short because Revit can mutate sketch geometry without changing ids.
-            return _appMemoryCache.GetOrCreate(
-                cacheKey,
-                () => ExtractNormalizedLoops(sketch),
-                TimeSpan.FromSeconds(30),
-                TimeSpan.FromSeconds(10));
+            return _memoryCache.GetOrCreate(cacheKey, entry =>
+            {
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30);
+                entry.SlidingExpiration = TimeSpan.FromSeconds(10);
+                return ExtractNormalizedLoops(sketch);
+            })!;
         }
 
         private IList<CurveLoop> ExtractNormalizedLoops(Sketch sketch)

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "output": "lecg-knowledge.html",
+  "specification_sha256": "58ce05a0af3af1ef2b35567e2640ceec453c2c8ff801cad5df8ab34797480d00",
+  "artifact_sha256": "6cc5b1b3e5105131327b5d43925b9c1a2fcfeb964517a57ba6bc5d060e88dd0a",
+  "inventory_sha256": "68b73fe107545eec052acf15814be2e9ef7a7edbea4dcd4ce2abeb9c9c0797d2",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "source_references": {
+    "count": 33,
+    "verified": true,
+    "revision": "d3a105199a04aa7295b634dba829397b805cd18e"
+  },
+  "browser_evidence": "passed",
+  "browser_receipt": "lecg-knowledge.visual-check.json",
+  "visual_review": "passed",
+  "visual_review_scope": {
+    "method": "Image-capable review of all four final screenshot sidecars",
+    "viewports": [
+      "1440x900",
+      "2048x1320"
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "observations": [
+      "No visible node or label overlap; all relationship labels retained.",
+      "Clear left-to-right overview with vertical knowledge branches.",
+      "Nodes, cards and navigation fit; large desktop composition uses the available height."
+    ],
+    "limitations": [
+      "Screenshot review covers default READ/Still presentation, not independent interaction or export testing."
+    ]
+  },
+  "correction_rounds": 0,
+  "post_delivery_source_link_corrections": 1,
+  "build": {
+    "command": "dotnet build -p:SkipRevitDeploy=true",
+    "status": "passed",
+    "errors": 0,
+    "warnings": 0,
+    "scope": "Root LECG solution; live Revit deployment disabled"
+  },
+  "runtime_tests_rerun": false,
+  "coverage_note": "API states come from the embedded September 5 campaign evidence; this documentation task did not retest Revit functions.",
+  "inventory_note": "Working-tree source hashes are explicit; exact byte comparison with Git blobs can differ due to checkout line endings."
+}

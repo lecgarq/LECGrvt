@@ -152,7 +152,7 @@ namespace LECG.Commands
                 return;
             }
 
-            var loadOptionsFactory = ServiceLocator.GetRequiredService<IFamilyLoadOptionsFactory>();
+            var loadOptionsFactory = ServiceLocator.GetRequiredService<FamilyLoadOptionsFactory>();
             s_projectRunActive = true;
             Log("Processing families in short slices...");
             UpdateProgress(0, "Queued");
@@ -168,7 +168,7 @@ namespace LECG.Commands
             private readonly Document _projectDocument;
             private readonly IReadOnlyList<ProjectFamilyTarget> _families;
             private readonly TargetGroupContext _targetGroup;
-            private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
+            private readonly FamilyLoadOptionsFactory _loadOptionsFactory;
 
             private int _familyIndex;
             private int _totalChanged;
@@ -183,7 +183,7 @@ namespace LECG.Commands
                 Document projectDocument,
                 IReadOnlyList<ProjectFamilyTarget> families,
                 TargetGroupContext targetGroup,
-                IFamilyLoadOptionsFactory loadOptionsFactory)
+                FamilyLoadOptionsFactory loadOptionsFactory)
             {
                 _command = command ?? throw new ArgumentNullException(nameof(command));
                 _application = application ?? throw new ArgumentNullException(nameof(application));
@@ -262,7 +262,7 @@ namespace LECG.Commands
             }
         }
 
-        private ProjectFamilyResult ProcessProjectFamily(Document projectDoc, ProjectFamilyTarget family, TargetGroupContext targetGroup, IFamilyLoadOptionsFactory loadOptionsFactory)
+        private ProjectFamilyResult ProcessProjectFamily(Document projectDoc, ProjectFamilyTarget family, TargetGroupContext targetGroup, FamilyLoadOptionsFactory loadOptionsFactory)
         {
             Family? currentFamily = ResolveEditableProjectFamily(projectDoc, family);
             if (currentFamily == null)
@@ -379,7 +379,7 @@ namespace LECG.Commands
             }
         }
 
-        private bool TryReloadFamily(Document projectDoc, Document famDoc, string familyName, IFamilyLoadOptionsFactory loadOptionsFactory)
+        private bool TryReloadFamily(Document projectDoc, Document famDoc, string familyName, FamilyLoadOptionsFactory loadOptionsFactory)
         {
             try
             {

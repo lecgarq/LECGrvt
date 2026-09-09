@@ -5,13 +5,13 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadTempDwgExtractionService : ICadTempDwgExtractionService
+    public class CadTempDwgExtractionService
     {
-        private readonly ICadGeometryExtractionService _geometryExtractionService;
+        private readonly CadGeometryExtractionService _geometryExtractionService;
         private readonly ITransactionService _transactionService;
 
         public CadTempDwgExtractionService(
-            ICadGeometryExtractionService geometryExtractionService,
+            CadGeometryExtractionService geometryExtractionService,
             ITransactionService transactionService)
         {
             _geometryExtractionService = geometryExtractionService;

@@ -126,8 +126,8 @@ public class SearchReplaceServiceTests
         var (sut, _, execution, _) = Build();
         execution.NextCount = 7;
 
-        var reporter = new SimpleProgressReporter(_ => { });
         var logger = Substitute.For<LECG.Services.Logging.ILogger>();
+        var reporter = new LegacyProgressReporter(logger);
 
         var actual = sut.ExecuteBatchRename(null!, new List<ElementRowViewModel>(), logger, reporter);
 

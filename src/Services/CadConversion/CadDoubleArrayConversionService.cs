@@ -4,7 +4,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadDoubleArrayConversionService : ICadDoubleArrayConversionService
+    public class CadDoubleArrayConversionService
     {
         public IList<double> ToList(DoubleArray values)
         {

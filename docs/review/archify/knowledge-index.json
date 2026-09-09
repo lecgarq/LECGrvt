@@ -1,0 +1,1421 @@
+{
+  "schema_version": 1,
+  "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
+  "repository_revision": "d3a105199a04aa7295b634dba829397b805cd18e",
+  "source_inputs_match_revision": false,
+  "counts": {
+    "command_classes": 37,
+    "service_source_files": 198,
+    "mcp_top_level_tools": 16,
+    "native_operations": 52,
+    "native_reads": 35,
+    "native_changes": 17,
+    "curated_recipes": 29,
+    "shared_references": 3000,
+    "api_validation_entries": 2216
+  },
+  "commands": [
+    {
+      "name": "AlignLeftCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 18
+    },
+    {
+      "name": "AlignCenterCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 24
+    },
+    {
+      "name": "AlignRightCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 30
+    },
+    {
+      "name": "AlignTopCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 37
+    },
+    {
+      "name": "AlignMiddleCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 43
+    },
+    {
+      "name": "AlignBottomCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 49
+    },
+    {
+      "name": "DistributeHorizontallyCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 56
+    },
+    {
+      "name": "DistributeVerticallyCommand",
+      "path": "src/Commands/AlignCommands.cs",
+      "line": 62
+    },
+    {
+      "name": "AlignEdgesCommand",
+      "path": "src/Commands/AlignEdgesCommand.cs",
+      "line": 14
+    },
+    {
+      "name": "AssignMaterialCommand",
+      "path": "src/Commands/AssignMaterialCommand.cs",
+      "line": 19
+    },
+    {
+      "name": "CategoryChangerCommand",
+      "path": "src/Commands/CategoryChangerCommand.cs",
+      "line": 17
+    },
+    {
+      "name": "ChangeLevelCommand",
+      "path": "src/Commands/ChangeLevelCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "CleanSchemasCommand",
+      "path": "src/Commands/CleanSchemasCommand.cs",
+      "line": 16
+    },
+    {
+      "name": "CompactingStylesCommand",
+      "path": "src/Commands/CompactingStylesCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "ConvertCadCommand",
+      "path": "src/Commands/ConvertCadCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "ConvertFamilyCommand",
+      "path": "src/Commands/ConvertFamilyCommand.cs",
+      "line": 16
+    },
+    {
+      "name": "ConvertFloorToToposolidCommand",
+      "path": "src/Commands/ConvertFloorToToposolidCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "ConvertSharedCommand",
+      "path": "src/Commands/ConvertSharedCommand.cs",
+      "line": 12
+    },
+    {
+      "name": "ConvertToposolidToFloorCommand",
+      "path": "src/Commands/ConvertToposolidToFloorCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "DivideToposolidCommand",
+      "path": "src/Commands/DivideToposolidCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "FilterCopyCommand",
+      "path": "src/Commands/FilterCopyCommand.cs",
+      "line": 11
+    },
+    {
+      "name": "FixPointsCommand",
+      "path": "src/Commands/FixPointsCommand.cs",
+      "line": 17
+    },
+    {
+      "name": "FormulaAutoGroupingCommand",
+      "path": "src/Commands/FormulaAutoGroupingCommand.cs",
+      "line": 26
+    },
+    {
+      "name": "HomeCommand",
+      "path": "src/Commands/HomeCommand.cs",
+      "line": 9
+    },
+    {
+      "name": "OffsetElevationsCommand",
+      "path": "src/Commands/OffsetElevationsCommand.cs",
+      "line": 19
+    },
+    {
+      "name": "PbrMaterialCreatorCommand",
+      "path": "src/Commands/PbrMaterialCreatorCommand.cs",
+      "line": 15
+    },
+    {
+      "name": "PurgeCommand",
+      "path": "src/Commands/PurgeCommand.cs",
+      "line": 24
+    },
+    {
+      "name": "RenderAppearanceMatchCommand",
+      "path": "src/Commands/RenderAppearanceMatchCommand.cs",
+      "line": 21
+    },
+    {
+      "name": "ResetSlabsCommand",
+      "path": "src/Commands/ResetSlabsCommand.cs",
+      "line": 21
+    },
+    {
+      "name": "SearchReplaceCommand",
+      "path": "src/Commands/SearchReplaceCommand.cs",
+      "line": 19
+    },
+    {
+      "name": "SexyRevitCommand",
+      "path": "src/Commands/SexyRevitCommand.cs",
+      "line": 18
+    },
+    {
+      "name": "SharedToFamilyParameterCommand",
+      "path": "src/Commands/SharedToFamilyParameterCommand.cs",
+      "line": 21
+    },
+    {
+      "name": "SimplifyPointsCommand",
+      "path": "src/Commands/SimplifyPointsCommand.cs",
+      "line": 19
+    },
+    {
+      "name": "SplitBoundariesCommand",
+      "path": "src/Commands/SplitBoundariesCommand.cs",
+      "line": 18
+    },
+    {
+      "name": "TypeToLinkedModelsCommand",
+      "path": "src/Commands/TypeToLinkedModelsCommand.cs",
+      "line": 21
+    },
+    {
+      "name": "UpdateContoursCommand",
+      "path": "src/Commands/UpdateContoursCommand.cs",
+      "line": 18
+    },
+    {
+      "name": "WarningsCommand",
+      "path": "src/Commands/WarningsCommand.cs",
+      "line": 11
+    }
+  ],
+  "services": {
+    "Alignment": [
+      "src/Services/Alignment/AlignEdgesBoundaryCollectionService.cs",
+      "src/Services/Alignment/AlignEdgesBoundaryPointService.cs",
+      "src/Services/Alignment/AlignEdgesCurveDivisionService.cs",
+      "src/Services/Alignment/AlignEdgesHitInfo.cs",
+      "src/Services/Alignment/AlignEdgesHitPointProjectionService.cs",
+      "src/Services/Alignment/AlignEdgesIntersectorService.cs",
+      "src/Services/Alignment/AlignEdgesPointInsertionService.cs",
+      "src/Services/Alignment/AlignEdgesService.cs",
+      "src/Services/Alignment/AlignEdgesSourceResult.cs",
+      "src/Services/Alignment/AlignEdgesToposolidProcessingService.cs",
+      "src/Services/Alignment/AlignEdgesVertexAlignmentService.cs",
+      "src/Services/Alignment/AlignElementsService.cs",
+      "src/Services/Alignment/ReferenceRaycastService.cs"
+    ],
+    "CadConversion": [
+      "src/Services/CadConversion/CadConversionService.cs",
+      "src/Services/CadConversion/CadCurveFlattenService.cs",
+      "src/Services/CadConversion/CadCurveRenderService.cs",
+      "src/Services/CadConversion/CadCurveTessellationService.cs",
+      "src/Services/CadConversion/CadDataDrawService.cs",
+      "src/Services/CadConversion/CadDataValidationService.cs",
+      "src/Services/CadConversion/CadDoubleArrayConversionService.cs",
+      "src/Services/CadConversion/CadDrawingViewService.cs",
+      "src/Services/CadConversion/CadDwgFamilyCreationService.cs",
+      "src/Services/CadConversion/CadFamilyBuildService.cs",
+      "src/Services/CadConversion/CadFamilyInstancePlacementService.cs",
+      "src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+      "src/Services/CadConversion/CadFamilyLoadResolveService.cs",
+      "src/Services/CadConversion/CadFamilySaveService.cs",
+      "src/Services/CadConversion/CadFamilySymbolService.cs",
+      "src/Services/CadConversion/CadFilledRegionTypeService.cs",
+      "src/Services/CadConversion/CadGeometryData.cs",
+      "src/Services/CadConversion/CadGeometryExtractionService.cs",
+      "src/Services/CadConversion/CadGeometryOptimizationService.cs",
+      "src/Services/CadConversion/CadHatchLoopPreparationService.cs",
+      "src/Services/CadConversion/CadHatchProgressService.cs",
+      "src/Services/CadConversion/CadHatchRenderService.cs",
+      "src/Services/CadConversion/CadImportDataPreparationService.cs",
+      "src/Services/CadConversion/CadImportFamilyCreationService.cs",
+      "src/Services/CadConversion/CadImportInstanceCenterService.cs",
+      "src/Services/CadConversion/CadLineMergeService.cs",
+      "src/Services/CadConversion/CadLineStyleService.cs",
+      "src/Services/CadConversion/CadPlacementViewService.cs",
+      "src/Services/CadConversion/CadPointFlattenService.cs",
+      "src/Services/CadConversion/CadPolylineExtractionService.cs",
+      "src/Services/CadConversion/CadRenderContextService.cs",
+      "src/Services/CadConversion/CadSolidHatchExtractionService.cs",
+      "src/Services/CadConversion/CadSourceCleanupService.cs",
+      "src/Services/CadConversion/CadSplineFlattenService.cs",
+      "src/Services/CadConversion/CadTempDwgExtractionService.cs",
+      "src/Services/CadConversion/CadTempFileCleanupService.cs",
+      "src/Services/CadConversion/ICadConversionService.cs",
+      "src/Services/CadConversion/ICadCurveFlattenService.cs",
+      "src/Services/CadConversion/ICadCurveRenderService.cs",
+      "src/Services/CadConversion/ICadCurveTessellationService.cs",
+      "src/Services/CadConversion/ICadDataDrawService.cs",
+      "src/Services/CadConversion/ICadDataValidationService.cs",
+      "src/Services/CadConversion/ICadDoubleArrayConversionService.cs",
+      "src/Services/CadConversion/ICadDrawingViewService.cs",
+      "src/Services/CadConversion/ICadDwgFamilyCreationService.cs",
+      "src/Services/CadConversion/ICadFamilyBuildService.cs",
+      "src/Services/CadConversion/ICadFamilyInstancePlacementService.cs",
+      "src/Services/CadConversion/ICadFamilyLoadPlacementService.cs",
+      "src/Services/CadConversion/ICadFamilyLoadResolveService.cs",
+      "src/Services/CadConversion/ICadFamilySaveService.cs",
+      "src/Services/CadConversion/ICadFamilySymbolService.cs",
+      "src/Services/CadConversion/ICadFilledRegionTypeService.cs",
+      "src/Services/CadConversion/ICadGeometryExtractionService.cs",
+      "src/Services/CadConversion/ICadGeometryOptimizationService.cs",
+      "src/Services/CadConversion/ICadHatchLoopPreparationService.cs",
+      "src/Services/CadConversion/ICadHatchProgressService.cs",
+      "src/Services/CadConversion/ICadHatchRenderService.cs",
+      "src/Services/CadConversion/ICadImportDataPreparationService.cs",
+      "src/Services/CadConversion/ICadImportFamilyCreationService.cs",
+      "src/Services/CadConversion/ICadImportInstanceCenterService.cs",
+      "src/Services/CadConversion/ICadLineMergeService.cs",
+      "src/Services/CadConversion/ICadLineStyleService.cs",
+      "src/Services/CadConversion/ICadPlacementViewService.cs",
+      "src/Services/CadConversion/ICadPointFlattenService.cs",
+      "src/Services/CadConversion/ICadPolylineExtractionService.cs",
+      "src/Services/CadConversion/ICadRenderContextService.cs",
+      "src/Services/CadConversion/ICadSolidHatchExtractionService.cs",
+      "src/Services/CadConversion/ICadSourceCleanupService.cs",
+      "src/Services/CadConversion/ICadSplineFlattenService.cs",
+      "src/Services/CadConversion/ICadTempDwgExtractionService.cs",
+      "src/Services/CadConversion/ICadTempFileCleanupService.cs"
+    ],
+    "Shared": [
+      "src/Services/ElementLabelService.cs"
+    ],
+    "FamilyConversion": [
+      "src/Services/FamilyConversion/FamilyConversionExecutionService.cs",
+      "src/Services/FamilyConversion/FamilyConversionFinalizeService.cs",
+      "src/Services/FamilyConversion/FamilyConversionLoggingService.cs",
+      "src/Services/FamilyConversion/FamilyConversionService.cs",
+      "src/Services/FamilyConversion/FamilyEditorService.cs",
+      "src/Services/FamilyConversion/FamilyGeometryCollectionService.cs",
+      "src/Services/FamilyConversion/FamilyGeometryCopyService.cs",
+      "src/Services/FamilyConversion/FamilyLoadOptionsFactory.cs",
+      "src/Services/FamilyConversion/FamilyParameterSetupService.cs",
+      "src/Services/FamilyConversion/FamilyProjectLoadService.cs",
+      "src/Services/FamilyConversion/FamilySaveLoadService.cs",
+      "src/Services/FamilyConversion/FamilySaveService.cs",
+      "src/Services/FamilyConversion/FamilySourceDocumentService.cs",
+      "src/Services/FamilyConversion/FamilyTargetDocumentService.cs",
+      "src/Services/FamilyConversion/FamilyTempFileCleanupService.cs",
+      "src/Services/FamilyConversion/FamilyTemplatePathService.cs",
+      "src/Services/FamilyConversion/IFamilyLoadOptionsFactory.cs",
+      "src/Services/FamilyConversion/SharedToFamilyParameterService.cs"
+    ],
+    "Graphics": [
+      "src/Services/Graphics/IViewGraphicsFacade.cs",
+      "src/Services/Graphics/RevitViewGraphicsFacade.cs",
+      "src/Services/Graphics/SexyRevitService.cs"
+    ],
+    "Health": [
+      "src/Services/Health/WarningsService.cs"
+    ],
+    "Infrastructure": [
+      "src/Services/Infrastructure/AppMemoryCache.cs",
+      "src/Services/Infrastructure/FilterCopyService.cs",
+      "src/Services/Infrastructure/IAppMemoryCache.cs",
+      "src/Services/Infrastructure/IFilterCopyService.cs",
+      "src/Services/Infrastructure/ILinkedModelExportService.cs",
+      "src/Services/Infrastructure/IProgressReporter.cs",
+      "src/Services/Infrastructure/ITransactionService.cs",
+      "src/Services/Infrastructure/LegacyProgressReporter.cs",
+      "src/Services/Infrastructure/LinkedModelExportService.cs",
+      "src/Services/Infrastructure/Logging/CommandLogContext.cs",
+      "src/Services/Infrastructure/Logging/LogEntry.cs",
+      "src/Services/Infrastructure/Logging/Logger.cs",
+      "src/Services/Infrastructure/Logging/SerilogBootstrapper.cs",
+      "src/Services/Infrastructure/RevitCommandProgressReporter.cs",
+      "src/Services/Infrastructure/SettingsManager.cs",
+      "src/Services/Infrastructure/TransactionService.cs"
+    ],
+    "Interfaces": [
+      "src/Services/Interfaces/ISharedToFamilyParameterService.cs"
+    ],
+    "Materials": [
+      "src/Services/Materials/IImageColorExtractionService.cs",
+      "src/Services/Materials/ImageColorExtractionService.cs",
+      "src/Services/Materials/IMaterialAppearanceAssetService.cs",
+      "src/Services/Materials/IMaterialColorSequenceService.cs",
+      "src/Services/Materials/IMaterialCreationService.cs",
+      "src/Services/Materials/IMaterialPbrService.cs",
+      "src/Services/Materials/IMaterialService.cs",
+      "src/Services/Materials/IMaterialTextureLookupService.cs",
+      "src/Services/Materials/MaterialAppearanceAssetService.cs",
+      "src/Services/Materials/MaterialAssignmentExecutionService.cs",
+      "src/Services/Materials/MaterialAssignmentProgressService.cs",
+      "src/Services/Materials/MaterialBitmapPropertyService.cs",
+      "src/Services/Materials/MaterialBumpMapNormalizer.cs",
+      "src/Services/Materials/MaterialColorSequenceService.cs",
+      "src/Services/Materials/MaterialCreationService.cs",
+      "src/Services/Materials/MaterialElementGroupingService.cs",
+      "src/Services/Materials/MaterialElementTypeResolverService.cs",
+      "src/Services/Materials/MaterialPbrService.cs",
+      "src/Services/Materials/MaterialService.cs",
+      "src/Services/Materials/MaterialTextureLookupService.cs",
+      "src/Services/Materials/MaterialTypeAssignmentProcessService.cs",
+      "src/Services/Materials/MaterialTypeAssignmentService.cs",
+      "src/Services/Materials/MaterialTypeEligibilityService.cs"
+    ],
+    "PurgeAndCompaction": [
+      "src/Services/PurgeAndCompaction/CompactingStylesContext.cs",
+      "src/Services/PurgeAndCompaction/CompactionSharedHelper.cs",
+      "src/Services/PurgeAndCompaction/DeepPurgeService.cs",
+      "src/Services/PurgeAndCompaction/FillPatternCompactionService.cs",
+      "src/Services/PurgeAndCompaction/LinePatternCompactionService.cs",
+      "src/Services/PurgeAndCompaction/LineStyleCompactionService.cs",
+      "src/Services/PurgeAndCompaction/PurgeContext.cs",
+      "src/Services/PurgeAndCompaction/PurgeDeleteElementService.cs",
+      "src/Services/PurgeAndCompaction/PurgeExtendedElementService.cs",
+      "src/Services/PurgeAndCompaction/PurgeFillPatternService.cs",
+      "src/Services/PurgeAndCompaction/PurgeLevelService.cs",
+      "src/Services/PurgeAndCompaction/PurgeLinePatternService.cs",
+      "src/Services/PurgeAndCompaction/PurgeLineStyleService.cs",
+      "src/Services/PurgeAndCompaction/PurgeMaterialService.cs",
+      "src/Services/PurgeAndCompaction/PurgeParameterService.cs",
+      "src/Services/PurgeAndCompaction/PurgePassExecutionService.cs",
+      "src/Services/PurgeAndCompaction/PurgePassSequenceService.cs",
+      "src/Services/PurgeAndCompaction/PurgeService.cs",
+      "src/Services/PurgeAndCompaction/TextStyleCompactionService.cs"
+    ],
+    "Renaming": [
+      "src/Services/Renaming/BaseElementCollectionService.cs",
+      "src/Services/Renaming/BatchRenameExecutionService.cs",
+      "src/Services/Renaming/FormulaUpdateService.cs",
+      "src/Services/Renaming/IBaseElementCollectionService.cs",
+      "src/Services/Renaming/IBatchRenameExecutionService.cs",
+      "src/Services/Renaming/IFormulaUpdateService.cs",
+      "src/Services/Renaming/IRenameRulePipelineService.cs",
+      "src/Services/Renaming/ISearchReplacePreviewService.cs",
+      "src/Services/Renaming/ISearchReplaceService.cs",
+      "src/Services/Renaming/RenameRulePipelineService.cs",
+      "src/Services/Renaming/RenameRules.cs",
+      "src/Services/Renaming/SearchReplacePreviewService.cs",
+      "src/Services/Renaming/SearchReplaceService.cs"
+    ],
+    "RenderAppearance": [
+      "src/Services/RenderAppearance/IRenderMaterialGraphicsApplyService.cs",
+      "src/Services/RenderAppearance/IRenderSolidFillPatternService.cs",
+      "src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs",
+      "src/Services/RenderAppearance/RenderAppearanceService.cs",
+      "src/Services/RenderAppearance/RenderAppearanceSingleSyncService.cs",
+      "src/Services/RenderAppearance/RenderMaterialGraphicsApplyService.cs",
+      "src/Services/RenderAppearance/RenderMaterialSyncExecutionService.cs",
+      "src/Services/RenderAppearance/RenderSolidFillPatternService.cs"
+    ],
+    "Schemas": [
+      "src/Services/Schemas/SchemaCleanerService.cs"
+    ],
+    "Topography": [
+      "src/Services/Topography/ChangeLevelService.cs",
+      "src/Services/Topography/ConversionService.cs",
+      "src/Services/Topography/DivideToposolidService.cs",
+      "src/Services/Topography/FixPointsService.cs",
+      "src/Services/Topography/GeometryBoundaryService.cs",
+      "src/Services/Topography/OffsetService.cs",
+      "src/Services/Topography/SimplifyPointsService.cs",
+      "src/Services/Topography/SlabService.cs",
+      "src/Services/Topography/SplitBoundariesService.cs",
+      "src/Services/Topography/ToposolidService.cs"
+    ]
+  },
+  "mcp_tools": [
+    {
+      "name": "api_search",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_capabilities",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_read",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_read_batch",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_preview_batch",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_preview",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_apply",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_recipe_search",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_recipe_get",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "agent_recipe_save",
+      "source": "RevitCopilot/McpServer/AgentTools.cs"
+    },
+    {
+      "name": "project_info",
+      "source": "RevitCopilot/McpServer/RevitTools.cs"
+    },
+    {
+      "name": "elements_query",
+      "source": "RevitCopilot/McpServer/RevitTools.cs"
+    },
+    {
+      "name": "element_get",
+      "source": "RevitCopilot/McpServer/RevitTools.cs"
+    },
+    {
+      "name": "element_set_parameter",
+      "source": "RevitCopilot/McpServer/RevitTools.cs"
+    },
+    {
+      "name": "elements_delete",
+      "source": "RevitCopilot/McpServer/RevitTools.cs"
+    },
+    {
+      "name": "view_isolate_or_select",
+      "source": "RevitCopilot/McpServer/RevitTools.cs"
+    }
+  ],
+  "native_operations": [
+    {
+      "name": "knowledge_search",
+      "kind": "read",
+      "description": "Search 3,000 shared Revit 2026 source references; distinguish installed adapters from documentation-only methods",
+      "arguments": "{query?:string,kind?:all|read|change|reference,limit?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "knowledge_get",
+      "kind": "read",
+      "description": "Fetch one source reference and its available adapter; documentation cannot execute code; source text supports character pagination",
+      "arguments": "{reference_id:string,offset?:int,limit?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "element_dependents",
+      "kind": "read",
+      "description": "Inspect logical dependent elements before cleanup; deletion preview remains authoritative for actual deleted IDs",
+      "arguments": "{unique_id:string,search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "element_valid_types",
+      "kind": "read",
+      "description": "Find types currently valid for one element before a type change",
+      "arguments": "{unique_id:string,search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "phases_list",
+      "kind": "read",
+      "description": "Project phases in chronological Revit order",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "design_options_list",
+      "kind": "read",
+      "description": "Design options, primary status and option set IDs in the current document",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "worksets_list",
+      "kind": "read",
+      "description": "User worksets and open/editable status; returns an empty list for non-workshared projects",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "schedule_fields",
+      "kind": "read",
+      "description": "Ordered schedule columns, headings, parameter IDs and hidden flags; bounded output",
+      "arguments": "{unique_id:string,search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "view_filters",
+      "kind": "read",
+      "description": "Filters applied to a view, with visibility and enabled flags",
+      "arguments": "{unique_id:string,search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "element_action_checks",
+      "kind": "read",
+      "description": "Read API feasibility checks for deletion, mirroring, parts creation and phase edits; checks do not grant approval or replace previews",
+      "arguments": "{unique_ids:string[1..20]}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "elements_joined",
+      "kind": "read",
+      "description": "Check whether two explicit current-document elements have a Revit geometry join",
+      "arguments": "{first_unique_id:string,second_unique_id:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "type_compound_layers",
+      "kind": "read",
+      "description": "Inspect ordered wall/floor/roof type layers, material identities and widths in millimeters; flags vertically compound structures",
+      "arguments": "{unique_id:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "instance_transform",
+      "kind": "read",
+      "description": "Read an instance total transform including true-north effects where applicable; origin in feet and millimeters, dimensionless basis vectors",
+      "arguments": "{unique_id:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "elements_find",
+      "kind": "read",
+      "description": "Find model instances or types with current UniqueIds and exact runtime API class; bounded page without a full sort or exact count",
+      "arguments": "{category?:string,element_type?:string,kind?:instances|types|all,search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "workflow_change_batch",
+      "kind": "change",
+      "description": "Execute up to 12 changes in one atomic preview/commit; earlier result references use $step:stepId.field",
+      "arguments": "{steps:[{id:string,operation:string,arguments:object}]}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "categories_list",
+      "kind": "read",
+      "description": "Available model categories",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "levels_list",
+      "kind": "read",
+      "description": "Levels and elevations in millimeters",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "grids_list",
+      "kind": "read",
+      "description": "Grid names and identifiers",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "views_list",
+      "kind": "read",
+      "description": "Views, templates and scales",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "sheets_list",
+      "kind": "read",
+      "description": "Sheet numbers, names and view counts",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "schedules_list",
+      "kind": "read",
+      "description": "Schedule names and row counts",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "materials_list",
+      "kind": "read",
+      "description": "Materials, graphics color and transparency",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "types_list",
+      "kind": "read",
+      "description": "Element types in a BuiltInCategory",
+      "arguments": "{category:string,search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "families_list",
+      "kind": "read",
+      "description": "Loaded families and symbol counts",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "rooms_list",
+      "kind": "read",
+      "description": "Rooms, numbers, level and area in square meters",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "warnings_list",
+      "kind": "read",
+      "description": "Model warnings with failing element IDs",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "links_list",
+      "kind": "read",
+      "description": "Revit link instances and loaded status",
+      "arguments": "{search?:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "selection_get",
+      "kind": "read",
+      "description": "Current selection with stable unique IDs",
+      "arguments": "{limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "parameters_get",
+      "kind": "read",
+      "description": "Only requested parameters, avoiding full dumps",
+      "arguments": "{unique_ids:string[1..20],parameter_names:string[1..20]}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "elements_count",
+      "kind": "read",
+      "description": "Count instances in a category without listing every element",
+      "arguments": "{category:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "sheet_views",
+      "kind": "read",
+      "description": "Views placed on a sheet",
+      "arguments": "{unique_id:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "element_materials",
+      "kind": "read",
+      "description": "Materials assigned to one element, area and volume",
+      "arguments": "{unique_id:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "element_bounds",
+      "kind": "read",
+      "description": "Model bounding box in internal feet and millimeters",
+      "arguments": "{unique_id:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "host_inserts",
+      "kind": "read",
+      "description": "List inserts in a wall/floor/other HostObject, with optional rectangular openings, shadows and embedded inserts; no model changes",
+      "arguments": "{unique_id:string,include_rectangular_openings?:bool,include_shadows?:bool,include_embedded_walls?:bool,include_shared_embedded_inserts?:bool,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "element_phase_status",
+      "kind": "read",
+      "description": "Check whether created/demolished phase properties are modifiable and read their current phase IDs; not a guarantee a proposed phase change is valid",
+      "arguments": "{unique_ids:string[1..50]}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "host_bottom_faces",
+      "kind": "read",
+      "description": "Read bottom-face references and areas in square meters for a supported floor, roof or ceiling; unsupported hosts return an error",
+      "arguments": "{unique_id:string,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "rename_elements",
+      "kind": "change",
+      "description": "Rename types, views, sheets, levels, grids or materials using existing LECG rename rules",
+      "arguments": "{unique_ids:string[1..50],find?:string,replace?:string,prefix?:string,suffix?:string,case?:lower|upper|title|capitalize}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "set_parameters",
+      "kind": "change",
+      "description": "Batch-set one exact parameter on explicit elements",
+      "arguments": "{unique_ids:string[1..50],parameter_name:string,new_value:string|number|bool}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "set_pinned",
+      "kind": "change",
+      "description": "Pin or unpin explicit model elements",
+      "arguments": "{unique_ids:string[1..50],pinned:bool}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "set_type",
+      "kind": "change",
+      "description": "Change explicit instances to a compatible element type",
+      "arguments": "{unique_ids:string[1..50],type_unique_id:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "move_elements",
+      "kind": "change",
+      "description": "Translate explicit elements in millimeters",
+      "arguments": "{unique_ids:string[1..50],x_mm:number,y_mm:number,z_mm:number}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "rotate_elements",
+      "kind": "change",
+      "description": "Rotate elements around a vertical axis",
+      "arguments": "{unique_ids:string[1..50],origin_x_mm:number,origin_y_mm:number,angle_degrees:number}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "delete_elements",
+      "kind": "change",
+      "description": "Delete explicit elements with dependent deletions included in preview",
+      "arguments": "{unique_ids:string[1..50]}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "create_level",
+      "kind": "change",
+      "description": "Create a named level at a millimeter elevation",
+      "arguments": "{name:string,elevation_mm:number}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "duplicate_type",
+      "kind": "change",
+      "description": "Duplicate an element type with a new name",
+      "arguments": "{unique_id:string,name:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "duplicate_view",
+      "kind": "change",
+      "description": "Duplicate a view; supports detailing or dependent copy",
+      "arguments": "{unique_id:string,name:string,mode:Duplicate|WithDetailing|AsDependent}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "material_color",
+      "kind": "change",
+      "description": "Set material graphics RGB and transparency",
+      "arguments": "{unique_ids:string[1..50],red:int,green:int,blue:int,transparency:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "assign_material",
+      "kind": "change",
+      "description": "Assign a material through an exact writable material parameter",
+      "arguments": "{unique_ids:string[1..50],parameter_name:string,material_unique_id:string}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "view_scale",
+      "kind": "change",
+      "description": "Set a view scale denominator on explicit views",
+      "arguments": "{unique_ids:string[1..50],scale:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "material_graphics_solid",
+      "kind": "change",
+      "description": "Reuse LECG solid-fill graphics application for materials",
+      "arguments": "{unique_ids:string[1..50],red:int,green:int,blue:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "slab_offset",
+      "kind": "change",
+      "description": "Reuse LECG floor/slab height-offset function, expressed in millimeters",
+      "arguments": "{unique_ids:string[1..50],offset_mm:number}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "slab_reset",
+      "kind": "change",
+      "description": "Reuse LECG shape reset for floors and toposolids; removes shape edits",
+      "arguments": "{unique_ids:string[1..50]}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    }
+  ],
+  "curated_recipes": [
+    {
+      "id": "element-feasibility",
+      "name": "Element action checks",
+      "description": "Inspect deletion, mirroring and parts feasibility before any preview; these checks do not grant approval.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "compound-layer-audit",
+      "name": "Compound layers",
+      "description": "Inspect ordered capas, material identities and espesor in millimeters for a wall, floor or roof type.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "geometry-join-audit",
+      "name": "Geometry join audit",
+      "description": "Inspect two explicit elements and check their current Revit geometry join.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "instance-coordinate-audit",
+      "name": "Instance coordinates",
+      "description": "Read a family, link or import instance transform and origin before coordinate decisions.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "phase-audit",
+      "name": "Phase audit",
+      "description": "List project phases in order and inspect current phase assignments and editability.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "collaboration-audit",
+      "name": "Worksets and design options",
+      "description": "Inspect subproyectos and opciones de diseno together with linked-model status.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "dependency-audit",
+      "name": "Dependencies before cleanup",
+      "description": "Inspect dependientes before previewing deletion of explicit approved targets; preview determines actual affected elements.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "compatible-type-change",
+      "name": "Compatible type change",
+      "description": "Query tipos compatibles for the actual instance before previewing an explicit type change.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "schedule-columns",
+      "name": "Schedule columns",
+      "description": "Inspect campos and column headings in schedule order, including hidden fields.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "view-filter-audit",
+      "name": "View filter audit",
+      "description": "Inspect filtros and visibility settings on a selected view.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "api-reference",
+      "name": "API reference lookup",
+      "description": "Search shared API documentation and fetch one reference; unmapped methods require implementation and cannot run.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "project-health",
+      "name": "Project health",
+      "description": "Compact first pass over warnings, links, phases, worksets, design options and schedules.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "model-overview",
+      "name": "Model overview",
+      "description": "Inspect levels, views, sheets and model warnings.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "project-navigation",
+      "name": "Project navigation",
+      "description": "Quickly inspect levels, plan views, sheets and current selection before choosing targets.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "wall-audit",
+      "name": "Wall audit",
+      "description": "Count walls and inspect only requested parameters on selected walls.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "wall-geometry",
+      "name": "Wall geometry",
+      "description": "Find walls, inspect bounds, materials, inserts and phase status for explicit wall targets.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "rename-types",
+      "name": "Rename types",
+      "description": "Find types and apply reviewed naming rules.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "material-graphics",
+      "name": "Material graphics",
+      "description": "Find materials and standardize solid-fill graphics using LECG services.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "material-audit",
+      "name": "Material audit",
+      "description": "Review materials and inspect material use on explicit elements without changing graphics.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "sheet-audit",
+      "name": "Sheet audit",
+      "description": "Review sheets and their placed views.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "view-audit",
+      "name": "View audit",
+      "description": "Inspect views and sheets before changing scale, duplicating views or preparing sheets.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "link-audit",
+      "name": "Link audit",
+      "description": "Inspect loaded Revit links, warnings and selected linked-model context before cleanup decisions.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "room-audit",
+      "name": "Room audit",
+      "description": "Inspect rooms, levels and room parameters for area, naming or schedule QA.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "schedule-audit",
+      "name": "Schedule audit",
+      "description": "Inspect schedules, sheets and warnings before schedule cleanup or documentation review.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "reviewed-cleanup",
+      "name": "Reviewed cleanup",
+      "description": "Inspect warnings and types, then preview deletion of explicit user-selected candidates. Does not infer unused status.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "slab-elevation",
+      "name": "Slab elevation",
+      "description": "Inspect selected floors and adjust their height offset in millimeters.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "slab-qa",
+      "name": "Slab QA",
+      "description": "Inspect selected floors or toposolids, bounds, materials and offset before slab edits.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "parameter-batch",
+      "name": "Batch parameters",
+      "description": "Inspect exact parameters before applying a reviewed batch update.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    },
+    {
+      "id": "type-change",
+      "name": "Type change",
+      "description": "Find compatible types, inspect selected instances and preview an explicit type assignment.",
+      "status": "curated_template",
+      "source": "RevitCopilot/Agent/WorkflowLibrary.cs"
+    }
+  ],
+  "research": {
+    "source": "RevitCopilot/Agent/Knowledge/revit2026-reference.json",
+    "provenance": "Installed Revit 2026 API metadata/XML; generated answers and executable code excluded.",
+    "entries_by_kind": {
+      "code": 784,
+      "lookup": 2216
+    },
+    "entries_by_research_status": {
+      "rejected_candidate": 21,
+      "candidate_aliases_need_semantic_review": 2216,
+      "compiled_candidate_NOT_runtime_verified": 762,
+      "invalid_output": 1
+    },
+    "note": "Full references remain in the original pack. A reference does not establish executable capability."
+  },
+  "api_evidence": {
+    "source": "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
+    "campaign": "20260905_203238",
+    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify.",
+    "entries_by_state": {
+      "unsupported_context": 194,
+      "read_invoked": 1217,
+      "missing_fixture": 82,
+      "changed_value_tested": 618,
+      "same_value_only": 70,
+      "context_rejected": 35
+    },
+    "note": "Recorded campaign evidence, not tests rerun by this documentation refresh."
+  },
+  "documentation": [
+    "docs/ai/repo-context.md",
+    "docs/ai/revit-protocol.md",
+    "docs/ai/revit-smoke-test.md",
+    "docs/ai/ui-guide.md",
+    "docs/deployment/README.md",
+    "docs/model-selection-playbook.md",
+    "docs/review/01-architecture.md",
+    "docs/review/02-components.md",
+    "docs/review/03-organization.md",
+    "docs/review/04-patterns.md",
+    "docs/review/05-revit-api.md",
+    "docs/review/06-dependency-injection.md",
+    "docs/review/07-onboarding.md",
+    "docs/review/08-quality-report.md",
+    "docs/review/09-refactoring-roadmap.md",
+    "docs/review/10-release-checklist.md",
+    "docs/review/11-runner-operations.md",
+    "docs/review/12-gemini-workspace.md",
+    "docs/review/13-compacting-styles.md",
+    "docs/review/14-current-debt-audit.md",
+    "docs/review/15-revit-api-export.md",
+    "docs/review/diagrams/command-execution-flow.md",
+    "docs/review/diagrams/component-dependency.md",
+    "docs/review/diagrams/service-interaction.md",
+    "docs/review/diagrams/startup-sequence.md",
+    "docs/review/LECG-icon-system.md",
+    "docs/review/README.md",
+    "docs/review/RevitCopilot-Agent-Capabilities.md",
+    "docs/review/RevitCopilot-API-Expansion.md",
+    "docs/review/RevitCopilot-Autodesk-Sample-Benchmark.md",
+    "docs/review/RevitCopilot-Combined-Deployment.md",
+    "docs/review/RevitCopilot-MCP-Harvest-First-Promotion.md",
+    "docs/review/RevitCopilot-Project-Conversations.md",
+    "docs/review/RevitCopilot-README.md",
+    "docs/review/RevitCopilot-Shared-Knowledge.md",
+    "docs/review/RevitCopilot-Temporary-Knowledge-Lab.md",
+    "docs/review/RevitCopilot-Validation-Release.md",
+    "docs/standards/INTERACTION_STANDARDS.md",
+    "docs/standards/MVVM_PATTERN.md",
+    "docs/standards/REVIT_COMMANDS.md",
+    "docs/standards/SERVICE_ARCHITECTURE.md",
+    "docs/standards/SKILLS.md",
+    "docs/standards/UI_STANDARDS.md",
+    "docs/token-optimization-guide.md"
+  ],
+  "planning_documents": [
+    ".planning/archive/v1.0-hardening/AUDIT.md",
+    ".planning/archive/v1.0-hardening/phases/01-test-scaffolding-shared-error-handling-helper/01-CONTEXT.md",
+    ".planning/archive/v1.0-hardening/REQUIREMENTS.md",
+    ".planning/archive/v1.0-hardening/research/ARCHITECTURE.md",
+    ".planning/archive/v1.0-hardening/research/FEATURES.md",
+    ".planning/archive/v1.0-hardening/research/PITFALLS.md",
+    ".planning/archive/v1.0-hardening/research/STACK.md",
+    ".planning/archive/v1.0-hardening/research/SUMMARY.md",
+    ".planning/archive/v1.0-hardening/ROADMAP.md",
+    ".planning/archive/warnings-review/AUDIT.md",
+    ".planning/archive/warnings-review/phases/01-warnings-command/CONTEXT.md",
+    ".planning/archive/warnings-review/phases/01-warnings-command/PLAN.md",
+    ".planning/archive/warnings-review/phases/02-live-validation/CONTEXT.md",
+    ".planning/archive/warnings-review/phases/02-live-validation/PLAN.md",
+    ".planning/archive/warnings-review/REQUIREMENTS.md",
+    ".planning/archive/warnings-review/ROADMAP.md",
+    ".planning/CANDIDATES.md",
+    ".planning/codebase/ARCHITECTURE.md",
+    ".planning/codebase/CONCERNS.md",
+    ".planning/codebase/CONVENTIONS.md",
+    ".planning/codebase/INTEGRATIONS.md",
+    ".planning/codebase/MAP.md",
+    ".planning/codebase/STACK.md",
+    ".planning/codebase/STRUCTURE.md",
+    ".planning/codebase/TESTING.md",
+    ".planning/phases/01-preview-pipeline/CONTEXT.md",
+    ".planning/phases/01-preview-pipeline/PLAN.md",
+    ".planning/PROJECT.md",
+    ".planning/REQUIREMENTS.md",
+    ".planning/ROADMAP.md",
+    ".planning/STATE.md"
+  ],
+  "input_sha256": {
+    "LECG.csproj": "d085beab1a4b102cfca06baa47be508dc90856ff332876e6cefc1022d1d8fe0b",
+    "RevitCopilot/Agent/AgentBatch.cs": "1fd4db7d90f1582f1b6b28331ad722483706e3afae0eaf9224a3bca60a747574",
+    "RevitCopilot/Agent/CapabilityCatalog.cs": "a6a98f6203a093dd5aa164a743c64f0b2765d26465425d1fe43e5913aae75ce3",
+    "RevitCopilot/Agent/Knowledge/revit2026-reference.json": "9726924ad3b74f781f94ff3b9babfd612debd41f6d09bb3b941a030ad2454052",
+    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "90ad166cc4c6994b651186f2bfdd87eed1c45749d04974009d95ac55f72b88f5",
+    "RevitCopilot/Agent/WorkflowLibrary.cs": "3bdc5092fae7c409342b335f5c1cebbe4bbe2c89468dcf9800f2fd5b21683d4a",
+    "RevitCopilot/McpServer/AgentTools.cs": "0e647ab04960932aa0a097aee4b2cd955e386a2e5758574d6c149869ab4bb3e9",
+    "RevitCopilot/McpServer/RevitTools.cs": "3f2941e93a7f966cc13a66a45e9ac20d8fb8e0d0a254c14fee7f118846253a95",
+    "RevitCopilot/Revit/ToolExecutor.Changes.cs": "2eecc6668cf5e75aa17539705d3efdfeea145f56eb3948f2bcaa3d47d7900603",
+    "RevitCopilot/RevitCopilot.csproj": "cfd4039642fb6d2254c1b521acd3046ae8e750282ee483ca36f42b7d74c9ed9e",
+    "RevitCopilot/Services/ProjectConversationStore.cs": "aff47bbe164e37987686a47c97c93aa595664cd3b5dbcfd3f66138a9ae7510a3",
+    "src/App.cs": "5316d3e273492e94c340786df9bf29e8a8d851c476094fe2dd0a46615505d416",
+    "src/Commands/AlignCommands.cs": "5d9848c6f14a41933f28e185c5744404f3f508644b57d6e9731a6c037a5655ef",
+    "src/Commands/AlignEdgesCommand.cs": "8a7ee2cad710b83aabe1ec6bf152d25ff92f965036206fb2ddf6b7e04fb59ef8",
+    "src/Commands/AssignMaterialCommand.cs": "30ae097100c54e47a0573f6babf055984f72bb539f0ba8d54384c52ff75e8ff4",
+    "src/Commands/CategoryChangerCommand.cs": "6de625dd106c47825536f6003ca313eee22fd4ac894b383962cd3e4154c85513",
+    "src/Commands/ChangeLevelCommand.cs": "a76c5c011c951a8ab99ea88e50d9f594d8ee6822d08ea051e1f4e5d532605a48",
+    "src/Commands/CleanSchemasCommand.cs": "275b58aaef0c4e7eb68dd218063c30f1dab7fdda8176504de203300063c4c305",
+    "src/Commands/CompactingStylesCommand.cs": "7d99a24791fc667d299413f8a1d70c417216db01cc4c4bb82e1faeed40654d73",
+    "src/Commands/ConvertCadCommand.cs": "57d12a9b452d8f5a89192112c3572aea37f0bbcc1f734c71def282c707edb9ae",
+    "src/Commands/ConvertFamilyCommand.cs": "ad099192decf586195323d47eb0c85f440dd98f51c5032c64397874c08d0dab8",
+    "src/Commands/ConvertFloorToToposolidCommand.cs": "ce2b20d965b9ea9e7b7fbe7b0994ca5f543929440d1157b083cd4aa753c58da9",
+    "src/Commands/ConvertSharedCommand.cs": "e675c1e9efcc30a47f7ea91f571b1f4b0c4a9b5bd012ab4dbee0cf37ea217b70",
+    "src/Commands/ConvertToposolidToFloorCommand.cs": "b4a31238351997b8fa26f1caddd8031e860cf9a5d7c59cd0c085995d7328e5b0",
+    "src/Commands/DivideToposolidCommand.cs": "95d65d9dd6b3bb36025c6332ddf60493d95bddcaa979a02495e60a138e9a469d",
+    "src/Commands/FilterCopyCommand.cs": "737d82d3a76a309697b887f0481966100f9e6a5d283a9c78ad2d1404a7e859d7",
+    "src/Commands/FixPointsCommand.cs": "6cd4650e643d86c03b059958b1484dfc6cf8abf1abaadb53af2a6d5267677e45",
+    "src/Commands/FormulaAutoGroupingCommand.cs": "14bddd543cab0dfe53d4a28b7a64d03cf1ccf5b79a72db96f21e3b9370389c35",
+    "src/Commands/HomeCommand.cs": "041a8c8e27b305897015de77f16a29ba6c09c7ace4ebf8a4717b547204c6776c",
+    "src/Commands/OffsetElevationsCommand.cs": "37d905ac5ef3ded435a5f1cee92f38791229a6d1176004f7b056785fd90a0a1c",
+    "src/Commands/PbrMaterialCreatorCommand.cs": "5abec8cee3a6f98f890b4ba6ace98c04db03ae82ba1e6577d372da56f034562f",
+    "src/Commands/PurgeCommand.cs": "2f1f4a79ff0e6ff8243e5ffa542972f95a553c4ef25b22df3ed45be951f01a73",
+    "src/Commands/RenderAppearanceMatchCommand.cs": "8877a6a92ec0329f20c6589cb15b26cba490248e7f9763fabfad833282533239",
+    "src/Commands/ResetSlabsCommand.cs": "2e8d4da486d41f5bf1d7ec13415454f65b547a8d228c72f69d27a6f983cc1cfe",
+    "src/Commands/SearchReplaceCommand.cs": "d888286ffbf21ffb5749da18bfb4bf8c9d7f3d98fc22a6e70597f7dd0fe48e38",
+    "src/Commands/SexyRevitCommand.cs": "7eb3b1adf8862cbb03023a32468669657b6174d1a29087e523756f7e384710cd",
+    "src/Commands/SharedToFamilyParameterCommand.cs": "851c0bcd79611f9083a9777f60123356d9f86c87c65c0957b5a0d7d52bd64622",
+    "src/Commands/SimplifyPointsCommand.cs": "b95f657c7d1008192d17a4275739f13beabfaf51689d678fbd1d6e267039752f",
+    "src/Commands/SplitBoundariesCommand.cs": "d0d2e48a3d9f29d6a0d537f94cad5fe90392e96b2593660ed173861534d957e0",
+    "src/Commands/TypeToLinkedModelsCommand.cs": "f8f15fa9ab1846521bd4733bed264242fb54d3e2a9ddf7d745e9e2a5df049d11",
+    "src/Commands/UpdateContoursCommand.cs": "27bbdbabf23d58ceac10e17c72000e69bb59adc4760247a84216f889c7b28a10",
+    "src/Commands/WarningsCommand.cs": "b1f6389a8879d5163c34c7fc9968883bafb890be2519517592d8b58ad85a1489",
+    "src/Core/Bootstrapper.cs": "f3d75195a19fb924e34f03731b4ad79e578e54beda9b183b47d11f9750e3025a",
+    "src/Core/Ribbon/RibbonService.cs": "db00e11519312103b331b17bf6e104b22f3a157ca5674632481b87cc48e08393",
+    "src/Services/Alignment/AlignEdgesBoundaryCollectionService.cs": "be0fa5cdc22eeac1961c76e03979a2f65f0ef809d92537168759cb1a852f09f5",
+    "src/Services/Alignment/AlignEdgesBoundaryPointService.cs": "8f3dc95982b11644f9b96ea53735bbd5db1e0d65fa1c343bb1c16bb39518f3da",
+    "src/Services/Alignment/AlignEdgesCurveDivisionService.cs": "883297059e421055ce324cce74ef27c2ddd0dae648dbe1374ab868e717dd94e3",
+    "src/Services/Alignment/AlignEdgesHitInfo.cs": "a8634bb94ab54a5535d093b02734d89283aac785147ce917a3a68b563aa9f35c",
+    "src/Services/Alignment/AlignEdgesHitPointProjectionService.cs": "ab22431960f6bd461738fbb294991737903191fb3a1ff29621870dfdc0272584",
+    "src/Services/Alignment/AlignEdgesIntersectorService.cs": "08090f70b37e176585d12c2239f6a216ba793d179768822ed24bd10847ccc139",
+    "src/Services/Alignment/AlignEdgesPointInsertionService.cs": "c989884db9ce063f0719a0e9bc2e531c8854a4cb783a8c7bec9c5a92d8a6470a",
+    "src/Services/Alignment/AlignEdgesService.cs": "78ea467108bc0c12a55312e9da6d3d5a1c18f21706ab85d463c793b3263732b1",
+    "src/Services/Alignment/AlignEdgesSourceResult.cs": "85b8bcddcdc0624e874222b92d0207f40fe3b7732742bd9b5c0e13ca0f41f1a7",
+    "src/Services/Alignment/AlignEdgesToposolidProcessingService.cs": "a2e64a5b13aafc3cd23b6a6e4d3a6b16dbed849d71877e93c6109f55ea9649c9",
+    "src/Services/Alignment/AlignEdgesVertexAlignmentService.cs": "5047a1f20364f5905336fbe53ca3fc14253bc5fe44ef8a04c134619c3512a269",
+    "src/Services/Alignment/AlignElementsService.cs": "0d2afc6c8b26889bb530567167630a90a03a13d246f88b131f62735093c97b7d",
+    "src/Services/Alignment/ReferenceRaycastService.cs": "1a35f0fb50dbe0575fdd84ef74ace1f179c2efa69e3d2a2374c5da9d343c8747",
+    "src/Services/CadConversion/CadConversionService.cs": "c22dd966711a6c847d6d62db673bbeb64af7002bcfdcf337664121d80ec3d2f0",
+    "src/Services/CadConversion/CadCurveFlattenService.cs": "22e79d2725666e4e48d522f1939a762f241a9a50093aec89725e096936e40470",
+    "src/Services/CadConversion/CadCurveRenderService.cs": "1673a68e93989d2b48df6665d6c806370b4801ce9f2e57a852c108939a0866dd",
+    "src/Services/CadConversion/CadCurveTessellationService.cs": "88de69ab145b6d49f6a3455fbe3bd3cc2264e618267fcc8ca655e5169ac42316",
+    "src/Services/CadConversion/CadDataDrawService.cs": "b04ca515c3bcbcdcac028611f32d8a0e5727e65069d1920319df29c240add017",
+    "src/Services/CadConversion/CadDataValidationService.cs": "46408c56d36e9a4f42dc31fb51c965250f7612f2d077169278eec1e9c8172777",
+    "src/Services/CadConversion/CadDoubleArrayConversionService.cs": "c3e6132d71114d37cf3e7365690126ddcbb737000af362a2a89f0d6eb484cfe6",
+    "src/Services/CadConversion/CadDrawingViewService.cs": "bfca63334b8a50335b1cacd3c3cd4981d322fc16e7751b2d1776c8ef963cf45c",
+    "src/Services/CadConversion/CadDwgFamilyCreationService.cs": "a5beff1484e9de5ef6da745980f1ec39c7f05bb56fe995c35b89b5e19f9df616",
+    "src/Services/CadConversion/CadFamilyBuildService.cs": "52a326e08f787043fb336d42dd96e959cb2c726a79b3933515c15889473d8691",
+    "src/Services/CadConversion/CadFamilyInstancePlacementService.cs": "d7701a2c6bda8f850528f64ab4edc83699210e4350298add4eaa10d71b17f3ef",
+    "src/Services/CadConversion/CadFamilyLoadPlacementService.cs": "1123d6f50cd610c5388bbe99398fda44aab7424f80a4187566939767105bede2",
+    "src/Services/CadConversion/CadFamilyLoadResolveService.cs": "7b26bdfee7ebf1af5e8588a8da5bddd65e97cec28761fe7ec6d03ec8bb899ff4",
+    "src/Services/CadConversion/CadFamilySaveService.cs": "ac3b27c6941d12003e824bb87bc6a3f1259244956e4c4cda3117e963dc5b6d4e",
+    "src/Services/CadConversion/CadFamilySymbolService.cs": "4cfe2b97095c4aefda7ee783f4eec33b9a435e31b0f9c8414ca9a6a9dbf14674",
+    "src/Services/CadConversion/CadFilledRegionTypeService.cs": "37255f4b1fc09113de447a56171836ef1eb58620b757940c8a428090a7c9ce06",
+    "src/Services/CadConversion/CadGeometryData.cs": "952cd359a6720f9c866e60ef1318f9559d3c9ded97d7db1af66e040c0744f70a",
+    "src/Services/CadConversion/CadGeometryExtractionService.cs": "5fbd148971ca69981dd0bec9e844212d6c54cfb47d0763ce1bb1fef6a4f1df20",
+    "src/Services/CadConversion/CadGeometryOptimizationService.cs": "cdee7704c8797254ead0618c85ef6d54225031ad2640bc9cac6a204006e066d5",
+    "src/Services/CadConversion/CadHatchLoopPreparationService.cs": "eafd1c32bcf250822329724a7d3fd42749ca7bbf427227db60b3d5ea8dce369c",
+    "src/Services/CadConversion/CadHatchProgressService.cs": "dc5c212484cbb1ea57e65464988c4e37dc0c1565439204650729d72d916ed8d3",
+    "src/Services/CadConversion/CadHatchRenderService.cs": "efc9cc55fbde14beaa9e63706d464a3e58684f13fa63179ff2c7ccea8ad8c5ec",
+    "src/Services/CadConversion/CadImportDataPreparationService.cs": "bc3c042a7a6276d68954397797f73533a3c5e5306cf393f35edcac6e5b674587",
+    "src/Services/CadConversion/CadImportFamilyCreationService.cs": "09056c7d613b6d11f7fbb1a4703970a7121122a22e1d210e59ab1182d57831c9",
+    "src/Services/CadConversion/CadImportInstanceCenterService.cs": "ee2fd42b62edddb92edc9650afe05b5f1c0c465907b13297b5d0cb13022164f4",
+    "src/Services/CadConversion/CadLineMergeService.cs": "744f65c75eb67987e8525d5b400cd5dcc075bc4fcc4a9a25c968ca991c5a48d5",
+    "src/Services/CadConversion/CadLineStyleService.cs": "36fc8c57553326db5e7cf9cf82c09a0620a7291db3eea2b25b1384d029ba7ed4",
+    "src/Services/CadConversion/CadPlacementViewService.cs": "46d8f5af602ae925c1c2965214fda7119d18ba842b5b23fe49d18beaeefb8a3d",
+    "src/Services/CadConversion/CadPointFlattenService.cs": "bf011fed7b393bff230826a50f0773d8a6489776989c4a5e3d40a103ba919428",
+    "src/Services/CadConversion/CadPolylineExtractionService.cs": "d83bfa413b461bfa4cfc1fed7eec687207045426e7a723b7eb1bf497b6bec9a5",
+    "src/Services/CadConversion/CadRenderContextService.cs": "066a57220d029cdac0fc7978544ac69b9e130393c23e103f845fceed857ab455",
+    "src/Services/CadConversion/CadSolidHatchExtractionService.cs": "765ce34ee15d1c1da93ba67a3b5d493380e95e407fe983c5dd6180c9623b4437",
+    "src/Services/CadConversion/CadSourceCleanupService.cs": "3eb29f4161150d73e334e1a92401ed82813aa209eb2f6177bf5946897004264a",
+    "src/Services/CadConversion/CadSplineFlattenService.cs": "42d749500ec62b42761a43613ec722be155cbbaaac6f3fcfb90ac3055cb23499",
+    "src/Services/CadConversion/CadTempDwgExtractionService.cs": "b8566a275db8344702ee7c6e2b54132a950a9b2e09c8424064cbe871bf1e634e",
+    "src/Services/CadConversion/CadTempFileCleanupService.cs": "f990f1489f10f12241d42be73ccd065db383df6151ebedc6cdb730c0b7e13850",
+    "src/Services/CadConversion/ICadConversionService.cs": "2f9da96bf9e23b1061141e9034c0d3cf6e439fb6cdae5f829c962f1a262f4b78",
+    "src/Services/CadConversion/ICadCurveFlattenService.cs": "3a13593582a25ee33b81530068d93191a48f75eebaafb45b61e7220e06666fe7",
+    "src/Services/CadConversion/ICadCurveRenderService.cs": "e0c599597b8314613390e7e5ba8f6191fa2f09fb3d7fd9d03b53990b93725941",
+    "src/Services/CadConversion/ICadCurveTessellationService.cs": "7d7f09f9d4e342a61958e04a303026124fefedfcf0e35edc97dd3fa399de269b",
+    "src/Services/CadConversion/ICadDataDrawService.cs": "0e7009c60e130185246397916414170af3b5f2e58a3bbaa8c8af3d874483cd67",
+    "src/Services/CadConversion/ICadDataValidationService.cs": "397880ce2e0f0331d8a92948459eabf07ce2d649dd48fed96193d85970652e0d",
+    "src/Services/CadConversion/ICadDoubleArrayConversionService.cs": "6097a9a405be121a694bdd905b5db2df8c7f5d21616023829977b7fedd4f82bb",
+    "src/Services/CadConversion/ICadDrawingViewService.cs": "d991ee2ebe4982136ed70d60fbcb6aae4c678cf74d27a8175eb8c207e8b6a5c1",
+    "src/Services/CadConversion/ICadDwgFamilyCreationService.cs": "850c6abaee84e7aeb2db28f2078fd9b6b961f69d749e16e5ca0bf6a1691a5682",
+    "src/Services/CadConversion/ICadFamilyBuildService.cs": "9737320d05416f58db4cdc95b4cf864750281cbebf9dfacc98216817d299d597",
+    "src/Services/CadConversion/ICadFamilyInstancePlacementService.cs": "1080eb1e7b068aa7375318f5da74048510f84e58bffb7bedff4fa35e464550a5",
+    "src/Services/CadConversion/ICadFamilyLoadPlacementService.cs": "1d71b4c3f1cd91d39e896600269e1528e1ab7c617597af46d90b2dbe3fb4b84a",
+    "src/Services/CadConversion/ICadFamilyLoadResolveService.cs": "82d7e91a4cf4cbbb935ac56f88bbacdb1483d7dad01db9bd6a261b56a126473a",
+    "src/Services/CadConversion/ICadFamilySaveService.cs": "f0a6e5eb87cbc79175371947a0b603dab933c339154421f2ad93ca5e00076688",
+    "src/Services/CadConversion/ICadFamilySymbolService.cs": "31d4d8dd322b77e561d6a8d43c80d2aac6a7969bca8489e3c0a07c634a8ad114",
+    "src/Services/CadConversion/ICadFilledRegionTypeService.cs": "dd96f3b989da0e36d2deedc41633339e8aa149cd4ae348a077638ff23f4aa3a6",
+    "src/Services/CadConversion/ICadGeometryExtractionService.cs": "24a3c2315c7891b247d8f51674f37065f4e3b724cd08ae2c2bf4708b78d8a2e9",
+    "src/Services/CadConversion/ICadGeometryOptimizationService.cs": "395f40999e4edd975dfde82401ba5fa818118f0a32876b17700b72bcfaf4c9a2",
+    "src/Services/CadConversion/ICadHatchLoopPreparationService.cs": "ac3bbaab6ac22861b4d95ed2b14366c991c08d227ba9477a8ab182b88006477c",
+    "src/Services/CadConversion/ICadHatchProgressService.cs": "a8f7fb7c72123ce7f9be449925ef375e4a2f6468d36faac430dbc2403f44b5df",
+    "src/Services/CadConversion/ICadHatchRenderService.cs": "4646f34408caf80a0d9cc5dd51b3f38e1979aa8fb3d6b22aabe684594319f947",
+    "src/Services/CadConversion/ICadImportDataPreparationService.cs": "4dc04f811fa8597ac600170ce9f9dd33eb5b09d6ff5582e03d1ae9b6e00a90a8",
+    "src/Services/CadConversion/ICadImportFamilyCreationService.cs": "7d223ec77291086e6eeabf63b4e3cce94667acdb6188b8578d8ae2cec43b1f7a",
+    "src/Services/CadConversion/ICadImportInstanceCenterService.cs": "8416b2047189773b6b83a0ffc2afd86e9ec268b72570a3a189f4004f574525d0",
+    "src/Services/CadConversion/ICadLineMergeService.cs": "44f74a2fa41b78ef826be0ca32aa596be0bb4c37d101bcef7f68089a42c7fa96",
+    "src/Services/CadConversion/ICadLineStyleService.cs": "ae931c1cafab9673d694cfa50735692e1dae319b02d24e5afb490c5de7f42e6d",
+    "src/Services/CadConversion/ICadPlacementViewService.cs": "a817bbcb89d34aecbda00e43eeb5f55e9fae53552a964a81563f442fcc788381",
+    "src/Services/CadConversion/ICadPointFlattenService.cs": "3bc67207144e1cbf80ed38405961b723ab99a041644ecf35181b2b289e6ffa63",
+    "src/Services/CadConversion/ICadPolylineExtractionService.cs": "eed3c98fc96f220adff7dc639ae5bd1c3ffc754ee8f4b0dc86393171c684a3ad",
+    "src/Services/CadConversion/ICadRenderContextService.cs": "65691f26731d9e08af8dcf88d315503363e394bbba6c532f7de4ab72254f746e",
+    "src/Services/CadConversion/ICadSolidHatchExtractionService.cs": "96ef51c93eeec7d640768e082e9a183f00b98fdd7fd40c963e8f4587faae716d",
+    "src/Services/CadConversion/ICadSourceCleanupService.cs": "41e603ae8922496fb5d9048c5d144685258100638353058948935ca0ed25a650",
+    "src/Services/CadConversion/ICadSplineFlattenService.cs": "027fb386d192d1e9ab4cbedbd8b9bcb4a27e586899400ba1b83747fe62201f45",
+    "src/Services/CadConversion/ICadTempDwgExtractionService.cs": "053d814db2ae03c6eb69e494ff6d6201af83825b2c59f4d95b715865cbc6cab7",
+    "src/Services/CadConversion/ICadTempFileCleanupService.cs": "5a6a7759fffc97bdccffe47b357938ac6f545ef1fc060ed89a4bd47f8a3dfbb0",
+    "src/Services/ElementLabelService.cs": "043fc72ba9995248976941abea4ddf6768a8a489c67cddc684b1bf409495f604",
+    "src/Services/FamilyConversion/FamilyConversionExecutionService.cs": "ae691df09b39bbcb393d086e11b1592cff190c9920cc75d67b3e1a11f2628d33",
+    "src/Services/FamilyConversion/FamilyConversionFinalizeService.cs": "29cc6124a58aec2a204f75f1f9f4edf263816f7a38104053b0eff7cad965440a",
+    "src/Services/FamilyConversion/FamilyConversionLoggingService.cs": "c3e9e3af073f79ed457b23b9541bd0bf7c30e42cb7fd0ade9f5c791491624aa4",
+    "src/Services/FamilyConversion/FamilyConversionService.cs": "cf71b293200b0c1da0782af999486fd1df683f5a61a4e15f3746a565758e7403",
+    "src/Services/FamilyConversion/FamilyEditorService.cs": "d29bcfaa6fb90f54b415ceb9dceedacfae67716084fd06c734f5bf0b74c5c5a4",
+    "src/Services/FamilyConversion/FamilyGeometryCollectionService.cs": "965b37624b1c46dfd80effba49e6a9e9c17a41a43b80e918125cfda6348df92a",
+    "src/Services/FamilyConversion/FamilyGeometryCopyService.cs": "38e8684bc77060291207ffb681ecc7e327bcffb52f0566bcfe0753719524c57f",
+    "src/Services/FamilyConversion/FamilyLoadOptionsFactory.cs": "720a1c6342279287b6df1c83110b8d1e63cd01486b3a2c4e196db8ef3a2f2842",
+    "src/Services/FamilyConversion/FamilyParameterSetupService.cs": "bf4110effe9e9d0acdab0a4ceed018c1db1a0d0cf240f8e9a8c4a2b423f7b6a1",
+    "src/Services/FamilyConversion/FamilyProjectLoadService.cs": "3250df8a339e81f442e26bb2abc66e489ca5c70b2e927fd0db92efffb4500d80",
+    "src/Services/FamilyConversion/FamilySaveLoadService.cs": "549da11223ca8b518cf611c7452e54eb5bace58d74e884c45934ff5685428a4e",
+    "src/Services/FamilyConversion/FamilySaveService.cs": "22ab1b3043a157884d5d02debac7f9b88a6d268a908ea3a14b684665dc6f8c26",
+    "src/Services/FamilyConversion/FamilySourceDocumentService.cs": "cc8ae5daab9b84fdc7abef4ecaba75e9527fbb6dacbbd1e3e0f774ea134a794e",
+    "src/Services/FamilyConversion/FamilyTargetDocumentService.cs": "0c64fa82975ee5ae1e0be5e5c0c361eff53d9e07e3cb9a5abf9b7f54616c7750",
+    "src/Services/FamilyConversion/FamilyTempFileCleanupService.cs": "d29c0688976b588b6a4acec1092cc0f040332ad7fcb4c676458eff0520aa44ea",
+    "src/Services/FamilyConversion/FamilyTemplatePathService.cs": "9bc86f2f79be69e62fea4547f50231cd132904a20ce83357948a96322ad7f67b",
+    "src/Services/FamilyConversion/IFamilyLoadOptionsFactory.cs": "659d3aa540147fe31587b0b17da82155cceeb270b76b7de0732a05fb556fa9ce",
+    "src/Services/FamilyConversion/SharedToFamilyParameterService.cs": "760a017e507e22a0d88714c893a8e1df855d50ad819791b7004dc89fd065b954",
+    "src/Services/Graphics/IViewGraphicsFacade.cs": "102c325edaf05bb6e18e84b7c5452cd36e366a5e3f1b557093bc5f33e57480ec",
+    "src/Services/Graphics/RevitViewGraphicsFacade.cs": "cdf8891a575093df93c777746df7acbfec16ca0ad7901b14c551bec6a51ac3f8",
+    "src/Services/Graphics/SexyRevitService.cs": "9a3675b6dc5b27b874b08eea868112464a03eeae1acc9369437993c3bb3e2857",
+    "src/Services/Health/WarningsService.cs": "8e7448a01a5f9f5d2602fcdce3cc1f4310b59800bbf2fe05eca5a40ee9183118",
+    "src/Services/Infrastructure/AppMemoryCache.cs": "4ad8b91a40cfae94effb2c4fecd168abcb6aa731611c410bab476d83f0b71871",
+    "src/Services/Infrastructure/FilterCopyService.cs": "b844b71c117c924265f8923da3e8cfcd4964a9c33ccdb86c77ccd50eb7839b0f",
+    "src/Services/Infrastructure/IAppMemoryCache.cs": "536fabfdfd5b89fe00c92b550d451c7b3bf27f09042f05cc8e5dc0da0034749d",
+    "src/Services/Infrastructure/IFilterCopyService.cs": "c8e7f60329a1c336b27833d963beb77a4fa13bfd89096992ca4c1c4c101ed419",
+    "src/Services/Infrastructure/ILinkedModelExportService.cs": "e9ff1c54b431b1588611d583793e58edf233e8dc67fa7850552c8b60048baea2",
+    "src/Services/Infrastructure/IProgressReporter.cs": "bf4e27edf0deb1c7d6308a794d67cf29322c5dedefcfdf707798c1363f6b4075",
+    "src/Services/Infrastructure/ITransactionService.cs": "689f5e3bdda71fd3656af02cb5f781c768e1bc561fe13e915bb05f4d3a2b3fcd",
+    "src/Services/Infrastructure/LegacyProgressReporter.cs": "38d9c17641e51e3c4393e5e3ad7554b6cea69f200e4b2f812fde03757d69fabb",
+    "src/Services/Infrastructure/LinkedModelExportService.cs": "79c82899d7c9969ff195dd7664e22d585c27badc5d17ea5e9db57aa9e1ca743c",
+    "src/Services/Infrastructure/Logging/CommandLogContext.cs": "51138b719abf5e7aae80d18d445805eecc90dc6c20e62b65240c9d21e244ac17",
+    "src/Services/Infrastructure/Logging/LogEntry.cs": "67c990750da02d7c716a0e05e15c7e7355413d131668f5add0faaddad308b304",
+    "src/Services/Infrastructure/Logging/Logger.cs": "8792f69fae8bd8a2e00f3e2080264ca851854fc54c0f3d4f300737abd7809999",
+    "src/Services/Infrastructure/Logging/SerilogBootstrapper.cs": "bb0387c11d8694fafdc167e077a1d9e34638849d7ed4aabe738d3fe64ad23fd5",
+    "src/Services/Infrastructure/RevitCommandProgressReporter.cs": "2f9868985c65277d92de79aa68c3cdf2bef4e2e7a06687bb6baf126581a616ad",
+    "src/Services/Infrastructure/SettingsManager.cs": "c77b53fe2504311d1daa713f57ed175eade3254ab939f83b7d0bea2d7a6024de",
+    "src/Services/Infrastructure/TransactionService.cs": "98fd35ffeb617898b14df11ecb32bf29a84d748fa7f172a453eaa37e6b86c393",
+    "src/Services/Interfaces/ISharedToFamilyParameterService.cs": "d2b551249500a0a44297af46b036632c10f4524d4fd24461579c88492601f95a",
+    "src/Services/Materials/IImageColorExtractionService.cs": "827f712ea131041e2173531688a2437b137b5a468855607dee0020d44d3e9f33",
+    "src/Services/Materials/ImageColorExtractionService.cs": "f4a591b0fa090669be94e4b7c4ec9519bc95810f5aa486766203246e8b4c3bf1",
+    "src/Services/Materials/IMaterialAppearanceAssetService.cs": "bf3b0629a682dddddd4db90c5e1f5d02ac5d0c1a9e2a44ad61924fdad3b498c6",
+    "src/Services/Materials/IMaterialColorSequenceService.cs": "3493ec7d68b2698ecb44edb30eeada301cbf0934fe0e8cd803f98d35cfa89ae4",
+    "src/Services/Materials/IMaterialCreationService.cs": "ab30953a2070ffb97eaf7b2f488d8045e8591a615cfa624c1a5b5d07e764d9af",
+    "src/Services/Materials/IMaterialPbrService.cs": "f21a32feee327018f77ddf5c3e57b44ad88013211f36868ab67e24b58100ca3d",
+    "src/Services/Materials/IMaterialService.cs": "97d731c053045e3c1bf3f54b5422bb7df3700a1a573d4c4fb9ee7e80707b0dcb",
+    "src/Services/Materials/IMaterialTextureLookupService.cs": "611da92dcf99a15fd76233b00c98894444410d36cf48b45d321bf9f28417ef1f",
+    "src/Services/Materials/MaterialAppearanceAssetService.cs": "29006fba93de043e8c2af9d2840d1fb444640db54d60c9ebd9a0e8e0c214909f",
+    "src/Services/Materials/MaterialAssignmentExecutionService.cs": "771a27e3be5bad4256b7a81016e51e6f98d6638b3d6da66e863fb882985cf2a8",
+    "src/Services/Materials/MaterialAssignmentProgressService.cs": "85f14025203f020878f8cd6a8e6135f8380dd07fa60dd7f10e78521d62824a9c",
+    "src/Services/Materials/MaterialBitmapPropertyService.cs": "b7c6cccb179bad2d8143d43439b88faf176563eccc84772e2615c35898290cd4",
+    "src/Services/Materials/MaterialBumpMapNormalizer.cs": "e749d5e832ec060b3744c8b254ab4e309849b283c5fb3da88ed4dd382d684939",
+    "src/Services/Materials/MaterialColorSequenceService.cs": "c6b6f6556d38e00413c03249c096c0ce099250a15ddd233130714bd625511824",
+    "src/Services/Materials/MaterialCreationService.cs": "171b32a4efbcceab684f05194897bb17ae220c222963a9efed29fdd0db91b72c",
+    "src/Services/Materials/MaterialElementGroupingService.cs": "fed898e91b6b5778c38596b5ca4f1c86b54b661c9655565c2e815d2412f76765",
+    "src/Services/Materials/MaterialElementTypeResolverService.cs": "d4b8f27aa3be45c94e1c57d7e3e6175228cd6dbd24748bdd0a2048e0ca97f5d8",
+    "src/Services/Materials/MaterialPbrService.cs": "04b33cd121d6f764bc731c6be1df203d0bf2416fdea6b33bee9a97fae44b749e",
+    "src/Services/Materials/MaterialService.cs": "d7b01b491930cbcbfee335ce3d112def7f0ec69f7561c9921fdcf549ba5a0283",
+    "src/Services/Materials/MaterialTextureLookupService.cs": "c8603e078443a477305f0d799f38658b2e2788d704c17bc4ac569580bf6555e0",
+    "src/Services/Materials/MaterialTypeAssignmentProcessService.cs": "08938d307733d094c6c3a908dfe3f654b9954c389948a585cbc8e470c95f9863",
+    "src/Services/Materials/MaterialTypeAssignmentService.cs": "7dc4fbbecbbd8a1f57f45eb26b0ef3babc426b61c232dc5ba0bdc3a765f34da5",
+    "src/Services/Materials/MaterialTypeEligibilityService.cs": "6decf7bfabcdd3ae5eba711aeb8e0bbe114cbb5529d9249a0bea2dd8e3711743",
+    "src/Services/PurgeAndCompaction/CompactingStylesContext.cs": "cb6141c8093f27e5b46725df18f1cd742617543e96831368a2d00376ccc83d72",
+    "src/Services/PurgeAndCompaction/CompactionSharedHelper.cs": "a165e602efaf0e120070b3c7ae26a7752a203e516bfd0f35dbd5c315634d5ae3",
+    "src/Services/PurgeAndCompaction/DeepPurgeService.cs": "abae76c81a9e1a4df39a74019dd19541d2ce82742b9316c37bf2455c2df08ccb",
+    "src/Services/PurgeAndCompaction/FillPatternCompactionService.cs": "040e7758f6a67cf2c9477d573110e799371b0d0b6b2612f64b12c61d1b3a980c",
+    "src/Services/PurgeAndCompaction/LinePatternCompactionService.cs": "676eff166ccbda81e01081ea9fdbd0063ec07da836dcfbe2955c5fcedf38508d",
+    "src/Services/PurgeAndCompaction/LineStyleCompactionService.cs": "72cf0b53977bfe3dcf37fbbb984363c2221a95751f1e3f215ebe2d9606e0abf6",
+    "src/Services/PurgeAndCompaction/PurgeContext.cs": "ccd7dc72d4114721fd351102f8e85f5e4367173e82601c88d420e3cecac8c703",
+    "src/Services/PurgeAndCompaction/PurgeDeleteElementService.cs": "beef85fb7b1e02c50793cd0ae0260cd70a3a78c4118e5244e547a6ed2d782348",
+    "src/Services/PurgeAndCompaction/PurgeExtendedElementService.cs": "d8b47e94859e0ee96894b6ba89935f7d74d1caf8c2789679fde9c06e103bcf5f",
+    "src/Services/PurgeAndCompaction/PurgeFillPatternService.cs": "ef0ac2594b8e2e4375bd3eb64eb6eb3a544d74b95e125124c09fb5876f784fab",
+    "src/Services/PurgeAndCompaction/PurgeLevelService.cs": "86816861037422935df939b582e74d8ff1222d58f277b5b7f558679c2300cfba",
+    "src/Services/PurgeAndCompaction/PurgeLinePatternService.cs": "9feb5d71f15433dc6aa2df7ce78f5bda77431f888a1f0ecabc5a6a2495bdf35a",
+    "src/Services/PurgeAndCompaction/PurgeLineStyleService.cs": "ac6f15adc2b6d412086cf10d448e327cf80992b82c0983019892820c1cb4175c",
+    "src/Services/PurgeAndCompaction/PurgeMaterialService.cs": "2e662c71f267beced8f8a4906239dd36624fa1d76218bea5b15db8e777d5f491",
+    "src/Services/PurgeAndCompaction/PurgeParameterService.cs": "c5aed9050204f46342a9d8aef26a73661c50bcbf874921a2dd5ca69ab65a08e3",
+    "src/Services/PurgeAndCompaction/PurgePassExecutionService.cs": "904079356bdc03b267b1e61c2949cc48dd7d2d0857e15a1f9c831cfa676c539a",
+    "src/Services/PurgeAndCompaction/PurgePassSequenceService.cs": "56539f3e9fe3c7c2c9792abe8a4c9546b5e6d738484d234ab1a290fdb0997ee7",
+    "src/Services/PurgeAndCompaction/PurgeService.cs": "83e59000aa36131640a24e1e472a282af21232dd0a23cf014743ffe783ddbada",
+    "src/Services/PurgeAndCompaction/TextStyleCompactionService.cs": "1143da4b2f1e12654df28fe004d7d426f39ad950ef8b2bf82f7367711cf3c53b",
+    "src/Services/Renaming/BaseElementCollectionService.cs": "424fa581eb3d162aab8f8765ac4284c6b19d140cc6f855baf2de01d01e6532e7",
+    "src/Services/Renaming/BatchRenameExecutionService.cs": "f72434648e49abbbdf60127336cf2437fe4b11818b31e285c6affa38d247ecd5",
+    "src/Services/Renaming/FormulaUpdateService.cs": "380a2617dd8950c3bb99a745b0b6437cd13a502d9556b28af44ad489f3442e0b",
+    "src/Services/Renaming/IBaseElementCollectionService.cs": "48d4db6698ec1ff556162ec9c702e2190b7fcbc06f89839a6ef5fab5784197e9",
+    "src/Services/Renaming/IBatchRenameExecutionService.cs": "73baeeaccc146489f252b1730ed4d0a0a329ed9bf1364c183521bda31cd68ca4",
+    "src/Services/Renaming/IFormulaUpdateService.cs": "8eebb0ce21f63f0cfdd31a9c4b35b78704c302168137981f12049265e473e8bd",
+    "src/Services/Renaming/IRenameRulePipelineService.cs": "3d0e2de2becb2b381de8fc91a3f170231c985e6ed33f59c7b1ab91874e073274",
+    "src/Services/Renaming/ISearchReplacePreviewService.cs": "500c4e2069425cb740207393d678fb9517ca306b15a05c487a2c1606fbe31249",
+    "src/Services/Renaming/ISearchReplaceService.cs": "bcb809de6970537ab0a0a28869dfefeaf96822376cc7ad691e069842f39e76b4",
+    "src/Services/Renaming/RenameRulePipelineService.cs": "735d87e5b6a1afabfa9319e9f0e7152910e50fbff560e8dc3270011d688a2f2b",
+    "src/Services/Renaming/RenameRules.cs": "75b7cc1cdca76b37491e354c89c64207575915450e307eabea1b9e82f609afe5",
+    "src/Services/Renaming/SearchReplacePreviewService.cs": "1fba11b509bc2dee577417e93041308274a1e1cf83c841c80f33cfe0157a3f4b",
+    "src/Services/Renaming/SearchReplaceService.cs": "ff9e425c28ee4e467d14c873f8b0d3e4dcefdae0fbfeba7ff35585068dbee0fa",
+    "src/Services/RenderAppearance/IRenderMaterialGraphicsApplyService.cs": "f431dbd02b6d55f063298b0493d5c1989e9d02b8ffb13df4f09d65171db38098",
+    "src/Services/RenderAppearance/IRenderSolidFillPatternService.cs": "b51e5420fd6166abc6532c8b5eb7f7dc79fccb416f97cde54a56bc6c9283d40a",
+    "src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs": "09f268c95755875e8bc421efd9f82ac2020a7fac0e9bc4f6690ddb7ab4038b18",
+    "src/Services/RenderAppearance/RenderAppearanceService.cs": "32027f25adc2628b5ec41272dc546a22a320c6998c8ff6ed65cb8fd2f2b6d4ea",
+    "src/Services/RenderAppearance/RenderAppearanceSingleSyncService.cs": "f7a1159a2671eab7e5df2d0c1f5fad17f838dd9504b06a0cbc41fb1c6e563d3b",
+    "src/Services/RenderAppearance/RenderMaterialGraphicsApplyService.cs": "d932f1fc8781d8fe827d4f7c44556b32d8ed217e7a57815997791b22212d7847",
+    "src/Services/RenderAppearance/RenderMaterialSyncExecutionService.cs": "104cc66bb3c2baae655b51330ad5856193c0107163c4f84465e80d0eb03a8ac4",
+    "src/Services/RenderAppearance/RenderSolidFillPatternService.cs": "d35bbc497595102b38e4121bd58fd2eda9d9f22dbe65d593d54eedb83623c3c8",
+    "src/Services/Schemas/SchemaCleanerService.cs": "c49af2f7fb1d8cbbd4da3ae46dfe81a43ccf6b47c4c8bd72e496ea6374004718",
+    "src/Services/Topography/ChangeLevelService.cs": "e4cda857ed40dd31c3bd56938329fe86420a8eacebd2e7d98d49bdce6758aaf0",
+    "src/Services/Topography/ConversionService.cs": "9daa58bfd9f149f0f01f0af0a8921894599e4b02c3a116269e4c4d68cd64339b",
+    "src/Services/Topography/DivideToposolidService.cs": "4e96c924871b32534bc235679d5e755dbfedd44bd2e0e1cec6725ac327827de3",
+    "src/Services/Topography/FixPointsService.cs": "c2a782ef77369952a19875d9783f19423e5404b4388f02e3b69736892b99fc07",
+    "src/Services/Topography/GeometryBoundaryService.cs": "905ef653dd019ec734181b8c77e50fc19237992ab87db2059d31831297ceeeb0",
+    "src/Services/Topography/OffsetService.cs": "88f901337008445d0860d8650e3e4c1f42d8a79e95353ce95c4ac0b7e0e21242",
+    "src/Services/Topography/SimplifyPointsService.cs": "7e1953916984db05af14aceb487d2b0292affed012c7ee711c16b523ae1d48be",
+    "src/Services/Topography/SlabService.cs": "1a6060a7afa567fbf99899a756b19399b947a9d59ab8705165adf5a158297341",
+    "src/Services/Topography/SplitBoundariesService.cs": "dac812101ea253701b3f775e675791ef475d2c1af229979b7efad70917daf910",
+    "src/Services/Topography/ToposolidService.cs": "2c84bf67acfab57cb831f4b4dcc7ed1c49d7cfc30c184a39ffe63e233ca0d821"
+  }
+}

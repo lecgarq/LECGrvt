@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\archify\\lecg-knowledge.architecture.json",
+  "output": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\archify\\lecg-knowledge.html",
+  "specification": {
+    "sha256": "58ce05a0af3af1ef2b35567e2640ceec453c2c8ff801cad5df8ab34797480d00",
+    "bytes": 7236
+  },
+  "artifact": {
+    "sha256": "6cc5b1b3e5105131327b5d43925b9c1a2fcfeb964517a57ba6bc5d060e88dd0a",
+    "bytes": 820617
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  },
+  "evidence": {
+    "verified": true,
+    "repository": "https://github.com/lecgarq/LECGrvt",
+    "revision": "d3a105199a04aa7295b634dba829397b805cd18e",
+    "references": 33
+  }
+}

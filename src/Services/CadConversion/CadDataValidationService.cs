@@ -3,7 +3,7 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadDataValidationService : ICadDataValidationService
+    public class CadDataValidationService
     {
         public void EnsureHasGeometry(CadData data, string emptyDataMessage)
         {

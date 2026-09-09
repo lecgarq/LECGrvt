@@ -1,6 +1,6 @@
 # LECG Manual Revit Smoke Test
 
-> Manual checklist — requires a human running Revit 2026 on this machine. Agents must NOT claim these steps passed unless Revit was actually opened and each step observed. The interactive checklist has never been executed end-to-end by a GSD run; see Run History below for journal-derived partial evidence.
+> Manual checklist — requires a human running Revit 2026 on this machine. Agents must NOT claim these steps passed unless Revit was actually opened and each step observed. The interactive checklist has never been executed end-to-end; see Run History below for journal-derived partial evidence.
 
 ## Preconditions
 
@@ -113,7 +113,7 @@ remembered deselections are re-applied. Execution renames ticked rows only. Mark
 
 ## Recording results
 
-Log the run (date, Revit build, steps passed/failed, journal excerpts for failures) as an entry in `docs/ai/worklog.md`. Until an interactive run happens, reports must state: `Revit runtime validation: not executed.`
+Log the run below with its date, Revit build, steps passed/failed, and journal excerpts for failures. Until an interactive run happens, reports must state: `Revit runtime validation: not executed.`
 
 ## Run History
 
@@ -161,7 +161,7 @@ Regression guard added the same day: `LECG.Tests/Views/ThemeScopingTests.cs`.
 
 ### 2026-07-04 — journal-derived partial evidence (NOT an interactive checklist run)
 
-No GSD-driven interactive test was performed (agent cannot drive the Revit GUI). However, read-only inspection of the user's own Revit 2026 session that day (`%LOCALAPPDATA%\Autodesk\Revit\Autodesk Revit 2026\Journals\journal.0879.txt`, session 22:12–22:15) provides direct evidence for a subset of steps, running the currently deployed DLL (deployed 2026-07-02):
+No interactive test was performed. However, read-only inspection of the user's own Revit 2026 session that day (`%LOCALAPPDATA%\Autodesk\Revit\Autodesk Revit 2026\Journals\journal.0879.txt`, session 22:12–22:15) provides direct evidence for a subset of steps, running the currently deployed DLL (deployed 2026-07-02):
 
 - **Step 1 (Startup): EVIDENCED** — `API_SUCCESS { Starting External Application: LECG, Class: LECG.App, ... Assembly: C:\ProgramData\Autodesk\Revit\Addins\2026\LECG\LECG.dll, Assembly Version: 0.1.1.0 }`. No load-failure dialog entries.
 - **Step 2 (Ribbon): EVIDENCED** — dozens of `API_SUCCESS { Added pushbutton ... }` entries across all LECG panels (Home, Project Health, Standards, Toposolids, Align, Model Organization, Visualization).

@@ -26,9 +26,9 @@ namespace LECG.Services
     public class PurgeParameterService
     {
         private readonly ITransactionService _transactionService;
-        private readonly IFamilyLoadOptionsFactory _loadOptionsFactory;
+        private readonly FamilyLoadOptionsFactory _loadOptionsFactory;
 
-        public PurgeParameterService(ITransactionService transactionService, IFamilyLoadOptionsFactory loadOptionsFactory)
+        public PurgeParameterService(ITransactionService transactionService, FamilyLoadOptionsFactory loadOptionsFactory)
         {
             _transactionService = transactionService;
             _loadOptionsFactory = loadOptionsFactory;

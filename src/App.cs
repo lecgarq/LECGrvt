@@ -33,7 +33,7 @@ namespace LECG
                 Core.Bootstrapper.Initialize();
 
                 // 1. Initialize Ribbon
-                var ribbonService = Core.ServiceLocator.GetRequiredService<IRibbonService>();
+                var ribbonService = Core.ServiceLocator.GetRequiredService<RibbonService>();
                 ribbonService.InitializeRibbon(application);
 
                 return Result.Succeeded;

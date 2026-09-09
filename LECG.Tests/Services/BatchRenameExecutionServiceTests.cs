@@ -287,7 +287,7 @@ public class BatchRenameExecutionServiceTests
     [Fact]
     public void Constructor_NullFormulaUpdateService_Throws()
     {
-        // ITransactionService and IFamilyLoadOptionsFactory use Revit API types — Castle DynamicProxy
+        // ITransactionService and FamilyLoadOptionsFactory use Revit API types — Castle DynamicProxy
         // cannot proxy them without RevitAPI.dll in the test runner (Phase 04-03 decision).
         // Use reflection to invoke the constructor with null for formulaUpdateService and verify
         // the resulting TargetInvocationException wraps ArgumentNullException.

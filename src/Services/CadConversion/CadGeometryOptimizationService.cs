@@ -6,12 +6,12 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadGeometryOptimizationService : ICadGeometryOptimizationService
+    public class CadGeometryOptimizationService
     {
-        private readonly ICadCurveFlattenService _curveFlattenService;
-        private readonly ICadLineMergeService _lineMergeService;
+        private readonly CadCurveFlattenService _curveFlattenService;
+        private readonly CadLineMergeService _lineMergeService;
 
-        public CadGeometryOptimizationService(ICadCurveFlattenService curveFlattenService, ICadLineMergeService lineMergeService)
+        public CadGeometryOptimizationService(CadCurveFlattenService curveFlattenService, CadLineMergeService lineMergeService)
         {
             _curveFlattenService = curveFlattenService;
             _lineMergeService = lineMergeService;

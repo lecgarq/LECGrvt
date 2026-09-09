@@ -19,7 +19,7 @@ namespace LECG.Commands
             ArgumentNullException.ThrowIfNull(uiDoc);
             ArgumentNullException.ThrowIfNull(doc);
 
-            var materialService = ServiceLocator.GetRequiredService<IMaterialService>();
+            var materialService = ServiceLocator.GetRequiredService<IMaterialPbrService>();
             var textureLookup = ServiceLocator.GetRequiredService<IMaterialTextureLookupService>();
             var viewModel = new PbrMaterialCreatorViewModel(textureLookup);
             var view = ServiceLocator.CreateWith<PbrMaterialCreatorView>(viewModel);

@@ -14,6 +14,10 @@
 
 ## Document Index
 
+For a plugin-wide knowledge overview, start with the [LECG knowledge atlas](archify/README.md), its [interactive map](archify/lecg-knowledge.html), and [searchable source inventory](archify/knowledge-index.json).
+
+The [Ponytail whole-repository audit](ponytail-audit.md) ranks the current opportunities to remove wrappers, unused flexibility, and avoidable dependencies.
+
 1. `01-architecture.md` - high-level architecture and boundaries.
 2. `02-components.md` - component inventory.
 3. `03-organization.md` - folder and naming rules.

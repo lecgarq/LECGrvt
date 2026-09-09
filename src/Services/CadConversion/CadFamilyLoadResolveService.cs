@@ -3,12 +3,12 @@ using LECG.Services.Interfaces;
 
 namespace LECG.Services
 {
-    public class CadFamilyLoadResolveService : ICadFamilyLoadResolveService
+    public class CadFamilyLoadResolveService
     {
-        private readonly IFamilyLoadOptionsFactory _familyLoadOptionsFactory;
-        private readonly ICadFamilySymbolService _familySymbolService;
+        private readonly FamilyLoadOptionsFactory _familyLoadOptionsFactory;
+        private readonly CadFamilySymbolService _familySymbolService;
 
-        public CadFamilyLoadResolveService(IFamilyLoadOptionsFactory familyLoadOptionsFactory, ICadFamilySymbolService familySymbolService)
+        public CadFamilyLoadResolveService(FamilyLoadOptionsFactory familyLoadOptionsFactory, CadFamilySymbolService familySymbolService)
         {
             _familyLoadOptionsFactory = familyLoadOptionsFactory;
             _familySymbolService = familySymbolService;

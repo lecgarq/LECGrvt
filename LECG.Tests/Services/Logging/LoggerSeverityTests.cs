@@ -4,16 +4,6 @@ using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using Xunit;
 
-// EXPECTED RED until Wave 1:
-// - Logger_ScopeParameterTests: build error — ILogger.LogWarning/LogError/Log/LogSuccess do not
-//   yet accept a `scope` parameter. Wave 1 adds this parameter to the ILogger contract.
-// - RevitCommandProgressReporter_SeverityTests: build error — RevitCommandProgressReporter ctor
-//   currently takes Action<string> + Action<double,string>; Wave 1 migrates it to accept ILogger.
-// - LegacyProgressReporter_SeverityTests: build error — LegacyProgressReporter ctor currently
-//   takes Action callbacks; Wave 1 migrates it to accept ILogger.
-// - SimpleProgressReporter_SeverityTests: build error — SimpleProgressReporter ctor currently
-//   takes Action<ProgressReport>; Wave 1 migrates it to accept ILogger.
-
 namespace LECG.Tests.Services.Logging;
 
 // ---------------------------------------------------------------------------
@@ -124,41 +114,6 @@ public class LegacyProgressReporter_SeverityTests
         var reporter = new LegacyProgressReporter(logger);
 
         reporter.LogError("legacy error");
-
-        logger.Entries.Should().ContainSingle()
-            .Which.Level.Should().Be(LogLevel.Error);
-    }
-}
-
-/// <summary>
-/// Verifies SimpleProgressReporter forwards LogWarning/LogError with correct severity.
-/// Expected RED until Wave 1: constructor signature change + severity-forward impl.
-/// </summary>
-[Trait("Category", "CrossCutting")]
-public class SimpleProgressReporter_SeverityTests
-{
-    [Fact]
-    public void LogWarning_ProducesWarningLevelEntry()
-    {
-        // Arrange — Wave 1 ctor: SimpleProgressReporter(ILogger, Action<ProgressReport>?)
-        var logger = new Logger();
-        var reporter = new SimpleProgressReporter(logger);
-
-        // Act
-        reporter.LogWarning("simple warning");
-
-        // Assert
-        logger.Entries.Should().ContainSingle()
-            .Which.Level.Should().Be(LogLevel.Warning);
-    }
-
-    [Fact]
-    public void LogError_ProducesErrorLevelEntry()
-    {
-        var logger = new Logger();
-        var reporter = new SimpleProgressReporter(logger);
-
-        reporter.LogError("simple error");
 
         logger.Entries.Should().ContainSingle()
             .Which.Level.Should().Be(LogLevel.Error);
