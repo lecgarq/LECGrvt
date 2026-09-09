@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    }
+  ],
+  "historical_reachable_models": 1,
+  "models_attempted": 1
+}

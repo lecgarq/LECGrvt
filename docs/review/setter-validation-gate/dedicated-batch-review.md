@@ -1,5 +1,8 @@
 # Dedicated-collection batch: tooling adopted, qualification blocked
 
+Historical report. The read-only check and approved scope amendment subsequently
+resolved this block without quarantining the sample; see [writable snapshot results](writable-snapshot-results.md).
+
 ## Outcome
 
 - Ledger committed as **f046465**, **624/805** changed-value-tested setters.

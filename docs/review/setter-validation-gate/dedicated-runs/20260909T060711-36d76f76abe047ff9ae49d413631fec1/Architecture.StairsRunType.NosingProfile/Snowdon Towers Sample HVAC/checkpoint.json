@@ -1,0 +1,13 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+  "model": "Snowdon Towers Sample HVAC.rvt",
+  "model_sha256": "2793230A685E08A4511899CCE4D8148C96B5860A52CE50EE10815C13743FC280",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.NosingProfile\\Snowdon Towers Sample HVAC\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false
+}

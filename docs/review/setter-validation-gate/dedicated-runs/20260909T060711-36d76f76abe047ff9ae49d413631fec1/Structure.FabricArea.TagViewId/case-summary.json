@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "historical_reachable_models": 1,
+  "models_attempted": 1
+}
