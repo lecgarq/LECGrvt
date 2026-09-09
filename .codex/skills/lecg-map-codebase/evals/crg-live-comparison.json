@@ -1,0 +1,3115 @@
+{
+  "repository_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "scope": "Offline qualification with live resolvable targets; not an 8-call production query or a general CRG accuracy certification.",
+  "identity": "repository-relative file path plus 1-based declaration start line; repeated call sites deduplicated; overloads remain distinct",
+  "case12": {
+    "target": "LECG.Services.Interfaces.IProgressReporter",
+    "project": "LECG.csproj",
+    "tfm": "net8.0-windows",
+    "reason": "Two differently named implementations; cannot choose by interface-name substitution.",
+    "sets": {
+      "serena": [
+        "src/Services/Infrastructure/LegacyProgressReporter.cs:11",
+        "src/Services/Infrastructure/RevitCommandProgressReporter.cs:11"
+      ],
+      "crg": [
+        "src/Services/Infrastructure/LegacyProgressReporter.cs:11",
+        "src/Services/Infrastructure/RevitCommandProgressReporter.cs:11"
+      ],
+      "missing": [],
+      "extra": []
+    },
+    "verdict": "Exact implementation-set match for this target; constructor selection is manual, not a claim of inferred container registration.",
+    "serena_implementations": {
+      "result": "[{\"name_path\": \"LECG.Services/RevitCommandProgressReporter\", \"kind\": \"Class\", \"relative_path\": \"src\\\\Services\\\\Infrastructure\\\\RevitCommandProgressReporter.cs\", \"body_location\": {\"start_line\": 10, \"end_line\": 33}}, {\"name_path\": \"LECG.Services/LegacyProgressReporter\", \"kind\": \"Class\", \"relative_path\": \"src\\\\Services\\\\Infrastructure\\\\LegacyProgressReporter.cs\", \"body_location\": {\"start_line\": 10, \"end_line\": 45}}]"
+    },
+    "crg": {
+      "status": "ok",
+      "pattern": "inheritors_of",
+      "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/IProgressReporter.cs::IProgressReporter",
+      "description": "Find all classes that inherit from a given class",
+      "summary": "Found 2 result(s) for inheritors_of('C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/IProgressReporter.cs::IProgressReporter')",
+      "result_count": 2,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 1854,
+          "kind": "Class",
+          "name": "LegacyProgressReporter",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LegacyProgressReporter.cs::LegacyProgressReporter",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LegacyProgressReporter.cs",
+          "line_start": 11,
+          "line_end": 46,
+          "language": "csharp",
+          "parent_name": null,
+          "is_test": false
+        },
+        {
+          "id": 1917,
+          "kind": "Class",
+          "name": "RevitCommandProgressReporter",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/RevitCommandProgressReporter.cs::RevitCommandProgressReporter",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/RevitCommandProgressReporter.cs",
+          "line_start": 11,
+          "line_end": 34,
+          "language": "csharp",
+          "parent_name": null,
+          "is_test": false
+        }
+      ],
+      "edges": [
+        {
+          "id": 12150,
+          "kind": "INHERITS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LegacyProgressReporter.cs::LegacyProgressReporter",
+          "target": "IProgressReporter",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LegacyProgressReporter.cs",
+          "line": 11,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 12394,
+          "kind": "INHERITS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/RevitCommandProgressReporter.cs::RevitCommandProgressReporter",
+          "target": "IProgressReporter",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/RevitCommandProgressReporter.cs",
+          "line": 11,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-09-08T21:30:40",
+        "age_seconds": 972,
+        "built_at_sha": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+        "built_on_branch": "feature/purge-unused-maturity",
+        "head_sha": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+        "head_matches_build": true
+      }
+    },
+    "constructor_references": {
+      "RevitCommandProgressReporter": {
+        "src\\Commands\\RenderAppearanceMatchCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/RenderAppearanceMatchCommand/Execute",
+              "body_location": {
+                "start_line": 22,
+                "end_line": 66
+              },
+              "content_around_reference": "...  58:                // 4. Process Materials (Batch)\n  >  59:                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  60:                matService.BatchSyncWithRenderAppearance(doc, materialsList, settings, reporter);"
+            }
+          ]
+        },
+        "src\\Commands\\PurgeCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/PurgeCommand/Execute",
+              "body_location": {
+                "start_line": 38,
+                "end_line": 102
+              },
+              "content_around_reference": "...  48:\n  >  49:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  50:"
+            }
+          ]
+        },
+        "src\\Commands\\SearchReplaceCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/SearchReplaceCommand/Execute",
+              "body_location": {
+                "start_line": 20,
+                "end_line": 40
+              },
+              "content_around_reference": "...  34:                ShowLogWindow(\"Batch Rename\");\n  >  35:                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  36:                service.ExecuteBatchRename(doc, vm.PreviewItems.Where(i => i.IsChecked).ToList(), _logger, reporter);"
+            }
+          ]
+        },
+        "src\\Commands\\SexyRevitCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/SexyRevitCommand/Execute",
+              "body_location": {
+                "start_line": 19,
+                "end_line": 63
+              },
+              "content_around_reference": "...  55:            var service = ServiceLocator.GetRequiredService<SexyRevitService>();\n  >  56:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  57:            service.ApplyBeauty(doc, view, settings.ToSettings(), reporter);"
+            }
+          ]
+        },
+        "src\\Commands\\DivideToposolidCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/DivideToposolidCommand/Execute",
+              "body_location": {
+                "start_line": 17,
+                "end_line": 63
+              },
+              "content_around_reference": "...  56:\n  >  57:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  58:"
+            }
+          ]
+        },
+        "src\\Commands\\CompactingStylesCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/CompactingStylesCommand/Execute",
+              "body_location": {
+                "start_line": 16,
+                "end_line": 97
+              },
+              "content_around_reference": "...  30:            Log(\"=================\");\n  >  31:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  32:            var failureHandler = new SafeFailureHandler();"
+            }
+          ]
+        },
+        "src\\Commands\\TypeToLinkedModelsCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/TypeToLinkedModelsCommand/Execute",
+              "body_location": {
+                "start_line": 22,
+                "end_line": 70
+              },
+              "content_around_reference": "...  62:\n  >  63:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  64:"
+            }
+          ]
+        },
+        "src\\Commands\\FixPointsCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/FixPointsCommand/Execute",
+              "body_location": {
+                "start_line": 18,
+                "end_line": 63
+              },
+              "content_around_reference": "...  55:\n  >  56:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  57:            Log(\"Starting Fix Points...\");"
+            }
+          ]
+        },
+        "src\\Commands\\ConvertFloorToToposolidCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/ConvertFloorToToposolidCommand/Execute",
+              "body_location": {
+                "start_line": 17,
+                "end_line": 73
+              },
+              "content_around_reference": "...  61:\n  >  62:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  63:"
+            }
+          ]
+        },
+        "src\\Commands\\ConvertToposolidToFloorCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/ConvertToposolidToFloorCommand/Execute",
+              "body_location": {
+                "start_line": 17,
+                "end_line": 73
+              },
+              "content_around_reference": "...  61:\n  >  62:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  63:"
+            }
+          ]
+        },
+        "src\\Commands\\AssignMaterialCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/AssignMaterialCommand/Execute",
+              "body_location": {
+                "start_line": 20,
+                "end_line": 59
+              },
+              "content_around_reference": "...  54:                // Call Logic\n  >  55:                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  56:                service.AssignMaterialsToElements(doc, elements, reporter);"
+            }
+          ]
+        },
+        "src\\Commands\\SimplifyPointsCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/SimplifyPointsCommand/Execute",
+              "body_location": {
+                "start_line": 20,
+                "end_line": 59
+              },
+              "content_around_reference": "...  45:            {\n  >  46:                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  47:                // Show Log"
+            }
+          ]
+        },
+        "src\\Commands\\ConvertFamilyCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/ConvertFamilyCommand/Execute",
+              "body_location": {
+                "start_line": 28,
+                "end_line": 101
+              },
+              "content_around_reference": "...  87:\n  >  88:                var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  89:"
+            }
+          ]
+        },
+        "src\\Commands\\SplitBoundariesCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/SplitBoundariesCommand/Execute",
+              "body_location": {
+                "start_line": 20,
+                "end_line": 66
+              },
+              "content_around_reference": "...  59:\n  >  60:            var reporter = new RevitCommandProgressReporter(_logger, UpdateProgress);\n...  61:"
+            }
+          ]
+        },
+        "LECG.Tests\\Services\\Logging\\LoggerSeverityTests.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Tests.Services.Logging/RevitCommandProgressReporter_SeverityTests/LogWarning_ProducesWarningLevelEntry",
+              "body_location": {
+                "start_line": 59,
+                "end_line": 72
+              },
+              "content_around_reference": "...  63:        var logger = new Logger();\n  >  64:        var reporter = new RevitCommandProgressReporter(logger, (_, _) => { });\n...  65:"
+            },
+            {
+              "name_path": "LECG.Tests.Services.Logging/RevitCommandProgressReporter_SeverityTests/LogError_ProducesErrorLevelEntry",
+              "body_location": {
+                "start_line": 74,
+                "end_line": 84
+              },
+              "content_around_reference": "...  77:        var logger = new Logger();\n  >  78:        var reporter = new RevitCommandProgressReporter(logger, (_, _) => { });\n...  79:"
+            }
+          ]
+        },
+        "src\\Commands\\ConvertCadCommand.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Commands/ConvertCadEventHandler/RunConversion",
+              "body_location": {
+                "start_line": 116,
+                "end_line": 154
+              },
+              "content_around_reference": "... 124:            ElementId createdId = ElementId.InvalidElementId;\n  > 125:            var reporter = new RevitCommandProgressReporter(_logger!, (percentage, message) =>\n... 126:            {"
+            }
+          ]
+        }
+      },
+      "LegacyProgressReporter": {
+        "LECG.Tests\\Services\\Logging\\LoggerSeverityTests.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Tests.Services.Logging/LegacyProgressReporter_SeverityTests/LogWarning_ProducesWarningLevelEntry",
+              "body_location": {
+                "start_line": 94,
+                "end_line": 107
+              },
+              "content_around_reference": "...  98:        var logger = new Logger();\n  >  99:        var reporter = new LegacyProgressReporter(logger);\n... 100:"
+            },
+            {
+              "name_path": "LECG.Tests.Services.Logging/LegacyProgressReporter_SeverityTests/LogError_ProducesErrorLevelEntry",
+              "body_location": {
+                "start_line": 109,
+                "end_line": 119
+              },
+              "content_around_reference": "... 112:        var logger = new Logger();\n  > 113:        var reporter = new LegacyProgressReporter(logger);\n... 114:"
+            }
+          ]
+        },
+        "LECG.Tests\\Services\\SearchReplaceServiceTests.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Tests.Services/SearchReplaceServiceTests/ExecuteBatchRename_ProgressReporterOverload_DelegatesToExecutionService",
+              "body_location": {
+                "start_line": 122,
+                "end_line": 135
+              },
+              "content_around_reference": "... 128:        var logger = Substitute.For<LECG.Services.Logging.ILogger>();\n  > 129:        var reporter = new LegacyProgressReporter(logger);\n... 130:"
+            }
+          ]
+        },
+        "src\\Services\\Renaming\\BatchRenameExecutionService.cs": {
+          "Method": [
+            {
+              "name_path": "LECG.Services/BatchRenameExecutionService/ExecuteBatchRename[0]",
+              "body_location": {
+                "start_line": 25,
+                "end_line": 32
+              },
+              "content_around_reference": "...  30:\n  >  31:            return ExecuteBatchRename(doc, items, logger, new LegacyProgressReporter(logger, onProgress));\n...  32:        }"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "case13": {
+    "target": "LECG.Services.Interfaces.ITransactionService.Run(Document,string,Action<Document>)",
+    "project": "LECG.csproj",
+    "tfm": "net8.0-windows",
+    "comparison": {
+      "call_sites": 35,
+      "serena_callers": 29,
+      "crg_callers": 33,
+      "common": 25,
+      "missing": [
+        {
+          "key": "src/Commands/ResetSlabsCommand.cs:23",
+          "symbol": "LECG.Commands/ResetSlabsCommand/Execute"
+        },
+        {
+          "key": "src/Commands/CleanSchemasCommand.cs:18",
+          "symbol": "LECG.Commands/CleanSchemasCommand/Execute"
+        },
+        {
+          "key": "src/Commands/OffsetElevationsCommand.cs:21",
+          "symbol": "LECG.Commands/OffsetElevationsCommand/Execute"
+        },
+        {
+          "key": "src/Commands/UpdateContoursCommand.cs:20",
+          "symbol": "LECG.Commands/UpdateContoursCommand/Execute"
+        }
+      ],
+      "extra": [
+        {
+          "key": "src/Services/Alignment/AlignEdgesService.cs:64",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs::AlignEdgesService.RunAlignment",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/CadConversion/CadFamilyLoadPlacementService.cs:28",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadOnly",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/CadConversion/CadFamilyLoadPlacementService.cs:39",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadAndPlace",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Infrastructure/FilterCopyService.cs:21",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs::FilterCopyService.Apply",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Materials/MaterialPbrService.cs:69",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs::MaterialPbrService.CreatePBRMaterial",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/FixPointsService.cs:61",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs::FixPointsService.ProcessElement",
+          "resolution": null
+        },
+        {
+          "key": "RevitCopilot/Tests/SampleBenchmark.cs:60",
+          "symbol": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs::SampleBenchmark.Tick",
+          "resolution": "unresolved"
+        },
+        {
+          "key": "RevitCopilot/Tests/SmokeApplication.cs:59",
+          "symbol": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs::SmokeApplication.OnIdling",
+          "resolution": "unresolved"
+        }
+      ],
+      "serena_set": [
+        {
+          "key": "src/Services/CadConversion/CadFamilyBuildService.cs:23",
+          "symbol": "LECG.Services/CadFamilyBuildService/BuildAndSave"
+        },
+        {
+          "key": "src/Services/Alignment/AlignElementsService.cs:18",
+          "symbol": "LECG.Services/AlignElementsService/Align"
+        },
+        {
+          "key": "src/Services/Alignment/AlignElementsService.cs:45",
+          "symbol": "LECG.Services/AlignElementsService/Distribute"
+        },
+        {
+          "key": "src/Services/Materials/MaterialAppearanceAssetService.cs:23",
+          "symbol": "LECG.Services/MaterialAppearanceAssetService/ApplyTextures"
+        },
+        {
+          "key": "src/Services/Materials/MaterialAppearanceAssetService.cs:62",
+          "symbol": "LECG.Services/MaterialAppearanceAssetService/ApplyPbrTextures"
+        },
+        {
+          "key": "src/Services/Graphics/SexyRevitService.cs:19",
+          "symbol": "LECG.Services/SexyRevitService/ApplyBeauty"
+        },
+        {
+          "key": "src/Services/FamilyConversion/SharedToFamilyParameterService.cs:50",
+          "symbol": "LECG.Services/SharedToFamilyParameterService/ProcessSingleFamily"
+        },
+        {
+          "key": "src/Commands/ConvertSharedCommand.cs:14",
+          "symbol": "LECG.Commands/ConvertSharedCommand/Execute"
+        },
+        {
+          "key": "src/Services/Materials/MaterialAssignmentExecutionService.cs:25",
+          "symbol": "LECG.Services/MaterialAssignmentExecutionService/AssignMaterialsToElements"
+        },
+        {
+          "key": "src/Services/Topography/ChangeLevelService.cs:26",
+          "symbol": "LECG.Services/ChangeLevelService/ChangeLevel"
+        },
+        {
+          "key": "src/Commands/ConvertCadCommand.cs:157",
+          "symbol": "LECG.Commands/ConvertCadEventHandler/RunPlacement"
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyEditorService.cs:112",
+          "symbol": "LECG.Services/FamilyEditorService/ProcessFamily"
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyEditorService.cs:221",
+          "symbol": "LECG.Services/FamilyEditorService/RestoreFamilyParameterValues"
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyEditorService.cs:325",
+          "symbol": "LECG.Services/FamilyEditorService/RecreateAs"
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyConversionService.cs:235",
+          "symbol": "LECG.Services/FamilyConversionService/DeleteCapturedInstances"
+        },
+        {
+          "key": "src/Services/Infrastructure/LinkedModelExportService.cs:36",
+          "symbol": "LECG.Services/LinkedModelExportService/ExportAndLink"
+        },
+        {
+          "key": "src/Commands/ResetSlabsCommand.cs:23",
+          "symbol": "LECG.Commands/ResetSlabsCommand/Execute"
+        },
+        {
+          "key": "src/Commands/CategoryChangerCommand.cs:159",
+          "symbol": "LECG.Commands/CategoryChangerEventHandler/SwapInstances"
+        },
+        {
+          "key": "src/Services/Topography/SplitBoundariesService.cs:184",
+          "symbol": "LECG.Services/SplitBoundariesService/SplitFloor"
+        },
+        {
+          "key": "src/Services/Topography/SplitBoundariesService.cs:79",
+          "symbol": "LECG.Services/SplitBoundariesService/SplitToposolid"
+        },
+        {
+          "key": "src/Services/Topography/DivideToposolidService.cs:62",
+          "symbol": "LECG.Services/DivideToposolidService/DivideSingleToposolid"
+        },
+        {
+          "key": "src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs:26",
+          "symbol": "LECG.Services/RenderAppearanceBatchSyncService/BatchSync"
+        },
+        {
+          "key": "src/Services/Renaming/BatchRenameExecutionService.cs:35",
+          "symbol": "LECG.Services/BatchRenameExecutionService/ExecuteBatchRename[1]"
+        },
+        {
+          "key": "src/Commands/CleanSchemasCommand.cs:18",
+          "symbol": "LECG.Commands/CleanSchemasCommand/Execute"
+        },
+        {
+          "key": "src/Commands/OffsetElevationsCommand.cs:21",
+          "symbol": "LECG.Commands/OffsetElevationsCommand/Execute"
+        },
+        {
+          "key": "src/Services/Topography/SimplifyPointsService.cs:52",
+          "symbol": "LECG.Services/SimplifyPointsService/DeleteAllDeletablePoints"
+        },
+        {
+          "key": "src/Services/Topography/ConversionService.cs:196",
+          "symbol": "LECG.Services/ConversionService/ConvertSingleToposolidToFloor"
+        },
+        {
+          "key": "src/Services/Topography/ConversionService.cs:152",
+          "symbol": "LECG.Services/ConversionService/ConvertSingleFloorToToposolid"
+        },
+        {
+          "key": "src/Commands/UpdateContoursCommand.cs:20",
+          "symbol": "LECG.Commands/UpdateContoursCommand/Execute"
+        }
+      ],
+      "crg_set": [
+        {
+          "key": "src/Commands/CategoryChangerCommand.cs:159",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs::CategoryChangerEventHandler.SwapInstances",
+          "resolution": null
+        },
+        {
+          "key": "src/Commands/ConvertCadCommand.cs:157",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs::ConvertCadEventHandler.RunPlacement",
+          "resolution": null
+        },
+        {
+          "key": "src/Commands/ConvertSharedCommand.cs:14",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs::ConvertSharedCommand.Execute",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Alignment/AlignEdgesService.cs:64",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs::AlignEdgesService.RunAlignment",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Alignment/AlignElementsService.cs:18",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Align",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Alignment/AlignElementsService.cs:45",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Distribute",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/CadConversion/CadFamilyBuildService.cs:23",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs::CadFamilyBuildService.BuildAndSave",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/CadConversion/CadFamilyLoadPlacementService.cs:28",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadOnly",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/CadConversion/CadFamilyLoadPlacementService.cs:39",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadAndPlace",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyConversionService.cs:235",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs::FamilyConversionService.DeleteCapturedInstances",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyEditorService.cs:112",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.ProcessFamily",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyEditorService.cs:221",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RestoreFamilyParameterValues",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/FamilyConversion/FamilyEditorService.cs:325",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RecreateAs",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/FamilyConversion/SharedToFamilyParameterService.cs:50",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs::SharedToFamilyParameterService.ProcessSingleFamily",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Graphics/SexyRevitService.cs:19",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs::SexyRevitService.ApplyBeauty",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Infrastructure/FilterCopyService.cs:21",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs::FilterCopyService.Apply",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Infrastructure/LinkedModelExportService.cs:36",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs::LinkedModelExportService.ExportAndLink",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Materials/MaterialAppearanceAssetService.cs:23",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyTextures",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Materials/MaterialAppearanceAssetService.cs:62",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyPbrTextures",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Materials/MaterialAssignmentExecutionService.cs:25",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs::MaterialAssignmentExecutionService.AssignMaterialsToElements",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Materials/MaterialPbrService.cs:69",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs::MaterialPbrService.CreatePBRMaterial",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Renaming/BatchRenameExecutionService.cs:35",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs::BatchRenameExecutionService.ExecuteBatchRename",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs:26",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs::RenderAppearanceBatchSyncService.BatchSync",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/ChangeLevelService.cs:26",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs::ChangeLevelService.ChangeLevel",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/ConversionService.cs:152",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleFloorToToposolid",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/ConversionService.cs:196",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleToposolidToFloor",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/DivideToposolidService.cs:62",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs::DivideToposolidService.DivideSingleToposolid",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/FixPointsService.cs:61",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs::FixPointsService.ProcessElement",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/SimplifyPointsService.cs:52",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs::SimplifyPointsService.DeleteAllDeletablePoints",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/SplitBoundariesService.cs:79",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitToposolid",
+          "resolution": null
+        },
+        {
+          "key": "src/Services/Topography/SplitBoundariesService.cs:184",
+          "symbol": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitFloor",
+          "resolution": null
+        },
+        {
+          "key": "RevitCopilot/Tests/SampleBenchmark.cs:60",
+          "symbol": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs::SampleBenchmark.Tick",
+          "resolution": "unresolved"
+        },
+        {
+          "key": "RevitCopilot/Tests/SmokeApplication.cs:59",
+          "symbol": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs::SmokeApplication.OnIdling",
+          "resolution": "unresolved"
+        }
+      ],
+      "edges": [
+        {
+          "id": 8495,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs::CategoryChangerEventHandler.SwapInstances",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs",
+          "line": 183,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 8726,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs::ConvertCadEventHandler.RunPlacement",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs",
+          "line": 177,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 8833,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs::ConvertSharedCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs",
+          "line": 61,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 10689,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs::AlignEdgesService.RunAlignment",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs",
+          "line": 76,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 10787,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Align",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs",
+          "line": 24,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 10795,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Distribute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs",
+          "line": 51,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11026,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs::CadFamilyBuildService.BuildAndSave",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs",
+          "line": 47,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11046,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadOnly",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+          "line": 30,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11050,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadAndPlace",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+          "line": 41,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11519,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs::FamilyConversionService.DeleteCapturedInstances",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs",
+          "line": 237,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11600,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.ProcessFamily",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line": 140,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11629,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RestoreFamilyParameterValues",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line": 244,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11669,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RecreateAs",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line": 360,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11951,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs::SharedToFamilyParameterService.ProcessSingleFamily",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs",
+          "line": 86,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11993,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs::SexyRevitService.ApplyBeauty",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs",
+          "line": 23,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12106,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs::FilterCopyService.Apply",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs",
+          "line": 28,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12198,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs::LinkedModelExportService.ExportAndLink",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs",
+          "line": 99,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12555,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyTextures",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs",
+          "line": 42,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12573,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyPbrTextures",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs",
+          "line": 81,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12618,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs::MaterialAssignmentExecutionService.AssignMaterialsToElements",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs",
+          "line": 44,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12927,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs::MaterialPbrService.CreatePBRMaterial",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs",
+          "line": 51,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 14694,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs::BatchRenameExecutionService.ExecuteBatchRename",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs",
+          "line": 81,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15076,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs::RenderAppearanceBatchSyncService.BatchSync",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs",
+          "line": 52,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15248,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs::ChangeLevelService.ChangeLevel",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs",
+          "line": 33,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15331,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleFloorToToposolid",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs",
+          "line": 175,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15345,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleToposolidToFloor",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs",
+          "line": 213,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15438,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs::DivideToposolidService.DivideSingleToposolid",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs",
+          "line": 119,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15524,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs::FixPointsService.ProcessElement",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs",
+          "line": 74,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15670,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs::SimplifyPointsService.DeleteAllDeletablePoints",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs",
+          "line": 59,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15738,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitToposolid",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs",
+          "line": 94,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15761,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitFloor",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs",
+          "line": 200,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 6745,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs::SampleBenchmark.Tick",
+          "target": "Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs",
+          "line": 158,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 7274,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs::SmokeApplication.OnIdling",
+          "target": "Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs",
+          "line": 113,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        }
+      ],
+      "overload_family": {
+        "serena_callers": 36,
+        "common": 31,
+        "missing": [
+          {
+            "key": "src/Commands/ResetSlabsCommand.cs:23",
+            "symbol": "LECG.Commands/ResetSlabsCommand/Execute"
+          },
+          {
+            "key": "src/Commands/CleanSchemasCommand.cs:18",
+            "symbol": "LECG.Commands/CleanSchemasCommand/Execute"
+          },
+          {
+            "key": "src/Commands/OffsetElevationsCommand.cs:21",
+            "symbol": "LECG.Commands/OffsetElevationsCommand/Execute"
+          },
+          {
+            "key": "src/Commands/UpdateContoursCommand.cs:20",
+            "symbol": "LECG.Commands/UpdateContoursCommand/Execute"
+          },
+          {
+            "key": "src/Services/Materials/MaterialPbrService.cs:45",
+            "symbol": "LECG.Services/MaterialPbrService/CreatePBRMaterial[0]"
+          }
+        ],
+        "extra": [
+          {
+            "key": "RevitCopilot/Tests/SampleBenchmark.cs:60",
+            "symbol": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs::SampleBenchmark.Tick",
+            "resolution": "unresolved"
+          },
+          {
+            "key": "RevitCopilot/Tests/SmokeApplication.cs:59",
+            "symbol": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs::SmokeApplication.OnIdling",
+            "resolution": "unresolved"
+          }
+        ]
+      }
+    },
+    "raw_serena": {
+      "src\\Services\\CadConversion\\CadFamilyBuildService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/CadFamilyBuildService/BuildAndSave",
+            "body_location": {
+              "start_line": 22,
+              "end_line": 61
+            },
+            "content_around_reference": "...  45:            Document familyDoc = projectDoc.Application.NewFamilyDocument(templatePath);\n  >  46:            _transactionService.Run(familyDoc, transactionName, _ =>\n...  47:            {"
+          }
+        ]
+      },
+      "src\\Services\\Alignment\\AlignElementsService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/AlignElementsService/Align",
+            "body_location": {
+              "start_line": 17,
+              "end_line": 42
+            },
+            "content_around_reference": "...  22:\n  >  23:            _transactionService.Run(doc, $\"Align {mode}\", currentDoc =>\n...  24:            {"
+          },
+          {
+            "name_path": "LECG.Services/AlignElementsService/Distribute",
+            "body_location": {
+              "start_line": 44,
+              "end_line": 58
+            },
+            "content_around_reference": "...  49:\n  >  50:            _transactionService.Run(doc, $\"Distribute {mode}\", currentDoc =>\n...  51:            {"
+          }
+        ]
+      },
+      "src\\Services\\Materials\\MaterialAppearanceAssetService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/MaterialAppearanceAssetService/ApplyTextures",
+            "body_location": {
+              "start_line": 22,
+              "end_line": 59
+            },
+            "content_around_reference": "...  40:\n  >  41:            _transactionService.Run(doc, \"Apply Material Appearance\", _ =>\n...  42:            {"
+          },
+          {
+            "name_path": "LECG.Services/MaterialAppearanceAssetService/ApplyPbrTextures",
+            "body_location": {
+              "start_line": 61,
+              "end_line": 124
+            },
+            "content_around_reference": "...  79:\n  >  80:            _transactionService.Run(doc, \"Apply PBR Textures\", _ =>\n...  81:            {"
+          }
+        ]
+      },
+      "src\\Services\\Graphics\\SexyRevitService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/SexyRevitService/ApplyBeauty",
+            "body_location": {
+              "start_line": 18,
+              "end_line": 36
+            },
+            "content_around_reference": "...  21:\n  >  22:            _transactionService.Run(doc, \"Sexy Revit\", currentDoc =>\n...  23:            {"
+          }
+        ]
+      },
+      "src\\Services\\FamilyConversion\\SharedToFamilyParameterService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/SharedToFamilyParameterService/ProcessSingleFamily",
+            "body_location": {
+              "start_line": 49,
+              "end_line": 134
+            },
+            "content_around_reference": "...  84:\n  >  85:                _transactionService.Run(familyDoc, \"Convert Shared to Family Parameters\", _ =>\n...  86:                {"
+          }
+        ]
+      },
+      "src\\Commands\\ConvertSharedCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/ConvertSharedCommand/Execute",
+            "body_location": {
+              "start_line": 13,
+              "end_line": 86
+            },
+            "content_around_reference": "...  59:                {\n  >  60:                    transactionService.Run(nestedDoc, \"Uncheck Shared\", _ =>\n...  61:                    {"
+          }
+        ]
+      },
+      "src\\Services\\Materials\\MaterialAssignmentExecutionService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/MaterialAssignmentExecutionService/AssignMaterialsToElements",
+            "body_location": {
+              "start_line": 24,
+              "end_line": 62
+            },
+            "content_around_reference": "...  42:\n  >  43:            _transactionService.Run(doc, \"Assign Material by Type\", currentDoc =>\n...  44:            {"
+          }
+        ]
+      },
+      "src\\Services\\Topography\\ChangeLevelService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/ChangeLevelService/ChangeLevel",
+            "body_location": {
+              "start_line": 25,
+              "end_line": 39
+            },
+            "content_around_reference": "...  31:\n  >  32:            _transactionService.Run(doc, \"Change Element Level\", currentDoc =>\n...  33:            {"
+          }
+        ]
+      },
+      "src\\Commands\\ConvertCadCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/ConvertCadEventHandler/RunPlacement",
+            "body_location": {
+              "start_line": 156,
+              "end_line": 189
+            },
+            "content_around_reference": "... 175:            {\n  > 176:                transactionService.Run(doc, \"Activate Symbol\", _ => symbol.Activate());\n... 177:            }"
+          }
+        ]
+      },
+      "src\\Services\\FamilyConversion\\FamilyEditorService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/FamilyEditorService/ProcessFamily",
+            "body_location": {
+              "start_line": 111,
+              "end_line": 161
+            },
+            "content_around_reference": "... 138:\n  > 139:                _transactionService.Run(familyDoc, \"Silent Family Edit\", _ =>\n... 140:                {"
+          },
+          {
+            "name_path": "LECG.Services/FamilyEditorService/RestoreFamilyParameterValues",
+            "body_location": {
+              "start_line": 220,
+              "end_line": 268
+            },
+            "content_around_reference": "... 242:            int restored = 0;\n  > 243:            _transactionService.Run(projectDoc, \"Restore Parameter Values\", _ =>\n... 244:            {"
+          },
+          {
+            "name_path": "LECG.Services/FamilyEditorService/RecreateAs",
+            "body_location": {
+              "start_line": 324,
+              "end_line": 419
+            },
+            "content_around_reference": "... 358:\n  > 359:                    _transactionService.Run(targetDoc, \"Nest Source Family\", _ =>\n... 360:                    {"
+          },
+          {
+            "name_path": "LECG.Services/FamilyEditorService/RecreateAs",
+            "body_location": {
+              "start_line": 324,
+              "end_line": 419
+            },
+            "content_around_reference": "... 390:                // 4. Set the Category in the new family\n  > 391:                _transactionService.Run(targetDoc, \"Set Category\", _ =>\n... 392:                {"
+          },
+          {
+            "name_path": "LECG.Services/FamilyEditorService/RecreateAs",
+            "body_location": {
+              "start_line": 324,
+              "end_line": 419
+            },
+            "content_around_reference": "... 406:                // Rename in project context\n  > 407:                _transactionService.Run(projectDoc, \"Rename Transplanted Family\", _ =>\n... 408:                {"
+          }
+        ]
+      },
+      "src\\Services\\FamilyConversion\\FamilyConversionService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/FamilyConversionService/DeleteCapturedInstances",
+            "body_location": {
+              "start_line": 234,
+              "end_line": 254
+            },
+            "content_around_reference": "... 235:        {\n  > 236:            _transactionService.Run(doc, \"Delete Old Instances for Conversion\", _ =>\n... 237:            {"
+          }
+        ]
+      },
+      "src\\Services\\Infrastructure\\LinkedModelExportService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/LinkedModelExportService/ExportAndLink",
+            "body_location": {
+              "start_line": 35,
+              "end_line": 138
+            },
+            "content_around_reference": "...  97:\n  >  98:            _transactionService.Run(doc, \"Link Exported Models\", currentDoc =>\n...  99:            {"
+          }
+        ]
+      },
+      "src\\Commands\\ResetSlabsCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/ResetSlabsCommand/Execute",
+            "body_location": {
+              "start_line": 22,
+              "end_line": 122
+            },
+            "content_around_reference": "...  62:            int processed = 0;\n  >  63:            transactionService.Run(doc, \"Reset Slab Shapes\", currentDoc =>\n...  64:            {"
+          }
+        ]
+      },
+      "src\\Commands\\CategoryChangerCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/CategoryChangerEventHandler/SwapInstances",
+            "body_location": {
+              "start_line": 158,
+              "end_line": 260
+            },
+            "content_around_reference": "... 181:\n  > 182:            _transactionService.Run(doc, \"Swap Transplanted Instances\", _ =>\n... 183:            {"
+          }
+        ]
+      },
+      "src\\Services\\Topography\\SplitBoundariesService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/SplitBoundariesService/SplitFloor",
+            "body_location": {
+              "start_line": 183,
+              "end_line": 293
+            },
+            "content_around_reference": "... 198:\n  > 199:            _transactionService.Run(doc, \"Split Floor Boundaries\", currentDoc =>\n... 200:            {"
+          },
+          {
+            "name_path": "LECG.Services/SplitBoundariesService/SplitToposolid",
+            "body_location": {
+              "start_line": 78,
+              "end_line": 181
+            },
+            "content_around_reference": "...  92:\n  >  93:            _transactionService.Run(doc, \"Split Toposolid Boundaries\", currentDoc =>\n...  94:            {"
+          },
+          {
+            "name_path": "LECG.Services/SplitBoundariesService/SplitToposolid",
+            "body_location": {
+              "start_line": 78,
+              "end_line": 181
+            },
+            "content_around_reference": "... 110:\n  > 111:                _transactionService.Run(doc, \"Copy Toposolid Parameters\", currentDoc =>\n... 112:                {"
+          },
+          {
+            "name_path": "LECG.Services/SplitBoundariesService/SplitFloor",
+            "body_location": {
+              "start_line": 183,
+              "end_line": 293
+            },
+            "content_around_reference": "... 215:\n  > 216:                _transactionService.Run(doc, \"Copy Floor Shape Points\", currentDoc =>\n... 217:                {"
+          }
+        ]
+      },
+      "src\\Services\\Topography\\DivideToposolidService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/DivideToposolidService/DivideSingleToposolid",
+            "body_location": {
+              "start_line": 61,
+              "end_line": 212
+            },
+            "content_around_reference": "... 117:\n  > 118:            _transactionService.Run(doc, \"Divide Toposolid - Create Layers\", currentDoc =>\n... 119:            {"
+          },
+          {
+            "name_path": "LECG.Services/DivideToposolidService/DivideSingleToposolid",
+            "body_location": {
+              "start_line": 61,
+              "end_line": 212
+            },
+            "content_around_reference": "... 147:\n  > 148:                _transactionService.Run(doc, \"Divide Toposolid - Copy Shape\", currentDoc =>\n... 149:                {"
+          }
+        ]
+      },
+      "src\\Services\\RenderAppearance\\RenderAppearanceBatchSyncService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/RenderAppearanceBatchSyncService/BatchSync",
+            "body_location": {
+              "start_line": 25,
+              "end_line": 98
+            },
+            "content_around_reference": "...  50:\n  >  51:            _transactionService.Run(doc, \"Sync Render Appearance\", _ =>\n...  52:            {"
+          }
+        ]
+      },
+      "src\\Services\\Renaming\\BatchRenameExecutionService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/BatchRenameExecutionService/ExecuteBatchRename[1]",
+            "body_location": {
+              "start_line": 34,
+              "end_line": 270
+            },
+            "content_around_reference": "...  79:            {\n  >  80:                _transactionService.Run(doc, \"Batch Rename\", currentDoc =>\n...  81:                {"
+          }
+        ]
+      },
+      "src\\Commands\\CleanSchemasCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/CleanSchemasCommand/Execute",
+            "body_location": {
+              "start_line": 17,
+              "end_line": 93
+            },
+            "content_around_reference": "...  67:            int dataStoragesDeleted = 0;\n  >  68:            transactionService.Run(doc, \"Delete DataStorage\", currentDoc =>\n...  69:            {"
+          },
+          {
+            "name_path": "LECG.Commands/CleanSchemasCommand/Execute",
+            "body_location": {
+              "start_line": 17,
+              "end_line": 93
+            },
+            "content_around_reference": "...  79:            int schemasErased = 0;\n  >  80:            transactionService.Run(doc, \"Erase Schemas\", currentDoc =>\n...  81:            {"
+          }
+        ]
+      },
+      "src\\Commands\\OffsetElevationsCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/OffsetElevationsCommand/Execute",
+            "body_location": {
+              "start_line": 20,
+              "end_line": 84
+            },
+            "content_around_reference": "...  66:\n  >  67:            transactionService.Run(doc, \"Offset Elevations\", currentDoc =>\n...  68:            {"
+          }
+        ]
+      },
+      "src\\Services\\Topography\\SimplifyPointsService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/SimplifyPointsService/DeleteAllDeletablePoints",
+            "body_location": {
+              "start_line": 51,
+              "end_line": 90
+            },
+            "content_around_reference": "...  57:\n  >  58:            _transactionService.Run(doc, $\"Simplify Points - {elem.Id}\", _ =>\n...  59:            {"
+          }
+        ]
+      },
+      "src\\Services\\Topography\\ConversionService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/ConversionService/ConvertSingleToposolidToFloor",
+            "body_location": {
+              "start_line": 195,
+              "end_line": 258
+            },
+            "content_around_reference": "... 211:\n  > 212:            _transactionService.Run(doc, \"Convert Toposolid to Floor\", currentDoc =>\n... 213:            {"
+          },
+          {
+            "name_path": "LECG.Services/ConversionService/ConvertSingleFloorToToposolid",
+            "body_location": {
+              "start_line": 151,
+              "end_line": 189
+            },
+            "content_around_reference": "... 173:            // 3. Create Toposolid in a single transaction\n  > 174:            _transactionService.Run(doc, \"Convert Floor to Toposolid\", currentDoc =>\n... 175:            {"
+          }
+        ]
+      },
+      "src\\Commands\\UpdateContoursCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/UpdateContoursCommand/Execute",
+            "body_location": {
+              "start_line": 19,
+              "end_line": 78
+            },
+            "content_around_reference": "...  50:\n  >  51:                transactionService.Run(doc, \"Update Contours\", currentDoc =>\n...  52:                {"
+          }
+        ]
+      }
+    },
+    "raw_serena_generic": {
+      "src\\Services\\Alignment\\AlignEdgesService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/AlignEdgesService/RunAlignment",
+            "body_location": {
+              "start_line": 63,
+              "end_line": 89
+            },
+            "content_around_reference": "...  74:                {\n  >  75:                    AlignEdgesSourceResult result = _transactionService.Run(\n...  76:                        doc,"
+          }
+        ]
+      },
+      "src\\Services\\CadConversion\\CadFamilyLoadPlacementService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/CadFamilyLoadPlacementService/LoadOnly",
+            "body_location": {
+              "start_line": 27,
+              "end_line": 36
+            },
+            "content_around_reference": "...  28:        {\n  >  29:            ElementId createdId = _transactionService.Run(doc, \"Load Family\", _ =>\n...  30:            {"
+          },
+          {
+            "name_path": "LECG.Services/CadFamilyLoadPlacementService/LoadAndPlace",
+            "body_location": {
+              "start_line": 38,
+              "end_line": 55
+            },
+            "content_around_reference": "...  39:        {\n  >  40:            ElementId createdId = _transactionService.Run(doc, \"Load and Place Detail Item\", _ =>\n...  41:            {"
+          }
+        ]
+      },
+      "src\\Services\\Materials\\MaterialPbrService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/MaterialPbrService/CreatePBRMaterial[1]",
+            "body_location": {
+              "start_line": 68,
+              "end_line": 129
+            },
+            "content_around_reference": "...  86:            Color materialColor = TryGetDiffuseColor(request.DiffusePath, logCallback);\n  >  87:            ElementId materialId = _transactionService.Run(doc, \"Create PBR Material\", currentDoc =>\n...  88:            {"
+          },
+          {
+            "name_path": "LECG.Services/MaterialPbrService/CreatePBRMaterial[0]",
+            "body_location": {
+              "start_line": 44,
+              "end_line": 66
+            },
+            "content_around_reference": "...  49:\n  >  50:            ElementId matId = _transactionService.Run(\n...  51:                doc,"
+          }
+        ]
+      },
+      "src\\Services\\Topography\\FixPointsService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/FixPointsService/ProcessElement",
+            "body_location": {
+              "start_line": 60,
+              "end_line": 81
+            },
+            "content_around_reference": "...  72:            {\n  >  73:                return _transactionService.Run(doc, $\"Fix Points - ID {element.Id}\",\n...  74:                    _ => DetectAndRepair(element, editor, threshold, minAbsDev, reporter));"
+          }
+        ]
+      },
+      "src\\Commands\\ConvertSharedCommand.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Commands/ConvertSharedCommand/Execute",
+            "body_location": {
+              "start_line": 13,
+              "end_line": 86
+            },
+            "content_around_reference": "...  83:\n  >  84:            transactionService.Run(doc, \"Set Nested Family to Non-Shared\", _ => sharedParam.Set(0));\n...  85:            LecgDialog.Show(\"Success\", $\"Family '{familyName}' converted to Non-Shared.\");"
+          }
+        ]
+      },
+      "src\\Services\\Infrastructure\\FilterCopyService.cs": {
+        "Method": [
+          {
+            "name_path": "LECG.Services/FilterCopyService/Apply",
+            "body_location": {
+              "start_line": 20,
+              "end_line": 79
+            },
+            "content_around_reference": "...  26:            {\n  >  27:                int updatedViews = _transactionService.Run(doc, \"Filter Copy\", _ =>\n...  28:                {"
+          }
+        ]
+      }
+    },
+    "raw_crg": {
+      "status": "ok",
+      "pattern": "callers_of",
+      "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+      "description": "Find all functions that call a given function",
+      "summary": "Found 33 result(s) for callers_of('C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run')",
+      "result_count": 33,
+      "results_omitted": 0,
+      "results": [
+        {
+          "id": 1090,
+          "kind": "Function",
+          "name": "SwapInstances",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs::CategoryChangerEventHandler.SwapInstances",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs",
+          "line_start": 159,
+          "line_end": 261,
+          "language": "csharp",
+          "parent_name": "CategoryChangerEventHandler",
+          "is_test": false
+        },
+        {
+          "id": 1115,
+          "kind": "Function",
+          "name": "RunPlacement",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs::ConvertCadEventHandler.RunPlacement",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs",
+          "line_start": 157,
+          "line_end": 190,
+          "language": "csharp",
+          "parent_name": "ConvertCadEventHandler",
+          "is_test": false
+        },
+        {
+          "id": 1127,
+          "kind": "Function",
+          "name": "Execute",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs::ConvertSharedCommand.Execute",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs",
+          "line_start": 14,
+          "line_end": 87,
+          "language": "csharp",
+          "parent_name": "ConvertSharedCommand",
+          "is_test": false
+        },
+        {
+          "id": 1503,
+          "kind": "Function",
+          "name": "RunAlignment",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs::AlignEdgesService.RunAlignment",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs",
+          "line_start": 64,
+          "line_end": 90,
+          "language": "csharp",
+          "parent_name": "AlignEdgesService",
+          "is_test": false
+        },
+        {
+          "id": 1526,
+          "kind": "Function",
+          "name": "Align",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Align",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs",
+          "line_start": 18,
+          "line_end": 43,
+          "language": "csharp",
+          "parent_name": "AlignElementsService",
+          "is_test": false
+        },
+        {
+          "id": 1527,
+          "kind": "Function",
+          "name": "Distribute",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Distribute",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs",
+          "line_start": 45,
+          "line_end": 59,
+          "language": "csharp",
+          "parent_name": "AlignElementsService",
+          "is_test": false
+        },
+        {
+          "id": 1582,
+          "kind": "Function",
+          "name": "BuildAndSave",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs::CadFamilyBuildService.BuildAndSave",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs",
+          "line_start": 23,
+          "line_end": 62,
+          "language": "csharp",
+          "parent_name": "CadFamilyBuildService",
+          "is_test": false
+        },
+        {
+          "id": 1590,
+          "kind": "Function",
+          "name": "LoadOnly",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadOnly",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+          "line_start": 28,
+          "line_end": 37,
+          "language": "csharp",
+          "parent_name": "CadFamilyLoadPlacementService",
+          "is_test": false
+        },
+        {
+          "id": 1591,
+          "kind": "Function",
+          "name": "LoadAndPlace",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadAndPlace",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+          "line_start": 39,
+          "line_end": 56,
+          "language": "csharp",
+          "parent_name": "CadFamilyLoadPlacementService",
+          "is_test": false
+        },
+        {
+          "id": 1710,
+          "kind": "Function",
+          "name": "DeleteCapturedInstances",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs::FamilyConversionService.DeleteCapturedInstances",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs",
+          "line_start": 235,
+          "line_end": 255,
+          "language": "csharp",
+          "parent_name": "FamilyConversionService",
+          "is_test": false
+        },
+        {
+          "id": 1724,
+          "kind": "Function",
+          "name": "ProcessFamily",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.ProcessFamily",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line_start": 112,
+          "line_end": 162,
+          "language": "csharp",
+          "parent_name": "FamilyEditorService",
+          "is_test": false
+        },
+        {
+          "id": 1727,
+          "kind": "Function",
+          "name": "RestoreFamilyParameterValues",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RestoreFamilyParameterValues",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line_start": 221,
+          "line_end": 269,
+          "language": "csharp",
+          "parent_name": "FamilyEditorService",
+          "is_test": false
+        },
+        {
+          "id": 1732,
+          "kind": "Function",
+          "name": "RecreateAs",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RecreateAs",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line_start": 325,
+          "line_end": 420,
+          "language": "csharp",
+          "parent_name": "FamilyEditorService",
+          "is_test": false
+        },
+        {
+          "id": 1794,
+          "kind": "Function",
+          "name": "ProcessSingleFamily",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs::SharedToFamilyParameterService.ProcessSingleFamily",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs",
+          "line_start": 50,
+          "line_end": 135,
+          "language": "csharp",
+          "parent_name": "SharedToFamilyParameterService",
+          "is_test": false
+        },
+        {
+          "id": 1812,
+          "kind": "Function",
+          "name": "ApplyBeauty",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs::SexyRevitService.ApplyBeauty",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs",
+          "line_start": 19,
+          "line_end": 37,
+          "language": "csharp",
+          "parent_name": "SexyRevitService",
+          "is_test": false
+        },
+        {
+          "id": 1831,
+          "kind": "Function",
+          "name": "Apply",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs::FilterCopyService.Apply",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs",
+          "line_start": 21,
+          "line_end": 80,
+          "language": "csharp",
+          "parent_name": "FilterCopyService",
+          "is_test": false
+        },
+        {
+          "id": 1864,
+          "kind": "Function",
+          "name": "ExportAndLink",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs::LinkedModelExportService.ExportAndLink",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs",
+          "line_start": 36,
+          "line_end": 139,
+          "language": "csharp",
+          "parent_name": "LinkedModelExportService",
+          "is_test": false
+        },
+        {
+          "id": 1973,
+          "kind": "Function",
+          "name": "ApplyTextures",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyTextures",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs",
+          "line_start": 23,
+          "line_end": 60,
+          "language": "csharp",
+          "parent_name": "MaterialAppearanceAssetService",
+          "is_test": false
+        },
+        {
+          "id": 1974,
+          "kind": "Function",
+          "name": "ApplyPbrTextures",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyPbrTextures",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs",
+          "line_start": 62,
+          "line_end": 125,
+          "language": "csharp",
+          "parent_name": "MaterialAppearanceAssetService",
+          "is_test": false
+        },
+        {
+          "id": 1980,
+          "kind": "Function",
+          "name": "AssignMaterialsToElements",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs::MaterialAssignmentExecutionService.AssignMaterialsToElements",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs",
+          "line_start": 25,
+          "line_end": 63,
+          "language": "csharp",
+          "parent_name": "MaterialAssignmentExecutionService",
+          "is_test": false
+        },
+        {
+          "id": 2039,
+          "kind": "Function",
+          "name": "CreatePBRMaterial",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs::MaterialPbrService.CreatePBRMaterial",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs",
+          "line_start": 69,
+          "line_end": 130,
+          "language": "csharp",
+          "parent_name": "MaterialPbrService",
+          "is_test": false
+        },
+        {
+          "id": 2324,
+          "kind": "Function",
+          "name": "ExecuteBatchRename",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs::BatchRenameExecutionService.ExecuteBatchRename",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs",
+          "line_start": 35,
+          "line_end": 271,
+          "language": "csharp",
+          "parent_name": "BatchRenameExecutionService",
+          "is_test": false
+        },
+        {
+          "id": 2430,
+          "kind": "Function",
+          "name": "BatchSync",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs::RenderAppearanceBatchSyncService.BatchSync",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs",
+          "line_start": 26,
+          "line_end": 99,
+          "language": "csharp",
+          "parent_name": "RenderAppearanceBatchSyncService",
+          "is_test": false
+        },
+        {
+          "id": 2469,
+          "kind": "Function",
+          "name": "ChangeLevel",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs::ChangeLevelService.ChangeLevel",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs",
+          "line_start": 26,
+          "line_end": 40,
+          "language": "csharp",
+          "parent_name": "ChangeLevelService",
+          "is_test": false
+        },
+        {
+          "id": 2480,
+          "kind": "Function",
+          "name": "ConvertSingleFloorToToposolid",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleFloorToToposolid",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs",
+          "line_start": 152,
+          "line_end": 190,
+          "language": "csharp",
+          "parent_name": "ConversionService",
+          "is_test": false
+        },
+        {
+          "id": 2481,
+          "kind": "Function",
+          "name": "ConvertSingleToposolidToFloor",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleToposolidToFloor",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs",
+          "line_start": 196,
+          "line_end": 259,
+          "language": "csharp",
+          "parent_name": "ConversionService",
+          "is_test": false
+        },
+        {
+          "id": 2496,
+          "kind": "Function",
+          "name": "DivideSingleToposolid",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs::DivideToposolidService.DivideSingleToposolid",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs",
+          "line_start": 62,
+          "line_end": 213,
+          "language": "csharp",
+          "parent_name": "DivideToposolidService",
+          "is_test": false
+        },
+        {
+          "id": 2512,
+          "kind": "Function",
+          "name": "ProcessElement",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs::FixPointsService.ProcessElement",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs",
+          "line_start": 61,
+          "line_end": 82,
+          "language": "csharp",
+          "parent_name": "FixPointsService",
+          "is_test": false
+        },
+        {
+          "id": 2543,
+          "kind": "Function",
+          "name": "DeleteAllDeletablePoints",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs::SimplifyPointsService.DeleteAllDeletablePoints",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs",
+          "line_start": 52,
+          "line_end": 91,
+          "language": "csharp",
+          "parent_name": "SimplifyPointsService",
+          "is_test": false
+        },
+        {
+          "id": 2558,
+          "kind": "Function",
+          "name": "SplitToposolid",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitToposolid",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs",
+          "line_start": 79,
+          "line_end": 182,
+          "language": "csharp",
+          "parent_name": "SplitBoundariesService",
+          "is_test": false
+        },
+        {
+          "id": 2559,
+          "kind": "Function",
+          "name": "SplitFloor",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitFloor",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs",
+          "line_start": 184,
+          "line_end": 294,
+          "language": "csharp",
+          "parent_name": "SplitBoundariesService",
+          "is_test": false
+        },
+        {
+          "id": 895,
+          "kind": "Function",
+          "name": "Tick",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs::SampleBenchmark.Tick",
+          "file_path": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs",
+          "line_start": 60,
+          "line_end": 170,
+          "language": "csharp",
+          "parent_name": "SampleBenchmark",
+          "is_test": false,
+          "target_resolution": "unresolved"
+        },
+        {
+          "id": 927,
+          "kind": "Function",
+          "name": "OnIdling",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs::SmokeApplication.OnIdling",
+          "file_path": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs",
+          "line_start": 59,
+          "line_end": 159,
+          "language": "csharp",
+          "parent_name": "SmokeApplication",
+          "is_test": false,
+          "target_resolution": "unresolved"
+        }
+      ],
+      "edges": [
+        {
+          "id": 8495,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs::CategoryChangerEventHandler.SwapInstances",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/CategoryChangerCommand.cs",
+          "line": 183,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 8726,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs::ConvertCadEventHandler.RunPlacement",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertCadCommand.cs",
+          "line": 177,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 8833,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs::ConvertSharedCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ConvertSharedCommand.cs",
+          "line": 61,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 10689,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs::AlignEdgesService.RunAlignment",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignEdgesService.cs",
+          "line": 76,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 10787,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Align",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs",
+          "line": 24,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 10795,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs::AlignElementsService.Distribute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Alignment/AlignElementsService.cs",
+          "line": 51,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11026,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs::CadFamilyBuildService.BuildAndSave",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyBuildService.cs",
+          "line": 47,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11046,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadOnly",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+          "line": 30,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11050,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs::CadFamilyLoadPlacementService.LoadAndPlace",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/CadConversion/CadFamilyLoadPlacementService.cs",
+          "line": 41,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11519,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs::FamilyConversionService.DeleteCapturedInstances",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyConversionService.cs",
+          "line": 237,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11600,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.ProcessFamily",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line": 140,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11629,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RestoreFamilyParameterValues",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line": 244,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11669,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs::FamilyEditorService.RecreateAs",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/FamilyEditorService.cs",
+          "line": 360,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11951,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs::SharedToFamilyParameterService.ProcessSingleFamily",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/FamilyConversion/SharedToFamilyParameterService.cs",
+          "line": 86,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 11993,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs::SexyRevitService.ApplyBeauty",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Graphics/SexyRevitService.cs",
+          "line": 23,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12106,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs::FilterCopyService.Apply",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/FilterCopyService.cs",
+          "line": 28,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12198,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs::LinkedModelExportService.ExportAndLink",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LinkedModelExportService.cs",
+          "line": 99,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12555,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyTextures",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs",
+          "line": 42,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12573,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs::MaterialAppearanceAssetService.ApplyPbrTextures",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAppearanceAssetService.cs",
+          "line": 81,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12618,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs::MaterialAssignmentExecutionService.AssignMaterialsToElements",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialAssignmentExecutionService.cs",
+          "line": 44,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 12927,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs::MaterialPbrService.CreatePBRMaterial",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Materials/MaterialPbrService.cs",
+          "line": 51,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 14694,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs::BatchRenameExecutionService.ExecuteBatchRename",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Renaming/BatchRenameExecutionService.cs",
+          "line": 81,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15076,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs::RenderAppearanceBatchSyncService.BatchSync",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/RenderAppearance/RenderAppearanceBatchSyncService.cs",
+          "line": 52,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15248,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs::ChangeLevelService.ChangeLevel",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ChangeLevelService.cs",
+          "line": 33,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15331,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleFloorToToposolid",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs",
+          "line": 175,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15345,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs::ConversionService.ConvertSingleToposolidToFloor",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/ConversionService.cs",
+          "line": 213,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15438,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs::DivideToposolidService.DivideSingleToposolid",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/DivideToposolidService.cs",
+          "line": 119,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15524,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs::FixPointsService.ProcessElement",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/FixPointsService.cs",
+          "line": 74,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15670,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs::SimplifyPointsService.DeleteAllDeletablePoints",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SimplifyPointsService.cs",
+          "line": 59,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15738,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitToposolid",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs",
+          "line": 94,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 15761,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs::SplitBoundariesService.SplitFloor",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SplitBoundariesService.cs",
+          "line": 200,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 6745,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs::SampleBenchmark.Tick",
+          "target": "Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SampleBenchmark.cs",
+          "line": 158,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 7274,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs::SmokeApplication.OnIdling",
+          "target": "Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/RevitCopilot/Tests/SmokeApplication.cs",
+          "line": 113,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-09-08T21:30:40",
+        "age_seconds": 767,
+        "built_at_sha": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+        "built_on_branch": "feature/purge-unused-maturity",
+        "head_sha": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+        "head_matches_build": true
+      }
+    },
+    "wrong_target_candidates": [
+      {
+        "source": "RevitCopilot/Tests/SampleBenchmark.cs:158",
+        "actual_target": "LECG.RevitCopilot.SmokeTests.SetterSweep.Run",
+        "crg_target": "Run",
+        "crg_target_resolution": "unresolved",
+        "compiler_reference_proof": {
+          "result": "{\"RevitCopilot\\\\Tests\\\\SampleBenchmark.cs\": {\"Method\": [{\"name_path\": \"LECG.RevitCopilot.SmokeTests/SampleBenchmark/Tick\", \"body_location\": {\"start_line\": 59, \"end_line\": 169}, \"content_around_reference\": \"... 156:                var targets = _fixtures.Where(pair => setter.Property.DeclaringType!.IsAssignableFrom(pair.Key)).SelectMany(pair => pair.Value);\\n  > 157:                _rows.Add(_setterSweep!.Run(app, _doc!, _name!, setter, targets));\\n... 158:            }\"}]}}"
+        }
+      },
+      {
+        "source": "RevitCopilot/Tests/SmokeApplication.cs:113",
+        "actual_target": "System.Threading.Tasks.Task.Run",
+        "crg_target": "Run",
+        "crg_target_resolution": "unresolved",
+        "proof": "Explicit Task.Run receiver at the reported source line; not the transaction service."
+      }
+    ],
+    "missing_caller_example": {
+      "status": "ok",
+      "pattern": "callees_of",
+      "target": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+      "description": "Find all functions called by a given function",
+      "summary": "Found 21 result(s) for callees_of('C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute')",
+      "result_count": 21,
+      "results_omitted": 0,
+      "results": [
+        {
+          "kind": "Function",
+          "name": "ThrowIfNull",
+          "qualified_name": "ThrowIfNull"
+        },
+        {
+          "kind": "Function",
+          "name": "GetRequiredService<SlabService>",
+          "qualified_name": "GetRequiredService<SlabService>"
+        },
+        {
+          "kind": "Function",
+          "name": "GetRequiredService<ITransactionService>",
+          "qualified_name": "GetRequiredService<ITransactionService>"
+        },
+        {
+          "kind": "Function",
+          "name": "Log",
+          "qualified_name": "Log",
+          "resolution": "ambiguous",
+          "candidates": [
+            "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs::RevitCommand.Log",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/IProgressReporter.cs::IProgressReporter.Log",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LegacyProgressReporter.cs::LegacyProgressReporter.Log",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/RevitCommandProgressReporter.cs::RevitCommandProgressReporter.Log"
+          ],
+          "candidate_count": 4,
+          "candidates_truncated": false
+        },
+        {
+          "kind": "Function",
+          "name": "Load<ResetSlabsViewModel>",
+          "qualified_name": "Load<ResetSlabsViewModel>"
+        },
+        {
+          "kind": "Function",
+          "name": "GetRequiredService<ResetSlabsViewModel>",
+          "qualified_name": "GetRequiredService<ResetSlabsViewModel>"
+        },
+        {
+          "id": 1399,
+          "kind": "Function",
+          "name": "GetSelectedReferences",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Core/SelectionSeedHelper.cs::SelectionSeedHelper.GetSelectedReferences",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Core/SelectionSeedHelper.cs",
+          "line_start": 40,
+          "line_end": 67,
+          "language": "csharp",
+          "parent_name": "SelectionSeedHelper",
+          "is_test": false
+        },
+        {
+          "kind": "Function",
+          "name": "SetSelection",
+          "qualified_name": "SetSelection",
+          "resolution": "ambiguous",
+          "candidates": [
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/AssignMaterialViewModel.cs::AssignMaterialViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/CategoryChangerViewModel.cs::CategoryChangerViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ConvertCadViewModel.cs::ConvertCadViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/OffsetElevationsViewModel.cs::OffsetElevationsViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ResetSlabsViewModel.cs::ResetSlabsViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/SimplifyPointsViewModel.cs::SimplifyPointsViewModel.SetSelection"
+          ],
+          "candidate_count": 6,
+          "candidates_truncated": false
+        },
+        {
+          "kind": "Function",
+          "name": "CreateWith<ResetSlabsView>",
+          "qualified_name": "CreateWith<ResetSlabsView>"
+        },
+        {
+          "kind": "Function",
+          "name": "Initialize",
+          "qualified_name": "Initialize",
+          "resolution": "ambiguous",
+          "candidates": [
+            "C:/LECG/RevitAddins/LECG/src/Core/Bootstrapper.cs::Bootstrapper.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Core/ServiceLocator.cs::ServiceLocator.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/AlignElementsViewModel.cs::AlignElementsViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ChangeLevelViewModel.cs::ChangeLevelViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ConvertFloorToToposolidViewModel.cs::ConvertFloorToToposolidViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ConvertToposolidToFloorViewModel.cs::ConvertToposolidToFloorViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/SearchReplaceViewModel.cs::SearchReplaceViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/TypeToLinkedModelsViewModel.cs::TypeToLinkedModelsViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/WarningsViewModel.cs::WarningsViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/CategoryChangerView.xaml.cs::CategoryChangerView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/ChangeLevelView.xaml.cs::ChangeLevelView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/ConvertFloorToToposolidView.xaml.cs::ConvertFloorToToposolidView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/ConvertToposolidToFloorView.xaml.cs::ConvertToposolidToFloorView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/WarningsView.xaml.cs::WarningsView.Initialize"
+          ],
+          "candidate_count": 14,
+          "candidates_truncated": false
+        },
+        {
+          "kind": "Function",
+          "name": "ShowDialog",
+          "qualified_name": "ShowDialog"
+        },
+        {
+          "id": 1926,
+          "kind": "Function",
+          "name": "Save",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/SettingsManager.cs::SettingsManager.Save",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/SettingsManager.cs",
+          "line_start": 37,
+          "line_end": 54,
+          "language": "csharp",
+          "parent_name": "SettingsManager",
+          "is_test": false
+        },
+        {
+          "kind": "Function",
+          "name": "Run",
+          "qualified_name": "Run",
+          "resolution": "ambiguous",
+          "candidates": [
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/TransactionService.cs::TransactionService.Run",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/OffsetElevationsViewModel.cs::OffsetElevationsViewModel.Run"
+          ],
+          "candidate_count": 3,
+          "candidates_truncated": false
+        },
+        {
+          "kind": "Function",
+          "name": "GetElement",
+          "qualified_name": "GetElement"
+        },
+        {
+          "kind": "Function",
+          "name": "UpdateProgress",
+          "qualified_name": "UpdateProgress",
+          "resolution": "ambiguous",
+          "candidates": [
+            "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs::RevitCommand.UpdateProgress",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/LogViewModel.cs::LogViewModel.UpdateProgress"
+          ],
+          "candidate_count": 2,
+          "candidates_truncated": false
+        },
+        {
+          "id": 2550,
+          "kind": "Function",
+          "name": "DuplicateElement",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SlabService.cs::SlabService.DuplicateElement",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SlabService.cs",
+          "line_start": 34,
+          "line_end": 46,
+          "language": "csharp",
+          "parent_name": "SlabService",
+          "is_test": false
+        },
+        {
+          "kind": "Function",
+          "name": "Add",
+          "qualified_name": "Add"
+        },
+        {
+          "id": 1211,
+          "kind": "Function",
+          "name": "IsExpectedResetSlabsException",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.IsExpectedResetSlabsException",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line_start": 125,
+          "line_end": 130,
+          "language": "csharp",
+          "parent_name": "ResetSlabsCommand",
+          "is_test": false
+        },
+        {
+          "id": 2549,
+          "kind": "Function",
+          "name": "TryResetSlabShape",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SlabService.cs::SlabService.TryResetSlabShape",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SlabService.cs",
+          "line_start": 11,
+          "line_end": 32,
+          "language": "csharp",
+          "parent_name": "SlabService",
+          "is_test": false
+        },
+        {
+          "kind": "Function",
+          "name": "SetElementIds",
+          "qualified_name": "SetElementIds"
+        },
+        {
+          "id": 1330,
+          "kind": "Function",
+          "name": "ShowLogWindow",
+          "qualified_name": "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs::RevitCommand.ShowLogWindow",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs",
+          "line_start": 69,
+          "line_end": 89,
+          "language": "csharp",
+          "parent_name": "RevitCommand",
+          "is_test": false
+        }
+      ],
+      "edges": [
+        {
+          "id": 9442,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "ThrowIfNull",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 25,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9444,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "GetRequiredService<SlabService>",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 28,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9445,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "GetRequiredService<ITransactionService>",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 29,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9446,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "Log",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 31,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED",
+          "ambiguous_targets": [
+            "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs::RevitCommand.Log",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/IProgressReporter.cs::IProgressReporter.Log",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/LegacyProgressReporter.cs::LegacyProgressReporter.Log",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/RevitCommandProgressReporter.cs::RevitCommandProgressReporter.Log"
+          ],
+          "ambiguous_target_count": 4,
+          "ambiguous_targets_truncated": false
+        },
+        {
+          "id": 9447,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "Load<ResetSlabsViewModel>",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 34,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9448,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "GetRequiredService<ResetSlabsViewModel>",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 35,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9449,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Core/SelectionSeedHelper.cs::SelectionSeedHelper.GetSelectedReferences",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 37,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 9450,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "SetSelection",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 40,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED",
+          "ambiguous_targets": [
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/AssignMaterialViewModel.cs::AssignMaterialViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/CategoryChangerViewModel.cs::CategoryChangerViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ConvertCadViewModel.cs::ConvertCadViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/OffsetElevationsViewModel.cs::OffsetElevationsViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ResetSlabsViewModel.cs::ResetSlabsViewModel.SetSelection",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/SimplifyPointsViewModel.cs::SimplifyPointsViewModel.SetSelection"
+          ],
+          "ambiguous_target_count": 6,
+          "ambiguous_targets_truncated": false
+        },
+        {
+          "id": 9451,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "CreateWith<ResetSlabsView>",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 44,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9452,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "Initialize",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 45,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED",
+          "ambiguous_targets": [
+            "C:/LECG/RevitAddins/LECG/src/Core/Bootstrapper.cs::Bootstrapper.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Core/ServiceLocator.cs::ServiceLocator.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/AlignElementsViewModel.cs::AlignElementsViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ChangeLevelViewModel.cs::ChangeLevelViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ConvertFloorToToposolidViewModel.cs::ConvertFloorToToposolidViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/ConvertToposolidToFloorViewModel.cs::ConvertToposolidToFloorViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/SearchReplaceViewModel.cs::SearchReplaceViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/TypeToLinkedModelsViewModel.cs::TypeToLinkedModelsViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/WarningsViewModel.cs::WarningsViewModel.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/CategoryChangerView.xaml.cs::CategoryChangerView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/ChangeLevelView.xaml.cs::ChangeLevelView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/ConvertFloorToToposolidView.xaml.cs::ConvertFloorToToposolidView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/ConvertToposolidToFloorView.xaml.cs::ConvertToposolidToFloorView.Initialize",
+            "C:/LECG/RevitAddins/LECG/src/Views/WarningsView.xaml.cs::WarningsView.Initialize"
+          ],
+          "ambiguous_target_count": 14,
+          "ambiguous_targets_truncated": false
+        },
+        {
+          "id": 9453,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "ShowDialog",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 47,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9454,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/SettingsManager.cs::SettingsManager.Save",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 49,
+          "confidence": 1,
+          "confidence_tier": "INFERRED"
+        },
+        {
+          "id": 9456,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "Run",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 64,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED",
+          "ambiguous_targets": [
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/ITransactionService.cs::ITransactionService.Run",
+            "C:/LECG/RevitAddins/LECG/src/Services/Infrastructure/TransactionService.cs::TransactionService.Run",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/OffsetElevationsViewModel.cs::OffsetElevationsViewModel.Run"
+          ],
+          "ambiguous_target_count": 3,
+          "ambiguous_targets_truncated": false
+        },
+        {
+          "id": 9457,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "GetElement",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 68,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9458,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "UpdateProgress",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 72,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED",
+          "ambiguous_targets": [
+            "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs::RevitCommand.UpdateProgress",
+            "C:/LECG/RevitAddins/LECG/src/ViewModels/LogViewModel.cs::LogViewModel.UpdateProgress"
+          ],
+          "ambiguous_target_count": 2,
+          "ambiguous_targets_truncated": false
+        },
+        {
+          "id": 9460,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SlabService.cs::SlabService.DuplicateElement",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 81,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9462,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "Add",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 86,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9463,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.IsExpectedResetSlabsException",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 89,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9466,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Services/Topography/SlabService.cs::SlabService.TryResetSlabShape",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 101,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9469,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "SetElementIds",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 115,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        },
+        {
+          "id": 9472,
+          "kind": "CALLS",
+          "source": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs::ResetSlabsCommand.Execute",
+          "target": "C:/LECG/RevitAddins/LECG/src/Core/RevitCommand.cs::RevitCommand.ShowLogWindow",
+          "file_path": "C:/LECG/RevitAddins/LECG/src/Commands/ResetSlabsCommand.cs",
+          "line": 122,
+          "confidence": 1,
+          "confidence_tier": "EXTRACTED"
+        }
+      ],
+      "_graph": {
+        "updated_at": "2026-09-08T21:30:40",
+        "age_seconds": 909,
+        "built_at_sha": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+        "built_on_branch": "feature/purge-unused-maturity",
+        "head_sha": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+        "head_matches_build": true
+      }
+    },
+    "verdict": "FAIL promotion: not a superset. Overload conflation plus four omitted real callers and two unrelated unresolved fallback candidates. Even a merged overload-family interpretation misses five callers and adds two unrelated candidates.",
+    "policy": "Keep CRG milestone-only and outside EVIDENCE; unresolved name-match candidates are not executable call edges."
+  },
+  "coverage": {
+    "revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+    "curated_count": 199,
+    "graph_file_nodes": 443,
+    "intersection": 195,
+    "graph_only_count": 248,
+    "curated_only_count": 4,
+    "graph_prefixes": {
+      "scripts": 3,
+      "src": 302,
+      "LECG.Core": 13,
+      "LECG.Tests": 37,
+      "RevitCopilot": 83,
+      "tools": 5
+    },
+    "graph_only_prefixes": {
+      "scripts": 3,
+      "src": 114,
+      "LECG.Core": 13,
+      "RevitCopilot": 76,
+      "LECG.Tests": 37,
+      "tools": 5
+    },
+    "curated_only_extensions": {
+      ".csproj": 2,
+      ".json": 2
+    },
+    "not_git_tracked": [],
+    "forbidden_paths": [],
+    "suspicious_paths": [],
+    "graph_only": [
+      "LECG.Core/Filtering/SearchTermPolicy.cs",
+      "LECG.Core/Graphics/SexyRevitGraphicsPolicy.cs",
+      "LECG.Core/Naming/DetailFamilyNamePolicy.cs",
+      "LECG.Core/Naming/FamilyNamePolicy.cs",
+      "LECG.Core/Naming/FamilySelectionPolicy.cs",
+      "LECG.Core/Naming/LinePatternNamingPolicy.cs",
+      "LECG.Core/Purge/PurgeOptions.cs",
+      "LECG.Core/Purge/PurgeResult.cs",
+      "LECG.Core/Purge/PurgeSequence.cs",
+      "LECG.Core/Rename/FormulaNameUpdater.cs",
+      "LECG.Core/Rename/RenameRuleEngine.cs",
+      "LECG.Core/Result.cs",
+      "LECG.Core/Warnings/WarningGroupingPolicy.cs",
+      "LECG.Tests/Commands/FormulaAutoGroupingCommandTests.cs",
+      "LECG.Tests/Core/DialogWhitelistTests.cs",
+      "LECG.Tests/Core/PurgeOptionsTests.cs",
+      "LECG.Tests/Core/PurgeResultTests.cs",
+      "LECG.Tests/Services/BaseElementCollectionServiceTests.cs",
+      "LECG.Tests/Services/BatchRenameExecutionServiceTests.cs",
+      "LECG.Tests/Services/BatchRenameSafeRenameTests.cs",
+      "LECG.Tests/Services/DetailFamilyNamePolicyTests.cs",
+      "LECG.Tests/Services/ElementLabelServiceTests.cs",
+      "LECG.Tests/Services/FamilyNamePolicyTests.cs",
+      "LECG.Tests/Services/FormulaNameUpdaterTests.cs",
+      "LECG.Tests/Services/FormulaUpdateServiceTests.cs",
+      "LECG.Tests/Services/LinePatternNamingPolicyTests.cs",
+      "LECG.Tests/Services/Logging/LoggerSeverityTests.cs",
+      "LECG.Tests/Services/MaterialBumpMapNormalizerTests.cs",
+      "LECG.Tests/Services/MaterialTextureLookupServiceTests.cs",
+      "LECG.Tests/Services/PurgeSequenceTests.cs",
+      "LECG.Tests/Services/RenameRuleEngineTests.cs",
+      "LECG.Tests/Services/RenameRulePipelineServiceTests.cs",
+      "LECG.Tests/Services/RenameSkipDetectorTests.cs",
+      "LECG.Tests/Services/ResultTests.cs",
+      "LECG.Tests/Services/SearchReplacePreviewServiceTests.cs",
+      "LECG.Tests/Services/SearchReplaceServiceTests.cs",
+      "LECG.Tests/Services/SearchTermPolicyTests.cs",
+      "LECG.Tests/Services/SexyRevitServiceTests.cs",
+      "LECG.Tests/Services/WarningGroupingPolicyTests.cs",
+      "LECG.Tests/Services/WarningsServiceTests.cs",
+      "LECG.Tests/Utils/FamilySelectionPolicyTests.cs",
+      "LECG.Tests/Validation/ValidationRulesTests.cs",
+      "LECG.Tests/ViewModels/MaterialPageViewModelTests.cs",
+      "LECG.Tests/ViewModels/PbrMaterialCreatorViewModelTests.cs",
+      "LECG.Tests/ViewModels/SearchReplaceViewModelTests.cs",
+      "LECG.Tests/ViewModels/SexyRevitGraphicsPolicyTests.cs",
+      "LECG.Tests/ViewModels/WarningsViewModelTests.cs",
+      "LECG.Tests/Views/BrandTokenTests.cs",
+      "LECG.Tests/Views/ThemeScopingTests.cs",
+      "LECG.Tests/Views/XamlResourceTests.cs",
+      "RevitCopilot/Agent/ApiValidationEvidence.cs",
+      "RevitCopilot/Agent/KnowledgeLibrary.cs",
+      "RevitCopilot/Agent/ReviewedDiscovery.cs",
+      "RevitCopilot/Agent/RevitApiCatalog.cs",
+      "RevitCopilot/Configuration/CopilotConfiguration.cs",
+      "RevitCopilot/Configuration/CopilotPaths.cs",
+      "RevitCopilot/Configuration/CopilotSettings.cs",
+      "RevitCopilot/Configuration/McpServerInstallation.cs",
+      "RevitCopilot/Llm/CodexAppServerClient.Approvals.cs",
+      "RevitCopilot/Llm/CodexAppServerClient.Projects.cs",
+      "RevitCopilot/Llm/CodexAppServerClient.cs",
+      "RevitCopilot/Llm/CodexModelOption.cs",
+      "RevitCopilot/Llm/CodexUsageState.cs",
+      "RevitCopilot/Llm/CopilotQuestionRequest.cs",
+      "RevitCopilot/Llm/IAgentClient.cs",
+      "RevitCopilot/Llm/LlmClient.cs",
+      "RevitCopilot/Llm/ToolSchemas.cs",
+      "RevitCopilot/Mcp/McpBridgeService.cs",
+      "RevitCopilot/McpServer/Program.cs",
+      "RevitCopilot/McpServer/RevitPipeClient.cs",
+      "RevitCopilot/Models/ChatEntry.cs",
+      "RevitCopilot/Models/LlmModels.cs",
+      "RevitCopilot/Models/ProjectContext.cs",
+      "RevitCopilot/Properties/AssemblyInfo.cs",
+      "RevitCopilot/Research/ApiContract.cs",
+      "RevitCopilot/Research/Campaign.ps1",
+      "RevitCopilot/Research/CampaignReport.cs",
+      "RevitCopilot/Research/CandidateValidator.cs",
+      "RevitCopilot/Research/LocalGeneration.cs",
+      "RevitCopilot/Research/Program.cs",
+      "RevitCopilot/Research/QuestionBank.cs",
+      "RevitCopilot/Research/RuntimeCandidateAudit.cs",
+      "RevitCopilot/Research/RuntimeReferenceExport.cs",
+      "RevitCopilot/Research/RuntimeValidationExport.cs",
+      "RevitCopilot/Revit/ExternalEventDispatcher.cs",
+      "RevitCopilot/Revit/ProjectContextReader.cs",
+      "RevitCopilot/Revit/ToolExecutor.Agent.cs",
+      "RevitCopilot/Revit/ToolExecutor.Api.cs",
+      "RevitCopilot/Revit/ToolExecutor.ApiContexts.cs",
+      "RevitCopilot/Revit/ToolExecutor.Batch.cs",
+      "RevitCopilot/Revit/ToolExecutor.HarvestedReads.cs",
+      "RevitCopilot/Revit/ToolExecutor.ProjectReads.cs",
+      "RevitCopilot/Revit/ToolExecutor.Reads.cs",
+      "RevitCopilot/Revit/ToolExecutor.ReviewedMethods.cs",
+      "RevitCopilot/Revit/ToolExecutor.cs",
+      "RevitCopilot/RevitCopilotApp.cs",
+      "RevitCopilot/RevitCopilotCommand.cs",
+      "RevitCopilot/Services/SessionLogger.cs",
+      "RevitCopilot/Tests/AgentSmokeChecks.cs",
+      "RevitCopilot/Tests/ApiSmokeChecks.cs",
+      "RevitCopilot/Tests/BenchmarkMcpSession.cs",
+      "RevitCopilot/Tests/ConnectionTests/AgentLibraryChecks.cs",
+      "RevitCopilot/Tests/ConnectionTests/ApiLibraryChecks.cs",
+      "RevitCopilot/Tests/ConnectionTests/HarvestDiscoveryChecks.cs",
+      "RevitCopilot/Tests/ConnectionTests/KnowledgeLibraryChecks.cs",
+      "RevitCopilot/Tests/ConnectionTests/Program.cs",
+      "RevitCopilot/Tests/ConnectionTests/ProjectSessionChecks.cs",
+      "RevitCopilot/Tests/ConnectionTests/SetterInventory.cs",
+      "RevitCopilot/Tests/ConnectionTests/UsageChecks.cs",
+      "RevitCopilot/Tests/CoverageFixtures.cs",
+      "RevitCopilot/Tests/HarvestMcpRoundTrip.cs",
+      "RevitCopilot/Tests/HarvestReadSmokeChecks.cs",
+      "RevitCopilot/Tests/PanelPresentationChecks.cs",
+      "RevitCopilot/Tests/ReviewedMethodSmokeChecks.cs",
+      "RevitCopilot/Tests/SampleBenchmark.cs",
+      "RevitCopilot/Tests/SampleWriteChecks.cs",
+      "RevitCopilot/Tests/SampleWriteExtras.cs",
+      "RevitCopilot/Tests/SetterProbeValues.cs",
+      "RevitCopilot/Tests/SetterSweep.cs",
+      "RevitCopilot/Tests/SharedKnowledgeReadChecks.cs",
+      "RevitCopilot/Tests/SmokeApplication.cs",
+      "RevitCopilot/UI/DockablePanel.Approvals.cs",
+      "RevitCopilot/UI/DockablePanel.Projects.cs",
+      "RevitCopilot/UI/DockablePanel.Usage.cs",
+      "RevitCopilot/UI/DockablePanel.xaml.cs",
+      "RevitCopilot/UI/MarkdownRenderer.cs",
+      "scripts/generate_lecg_icons.py",
+      "scripts/resize_icons.py",
+      "scripts/revit-api-index/Program.cs",
+      "src/Behaviors/MultiSelectCheckboxBehavior.cs",
+      "src/Configuration/AppConstants.cs",
+      "src/Configuration/RevitConstants.cs",
+      "src/Configuration/UIConstants.cs",
+      "src/Controls/ElementGridControl.xaml.cs",
+      "src/Controls/LecgDataGrid.cs",
+      "src/Core/DependencyInjection/SimpleDi.cs",
+      "src/Core/DialogWhitelist.cs",
+      "src/Core/ExternalEventCommand.cs",
+      "src/Core/FamilyDocumentAvailability.cs",
+      "src/Core/IRevitSliceJob.cs",
+      "src/Core/ISelectionCoordinator.cs",
+      "src/Core/ProjectDocumentAvailability.cs",
+      "src/Core/RevitCommand.cs",
+      "src/Core/RevitIdlingRunner.cs",
+      "src/Core/Ribbon/RibbonButtonConfig.cs",
+      "src/Core/Ribbon/RibbonFactory.cs",
+      "src/Core/SafeFailureHandler.cs",
+      "src/Core/SelectionCoordinator.cs",
+      "src/Core/SelectionFilters.cs",
+      "src/Core/SelectionSeedHelper.cs",
+      "src/Core/ServiceLocator.cs",
+      "src/Core/WarningSwallower.cs",
+      "src/InternalsVisibleTo.Tests.cs",
+      "src/Models/AlignMode.cs",
+      "src/Models/FamilyInstanceData.cs",
+      "src/Models/FillPatternCompactionResult.cs",
+      "src/Models/FilterCopyOperation.cs",
+      "src/Models/LinePatternCompactionResult.cs",
+      "src/Models/LineStyleCompactionResult.cs",
+      "src/Models/PbrMaterialCreateRequest.cs",
+      "src/Models/PbrMaterialFolderCandidate.cs",
+      "src/Models/PurgeDialogSettings.cs",
+      "src/Models/RenameRuleContext.cs",
+      "src/Models/RenderAppearanceSettings.cs",
+      "src/Models/RenderMaterialSyncResult.cs",
+      "src/Models/SearchCriteria.cs",
+      "src/Models/SearchFilterType.cs",
+      "src/Models/SexyRevitSettings.cs",
+      "src/Models/TextStyleCompactionResult.cs",
+      "src/Models/TypeGroupItem.cs",
+      "src/Models/WindowSettings.cs",
+      "src/Services/Renaming/TestHelpers/SearchReplaceFakes.cs",
+      "src/Utilities/AppImages.cs",
+      "src/Utilities/BoolConverters.cs",
+      "src/Utilities/CategoryUtils.cs",
+      "src/Utilities/ClipperUtils.cs",
+      "src/Utilities/EnumBindingSource.cs",
+      "src/Utilities/ExecutionTimer.cs",
+      "src/Utilities/FamilyInstanceFilter.cs",
+      "src/Utilities/Icons.cs",
+      "src/Utilities/MathConverter.cs",
+      "src/Utilities/VertexSpatialIndex.cs",
+      "src/Validation/ValidationRules.cs",
+      "src/ViewModels/AlignEdgesViewModel.cs",
+      "src/ViewModels/AlignElementsViewModel.cs",
+      "src/ViewModels/AssignMaterialViewModel.cs",
+      "src/ViewModels/BaseViewModel.cs",
+      "src/ViewModels/CategoryChangerViewModel.cs",
+      "src/ViewModels/ChangeLevelViewModel.cs",
+      "src/ViewModels/Components/BulkObservableCollection.cs",
+      "src/ViewModels/Components/CategoryFilterOption.cs",
+      "src/ViewModels/Components/ElementRowViewModel.cs",
+      "src/ViewModels/Components/SelectionViewModel.cs",
+      "src/ViewModels/ConvertCadViewModel.cs",
+      "src/ViewModels/ConvertFloorToToposolidViewModel.cs",
+      "src/ViewModels/ConvertToposolidToFloorViewModel.cs",
+      "src/ViewModels/DivideToposolidViewModel.cs",
+      "src/ViewModels/FilterCopyModels.cs",
+      "src/ViewModels/FilterCopyViewModel.cs",
+      "src/ViewModels/FixPointsViewModel.cs",
+      "src/ViewModels/LogViewModel.cs",
+      "src/ViewModels/MaterialPageViewModel.cs",
+      "src/ViewModels/OffsetElevationsViewModel.cs",
+      "src/ViewModels/PbrMaterialCreatorViewModel.cs",
+      "src/ViewModels/PurgeViewModel.cs",
+      "src/ViewModels/RenderAppearanceViewModel.cs",
+      "src/ViewModels/ResetSlabsViewModel.cs",
+      "src/ViewModels/SearchReplaceViewModel.cs",
+      "src/ViewModels/SexyRevitViewModel.cs",
+      "src/ViewModels/SimplifyPointsViewModel.cs",
+      "src/ViewModels/SplitBoundariesViewModel.cs",
+      "src/ViewModels/TypeToLinkedModelsViewModel.cs",
+      "src/ViewModels/UpdateContoursViewModel.cs",
+      "src/ViewModels/WarningsViewModel.cs",
+      "src/Views/AlignEdgesView.xaml.cs",
+      "src/Views/AlignElementsView.xaml.cs",
+      "src/Views/AssignMaterialView.xaml.cs",
+      "src/Views/Base/LecgDialog.cs",
+      "src/Views/Base/LecgDialogWindow.xaml.cs",
+      "src/Views/Base/LecgWindow.cs",
+      "src/Views/CategoryChangerView.xaml.cs",
+      "src/Views/ChangeLevelView.xaml.cs",
+      "src/Views/Components/SelectionControl.xaml.cs",
+      "src/Views/ConvertCadView.xaml.cs",
+      "src/Views/ConvertFloorToToposolidView.xaml.cs",
+      "src/Views/ConvertToposolidToFloorView.xaml.cs",
+      "src/Views/DivideToposolidView.xaml.cs",
+      "src/Views/FilterCopyView.xaml.cs",
+      "src/Views/FixPointsView.xaml.cs",
+      "src/Views/HomeView.xaml.cs",
+      "src/Views/LogView.xaml.cs",
+      "src/Views/OffsetElevationsView.xaml.cs",
+      "src/Views/PbrMaterialCreatorView.xaml.cs",
+      "src/Views/PurgeView.xaml.cs",
+      "src/Views/RenderAppearanceView.xaml.cs",
+      "src/Views/ResetSlabsView.xaml.cs",
+      "src/Views/SearchReplaceView.xaml.cs",
+      "src/Views/SexyRevitView.xaml.cs",
+      "src/Views/SimplifyPointsView.xaml.cs",
+      "src/Views/SplitBoundariesView.xaml.cs",
+      "src/Views/TypeToLinkedModelsView.xaml.cs",
+      "src/Views/UpdateContoursView.xaml.cs",
+      "src/Views/WarningsView.xaml.cs",
+      "tools/InstallCombinedRevit2026.ps1",
+      "tools/RevitApiExtractor/MetadataAssemblyExporter.cs",
+      "tools/RevitApiExtractor/Program.cs",
+      "tools/SummarizeSampleBenchmark.ps1",
+      "tools/UiSnapshot/Program.cs"
+    ],
+    "curated_only": [
+      "LECG.csproj",
+      "RevitCopilot/Agent/Knowledge/revit2026-reference.json",
+      "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
+      "RevitCopilot/RevitCopilot.csproj"
+    ],
+    "graph_only_groups": {
+      "LECG.Core/Filtering": 1,
+      "LECG.Core/Graphics": 1,
+      "LECG.Core/Naming": 4,
+      "LECG.Core/Purge": 3,
+      "LECG.Core/Rename": 2,
+      "LECG.Core": 1,
+      "LECG.Core/Warnings": 1,
+      "LECG.Tests/Commands": 1,
+      "LECG.Tests/Core": 3,
+      "LECG.Tests/Services": 23,
+      "LECG.Tests/Utils": 1,
+      "LECG.Tests/Validation": 1,
+      "LECG.Tests/ViewModels": 5,
+      "LECG.Tests/Views": 3,
+      "RevitCopilot/Agent": 4,
+      "RevitCopilot/Configuration": 4,
+      "RevitCopilot/Llm": 9,
+      "RevitCopilot/Mcp": 1,
+      "RevitCopilot/McpServer": 2,
+      "RevitCopilot/Models": 3,
+      "RevitCopilot/Properties": 1,
+      "RevitCopilot/Research": 10,
+      "RevitCopilot/Revit": 11,
+      "RevitCopilot": 2,
+      "RevitCopilot/Services": 1,
+      "RevitCopilot/Tests": 23,
+      "RevitCopilot/UI": 5,
+      "scripts": 2,
+      "scripts/revit-api-index": 1,
+      "src/Behaviors": 1,
+      "src/Configuration": 3,
+      "src/Controls": 2,
+      "src/Core": 17,
+      "src": 1,
+      "src/Models": 18,
+      "src/Services": 1,
+      "src/Utilities": 10,
+      "src/Validation": 1,
+      "src/ViewModels": 31,
+      "src/Views": 29,
+      "tools": 2,
+      "tools/RevitApiExtractor": 2,
+      "tools/UiSnapshot": 1
+    },
+    "generated_name_candidates": []
+  }
+}

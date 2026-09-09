@@ -84,7 +84,9 @@ const sourceSupport = [
 ];
 sourceSupport.forEach(read);
 const unchangedInputs = [...inputs.keys()].every(path => {
-  try { return inputs.get(path) === sha(execFileSync("git", ["show", "HEAD:" + path], { cwd: root, windowsHide: true, maxBuffer: 16 * 1024 * 1024 })); }
+  // Inputs are text: Git may store LF while the Windows worktree uses CRLF.
+  const canonical = bytes => sha(bytes.toString("utf8").replaceAll("\r\n", "\n"));
+  try { return canonical(readFileSync(join(root, path))) === canonical(execFileSync("git", ["show", "HEAD:" + path], { cwd: root, windowsHide: true, maxBuffer: 16 * 1024 * 1024 })); }
   catch { return false; }
 });
 const inventory = {
