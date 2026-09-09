@@ -1,0 +1,178 @@
+{
+  "run": "20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531",
+  "original_ledger_sha256": "90AD166CC4C6994B651186F2BFDD87EED1C45749D04974009D95AC55F72B88F5",
+  "historical_receipt_path": "C:\\LECG\\RevitAddins\\LECG\\RevitCopilot\\Tests\\bin\\x64\\Release\\net10.0-windows\\benchmarks\\20260905_203238\\benchmark-results.json",
+  "historical_receipt_sha256": "DD10BE0BE4772B3B3A4ADC04432A97D07E7D7872222BC7D3309BABD3B14DAE83",
+  "provenance_path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\provenance.json",
+  "provenance_sha256": "1E43F3F007E8B44858D722748D7241AA1448DDA77D1D36778E8024F3BAB5D562",
+  "proposed_numerator": 624,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 624,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "same_value_only": 64
+  },
+  "updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\Electrical.CableType.ConductorMaterial\\receipt.json",
+      "receipt_sha256": "3DC8BC1DA0706AE50505B86805373977F227C74D7C528DBB034D4B88AE9F275F"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\Electrical.ElectricalSystem.CircuitConnectionType\\receipt.json",
+      "receipt_sha256": "CD6EE93413077EA7A176CC99A23E11AB6E5B7D23BE124221C70A1798A1991096"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\Material.CutBackgroundPatternId\\receipt.json",
+      "receipt_sha256": "BFB7B775597092364340E74130E4908F16E2A457DBEA33AF48D375D055E8489E"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidTemperature",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidTemperature",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\Plumbing.PipingSystemType.FluidTemperature\\receipt.json",
+      "receipt_sha256": "9D3212B0DB29C460BD55EA303897FF55ADDA09CE7D18D29DA32FA6657B116E14"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.BubbleEnd",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.BubbleEnd",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\ReferencePlane.BubbleEnd\\receipt.json",
+      "receipt_sha256": "242CB9D6817C7B6E3916827BB00C3A8BB1E316073510DC9218CA8ACC77A52EE9"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.Number",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.Number",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\Structure.LoadCase.Number\\receipt.json",
+      "receipt_sha256": "36146EB22692B34FAE6E22FDED88975923E13403D92C7C1D30F1A85D37F6E356"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.TextElement.Text",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.TextElement.Text",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\TextElement.Text\\receipt.json",
+      "receipt_sha256": "CF7CBA873B86345F2B4D0308374A5898E7B93C5B62F3524C7FCD97050082BE85"
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "receipt": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\ViewSheetSet.IsAutomatic\\receipt.json",
+      "receipt_sha256": "2D9B17F0948528A33D34DC30ED932118894B8855A7C62AC883EEA0970F74FB3C"
+    }
+  ]
+}

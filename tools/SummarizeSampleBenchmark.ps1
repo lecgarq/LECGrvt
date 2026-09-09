@@ -27,7 +27,9 @@ function Coverage([string]$operation, [string]$kind) {
     $roundtrip = @($rows | Where-Object status -eq 'roundtrip_only')
     $rejected = @($rows | Where-Object status -eq 'context_rejected')
     $missing = @($rows | Where-Object status -eq 'missing_fixture')
-    $status = if ($changed.Count) { 'changed_value_tested' } elseif ($passed.Count) { 'passed' } elseif ($failed.Count) { 'failed' } elseif ($roundtrip.Count) { 'same_value_only' } elseif ($rejected.Count) { 'context_rejected' } elseif ($missing.Count) { 'missing_fixture' } elseif ($unsupported.Count) { 'unsupported' } elseif ($kind -eq 'change') { 'awaiting_review' } else { 'unsupported' }
+    $outOfContract = @($rows | Where-Object status -eq 'out_of_contract')
+    if ($outOfContract.Count -and $passed.Count) { throw "Contradictory out-of-contract and passed evidence for $operation" }
+    $status = if ($outOfContract.Count) { 'out_of_contract' } elseif ($changed.Count) { 'changed_value_tested' } elseif ($passed.Count) { 'passed' } elseif ($failed.Count) { 'failed' } elseif ($roundtrip.Count) { 'same_value_only' } elseif ($rejected.Count) { 'context_rejected' } elseif ($missing.Count) { 'missing_fixture' } elseif ($unsupported.Count) { 'unsupported' } elseif ($kind -eq 'change') { 'awaiting_review' } else { 'unsupported' }
     [pscustomobject]@{operation=$operation; kind=$kind; status=$status; passed_models=$passed.Count; failed_models=$failed.Count; unsupported_models=$unsupported.Count}
 }
 $coverage = @(@($data.installed_catalog.native) + @($data.installed_catalog.api) | ForEach-Object { Coverage $_.operation $_.kind })

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="bd9b5e9a-d164-4040-85e8-a2bf8191ad72" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-08 22:30:32" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-08T22:30:32.0430954-06:00" queuing="2026-09-08T22:30:32.0430955-06:00" start="2026-09-08T22:29:45.1267509-06:00" finish="2026-09-08T22:30:34.6916881-06:00" />
+  <TestSettings name="default" id="2402f3fc-836f-40a5-8182-cdd14b396088">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-08_22_30_32" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="6cf6b268-e4f4-40ce-b48d-30a39b3c2bc4" testId="dc2784a8-fca1-dbf5-5850-fc046fca7779" testName="RunsInsideRevit2026OnNet10WithoutModels" computerName="DESKTOP-1FAV1F2" duration="00:00:00.0092300" startTime="2026-09-08T22:30:31.7793981-06:00" endTime="2026-09-08T22:30:31.7794205-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6cf6b268-e4f4-40ce-b48d-30a39b3c2bc4">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunsInsideRevit2026OnNet10WithoutModels" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="dc2784a8-fca1-dbf5-5850-fc046fca7779">
+      <Execution id="6cf6b268-e4f4-40ce-b48d-30a39b3c2bc4" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.CompatibilityProbe" name="RunsInsideRevit2026OnNet10WithoutModels" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="dc2784a8-fca1-dbf5-5850-fc046fca7779" executionId="6cf6b268-e4f4-40ce-b48d-30a39b3c2bc4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":2.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 0]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 2 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:[]&#xD;
+OutputConsole:  Revit 2026: 9.23 	 RunsInsideRevit2026OnNet10WithoutModels	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.CompatibilityProbe.RunsInsideRevit2026OnNet10WithoutModels [RunsInsideRevit2026OnNet10WithoutModels] 	dc2784a8-fca1-dbf5-5850-fc046fca7779&#xD;
+OutputConsole:  Revit 2026: 92.35 	 SetterValidationProbe 1 True 100% 92.35ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

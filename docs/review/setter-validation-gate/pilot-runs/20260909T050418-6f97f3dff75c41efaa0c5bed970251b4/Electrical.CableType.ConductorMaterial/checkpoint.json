@@ -1,0 +1,14 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+  "model": "Snowdon Towers Sample Electrical.rvt",
+  "model_sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T050418-6f97f3dff75c41efaa0c5bed970251b4\\Electrical.CableType.ConductorMaterial\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "copy_open_sha256": "BF50CF7E6F3C4E985C2D3355819C6420171A89BFF13A71B4CDAA774669DF6258",
+  "target_count": 2,
+  "generator_errors": []
+}

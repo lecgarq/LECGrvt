@@ -1,0 +1,46 @@
+{
+  "started_at": "2026-09-09T05:04:18.031085Z",
+  "revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+  "runtime": "10.0.11",
+  "revit_build": "26.5.0.55",
+  "manifest_sha256": "CAE7CD75EB409C6FF9271CA4A24ECC0AA0E5C7A1EBB2FA690259AB30D9F9C286",
+  "model": "Snowdon Towers Sample Electrical.rvt",
+  "model_sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A",
+  "binaries": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\RevitAPI.dll",
+      "sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285"
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\RevitAPIUI.dll",
+      "sha256": "8D769989B3C1B6875EB397518A4B71AE205B38D36C6F5DFFDB1D4F641DE54B6B"
+    },
+    {
+      "path": "C:\\Users\\LECG Arquitectura\\AppData\\Local\\Temp\\3096e75f-1aa9-48e1-b807-84ba0302afaa\\RevitTest\\SetterValidationProbe\\SetterValidationProbe.dll",
+      "sha256": "7FEE4A0ADD367E554CBB2C0D3F53D6F2A033CE4895790FE30C3763845EAB1418"
+    },
+    {
+      "path": "C:\\Users\\LECG Arquitectura\\AppData\\Local\\Temp\\3096e75f-1aa9-48e1-b807-84ba0302afaa\\Costura\\21DD5762ADC8302FBDC115F22DE7B0D9\\nunit.framework.dll",
+      "sha256": "8209DDE828B2FD6BB89AFFF760916208FB8C0C3D91732676C3213E46C94AADE0"
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Revit.exe",
+      "sha256": "55C7CC183FC5555A5E1E40FB5405AD99104D7D1BCE9CE585E092461EF1E6F47D"
+    }
+  ],
+  "sources": [
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ChangedValuePilot.cs",
+      "sha256": "5F846DFDEE48586DC29AB6FB6ACEF67DB765A1D3B962094D83AB58B586A288E7"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\CompatibilityProbe.cs",
+      "sha256": "3781C5F678F03A2F159BF3C3C43E86F73333CFC343E196E1E7CB0F187719FC0F"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\PilotValues.cs",
+      "sha256": "42ED7D7D402022CAE537050C5DF85A71598A799274DD72A33E038EF5BFC0109A"
+    }
+  ],
+  "isolation": "Fresh detached disposable copy per operation; never saved; observable rollback checks are not a proof of all internal state."
+}

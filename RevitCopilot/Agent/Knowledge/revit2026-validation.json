@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "campaign": "20260905_203238",
-  "source_sha256": "DD10BE0BE4772B3B3A4ADC04432A97D07E7D7872222BC7D3309BABD3B14DAE83",
-  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify.",
+  "campaign": "changed-value-pilot-20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531",
+  "source_sha256": "AC8DC43315F0BE661CF257D4EEBEFDE1EC1D84ACA37CAF67A1FDA894802CF67A",
+  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving.",
   "entries": [
     {
       "operation": "api.get:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
@@ -13351,11 +13351,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.CoreType",
@@ -14471,11 +14471,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.CutForegroundPatternColor",
@@ -15447,11 +15447,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidTemperature",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidType",
@@ -15623,11 +15623,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.BubbleEnd",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.Direction",
@@ -16439,11 +16439,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.Number",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
@@ -17319,11 +17319,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.TextElement.Text",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.TextElement.VerticalAlignment",
