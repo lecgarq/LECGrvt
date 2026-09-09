@@ -1,2 +1,2 @@
 # Evidence hashes are byte-exact; do not normalize captured artifacts on checkout.
-* -text
+* -text whitespace=cr-at-eol

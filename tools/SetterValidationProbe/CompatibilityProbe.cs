@@ -7,7 +7,7 @@ using NUnit.Framework;
 [assembly: AssemblyMetadata("NUnit.Version", "2026")]
 [assembly: AssemblyMetadata("NUnit.Open", "true")]
 [assembly: AssemblyMetadata("NUnit.Close", "true")]
-[assembly: AssemblyMetadata("NUnit.Timeout", "10")]
+[assembly: AssemblyMetadata("NUnit.Timeout", "45")]
 [assembly: AssemblyMetadata("NUnit.Verbosity", "2")]
 
 namespace LECG.SetterValidationProbe;

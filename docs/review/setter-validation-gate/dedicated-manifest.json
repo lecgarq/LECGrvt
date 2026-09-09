@@ -1,0 +1,404 @@
+{
+  "prepared_at": "2026-09-09T05:39:17.8531382Z",
+  "revision": "f0464656b458827206ca3632a42fcf99248af091",
+  "ledger_sha256": "E982AF133E2D9B704563E82BF340047BC046169687B6432E9F79E2C29F39A9C7",
+  "baseline_path": "C:\\LECG\\RevitAddins\\LECG\\RevitCopilot\\Tests\\bin\\x64\\Release\\net10.0-windows\\benchmarks\\20260905_203238\\benchmark-results.json",
+  "baseline_sha256": "DD10BE0BE4772B3B3A4ADC04432A97D07E7D7872222BC7D3309BABD3B14DAE83",
+  "api_sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285",
+  "api_xml_sha256": "16F6AC77BEEE5E88591675E1F06D78C45209B354B4AC8C161AFB9EC9ACA039ED",
+  "classification_sha256": "088DB62397D66E6FAAC21F52DBBD1C9391DD19D3859E3AB73EC17A6E233620BD",
+  "preregistration_sha256": "78678D2DA83067A3922F7F89D2EA8EC8492CB1B8C1EF1EE563AAFD11567049C1",
+  "models": [
+    {
+      "name": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222"
+    },
+    {
+      "name": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2"
+    },
+    {
+      "name": "Snowdon Towers Sample Architectural.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Architectural.rvt",
+      "sha256": "931EEEF58311D87AD5B15EB2622A4A7CD2737091D295C24E625C67E445AD65D1"
+    },
+    {
+      "name": "Snowdon Towers Sample Electrical.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Electrical.rvt",
+      "sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A"
+    },
+    {
+      "name": "Snowdon Towers Sample Facades.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Facades.rvt",
+      "sha256": "A3A1FB79871D2B537A6D0D80E9D662EB7FB9748E2A89032B3DEF6322FED09A3C"
+    },
+    {
+      "name": "Snowdon Towers Sample HVAC.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample HVAC.rvt",
+      "sha256": "2793230A685E08A4511899CCE4D8148C96B5860A52CE50EE10815C13743FC280"
+    },
+    {
+      "name": "Snowdon Towers Sample Plumbing.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Plumbing.rvt",
+      "sha256": "53886EFC2B0B50DA53794F670A325F9CE0D04D196CA3858F01439632268A05BA"
+    },
+    {
+      "name": "Snowdon Towers Sample Site.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Site.rvt",
+      "sha256": "87116705D83F45871E2E51C9AEDB1509132F2B2E771D699E38E8F9F8CAFD0617"
+    },
+    {
+      "name": "Snowdon Towers Sample Structural.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Structural.rvt",
+      "sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F"
+    },
+    {
+      "name": "サンプル意匠.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\サンプル意匠.rvt",
+      "sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A"
+    },
+    {
+      "name": "サンプル構造.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\サンプル構造.rvt",
+      "sha256": "C267DA0DCD17DA89A66AF10855C90701E03C98BF8749ADDEA2D475F851AF8386"
+    },
+    {
+      "name": "サンプル設備.rvt",
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\サンプル設備.rvt",
+      "sha256": "205A4B00D7FB6656F9E327F459E6DB76EB672E232EF25DBB1696C2EE78CDF5C8"
+    }
+  ],
+  "pilot_model": "Snowdon Towers Sample Electrical.rvt",
+  "cases": [
+    {
+      "property": "Analysis.MassLevelData.ConceptualConstructionId",
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+      "models": [
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Architecture.StairsRunType.NosingProfile",
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Architecture.StairsRunType.RiserProfile",
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Architecture.StairsRunType.TreadProfile",
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.CableType.ConductorMaterial",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.CableType.InsulationMaterial",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.CableType.TemperatureRating",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.ElectricalSystem.CableSize",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+      "models": [
+        "Snowdon Towers Sample Electrical.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.WireType.Insulation",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.WireType.TemperatureRating",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Electrical.WireType.WireMaterial",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+      "models": [
+        "Snowdon Towers Sample HVAC.rvt",
+        "Snowdon Towers Sample Structural.rvt",
+        "Snowdon Towers Sample Electrical.rvt",
+        "Snowdon Towers Sample Plumbing.rvt",
+        "サンプル構造.rvt",
+        "Snowdon Towers Sample Facades.rvt",
+        "Snowdon Towers Sample Site.rvt",
+        "サンプル意匠.rvt",
+        "サンプル設備.rvt",
+        "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Part.OriginalCategoryId",
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "models": [
+        "サンプル意匠.rvt",
+        "Snowdon Towers Sample Architectural.rvt",
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Structure.FabricArea.TagViewId",
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+      "models": [
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    },
+    {
+      "property": "Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "models": [
+        "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt"
+      ]
+    }
+  ],
+  "baseline_entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+      "state": "changed_value_tested",
+      "passed_models": 1,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 11
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 9,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 8,
+      "same_value_models": 3
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 11,
+      "same_value_models": 1
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 0,
+      "unsupported_models": 0,
+      "same_value_models": 12
+    }
+  ],
+  "previous_pilot_run": "20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531",
+  "estimate_before": [
+    18,
+    34
+  ]
+}

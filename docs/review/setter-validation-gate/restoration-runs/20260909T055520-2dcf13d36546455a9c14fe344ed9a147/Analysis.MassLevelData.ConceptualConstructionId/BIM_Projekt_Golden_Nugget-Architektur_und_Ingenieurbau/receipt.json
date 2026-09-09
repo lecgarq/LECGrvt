@@ -1,0 +1,57 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "status": "rejected-with-reason",
+  "stage": "comparison",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\restoration-runs\\20260909T055520-2dcf13d36546455a9c14fe344ed9a147\\Analysis.MassLevelData.ConceptualConstructionId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": true,
+  "no_write_control": true,
+  "copy_open_sha256": "4AB83AFDA029CD9190BE48D7F572005696CDF3448ACA5F4EF55259ECB6DA3C13",
+  "target_count": 18,
+  "generator_errors": [],
+  "target": "3362b07f-edc7-4f7b-9075-8d14f8b30102-0021ed5b",
+  "before": -1,
+  "desired": 638139,
+  "after_regenerate": -1,
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": -1,
+  "reason": "InvalidOperationException: Rollback observable restoration failed.",
+  "rollback_status": "RolledBack",
+  "restoration_detail": {
+    "element_id": 1462965,
+    "before": "{\u0022UniqueId\u0022:\u0022a1008162-f940-45fa-a04b-10dbc201be0d-001652b5\u0022,\u0022type\u0022:1051489,\u0022group\u0022:-1,\u0022category\u0022:-2000263,\u0022Pinned\u0022:false,\u0022parameters\u0022:[\u0022{\\u0022id\\u0022:-1002000,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1002001,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:false,\\u0022value\\u0022:null}\u0022,\u0022{\\u0022id\\u0022:-1002002,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:false,\\u0022value\\u0022:null}\u0022,\u0022{\\u0022id\\u0022:-1002050,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1002051,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1002052,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006441,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-1\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006466,\\u0022storage\\u0022:\\u0022Integer\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006469,\\u0022storage\\u0022:\\u0022Integer\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006476,\\u0022storage\\u0022:\\u0022Integer\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006478,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006479,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006480,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006481,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006490,\\u0022storage\\u0022:\\u0022Double\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006491,\\u0022storage\\u0022:\\u0022Double\\u0022,\\u0022has_value\\u0022:false,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1013201,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-1\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1140362,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-2000263\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1140363,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-2000263\\u0022}\u0022]}",
+    "after": "{\u0022UniqueId\u0022:\u0022a1008162-f940-45fa-a04b-10dbc201be0d-001652b5\u0022,\u0022type\u0022:1051489,\u0022group\u0022:-1,\u0022category\u0022:-2000263,\u0022Pinned\u0022:false,\u0022parameters\u0022:[\u0022{\\u0022id\\u0022:-1002000,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1002001,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:false,\\u0022value\\u0022:null}\u0022,\u0022{\\u0022id\\u0022:-1002002,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:false,\\u0022value\\u0022:null}\u0022,\u0022{\\u0022id\\u0022:-1002050,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1002051,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1002052,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221051489\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006441,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-1\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006466,\\u0022storage\\u0022:\\u0022Integer\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006469,\\u0022storage\\u0022:\\u0022Integer\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006476,\\u0022storage\\u0022:\\u0022Integer\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00221\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006478,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006479,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006480,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006481,\\u0022storage\\u0022:\\u0022String\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006490,\\u0022storage\\u0022:\\u0022Double\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u00228E-323\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1006491,\\u0022storage\\u0022:\\u0022Double\\u0022,\\u0022has_value\\u0022:false,\\u0022value\\u0022:\\u00220\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1013201,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-1\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1140362,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-2000263\\u0022}\u0022,\u0022{\\u0022id\\u0022:-1140363,\\u0022storage\\u0022:\\u0022ElementId\\u0022,\\u0022has_value\\u0022:true,\\u0022value\\u0022:\\u0022-2000263\\u0022}\u0022]}"
+  },
+  "restoration": {
+    "before_elements": 29881,
+    "after_elements": 29881,
+    "different_elements": [
+      1462965,
+      1780031,
+      2716783
+    ],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "complete_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element identities and readable parameters; target property; warning identities. Unavailable parameter slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [],
+  "infrastructure_failure": true,
+  "opening_warnings": [],
+  "elapsed_ms": 27837.9526
+}

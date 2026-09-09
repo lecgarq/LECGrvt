@@ -34,6 +34,7 @@ export function aggregate(operation, attempts) {
 }
 
 export function receiptAttempt(receipt) {
+  if (receipt.classification_only) throw new Error('Classification probes cannot receive standalone setter credit.');
   if (!Object.hasOwn(states, receipt.status) || !receipt.cleanup_verified || receipt.infrastructure_failure || receipt.cleanup_error)
     throw new Error('Incomplete or failed-infrastructure receipt cannot enter the ledger.');
   if (receipt.setter_attempted && !receipt.rollback_verified) throw new Error('Missing verified rollback.');
