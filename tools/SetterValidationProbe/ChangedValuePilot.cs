@@ -27,6 +27,7 @@ public abstract class SetterHarness
     protected virtual bool PersistenceProbe => false;
     protected virtual long? RestorationWatchId => null;
     protected bool NoWriteControl;
+    protected bool InspectReadOnly;
     private string _source = "", _modelHash = "";
     private bool _abort;
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
@@ -43,6 +44,9 @@ public abstract class SetterHarness
         Require(application.Application.Documents.Size == 0, "Pilot refuses to run alongside any open model.");
         Manifest = JsonDocument.Parse(File.ReadAllText(Path.Combine(Evidence, ManifestName)));
         var m = Manifest.RootElement;
+        Require(m.TryGetProperty("snapshot_amendment_sha256", out var amendment)
+            && Hash(Path.Combine(Evidence, "writable-snapshot-amendment.md")) == amendment.GetString(),
+            "Writable snapshot requires an amended manifest; legacy pilot modes must be explicitly re-registered.");
         Require(Hash(typeof(Element).Assembly.Location) == m.GetProperty("api_sha256").GetString(), "API binary changed.");
         Require(Hash(Path.Combine(Evidence, PreregistrationName)) == m.GetProperty("preregistration_sha256").GetString(), "Preregistration changed.");
         Require(Hash(Path.Combine(Evidence, "elementid-classification.csv")) == m.GetProperty("classification_sha256").GetString(), "Classification changed.");
@@ -56,6 +60,7 @@ public abstract class SetterHarness
             started_at = DateTime.UtcNow, revision = m.GetProperty("revision").GetString(),
             runtime = Environment.Version.ToString(), revit_build = application.Application.VersionBuild,
             manifest_sha256 = Hash(Path.Combine(Evidence, ManifestName)),
+            snapshot_amendment_sha256 = m.TryGetProperty("snapshot_amendment_sha256", out var scopeHash) ? scopeHash.GetString() : null,
             project_sha256 = Hash(Path.Combine(Root, "tools/SetterValidationProbe/SetterValidationProbe.csproj")),
             protocol_amendment_sha256 = Hash(Path.Combine(Evidence, "pilot-protocol-amendment.md")),
             models = m.GetProperty("models"),
@@ -91,7 +96,7 @@ public abstract class SetterHarness
             ["status"] = "rejected-with-reason", ["stage"] = "opening", ["setter_attempted"] = false,
             ["copy"] = copy, ["rollback_verified"] = false, ["cleanup_verified"] = false };
         LastReceipt = result;
-        result["classification_only"] = PersistenceProbe || NoWriteControl;
+        result["classification_only"] = PersistenceProbe || NoWriteControl || InspectReadOnly;
         result["no_write_control"] = NoWriteControl;
         void Checkpoint() => File.WriteAllText(Path.Combine(directory, "checkpoint.json"), JsonSerializer.Serialize(result, JsonOptions));
         Checkpoint();
@@ -140,6 +145,16 @@ public abstract class SetterHarness
             Require(!doc.IsFamilyDocument && !doc.IsLinked && !doc.IsReadOnly && !doc.IsWorkshared, "Unsafe document context.");
             Require(!new FilteredElementCollector(doc).OfClass(typeof(RevitLinkType)).Cast<RevitLinkType>()
                 .Any(t => RevitLinkType.IsLoaded(doc, t.Id)), "Unexpected loaded Revit link.");
+            if (InspectReadOnly)
+            {
+                var element = doc.GetElement(new ElementId(1462965));
+                var parameter = element.get_Parameter(BuiltInParameter.SPOT_ELEV_SINGLE_OR_UPPER_VALUE);
+                result["parameter_probe"] = new { element_id = element.Id.Value, element.UniqueId,
+                    parameter_id = parameter.Id.Value, parameter.Definition.Name, parameter.IsReadOnly,
+                    storage = parameter.StorageType.ToString(), parameter.HasValue, value = parameter.AsDouble() };
+                result["reason"] = "classification_only_parameter_read_no_transaction";
+                return;
+            }
             result["stage"] = "generator";
             int split = property.LastIndexOf('.');
             Type type = typeof(Element).Assembly.GetType("Autodesk.Revit.DB." + property[..split], true)!;
@@ -202,7 +217,7 @@ public abstract class SetterHarness
         result["before"] = PilotValues.Snapshot(before);
         result["desired"] = PilotValues.Snapshot(desired);
         string? watchedBefore = null, watchedAfter = null;
-        var snapshot = State(doc, out var unobservedBefore, (id, value) => { if (id == RestorationWatchId) watchedBefore = value; });
+        var snapshot = State(doc, target.Id.Value, out var unobservedBefore, out var excludedBefore, (id, value) => { if (id == RestorationWatchId) watchedBefore = value; });
         var warnings = Warnings(doc);
         var events = new List<object>();
         void Changed(object? sender, DocumentChangedEventArgs args)
@@ -267,16 +282,17 @@ public abstract class SetterHarness
             {
                 var rollback = group.RollBack();
                 result["rollback_status"] = rollback.ToString();
-                var restored = State(doc, out var unobservedAfter, (id, value) => { if (id == RestorationWatchId) watchedAfter = value; });
+                var restored = State(doc, target.Id.Value, out var unobservedAfter, out var excludedAfter, (id, value) => { if (id == RestorationWatchId) watchedAfter = value; });
                 if (RestorationWatchId is not null)
                     result["restoration_detail"] = new { element_id = RestorationWatchId, before = watchedBefore, after = watchedAfter };
                 long[] changedIds = snapshot.Keys.Union(restored.Keys).Where(id => snapshot.GetValueOrDefault(id) != restored.GetValueOrDefault(id)).ToArray();
                 result["restoration"] = new { before_elements = snapshot.Count, after_elements = restored.Count,
                     different_elements = changedIds, warning_set_restored = warnings == Warnings(doc),
                     unobservable_parameter_slots_before = unobservedBefore, unobservable_parameter_slots_after = unobservedAfter,
-                    complete_parameter_snapshot = unobservedBefore.Count == 0 && unobservedAfter.Count == 0,
+                    excluded_readonly_values_before = excludedBefore, excluded_readonly_values_after = excludedAfter,
+                    complete_scoped_parameter_snapshot = unobservedBefore.Count == 0 && unobservedAfter.Count == 0,
                     target_restored = PilotValues.Equal(before, property.GetValue(doc.GetElement(uid))),
-                    scope = "All element identities and readable parameters; target property; warning identities. Unavailable parameter slots and internal/geometry state are NOT verified. Fresh-copy isolation required." };
+                    scope = "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required." };
                 result["document_changes"] = events;
                 Require(rollback == TransactionStatus.RolledBack && !doc.IsModifiable && changedIds.Length == 0
                     && warnings == Warnings(doc) && PilotValues.Equal(before, property.GetValue(doc.GetElement(uid))), "Rollback observable restoration failed.");
@@ -286,11 +302,14 @@ public abstract class SetterHarness
         }
     }
 
-    private static Dictionary<long, string> State(Document doc, out List<string> unobserved, Action<long, string>? observe = null)
+    internal static bool IncludeParameterValue(bool isTarget, bool isReadOnly) => isTarget || !isReadOnly;
+
+    private static Dictionary<long, string> State(Document doc, long targetId, out List<string> unobserved, out int excludedReadOnly, Action<long, string>? observe = null)
     {
         var gaps = new List<string>();
         unobserved = gaps;
-        return PilotValues.Elements(doc).ToDictionary(e => e.Id.Value, e =>
+        int excluded = 0;
+        var states = PilotValues.Elements(doc).ToDictionary(e => e.Id.Value, e =>
         {
         // Read native wrappers immediately while their owning ParameterSet is alive. Never
         // buffer/sort Parameter wrappers or hand a deferred API enumeration to the serializer.
@@ -306,12 +325,19 @@ public abstract class SetterHarness
                 parameters.Add("unobservable-slot:" + index);
                 continue; // Explicitly disclosed API gap; never read StorageType without a definition.
             }
+            bool readOnly = p.IsReadOnly;
+            if (!IncludeParameterValue(e.Id.Value == targetId, readOnly))
+            {
+                excluded++;
+                parameters.Add(JsonSerializer.Serialize(new { id = p.Id.Value, read_only = true, excluded_value = true }));
+                continue;
+            }
             StorageType storage = p.StorageType;
             string? value = storage switch {
                 StorageType.String => p.AsString(), StorageType.Integer => p.AsInteger().ToString(CultureInfo.InvariantCulture),
                 StorageType.Double => p.AsDouble().ToString("R", CultureInfo.InvariantCulture),
                 StorageType.ElementId => p.AsElementId().Value.ToString(CultureInfo.InvariantCulture), _ => null };
-            parameters.Add(JsonSerializer.Serialize(new { id = p.Id.Value, storage = storage.ToString(), has_value = p.HasValue, value }));
+            parameters.Add(JsonSerializer.Serialize(new { id = p.Id.Value, read_only = readOnly, storage = storage.ToString(), has_value = p.HasValue, value }));
         }
         parameters.Sort(StringComparer.Ordinal);
         string text = JsonSerializer.Serialize(new { e.UniqueId, type = e.GetTypeId().Value, group = e.GroupId.Value,
@@ -319,6 +345,8 @@ public abstract class SetterHarness
         observe?.Invoke(e.Id.Value, text);
         return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(text)));
         });
+        excludedReadOnly = excluded;
+        return states;
     }
 
     private static string Warnings(Document doc) => JsonSerializer.Serialize(doc.GetWarnings().Select(w => new {

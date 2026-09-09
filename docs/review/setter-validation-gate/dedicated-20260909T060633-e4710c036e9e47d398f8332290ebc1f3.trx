@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="4dfdc47f-caa4-4f14-9302-bc1546a7b75d" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-09 00:07:31" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-09T00:07:31.2041652-06:00" queuing="2026-09-09T00:07:31.2041655-06:00" start="2026-09-09T00:06:33.9364183-06:00" finish="2026-09-09T00:10:16.7230779-06:00" />
+  <TestSettings name="default" id="80435fe6-7811-4fc5-9b02-0b868bb54a85">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-09_00_07_31" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="1a6dea0b-61ec-4616-8029-eed8d6d82414" testId="caead80a-adea-4d9c-49b7-f4fde2b6de94" testName="RunDedicated(&quot;Electrical.WireType.TemperatureRating&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.5413600" startTime="2026-09-09T00:09:11.3122329-06:00" endTime="2026-09-09T00:09:11.3122332-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1a6dea0b-61ec-4616-8029-eed8d6d82414">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="53bb62d8-97e4-4a92-aee2-b0901b96c55a" testId="cbc2bad5-83bd-7360-2013-c9b9f8c5edb2" testName="RunDedicated(&quot;Architecture.StairsRunType.RiserProfile&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:12.9060200" startTime="2026-09-09T00:07:56.2731994-06:00" endTime="2026-09-09T00:07:56.2731998-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="53bb62d8-97e4-4a92-aee2-b0901b96c55a">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="5a419fa1-bb00-4b37-86c2-6f76d7b58399" testId="5e3cc95b-507b-f21c-23e5-24d777ab6464" testName="RunDedicated(&quot;Architecture.StairsRunType.NosingProfile&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:12.5305900" startTime="2026-09-09T00:07:43.3657549-06:00" endTime="2026-09-09T00:07:43.3657552-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="5a419fa1-bb00-4b37-86c2-6f76d7b58399">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="eb61138e-70f2-4bfd-84a0-242f191af828" testId="fab03f3e-3037-6442-9fbe-e1e9b6c04f5b" testName="RunDedicated(&quot;Electrical.CableType.TemperatureRating&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.5731299" startTime="2026-09-09T00:08:38.1482865-06:00" endTime="2026-09-09T00:08:38.1482868-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eb61138e-70f2-4bfd-84a0-242f191af828">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fd3abf75-58af-4d35-8e85-40ffbc4c55fd" testId="16448479-45b1-6b24-24a2-a07185393322" testName="RunDedicated(&quot;Part.OriginalCategoryId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:26.5003100" startTime="2026-09-09T00:09:47.6373203-06:00" endTime="2026-09-09T00:09:47.6373205-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd3abf75-58af-4d35-8e85-40ffbc4c55fd">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9eab17b3-f433-4f41-bfb4-ec1e43f733e7" testId="2fb7060f-9269-74f7-e460-472fcffdb173" testName="RunDedicated(&quot;Electrical.WireType.WireMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.8178300" startTime="2026-09-09T00:09:21.1336997-06:00" endTime="2026-09-09T00:09:21.1337001-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9eab17b3-f433-4f41-bfb4-ec1e43f733e7">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f2dc7296-ab6f-455e-8ae2-2668e482b7f5" testId="52635263-4d22-3ed4-4273-cbd96238e446" testName="RunDedicated(&quot;Electrical.ElectricalSystem.CableSize&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:13.9260600" startTime="2026-09-09T00:08:52.0765429-06:00" endTime="2026-09-09T00:08:52.0765432-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f2dc7296-ab6f-455e-8ae2-2668e482b7f5">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6c5beef3-e039-4f92-be9b-76533aca3eed" testId="88fffc16-fc93-2cf8-889e-4f15909229c4" testName="RunDedicated(&quot;Analysis.MassLevelData.ConceptualConstructionId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:19.4176500" startTime="2026-09-09T00:07:30.8416994-06:00" endTime="2026-09-09T00:07:30.8417146-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6c5beef3-e039-4f92-be9b-76533aca3eed">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a1a64a8b-8134-4957-9174-099051d4e135" testId="0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c" testName="RunDedicated(&quot;Structure.FabricArea.TagViewId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:17.2912500" startTime="2026-09-09T00:10:04.9323521-06:00" endTime="2026-09-09T00:10:04.9323523-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a1a64a8b-8134-4957-9174-099051d4e135">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2a62a3ed-16e8-44fd-9942-72ac7acf54fa" testId="c0eb3c27-306b-6528-34ba-46086efb19bc" testName="RunDedicated(&quot;Architecture.StairsRunType.TreadProfile&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:12.6054100" startTime="2026-09-09T00:08:08.8809027-06:00" endTime="2026-09-09T00:08:08.8809036-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2a62a3ed-16e8-44fd-9942-72ac7acf54fa">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0476ece7-93e5-45aa-a832-623ebd8af7e6" testId="a7606266-b407-69c2-b261-541d99a0e6f9" testName="RunDedicated(&quot;Electrical.CableType.ConductorMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.5828200" startTime="2026-09-09T00:08:18.4651218-06:00" endTime="2026-09-09T00:08:18.4651222-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0476ece7-93e5-45aa-a832-623ebd8af7e6">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9fd0ecf9-dd38-4522-a21e-5bc3c227e0f6" testId="98be4b2d-231b-95f0-5703-5ea6728e0182" testName="RunDedicated(&quot;Structure.StructuralConnectionHandler.ApprovalTypeId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.6702300" startTime="2026-09-09T00:10:14.6128339-06:00" endTime="2026-09-09T00:10:14.6128341-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9fd0ecf9-dd38-4522-a21e-5bc3c227e0f6">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fd551c58-e474-4f24-8141-91c09d6f8f58" testId="7c3d2829-c148-64e2-fca0-d68dd8a38968" testName="RunDedicated(&quot;Electrical.CableType.InsulationMaterial&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:10.1035300" startTime="2026-09-09T00:08:28.5722430-06:00" endTime="2026-09-09T00:08:28.5722436-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fd551c58-e474-4f24-8141-91c09d6f8f58">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4762b27d-569c-4f56-84d4-b7cae2d09878" testId="7329ca16-1cb5-b1df-e11c-324fa58c559c" testName="RunDedicated(&quot;Electrical.WireType.Insulation&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:09.6882600" startTime="2026-09-09T00:09:01.7671746-06:00" endTime="2026-09-09T00:09:01.7671749-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4762b27d-569c-4f56-84d4-b7cae2d09878">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDedicated(&quot;Electrical.CableType.InsulationMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7c3d2829-c148-64e2-fca0-d68dd8a38968">
+      <Execution id="fd551c58-e474-4f24-8141-91c09d6f8f58" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.WireType.TemperatureRating&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="caead80a-adea-4d9c-49b7-f4fde2b6de94">
+      <Execution id="1a6dea0b-61ec-4616-8029-eed8d6d82414" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.ElectricalSystem.CableSize&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="52635263-4d22-3ed4-4273-cbd96238e446">
+      <Execution id="f2dc7296-ab6f-455e-8ae2-2668e482b7f5" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Analysis.MassLevelData.ConceptualConstructionId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="88fffc16-fc93-2cf8-889e-4f15909229c4">
+      <Execution id="6c5beef3-e039-4f92-be9b-76533aca3eed" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.CableType.TemperatureRating&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="fab03f3e-3037-6442-9fbe-e1e9b6c04f5b">
+      <Execution id="eb61138e-70f2-4bfd-84a0-242f191af828" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Part.OriginalCategoryId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="16448479-45b1-6b24-24a2-a07185393322">
+      <Execution id="fd3abf75-58af-4d35-8e85-40ffbc4c55fd" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.WireType.WireMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="2fb7060f-9269-74f7-e460-472fcffdb173">
+      <Execution id="9eab17b3-f433-4f41-bfb4-ec1e43f733e7" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Architecture.StairsRunType.TreadProfile&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="c0eb3c27-306b-6528-34ba-46086efb19bc">
+      <Execution id="2a62a3ed-16e8-44fd-9942-72ac7acf54fa" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.CableType.ConductorMaterial&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="a7606266-b407-69c2-b261-541d99a0e6f9">
+      <Execution id="0476ece7-93e5-45aa-a832-623ebd8af7e6" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Architecture.StairsRunType.NosingProfile&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="5e3cc95b-507b-f21c-23e5-24d777ab6464">
+      <Execution id="5a419fa1-bb00-4b37-86c2-6f76d7b58399" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Architecture.StairsRunType.RiserProfile&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="cbc2bad5-83bd-7360-2013-c9b9f8c5edb2">
+      <Execution id="53bb62d8-97e4-4a92-aee2-b0901b96c55a" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Electrical.WireType.Insulation&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7329ca16-1cb5-b1df-e11c-324fa58c559c">
+      <Execution id="4762b27d-569c-4f56-84d4-b7cae2d09878" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Structure.StructuralConnectionHandler.ApprovalTypeId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="98be4b2d-231b-95f0-5703-5ea6728e0182">
+      <Execution id="9fd0ecf9-dd38-4522-a21e-5bc3c227e0f6" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+    <UnitTest name="RunDedicated(&quot;Structure.FabricArea.TagViewId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c">
+      <Execution id="a1a64a8b-8134-4957-9174-099051d4e135" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DedicatedCollectionBatch" name="RunDedicated" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="caead80a-adea-4d9c-49b7-f4fde2b6de94" executionId="1a6dea0b-61ec-4616-8029-eed8d6d82414" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cbc2bad5-83bd-7360-2013-c9b9f8c5edb2" executionId="53bb62d8-97e4-4a92-aee2-b0901b96c55a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e3cc95b-507b-f21c-23e5-24d777ab6464" executionId="5a419fa1-bb00-4b37-86c2-6f76d7b58399" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fab03f3e-3037-6442-9fbe-e1e9b6c04f5b" executionId="eb61138e-70f2-4bfd-84a0-242f191af828" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="16448479-45b1-6b24-24a2-a07185393322" executionId="fd3abf75-58af-4d35-8e85-40ffbc4c55fd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2fb7060f-9269-74f7-e460-472fcffdb173" executionId="9eab17b3-f433-4f41-bfb4-ec1e43f733e7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="52635263-4d22-3ed4-4273-cbd96238e446" executionId="f2dc7296-ab6f-455e-8ae2-2668e482b7f5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="88fffc16-fc93-2cf8-889e-4f15909229c4" executionId="6c5beef3-e039-4f92-be9b-76533aca3eed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c" executionId="a1a64a8b-8134-4957-9174-099051d4e135" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c0eb3c27-306b-6528-34ba-46086efb19bc" executionId="2a62a3ed-16e8-44fd-9942-72ac7acf54fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a7606266-b407-69c2-b261-541d99a0e6f9" executionId="0476ece7-93e5-45aa-a832-623ebd8af7e6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98be4b2d-231b-95f0-5703-5ea6728e0182" executionId="9fd0ecf9-dd38-4522-a21e-5bc3c227e0f6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7c3d2829-c148-64e2-fca0-d68dd8a38968" executionId="fd551c58-e474-4f24-8141-91c09d6f8f58" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7329ca16-1cb5-b1df-e11c-324fa58c559c" executionId="4762b27d-569c-4f56-84d4-b7cae2d09878" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="14" executed="14" passed="14" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 14]&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.NosingProfile")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.RiserProfile")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.TreadProfile")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.ConductorMaterial")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.InsulationMaterial")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.TemperatureRating")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.ElectricalSystem.CableSize")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.Insulation")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.TemperatureRating")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.WireMaterial")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Part.OriginalCategoryId")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.FabricArea.TagViewId")&#xD;
+Test: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.NosingProfile")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.RiserProfile")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Architecture.StairsRunType.TreadProfile")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.ConductorMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.InsulationMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.CableType.TemperatureRating")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.ElectricalSystem.CableSize")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.Insulation")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.TemperatureRating")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Electrical.WireType.WireMaterial")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Part.OriginalCategoryId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.FabricArea.TagViewId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 14]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Analysis.MassLevelData.ConceptualConstructionId\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Architecture.StairsRunType.NosingProfile\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Architecture.StairsRunType.RiserProfile\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Architecture.StairsRunType.TreadProfile\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.CableType.ConductorMaterial\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.CableType.InsulationMaterial\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.CableType.TemperatureRating\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.ElectricalSystem.CableSize\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.WireType.Insulation\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.WireType.TemperatureRating\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Electrical.WireType.WireMaterial\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Part.OriginalCategoryId\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Structure.FabricArea.TagViewId\u0022)","LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated.RunDedicated(\u0022Structure.StructuralConnectionHandler.ApprovalTypeId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 19417.65 	 RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Analysis.MassLevelData.ConceptualConstructionId")] 	88fffc16-fc93-2cf8-889e-4f15909229c4&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 12530.59 	 RunDedicated("Architecture.StairsRunType.NosingProfile")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Architecture.StairsRunType.NosingProfile")] 	5e3cc95b-507b-f21c-23e5-24d777ab6464&#xD;
+OutputConsole:  Revit 2026: 12906.02 	 RunDedicated("Architecture.StairsRunType.RiserProfile")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Architecture.StairsRunType.RiserProfile")] 	cbc2bad5-83bd-7360-2013-c9b9f8c5edb2&#xD;
+OutputConsole:  Revit 2026: 12605.41 	 RunDedicated("Architecture.StairsRunType.TreadProfile")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Architecture.StairsRunType.TreadProfile")] 	c0eb3c27-306b-6528-34ba-46086efb19bc&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 9582.82 	 RunDedicated("Electrical.CableType.ConductorMaterial")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.CableType.ConductorMaterial")] 	a7606266-b407-69c2-b261-541d99a0e6f9&#xD;
+OutputConsole:  Revit 2026: 10103.53 	 RunDedicated("Electrical.CableType.InsulationMaterial")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.CableType.InsulationMaterial")] 	7c3d2829-c148-64e2-fca0-d68dd8a38968&#xD;
+OutputConsole:  Revit 2026: 9573.13 	 RunDedicated("Electrical.CableType.TemperatureRating")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.CableType.TemperatureRating")] 	fab03f3e-3037-6442-9fbe-e1e9b6c04f5b&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 13926.06 	 RunDedicated("Electrical.ElectricalSystem.CableSize")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.ElectricalSystem.CableSize")] 	52635263-4d22-3ed4-4273-cbd96238e446&#xD;
+OutputConsole:  Revit 2026: 9688.26 	 RunDedicated("Electrical.WireType.Insulation")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.WireType.Insulation")] 	7329ca16-1cb5-b1df-e11c-324fa58c559c&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 9541.36 	 RunDedicated("Electrical.WireType.TemperatureRating")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.WireType.TemperatureRating")] 	caead80a-adea-4d9c-49b7-f4fde2b6de94&#xD;
+OutputConsole:  Revit 2026: 9817.83 	 RunDedicated("Electrical.WireType.WireMaterial")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Electrical.WireType.WireMaterial")] 	2fb7060f-9269-74f7-e460-472fcffdb173&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 26500.31 	 RunDedicated("Part.OriginalCategoryId")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Part.OriginalCategoryId")] 	16448479-45b1-6b24-24a2-a07185393322&#xD;
+OutputConsole:  Revit 2026: 17291.25 	 RunDedicated("Structure.FabricArea.TagViewId")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Structure.FabricArea.TagViewId")] 	0fe30d5c-99f8-391f-ce9b-ffdfdd9df29c&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 9670.23 	 RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")[RunDedicated]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DedicatedCollectionBatch.RunDedicated [RunDedicated("Structure.StructuralConnectionHandler.ApprovalTypeId")] 	98be4b2d-231b-95f0-5703-5ea6728e0182&#xD;
+OutputConsole:  Revit 2026: 183390.22 	 SetterValidationProbe 14 True 100% 183390.22ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

@@ -15,6 +15,14 @@ namespace LECG.SetterValidationProbe;
 // Compatibility gate only. No documents opened, transactions started or setters invoked.
 public sealed class CompatibilityProbe
 {
+    [Test]
+    public void SnapshotIncludesAllTargetValuesAndOnlyWritableNonTargetValues()
+    {
+        Assert.That(SetterHarness.IncludeParameterValue(true, true), Is.True);
+        Assert.That(SetterHarness.IncludeParameterValue(true, false), Is.True);
+        Assert.That(SetterHarness.IncludeParameterValue(false, false), Is.True);
+        Assert.That(SetterHarness.IncludeParameterValue(false, true), Is.False);
+    }
     private UIApplication? _application;
 
     [OneTimeSetUp]

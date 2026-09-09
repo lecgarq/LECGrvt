@@ -1,0 +1,27 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\restoration-runs\\20260909T060232-b9ce4944bde8496d8533fbf9e6c154c3\\Analysis.MassLevelData.ConceptualConstructionId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": true,
+  "no_write_control": true,
+  "copy_open_sha256": "907AB64D1D1FB7B2D104077539F41773B1FAFA89AD24A5F3DF6DD3FE3AD7B91A",
+  "parameter_probe": {
+    "element_id": 1462965,
+    "UniqueId": "a1008162-f940-45fa-a04b-10dbc201be0d-001652b5",
+    "parameter_id": -1006490,
+    "Name": "Single/Upper Value",
+    "IsReadOnly": true,
+    "storage": "Double",
+    "HasValue": true,
+    "value": 6.3659873724E-314
+  },
+  "reason": "classification_only_parameter_read_no_transaction",
+  "opening_warnings": [],
+  "elapsed_ms": 12584.9002
+}

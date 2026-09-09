@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="39a736ca-973e-47ac-adc1-f8128ac115d5" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-09 00:02:46" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-09T00:02:46.1073473-06:00" queuing="2026-09-09T00:02:46.1073477-06:00" start="2026-09-09T00:01:56.3350337-06:00" finish="2026-09-09T00:02:47.4840946-06:00" />
+  <TestSettings name="default" id="a70510b2-4c19-4265-ade9-72c34a80e69b">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-09_00_02_46" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="e456ca54-1c14-433f-bf93-5f754da62131" testId="66ea926a-f132-fed7-6dec-74da05353913" testName="InspectParameterReadOnly" computerName="DESKTOP-1FAV1F2" duration="00:00:12.6966100" startTime="2026-09-09T00:02:45.2091479-06:00" endTime="2026-09-09T00:02:45.2091772-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e456ca54-1c14-433f-bf93-5f754da62131">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="InspectParameterReadOnly" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="66ea926a-f132-fed7-6dec-74da05353913">
+      <Execution id="e456ca54-1c14-433f-bf93-5f754da62131" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.RestorationDiagnostic" name="InspectParameterReadOnly" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="66ea926a-f132-fed7-6dec-74da05353913" executionId="e456ca54-1c14-433f-bf93-5f754da62131" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 1]&#xD;
+Test: LECG.SetterValidationProbe.RestorationDiagnostic.InspectParameterReadOnly.InspectParameterReadOnly&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.RestorationDiagnostic.InspectParameterReadOnly.InspectParameterReadOnly&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 1]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.RestorationDiagnostic.InspectParameterReadOnly.InspectParameterReadOnly"]&#xD;
+OutputConsole:  Revit 2026: 12696.61 	 InspectParameterReadOnly	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.RestorationDiagnostic.InspectParameterReadOnly [InspectParameterReadOnly] 	66ea926a-f132-fed7-6dec-74da05353913&#xD;
+OutputConsole:  Revit 2026: 12832.48 	 SetterValidationProbe 1 True 100% 12832.48ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

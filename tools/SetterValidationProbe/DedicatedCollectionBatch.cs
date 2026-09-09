@@ -6,7 +6,7 @@ namespace LECG.SetterValidationProbe;
 
 public sealed class DedicatedCollectionBatch : SetterHarness
 {
-    protected override string ManifestName => "dedicated-manifest.json";
+    protected override string ManifestName => "dedicated-writable-manifest.json";
     protected override string PreregistrationName => "dedicated-preregistration.md";
     protected override string RunKind => "dedicated-runs";
 
@@ -55,7 +55,7 @@ public sealed class AutomaticPersistenceProbe : SetterHarness
 
 public sealed class RestorationDiagnostic : SetterHarness
 {
-    protected override string ManifestName => "dedicated-manifest.json";
+    protected override string ManifestName => "dedicated-writable-manifest.json";
     protected override string PreregistrationName => "dedicated-preregistration.md";
     protected override string RunKind => "restoration-runs";
     protected override long? RestorationWatchId => 1462965;
@@ -65,6 +65,14 @@ public sealed class RestorationDiagnostic : SetterHarness
 
     [Test]
     public void InspectNoWriteRestoration() => Run(true);
+
+    [Test]
+    public void InspectParameterReadOnly()
+    {
+        InspectReadOnly = true;
+        try { Run(true); }
+        finally { InspectReadOnly = false; }
+    }
 
     private void Run(bool noWrite)
     {

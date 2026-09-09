@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Structure.StructuralConnectionHandler.ApprovalTypeId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "F567E32372C15EB2C46E5944506299DDC62F95AFD7BC863CEE905C9AECBDD1A9",
+  "target_count": 173,
+  "generator_errors": [],
+  "reason": "no_proven_valid_alternative",
+  "opening_warnings": [],
+  "elapsed_ms": 9569.5142
+}

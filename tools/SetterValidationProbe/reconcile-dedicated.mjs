@@ -28,7 +28,7 @@ function reconcile(runName, trxName) {
   require(/^\d{8}T\d{6}-[a-f\d]{32}$/.test(runName ?? ''), 'Provide an exact dedicated run name.');
   require(/^dedicated-\d{8}T\d{6}-[a-f\d]{32}\.trx$/.test(trxName ?? ''), 'Provide the completed dedicated TRX filename.');
   const run = join(evidence, 'dedicated-runs', runName);
-  const manifestPath = join(evidence, 'dedicated-manifest.json');
+  const manifestPath = join(evidence, 'dedicated-writable-manifest.json');
   const manifest = read(manifestPath);
   const provenancePath = join(run, 'provenance.json');
   const provenance = read(provenancePath);
@@ -40,6 +40,18 @@ function reconcile(runName, trxName) {
   require(hash(manifest.baseline_path) === manifest.baseline_sha256, 'Historical corpus receipt changed.');
   require(hash(join(evidence, 'dedicated-preregistration.md')) === manifest.preregistration_sha256,
     'Frozen protocol changed.');
+  require(hash(join(evidence, 'dedicated-manifest.json')) === manifest.original_manifest_sha256,
+    'Original manifest changed.');
+  require(hash(join(evidence, 'writable-snapshot-amendment.md')) === manifest.snapshot_amendment_sha256
+    && provenance.snapshot_amendment_sha256 === manifest.snapshot_amendment_sha256, 'Snapshot amendment differs.');
+  require(hash(manifest.readonly_probe.path) === manifest.readonly_probe.sha256, 'Read-only gate receipt changed.');
+  const gate = read(manifest.readonly_probe.path);
+  require(gate.parameter_probe?.IsReadOnly === true && gate.parameter_probe.element_id === 1462965
+    && gate.parameter_probe.parameter_id === -1006490 && gate.cleanup_verified && !gate.setter_attempted,
+    'Read-only amendment condition not established.');
+  const originalPlan = read(join(evidence, 'dedicated-manifest.json'));
+  require(same(manifest.cases, originalPlan.cases) && same(manifest.models, originalPlan.models),
+    'Amendment changed the case/fixture selection.');
   require(hash(join(evidence, 'elementid-classification.csv')) === manifest.classification_sha256,
     'Classification changed.');
   require(provenance.runtime.startsWith('10.') && provenance.binaries.some(b => b.sha256 === manifest.api_sha256),

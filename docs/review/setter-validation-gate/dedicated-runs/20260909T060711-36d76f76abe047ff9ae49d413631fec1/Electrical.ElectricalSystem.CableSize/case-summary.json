@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+  "attempts": [
+    {
+      "model": "Snowdon Towers Sample Electrical.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "historical_reachable_models": 3,
+  "models_attempted": 1
+}

@@ -1,0 +1,16 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+  "model": "Snowdon Towers Sample Structural.rvt",
+  "model_sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.NosingProfile\\Snowdon Towers Sample Structural\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "AFF274177D820FEC5A54D19DE830A73E929709D29871C1AFB1C690ABE4A9A814",
+  "target_count": 2,
+  "generator_errors": []
+}

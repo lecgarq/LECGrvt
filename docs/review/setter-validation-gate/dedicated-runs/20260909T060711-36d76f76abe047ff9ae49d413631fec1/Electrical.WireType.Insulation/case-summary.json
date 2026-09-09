@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+  "attempts": [
+    {
+      "model": "Snowdon Towers Sample HVAC.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "historical_reachable_models": 12,
+  "models_attempted": 1
+}

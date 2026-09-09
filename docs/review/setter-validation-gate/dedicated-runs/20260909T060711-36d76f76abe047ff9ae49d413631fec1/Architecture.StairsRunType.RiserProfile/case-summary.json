@@ -1,0 +1,17 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+  "attempts": [
+    {
+      "model": "Snowdon Towers Sample HVAC.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Structural.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "historical_reachable_models": 12,
+  "models_attempted": 2
+}

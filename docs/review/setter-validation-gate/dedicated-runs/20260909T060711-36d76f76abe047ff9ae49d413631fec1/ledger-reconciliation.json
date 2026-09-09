@@ -1,0 +1,393 @@
+{
+  "run": "20260909T060711-36d76f76abe047ff9ae49d413631fec1",
+  "revision": "0abda1eee3f4cd99db05dbb4c75e17d81919f8f1",
+  "original_ledger_sha256": "E982AF133E2D9B704563E82BF340047BC046169687B6432E9F79E2C29F39A9C7",
+  "previous_reconciliation": {
+    "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\pilot-runs\\20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531\\ledger-reconciliation.json",
+    "sha256": "AC8DC43315F0BE661CF257D4EEBEFDE1EC1D84ACA37CAF67A1FDA894802CF67A"
+  },
+  "historical_receipt": {
+    "path": "C:\\LECG\\RevitAddins\\LECG\\RevitCopilot\\Tests\\bin\\x64\\Release\\net10.0-windows\\benchmarks\\20260905_203238\\benchmark-results.json",
+    "sha256": "DD10BE0BE4772B3B3A4ADC04432A97D07E7D7872222BC7D3309BABD3B14DAE83"
+  },
+  "provenance": {
+    "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\provenance.json",
+    "sha256": "12750671ADEFD454D3B7D8B5A1B54FD125B2ED29C36D84D9ECF57C8212806253"
+  },
+  "trx": {
+    "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-20260909T060633-e4710c036e9e47d398f8332290ebc1f3.trx",
+    "sha256": "8E4CAEE31CBB8EE748E334C4F4A3CB39DFB4DF88C53015DDC4BCD1897AC11BC8"
+  },
+  "manifest": {
+    "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-writable-manifest.json",
+    "sha256": "81DF3C370CFA51EB2505A74376ECF36ECD528274CD5C6992F3E68FE241EF4AE7"
+  },
+  "original_numerator": 624,
+  "proposed_numerator": 635,
+  "new_validations": 11,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 635,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "same_value_only": 53
+  },
+  "updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 0
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Analysis.MassLevelData.ConceptualConstructionId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\receipt.json",
+          "sha256": "689E2D937EB92BE60C26AE98DDA0A98763ABDC017AA22F8412E73B82FB834D67"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.NosingProfile\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "2EA3AB026CF9882FBC1D30EB8E59F6DE8FD0054610E56B08AC9A84098E828CBC"
+        },
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.NosingProfile\\Snowdon Towers Sample Structural\\receipt.json",
+          "sha256": "C210485C9E26818554797B0BEB50A8015B3A32E63E67EC4E90F2AEA76C278B83"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.RiserProfile\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "923ADB5A5DB6C7117C600C61E586FAA3AE91210A789996A60D91A64C00DE4770"
+        },
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.RiserProfile\\Snowdon Towers Sample Structural\\receipt.json",
+          "sha256": "6E0B87FE0A45C9FA4ED183708FB44F069DFF7191555B112C8F8D10EEF50726A8"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.TreadProfile\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "B255FA718D9967590E72FAD212A04680451A60F2B675AB82DE98875AF9B3929A"
+        },
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Architecture.StairsRunType.TreadProfile\\Snowdon Towers Sample Structural\\receipt.json",
+          "sha256": "5511E9A8AF00435062A80003EA5711734D0D3F03FCC1226BFF5E9504F9E1AC66"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+        "state": "changed_value_tested",
+        "passed_models": 2,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 10
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.CableType.ConductorMaterial\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "E1A26506CCA63F9487EBC135C218C177E126A1AA5C618D861068564524489EE6"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.CableType.InsulationMaterial\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "5B0718F62457A3259CF97358354D9EE5785B782FF61172FE6C9CDBD9B24E96B9"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.CableType.TemperatureRating\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "5CD278900739292CE7B30FF5409A27D766C0F9CEB3A64C83FA1F1B1B344C826A"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 2
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.ElectricalSystem.CableSize\\Snowdon Towers Sample Electrical\\receipt.json",
+          "sha256": "5AC79BE398C8EEFAA4CB1F432A6D2D8F9215D0E960106B6C809686593941D19A"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.WireType.Insulation\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "26536C7B6C2BC7A259ADAE38228F70428F17D10DE8BE6AB3CF3EDE3D3D339945"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.WireType.TemperatureRating\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "FF233AD4235EF9C56B6E1A52E5C56457CB65AB8EC8A960A55235382ACE941FC1"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Electrical.WireType.WireMaterial\\Snowdon Towers Sample HVAC\\receipt.json",
+          "sha256": "03AA06C2D576C4981BFCE0FBA04A0E9E755CD77D12342A8C60F83CF9D6CF4C58"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 8,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 8,
+        "same_value_models": 3
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Part.OriginalCategoryId\\サンプル意匠\\receipt.json",
+          "sha256": "8646B9770269693AE303A918B6386E10146B9F7ED50DE4736CC3864810EA1A33"
+        },
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Part.OriginalCategoryId\\Snowdon Towers Sample Architectural\\receipt.json",
+          "sha256": "44A21C6267E2B16A5B265C8D10E066088486978AA4C3BC0E9AF46E8E3B6813F4"
+        },
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Part.OriginalCategoryId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\receipt.json",
+          "sha256": "9CB0BDA06ACDFAA4AB2E1680D06A2654224D2A4B8618D454B9BF65AB713BA876"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 0
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Structure.FabricArea.TagViewId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\receipt.json",
+          "sha256": "323DBDBF477DD0075AB75EE01C6370BE2EBC6EE901CAB6D625EEDF83C26D683E"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "receipts": [
+        {
+          "path": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\dedicated-runs\\20260909T060711-36d76f76abe047ff9ae49d413631fec1\\Structure.StructuralConnectionHandler.ApprovalTypeId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\receipt.json",
+          "sha256": "D92312775ECD7A1BBC685F575BD396D242418E0FA4AD8F337094DD73DF06D58E"
+        }
+      ]
+    }
+  ]
+}
