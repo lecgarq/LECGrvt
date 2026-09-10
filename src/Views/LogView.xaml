@@ -162,10 +162,13 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Button Grid.Column="0" Command="{Binding CopyCommand}" Content="Copy Log" Style="{DynamicResource SecondaryButtonStyle}" Height="32" Padding="12,0"/>
-            <Button Grid.Column="2" Click="Close_Click" Content="Close" Style="{DynamicResource AccentButtonStyle}" Height="32" MinWidth="80"/>
+            <Button Grid.Column="2" Command="{Binding CancelCommand}" Content="Cancel" IsEnabled="{Binding CanCancel}" Style="{DynamicResource SecondaryButtonStyle}" Height="32" MinWidth="80"/>
+            <Button Grid.Column="4" Click="Close_Click" Content="Close" Style="{DynamicResource AccentButtonStyle}" Height="32" MinWidth="80"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

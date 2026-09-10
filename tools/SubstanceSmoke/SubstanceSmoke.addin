@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>LECG Substance Smoke Test</Name>
+    <Assembly>LECG\SubstanceSmoke.dll</Assembly>
+    <AddInId>89177E7F-D36F-4E98-BFDB-F6A120279E40</AddInId>
+    <FullClassName>LECG.SubstanceSmoke.Smoke</FullClassName>
+    <VendorId>LECG</VendorId>
+    <VendorDescription>Temporary local smoke test</VendorDescription>
+  </AddIn>
+</RevitAddIns>

@@ -84,6 +84,10 @@ namespace LECG.Core
             services.AddSingleton<IImageColorExtractionService, ImageColorExtractionService>();
             services.AddSingleton<IMaterialAppearanceAssetService, MaterialAppearanceAssetService>();
             services.AddSingleton<IMaterialPbrService, MaterialPbrService>();
+            services.AddSingleton<IPbrTextureBakeService, PbrTextureBakeService>();
+            services.AddSingleton<IAdvancedAppearanceAssetService, AdvancedAppearanceAssetService>();
+            services.AddSingleton<IMetallicProbeService, MetallicProbeService>();
+            services.AddSingleton<ISubstanceMaterialCreateService, SubstanceMaterialCreateService>();
             services.AddSingleton<MaterialElementGroupingService>();
             services.AddSingleton<MaterialTypeEligibilityService>();
             services.AddSingleton<MaterialTypeAssignmentProcessService>();
@@ -209,6 +213,7 @@ namespace LECG.Core
             services.AddTransient<CategoryChangerViewModel>();
             services.AddTransient<RenderAppearanceViewModel>();
             services.AddTransient<PbrMaterialCreatorViewModel>();
+            services.AddTransient<SubstanceBatchViewModel>();
             services.AddTransient<SplitBoundariesViewModel>();
             services.AddTransient<DivideToposolidViewModel>();
             services.AddTransient<TypeToLinkedModelsViewModel>();
@@ -240,6 +245,7 @@ namespace LECG.Core
             services.AddTransient<Views.HomeView>();
             services.AddTransient<Views.RenderAppearanceView>();
             services.AddTransient<Views.PbrMaterialCreatorView>();
+            services.AddTransient<Views.SubstanceBatchView>();
             services.AddTransient<Views.SplitBoundariesView>();
             services.AddTransient<Views.DivideToposolidView>();
             services.AddTransient<Views.TypeToLinkedModelsView>();

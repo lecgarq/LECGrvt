@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
+using LECG.Models;
 using LECG.Services.Interfaces;
 using LECG.Services.Logging;
 using RevitExceptions = Autodesk.Revit.Exceptions;
@@ -16,6 +17,59 @@ namespace LECG.Services
         public MaterialBitmapPropertyService(ILogger logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        public void ConnectBitmap(AssetProperty? prop, string path, TextureTransform transform)
+        {
+            ArgumentNullException.ThrowIfNull(transform);
+            Asset? connected = EnsureConnected(prop, "UnifiedBitmap");
+            if (connected == null) return;
+
+            SetAssetString(connected, UnifiedBitmap.UnifiedbitmapBitmap, path);
+            ApplyTransform(connected, transform);
+        }
+
+        public void ConnectNormalMap(AssetProperty? prop, string path, TextureTransform transform, double normalScale = 1.0)
+        {
+            ArgumentNullException.ThrowIfNull(transform);
+            Asset? connected = EnsureConnected(prop, "BumpMap");
+            if (connected == null) return;
+
+            SetAssetString(connected, BumpMap.BumpmapBitmap, path);
+            SetAssetInteger(connected, BumpMap.BumpmapType, 1);
+            SetAssetDouble(connected, BumpMap.BumpmapNormalScale, normalScale);
+            ApplyTransform(connected, transform);
+        }
+
+        private Asset? EnsureConnected(AssetProperty? prop, string schema)
+        {
+            if (prop == null) return null;
+            Asset? existing = prop.GetSingleConnectedAsset();
+            if (existing != null && existing.Name.Contains(schema, StringComparison.OrdinalIgnoreCase)) return existing;
+
+            try
+            {
+                if (existing != null) prop.RemoveConnectedAsset();
+                prop.AddConnectedAsset(schema);
+                return prop.GetSingleConnectedAsset();
+            }
+            catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
+            {
+                _logger.LogWarning($"Connect '{schema}' to '{prop.Name}': {ex.Message}", scope: "MaterialBitmapProperty");
+                return null;
+            }
+        }
+
+        private void ApplyTransform(Asset asset, TextureTransform transform)
+        {
+            SetAssetBoolean(asset, UnifiedBitmap.TextureLinkTextureTransforms, false);
+            SetAssetDistance(asset, UnifiedBitmap.TextureRealWorldScaleX, transform.ScaleXMillimeters);
+            SetAssetDistance(asset, UnifiedBitmap.TextureRealWorldScaleY, transform.ScaleYMillimeters);
+            SetAssetDistance(asset, UnifiedBitmap.TextureRealWorldOffsetX, transform.OffsetXMillimeters);
+            SetAssetDistance(asset, UnifiedBitmap.TextureRealWorldOffsetY, transform.OffsetYMillimeters);
+            SetAssetDouble(asset, UnifiedBitmap.TextureWAngle, transform.RotationDegrees);
+            if (transform.LinkTransforms)
+                SetAssetBoolean(asset, UnifiedBitmap.TextureLinkTextureTransforms, true);
         }
 
         public void SetupBitmapProperty(AssetProperty? prop, string path, double scaleXMillimeters, double scaleYMillimeters, double offsetXMillimeters, double offsetYMillimeters, double rotationDegrees, bool linkTextureTransforms)
@@ -221,6 +275,20 @@ namespace LECG.Services
             catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
             {
                 _logger.LogWarning($"SetAssetBoolean '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
+            }
+        }
+
+        private void SetAssetInteger(Asset asset, string propName, int value)
+        {
+            try
+            {
+                AssetProperty? prop = asset.FindByName(propName);
+                if (prop is AssetPropertyInteger integer && !integer.IsReadOnly) integer.Value = value;
+                else if (prop is AssetPropertyEnum enumeration && !enumeration.IsReadOnly) enumeration.Value = value;
+            }
+            catch (Exception ex) when (IsExpectedMaterialBitmapPropertyException(ex))
+            {
+                _logger.LogWarning($"SetAssetInteger '{propName}': {ex.Message}", scope: "MaterialBitmapProperty");
             }
         }
 

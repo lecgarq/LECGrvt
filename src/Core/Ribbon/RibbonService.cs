@@ -240,7 +240,7 @@ namespace LECG.Core.Ribbon
             RibbonFactory.CreateButton(panel, new RibbonButtonConfig(
                 UIConstants.ButtonMaterialCreator_Name,
                 UIConstants.ButtonMaterialCreator_Text,
-                "LECG.Commands.PbrMaterialCreatorCommand",
+                "LECG.Commands.SubstanceBatchCommand",
                 UIConstants.ButtonMaterialCreator_Tooltip,
                 AppImages.PbrMaterial32,
                 AppImages.PbrMaterial16

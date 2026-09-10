@@ -23,7 +23,14 @@ namespace LECG.ViewModels
         private double _progressValue;
         public double ProgressValue { get => _progressValue; set => SetProperty(ref _progressValue, value); }
 
+        private bool _isCancelRequested;
+        public bool IsCancelRequested { get => _isCancelRequested; set => SetProperty(ref _isCancelRequested, value); }
+
+        private bool _canCancel;
+        public bool CanCancel { get => _canCancel; set => SetProperty(ref _canCancel, value); }
+
         public ICommand CopyCommand { get; }
+        public ICommand CancelCommand { get; }
 
         public LogViewModel(ILogger logger)
         {
@@ -31,6 +38,12 @@ namespace LECG.ViewModels
             _logger.OnProgressUpdate += UpdateProgress;
 
             CopyCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(Copy);
+            CancelCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(() =>
+            {
+                IsCancelRequested = true;
+                CanCancel = false;
+                _logger.Log("Cancel requested. Finishing current material...", "LogView");
+            });
         }
 
         private void Copy()
