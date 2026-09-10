@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\ViewSheetSet.SheetOrganizationId\\BIM_Projekt_Golden_Nu-CC172C5B28\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "CADA3044EE70D36C7100B35CBB05160BEA7175F2FD1BBF4CF8BC86DD7053D5FC",
+  "target_count": 3,
+  "generator_errors": [],
+  "reason": "no_proven_valid_alternative",
+  "opening_warnings": [],
+  "elapsed_ms": 11395.1602
+}

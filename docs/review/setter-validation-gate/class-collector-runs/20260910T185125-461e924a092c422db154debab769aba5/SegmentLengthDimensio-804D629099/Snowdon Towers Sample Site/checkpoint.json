@@ -1,0 +1,16 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
+  "model": "Snowdon Towers Sample Site.rvt",
+  "model_sha256": "87116705D83F45871E2E51C9AEDB1509132F2B2E771D699E38E8F9F8CAFD0617",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\SegmentLengthDimensio-804D629099\\Snowdon Towers Sample Site\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "8D813652C698B2694DA0B79DE5BB2788BC51435897A9852B88741D3568500069",
+  "target_count": 2,
+  "generator_errors": []
+}

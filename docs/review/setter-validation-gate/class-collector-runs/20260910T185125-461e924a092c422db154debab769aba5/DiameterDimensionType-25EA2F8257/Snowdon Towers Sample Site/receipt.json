@@ -1,0 +1,51 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId",
+  "model": "Snowdon Towers Sample Site.rvt",
+  "model_sha256": "87116705D83F45871E2E51C9AEDB1509132F2B2E771D699E38E8F9F8CAFD0617",
+  "status": "rejected-with-reason",
+  "stage": "setter",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\DiameterDimensionType-25EA2F8257\\Snowdon Towers Sample Site\\disposable.rvt",
+  "rollback_verified": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "FF58B6EC00B507DFA10F9D1B369F646F0B0974E1A721D9BB3A1A687A39DF7ACB",
+  "target_count": 2,
+  "generator_errors": [],
+  "target": "f3171ee7-452c-4b52-b992-07c97c3adf59-0012b403",
+  "before": 164554,
+  "desired": 327642,
+  "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 6252,
+    "after_elements": 6252,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "f7b8c052-f040-4daf-9644-57d0512e2c28-0012f1f2:parameter-slot:6",
+      "f7b8c052-f040-4daf-9644-57d0512e2c28-0012f1f2:parameter-slot:7",
+      "f7b8c052-f040-4daf-9644-57d0512e2c28-0012f1f2:parameter-slot:8",
+      "f6e2fbe7-c51b-477c-b76d-14b764cf3ee9-0013417f:parameter-slot:6",
+      "f6e2fbe7-c51b-477c-b76d-14b764cf3ee9-0013417f:parameter-slot:7",
+      "f6e2fbe7-c51b-477c-b76d-14b764cf3ee9-0013417f:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "f7b8c052-f040-4daf-9644-57d0512e2c28-0012f1f2:parameter-slot:6",
+      "f7b8c052-f040-4daf-9644-57d0512e2c28-0012f1f2:parameter-slot:7",
+      "f7b8c052-f040-4daf-9644-57d0512e2c28-0012f1f2:parameter-slot:8",
+      "f6e2fbe7-c51b-477c-b76d-14b764cf3ee9-0013417f:parameter-slot:6",
+      "f6e2fbe7-c51b-477c-b76d-14b764cf3ee9-0013417f:parameter-slot:7",
+      "f6e2fbe7-c51b-477c-b76d-14b764cf3ee9-0013417f:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 40572,
+    "excluded_readonly_values_after": 40572,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [],
+  "opening_warnings": [],
+  "elapsed_ms": 6359.0693
+}

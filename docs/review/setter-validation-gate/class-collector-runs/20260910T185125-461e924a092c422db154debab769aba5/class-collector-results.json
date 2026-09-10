@@ -1,0 +1,944 @@
+{
+  "report": "class-collector-18",
+  "total": 18,
+  "receipt_attempts": 103,
+  "counts_by_outcome": {
+    "validated": 13,
+    "rejected-with-reason": 5
+  },
+  "new_validations": 12,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/MaterialId-D7DB840189/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "D9D39015A66F5E2E917A8AB37A585B3EC8139EE928C98443F650F3030D84DB82"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "A63AD8AA2B066766A4AD58F896B34CBA0E79D38B23506910C05E58595594CFEE"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "E78F7A74ADD4DFAE680BD47AEE48F7B20A54DBFE617503A2B0A515DBB7D1156E"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "B27C47CE21877A3CC367E72CECBD6821EC96B64551DDF1274FE03D9D14739234"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "5458E48E3E6376916143DD4C05959DF38681EAF98F20E9E97CE598DA969FEA00"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "7F435D3AA5E5306E4DBB97047DF47DE67C288B5999DBE0547B933BB84B88378B"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "A8C11A6FDA5A56A7ABF77E0F879465434C9672ADDCC5026A34AF637BC7995E21"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "A7F073ED7614F007C71DE9B048742EEEAECD923244C6696E88FCD8F69F4035F3"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "D6F394D6E007C75C77508CE0646939C7418E9D3E27404483356690988C9A675F"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "98EAC6D70805524C59B5E60385B04A0A70BE06637D7AF0B4D12B8C14E51DEBDA"
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/サンプル意匠/receipt.json",
+          "sha256": "ED001DD5D2C7562CB603CA8D9D157F2D3558094D15F8E5439B20514E16738082"
+        },
+        {
+          "model": "サンプル構造.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/サンプル構造/receipt.json",
+          "sha256": "A865E73985364B0339D9AC0233EFB747B7955F088D230CE3474769B6B782F5B1"
+        },
+        {
+          "model": "サンプル設備.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/CircuitNamingSchemeId-DF9DFCC963/サンプル設備/receipt.json",
+          "sha256": "14FDCB57DF7B579CACA7ABBDDA1CE7FF4D49392F24FAD1BDC12FF78A68949C14"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/BackgroundPatternId-D068A717FC/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "4C0BA45A184212C015C42FE09C4A5D9F014E3EB367752093A1AC9BF9E93E8552"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillPatternId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/MEPSystemType.FillPatternId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "CA97208987FC6608DC9701348C6BC07121623F1F0A27FD3CEE716EC578AC05FA"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LinePatternId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/MEPSystemType.LinePatternId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "137590A4D913EE3F182F2C5A99DAC33A578EAFB8B0BA95F866FEBCEBFC1C6EB5"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.MaterialId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/MEPSystemType.MaterialId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "5FD3C2DCBFEFE8E35C622C4280AE8C89C865597DCD4A24C3D2A26165E6BC5F63"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/Material.CutBackgroundPatternId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "43E383461AC28C517D93020195BCB43F05448D13B926471F1A2CFB32FAC7D7E5"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SurfaceBackgroundPatt-3521DFC715/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "D515434D9EE65A8BB138BB65E629F5B6EAAD206282868AFBFD50795EC039FC45"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.DimensionStyleId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DimensionStyleId-7D2A9FBA8D/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "5745834BD54F69DBE42A977E93298AE2835FF2B4A1CD15294AC2B524FDDC9728"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.Material",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/Material-BC60342667/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "C5FE67A80190DB2FCAC3F3121F924CB896CDDF9FC852AD566D8FDE61D3F868BF"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "2C0C979119232B2A41334F9592D31AD62C56C94750E9E206245920EBA0F2966D"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "E9B27451FB9CDF6F24502972F93FA9BED54A382A9A089E011FEF1C5AC5E005BB"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "BF7055E8D67896764BDC071E9A29070CB90ABECDC39D85E8B1DB1521D3D4B87F"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "84223B95ECA73D9C602095B4725E2641EB4555505391ECF415FE55A3545E4BDC"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "8FBA06CC884FB1BB9CD1C57C6420F8ACCAB70E526D4AA5158D35601C815A067A"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "9901D1AF9652EA0890E36044165C0D51550DE198DA96312E17DF85C20D782D88"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/AngularDimensionTypeI-C8F81FF536/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "C6671B37BF8094B6B99A4EAE97F863DF0ABE376B2D9414ECDC626FDACC10C425"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "A4FF1AB92794F80B6BC99A7B7A19681A095822E6B5B12359C08A10E0ADC01442"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "69D7AB8778369865445E084F73F32CDAFBEA286B82E333556E3A77B9A2F4B83E"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "B1031A8872D918C98B4AF7F655CB4DDE3E4A97947736ABBFBE194A289BD1F4E7"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "8E7B682C3C5160A2ECE8928A3FCDCFF81C83E9AC25D6C329327DF8D1C3E1D68E"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "A5D649E7602321E02B5AD4B627E1BBC293863F6D6B9851CB1F72F8E6557C60CC"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "F7218185DBDD59373FD6BED85F3559BB942A3318A7FD7D96F4D65B2EC3626972"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "0B69FA2974EC259A07FE179E5C3A4044A2DC5181BA198A29FC700265DD5C8C32"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "120B36CD3906E3A98D34CE514C3789466B9C81B541BE2C65FA36306F869C1C3C"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "9AF4062143E768A66535D1F12CBE7E83BE58D7F842980E5C82D8284D0CF110BE"
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: diameterDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/サンプル意匠/receipt.json",
+          "sha256": "31BBC3F3C20DF51B38E3AFD5D5876D526FF0BB54CCA3315FFC179BA730F314E7"
+        },
+        {
+          "model": "サンプル構造.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/DiameterDimensionType-25EA2F8257/サンプル構造/receipt.json",
+          "sha256": "DF7308309DC25487B7C26378D8580CF884F3CBF16DBFF134E199E3485E4DF7B0"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "31BC96F699D3CA1BCBEB907F5760DA2AC066BEA4E64209911F6C0CF2E6A3C776"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "BAEDC000CB114FB2924CAE354F4983D4712B3E2B42E6F9F0B7AF4E25CC73FEFF"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "E4D3511F20178253AF1CD5CFE2B22C2A6216AC4674A874374337D9C8BBA96C33"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "8D4EF82B092EBE91365F6EE739D47B57BCE60E3401CCF95FE5649F281703F480"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "0527A451145DEBD8662DAAFAB4D24BB8F44036842BADFC52D1F34FD39F374283"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "581165DDB53FB48928D90188A045948F8194962CA8D77130E7EDAC24CA127EFF"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/RadialDimensionTypeId-8268FA5239/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "24BBD52A7E4453197B77D11D85E948077A8136E3D09DEE59CB8C5EA304C275C1"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "C4CF4DF14C5EEEDE6CE851E41D2963646E79166C6E8E7A09606EC977BDB75EBD"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "E4727BCDE8918AC30146C07920BBBDF84C3C6283956A8A8913CFFF0F83F7A94F"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "5C41D836E58164D3D3D1D244D1519A577F411761E9A060AF801F58D5E7C03A46"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "E0F1CC055A3BA2104D3E73ECAEDF191C0262FEF0DF2FA41EE8CA516006DB865A"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "74AD7E903E5943C0C48554B17D0F4676DA6AE29BD77FC3AB2BAB099BABD242B9"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "200E746EF4C0ED6A193C92494600E53633471539AE7F68E52B47234F03B59553"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "9C249A2F7CDAB2F142356450325270267BE537D2207FD39646D7E72F9BF73147"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: \r\nParameter name: segmentLengthDimensionTypeId",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "F8DD3DBAA7613848C3D6A44D19154378789551143D463DD00ADCED288F59AA23"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "validated",
+          "reason": null,
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/SegmentLengthDimensio-804D629099/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "4C7B02C35EF7559B8418CABCF0446055781DB3A5DD5183DF5DC7A182D960560F"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: Cannot set the AnalysisDisplayStyleId for the specified view.",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "EE1D8818E13A9E563A071E2FD6DB337054BE9716CF9FBA29680A05FF39C2E166"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "38689807FB931D47CADABF1F1F3328F51A12A7EAE14553C1217F119C9724BE21"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "E91A91068659F40F0CA259D755D015D16CE4194305A1CC57DCB78D33A4B9F086"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "009DF35415649B69978FFE2C08DCB987DCC3D078E1F3B473D8E2D3908DB2FDA9"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "3CB251E16B3672FA4B54DC29D60294D1DC62AC579FC8A8C0515C40EA1941E558"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "AC28E95BA7611FBA58777AB4001D3439A3F0702B3A2471FAB960F42CA50CB2FF"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "0E50CB471B3F3D36582796001B48E048737F6E0F07F307957A9093D0360E683C"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "7FFC9D8831C10C6648ED031AE50AF026BE09B7A08D7C79ACE87C6BC2C753C4DF"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "D2F548FF583E4C2FE9C7AAAF5694C0A2C7BD5E938511D0E6B0E71A923DDCF9BA"
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: Cannot set the AnalysisDisplayStyleId for the specified view.",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/サンプル意匠/receipt.json",
+          "sha256": "640DC49BB4729A5776FE001D08492E31B5FE50815E7867AF1D7FA4699ABC5AD2"
+        },
+        {
+          "model": "サンプル構造.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/サンプル構造/receipt.json",
+          "sha256": "DB492CA66493FEF8D57B347D94ECBEABD0452D96BFDEB8154D3292E68F4844CF"
+        },
+        {
+          "model": "サンプル設備.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/View.AnalysisDisplayStyleId/サンプル設備/receipt.json",
+          "sha256": "1024CCCB2D1C84A7C4728D4C1246EDBD1A27A47E9B7EA5C5FEE268177291DDB1"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "CC97C6AE4399490F59A6C783D8B7A71B2131F5E814E0BDF71FEE2DDE5C1CA798"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "F287F7ED130EF340F66B5EF75FDCA74A69740FC144EC0C9CCAC0A7ADB3958826"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "3ABD8CCCFD89E532874B8C9F0A2596B0188C480DA9CEBBF508DEE41666516034"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "FC84A561F5C954DFA8FD67FB6A32C2D04CFEE7B476AA8465CA19D251FF4BA873"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "11D44CEAC809D1B049447F2B5C8BBEB2438359DDDE85877501525B9F1C38C24E"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "29C4766A08D4C4D350A6800851245ED7B6A421494379F4C23354D8C21EA78903"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "9BF577D9C1635A7C88014644A6A83E04769B521075E0E4BF5394F9A62280809C"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "3BAC8D85413A2A3AA2123FC49FAD85364FA37E5192023DE2AC061550F572A4C8"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "5D1AB4E9F4A57AF1141E18C44B91CAA712FCF5F7C02EF75A9BF0DD1E8FD46EBF"
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/サンプル意匠/receipt.json",
+          "sha256": "A9A82202AA72BFBEC4A94B2728C32A915689CB06C723AC693CCFB214A5431E5C"
+        },
+        {
+          "model": "サンプル構造.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/サンプル構造/receipt.json",
+          "sha256": "0AF9E80F312047E7BE31BA785B7D315F5408AC0B30185A9D63D3E4B494C3981C"
+        },
+        {
+          "model": "サンプル設備.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheet.SheetCollectionId/サンプル設備/receipt.json",
+          "sha256": "61B7AA3E9C3D9D833B8DDA9A38B7461AB44E0973CF7541BB450713B716100234"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "7DDD9975FCA57D98C62C3EE533E0287C5E8DC99B42C9ECE9054C1A5FC149AE58"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "BE6FE359EA23356E924785307D9A11DD7CA3E0BF156E5518D57697817F0A4466"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "8CB45376199C3A8A1EA1D279ED2E8149F77AE8F6C4149FCDB0555F04CECD6D3E"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "43C253FD4802E5EC333CE944FD0D96C197DF176F403D45779C23261E4658F5D6"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "DC70DCAEC0D01C6F5A15B96665068AD350E7C8C7F833E557CE64E4F1B7C223D6"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "FBC3AE75F619FC628301C6630B60A94FC7449FF20713CA0ED3E02424D1B755AF"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "D75F9318166DF91DCF5059326641EC2C4A5F8F7A3096B66D0FA2A340A3F8307E"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "118476695EBA19DFE14D63A6262F7B487BD279EDE7A6E40AA1FC9D7A70B09EB3"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "EF96BFF06E92808827F75697D26CB412D1FDB1F422BE34DB42D00C7EEA5DBC8A"
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/サンプル意匠/receipt.json",
+          "sha256": "E38EF9B3E827821E9267DB62874FDAD867366724FBE384351532B0803F37309F"
+        },
+        {
+          "model": "サンプル構造.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/サンプル構造/receipt.json",
+          "sha256": "1D644B4F521573D4173B2584195CE2DB6D69A37F265141F5130CC543B9C129DE"
+        },
+        {
+          "model": "サンプル設備.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.SheetOrganizationId/サンプル設備/receipt.json",
+          "sha256": "412214FA9D34F614798A880D1273E0287C5127C8892BC33F07868A9B0AA92B20"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "451E2260ADABC2F0BE7E2EF73675A9B1E6B4396F952E92159D407615C5880B6A"
+        },
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "D2F710EFAB3EF5458318B47A24747731CE704EA19DC64FA7A0623685A31A5DAE"
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "B6218B277D716813E556F5B3F93AFFB7215C0D246EB48B7200B0932A9E9A1C2E"
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "C35E71E4D8406C68862139618786AD1A171991FB7C7591E49DEE46BAC1C98503"
+        },
+        {
+          "model": "Snowdon Towers Sample Facades.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "3E20DDAEFEB6A2CCF5307541EFBF6AD622268BDAC6A4F221693BF03AC6F6F21C"
+        },
+        {
+          "model": "Snowdon Towers Sample HVAC.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "8AB8E495B9E3F7B5D75F8BF877BEEEF125DCD83407DDCD575A51973F964CA150"
+        },
+        {
+          "model": "Snowdon Towers Sample Plumbing.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "453AC5C024169A2220CBA9C396B76E8AF156C51383685696DF7967F4956ABAB2"
+        },
+        {
+          "model": "Snowdon Towers Sample Site.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "0CA67A79FB804C38C805BC473D5741B014E85ACEBE235FE513AA068ED634836D"
+        },
+        {
+          "model": "Snowdon Towers Sample Structural.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "setter_attempted": true,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "77D05520733E14B4BB2AC3C6FA822B84F48B4F7ACE3AA620A4902B6DDB65F664"
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/サンプル意匠/receipt.json",
+          "sha256": "674EFFCB401D1AB33F8E01B700CF7D56B22A6FD573A4C549963356DB030D8C25"
+        },
+        {
+          "model": "サンプル構造.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/サンプル構造/receipt.json",
+          "sha256": "FA035A1504D93C1523D5CA754EC665E19E5FECC7B4EBBFBEADE503D67080B193"
+        },
+        {
+          "model": "サンプル設備.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "setter_attempted": false,
+          "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125-461e924a092c422db154debab769aba5/ViewSheetSet.ViewOrganizationId/サンプル設備/receipt.json",
+          "sha256": "AAD8D2729AF4611F9656AD7C2F4378EACC222EA9BE223A39D79738B90200090D"
+        }
+      ]
+    }
+  ]
+}

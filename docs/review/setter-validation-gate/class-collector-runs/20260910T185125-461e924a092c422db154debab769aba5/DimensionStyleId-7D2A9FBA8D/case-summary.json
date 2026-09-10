@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.DimensionStyleId",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "models_planned": 12,
+  "models_attempted": 1
+}

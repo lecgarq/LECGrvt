@@ -1,0 +1,16 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
+  "model": "Snowdon Towers Sample Electrical.rvt",
+  "model_sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\SegmentLengthDimensio-804D629099\\Snowdon Towers Sample Electrical\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "BB7CF5D5EBD231932DF2E76084B4D17BDD49B78A42EFA111DD0C184C5B65AE3B",
+  "target_count": 2,
+  "generator_errors": []
+}

@@ -1,0 +1,42 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Architectural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Electrical.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Facades.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample HVAC.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Plumbing.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "models_planned": 12,
+  "models_attempted": 7
+}

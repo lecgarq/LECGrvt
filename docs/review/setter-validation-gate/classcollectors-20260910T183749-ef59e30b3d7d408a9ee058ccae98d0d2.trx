@@ -1,0 +1,337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="0c6f4bd2-a701-462e-b802-16943a1d36c5" name="luis.cortes@ROG_STRIX_ECORT 2026-09-10 12:51:49" runUser="ROG_STRIX_ECORT\luis.cortes" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-10T12:51:49.2554650-06:00" queuing="2026-09-10T12:51:49.2554652-06:00" start="2026-09-10T12:37:50.2995914-06:00" finish="2026-09-10T13:12:09.4827482-06:00" />
+  <TestSettings name="default" id="c3d0a613-0026-4a55-8e26-887a5f023599">
+    <Deployment runDeploymentRoot="luis.cortes_ROG_STRIX_ECORT_2026-09-10_12_51_49" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="69053e28-4546-4fb4-bec9-ee54eaf1ce50" testId="1acbed3d-b544-04cf-457e-1dac574c705d" testName="RunClassCollector(&quot;Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:01:38.0492700" startTime="2026-09-10T12:53:26.8909876-06:00" endTime="2026-09-10T12:53:26.8909880-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69053e28-4546-4fb4-bec9-ee54eaf1ce50">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="8a8a8392-4cf4-4b1f-b1dd-18e97dbef4ae" testId="b01624a0-b66f-83f9-966e-181986ac2f9b" testName="RunClassCollector(&quot;ViewSheetSet.SheetOrganizationId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:02:17.9400900" startTime="2026-09-10T13:09:35.5612921-06:00" endTime="2026-09-10T13:09:35.5612925-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8a8a8392-4cf4-4b1f-b1dd-18e97dbef4ae">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fc86bdd0-2d79-4461-9d28-f4f9a6cf1753" testId="ed60ac7e-5af7-2216-39a4-1ee165b20510" testName="RunClassCollector(&quot;MEPSystemType.MaterialId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:14.8304100" startTime="2026-09-10T12:54:59.6761334-06:00" endTime="2026-09-10T12:54:59.6761339-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fc86bdd0-2d79-4461-9d28-f4f9a6cf1753">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ee2f80ef-d1b0-4749-8eee-90873a1bf5b8" testId="e61e379a-146e-394e-dc12-afa621b8338c" testName="RunClassCollector(&quot;ViewSheetSet.ViewOrganizationId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:02:30.3398299" startTime="2026-09-10T13:12:05.9092795-06:00" endTime="2026-09-10T13:12:05.9092815-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee2f80ef-d1b0-4749-8eee-90873a1bf5b8">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b14d83ad-783a-44d7-851e-4a1efaa76ea6" testId="0767825e-da2e-4c1f-6b11-9eb95b1f8b70" testName="RunClassCollector(&quot;MEPSystemType.FillPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:14.9158600" startTime="2026-09-10T12:54:30.1792462-06:00" endTime="2026-09-10T12:54:30.1792466-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b14d83ad-783a-44d7-851e-4a1efaa76ea6">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9a9047b7-4261-455b-bc74-f92b89bf632b" testId="4d817396-d869-cef4-3b7d-981238e16482" testName="RunClassCollector(&quot;MultiReferenceAnnotationType.DimensionStyleId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:14.5551000" startTime="2026-09-10T12:55:14.2377132-06:00" endTime="2026-09-10T12:55:14.2377136-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9a9047b7-4261-455b-bc74-f92b89bf632b">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="dc80a363-3e90-4c6d-ae94-3feb42c63eac" testId="3df7e735-db77-da9f-9456-164fb0ba179f" testName="RunClassCollector(&quot;ViewSheet.SheetCollectionId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:02:10.9971000" startTime="2026-09-10T13:07:17.6083251-06:00" endTime="2026-09-10T13:07:17.6083270-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dc80a363-3e90-4c6d-ae94-3feb42c63eac">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="29bf9f31-d177-4d6c-a0de-fcf6080f96ba" testId="7f2e0144-25f2-45d9-45c0-f10a5e714e07" testName="RunClassCollector(&quot;FilledRegionType.BackgroundPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:14.8908800" startTime="2026-09-10T12:53:41.7816279-06:00" endTime="2026-09-10T12:53:41.7816282-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="29bf9f31-d177-4d6c-a0de-fcf6080f96ba">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c345d826-8e56-4583-951c-ec2c9fdbcbda" testId="d789cf01-96c6-ff30-7753-2e1bbd76b9c5" testName="RunClassCollector(&quot;MEPSystemType.LinePatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:14.6627900" startTime="2026-09-10T12:54:44.8436996-06:00" endTime="2026-09-10T12:54:44.8437002-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c345d826-8e56-4583-951c-ec2c9fdbcbda">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9ff59a22-4360-4c9e-950e-c7f0306bc37d" testId="4d4761a5-4307-7c41-b070-94e6a6dcaa21" testName="RunClassCollector(&quot;Structure.FabricSheetType.Material&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:14.7389500" startTime="2026-09-10T12:55:28.9798415-06:00" endTime="2026-09-10T12:55:28.9798418-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9ff59a22-4360-4c9e-950e-c7f0306bc37d">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="69ce3b6e-201f-4164-9646-23bb1e264216" testId="02eeb263-6e4c-d3d9-2dbf-e581da58c507" testName="RunClassCollector(&quot;Material.CutBackgroundPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:17.3725200" startTime="2026-09-10T12:53:59.1554789-06:00" endTime="2026-09-10T12:53:59.1554793-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="69ce3b6e-201f-4164-9646-23bb1e264216">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ca7f9614-9bad-441b-b070-39bce2cbd067" testId="5e8dc9cf-84be-bc34-9773-c064bf9168c1" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.RadialDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:01:07.9011300" startTime="2026-09-10T12:59:58.3210443-06:00" endTime="2026-09-10T12:59:58.3210446-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ca7f9614-9bad-441b-b070-39bce2cbd067">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f82eb6ba-8999-43dc-a593-4437c577ec61" testId="072df4f3-caee-8fe2-10f3-d965ae13454b" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.DiameterDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:02:15.5993200" startTime="2026-09-10T12:58:50.4141503-06:00" endTime="2026-09-10T12:58:50.4141515-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f82eb6ba-8999-43dc-a593-4437c577ec61">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="3478fc04-60c1-46ab-b233-410d8031da03" testId="eff21ac2-8a6b-754d-7b6a-072c26210d9c" testName="RunClassCollector(&quot;Material.SurfaceBackgroundPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:16.1040300" startTime="2026-09-10T12:54:15.2623217-06:00" endTime="2026-09-10T12:54:15.2623221-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3478fc04-60c1-46ab-b233-410d8031da03">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="26ec9c13-01e2-47c0-b1f7-2777540c319d" testId="56d620b3-e2e1-7923-27c4-2ec80a3a93c5" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.AngularDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:01:05.8234200" startTime="2026-09-10T12:56:34.8090090-06:00" endTime="2026-09-10T12:56:34.8090094-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="26ec9c13-01e2-47c0-b1f7-2777540c319d">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="270331c0-a156-4745-ae58-bd4f2cb78970" testId="b4195527-76c1-7977-afdd-5480e928cc51" testName="RunClassCollector(&quot;Analysis.MassLevelData.MaterialId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:23.6857900" startTime="2026-09-10T12:51:48.8520177-06:00" endTime="2026-09-10T12:51:48.8520445-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="270331c0-a156-4745-ae58-bd4f2cb78970">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a9a591fe-43a2-48d1-b12e-4f27234180e2" testId="66749607-bbc2-8e43-1be3-bb33c424592e" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:02:31.0831400" startTime="2026-09-10T13:02:29.4110353-06:00" endTime="2026-09-10T13:02:29.4110357-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a9a591fe-43a2-48d1-b12e-4f27234180e2">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="bccf975e-e383-4a1f-945d-04958e3f154d" testId="959a020d-d40d-0645-f6d1-e86301828f8e" testName="RunClassCollector(&quot;View.AnalysisDisplayStyleId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:02:37.1913100" startTime="2026-09-10T13:05:06.6069904-06:00" endTime="2026-09-10T13:05:06.6069921-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="bccf975e-e383-4a1f-945d-04958e3f154d">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunClassCollector(&quot;Analysis.MassLevelData.MaterialId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b4195527-76c1-7977-afdd-5480e928cc51">
+      <Execution id="270331c0-a156-4745-ae58-bd4f2cb78970" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MEPSystemType.FillPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="0767825e-da2e-4c1f-6b11-9eb95b1f8b70">
+      <Execution id="b14d83ad-783a-44d7-851e-4a1efaa76ea6" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MultiReferenceAnnotationType.DimensionStyleId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4d817396-d869-cef4-3b7d-981238e16482">
+      <Execution id="9a9047b7-4261-455b-bc74-f92b89bf632b" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;View.AnalysisDisplayStyleId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="959a020d-d40d-0645-f6d1-e86301828f8e">
+      <Execution id="bccf975e-e383-4a1f-945d-04958e3f154d" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;ViewSheetSet.SheetOrganizationId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b01624a0-b66f-83f9-966e-181986ac2f9b">
+      <Execution id="8a8a8392-4cf4-4b1f-b1dd-18e97dbef4ae" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Material.CutBackgroundPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="02eeb263-6e4c-d3d9-2dbf-e581da58c507">
+      <Execution id="69ce3b6e-201f-4164-9646-23bb1e264216" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MEPSystemType.LinePatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="d789cf01-96c6-ff30-7753-2e1bbd76b9c5">
+      <Execution id="c345d826-8e56-4583-951c-ec2c9fdbcbda" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.AngularDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="56d620b3-e2e1-7923-27c4-2ec80a3a93c5">
+      <Execution id="26ec9c13-01e2-47c0-b1f7-2777540c319d" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;ViewSheetSet.ViewOrganizationId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="e61e379a-146e-394e-dc12-afa621b8338c">
+      <Execution id="ee2f80ef-d1b0-4749-8eee-90873a1bf5b8" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="1acbed3d-b544-04cf-457e-1dac574c705d">
+      <Execution id="69053e28-4546-4fb4-bec9-ee54eaf1ce50" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Material.SurfaceBackgroundPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="eff21ac2-8a6b-754d-7b6a-072c26210d9c">
+      <Execution id="3478fc04-60c1-46ab-b233-410d8031da03" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.FabricSheetType.Material&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4d4761a5-4307-7c41-b070-94e6a6dcaa21">
+      <Execution id="9ff59a22-4360-4c9e-950e-c7f0306bc37d" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;ViewSheet.SheetCollectionId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="3df7e735-db77-da9f-9456-164fb0ba179f">
+      <Execution id="dc80a363-3e90-4c6d-ae94-3feb42c63eac" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.RadialDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="5e8dc9cf-84be-bc34-9773-c064bf9168c1">
+      <Execution id="ca7f9614-9bad-441b-b070-39bce2cbd067" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MEPSystemType.MaterialId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="ed60ac7e-5af7-2216-39a4-1ee165b20510">
+      <Execution id="fc86bdd0-2d79-4461-9d28-f4f9a6cf1753" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.DiameterDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="072df4f3-caee-8fe2-10f3-d965ae13454b">
+      <Execution id="f82eb6ba-8999-43dc-a593-4437c577ec61" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;FilledRegionType.BackgroundPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7f2e0144-25f2-45d9-45c0-f10a5e714e07">
+      <Execution id="29bf9f31-d177-4d6c-a0de-fcf6080f96ba" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="66749607-bbc2-8e43-1be3-bb33c424592e">
+      <Execution id="a9a591fe-43a2-48d1-b12e-4f27234180e2" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="1acbed3d-b544-04cf-457e-1dac574c705d" executionId="69053e28-4546-4fb4-bec9-ee54eaf1ce50" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b01624a0-b66f-83f9-966e-181986ac2f9b" executionId="8a8a8392-4cf4-4b1f-b1dd-18e97dbef4ae" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ed60ac7e-5af7-2216-39a4-1ee165b20510" executionId="fc86bdd0-2d79-4461-9d28-f4f9a6cf1753" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e61e379a-146e-394e-dc12-afa621b8338c" executionId="ee2f80ef-d1b0-4749-8eee-90873a1bf5b8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0767825e-da2e-4c1f-6b11-9eb95b1f8b70" executionId="b14d83ad-783a-44d7-851e-4a1efaa76ea6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4d817396-d869-cef4-3b7d-981238e16482" executionId="9a9047b7-4261-455b-bc74-f92b89bf632b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3df7e735-db77-da9f-9456-164fb0ba179f" executionId="dc80a363-3e90-4c6d-ae94-3feb42c63eac" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7f2e0144-25f2-45d9-45c0-f10a5e714e07" executionId="29bf9f31-d177-4d6c-a0de-fcf6080f96ba" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d789cf01-96c6-ff30-7753-2e1bbd76b9c5" executionId="c345d826-8e56-4583-951c-ec2c9fdbcbda" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4d4761a5-4307-7c41-b070-94e6a6dcaa21" executionId="9ff59a22-4360-4c9e-950e-c7f0306bc37d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02eeb263-6e4c-d3d9-2dbf-e581da58c507" executionId="69ce3b6e-201f-4164-9646-23bb1e264216" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e8dc9cf-84be-bc34-9773-c064bf9168c1" executionId="ca7f9614-9bad-441b-b070-39bce2cbd067" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="072df4f3-caee-8fe2-10f3-d965ae13454b" executionId="f82eb6ba-8999-43dc-a593-4437c577ec61" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eff21ac2-8a6b-754d-7b6a-072c26210d9c" executionId="3478fc04-60c1-46ab-b233-410d8031da03" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="56d620b3-e2e1-7923-27c4-2ec80a3a93c5" executionId="26ec9c13-01e2-47c0-b1f7-2777540c319d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b4195527-76c1-7977-afdd-5480e928cc51" executionId="270331c0-a156-4745-ae58-bd4f2cb78970" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="66749607-bbc2-8e43-1be3-bb33c424592e" executionId="a9a591fe-43a2-48d1-b12e-4f27234180e2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="959a020d-d40d-0645-f6d1-e86301828f8e" executionId="bccf975e-e383-4a1f-945d-04958e3f154d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="18" executed="18" passed="18" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 18]&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Analysis.MassLevelData.MaterialId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("FilledRegionType.BackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.CutBackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.SurfaceBackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.FillPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.LinePatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.MaterialId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.FabricSheetType.Material")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("View.AnalysisDisplayStyleId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheet.SheetCollectionId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.SheetOrganizationId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.ViewOrganizationId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Analysis.MassLevelData.MaterialId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("FilledRegionType.BackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.CutBackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.SurfaceBackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.FillPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.LinePatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.MaterialId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.FabricSheetType.Material")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("View.AnalysisDisplayStyleId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheet.SheetCollectionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.SheetOrganizationId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.ViewOrganizationId")&#xD;
+RunRevitTest: C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 18]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 9 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 9.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 10 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 10.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 11 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 11.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 12 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 12.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 13 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Analysis.MassLevelData.MaterialId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022FilledRegionType.BackgroundPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Material.CutBackgroundPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Material.SurfaceBackgroundPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MEPSystemType.FillPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MEPSystemType.LinePatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MEPSystemType.MaterialId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MultiReferenceAnnotationType.DimensionStyleId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.FabricSheetType.Material\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.AngularDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.DiameterDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.RadialDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022View.AnalysisDisplayStyleId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022ViewSheet.SheetCollectionId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022ViewSheetSet.SheetOrganizationId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022ViewSheetSet.ViewOrganizationId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 23685.79 	 RunClassCollector("Analysis.MassLevelData.MaterialId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Analysis.MassLevelData.MaterialId")] 	b4195527-76c1-7977-afdd-5480e928cc51&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 98049.27 	 RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")] 	1acbed3d-b544-04cf-457e-1dac574c705d&#xD;
+OutputConsole:  Revit 2026: 14890.88 	 RunClassCollector("FilledRegionType.BackgroundPatternId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("FilledRegionType.BackgroundPatternId")] 	7f2e0144-25f2-45d9-45c0-f10a5e714e07&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 17372.52 	 RunClassCollector("Material.CutBackgroundPatternId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Material.CutBackgroundPatternId")] 	02eeb263-6e4c-d3d9-2dbf-e581da58c507&#xD;
+OutputConsole:  Revit 2026: 16104.03 	 RunClassCollector("Material.SurfaceBackgroundPatternId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Material.SurfaceBackgroundPatternId")] 	eff21ac2-8a6b-754d-7b6a-072c26210d9c&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 14915.86 	 RunClassCollector("MEPSystemType.FillPatternId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MEPSystemType.FillPatternId")] 	0767825e-da2e-4c1f-6b11-9eb95b1f8b70&#xD;
+OutputConsole:  Revit 2026: 14662.79 	 RunClassCollector("MEPSystemType.LinePatternId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MEPSystemType.LinePatternId")] 	d789cf01-96c6-ff30-7753-2e1bbd76b9c5&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 14830.41 	 RunClassCollector("MEPSystemType.MaterialId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MEPSystemType.MaterialId")] 	ed60ac7e-5af7-2216-39a4-1ee165b20510&#xD;
+OutputConsole:  Revit 2026: 14555.1 	 RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")] 	4d817396-d869-cef4-3b7d-981238e16482&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 14738.95 	 RunClassCollector("Structure.FabricSheetType.Material")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.FabricSheetType.Material")] 	4d4761a5-4307-7c41-b070-94e6a6dcaa21&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 65823.42 	 RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")] 	56d620b3-e2e1-7923-27c4-2ec80a3a93c5&#xD;
+OutputConsole:  Revit 2026: Execution time is 5.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 135599.32 	 RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")] 	072df4f3-caee-8fe2-10f3-d965ae13454b&#xD;
+OutputConsole:  Revit 2026: Execution time is 7.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 67901.13 	 RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")] 	5e8dc9cf-84be-bc34-9773-c064bf9168c1&#xD;
+OutputConsole:  Revit 2026: Execution time is 9 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 9.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 10 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 10.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 11 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 151083.14 	 RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")] 	66749607-bbc2-8e43-1be3-bb33c424592e&#xD;
+OutputConsole:  Revit 2026: Execution time is 11.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 12 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 12.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 13 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 13.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 157191.31 	 RunClassCollector("View.AnalysisDisplayStyleId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("View.AnalysisDisplayStyleId")] 	959a020d-d40d-0645-f6d1-e86301828f8e&#xD;
+OutputConsole:  Revit 2026: Execution time is 14 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 14.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 15 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 15.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 130997.1 	 RunClassCollector("ViewSheet.SheetCollectionId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("ViewSheet.SheetCollectionId")] 	3df7e735-db77-da9f-9456-164fb0ba179f&#xD;
+OutputConsole:  Revit 2026: Execution time is 16 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 16.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 17 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 17.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 18 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 137940.09 	 RunClassCollector("ViewSheetSet.SheetOrganizationId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("ViewSheetSet.SheetOrganizationId")] 	b01624a0-b66f-83f9-966e-181986ac2f9b&#xD;
+OutputConsole:  Revit 2026: Execution time is 18.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 19 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 19.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 20 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 20.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 150339.83 	 RunClassCollector("ViewSheetSet.ViewOrganizationId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("ViewSheetSet.ViewOrganizationId")] 	e61e379a-146e-394e-dc12-afa621b8338c&#xD;
+OutputConsole:  Revit 2026: 1241323.08 	 SetterValidationProbe 18 True 100% 1241323.08ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

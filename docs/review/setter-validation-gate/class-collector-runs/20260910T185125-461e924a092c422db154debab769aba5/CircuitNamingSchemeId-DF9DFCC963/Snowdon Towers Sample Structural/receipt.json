@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+  "model": "Snowdon Towers Sample Structural.rvt",
+  "model_sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\CircuitNamingSchemeId-DF9DFCC963\\Snowdon Towers Sample Structural\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "89F0882E9A4FF2F3A68120819FC9E427879DB534BA836CB37A083B19F7673E0D",
+  "target_count": 1,
+  "generator_errors": [],
+  "reason": "no_proven_valid_alternative",
+  "opening_warnings": [],
+  "elapsed_ms": 6592.7868
+}

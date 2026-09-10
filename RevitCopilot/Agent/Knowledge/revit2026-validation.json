@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "campaign": "changed-value-dedicated-20260909T060711-36d76f76abe047ff9ae49d413631fec1",
-  "source_sha256": "ABA6F7D02C6FCFF9191E801375307ACFB240A940756AFA430D99C77BC0D6A3B7",
-  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification.",
+  "campaign": "changed-value-class-collectors-20260910T185125-461e924a092c422db154debab769aba5",
+  "source_sha256": "E99FB22955C7CB692E5DF8E4A5C70EF24EBE24F00509DC7C331B8243FDA121A2",
+  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving.",
   "entries": [
     {
       "operation": "api.get:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
@@ -11799,11 +11799,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 11,
-      "same_value_models": 1
+      "same_value_models": 0
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialType",
@@ -14023,11 +14023,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.ForegroundPatternColor",
@@ -14399,11 +14399,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillPatternId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillVisible",
@@ -14423,11 +14423,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LinePatternId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LineWeight",
@@ -14439,11 +14439,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.MaterialId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.AppearanceAssetId",
@@ -14472,10 +14472,10 @@
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
       "state": "changed_value_tested",
-      "passed_models": 1,
+      "passed_models": 2,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 11
+      "same_value_models": 10
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.CutForegroundPatternColor",
@@ -14543,11 +14543,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceForegroundPatternColor",
@@ -15175,11 +15175,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.DimensionStyleId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 9,
-      "same_value_models": 3
+      "same_value_models": 2
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.GroupTagHeads",
@@ -16319,11 +16319,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.Material",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 9,
-      "same_value_models": 3
+      "same_value_models": 2
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.MinorDirectionWireType",
@@ -16647,11 +16647,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsDisplayOption",
@@ -16743,11 +16743,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.MultipleValuesIndicatorOption",
@@ -16767,11 +16767,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RepresentaionOf3DShapes",
@@ -16807,11 +16807,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionsEnabled",

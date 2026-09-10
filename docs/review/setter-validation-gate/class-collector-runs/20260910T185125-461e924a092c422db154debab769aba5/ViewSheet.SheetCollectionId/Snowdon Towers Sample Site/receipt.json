@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+  "model": "Snowdon Towers Sample Site.rvt",
+  "model_sha256": "87116705D83F45871E2E51C9AEDB1509132F2B2E771D699E38E8F9F8CAFD0617",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\ViewSheet.SheetCollectionId\\Snowdon Towers Sample Site\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "7FB27A6498D0AECBE86C7665F790B9F796D94CA974A0C3B86CBE4CC9E72D7525",
+  "target_count": 3,
+  "generator_errors": [],
+  "reason": "no_proven_valid_alternative",
+  "opening_warnings": [],
+  "elapsed_ms": 7454.1226
+}

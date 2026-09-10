@@ -1,0 +1,13 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+  "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+  "model_sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\View.AnalysisDisplayStyleId\\BIM_Projekt_Golden_Nu-242729BD16\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false
+}

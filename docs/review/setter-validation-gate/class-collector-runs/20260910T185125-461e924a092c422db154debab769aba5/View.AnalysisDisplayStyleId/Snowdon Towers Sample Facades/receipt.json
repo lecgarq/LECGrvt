@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+  "model": "Snowdon Towers Sample Facades.rvt",
+  "model_sha256": "A3A1FB79871D2B537A6D0D80E9D662EB7FB9748E2A89032B3DEF6322FED09A3C",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\View.AnalysisDisplayStyleId\\Snowdon Towers Sample Facades\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "B9F427CB8C1708CA5AD1DD788CCD52C7BDC25956EECCB4AB1301D4A431F97383",
+  "target_count": 50,
+  "generator_errors": [],
+  "reason": "no_proven_valid_alternative",
+  "opening_warnings": [],
+  "elapsed_ms": 9722.8036
+}

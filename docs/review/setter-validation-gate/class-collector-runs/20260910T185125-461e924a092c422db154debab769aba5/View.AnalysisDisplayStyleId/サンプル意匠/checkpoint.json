@@ -1,0 +1,16 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "model_sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\View.AnalysisDisplayStyleId\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "47DF0A1AA27D7E1F9A8C0AA2D9D1EC23C15A103765B971D93E271E21CCB3FF68",
+  "target_count": 322,
+  "generator_errors": []
+}

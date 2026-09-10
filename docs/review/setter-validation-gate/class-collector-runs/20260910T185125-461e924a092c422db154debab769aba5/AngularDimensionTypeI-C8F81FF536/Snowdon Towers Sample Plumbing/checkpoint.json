@@ -1,0 +1,16 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId",
+  "model": "Snowdon Towers Sample Plumbing.rvt",
+  "model_sha256": "53886EFC2B0B50DA53794F670A325F9CE0D04D196CA3858F01439632268A05BA",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\AngularDimensionTypeI-C8F81FF536\\Snowdon Towers Sample Plumbing\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "ED9D8AF0EA3488BE8B3EB2F1B48DE5BBEA3E3EBE3E5363E669B36C2E2EB630A6",
+  "target_count": 2,
+  "generator_errors": []
+}

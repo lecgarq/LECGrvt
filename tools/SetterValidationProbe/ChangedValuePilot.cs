@@ -15,8 +15,8 @@ namespace LECG.SetterValidationProbe;
 [NonParallelizable]
 public abstract class SetterHarness
 {
-    private const string Root = @"C:\LECG\RevitAddins\LECG";
-    private const string Evidence = Root + @"\docs\review\setter-validation-gate";
+    private static readonly string Root = ResolveRoot();
+    private static readonly string Evidence = Path.Combine(Root, "docs", "review", "setter-validation-gate");
     private UIApplication _ui = null!;
     protected JsonDocument Manifest = null!;
     protected string RunDirectory = "";
@@ -33,6 +33,16 @@ public abstract class SetterHarness
     private static readonly JsonSerializerOptions JsonOptions = new() { WriteIndented = true };
     internal static string Hash(string path) => Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(path)));
     private static void Require(bool value, string message) { if (!value) throw new InvalidOperationException(message); }
+    private static string ResolveRoot()
+    {
+        string? configured = Environment.GetEnvironmentVariable("LECG_SETTER_REPO_ROOT");
+        if (string.IsNullOrWhiteSpace(configured))
+            throw new InvalidOperationException("LECG_SETTER_REPO_ROOT must name the repository used for this run.");
+        string root = Path.GetFullPath(configured);
+        if (!File.Exists(Path.Combine(root, "LECG.sln")))
+            throw new InvalidOperationException("LECG_SETTER_REPO_ROOT does not contain LECG.sln.");
+        return root;
+    }
 
     [OneTimeSetUp]
     public void Setup(UIApplication application)
@@ -81,14 +91,28 @@ public abstract class SetterHarness
         Require(Hash(_source) == _modelHash, "Sample hash changed.");
     }
 
+    protected string CaseDirectory(string property) => Path.Combine(RunDirectory, CompactSegment(property));
+
+    private static string CompactSegment(string value)
+    {
+        const int limit = 32;
+        string safe = string.Concat(value.Select(c => Path.GetInvalidFileNameChars().Contains(c) ? '_' : c));
+        if (safe.Length <= limit) return safe;
+        string leaf = safe[(safe.LastIndexOf('.') + 1)..];
+        string digest = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(value)))[..10];
+        int prefixLength = limit - digest.Length - 1;
+        return leaf[..Math.Min(prefixLength, leaf.Length)] + "-" + digest;
+    }
+
     protected void Record(string property)
     {
         ArgumentNullException.ThrowIfNull(property);
         Require(!_abort, "Earlier isolation failure aborted the pilot; no further document opens.");
         Require(_ui.Application.Documents.Size == 0, "Unexpected document open; refusing pilot.");
         string operation = "api.set:Autodesk.Revit.DB." + property;
-        string directory = RunKind == "pilot-runs" ? Path.Combine(RunDirectory, property)
-            : Path.Combine(RunDirectory, property, Path.GetFileNameWithoutExtension(_source));
+        string propertyDirectory = CaseDirectory(property);
+        string directory = RunKind == "pilot-runs" ? propertyDirectory
+            : Path.Combine(propertyDirectory, CompactSegment(Path.GetFileNameWithoutExtension(_source)));
         Directory.CreateDirectory(directory);
         string copy = Path.Combine(directory, "disposable.rvt");
         var result = new Dictionary<string, object?> {
