@@ -14,6 +14,7 @@ public sealed class SubstanceManifest
 
     [JsonPropertyName("material")] public string Material { get; set; } = string.Empty;
     [JsonPropertyName("resolution")] public int Resolution { get; set; }
+    [JsonPropertyName("normal_format")] public string? NormalFormat { get; set; }
     [JsonPropertyName("channels")] public List<SubstanceChannel> Channels { get; set; } = new();
     [JsonPropertyName("extended")] public List<SubstanceChannel> Extended { get; set; } = new();
     [JsonPropertyName("missing_canonical")] public List<string> MissingCanonical { get; set; } = new();
@@ -49,6 +50,22 @@ public sealed class SubstanceManifest
                 $"{Material}: manifest lacks required channel(s): {string.Join(", ", missing)}");
         }
 
+        string? normalFormat = string.IsNullOrWhiteSpace(NormalFormat) ? null : NormalFormat.Trim();
+        if (normalFormat is not null
+            && !string.Equals(normalFormat, "DirectX", StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(normalFormat, "OpenGL", StringComparison.OrdinalIgnoreCase))
+        {
+            return Result<SubstanceMaterialEntry>.Failure(
+                $"{Material}: unsupported normal_format '{NormalFormat}' (expected DirectX or OpenGL)");
+        }
+
+        if (normalFormat is not null)
+        {
+            normalFormat = string.Equals(normalFormat, "OpenGL", StringComparison.OrdinalIgnoreCase)
+                ? "OpenGL"
+                : "DirectX";
+        }
+
         double? ior = Extended
             .FirstOrDefault(c => string.Equals(c.Channel, "IOR", StringComparison.OrdinalIgnoreCase) && c.Value.HasValue)
             ?.Value;
@@ -65,7 +82,8 @@ public sealed class SubstanceManifest
             Full(Find("AmbientOcclusion")),
             Full(Find("Opacity")),
             ior,
-            Resolution));
+            Resolution,
+            normalFormat));
     }
 }
 

@@ -10,6 +10,7 @@ public class SubstanceManifestTests
     {
       "material": "concrete_slats",
       "resolution": 4096,
+      "normal_format": "DirectX",
       "channels": [
         { "channel": "BaseColor", "node": "basecolor", "file": "concrete_slats_basecolor.png", "bit_depth": 8, "colorspace": "sRGB", "extended": false, "rendered": true },
         { "channel": "Metallic", "node": "metallic", "file": "concrete_slats_metallic.png", "bit_depth": 8, "colorspace": "linear", "extended": false, "rendered": true },
@@ -46,6 +47,7 @@ public class SubstanceManifestTests
         var m = SubstanceManifest.Parse(FullManifest);
         m.Material.Should().Be("concrete_slats");
         m.Resolution.Should().Be(4096);
+        m.NormalFormat.Should().Be("DirectX");
         m.Channels.Should().HaveCount(6);
         m.Extended.Should().HaveCount(2);
     }
@@ -67,6 +69,7 @@ public class SubstanceManifestTests
         e.OpacityPath.Should().EndWith("concrete_slats_opacity.png");
         e.Ior.Should().Be(1.4);
         e.Resolution.Should().Be(4096);
+        e.NormalFormat.Should().Be("DirectX");
     }
 
     [Fact]
@@ -104,5 +107,14 @@ public class SubstanceManifestTests
     {
         var act = () => SubstanceManifest.Parse("{ not json");
         act.Should().Throw<System.Text.Json.JsonException>();
+    }
+
+    [Fact]
+    public void ToEntry_UnknownDeclaredNormalFormat_Fails()
+    {
+        string json = FullManifest.Replace("DirectX", "Unexpected");
+        var entry = SubstanceManifest.Parse(json).ToEntry("Concrete", @"C:\lib\Concrete\concrete_slats");
+        entry.IsFailure.Should().BeTrue();
+        entry.Error.Should().Contain("normal_format");
     }
 }
