@@ -17,8 +17,8 @@ namespace LECG.Services
 
             BakeOutputPaths paths = BakeOutputPaths.For(entry, options.OutputRoot);
             List<(string path, long ticks)> sources = CollectSources(entry);
-            bool normalConventionDeclared = entry.NormalFormat is not null;
-            string sourceNormalConvention = entry.NormalFormat ?? "DirectX";
+            const bool normalConventionDeclared = true;
+            string sourceNormalConvention = entry.NormalFormat;
             bool aoBakedIntoBaseColor = entry.AoPath is not null;
 
             BakeSidecar? existing = File.Exists(paths.Sidecar) ? BakeSidecar.FromJson(File.ReadAllText(paths.Sidecar)) : null;
@@ -59,7 +59,7 @@ namespace LECG.Services
             PngIo.SaveBgr24FromBgra(paths.BaseColor, baseColor, w, h);
 
             // Autodesk's surface_normal slot consumes OpenGL tangent-space normals.
-            // Legacy manifests use this library's audited DirectX default.
+            // The scanner requires each manifest to declare its source convention.
             var (normal, nw, nh) = PngIo.LoadBgra32(entry.NormalPath, size);
             if (string.Equals(sourceNormalConvention, "DirectX", StringComparison.Ordinal))
             {

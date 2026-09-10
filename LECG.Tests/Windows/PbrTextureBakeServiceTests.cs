@@ -41,7 +41,7 @@ public sealed class PbrTextureBakeServiceTests : IDisposable
         return path;
     }
 
-    private SubstanceMaterialEntry MakeEntry(byte metallic, bool withAo, string? normalFormat = null) => new(
+    private SubstanceMaterialEntry MakeEntry(byte metallic, bool withAo, string normalFormat = "DirectX") => new(
         "Cat", "slug", "Slug", Path.Combine(_root, "Cat", "slug"),
         WriteRgb("slug_basecolor.png", 200, 100, 50),
         WriteRgb("slug_normal.png", 128, 200, 255),

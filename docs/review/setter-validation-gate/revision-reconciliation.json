@@ -1,0 +1,57 @@
+{
+  "result": "pass",
+  "reason": "GitHub linear-history rebase for PR #18",
+  "pull_request": "https://github.com/lecgarq/LECGrvt/pull/18",
+  "main_tip_after_merge": "4b5d6c372fe496822c39eb2d37eeaa5093e3c0c7",
+  "note": "Historical receipts retain their factual execution revision. This map anchors each rebased source commit to its patch-identical main revision.",
+  "mappings": [
+    {
+      "feature_revision": "d3a105199a04aa7295b634dba829397b805cd18e",
+      "main_revision": "b5a01b1f51e666ae8fec63d25ddbe78eb430d5e5",
+      "stable_patch_id": "d86063126d5df2c20810cbcccc09090a7778e63c",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "774354b4d1d745b42ea2b73a73ad17cf68aebf58",
+      "main_revision": "562e74465c31de5a6bcbcb0e602c51f2950bb8b1",
+      "stable_patch_id": "5fc82411daf73e9b5ca471353cf33d6ce53237fe",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "f0464656b458827206ca3632a42fcf99248af091",
+      "main_revision": "022a91c2a3a1a4843be58b1d525451f5cbfc90d3",
+      "stable_patch_id": "b1809d6a621e0b9b49c6730f2405e4aaaaf05d6d",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "0abda1eee3f4cd99db05dbb4c75e17d81919f8f1",
+      "main_revision": "fd229ee1c2184c04b14472031f8124785e36029b",
+      "stable_patch_id": "6642771b83c8269af2f6d14900f8d9d3ae7fffee",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "392533b1b890ad0e5d21b813eadfad49d8ce128e",
+      "main_revision": "7dce14fed06b8ecd49b9910e5acc2b5bcdf327af",
+      "stable_patch_id": "b64088d7f5752a5410c33c74b1a56b0c2e2b8fcc",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "aaff35eedfbcb2da1eb6464d4b8928a462375997",
+      "main_revision": "6787e56f47e34188de74b4af149365ebaa72dae8",
+      "stable_patch_id": "509f82861b65fadac4dce9e6c7dfa37be9261a46",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "bb3f2095e0e3d72fcc73b0703dfc21591987c253",
+      "main_revision": "032dce12182a640b6d73a933fd9a8b90bcb35552",
+      "stable_patch_id": "5298037ca0fa1cde71bc21fbfc3e74b1a36ff1e1",
+      "patches_identical": true
+    },
+    {
+      "feature_revision": "830c00b46d4455e049c8a9d260ad7458951fca67",
+      "main_revision": "4b5d6c372fe496822c39eb2d37eeaa5093e3c0c7",
+      "stable_patch_id": "bfb1899bc222f62943eaca5997f9e0096989323a",
+      "patches_identical": true
+    }
+  ]
+}
