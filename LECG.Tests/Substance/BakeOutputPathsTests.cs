@@ -12,7 +12,7 @@ public class BakeOutputPathsTests
         @"C:\lib\Asphalt\asphalt_rough\asphalt_rough_normal.png",
         @"C:\lib\Asphalt\asphalt_rough\asphalt_rough_roughness.png",
         @"C:\lib\Asphalt\asphalt_rough\asphalt_rough_metallic.png",
-        null, null, null, 4096);
+        null, null, null, 4096, "DirectX");
 
     [Fact]
     public void For_BuildsCategorySlugFolderAndFiles()

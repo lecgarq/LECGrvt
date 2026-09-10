@@ -27,7 +27,7 @@ public sealed class SubstanceLibraryScannerTests : IDisposable
 
     private static string Good(string slug) => $$"""
     {
-      "material": "{{slug}}", "resolution": 4096,
+      "material": "{{slug}}", "resolution": 4096, "normal_format": "DirectX",
       "channels": [
         { "channel": "BaseColor", "file": "{{slug}}_basecolor.png" },
         { "channel": "Metallic", "file": "{{slug}}_metallic.png" },

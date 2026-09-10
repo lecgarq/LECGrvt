@@ -144,7 +144,7 @@ public sealed class Smoke : IExternalApplication
         Check(sidecar != null, "Bake sidecar must parse");
         Check(sidecar!.ContractVersion == BakeSidecar.CurrentContractVersion, "Bake contract version mismatch");
         Check(sidecar.Consumer == "Revit" && sidecar.DerivedOutput, "Bake must be marked as a Revit-derived output");
-        Check(sidecar.SourceNormalConvention == (entry.NormalFormat ?? "DirectX"), "Source normal convention mismatch");
+        Check(sidecar.SourceNormalConvention == entry.NormalFormat, "Source normal convention mismatch");
         Check(sidecar.OutputNormalConvention == "OpenGL", "Revit normal output must be OpenGL");
         Check(sidecar.AoBakedIntoBaseColor == entry.HasAo, "AO bake metadata mismatch");
         log($"BAKE contract={sidecar.ContractVersion} consumer={sidecar.Consumer} sourceNormal={sidecar.SourceNormalConvention} outputNormal={sidecar.OutputNormalConvention} aoInAlbedo={sidecar.AoBakedIntoBaseColor} derived={sidecar.DerivedOutput}");

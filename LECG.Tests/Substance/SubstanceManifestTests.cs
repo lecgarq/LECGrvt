@@ -86,7 +86,7 @@ public class SubstanceManifestTests
     {
         const string json = """
         {
-          "material": "x", "resolution": 2048,
+          "material": "x", "resolution": 2048, "normal_format": "DirectX",
           "channels": [
             { "channel": "BaseColor", "file": "x_basecolor.png" },
             { "channel": "Metallic", "file": "x_metallic.png" },
@@ -116,5 +116,14 @@ public class SubstanceManifestTests
         var entry = SubstanceManifest.Parse(json).ToEntry("Concrete", @"C:\lib\Concrete\concrete_slats");
         entry.IsFailure.Should().BeTrue();
         entry.Error.Should().Contain("normal_format");
+    }
+
+    [Fact]
+    public void ToEntry_MissingNormalFormat_Fails()
+    {
+        string json = FullManifest.Replace("\"normal_format\": \"DirectX\",", string.Empty);
+        var entry = SubstanceManifest.Parse(json).ToEntry("Concrete", @"C:\lib\Concrete\concrete_slats");
+        entry.IsFailure.Should().BeTrue();
+        entry.Error.Should().Contain("lacks required normal_format");
     }
 }

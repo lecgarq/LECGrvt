@@ -50,21 +50,23 @@ public sealed class SubstanceManifest
                 $"{Material}: manifest lacks required channel(s): {string.Join(", ", missing)}");
         }
 
-        string? normalFormat = string.IsNullOrWhiteSpace(NormalFormat) ? null : NormalFormat.Trim();
-        if (normalFormat is not null
-            && !string.Equals(normalFormat, "DirectX", StringComparison.OrdinalIgnoreCase)
+        if (string.IsNullOrWhiteSpace(NormalFormat))
+        {
+            return Result<SubstanceMaterialEntry>.Failure(
+                $"{Material}: manifest lacks required normal_format (expected DirectX or OpenGL)");
+        }
+
+        string normalFormat = NormalFormat.Trim();
+        if (!string.Equals(normalFormat, "DirectX", StringComparison.OrdinalIgnoreCase)
             && !string.Equals(normalFormat, "OpenGL", StringComparison.OrdinalIgnoreCase))
         {
             return Result<SubstanceMaterialEntry>.Failure(
                 $"{Material}: unsupported normal_format '{NormalFormat}' (expected DirectX or OpenGL)");
         }
 
-        if (normalFormat is not null)
-        {
-            normalFormat = string.Equals(normalFormat, "OpenGL", StringComparison.OrdinalIgnoreCase)
-                ? "OpenGL"
-                : "DirectX";
-        }
+        normalFormat = string.Equals(normalFormat, "OpenGL", StringComparison.OrdinalIgnoreCase)
+            ? "OpenGL"
+            : "DirectX";
 
         double? ior = Extended
             .FirstOrDefault(c => string.Equals(c.Channel, "IOR", StringComparison.OrdinalIgnoreCase) && c.Value.HasValue)

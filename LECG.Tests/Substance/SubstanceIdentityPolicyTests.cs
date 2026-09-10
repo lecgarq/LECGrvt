@@ -8,7 +8,7 @@ public class SubstanceIdentityPolicyTests
 {
     private static SubstanceMaterialEntry Entry(int res = 4096) => new(
         "Asphalt", "asphalt_rough", "Asphalt Rough", @"C:\lib\Asphalt\asphalt_rough",
-        "b", "n", "r", "m", null, null, null, res);
+        "b", "n", "r", "m", null, null, null, res, "DirectX");
 
     [Fact]
     public void Description_IncludesCategorySlugAndResolution()
