@@ -41,14 +41,14 @@ public sealed class PbrTextureBakeServiceTests : IDisposable
         return path;
     }
 
-    private SubstanceMaterialEntry MakeEntry(byte metallic, bool withAo) => new(
+    private SubstanceMaterialEntry MakeEntry(byte metallic, bool withAo, string? normalFormat = null) => new(
         "Cat", "slug", "Slug", Path.Combine(_root, "Cat", "slug"),
         WriteRgb("slug_basecolor.png", 200, 100, 50),
         WriteRgb("slug_normal.png", 128, 200, 255),
         WriteGray16("slug_roughness.png", 0x8000),
         WriteRgb("slug_metallic.png", metallic, metallic, metallic),
         withAo ? WriteRgb("slug_ao.png", 128, 128, 128) : null,
-        null, null, 4);
+        null, null, 4, normalFormat);
 
     private static byte[] ReadBgra(string path)
     {
@@ -85,6 +85,17 @@ public sealed class PbrTextureBakeServiceTests : IDisposable
         var set = new PbrTextureBakeService().Bake(entry, new BakeOptions(Path.Combine(_root, "_revit"), 4, false), null);
         var px = ReadBgra(set.BaseColor);
         px[2].Should().BeInRange(99, 101); // 200 * 128/255
+    }
+
+    [Fact]
+    public void Bake_OpenGlNormal_PreservesGreenAndRecordsConvention()
+    {
+        var entry = MakeEntry(metallic: 0, withAo: false, normalFormat: "OpenGL");
+        var set = new PbrTextureBakeService().Bake(entry, new BakeOptions(Path.Combine(_root, "_revit"), 4, false), null);
+
+        ReadBgra(set.NormalGl)[1].Should().Be(200);
+        BakeSidecar.FromJson(File.ReadAllText(Path.Combine(_root, "_revit", "Cat", "slug", "slug_bake.json")))!
+            .SourceNormalConvention.Should().Be("OpenGL");
     }
 
     [Fact]

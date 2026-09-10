@@ -17,9 +17,14 @@ namespace LECG.Services
 
             BakeOutputPaths paths = BakeOutputPaths.For(entry, options.OutputRoot);
             List<(string path, long ticks)> sources = CollectSources(entry);
+            bool normalConventionDeclared = entry.NormalFormat is not null;
+            string sourceNormalConvention = entry.NormalFormat ?? "DirectX";
+            bool aoBakedIntoBaseColor = entry.AoPath is not null;
 
             BakeSidecar? existing = File.Exists(paths.Sidecar) ? BakeSidecar.FromJson(File.ReadAllText(paths.Sidecar)) : null;
-            if (!options.ForceRebake && BakeSidecar.IsFresh(existing, options.TargetSize, sources) && OutputsExist(paths, existing!))
+            if (!options.ForceRebake
+                && BakeSidecar.IsFresh(existing, options.TargetSize, sources, sourceNormalConvention, normalConventionDeclared, aoBakedIntoBaseColor)
+                && OutputsExist(paths, existing!))
             {
                 log?.Invoke($"    -> Bake up to date: {paths.Folder}");
                 return new BakedTextureSet(
@@ -53,9 +58,13 @@ namespace LECG.Services
             }
             PngIo.SaveBgr24FromBgra(paths.BaseColor, baseColor, w, h);
 
-            // Normal: DirectX -> OpenGL
+            // Autodesk's surface_normal slot consumes OpenGL tangent-space normals.
+            // Legacy manifests use this library's audited DirectX default.
             var (normal, nw, nh) = PngIo.LoadBgra32(entry.NormalPath, size);
-            PbrBakeMath.InvertGreen(normal);
+            if (string.Equals(sourceNormalConvention, "DirectX", StringComparison.Ordinal))
+            {
+                PbrBakeMath.InvertGreen(normal);
+            }
             PngIo.SaveBgr24FromBgra(paths.NormalGl, normal, nw, nh);
 
             // Roughness: 16 -> 8 bit
@@ -71,7 +80,14 @@ namespace LECG.Services
                 opacityPath = paths.Opacity;
             }
 
-            File.WriteAllText(paths.Sidecar, BakeSidecar.Build(size, sources, f0Path is not null, opacityPath is not null).ToJson());
+            File.WriteAllText(paths.Sidecar, BakeSidecar.Build(
+                size,
+                sources,
+                sourceNormalConvention,
+                normalConventionDeclared,
+                aoBakedIntoBaseColor,
+                f0Path is not null,
+                opacityPath is not null).ToJson());
             log?.Invoke($"    -> Baked {size}px to {paths.Folder}{(isMetal ? " (metal: F0 written)" : string.Empty)}");
 
             return new BakedTextureSet(paths.BaseColor, paths.NormalGl, paths.Roughness, f0Path, opacityPath, WasSkipped: false);

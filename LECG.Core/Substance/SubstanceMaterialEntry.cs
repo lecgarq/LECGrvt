@@ -12,7 +12,8 @@ public sealed record SubstanceMaterialEntry(
     string? AoPath,
     string? OpacityPath,
     double? Ior,
-    int Resolution)
+    int Resolution,
+    string? NormalFormat = null)
 {
     public bool HasAo => AoPath is not null;
     public bool HasOpacity => OpacityPath is not null;

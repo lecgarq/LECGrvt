@@ -69,6 +69,7 @@ public sealed class Smoke : IExternalApplication
             var report = service.Create(doc, entry, options, log);
             Check(report.Outcome == SubstanceMaterialOutcome.Created, report.Error ?? report.ToString());
             VerifyMaterial(doc, entry, log);
+            VerifyBakeContract(entry, options.Bake, log);
             Check(service.Create(doc, entry, options, log).Outcome == SubstanceMaterialOutcome.Skipped, "Second run must skip");
             Check(service.Create(doc, entry, options with { OverwriteExisting = true }, log).Outcome == SubstanceMaterialOutcome.Updated, "Overwrite must update");
         }
@@ -135,6 +136,19 @@ public sealed class Smoke : IExternalApplication
 
     private static Material FindMaterial(Document doc, string name) =>
         new FilteredElementCollector(doc).OfClass(typeof(Material)).Cast<Material>().Single(m => m.Name == name);
+
+    private static void VerifyBakeContract(SubstanceMaterialEntry entry, BakeOptions options, Action<string> log)
+    {
+        BakeOutputPaths paths = BakeOutputPaths.For(entry, options.OutputRoot);
+        BakeSidecar? sidecar = BakeSidecar.FromJson(File.ReadAllText(paths.Sidecar));
+        Check(sidecar != null, "Bake sidecar must parse");
+        Check(sidecar!.ContractVersion == BakeSidecar.CurrentContractVersion, "Bake contract version mismatch");
+        Check(sidecar.Consumer == "Revit" && sidecar.DerivedOutput, "Bake must be marked as a Revit-derived output");
+        Check(sidecar.SourceNormalConvention == (entry.NormalFormat ?? "DirectX"), "Source normal convention mismatch");
+        Check(sidecar.OutputNormalConvention == "OpenGL", "Revit normal output must be OpenGL");
+        Check(sidecar.AoBakedIntoBaseColor == entry.HasAo, "AO bake metadata mismatch");
+        log($"BAKE contract={sidecar.ContractVersion} consumer={sidecar.Consumer} sourceNormal={sidecar.SourceNormalConvention} outputNormal={sidecar.OutputNormalConvention} aoInAlbedo={sidecar.AoBakedIntoBaseColor} derived={sidecar.DerivedOutput}");
+    }
 
     private static void VerifyMaterial(Document doc, SubstanceMaterialEntry entry, Action<string> log)
     {
