@@ -1,0 +1,204 @@
+<base:LecgWindow x:Class="LECG.Views.SubstanceBatchView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:base="clr-namespace:LECG.Views.Base"
+    xmlns:icons="clr-namespace:LECG.Utilities"
+    Title="SUBSTANCE BATCH MATERIALS"
+    Width="1100" Height="760" MinWidth="900" MinHeight="600"
+    UseLayoutRounding="True" SnapsToDevicePixels="True"
+    WindowIcon="{x:Static icons:Icons.Material}">
+
+    <base:LecgWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LECG;component/src/Resources/Themes/LecgTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <Style x:Key="ChipStyle" TargetType="Border">
+                <Setter Property="CornerRadius" Value="3"/>
+                <Setter Property="Padding" Value="5,1"/>
+                <Setter Property="Margin" Value="0,0,4,0"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource LecgBorderDark}"/>
+                <Setter Property="Background" Value="Transparent"/>
+            </Style>
+            <Style x:Key="ChipText" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="{DynamicResource LecgTextMuted}"/>
+            </Style>
+        </ResourceDictionary>
+    </base:LecgWindow.Resources>
+
+    <Grid Margin="{DynamicResource ViewContentMargin}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <StackPanel Grid.Row="0" Margin="{DynamicResource HeaderMarginSmall}">
+            <TextBlock Text="Substance Batch Materials" FontWeight="{DynamicResource WeightBold}" FontSize="{DynamicResource FontSizeTitle}" Foreground="{DynamicResource LecgTextPrimary}" Margin="{DynamicResource TitleMarginSmall}"/>
+            <TextBlock Text="{Binding ScanSummary}" FontSize="{DynamicResource FontSizeSmall}" Foreground="{DynamicResource LecgTextSecondary}"/>
+        </StackPanel>
+
+        <!-- SETTINGS BAR -->
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Library root" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding LibraryRoot, UpdateSourceTrigger=PropertyChanged}" Height="32" VerticalContentAlignment="Center"/>
+            <Button Grid.Row="1" Grid.Column="1" Content="..." Command="{Binding BrowseLibraryCommand}" Width="32" Height="32" Margin="4,0,0,0" Style="{DynamicResource SecondaryButtonStyle}"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="Baked texture output" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+            <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding OutputRoot, UpdateSourceTrigger=PropertyChanged}" Height="32" VerticalContentAlignment="Center"/>
+            <Button Grid.Row="1" Grid.Column="4" Content="..." Command="{Binding BrowseOutputCommand}" Width="32" Height="32" Margin="4,0,0,0" Style="{DynamicResource SecondaryButtonStyle}"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="6" Text="Resolution" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+            <ComboBox Grid.Row="1" Grid.Column="6" ItemsSource="{Binding ResolutionChoices}" SelectedItem="{Binding TargetSize}" Width="80" Height="32" VerticalContentAlignment="Center"/>
+
+            <TextBlock Grid.Row="0" Grid.Column="8" Text="Size (mm)" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11" Margin="0,0,0,4"/>
+            <TextBox Grid.Row="1" Grid.Column="8" Text="{Binding SizeMillimeters, UpdateSourceTrigger=PropertyChanged}" Width="80" Height="32" VerticalContentAlignment="Center"/>
+        </Grid>
+
+        <!-- BODY -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- CATEGORIES -->
+            <Border Grid.Column="0" Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderDark}" BorderThickness="1" CornerRadius="4" Padding="10">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="CATEGORIES" Style="{DynamicResource SectionHeaderStyle}" Margin="0,0,0,8"/>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+                        <Button Content="All" Command="{Binding SelectAllCommand}" Padding="10,2" FontSize="11" Style="{DynamicResource SecondaryButtonStyle}" Margin="0,0,6,0"/>
+                        <Button Content="None" Command="{Binding SelectNoneCommand}" Padding="10,2" FontSize="11" Style="{DynamicResource SecondaryButtonStyle}"/>
+                    </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <ItemsControl ItemsSource="{Binding Categories}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Label}" IsChecked="{Binding IsChecked}" IsThreeState="True" Margin="0,2" Foreground="{DynamicResource LecgTextPrimary}"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+
+            <!-- MATERIALS -->
+            <Border Grid.Column="2" Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderDark}" BorderThickness="1" CornerRadius="4" Padding="10">
+                <DockPanel>
+                    <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="MATERIALS" Style="{DynamicResource SectionHeaderStyle}" VerticalAlignment="Center" Margin="0,0,12,0"/>
+                        <TextBox Grid.Column="1" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Height="28" VerticalContentAlignment="Center" ToolTip="Filter by name or category"/>
+                    </Grid>
+
+                    <ListView ItemsSource="{Binding RowsView}"
+                              VirtualizingPanel.IsVirtualizing="True"
+                              VirtualizingPanel.VirtualizationMode="Recycling"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              BorderThickness="0" Background="Transparent">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Width="34">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Name" Width="300" DisplayMemberBinding="{Binding DisplayName}"/>
+                                <GridViewColumn Header="Category" Width="130" DisplayMemberBinding="{Binding Category}"/>
+                                <GridViewColumn Header="Maps" Width="230">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Border Style="{StaticResource ChipStyle}" Background="{DynamicResource LecgBorderDark}"><TextBlock Style="{StaticResource ChipText}" Text="BC" Foreground="{DynamicResource LecgSurfaceBackground}"/></Border>
+                                                <Border Style="{StaticResource ChipStyle}" Background="{DynamicResource LecgBorderDark}"><TextBlock Style="{StaticResource ChipText}" Text="N" Foreground="{DynamicResource LecgSurfaceBackground}"/></Border>
+                                                <Border Style="{StaticResource ChipStyle}" Background="{DynamicResource LecgBorderDark}"><TextBlock Style="{StaticResource ChipText}" Text="R" Foreground="{DynamicResource LecgSurfaceBackground}"/></Border>
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style TargetType="Border" BasedOn="{StaticResource ChipStyle}">
+                                                            <Style.Triggers><DataTrigger Binding="{Binding HasMetal}" Value="True"><Setter Property="Background" Value="{DynamicResource LecgBorderDark}"/></DataTrigger></Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock Style="{StaticResource ChipText}" Text="M"/>
+                                                </Border>
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style TargetType="Border" BasedOn="{StaticResource ChipStyle}">
+                                                            <Style.Triggers><DataTrigger Binding="{Binding HasAo}" Value="True"><Setter Property="Background" Value="{DynamicResource LecgBorderDark}"/></DataTrigger></Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock Style="{StaticResource ChipText}" Text="AO"/>
+                                                </Border>
+                                                <Border>
+                                                    <Border.Style>
+                                                        <Style TargetType="Border" BasedOn="{StaticResource ChipStyle}">
+                                                            <Style.Triggers><DataTrigger Binding="{Binding HasOpacity}" Value="True"><Setter Property="Background" Value="{DynamicResource LecgBorderDark}"/></DataTrigger></Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <TextBlock Style="{StaticResource ChipText}" Text="OP"/>
+                                                </Border>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Status" Width="80" DisplayMemberBinding="{Binding Status}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </Border>
+        </Grid>
+
+        <!-- OPTIONS + FOOTER -->
+        <Grid Grid.Row="3" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="16"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox Grid.Column="0" Content="Overwrite appearance of existing materials" IsChecked="{Binding OverwriteExisting}" Foreground="{DynamicResource LecgTextPrimary}"/>
+            <CheckBox Grid.Column="2" Content="Force re-bake textures" IsChecked="{Binding ForceRebake}" Foreground="{DynamicResource LecgTextPrimary}"/>
+            <TextBlock Grid.Column="3" Text="{Binding Footer}" HorizontalAlignment="Right" VerticalAlignment="Center" Foreground="{DynamicResource LecgTextSecondary}" FontSize="11"/>
+        </Grid>
+
+        <!-- BUTTONS -->
+        <Grid Grid.Row="4" Margin="{DynamicResource ButtonRowMarginSmall}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Create Materials" Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource AccentButtonStyle}"/>
+        </Grid>
+    </Grid>
+</base:LecgWindow>

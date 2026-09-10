@@ -65,7 +65,7 @@ namespace LECG.Commands
             "SharedToFamilyParam" => ServiceLocator.CreateWith<SharedToFamilyParameterCommand>(),
             "FilterCopy" => ServiceLocator.CreateWith<FilterCopyCommand>(),
             "TypeToLinked" => ServiceLocator.CreateWith<TypeToLinkedModelsCommand>(),
-            "PbrMaterial" => ServiceLocator.CreateWith<PbrMaterialCreatorCommand>(),
+            "PbrMaterial" => ServiceLocator.CreateWith<SubstanceBatchCommand>(),
             "DivideToposolid" => ServiceLocator.CreateWith<DivideToposolidCommand>(),
             _ => null,
         };
