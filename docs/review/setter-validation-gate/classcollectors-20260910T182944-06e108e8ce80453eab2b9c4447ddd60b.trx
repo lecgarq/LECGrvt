@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="96a99b47-22f3-44b4-b5c2-3cdeb316440e" name="luis.cortes@ROG_STRIX_ECORT 2026-09-10 12:32:15" runUser="ROG_STRIX_ECORT\luis.cortes" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-10T12:32:15.6075916-06:00" queuing="2026-09-10T12:32:15.6075919-06:00" start="2026-09-10T12:29:45.1916563-06:00" finish="2026-09-10T12:32:18.9420634-06:00" />
+  <TestSettings name="default" id="a8361c4d-b012-4f77-b210-417af3cbc7b8">
+    <Deployment runDeploymentRoot="luis.cortes_ROG_STRIX_ECORT_2026-09-10_12_32_15" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="3cd45c7f-0887-4288-b8db-ef103793e685" testId="56d620b3-e2e1-7923-27c4-2ec80a3a93c5" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.AngularDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0928199" startTime="2026-09-10T12:32:16.5066634-06:00" endTime="2026-09-10T12:32:16.5066637-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3cd45c7f-0887-4288-b8db-ef103793e685">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b849c604-1607-4191-bd21-081f698e58f9" testId="66749607-bbc2-8e43-1be3-bb33c424592e" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0789500" startTime="2026-09-10T12:32:16.7553394-06:00" endTime="2026-09-10T12:32:16.7553396-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b849c604-1607-4191-bd21-081f698e58f9">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="672c13d5-dba0-426c-acba-80293ccaf9a7" testId="eff21ac2-8a6b-754d-7b6a-072c26210d9c" testName="RunClassCollector(&quot;Material.SurfaceBackgroundPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0803600" startTime="2026-09-10T12:32:15.9163206-06:00" endTime="2026-09-10T12:32:15.9163209-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="672c13d5-dba0-426c-acba-80293ccaf9a7">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f515dab7-93b8-48a6-bc4e-1a702390dfaa" testId="ed60ac7e-5af7-2216-39a4-1ee165b20510" testName="RunClassCollector(&quot;MEPSystemType.MaterialId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.1454800" startTime="2026-09-10T12:32:16.2229593-06:00" endTime="2026-09-10T12:32:16.2229594-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f515dab7-93b8-48a6-bc4e-1a702390dfaa">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e11c00e5-6f53-4f65-8cfa-a1890833fbd9" testId="e61e379a-146e-394e-dc12-afa621b8338c" testName="RunClassCollector(&quot;ViewSheetSet.ViewOrganizationId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0948800" startTime="2026-09-10T12:32:17.1943538-06:00" endTime="2026-09-10T12:32:17.1943542-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e11c00e5-6f53-4f65-8cfa-a1890833fbd9">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1be17b32-d012-417a-b53f-3a16c4baf0a2" testId="7f2e0144-25f2-45d9-45c0-f10a5e714e07" testName="RunClassCollector(&quot;FilledRegionType.BackgroundPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0846600" startTime="2026-09-10T12:32:15.7531093-06:00" endTime="2026-09-10T12:32:15.7531096-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1be17b32-d012-417a-b53f-3a16c4baf0a2">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a83d29aa-e271-4662-a2ae-665e7a9b74a2" testId="4d4761a5-4307-7c41-b070-94e6a6dcaa21" testName="RunClassCollector(&quot;Structure.FabricSheetType.Material&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0816200" startTime="2026-09-10T12:32:16.4074619-06:00" endTime="2026-09-10T12:32:16.4074622-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a83d29aa-e271-4662-a2ae-665e7a9b74a2">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="485462c8-bd2a-4783-b2f4-35b8c90408c5" testId="b01624a0-b66f-83f9-966e-181986ac2f9b" testName="RunClassCollector(&quot;ViewSheetSet.SheetOrganizationId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.1168900" startTime="2026-09-10T12:32:17.0949022-06:00" endTime="2026-09-10T12:32:17.0949025-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="485462c8-bd2a-4783-b2f4-35b8c90408c5">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4c9d3ccb-4f83-4e40-b8cb-7cd2df5ccd8e" testId="02eeb263-6e4c-d3d9-2dbf-e581da58c507" testName="RunClassCollector(&quot;Material.CutBackgroundPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0792700" startTime="2026-09-10T12:32:15.8336580-06:00" endTime="2026-09-10T12:32:15.8336584-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4c9d3ccb-4f83-4e40-b8cb-7cd2df5ccd8e">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="56b8a924-252b-4712-8543-8358d881a14c" testId="0767825e-da2e-4c1f-6b11-9eb95b1f8b70" testName="RunClassCollector(&quot;MEPSystemType.FillPatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0739400" startTime="2026-09-10T12:32:15.9927105-06:00" endTime="2026-09-10T12:32:15.9927108-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="56b8a924-252b-4712-8543-8358d881a14c">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c4625722-1f98-47ea-b44d-11f0a4fba58e" testId="3df7e735-db77-da9f-9456-164fb0ba179f" testName="RunClassCollector(&quot;ViewSheet.SheetCollectionId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.1310300" startTime="2026-09-10T12:32:16.9711395-06:00" endTime="2026-09-10T12:32:16.9711410-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c4625722-1f98-47ea-b44d-11f0a4fba58e">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="77528c73-7a77-4351-b2cb-d2eee1ec7bc1" testId="d789cf01-96c6-ff30-7753-2e1bbd76b9c5" testName="RunClassCollector(&quot;MEPSystemType.LinePatternId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0806500" startTime="2026-09-10T12:32:16.0752015-06:00" endTime="2026-09-10T12:32:16.0752018-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="77528c73-7a77-4351-b2cb-d2eee1ec7bc1">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="62954c2d-ffc0-4782-a372-03c3cd23bac6" testId="1acbed3d-b544-04cf-457e-1dac574c705d" testName="RunClassCollector(&quot;Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.2748900" startTime="2026-09-10T12:32:15.6675050-06:00" endTime="2026-09-10T12:32:15.6675054-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="62954c2d-ffc0-4782-a372-03c3cd23bac6">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.&#xD;
+NUnit.Framework.AssertionException: Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.&#xD;
+   at NUnit.Framework.Assert.ReportFailure(String message)&#xD;
+   at NUnit.Framework.Assert.Fail(String message, Object[] args)&#xD;
+   at NUnit.Framework.Assert.Fail(String message)&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 219&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="c8e8b19d-d415-406e-8557-39736ba6cddd" testId="072df4f3-caee-8fe2-10f3-d965ae13454b" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.DiameterDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0724700" startTime="2026-09-10T12:32:16.5854520-06:00" endTime="2026-09-10T12:32:16.5854522-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c8e8b19d-d415-406e-8557-39736ba6cddd">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="da994f22-07ca-4c0f-9d85-938c1d1e1150" testId="b4195527-76c1-7977-afdd-5480e928cc51" testName="RunClassCollector(&quot;Analysis.MassLevelData.MaterialId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:20.3766800" startTime="2026-09-10T12:32:15.4008742-06:00" endTime="2026-09-10T12:32:15.4008981-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="da994f22-07ca-4c0f-9d85-938c1d1e1150">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="16c57b5d-ef59-47ce-84cb-4f37ff0adeb7" testId="4d817396-d869-cef4-3b7d-981238e16482" testName="RunClassCollector(&quot;MultiReferenceAnnotationType.DimensionStyleId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0897600" startTime="2026-09-10T12:32:16.3175690-06:00" endTime="2026-09-10T12:32:16.3175693-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="16c57b5d-ef59-47ce-84cb-4f37ff0adeb7">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b195e62c-05f8-46fd-bf68-47ef73ea6ce4" testId="5e8dc9cf-84be-bc34-9773-c064bf9168c1" testName="RunClassCollector(&quot;Structure.RebarBendingDetailType.RadialDimensionTypeId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0762000" startTime="2026-09-10T12:32:16.6690464-06:00" endTime="2026-09-10T12:32:16.6690466-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b195e62c-05f8-46fd-bf68-47ef73ea6ce4">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f30f335c-e5e6-43fe-8ec8-fc60b172a875" testId="959a020d-d40d-0645-f6d1-e86301828f8e" testName="RunClassCollector(&quot;View.AnalysisDisplayStyleId&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:00.0750699" startTime="2026-09-10T12:32:16.8344097-06:00" endTime="2026-09-10T12:32:16.8344099-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f30f335c-e5e6-43fe-8ec8-fc60b172a875">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35&#xD;
+   at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97&#xD;
+   at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39&#xD;
+   at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)&#xD;
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunClassCollector(&quot;Analysis.MassLevelData.MaterialId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b4195527-76c1-7977-afdd-5480e928cc51">
+      <Execution id="da994f22-07ca-4c0f-9d85-938c1d1e1150" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MEPSystemType.FillPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="0767825e-da2e-4c1f-6b11-9eb95b1f8b70">
+      <Execution id="56b8a924-252b-4712-8543-8358d881a14c" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MultiReferenceAnnotationType.DimensionStyleId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4d817396-d869-cef4-3b7d-981238e16482">
+      <Execution id="16c57b5d-ef59-47ce-84cb-4f37ff0adeb7" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;View.AnalysisDisplayStyleId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="959a020d-d40d-0645-f6d1-e86301828f8e">
+      <Execution id="f30f335c-e5e6-43fe-8ec8-fc60b172a875" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;ViewSheetSet.SheetOrganizationId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b01624a0-b66f-83f9-966e-181986ac2f9b">
+      <Execution id="485462c8-bd2a-4783-b2f4-35b8c90408c5" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Material.CutBackgroundPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="02eeb263-6e4c-d3d9-2dbf-e581da58c507">
+      <Execution id="4c9d3ccb-4f83-4e40-b8cb-7cd2df5ccd8e" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MEPSystemType.LinePatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="d789cf01-96c6-ff30-7753-2e1bbd76b9c5">
+      <Execution id="77528c73-7a77-4351-b2cb-d2eee1ec7bc1" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.AngularDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="56d620b3-e2e1-7923-27c4-2ec80a3a93c5">
+      <Execution id="3cd45c7f-0887-4288-b8db-ef103793e685" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;ViewSheetSet.ViewOrganizationId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="e61e379a-146e-394e-dc12-afa621b8338c">
+      <Execution id="e11c00e5-6f53-4f65-8cfa-a1890833fbd9" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="1acbed3d-b544-04cf-457e-1dac574c705d">
+      <Execution id="62954c2d-ffc0-4782-a372-03c3cd23bac6" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Material.SurfaceBackgroundPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="eff21ac2-8a6b-754d-7b6a-072c26210d9c">
+      <Execution id="672c13d5-dba0-426c-acba-80293ccaf9a7" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.FabricSheetType.Material&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4d4761a5-4307-7c41-b070-94e6a6dcaa21">
+      <Execution id="a83d29aa-e271-4662-a2ae-665e7a9b74a2" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;ViewSheet.SheetCollectionId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="3df7e735-db77-da9f-9456-164fb0ba179f">
+      <Execution id="c4625722-1f98-47ea-b44d-11f0a4fba58e" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.RadialDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="5e8dc9cf-84be-bc34-9773-c064bf9168c1">
+      <Execution id="b195e62c-05f8-46fd-bf68-47ef73ea6ce4" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;MEPSystemType.MaterialId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="ed60ac7e-5af7-2216-39a4-1ee165b20510">
+      <Execution id="f515dab7-93b8-48a6-bc4e-1a702390dfaa" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.DiameterDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="072df4f3-caee-8fe2-10f3-d965ae13454b">
+      <Execution id="c8e8b19d-d415-406e-8557-39736ba6cddd" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;FilledRegionType.BackgroundPatternId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7f2e0144-25f2-45d9-45c0-f10a5e714e07">
+      <Execution id="1be17b32-d012-417a-b53f-3a16c4baf0a2" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+    <UnitTest name="RunClassCollector(&quot;Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="66749607-bbc2-8e43-1be3-bb33c424592e">
+      <Execution id="b849c604-1607-4191-bd21-081f698e58f9" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ClassCollectorBatch" name="RunClassCollector" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="56d620b3-e2e1-7923-27c4-2ec80a3a93c5" executionId="3cd45c7f-0887-4288-b8db-ef103793e685" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="66749607-bbc2-8e43-1be3-bb33c424592e" executionId="b849c604-1607-4191-bd21-081f698e58f9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eff21ac2-8a6b-754d-7b6a-072c26210d9c" executionId="672c13d5-dba0-426c-acba-80293ccaf9a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ed60ac7e-5af7-2216-39a4-1ee165b20510" executionId="f515dab7-93b8-48a6-bc4e-1a702390dfaa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e61e379a-146e-394e-dc12-afa621b8338c" executionId="e11c00e5-6f53-4f65-8cfa-a1890833fbd9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7f2e0144-25f2-45d9-45c0-f10a5e714e07" executionId="1be17b32-d012-417a-b53f-3a16c4baf0a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4d4761a5-4307-7c41-b070-94e6a6dcaa21" executionId="a83d29aa-e271-4662-a2ae-665e7a9b74a2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b01624a0-b66f-83f9-966e-181986ac2f9b" executionId="485462c8-bd2a-4783-b2f4-35b8c90408c5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="02eeb263-6e4c-d3d9-2dbf-e581da58c507" executionId="4c9d3ccb-4f83-4e40-b8cb-7cd2df5ccd8e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0767825e-da2e-4c1f-6b11-9eb95b1f8b70" executionId="56b8a924-252b-4712-8543-8358d881a14c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3df7e735-db77-da9f-9456-164fb0ba179f" executionId="c4625722-1f98-47ea-b44d-11f0a4fba58e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="d789cf01-96c6-ff30-7753-2e1bbd76b9c5" executionId="77528c73-7a77-4351-b2cb-d2eee1ec7bc1" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1acbed3d-b544-04cf-457e-1dac574c705d" executionId="62954c2d-ffc0-4782-a372-03c3cd23bac6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="072df4f3-caee-8fe2-10f3-d965ae13454b" executionId="c8e8b19d-d415-406e-8557-39736ba6cddd" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b4195527-76c1-7977-afdd-5480e928cc51" executionId="da994f22-07ca-4c0f-9d85-938c1d1e1150" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4d817396-d869-cef4-3b7d-981238e16482" executionId="16c57b5d-ef59-47ce-84cb-4f37ff0adeb7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5e8dc9cf-84be-bc34-9773-c064bf9168c1" executionId="b195e62c-05f8-46fd-bf68-47ef73ea6ce4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="959a020d-d40d-0645-f6d1-e86301828f8e" executionId="f30f335c-e5e6-43fe-8ec8-fc60b172a875" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="18" executed="18" passed="1" failed="17" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 18]&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Analysis.MassLevelData.MaterialId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("FilledRegionType.BackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.CutBackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.SurfaceBackgroundPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.FillPatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.LinePatternId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.MaterialId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.FabricSheetType.Material")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("View.AnalysisDisplayStyleId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheet.SheetCollectionId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.SheetOrganizationId")&#xD;
+Test: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.ViewOrganizationId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Analysis.MassLevelData.MaterialId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("FilledRegionType.BackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.CutBackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Material.SurfaceBackgroundPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.FillPatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.LinePatternId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MEPSystemType.MaterialId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.FabricSheetType.Material")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("View.AnalysisDisplayStyleId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheet.SheetCollectionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.SheetOrganizationId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector("ViewSheetSet.ViewOrganizationId")&#xD;
+RunRevitTest: C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 18]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Analysis.MassLevelData.MaterialId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022FilledRegionType.BackgroundPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Material.CutBackgroundPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Material.SurfaceBackgroundPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MEPSystemType.FillPatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MEPSystemType.LinePatternId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MEPSystemType.MaterialId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022MultiReferenceAnnotationType.DimensionStyleId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.FabricSheetType.Material\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.AngularDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.DiameterDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.RadialDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022View.AnalysisDisplayStyleId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022ViewSheet.SheetCollectionId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022ViewSheetSet.SheetOrganizationId\u0022)","LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector.RunClassCollector(\u0022ViewSheetSet.ViewOrganizationId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 20376.68 	 RunClassCollector("Analysis.MassLevelData.MaterialId")[RunClassCollector]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Analysis.MassLevelData.MaterialId")] 	b4195527-76c1-7977-afdd-5480e928cc51&#xD;
+OutputConsole:  Revit 2026: 274.89 	 RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")[RunClassCollector]	 Failed	 Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.  NUnit.Framework.AssertionException: Pilot isolation/infrastructure failed; inspect receipt. No further writes permitted.     at NUnit.Framework.Assert.ReportFailure(String message)     at NUnit.Framework.Assert.Fail(String message, Object[] args)     at NUnit.Framework.Assert.Fail(String message)     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 219     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")] 	1acbed3d-b544-04cf-457e-1dac574c705d&#xD;
+OutputConsole:  Revit 2026: 84.66 	 RunClassCollector("FilledRegionType.BackgroundPatternId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("FilledRegionType.BackgroundPatternId")] 	7f2e0144-25f2-45d9-45c0-f10a5e714e07&#xD;
+OutputConsole:  Revit 2026: 79.27 	 RunClassCollector("Material.CutBackgroundPatternId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Material.CutBackgroundPatternId")] 	02eeb263-6e4c-d3d9-2dbf-e581da58c507&#xD;
+OutputConsole:  Revit 2026: 80.36 	 RunClassCollector("Material.SurfaceBackgroundPatternId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Material.SurfaceBackgroundPatternId")] 	eff21ac2-8a6b-754d-7b6a-072c26210d9c&#xD;
+OutputConsole:  Revit 2026: 73.94 	 RunClassCollector("MEPSystemType.FillPatternId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MEPSystemType.FillPatternId")] 	0767825e-da2e-4c1f-6b11-9eb95b1f8b70&#xD;
+OutputConsole:  Revit 2026: 80.65 	 RunClassCollector("MEPSystemType.LinePatternId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MEPSystemType.LinePatternId")] 	d789cf01-96c6-ff30-7753-2e1bbd76b9c5&#xD;
+OutputConsole:  Revit 2026: 145.48 	 RunClassCollector("MEPSystemType.MaterialId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MEPSystemType.MaterialId")] 	ed60ac7e-5af7-2216-39a4-1ee165b20510&#xD;
+OutputConsole:  Revit 2026: 89.76 	 RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("MultiReferenceAnnotationType.DimensionStyleId")] 	4d817396-d869-cef4-3b7d-981238e16482&#xD;
+OutputConsole:  Revit 2026: 81.62 	 RunClassCollector("Structure.FabricSheetType.Material")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.FabricSheetType.Material")] 	4d4761a5-4307-7c41-b070-94e6a6dcaa21&#xD;
+OutputConsole:  Revit 2026: 92.82 	 RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.AngularDimensionTypeId")] 	56d620b3-e2e1-7923-27c4-2ec80a3a93c5&#xD;
+OutputConsole:  Revit 2026: 72.47 	 RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.DiameterDimensionTypeId")] 	072df4f3-caee-8fe2-10f3-d965ae13454b&#xD;
+OutputConsole:  Revit 2026: 76.2 	 RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.RadialDimensionTypeId")] 	5e8dc9cf-84be-bc34-9773-c064bf9168c1&#xD;
+OutputConsole:  Revit 2026: 78.95 	 RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId")] 	66749607-bbc2-8e43-1be3-bb33c424592e&#xD;
+OutputConsole:  Revit 2026: 75.07 	 RunClassCollector("View.AnalysisDisplayStyleId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("View.AnalysisDisplayStyleId")] 	959a020d-d40d-0645-f6d1-e86301828f8e&#xD;
+OutputConsole:  Revit 2026: 131.03 	 RunClassCollector("ViewSheet.SheetCollectionId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("ViewSheet.SheetCollectionId")] 	3df7e735-db77-da9f-9456-164fb0ba179f&#xD;
+OutputConsole:  Revit 2026: 116.89 	 RunClassCollector("ViewSheetSet.SheetOrganizationId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("ViewSheetSet.SheetOrganizationId")] 	b01624a0-b66f-83f9-966e-181986ac2f9b&#xD;
+OutputConsole:  Revit 2026: 94.88 	 RunClassCollector("ViewSheetSet.ViewOrganizationId")[RunClassCollector]	 Failed	 System.InvalidOperationException: Earlier isolation failure aborted the pilot; no further document opens.     at LECG.SetterValidationProbe.SetterHarness.Require(Boolean value, String message) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 35     at LECG.SetterValidationProbe.SetterHarness.Record(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ChangedValuePilot.cs:line 97     at LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector(String property) in C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\ClassCollectorBatch.cs:line 39     at InvokeStub_ClassCollectorBatch.RunClassCollector(Object, Span`1)     at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)&#xD;
+	TestCase: LECG.SetterValidationProbe.ClassCollectorBatch.RunClassCollector [RunClassCollector("ViewSheetSet.ViewOrganizationId")] 	e61e379a-146e-394e-dc12-afa621b8338c&#xD;
+OutputConsole:  Revit 2026: 22668.55 	 SetterValidationProbe 18 False 6% 22668.55ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,13 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+  "model": "Snowdon Towers Sample Plumbing.rvt",
+  "model_sha256": "53886EFC2B0B50DA53794F670A325F9CE0D04D196CA3858F01439632268A05BA",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T185125-461e924a092c422db154debab769aba5\\View.AnalysisDisplayStyleId\\Snowdon Towers Sample Plumbing\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false
+}

@@ -35,7 +35,7 @@ public sealed class DedicatedCollectionBatch : SetterHarness
             attempts.Add(new { model = model.GetString(), status = LastReceipt["status"], reason = LastReceipt.GetValueOrDefault("reason") });
             if ((string)LastReceipt["status"]! == "validated") break;
         }
-        File.WriteAllText(Path.Combine(RunDirectory, property, "case-summary.json"), JsonSerializer.Serialize(new {
+        File.WriteAllText(Path.Combine(CaseDirectory(property), "case-summary.json"), JsonSerializer.Serialize(new {
             operation = "api.set:Autodesk.Revit.DB." + property, attempts,
             historical_reachable_models = plan.GetProperty("models").GetArrayLength(), models_attempted = attempts.Count
         }, new JsonSerializerOptions { WriteIndented = true }));

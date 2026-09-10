@@ -45,10 +45,53 @@ internal static class PilotValues
             case "Structure.StructuralConnectionHandler.ApprovalTypeId":
                 StructuralConnectionApprovalType.GetAllStructuralConnectionApprovalTypes(doc, out var approvals);
                 return Alternative(approvals, before);
+            case "Analysis.MassLevelData.MaterialId":
+            case "MEPSystemType.MaterialId":
+            case "Structure.FabricSheetType.Material":
+                return Alternative(Collect<Material>(doc).Select(e => e.Id), before);
+            case "Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId":
+                return Alternative(Collect<CircuitNamingScheme>(doc)
+                    .Where(e => CircuitNamingSchemeSettings.IsValidCircuitNamingSchemeId(doc, e.Id))
+                    .Select(e => e.Id), before);
+            case "FilledRegionType.BackgroundPatternId":
+                return Alternative(Collect<FillPatternElement>(doc)
+                    .Where(e => e.GetFillPattern().Target == FillPatternTarget.Drafting
+                        && ((FilledRegionType)target).IsValidBackgroundPatternId(e.Id))
+                    .Select(e => e.Id), before);
+            case "MEPSystemType.FillPatternId":
+                return Alternative(Collect<FillPatternElement>(doc).Select(e => e.Id), before);
+            case "MEPSystemType.LinePatternId":
+                return Alternative(Collect<LinePatternElement>(doc).Select(e => e.Id), before);
             case "Material.CutBackgroundPatternId":
-                return new FilteredElementCollector(doc).OfClass(typeof(FillPatternElement)).Cast<FillPatternElement>()
-                    .Where(p => p.GetFillPattern().Target == FillPatternTarget.Drafting && p.Id.Value != ((ElementId)before).Value)
-                    .OrderBy(p => p.Id.Value).Select(p => p.Id).FirstOrDefault();
+            case "Material.SurfaceBackgroundPatternId":
+                return Alternative(Collect<FillPatternElement>(doc)
+                    .Where(p => p.GetFillPattern().Target == FillPatternTarget.Drafting).Select(p => p.Id), before);
+            case "MultiReferenceAnnotationType.DimensionStyleId":
+                return Alternative(Collect<DimensionType>(doc)
+                    .Where(d => d.StyleType == DimensionStyleType.Linear
+                        && ((MultiReferenceAnnotationType)target).IsAllowedDimensionStyle(d.Id))
+                    .Select(d => d.Id), before);
+            case "Structure.RebarBendingDetailType.AngularDimensionTypeId":
+                return DimensionStyle(doc, before, DimensionStyleType.Angular);
+            case "Structure.RebarBendingDetailType.DiameterDimensionTypeId":
+                return DimensionStyle(doc, before, DimensionStyleType.Diameter);
+            case "Structure.RebarBendingDetailType.RadialDimensionTypeId":
+                return DimensionStyle(doc, before, DimensionStyleType.Radial);
+            case "Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId":
+                return DimensionStyle(doc, before, DimensionStyleType.Linear);
+            case "View.AnalysisDisplayStyleId":
+                return Alternative(Collect<AnalysisDisplayStyle>(doc).Select(e => e.Id), before);
+            case "ViewSheet.SheetCollectionId":
+                return ((ViewSheet)target).AssociatedAssemblyInstanceId == ElementId.InvalidElementId
+                    ? Alternative(Collect<SheetCollection>(doc).Select(e => e.Id), before) : null;
+            case "ViewSheetSet.SheetOrganizationId":
+                return ((ViewSheetSet)target).IsAutomatic
+                    ? Alternative(Collect<BrowserOrganization>(doc)
+                        .Where(e => e.Type == BrowserOrganizationType.Sheets).Select(e => e.Id), before) : null;
+            case "ViewSheetSet.ViewOrganizationId":
+                return ((ViewSheetSet)target).IsAutomatic
+                    ? Alternative(Collect<BrowserOrganization>(doc)
+                        .Where(e => e.Type == BrowserOrganizationType.Views).Select(e => e.Id), before) : null;
             case "TextElement.Text":
                 if (target is not TextNote) return null;
                 string text = (string)before;
@@ -86,6 +129,12 @@ internal static class PilotValues
 
     private static ElementId? Alternative(IEnumerable<ElementId> eligible, object before) => eligible
         .Where(id => id.Value != ((ElementId)before).Value).OrderBy(id => id.Value).FirstOrDefault();
+
+    private static T[] Collect<T>(Document doc) where T : Element => new FilteredElementCollector(doc)
+        .OfClass(typeof(T)).Cast<T>().OrderBy(e => e.Id.Value).ToArray();
+
+    private static ElementId? DimensionStyle(Document doc, object before, DimensionStyleType style) =>
+        Alternative(Collect<DimensionType>(doc).Where(d => d.StyleType == style).Select(d => d.Id), before);
 
     internal static bool Equal(object? a, object? b) => (a, b) switch
     {

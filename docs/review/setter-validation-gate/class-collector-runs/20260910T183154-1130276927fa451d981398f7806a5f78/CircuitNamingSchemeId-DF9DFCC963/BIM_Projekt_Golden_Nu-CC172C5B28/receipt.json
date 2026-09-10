@@ -1,0 +1,17 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\class-collector-runs\\20260910T183154-1130276927fa451d981398f7806a5f78\\Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "reason": "FileArgumentNotFoundException: There is not a valid Revit file at path\u0027s location\r\nParameter name: path",
+  "infrastructure_failure": true,
+  "opening_warnings": [],
+  "elapsed_ms": 191.5012
+}

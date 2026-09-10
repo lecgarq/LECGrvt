@@ -1,0 +1,67 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Architectural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Electrical.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    },
+    {
+      "model": "Snowdon Towers Sample Facades.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample HVAC.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    },
+    {
+      "model": "Snowdon Towers Sample Plumbing.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    },
+    {
+      "model": "Snowdon Towers Sample Site.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Structural.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    },
+    {
+      "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "\u30B5\u30F3\u30D7\u30EB\u8A2D\u5099.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    }
+  ],
+  "models_planned": 12,
+  "models_attempted": 12
+}
