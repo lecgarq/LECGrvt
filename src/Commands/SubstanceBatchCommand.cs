@@ -31,7 +31,7 @@ namespace LECG.Commands
             var view = ServiceLocator.CreateWith<SubstanceBatchView>(viewModel);
             view.Initialize(uiDoc);
             bool? dialogResult = view.ShowDialog();
-            if (dialogResult != true || !viewModel.ShouldRun)
+            if (dialogResult != true)
             {
                 return;
             }
@@ -41,6 +41,18 @@ namespace LECG.Commands
             string outputRoot = string.IsNullOrWhiteSpace(settings.OutputRoot)
                 ? BakeOutputPaths.DefaultOutputRoot(settings.LibraryRoot)
                 : settings.OutputRoot;
+
+            if (viewModel.ShouldRepath)
+            {
+                ShowLogWindow($"Repath Substance textures: {entries.Count} material{(entries.Count == 1 ? "" : "s")}");
+                Log($"New texture root: {outputRoot}");
+                SubstanceTextureRepathResult repath = createService.RepathExisting(doc, entries, outputRoot, Log);
+                UpdateProgress(100, "Complete");
+                Log($"COMPLETE: {repath.Summary}");
+                return;
+            }
+
+            if (!viewModel.ShouldRun) return;
 
             var options = new SubstanceBatchOptions(
                 new BakeOptions(outputRoot, settings.TargetSize, settings.ForceRebake),

@@ -31,4 +31,15 @@ namespace LECG.Models
 
         public string Summary => $"{Created} created, {Updated} updated, {Skipped} skipped, {Failed} failed";
     }
+
+    public sealed record SubstanceTextureRepathResult(
+        int Selected,
+        int Repathed,
+        int MissingInDocument,
+        int Failed,
+        int UpdatedBitmapPaths)
+    {
+        public string Summary =>
+            $"{Repathed} repathed, {MissingInDocument} not in document, {Failed} failed, {UpdatedBitmapPaths} bitmap paths updated";
+    }
 }

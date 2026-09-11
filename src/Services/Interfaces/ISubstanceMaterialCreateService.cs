@@ -10,5 +10,10 @@ namespace LECG.Services.Interfaces
     {
         HashSet<string> ExistingMaterialNames(Document doc);
         SubstanceMaterialReport Create(Document doc, SubstanceMaterialEntry entry, SubstanceBatchOptions options, Action<string>? log = null);
+        SubstanceTextureRepathResult RepathExisting(
+            Document doc,
+            IReadOnlyList<SubstanceMaterialEntry> entries,
+            string outputRoot,
+            Action<string>? log = null);
     }
 }

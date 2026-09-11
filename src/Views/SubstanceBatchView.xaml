@@ -196,9 +196,12 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="12"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Content="Cancel" Grid.Column="0" Height="{DynamicResource ButtonHeight}" Command="{Binding CancelCommand}" Style="{DynamicResource SecondaryButtonStyle}"/>
-            <Button Content="Create Materials" Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource AccentButtonStyle}"/>
+            <Button Content="Repath Selected" Grid.Column="2" Height="{DynamicResource ButtonHeight}" Command="{Binding RepathExistingCommand}" IsEnabled="{Binding CanRepath}" ToolTip="Point existing selected Substance materials at this baked texture output folder" Style="{DynamicResource SecondaryButtonStyle}"/>
+            <Button Content="Create Materials" Grid.Column="4" Height="{DynamicResource ButtonHeight}" Command="{Binding ApplyCommand}" IsEnabled="{Binding CanRun}" Style="{DynamicResource AccentButtonStyle}"/>
         </Grid>
     </Grid>
 </base:LecgWindow>

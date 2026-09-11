@@ -1,0 +1,99 @@
+{
+  "created_at": "2026-09-11T01:45:43.4392044Z",
+  "purpose": "Compact archived run directory names so Windows Git clients can check out the repository without changing evidence file contents.",
+  "tree_hash_contract": "For each run, SHA-256 of UTF-8 lines <path relative to run root><space><file SHA-256><LF>, sorted by full path before relocation.",
+  "receipt_note": "Absolute paths embedded in immutable receipts describe the original runtime location. Use this map for the repository archive location.",
+  "runs": [
+    {
+      "parent": "automatic-runs",
+      "original_run_name": "20260909T054636-6e1b6e3d071145f2ac83d6b8f55b2924",
+      "archive_run_name": "20260909T054636",
+      "file_count": 3,
+      "tree_sha256": "AFBD3A558862D56DA2D9CC9BDF58616707DFEF5342EE5BB7504935119C5E4D88"
+    },
+    {
+      "parent": "class-collector-runs",
+      "original_run_name": "20260910T183154-1130276927fa451d981398f7806a5f78",
+      "archive_run_name": "20260910T183154",
+      "file_count": 8,
+      "tree_sha256": "7DD279C00DE48CB8733C57740FA18F88DB10C37BEDEABC0CB9909C015950F99A"
+    },
+    {
+      "parent": "class-collector-runs",
+      "original_run_name": "20260910T185125-461e924a092c422db154debab769aba5",
+      "archive_run_name": "20260910T185125",
+      "file_count": 331,
+      "tree_sha256": "BF92F40EA7E350A0E08BCC545770219A8DE0A1EA47C453AF6E8CB963D023F157"
+    },
+    {
+      "parent": "dedicated-runs",
+      "original_run_name": "20260909T054746-f3bf2dc25d9d46c2aa7cac6638bb7f1a",
+      "archive_run_name": "20260909T054746",
+      "file_count": 3,
+      "tree_sha256": "254740D72804445F0AE0DF7135EC6F3583F8BD6F5906ED73225B2481AC41447A"
+    },
+    {
+      "parent": "dedicated-runs",
+      "original_run_name": "20260909T060711-36d76f76abe047ff9ae49d413631fec1",
+      "archive_run_name": "20260909T060711",
+      "file_count": 55,
+      "tree_sha256": "B881B2F80168C2DB88EB5D021CA34014E1D9B09F3374FE086E5D64BFFB2F4508"
+    },
+    {
+      "parent": "pilot-runs",
+      "original_run_name": "20260909T050029-11655fc4a2704bf0864a25c26dd83c41",
+      "archive_run_name": "20260909T050029",
+      "file_count": 1,
+      "tree_sha256": "FD97054FCACDE6B0F3721FE5ED78650D66E62A99458421003C1DB6B4DF6DAD19"
+    },
+    {
+      "parent": "pilot-runs",
+      "original_run_name": "20260909T050418-6f97f3dff75c41efaa0c5bed970251b4",
+      "archive_run_name": "20260909T050418",
+      "file_count": 3,
+      "tree_sha256": "E0860BA051F4E98D653E607D14B79E347FBA431CF6D4ADE0CAB29BAEC0E9FE05"
+    },
+    {
+      "parent": "pilot-runs",
+      "original_run_name": "20260909T050806-128678fa5f734740b10846e32ddb21b8",
+      "archive_run_name": "20260909T050806",
+      "file_count": 18,
+      "tree_sha256": "DACCD3FBD4AFD664B86D3F1E1AADE7BD895628450F14E4E0EFB2345C3685E7F1"
+    },
+    {
+      "parent": "pilot-runs",
+      "original_run_name": "20260909T051316-96a20f7cfb034e4fae35e1fa7d1e3531",
+      "archive_run_name": "20260909T051316",
+      "file_count": 19,
+      "tree_sha256": "03CD57ACA54D02B8B8BC0BF03209D856F5A7626E6F1D69BF7A343DE56D388A4F"
+    },
+    {
+      "parent": "restoration-runs",
+      "original_run_name": "20260909T055153-5a1b7fa488ed447d889039d7687ca20b",
+      "archive_run_name": "20260909T055153",
+      "file_count": 3,
+      "tree_sha256": "B6E1E34C565C6C27CE3992C25F052AA7C5BC1BF6E9106CAAE4EECB1312D48BFA"
+    },
+    {
+      "parent": "restoration-runs",
+      "original_run_name": "20260909T055520-2dcf13d36546455a9c14fe344ed9a147",
+      "archive_run_name": "20260909T055520",
+      "file_count": 3,
+      "tree_sha256": "B2D322A5EF16373A7DAC826C99E391129FAA4277220CE016B483162FA47310C4"
+    },
+    {
+      "parent": "restoration-runs",
+      "original_run_name": "20260909T060232-b9ce4944bde8496d8533fbf9e6c154c3",
+      "archive_run_name": "20260909T060232",
+      "file_count": 3,
+      "tree_sha256": "5332B55022CC02EC79E99D4474534A41348B5A870F18D9CB2533CDE594EBF9D2"
+    },
+    {
+      "parent": "restoration-runs",
+      "original_run_name": "20260909T060535-2ff3af7f5cfe4f559bc715deb1745c47",
+      "archive_run_name": "20260909T060535",
+      "file_count": 3,
+      "tree_sha256": "7E6C5EA5953A0543F5DD8365D84BEB6ED2694587B5BCBEA3672CB81EBD98DD75"
+    }
+  ]
+}

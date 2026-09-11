@@ -11,7 +11,7 @@ namespace LECG.Views
             ArgumentNullException.ThrowIfNull(viewModel);
             InitializeComponent();
             DataContext = viewModel;
-            BindDialogClose(viewModel, () => viewModel.ShouldRun);
+            BindDialogClose(viewModel, () => viewModel.ShouldRun || viewModel.ShouldRepath);
         }
     }
 }
