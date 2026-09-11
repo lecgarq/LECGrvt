@@ -88,6 +88,105 @@ namespace LECG.Services
             }
         }
 
+        public SubstanceTextureRepathResult RepathExisting(
+            Document doc,
+            IReadOnlyList<SubstanceMaterialEntry> entries,
+            string outputRoot,
+            Action<string>? log = null)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(entries);
+            ArgumentException.ThrowIfNullOrWhiteSpace(outputRoot);
+
+            int repathed = 0;
+            int missing = 0;
+            int failed = 0;
+            int updatedPaths = 0;
+            List<Material> documentMaterials = new FilteredElementCollector(doc)
+                .OfClass(typeof(Material))
+                .Cast<Material>()
+                .ToList();
+            Dictionary<string, Material> materialsByName = documentMaterials
+                .GroupBy(material => material.Name, StringComparer.OrdinalIgnoreCase)
+                .ToDictionary(group => group.Key, group => group.First(), StringComparer.OrdinalIgnoreCase);
+            Dictionary<long, int> appearanceAssetUsers = documentMaterials
+                .Where(material => material.AppearanceAssetId != ElementId.InvalidElementId)
+                .GroupBy(material => material.AppearanceAssetId.Value)
+                .ToDictionary(group => group.Key, group => group.Count());
+
+            foreach (SubstanceMaterialEntry entry in entries)
+            {
+                if (!materialsByName.TryGetValue(entry.DisplayName, out Material? material))
+                {
+                    missing++;
+                    log?.Invoke($"SKIP '{entry.DisplayName}': material is not in this document");
+                    continue;
+                }
+
+                if (!HasSubstanceIdentity(material, entry))
+                {
+                    failed++;
+                    log?.Invoke($"FAIL '{entry.DisplayName}': name matches, but the LECG Substance identity does not");
+                    continue;
+                }
+
+                BakeOutputPaths paths = BakeOutputPaths.For(entry, outputRoot);
+                string? f0 = File.Exists(paths.F0) ? paths.F0 : null;
+                string? opacity = File.Exists(paths.Opacity) ? paths.Opacity : null;
+                string[] required = { paths.BaseColor, paths.NormalGl, paths.Roughness };
+                string? absent = required.FirstOrDefault(path => !File.Exists(path));
+                if (absent != null)
+                {
+                    failed++;
+                    log?.Invoke($"FAIL '{entry.DisplayName}': required texture is missing: {absent}");
+                    continue;
+                }
+
+                if (material.AppearanceAssetId == ElementId.InvalidElementId)
+                {
+                    failed++;
+                    log?.Invoke($"FAIL '{entry.DisplayName}': material has no appearance asset");
+                    continue;
+                }
+
+                int assetUsers = appearanceAssetUsers[material.AppearanceAssetId.Value];
+                if (assetUsers > 1)
+                {
+                    failed++;
+                    log?.Invoke($"FAIL '{entry.DisplayName}': appearance asset is shared by {assetUsers} materials; duplicate the asset before repathing");
+                    continue;
+                }
+
+                try
+                {
+                    int changed = 0;
+                    var set = new BakedTextureSet(paths.BaseColor, paths.NormalGl, paths.Roughness, f0, opacity, WasSkipped: true);
+                    _transactions.Run(doc, $"Repath Substance material: {entry.DisplayName}", d =>
+                    {
+                        changed = _appearance.RepathBakedTextures(d, material.AppearanceAssetId, set, log);
+                    });
+                    updatedPaths += changed;
+                    repathed++;
+                    log?.Invoke($"DONE '{entry.DisplayName}': {changed} bitmap path{(changed == 1 ? "" : "s")} updated");
+                }
+                catch (Exception ex) when (ex is not OutOfMemoryException)
+                {
+                    failed++;
+                    log?.Invoke($"FAIL '{entry.DisplayName}': {ex.Message}");
+                }
+            }
+
+            return new SubstanceTextureRepathResult(entries.Count, repathed, missing, failed, updatedPaths);
+        }
+
+        private static bool HasSubstanceIdentity(Material material, SubstanceMaterialEntry entry)
+        {
+            string? manufacturer = material.get_Parameter(BuiltInParameter.ALL_MODEL_MANUFACTURER)?.AsString();
+            string? description = material.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION)?.AsString();
+            return string.Equals(manufacturer, SubstanceIdentityPolicy.Manufacturer, StringComparison.Ordinal)
+                && string.Equals(description, SubstanceIdentityPolicy.Description(entry), StringComparison.Ordinal);
+        }
+
         private static Material? FindMaterial(Document doc, string name)
         {
             return new FilteredElementCollector(doc)

@@ -35,12 +35,14 @@ namespace LECG.ViewModels
         [ObservableProperty] private string _filterText = string.Empty;
         [ObservableProperty] private string _scanSummary = string.Empty;
         [ObservableProperty] private IReadOnlyList<string> _warnings = Array.Empty<string>();
+        [ObservableProperty] private bool _shouldRepath;
 
         public int SelectedCount => Rows.Count(r => r.IsSelected);
         public int SelectedInDocumentCount => Rows.Count(r => r.IsSelected && r.ExistsInDocument);
         public int EstimatedBakeMegabytes => (int)Math.Round(Rows.Count(r => r.IsSelected) * 16.0 * Math.Pow(TargetSize / 2048.0, 2));
         public string Footer => $"{SelectedCount} selected · {SelectedInDocumentCount} already in document · ~{EstimatedBakeMegabytes} MB to bake";
         public bool CanRun => SelectedCount > 0 && SizeMillimeters > 0 && Directory.Exists(LibraryRoot);
+        public bool CanRepath => SelectedCount > 0 && Directory.Exists(LibraryRoot) && Directory.Exists(OutputRoot);
 
         public SubstanceBatchViewModel() : this(null) { }
 
@@ -95,7 +97,24 @@ namespace LECG.ViewModels
         {
             if (!CanRun) return;
             SettingsManager.Save(CurrentSettings(), SubstanceBatchSettings.FileName);
+            ShouldRepath = false;
             base.Apply();
+        }
+
+        [RelayCommand]
+        private void RepathExisting()
+        {
+            if (!CanRepath) return;
+            SettingsManager.Save(CurrentSettings(), SubstanceBatchSettings.FileName);
+            ShouldRun = false;
+            ShouldRepath = true;
+            CloseAction?.Invoke();
+        }
+
+        public override void Cancel()
+        {
+            ShouldRepath = false;
+            base.Cancel();
         }
 
         [RelayCommand]
@@ -172,10 +191,12 @@ namespace LECG.ViewModels
         partial void OnFilterTextChanged(string value) => RowsView.Refresh();
         partial void OnSizeMillimetersChanged(double value) => OnPropertyChanged(nameof(CanRun));
         partial void OnTargetSizeChanged(int value) => OnPropertyChanged(nameof(Footer));
+        partial void OnOutputRootChanged(string value) => OnPropertyChanged(nameof(CanRepath));
 
         partial void OnLibraryRootChanged(string value)
         {
             OnPropertyChanged(nameof(CanRun));
+            OnPropertyChanged(nameof(CanRepath));
             if (string.IsNullOrWhiteSpace(OutputRoot))
             {
                 OutputRoot = BakeOutputPaths.DefaultOutputRoot(value);
@@ -222,6 +243,7 @@ namespace LECG.ViewModels
             OnPropertyChanged(nameof(SelectedInDocumentCount));
             OnPropertyChanged(nameof(Footer));
             OnPropertyChanged(nameof(CanRun));
+            OnPropertyChanged(nameof(CanRepath));
         }
     }
 }

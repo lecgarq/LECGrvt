@@ -69,6 +69,68 @@ namespace LECG.Services
             scope.Commit(true);
         }
 
+        public int RepathBakedTextures(Document doc, ElementId assetId, BakedTextureSet set, Action<string>? log = null)
+        {
+            ArgumentNullException.ThrowIfNull(doc);
+            ArgumentNullException.ThrowIfNull(assetId);
+            ArgumentNullException.ThrowIfNull(set);
+
+            using var scope = new AppearanceAssetEditScope(doc);
+            Asset asset = scope.Start(assetId);
+            int updated = 0;
+            updated += RepathSlot(asset, OpaqueAlbedo, set.BaseColor, log);
+            updated += RepathSlot(asset, SurfaceRoughness, set.Roughness, log);
+            updated += RepathSlot(asset, SurfaceNormal, set.NormalGl, log);
+            if (set.F0 is not null) updated += RepathSlot(asset, OpaqueF0, set.F0, log);
+            if (set.Opacity is not null) updated += RepathSlot(asset, SurfaceCutout, set.Opacity, log);
+            scope.Commit(true);
+            return updated;
+        }
+
+        private static int RepathSlot(Asset owner, string slotName, string path, Action<string>? log)
+        {
+            Asset? connected = owner.FindByName(slotName)?.GetSingleConnectedAsset();
+            AssetPropertyString? bitmap = FindBitmapProperty(connected, 0);
+            if (bitmap == null || bitmap.IsReadOnly)
+            {
+                throw new InvalidOperationException($"{slotName} has no writable bitmap connection");
+            }
+
+            if (string.Equals(bitmap.Value, path, StringComparison.OrdinalIgnoreCase))
+            {
+                log?.Invoke($"    -> {slotName}: already points to {System.IO.Path.GetFileName(path)}");
+                return 0;
+            }
+
+            bitmap.Value = path;
+            log?.Invoke($"    -> {slotName}: repathed to {path}");
+            return 1;
+        }
+
+        private static AssetPropertyString? FindBitmapProperty(Asset? asset, int depth)
+        {
+            if (asset == null || depth > 4) return null;
+
+            string[] names = { "unifiedbitmap_Bitmap", "bumpmap_Bitmap", "texture_Bitmap" };
+            foreach (string name in names)
+            {
+                if (asset.FindByName(name) is AssetPropertyString value) return value;
+            }
+
+            for (int i = 0; i < asset.Size; i++)
+            {
+                AssetProperty? property = asset[i];
+                if (property == null) continue;
+                foreach (AssetProperty connectedProperty in property.GetAllConnectedProperties())
+                {
+                    AssetPropertyString? nested = FindBitmapProperty(connectedProperty.GetSingleConnectedAsset(), depth + 1);
+                    if (nested != null) return nested;
+                }
+            }
+
+            return null;
+        }
+
         private static void ClearStaleSlot(Asset asset, string propertyName, Action<string>? log)
         {
             AssetProperty? prop = asset.FindByName(propertyName);

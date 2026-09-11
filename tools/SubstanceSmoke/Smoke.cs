@@ -74,6 +74,16 @@ public sealed class Smoke : IExternalApplication
             Check(service.Create(doc, entry, options with { OverwriteExisting = true }, log).Outcome == SubstanceMaterialOutcome.Updated, "Overwrite must update");
         }
 
+        string movedTextureRoot = Path.Combine(root, "moved-textures");
+        CopyDirectory(options.Bake.OutputRoot, movedTextureRoot);
+        SubstanceTextureRepathResult repath = service.RepathExisting(doc, ceilings, movedTextureRoot, log);
+        Check(repath.Selected == ceilings.Count && repath.Repathed == ceilings.Count && repath.Failed == 0,
+            "Repath must update every selected material without failures: " + repath.Summary);
+        Check(repath.UpdatedBitmapPaths >= ceilings.Count * 3,
+            "Repath must update at least albedo, roughness, and normal for each material");
+        foreach (var entry in ceilings) VerifyTextureRoot(doc, entry, movedTextureRoot);
+        log("REPATH " + repath.Summary);
+
         var metals = scan.Entries.Where(e => e.Category == "Metal").ToList();
         Check(metals.Count == 28, $"Expected 28 Metal materials, got {metals.Count}");
         var initialNames = service.ExistingMaterialNames(doc);
@@ -136,6 +146,34 @@ public sealed class Smoke : IExternalApplication
 
     private static Material FindMaterial(Document doc, string name) =>
         new FilteredElementCollector(doc).OfClass(typeof(Material)).Cast<Material>().Single(m => m.Name == name);
+
+    private static void CopyDirectory(string source, string destination)
+    {
+        foreach (string directory in Directory.GetDirectories(source, "*", SearchOption.AllDirectories))
+            Directory.CreateDirectory(directory.Replace(source, destination, StringComparison.OrdinalIgnoreCase));
+        foreach (string file in Directory.GetFiles(source, "*", SearchOption.AllDirectories))
+        {
+            string target = file.Replace(source, destination, StringComparison.OrdinalIgnoreCase);
+            Directory.CreateDirectory(Path.GetDirectoryName(target)!);
+            File.Copy(file, target, true);
+        }
+    }
+
+    private static void VerifyTextureRoot(Document doc, SubstanceMaterialEntry entry, string expectedRoot)
+    {
+        var material = FindMaterial(doc, entry.DisplayName);
+        var asset = ((AppearanceAssetElement)doc.GetElement(material.AppearanceAssetId)).GetRenderingAsset();
+        foreach (string name in new[] { "opaque_albedo", "surface_roughness", "surface_normal" })
+        {
+            Asset? connected = asset.FindByName(name)?.GetSingleConnectedAsset();
+            Check(connected != null, $"Missing connected asset after repath: {entry.DisplayName} / {name}");
+            string bitmapProperty = name == "surface_normal" ? BumpMap.BumpmapBitmap : UnifiedBitmap.UnifiedbitmapBitmap;
+            string? path = (connected!.FindByName(bitmapProperty) as AssetPropertyString)?.Value;
+            Check(path != null && path.StartsWith(expectedRoot, StringComparison.OrdinalIgnoreCase),
+                $"Bitmap did not move to expected root: {entry.DisplayName} / {name} / {path}");
+            Check(File.Exists(path), $"Repathed bitmap does not exist: {path}");
+        }
+    }
 
     private static void VerifyBakeContract(SubstanceMaterialEntry entry, BakeOptions options, Action<string> log)
     {
