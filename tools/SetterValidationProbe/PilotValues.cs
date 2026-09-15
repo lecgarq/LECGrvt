@@ -4,6 +4,7 @@ using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.DB.Analysis;
 using Autodesk.Revit.DB.Architecture;
+using Autodesk.Revit.DB.Mechanical;
 
 namespace LECG.SetterValidationProbe;
 
@@ -35,6 +36,32 @@ internal static class PilotValues
                 var loadCase = (LoadCase)target;
                 return Alternative(doc.Settings.Categories.get_Item(BuiltInCategory.OST_LoadCases).SubCategories
                     .Cast<Category>().Select(category => category.Id).Where(loadCase.IsLoadCaseSubcategoryId), before);
+            case "Architecture.ContinuousRailType.EndOrTopTermination":
+            case "Architecture.ContinuousRailType.StartOrBottomTermination":
+                return Alternative(new FilteredElementCollector(doc)
+                    .OfClass(typeof(FamilySymbol)).OfCategory(BuiltInCategory.OST_RailingTermination)
+                    .Cast<FamilySymbol>().Select(symbol => symbol.Id), before);
+            case "FamilyInstance.StructuralUsage":
+                var familyInstance = (FamilyInstance)target;
+                if ((StructuralInstanceUsage)before != StructuralInstanceUsage.Other)
+                    return StructuralInstanceUsage.Other;
+                return familyInstance.StructuralType switch
+                {
+                    StructuralType.Beam => StructuralInstanceUsage.Girder,
+                    StructuralType.Brace => StructuralInstanceUsage.Brace,
+                    StructuralType.Column => StructuralInstanceUsage.Column,
+                    _ => null
+                };
+            case "FloorType.StructuralMaterialId":
+                return Alternative(Collect<Material>(doc)
+                    .Where(material => material.StructuralAssetId != ElementId.InvalidElementId)
+                    .Select(material => material.Id), before);
+            case "Mechanical.MEPHiddenLineSettings.LineStyle":
+                if (doc.GetElement((ElementId)before) is not GraphicsStyle currentStyle
+                    || currentStyle.GraphicsStyleCategory.Parent is not Category lineCategory) return null;
+                return Alternative(lineCategory.SubCategories.Cast<Category>()
+                    .Select(category => category.GetGraphicsStyle(GraphicsStyleType.Projection)?.Id)
+                    .OfType<ElementId>(), before);
             case "Architecture.StairsLanding.BaseElevation":
                 var landing = (StairsLanding)target;
                 return StairElevation((double)before, landing.GetStairs().ActualRiserHeight, 30000.0);
@@ -159,7 +186,9 @@ internal static class PilotValues
             case "ViewSheetSet.IsAutomatic": return !(bool)before;
             case "Electrical.ElectricalSystem.CircuitConnectionType":
                 var circuit = (ElectricalSystem)target;
-                if (circuit.BaseEquipment is null) return null;
+                if (circuit.BaseEquipment is null)
+                    return (CircuitConnectionType)before == CircuitConnectionType.NotApplicable
+                        ? null : CircuitConnectionType.NotApplicable;
                 if ((CircuitConnectionType)before == CircuitConnectionType.FeedThruLugs) return CircuitConnectionType.Breaker;
                 if ((CircuitConnectionType)before == CircuitConnectionType.Breaker &&
                     circuit.BaseEquipment.get_Parameter(BuiltInParameter.RBS_ELEC_PANEL_FEED_THRU_LUGS_PARAM)?.AsInteger() == 1)

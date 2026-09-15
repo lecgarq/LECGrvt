@@ -1,0 +1,18 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralUsage",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+  "model_sha256": "C267DA0DCD17DA89A66AF10855C90701E03C98BF8749ADDEA2D475F851AF8386",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-third-runs\\20260915T225640\\FamilyInstance.StructuralUsage\\\u30B5\u30F3\u30D7\u30EB\u69CB\u9020\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "4449AF358A2E27E2B3FFA979B00C531FEC20194D1B765BD5C8767E3223AF37DA",
+  "target_count": 3913,
+  "generator_errors": []
+}

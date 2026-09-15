@@ -1,0 +1,70 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralUsage",
+  "model": "LECG_RVT_ESTRUCTURAL.rvt",
+  "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\02-SHARED\\02-EST\\LECG_RVT_ESTRUCTURAL.rvt",
+  "status": "validated",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-third-runs\\20260915T225640\\FamilyInstance.StructuralUsage\\LECG_RVT_ESTRUCTURAL\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "E45155241B6865EFEA97C73972DE4076A3730A36531C03F6FF37BDA76CD8F570",
+  "target_count": 442,
+  "generator_errors": [],
+  "target": "26efe4db-db9d-43b4-b29f-17cb4b831d1a-000832df",
+  "before": {
+    "name": "Joist",
+    "value": 4
+  },
+  "desired": {
+    "name": "Other",
+    "value": 6
+  },
+  "after_regenerate": {
+    "name": "Other",
+    "value": 6
+  },
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": {
+    "name": "Other",
+    "value": 6
+  },
+  "reason": null,
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 24220,
+    "after_elements": 24220,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [],
+    "unobservable_parameter_slots_after": [],
+    "excluded_readonly_values_before": 188932,
+    "excluded_readonly_values_after": 188932,
+    "complete_scoped_parameter_snapshot": true,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionCommitted",
+      "added": [],
+      "modified": [
+        537311
+      ],
+      "deleted": []
+    },
+    {
+      "operation": "TransactionGroupRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 15837.7384
+}

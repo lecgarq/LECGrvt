@@ -1,0 +1,93 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralUsage",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+  "model_sha256": "C267DA0DCD17DA89A66AF10855C90701E03C98BF8749ADDEA2D475F851AF8386",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+  "status": "still-same-value",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-third-runs\\20260915T225640\\FamilyInstance.StructuralUsage\\\u30B5\u30F3\u30D7\u30EB\u69CB\u9020\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "4449AF358A2E27E2B3FFA979B00C531FEC20194D1B765BD5C8767E3223AF37DA",
+  "target_count": 3913,
+  "generator_errors": [],
+  "target": "f159ff3d-1420-4149-bbc9-65d3fd766772-0042ce09",
+  "before": {
+    "name": "Column",
+    "value": 2
+  },
+  "desired": {
+    "name": "Other",
+    "value": 6
+  },
+  "after_regenerate": {
+    "name": "Column",
+    "value": 2
+  },
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": {
+    "name": "Column",
+    "value": 2
+  },
+  "reason": "committed_but_unchanged",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 71297,
+    "after_elements": 71297,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [],
+    "unobservable_parameter_slots_after": [],
+    "excluded_readonly_values_before": 589579,
+    "excluded_readonly_values_after": 589579,
+    "complete_scoped_parameter_snapshot": true,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionCommitted",
+      "added": [],
+      "modified": [
+        4378121,
+        4398295,
+        4398300,
+        4398303,
+        4400480,
+        4400485,
+        4400488,
+        4400494,
+        4400509,
+        4400514,
+        4400517,
+        4400520,
+        4400523,
+        4400537,
+        4400542,
+        4400545,
+        4400548,
+        4400612,
+        4400617,
+        4400620,
+        4590552,
+        4590681,
+        4670421,
+        4670427
+      ],
+      "deleted": []
+    },
+    {
+      "operation": "TransactionGroupRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 21269.5386
+}

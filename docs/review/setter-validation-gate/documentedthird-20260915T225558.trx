@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="80e3a8e4-c4b3-4008-ab87-ca09f7cefb28" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 16:57:11" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T16:57:11.5899832-06:00" queuing="2026-09-15T16:57:11.5899836-06:00" start="2026-09-15T16:55:59.2907954-06:00" finish="2026-09-15T17:01:15.2037095-06:00" />
+  <TestSettings name="default" id="5d20c048-f1ef-43fb-b075-fac4a48c4328">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_16_57_11" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="b23cbbce-f3c4-49a4-ba41-f5336b6ca515" testId="98eb103a-dde6-4fdd-0229-97525a528833" testName="RunDocumentedThird(&quot;FloorType.StructuralMaterialId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:01:00.5826800" startTime="2026-09-15T17:00:25.7216184-06:00" endTime="2026-09-15T17:00:25.7216188-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b23cbbce-f3c4-49a4-ba41-f5336b6ca515">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="717df3a1-8321-4add-bd22-02cc08f7d289" testId="66387d48-3e00-267c-a9ce-21b4af5c6d59" testName="RunDocumentedThird(&quot;Architecture.ContinuousRailType.StartOrBottomTermination&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:27.1215800" startTime="2026-09-15T16:57:38.5275708-06:00" endTime="2026-09-15T16:57:38.5275711-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="717df3a1-8321-4add-bd22-02cc08f7d289">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ab5dd975-ec4f-44d9-bb3e-6693806c2853" testId="9d28d7f5-a3ad-afe3-5763-33065302859a" testName="RunDocumentedThird(&quot;Architecture.ContinuousRailType.EndOrTopTermination&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:31.0683200" startTime="2026-09-15T16:57:11.4154340-06:00" endTime="2026-09-15T16:57:11.4154563-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ab5dd975-ec4f-44d9-bb3e-6693806c2853">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e41b33c2-6758-447e-82f5-ef23fd023d54" testId="b9b6855a-aec9-016a-1586-7e829ee8e16c" testName="RunDocumentedThird(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:44.1047300" startTime="2026-09-15T16:58:22.6335772-06:00" endTime="2026-09-15T16:58:22.6335776-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e41b33c2-6758-447e-82f5-ef23fd023d54">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6a73eb41-4131-431a-b0dc-97903f3ebf46" testId="75124c86-fd66-53cf-31d7-2d1003f7be79" testName="RunDocumentedThird(&quot;FamilyInstance.StructuralUsage&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:01:02.5019700" startTime="2026-09-15T16:59:25.1368346-06:00" endTime="2026-09-15T16:59:25.1368349-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6a73eb41-4131-431a-b0dc-97903f3ebf46">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b6eadab2-5e40-4218-b515-21855a69ef77" testId="70daafc4-8269-86d0-1145-8c712e3522a7" testName="RunDocumentedThird(&quot;Mechanical.MEPHiddenLineSettings.LineStyle&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:47.8670600" startTime="2026-09-15T17:01:13.5912981-06:00" endTime="2026-09-15T17:01:13.5912996-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b6eadab2-5e40-4218-b515-21855a69ef77">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDocumentedThird(&quot;Architecture.ContinuousRailType.EndOrTopTermination&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="9d28d7f5-a3ad-afe3-5763-33065302859a">
+      <Execution id="ab5dd975-ec4f-44d9-bb3e-6693806c2853" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedThirdBatch" name="RunDocumentedThird" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedThird(&quot;FamilyInstance.StructuralUsage&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="75124c86-fd66-53cf-31d7-2d1003f7be79">
+      <Execution id="6a73eb41-4131-431a-b0dc-97903f3ebf46" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedThirdBatch" name="RunDocumentedThird" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedThird(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b9b6855a-aec9-016a-1586-7e829ee8e16c">
+      <Execution id="e41b33c2-6758-447e-82f5-ef23fd023d54" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedThirdBatch" name="RunDocumentedThird" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedThird(&quot;Architecture.ContinuousRailType.StartOrBottomTermination&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="66387d48-3e00-267c-a9ce-21b4af5c6d59">
+      <Execution id="717df3a1-8321-4add-bd22-02cc08f7d289" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedThirdBatch" name="RunDocumentedThird" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedThird(&quot;Mechanical.MEPHiddenLineSettings.LineStyle&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="70daafc4-8269-86d0-1145-8c712e3522a7">
+      <Execution id="b6eadab2-5e40-4218-b515-21855a69ef77" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedThirdBatch" name="RunDocumentedThird" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedThird(&quot;FloorType.StructuralMaterialId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="98eb103a-dde6-4fdd-0229-97525a528833">
+      <Execution id="b23cbbce-f3c4-49a4-ba41-f5336b6ca515" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedThirdBatch" name="RunDocumentedThird" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="98eb103a-dde6-4fdd-0229-97525a528833" executionId="b23cbbce-f3c4-49a4-ba41-f5336b6ca515" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="66387d48-3e00-267c-a9ce-21b4af5c6d59" executionId="717df3a1-8321-4add-bd22-02cc08f7d289" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d28d7f5-a3ad-afe3-5763-33065302859a" executionId="ab5dd975-ec4f-44d9-bb3e-6693806c2853" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9b6855a-aec9-016a-1586-7e829ee8e16c" executionId="e41b33c2-6758-447e-82f5-ef23fd023d54" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="75124c86-fd66-53cf-31d7-2d1003f7be79" executionId="6a73eb41-4131-431a-b0dc-97903f3ebf46" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="70daafc4-8269-86d0-1145-8c712e3522a7" executionId="b6eadab2-5e40-4218-b515-21855a69ef77" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="6" executed="6" passed="6" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 6]&#xD;
+Test: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Architecture.ContinuousRailType.EndOrTopTermination")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Architecture.ContinuousRailType.StartOrBottomTermination")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("FamilyInstance.StructuralUsage")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("FloorType.StructuralMaterialId")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Mechanical.MEPHiddenLineSettings.LineStyle")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Architecture.ContinuousRailType.EndOrTopTermination")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Architecture.ContinuousRailType.StartOrBottomTermination")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("FamilyInstance.StructuralUsage")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("FloorType.StructuralMaterialId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird("Mechanical.MEPHiddenLineSettings.LineStyle")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 6]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird(\u0022Architecture.ContinuousRailType.EndOrTopTermination\u0022)","LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird(\u0022Architecture.ContinuousRailType.StartOrBottomTermination\u0022)","LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird(\u0022Electrical.ElectricalSystem.CircuitConnectionType\u0022)","LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird(\u0022FamilyInstance.StructuralUsage\u0022)","LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird(\u0022FloorType.StructuralMaterialId\u0022)","LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird.RunDocumentedThird(\u0022Mechanical.MEPHiddenLineSettings.LineStyle\u0022)"]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 31068.32 	 RunDocumentedThird("Architecture.ContinuousRailType.EndOrTopTermination")[RunDocumentedThird]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird [RunDocumentedThird("Architecture.ContinuousRailType.EndOrTopTermination")] 	9d28d7f5-a3ad-afe3-5763-33065302859a&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 27121.58 	 RunDocumentedThird("Architecture.ContinuousRailType.StartOrBottomTermination")[RunDocumentedThird]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird [RunDocumentedThird("Architecture.ContinuousRailType.StartOrBottomTermination")] 	66387d48-3e00-267c-a9ce-21b4af5c6d59&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 44104.73 	 RunDocumentedThird("Electrical.ElectricalSystem.CircuitConnectionType")[RunDocumentedThird]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird [RunDocumentedThird("Electrical.ElectricalSystem.CircuitConnectionType")] 	b9b6855a-aec9-016a-1586-7e829ee8e16c&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 62501.97 	 RunDocumentedThird("FamilyInstance.StructuralUsage")[RunDocumentedThird]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird [RunDocumentedThird("FamilyInstance.StructuralUsage")] 	75124c86-fd66-53cf-31d7-2d1003f7be79&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 60582.68 	 RunDocumentedThird("FloorType.StructuralMaterialId")[RunDocumentedThird]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird [RunDocumentedThird("FloorType.StructuralMaterialId")] 	98eb103a-dde6-4fdd-0229-97525a528833&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 47867.06 	 RunDocumentedThird("Mechanical.MEPHiddenLineSettings.LineStyle")[RunDocumentedThird]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedThirdBatch.RunDocumentedThird [RunDocumentedThird("Mechanical.MEPHiddenLineSettings.LineStyle")] 	70daafc4-8269-86d0-1145-8c712e3522a7&#xD;
+OutputConsole:  Revit 2026: 273620.5 	 SetterValidationProbe 6 True 100% 273620.5ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

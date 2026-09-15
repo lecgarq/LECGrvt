@@ -1,0 +1,27 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+  "attempts": [
+    {
+      "model": "Snowdon Towers Sample Structural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "InvalidOperationException: the floor does not have a structural material"
+    },
+    {
+      "model": "Snowdon Towers Sample Architectural.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    },
+    {
+      "model": "\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    },
+    {
+      "model": "LECG_RVT_ESTRUCTURAL.rvt",
+      "status": "still-same-value",
+      "reason": "committed_but_unchanged"
+    }
+  ],
+  "models_planned": 4,
+  "models_attempted": 4
+}
