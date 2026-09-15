@@ -1,0 +1,233 @@
+{
+  "run": "20260915T234215",
+  "original_ledger_sha256": "468C2576AAFA0FA19A6C55A3C6F4311DA8358894FAFD9069B67C67CB50B47E03",
+  "previous_reconciliation": {
+    "path": "docs/review/setter-validation-gate/project-mep-wire-runs/20260915T233831/ledger-reconciliation.json",
+    "sha256": "24240E4488F30A3DCDA9FF56D8112ECE1B8B7690B1E179757FE1CF57FD350C5F"
+  },
+  "manifest": {
+    "path": "docs/review/setter-validation-gate/project-gaps-manifest.json",
+    "sha256": "477DF4E053C7333DA9E74D55C7D7E332C961287E1CF25B63CA7533C010C3B4FE"
+  },
+  "provenance": {
+    "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/provenance.json",
+    "sha256": "BFE2D013091B0E4F2F7F93010BBEE33B8879B4881C95F5FECBC580A63A269C81"
+  },
+  "trx": {
+    "path": "docs/review/setter-validation-gate/projectgaps-20260915T234143.trx",
+    "sha256": "B04D1C78D90949E9FFFA0787837F53672546E5E07F52886381A0B479D33ADF2D"
+  },
+  "sources": [
+    {
+      "name": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A"
+    },
+    {
+      "name": "LECG_RVT_CONTEXTO.rvt",
+      "sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0"
+    },
+    {
+      "name": "LECG_RVT_ESTRUCTURAL.rvt",
+      "sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02"
+    },
+    {
+      "name": "LECG_RVT_MEP.rvt",
+      "sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201"
+    }
+  ],
+  "remaining_rvt_files": 0,
+  "original_numerator": 668,
+  "proposed_numerator": 668,
+  "new_validations": 0,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 668,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "out_of_contract": 1,
+    "same_value_only": 19
+  },
+  "updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 2,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/FloorType.StructuralMaterialId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "67F50865CC041E9AC1BD003C2FF0C0A826B18194F3ECF4B90C1BDC217E9C98A9"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/FloorType.StructuralMaterialId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "2410D6BA6D7E906C73E6330659E7FC8E9BDDA8FF9EC5002939D42951E2B44749"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/FloorType.StructuralMaterialId/LECG_RVT_MEP/receipt.json",
+          "sha256": "DD9103565E452E7F22DF3206A31B1E9EC4DAA11DD1E85E18A6EE0D792E2F79C1"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 3,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/LineStyle-82A3A8F0C8/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "B602AA95DC526A597493DBC82727DA3A48E77C0B95DB10D02234AC0036E083D3"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/LineStyle-82A3A8F0C8/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "320BCAE609430353CCD5A20816E7321F6D088F0BBBB0B383A1EE76B24C78D18E"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/LineStyle-82A3A8F0C8/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "77B4C5BB519AD93AC480C4C843440936D95E7828888B3403AB5A84F866B23FA0"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 1,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/View.ViewPositionId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "9B88D41AC1A2EC6604841FD270C48B073986302CB2FA96712CB4CD17F804FA2E"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/View.ViewPositionId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "9E50BF5C523C24FB7122F217572DE6159AD39FF703BD3F0A6D35EB8B254EA41F"
+        }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/FloorType.StructuralMaterialId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "67F50865CC041E9AC1BD003C2FF0C0A826B18194F3ECF4B90C1BDC217E9C98A9"
+          }
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/FloorType.StructuralMaterialId/LECG_RVT_CONTEXTO/receipt.json",
+            "sha256": "2410D6BA6D7E906C73E6330659E7FC8E9BDDA8FF9EC5002939D42951E2B44749"
+          }
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/FloorType.StructuralMaterialId/LECG_RVT_MEP/receipt.json",
+            "sha256": "DD9103565E452E7F22DF3206A31B1E9EC4DAA11DD1E85E18A6EE0D792E2F79C1"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/LineStyle-82A3A8F0C8/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "B602AA95DC526A597493DBC82727DA3A48E77C0B95DB10D02234AC0036E083D3"
+          }
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/LineStyle-82A3A8F0C8/LECG_RVT_CONTEXTO/receipt.json",
+            "sha256": "320BCAE609430353CCD5A20816E7321F6D088F0BBBB0B383A1EE76B24C78D18E"
+          }
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/LineStyle-82A3A8F0C8/LECG_RVT_ESTRUCTURAL/receipt.json",
+            "sha256": "77B4C5BB519AD93AC480C4C843440936D95E7828888B3403AB5A84F866B23FA0"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: ",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/View.ViewPositionId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "9B88D41AC1A2EC6604841FD270C48B073986302CB2FA96712CB4CD17F804FA2E"
+          }
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-gaps-runs/20260915T234215/View.ViewPositionId/LECG_RVT_CONTEXTO/receipt.json",
+            "sha256": "9E50BF5C523C24FB7122F217572DE6159AD39FF703BD3F0A6D35EB8B254EA41F"
+          }
+        }
+      ]
+    }
+  ]
+}

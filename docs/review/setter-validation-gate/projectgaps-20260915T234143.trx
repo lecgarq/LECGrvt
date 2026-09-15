@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="ebaef9ae-de72-44b8-9570-f5e31fd34a2d" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 17:42:44" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T17:42:44.0606980-06:00" queuing="2026-09-15T17:42:44.0606984-06:00" start="2026-09-15T17:41:43.7787399-06:00" finish="2026-09-15T17:43:26.5594002-06:00" />
+  <TestSettings name="default" id="295c1cbc-0e11-4061-94aa-f037abfe94a6">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_17_42_44" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="58f0e4aa-1395-4214-badf-eabe4f31a843" testId="88ef21e8-dbb4-ec82-a0aa-b436e001af41" testName="RunProjectGaps(&quot;View.ViewPositionId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:18.1433500" startTime="2026-09-15T17:43:24.7927919-06:00" endTime="2026-09-15T17:43:24.7927924-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="58f0e4aa-1395-4214-badf-eabe4f31a843">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="92abcfb8-deca-47fe-a061-3c76f9f671bc" testId="e63c7354-b545-5e8a-494c-1ee716213f57" testName="RunProjectGaps(&quot;Mechanical.MEPHiddenLineSettings.LineStyle&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:23.5224000" startTime="2026-09-15T17:43:06.6482789-06:00" endTime="2026-09-15T17:43:06.6482793-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="92abcfb8-deca-47fe-a061-3c76f9f671bc">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="cd236e39-96f9-4949-8edf-4a0f78de5a92" testId="45eef29f-ba9a-a49f-1db1-31b1a9187f92" testName="RunProjectGaps(&quot;FloorType.StructuralMaterialId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:27.2409000" startTime="2026-09-15T17:42:43.1338879-06:00" endTime="2026-09-15T17:42:43.1339109-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="cd236e39-96f9-4949-8edf-4a0f78de5a92">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunProjectGaps(&quot;View.ViewPositionId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="88ef21e8-dbb4-ec82-a0aa-b436e001af41">
+      <Execution id="58f0e4aa-1395-4214-badf-eabe4f31a843" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectGapBatch" name="RunProjectGaps" />
+    </UnitTest>
+    <UnitTest name="RunProjectGaps(&quot;Mechanical.MEPHiddenLineSettings.LineStyle&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="e63c7354-b545-5e8a-494c-1ee716213f57">
+      <Execution id="92abcfb8-deca-47fe-a061-3c76f9f671bc" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectGapBatch" name="RunProjectGaps" />
+    </UnitTest>
+    <UnitTest name="RunProjectGaps(&quot;FloorType.StructuralMaterialId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="45eef29f-ba9a-a49f-1db1-31b1a9187f92">
+      <Execution id="cd236e39-96f9-4949-8edf-4a0f78de5a92" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectGapBatch" name="RunProjectGaps" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="88ef21e8-dbb4-ec82-a0aa-b436e001af41" executionId="58f0e4aa-1395-4214-badf-eabe4f31a843" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e63c7354-b545-5e8a-494c-1ee716213f57" executionId="92abcfb8-deca-47fe-a061-3c76f9f671bc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="45eef29f-ba9a-a49f-1db1-31b1a9187f92" executionId="cd236e39-96f9-4949-8edf-4a0f78de5a92" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="3" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 3]&#xD;
+Test: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps("FloorType.StructuralMaterialId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps("Mechanical.MEPHiddenLineSettings.LineStyle")&#xD;
+Test: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps("View.ViewPositionId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps("FloorType.StructuralMaterialId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps("Mechanical.MEPHiddenLineSettings.LineStyle")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps("View.ViewPositionId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps(\u0022FloorType.StructuralMaterialId\u0022)","LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps(\u0022Mechanical.MEPHiddenLineSettings.LineStyle\u0022)","LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps.RunProjectGaps(\u0022View.ViewPositionId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 27240.9 	 RunProjectGaps("FloorType.StructuralMaterialId")[RunProjectGaps]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps [RunProjectGaps("FloorType.StructuralMaterialId")] 	45eef29f-ba9a-a49f-1db1-31b1a9187f92&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 23522.4 	 RunProjectGaps("Mechanical.MEPHiddenLineSettings.LineStyle")[RunProjectGaps]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps [RunProjectGaps("Mechanical.MEPHiddenLineSettings.LineStyle")] 	e63c7354-b545-5e8a-494c-1ee716213f57&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 18143.35 	 RunProjectGaps("View.ViewPositionId")[RunProjectGaps]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectGapBatch.RunProjectGaps [RunProjectGaps("View.ViewPositionId")] 	88ef21e8-dbb4-ec82-a0aa-b436e001af41&#xD;
+OutputConsole:  Revit 2026: 69297.06 	 SetterValidationProbe 3 True 100% 69297.06ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>
