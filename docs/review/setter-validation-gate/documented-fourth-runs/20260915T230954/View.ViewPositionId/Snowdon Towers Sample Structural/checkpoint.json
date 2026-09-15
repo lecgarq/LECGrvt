@@ -1,0 +1,15 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+  "model": "Snowdon Towers Sample Structural.rvt",
+  "model_sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\Snowdon Towers Sample Structural.rvt",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-fourth-runs\\20260915T230954\\View.ViewPositionId\\Snowdon Towers Sample Structural\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false
+}

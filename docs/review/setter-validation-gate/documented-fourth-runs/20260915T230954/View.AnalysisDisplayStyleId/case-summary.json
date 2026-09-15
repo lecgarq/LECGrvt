@@ -1,0 +1,22 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+  "attempts": [
+    {
+      "model": "Snowdon Towers Sample Structural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "\u30B5\u30F3\u30D7\u30EB\u69CB\u9020.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "models_planned": 4,
+  "models_attempted": 3
+}

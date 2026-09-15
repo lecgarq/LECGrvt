@@ -149,7 +149,10 @@ internal static class PilotValues
             case "Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId":
                 return DimensionStyle(doc, before, DimensionStyleType.Linear);
             case "View.AnalysisDisplayStyleId":
-                return Alternative(Collect<AnalysisDisplayStyle>(doc).Select(e => e.Id), before);
+                return ((View)target).AllowsAnalysisDisplay()
+                    ? Alternative(Collect<AnalysisDisplayStyle>(doc).Select(e => e.Id), before) : null;
+            case "View.ViewPositionId":
+                return Alternative(Collect<ViewPosition>(doc).Select(position => position.Id), before);
             case "ViewSheet.SheetCollectionId":
                 return ((ViewSheet)target).AssociatedAssemblyInstanceId == ElementId.InvalidElementId
                     ? Alternative(Collect<SheetCollection>(doc).Select(e => e.Id), before) : null;
@@ -183,7 +186,7 @@ internal static class PilotValues
                 XYZ point = (XYZ)before + ((XYZ)before - plane.FreeEnd);
                 return XYZ.IsWithinLengthLimits(point) && !point.IsAlmostEqualTo(plane.FreeEnd)
                     && !point.IsAlmostEqualTo((XYZ)before) ? point : null;
-            case "ViewSheetSet.IsAutomatic": return !(bool)before;
+            case "ViewSheetSet.IsAutomatic": return (bool)before ? false : null;
             case "Electrical.ElectricalSystem.CircuitConnectionType":
                 var circuit = (ElectricalSystem)target;
                 if (circuit.BaseEquipment is null)

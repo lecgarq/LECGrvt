@@ -1,0 +1,37 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Architectural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "Snowdon Towers Sample Structural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "LECG_RVT_ESTRUCTURAL.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    },
+    {
+      "model": "LECG_RVT_MEP.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_proven_valid_alternative"
+    }
+  ],
+  "models_planned": 6,
+  "models_attempted": 6
+}

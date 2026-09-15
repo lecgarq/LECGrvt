@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="fd2807e1-bb4d-45be-a788-e5918a67ddb5" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 17:10:28" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T17:10:28.5461702-06:00" queuing="2026-09-15T17:10:28.5461704-06:00" start="2026-09-15T17:09:14.7649944-06:00" finish="2026-09-15T17:14:34.7377664-06:00" />
+  <TestSettings name="default" id="2e431665-c782-4657-9fdf-645d150da7b4">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_17_10_28" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="24fcba4c-b84f-41e5-b18c-bc760196d734" testId="50a2e4b8-5658-a773-54aa-5f2991bf6211" testName="RunDocumentedFourth(&quot;ViewSheetSet.SheetOrganizationId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:49.6810400" startTime="2026-09-15T17:13:41.4272010-06:00" endTime="2026-09-15T17:13:41.4272014-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="24fcba4c-b84f-41e5-b18c-bc760196d734">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fc88ba92-8264-4efe-9f49-832bb85ec4f4" testId="3fa171b3-4c5e-76de-6288-c4c77cde4405" testName="RunDocumentedFourth(&quot;ViewSheetSet.IsAutomatic&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:50.7715899" startTime="2026-09-15T17:12:51.7429164-06:00" endTime="2026-09-15T17:12:51.7429168-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="fc88ba92-8264-4efe-9f49-832bb85ec4f4">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d79f688b-54d1-4d71-97ec-ba1e0e26e0b6" testId="3b11129f-5399-8ef6-bca0-662a97b134cb" testName="RunDocumentedFourth(&quot;ViewSheet.SheetCollectionId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:34.9778000" startTime="2026-09-15T17:12:00.9643361-06:00" endTime="2026-09-15T17:12:00.9643364-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d79f688b-54d1-4d71-97ec-ba1e0e26e0b6">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6a129158-e6aa-4553-9102-7321e197d545" testId="59e02335-5433-dad6-ba09-818a942d1417" testName="RunDocumentedFourth(&quot;ViewSheetSet.ViewOrganizationId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:51.2926700" startTime="2026-09-15T17:14:32.7233458-06:00" endTime="2026-09-15T17:14:32.7233476-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6a129158-e6aa-4553-9102-7321e197d545">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="db0a3d26-0907-4945-b54a-63818f15e753" testId="b125532f-9b92-bf6c-7793-15373237e4b5" testName="RunDocumentedFourth(&quot;View.AnalysisDisplayStyleId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:33.3587600" startTime="2026-09-15T17:10:27.9381481-06:00" endTime="2026-09-15T17:10:27.9381843-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db0a3d26-0907-4945-b54a-63818f15e753">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="49f33778-22ba-4ed4-a978-489302284bc5" testId="1796401f-b3fe-e002-c435-c8c964fa4bed" testName="RunDocumentedFourth(&quot;View.ViewPositionId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:58.0538900" startTime="2026-09-15T17:11:25.9843729-06:00" endTime="2026-09-15T17:11:25.9843732-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="49f33778-22ba-4ed4-a978-489302284bc5">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDocumentedFourth(&quot;ViewSheetSet.ViewOrganizationId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="59e02335-5433-dad6-ba09-818a942d1417">
+      <Execution id="6a129158-e6aa-4553-9102-7321e197d545" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedFourthBatch" name="RunDocumentedFourth" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedFourth(&quot;ViewSheet.SheetCollectionId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="3b11129f-5399-8ef6-bca0-662a97b134cb">
+      <Execution id="d79f688b-54d1-4d71-97ec-ba1e0e26e0b6" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedFourthBatch" name="RunDocumentedFourth" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedFourth(&quot;ViewSheetSet.IsAutomatic&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="3fa171b3-4c5e-76de-6288-c4c77cde4405">
+      <Execution id="fc88ba92-8264-4efe-9f49-832bb85ec4f4" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedFourthBatch" name="RunDocumentedFourth" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedFourth(&quot;View.ViewPositionId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="1796401f-b3fe-e002-c435-c8c964fa4bed">
+      <Execution id="49f33778-22ba-4ed4-a978-489302284bc5" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedFourthBatch" name="RunDocumentedFourth" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedFourth(&quot;View.AnalysisDisplayStyleId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b125532f-9b92-bf6c-7793-15373237e4b5">
+      <Execution id="db0a3d26-0907-4945-b54a-63818f15e753" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedFourthBatch" name="RunDocumentedFourth" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedFourth(&quot;ViewSheetSet.SheetOrganizationId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="50a2e4b8-5658-a773-54aa-5f2991bf6211">
+      <Execution id="24fcba4c-b84f-41e5-b18c-bc760196d734" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedFourthBatch" name="RunDocumentedFourth" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="50a2e4b8-5658-a773-54aa-5f2991bf6211" executionId="24fcba4c-b84f-41e5-b18c-bc760196d734" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3fa171b3-4c5e-76de-6288-c4c77cde4405" executionId="fc88ba92-8264-4efe-9f49-832bb85ec4f4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3b11129f-5399-8ef6-bca0-662a97b134cb" executionId="d79f688b-54d1-4d71-97ec-ba1e0e26e0b6" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="59e02335-5433-dad6-ba09-818a942d1417" executionId="6a129158-e6aa-4553-9102-7321e197d545" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b125532f-9b92-bf6c-7793-15373237e4b5" executionId="db0a3d26-0907-4945-b54a-63818f15e753" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1796401f-b3fe-e002-c435-c8c964fa4bed" executionId="49f33778-22ba-4ed4-a978-489302284bc5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="6" executed="6" passed="6" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 6]&#xD;
+Test: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("View.AnalysisDisplayStyleId")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("View.ViewPositionId")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheet.SheetCollectionId")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheetSet.IsAutomatic")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheetSet.SheetOrganizationId")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheetSet.ViewOrganizationId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("View.AnalysisDisplayStyleId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("View.ViewPositionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheet.SheetCollectionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheetSet.IsAutomatic")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheetSet.SheetOrganizationId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth("ViewSheetSet.ViewOrganizationId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 6]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth(\u0022View.AnalysisDisplayStyleId\u0022)","LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth(\u0022View.ViewPositionId\u0022)","LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth(\u0022ViewSheet.SheetCollectionId\u0022)","LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth(\u0022ViewSheetSet.IsAutomatic\u0022)","LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth(\u0022ViewSheetSet.SheetOrganizationId\u0022)","LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth.RunDocumentedFourth(\u0022ViewSheetSet.ViewOrganizationId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 33358.76 	 RunDocumentedFourth("View.AnalysisDisplayStyleId")[RunDocumentedFourth]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth [RunDocumentedFourth("View.AnalysisDisplayStyleId")] 	b125532f-9b92-bf6c-7793-15373237e4b5&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 58053.89 	 RunDocumentedFourth("View.ViewPositionId")[RunDocumentedFourth]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth [RunDocumentedFourth("View.ViewPositionId")] 	1796401f-b3fe-e002-c435-c8c964fa4bed&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 34977.8 	 RunDocumentedFourth("ViewSheet.SheetCollectionId")[RunDocumentedFourth]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth [RunDocumentedFourth("ViewSheet.SheetCollectionId")] 	3b11129f-5399-8ef6-bca0-662a97b134cb&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 50771.59 	 RunDocumentedFourth("ViewSheetSet.IsAutomatic")[RunDocumentedFourth]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth [RunDocumentedFourth("ViewSheetSet.IsAutomatic")] 	3fa171b3-4c5e-76de-6288-c4c77cde4405&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 49681.04 	 RunDocumentedFourth("ViewSheetSet.SheetOrganizationId")[RunDocumentedFourth]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth [RunDocumentedFourth("ViewSheetSet.SheetOrganizationId")] 	50a2e4b8-5658-a773-54aa-5f2991bf6211&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 51292.67 	 RunDocumentedFourth("ViewSheetSet.ViewOrganizationId")[RunDocumentedFourth]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedFourthBatch.RunDocumentedFourth [RunDocumentedFourth("ViewSheetSet.ViewOrganizationId")] 	59e02335-5433-dad6-ba09-818a942d1417&#xD;
+OutputConsole:  Revit 2026: 278578.51 	 SetterValidationProbe 6 True 100% 278578.51ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

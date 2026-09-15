@@ -1,0 +1,66 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "status": "validated",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-fourth-runs\\20260915T230954\\View.AnalysisDisplayStyleId\\BIM_Projekt_Golden_Nu-CC172C5B28\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "224316CDE65E3F08C04FBC4F0B513ADF910B8D70EBACD2A6273C1D187F3394FC",
+  "target_count": 510,
+  "generator_errors": [],
+  "target": "44c3f3cd-efa4-4e45-8d6b-4404fa912d9a-000165b4",
+  "before": -1,
+  "desired": 1688365,
+  "after_regenerate": 1688365,
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": 1688365,
+  "reason": null,
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 29881,
+    "after_elements": 29881,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 296870,
+    "excluded_readonly_values_after": 296870,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionCommitted",
+      "added": [],
+      "modified": [
+        91572
+      ],
+      "deleted": []
+    },
+    {
+      "operation": "TransactionGroupRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 19517.5315
+}
