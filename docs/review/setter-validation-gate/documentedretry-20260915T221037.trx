@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="9ee1ae53-48da-4918-a5bb-b748a76d8229" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 16:12:22" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T16:12:22.5984936-06:00" queuing="2026-09-15T16:12:22.5984938-06:00" start="2026-09-15T16:10:38.6198719-06:00" finish="2026-09-15T16:12:47.1275542-06:00" />
+  <TestSettings name="default" id="2337b8bc-85d1-431a-8fe7-45091e1f9b03">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_16_12_22" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="b0775074-bf49-443d-90d2-e388c395471f" testId="4f20aa43-818c-8659-0030-7f243375dc1d" testName="RunDocumentedRetry(&quot;Structure.LoadCase.SubcategoryId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:07.3405300" startTime="2026-09-15T16:12:45.5505572-06:00" endTime="2026-09-15T16:12:45.5505575-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b0775074-bf49-443d-90d2-e388c395471f">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f8c46907-84cb-4cb5-bbbb-13207b56ca24" testId="0a6992bd-0e5e-d433-ed32-fb58fa1311de" testName="RunDocumentedRetry(&quot;Analysis.EnergyDataSettings.ExportCategory&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:16.5030900" startTime="2026-09-15T16:12:38.2090528-06:00" endTime="2026-09-15T16:12:38.2090535-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f8c46907-84cb-4cb5-bbbb-13207b56ca24">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="9b0912c8-2dd1-4426-8f11-081188b46ed7" testId="9cdf4605-fb59-bb9d-3c88-eb900375b591" testName="RunDocumentedRetry(&quot;Analysis.EnergyAnalysisDetailModel.ExportCategory&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:21.2336400" startTime="2026-09-15T16:12:21.7128736-06:00" endTime="2026-09-15T16:12:21.7128995-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="9b0912c8-2dd1-4426-8f11-081188b46ed7">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDocumentedRetry(&quot;Analysis.EnergyAnalysisDetailModel.ExportCategory&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="9cdf4605-fb59-bb9d-3c88-eb900375b591">
+      <Execution id="9b0912c8-2dd1-4426-8f11-081188b46ed7" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedRetryBatch" name="RunDocumentedRetry" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedRetry(&quot;Structure.LoadCase.SubcategoryId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4f20aa43-818c-8659-0030-7f243375dc1d">
+      <Execution id="b0775074-bf49-443d-90d2-e388c395471f" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedRetryBatch" name="RunDocumentedRetry" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedRetry(&quot;Analysis.EnergyDataSettings.ExportCategory&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="0a6992bd-0e5e-d433-ed32-fb58fa1311de">
+      <Execution id="f8c46907-84cb-4cb5-bbbb-13207b56ca24" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedRetryBatch" name="RunDocumentedRetry" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="4f20aa43-818c-8659-0030-7f243375dc1d" executionId="b0775074-bf49-443d-90d2-e388c395471f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0a6992bd-0e5e-d433-ed32-fb58fa1311de" executionId="f8c46907-84cb-4cb5-bbbb-13207b56ca24" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9cdf4605-fb59-bb9d-3c88-eb900375b591" executionId="9b0912c8-2dd1-4426-8f11-081188b46ed7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="3" executed="3" passed="3" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 3]&#xD;
+Test: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry("Analysis.EnergyAnalysisDetailModel.ExportCategory")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry("Analysis.EnergyDataSettings.ExportCategory")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry("Structure.LoadCase.SubcategoryId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry("Analysis.EnergyAnalysisDetailModel.ExportCategory")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry("Analysis.EnergyDataSettings.ExportCategory")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry("Structure.LoadCase.SubcategoryId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry(\u0022Analysis.EnergyAnalysisDetailModel.ExportCategory\u0022)","LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry(\u0022Analysis.EnergyDataSettings.ExportCategory\u0022)","LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry.RunDocumentedRetry(\u0022Structure.LoadCase.SubcategoryId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 21233.64 	 RunDocumentedRetry("Analysis.EnergyAnalysisDetailModel.ExportCategory")[RunDocumentedRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry [RunDocumentedRetry("Analysis.EnergyAnalysisDetailModel.ExportCategory")] 	9cdf4605-fb59-bb9d-3c88-eb900375b591&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 16503.09 	 RunDocumentedRetry("Analysis.EnergyDataSettings.ExportCategory")[RunDocumentedRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry [RunDocumentedRetry("Analysis.EnergyDataSettings.ExportCategory")] 	0a6992bd-0e5e-d433-ed32-fb58fa1311de&#xD;
+OutputConsole:  Revit 2026: 7340.53 	 RunDocumentedRetry("Structure.LoadCase.SubcategoryId")[RunDocumentedRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedRetryBatch.RunDocumentedRetry [RunDocumentedRetry("Structure.LoadCase.SubcategoryId")] 	4f20aa43-818c-8659-0030-7f243375dc1d&#xD;
+OutputConsole:  Revit 2026: 45458.93 	 SetterValidationProbe 3 True 100% 45458.93ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

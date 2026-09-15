@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "campaign": "changed-value-project-corpus-20260915T205421",
-  "source_sha256": "39F9DDD9EF62B8EC4F055E6668667827ED50E62110E2BA434D089AE2CD112EC1",
-  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract. ",
+  "campaign": "changed-value-documented-retry-20260915T221200",
+  "source_sha256": "53B2BA08DBE4D824F97E50C645C66BCF489EE5A11AE3D96CFFEC45C9D37162A1",
+  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract.  3 further direct-API setter validations from the completed documented-constraint retry; the timed-out parent run is retained but did not qualify. ",
   "entries": [
     {
       "operation": "api.get:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
@@ -11343,11 +11343,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 10,
-      "same_value_models": 2
+      "same_value_models": 1
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.AnalysisType",
@@ -11439,11 +11439,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportComplexity",
@@ -16447,11 +16447,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCombination.State",

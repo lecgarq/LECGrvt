@@ -1,0 +1,18 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-constraint-runs\\20260915T212311\\ExportCategory-1F4F6E867D\\BIM_Projekt_Golden_Nu-CC172C5B28\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "964E2D2647766E5070855CD9F403E4734BEAF182F01AEADBF80CACAD7FC3A9B0",
+  "target_count": 1,
+  "generator_errors": []
+}

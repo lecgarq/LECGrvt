@@ -1,0 +1,101 @@
+{
+  "run": "20260915T221200",
+  "failed_parent_run": "20260915T212311",
+  "failed_parent_qualified": false,
+  "original_ledger_sha256": "00701AA33FB4BE691D2D86E7379CEE9E15A17A3F70931481977B741D63FD6F3D",
+  "previous_reconciliation": {
+    "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ledger-reconciliation.json",
+    "sha256": "39F9DDD9EF62B8EC4F055E6668667827ED50E62110E2BA434D089AE2CD112EC1"
+  },
+  "manifest": {
+    "path": "docs/review/setter-validation-gate/documented-retry-manifest.json",
+    "sha256": "800BE6D76B10F092AE5859EAEFC440E12274E94F16B4C87AB02682C5DACE1668"
+  },
+  "provenance": {
+    "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/provenance.json",
+    "sha256": "A8478F12E38F42D9CB33AB3B42C362BE5D6ABE3A2B4813BC4131BB6244343791"
+  },
+  "trx": {
+    "path": "docs/review/setter-validation-gate/documentedretry-20260915T221037.trx",
+    "sha256": "F6EEFE3FD8EFEE87BB82B3E8F204548D9DF76A9CE7D6789973093B8C42C68DE4"
+  },
+  "remaining_rvt_files": 0,
+  "original_numerator": 659,
+  "proposed_numerator": 662,
+  "new_validations": 3,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 662,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "same_value_only": 26
+  },
+  "updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 2
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 1
+      },
+      "receipt": {
+        "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/ExportCategory-1F4F6E867D/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+        "sha256": "F2DF97B4EC21E30D9185905D845BB283925AD0564F260C00027AF8E100C969E8"
+      }
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": {
+        "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/ExportCategory-C608F0FC22/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+        "sha256": "6009156E567646AD4B41E01FEB8E895B796536C0F51E97A3068513D5026A7E0F"
+      }
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "receipt": {
+        "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/Structure.LoadCase.SubcategoryId/Snowdon Towers Sample Structural/receipt.json",
+        "sha256": "C06B66F3593E7981E95D5F5247ED6EF6D43F7856328A2993E437AC2DE88C7C7D"
+      }
+    }
+  ]
+}

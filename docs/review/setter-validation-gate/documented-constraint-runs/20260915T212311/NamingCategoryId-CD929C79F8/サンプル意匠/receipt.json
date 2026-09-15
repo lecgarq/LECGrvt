@@ -1,0 +1,21 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "model_sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-constraint-runs\\20260915T212311\\NamingCategoryId-CD929C79F8\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "E30F47433C2C83EC0467364E620716E814C954AEC58B27A664114E60AEBE8A82",
+  "target_count": 0,
+  "generator_errors": [],
+  "reason": "no_existing_target_in_unmodified_sample",
+  "opening_warnings": [],
+  "elapsed_ms": 8073.2711
+}

@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="54fce878-ecf7-43cb-bd98-13f2c487064a" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 15:23:34" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T15:23:34.4552463-06:00" queuing="2026-09-15T15:23:34.4552466-06:00" start="2026-09-15T15:22:29.6712316-06:00" finish="2026-09-15T16:08:40.6515975-06:00" />
+  <TestSettings name="default" id="fa6b8cea-459c-4aa6-b7e7-0d279b266b94">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_15_23_34" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="04aebc05-fb76-4094-9af4-8e9c012e52ff" testId="729b6d9e-a2f8-e483-5b44-d1fc43caa6de" testName="RunDocumented(&quot;AssemblyInstance.NamingCategoryId&quot;)" computerName="DESKTOP-1FAV1F2" startTime="2026-09-15T16:08:38.1776327-06:00" endTime="2026-09-15T16:08:38.1776328-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="04aebc05-fb76-4094-9af4-8e9c012e52ff">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>RevitTest: Timeout 45 minutes.</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2e1254c1-620e-4a21-bd0c-178b44339334" testId="fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1" testName="RunDocumented(&quot;Analysis.EnergyAnalysisDetailModel.ExportCategory&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:22.4790300" startTime="2026-09-15T15:23:34.2815278-06:00" endTime="2026-09-15T15:23:34.2815613-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e1254c1-620e-4a21-bd0c-178b44339334">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e67c19c7-3893-48d7-8128-b8d54fe3fdf5" testId="671574b4-1263-302b-a101-ab4080c28fb5" testName="RunDocumented(&quot;Analysis.EnergyDataSettings.ExportCategory&quot;)" computerName="DESKTOP-1FAV1F2" startTime="2026-09-15T16:08:38.1774995-06:00" endTime="2026-09-15T16:08:38.1774996-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e67c19c7-3893-48d7-8128-b8d54fe3fdf5">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>RevitTest: Timeout 45 minutes.</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="e85f626d-1682-40d3-8622-5ab07f7c6dc2" testId="671574b4-1263-302b-a101-ab4080c28fb5" testName="RunDocumented(&quot;Analysis.EnergyDataSettings.ExportCategory&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:17.2162700" startTime="2026-09-15T15:23:51.4882516-06:00" endTime="2026-09-15T15:23:51.4882520-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e85f626d-1682-40d3-8622-5ab07f7c6dc2">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1fe873b7-9fd4-42a4-aeac-19d2e7596224" testId="926c956f-0dfd-61f6-3c40-5896b15ba65b" testName="RunDocumented(&quot;Structure.LoadCase.SubcategoryId&quot;)" computerName="DESKTOP-1FAV1F2" startTime="2026-09-15T16:08:38.1777844-06:00" endTime="2026-09-15T16:08:38.1777845-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="1fe873b7-9fd4-42a4-aeac-19d2e7596224">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>RevitTest: Timeout 45 minutes.</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a33b39cc-5263-4a4e-943f-5d7d14a10e26" testId="fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1" testName="RunDocumented(&quot;Analysis.EnergyAnalysisDetailModel.ExportCategory&quot;)" computerName="DESKTOP-1FAV1F2" startTime="2026-09-15T16:08:38.1773135-06:00" endTime="2026-09-15T16:08:38.1773149-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a33b39cc-5263-4a4e-943f-5d7d14a10e26">
+      <Output>
+        <ErrorInfo>
+          <StackTrace>RevitTest: Timeout 45 minutes.</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDocumented(&quot;Structure.LoadCase.SubcategoryId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="926c956f-0dfd-61f6-3c40-5896b15ba65b">
+      <Execution id="1fe873b7-9fd4-42a4-aeac-19d2e7596224" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedConstraintBatch" name="RunDocumented" />
+    </UnitTest>
+    <UnitTest name="RunDocumented(&quot;Analysis.EnergyDataSettings.ExportCategory&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="671574b4-1263-302b-a101-ab4080c28fb5">
+      <Execution id="e85f626d-1682-40d3-8622-5ab07f7c6dc2" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedConstraintBatch" name="RunDocumented" />
+    </UnitTest>
+    <UnitTest name="RunDocumented(&quot;Analysis.EnergyAnalysisDetailModel.ExportCategory&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1">
+      <Execution id="2e1254c1-620e-4a21-bd0c-178b44339334" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedConstraintBatch" name="RunDocumented" />
+    </UnitTest>
+    <UnitTest name="RunDocumented(&quot;AssemblyInstance.NamingCategoryId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="729b6d9e-a2f8-e483-5b44-d1fc43caa6de">
+      <Execution id="04aebc05-fb76-4094-9af4-8e9c012e52ff" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedConstraintBatch" name="RunDocumented" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="729b6d9e-a2f8-e483-5b44-d1fc43caa6de" executionId="04aebc05-fb76-4094-9af4-8e9c012e52ff" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1" executionId="2e1254c1-620e-4a21-bd0c-178b44339334" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="671574b4-1263-302b-a101-ab4080c28fb5" executionId="e67c19c7-3893-48d7-8128-b8d54fe3fdf5" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="671574b4-1263-302b-a101-ab4080c28fb5" executionId="e85f626d-1682-40d3-8622-5ab07f7c6dc2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="926c956f-0dfd-61f6-3c40-5896b15ba65b" executionId="1fe873b7-9fd4-42a4-aeac-19d2e7596224" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1" executionId="a33b39cc-5263-4a4e-943f-5d7d14a10e26" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="6" executed="6" passed="2" failed="4" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 4]&#xD;
+Test: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("Analysis.EnergyAnalysisDetailModel.ExportCategory")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("Analysis.EnergyDataSettings.ExportCategory")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("AssemblyInstance.NamingCategoryId")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("Structure.LoadCase.SubcategoryId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("Analysis.EnergyAnalysisDetailModel.ExportCategory")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("Analysis.EnergyDataSettings.ExportCategory")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("AssemblyInstance.NamingCategoryId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented("Structure.LoadCase.SubcategoryId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 4]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented(\u0022Analysis.EnergyAnalysisDetailModel.ExportCategory\u0022)","LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented(\u0022Analysis.EnergyDataSettings.ExportCategory\u0022)","LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented(\u0022AssemblyInstance.NamingCategoryId\u0022)","LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented.RunDocumented(\u0022Structure.LoadCase.SubcategoryId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 22479.03 	 RunDocumented("Analysis.EnergyAnalysisDetailModel.ExportCategory")[RunDocumented]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented [RunDocumented("Analysis.EnergyAnalysisDetailModel.ExportCategory")] 	fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 17216.27 	 RunDocumented("Analysis.EnergyDataSettings.ExportCategory")[RunDocumented]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented [RunDocumented("Analysis.EnergyDataSettings.ExportCategory")] 	671574b4-1263-302b-a101-ab4080c28fb5&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 9 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 9.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 10 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 10.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 11 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 11.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 12 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 12.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 13 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 13.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 14 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 14.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 15 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 15.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 16 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 16.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 17 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 17.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 18 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 18.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 19 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 19.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 20 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 20.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 21 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 21.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 22 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 22.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 23 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 23.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 24 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 24.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 25 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 25.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 26 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 26.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 27 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 27.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 28 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 28.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 29 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 29.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 30 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 30.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 31 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 31.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 32 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 32.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 33 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 33.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 34 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 34.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 35 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 35.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 36 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 36.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 37 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 37.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 38 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 38.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 39 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 39.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 40 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 40.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 41 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 41.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 42 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 42.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 43 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 43.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 44 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 44.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 45 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: RevitTest: Timeout 45 minutes.&#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented [RunDocumented("Analysis.EnergyAnalysisDetailModel.ExportCategory")] 	fd470d68-222a-bf4d-9cbc-51e6b7e0c5e1&#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented [RunDocumented("Analysis.EnergyDataSettings.ExportCategory")] 	671574b4-1263-302b-a101-ab4080c28fb5&#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented [RunDocumented("AssemblyInstance.NamingCategoryId")] 	729b6d9e-a2f8-e483-5b44-d1fc43caa6de&#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedConstraintBatch.RunDocumented [RunDocumented("Structure.LoadCase.SubcategoryId")] 	926c956f-0dfd-61f6-3c40-5896b15ba65b&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

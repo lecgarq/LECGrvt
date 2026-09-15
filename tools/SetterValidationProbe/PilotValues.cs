@@ -19,6 +19,22 @@ internal static class PilotValues
         Document doc = target.Document;
         switch (property)
         {
+            case "Analysis.EnergyAnalysisDetailModel.ExportCategory":
+            case "Analysis.EnergyDataSettings.ExportCategory":
+                return Alternative(new[] {
+                    new ElementId(BuiltInCategory.OST_Rooms),
+                    new ElementId(BuiltInCategory.OST_MEPSpaces)
+                }.Where(EnergyDataSettings.CheckExportCategory), before);
+            case "AssemblyInstance.NamingCategoryId":
+                var assembly = (AssemblyInstance)target;
+                var members = assembly.GetMemberIds();
+                return Alternative(members.Select(id => doc.GetElement(id)?.Category?.Id).OfType<ElementId>()
+                    .DistinctBy(id => id.Value)
+                    .Where(id => AssemblyInstance.IsValidNamingCategory(doc, id, members)), before);
+            case "Structure.LoadCase.SubcategoryId":
+                var loadCase = (LoadCase)target;
+                return Alternative(doc.Settings.Categories.get_Item(BuiltInCategory.OST_LoadCases).SubCategories
+                    .Cast<Category>().Select(category => category.Id).Where(loadCase.IsLoadCaseSubcategoryId), before);
             case "Electrical.CableType.ConductorMaterial":
             case "Electrical.WireType.WireMaterial":
                 return ConductorMaterial.GetConductorMaterialIds(doc).OrderBy(id => id.Value)

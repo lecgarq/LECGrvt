@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+  "attempts": [
+    {
+      "model": "Snowdon Towers Sample Structural.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "models_planned": 3,
+  "models_attempted": 1
+}

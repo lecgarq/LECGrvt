@@ -1,0 +1,30 @@
+{
+  "report": "documented-retry-3",
+  "new_validations": 3,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+      "status": "validated",
+      "receipt": {
+        "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/ExportCategory-1F4F6E867D/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+        "sha256": "F2DF97B4EC21E30D9185905D845BB283925AD0564F260C00027AF8E100C969E8"
+      }
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
+      "status": "validated",
+      "receipt": {
+        "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/ExportCategory-C608F0FC22/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+        "sha256": "6009156E567646AD4B41E01FEB8E895B796536C0F51E97A3068513D5026A7E0F"
+      }
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+      "status": "validated",
+      "receipt": {
+        "path": "docs/review/setter-validation-gate/documented-retry-runs/20260915T221200/Structure.LoadCase.SubcategoryId/Snowdon Towers Sample Structural/receipt.json",
+        "sha256": "C06B66F3593E7981E95D5F5247ED6EF6D43F7856328A2993E437AC2DE88C7C7D"
+      }
+    }
+  ]
+}
