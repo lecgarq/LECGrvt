@@ -1,0 +1,216 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
+  "model": "Snowdon Towers Sample Electrical.rvt",
+  "model_sha256": "8BFBAFC3AE8E76BA0CE474EA5B163A568E6A128FC951A252635F2E4D7BCF0A2A",
+  "status": "rejected-with-reason",
+  "stage": "commit",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\IsWorkPlaneFlipped-CA23B09115\\Snowdon Towers Sample Electrical\\disposable.rvt",
+  "rollback_verified": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "8C5914B476AF20BCBEAAB86E05534E25FEE8A18F2A42F2140D05F95396C358CC",
+  "target_count": 1930,
+  "generator_errors": [
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a09",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a18",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a30",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a48",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a60",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a78",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153a90",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153aa8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153ac0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153ad8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153af0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153b08",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "d566bb2b-0a9b-48f3-8a14-0f74bc425aef-00153b27",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    }
+  ],
+  "target": "d6fdadf5-1319-4c7c-926d-1c91c3a2a108-00156a32",
+  "before": false,
+  "desired": true,
+  "after_regenerate": true,
+  "commit_status": "RolledBack",
+  "failures": [
+    "Error: The family is connected in a network and can no longer keep the connectivity. Disconnect the family from the network?",
+    "Error: The conduit has been modified to be in the opposite direction or insufficient space to create the required fittings. "
+  ],
+  "reason": "inner_transaction_not_committed",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 13813,
+    "after_elements": 13813,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014c9fd:parameter-slot:6",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014c9fd:parameter-slot:7",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014c9fd:parameter-slot:8",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014cb4b:parameter-slot:6",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014cb4b:parameter-slot:7",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014cb4b:parameter-slot:8",
+      "01d5840b-88f5-4948-b348-cc42c5bf771f-0016a667:parameter-slot:6",
+      "01d5840b-88f5-4948-b348-cc42c5bf771f-0016a667:parameter-slot:7",
+      "01d5840b-88f5-4948-b348-cc42c5bf771f-0016a667:parameter-slot:8",
+      "65aaf5e4-f787-46b4-a45b-5594e8189224-0019898d:parameter-slot:6",
+      "65aaf5e4-f787-46b4-a45b-5594e8189224-0019898d:parameter-slot:7",
+      "65aaf5e4-f787-46b4-a45b-5594e8189224-0019898d:parameter-slot:8",
+      "f9768fdf-15e7-48be-bd8a-fc631d8168bf-001a5fe8:parameter-slot:6",
+      "f9768fdf-15e7-48be-bd8a-fc631d8168bf-001a5fe8:parameter-slot:7",
+      "f9768fdf-15e7-48be-bd8a-fc631d8168bf-001a5fe8:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014c9fd:parameter-slot:6",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014c9fd:parameter-slot:7",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014c9fd:parameter-slot:8",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014cb4b:parameter-slot:6",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014cb4b:parameter-slot:7",
+      "c3ebb219-e63f-4383-98ab-605fca28cead-0014cb4b:parameter-slot:8",
+      "01d5840b-88f5-4948-b348-cc42c5bf771f-0016a667:parameter-slot:6",
+      "01d5840b-88f5-4948-b348-cc42c5bf771f-0016a667:parameter-slot:7",
+      "01d5840b-88f5-4948-b348-cc42c5bf771f-0016a667:parameter-slot:8",
+      "65aaf5e4-f787-46b4-a45b-5594e8189224-0019898d:parameter-slot:6",
+      "65aaf5e4-f787-46b4-a45b-5594e8189224-0019898d:parameter-slot:7",
+      "65aaf5e4-f787-46b4-a45b-5594e8189224-0019898d:parameter-slot:8",
+      "f9768fdf-15e7-48be-bd8a-fc631d8168bf-001a5fe8:parameter-slot:6",
+      "f9768fdf-15e7-48be-bd8a-fc631d8168bf-001a5fe8:parameter-slot:7",
+      "f9768fdf-15e7-48be-bd8a-fc631d8168bf-001a5fe8:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 147323,
+    "excluded_readonly_values_after": 147323,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region"
+  ],
+  "elapsed_ms": 13414.2259
+}

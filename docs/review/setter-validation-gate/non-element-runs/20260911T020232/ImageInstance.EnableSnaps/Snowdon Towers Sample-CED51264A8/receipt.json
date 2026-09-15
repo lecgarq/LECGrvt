@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+  "model": "Snowdon Towers Sample Architectural.rvt",
+  "model_sha256": "931EEEF58311D87AD5B15EB2622A4A7CD2737091D295C24E625C67E445AD65D1",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\ImageInstance.EnableSnaps\\Snowdon Towers Sample-CED51264A8\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "34DED94DF6B0FED472133C73F40A3E763E9520F931B1FDF85F2A3A838D2DC397",
+  "target_count": 17,
+  "generator_errors": [],
+  "reason": "no_proven_valid_alternative",
+  "opening_warnings": [],
+  "elapsed_ms": 8434.7723
+}

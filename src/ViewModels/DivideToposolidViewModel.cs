@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 using Autodesk.Revit.DB;
+using CommunityToolkit.Mvvm.Input;
 using LECG.Services;
 using LECG.ViewModels.Components;
 using RevitExceptions = Autodesk.Revit.Exceptions;
@@ -18,8 +19,8 @@ namespace LECG.ViewModels
 
         public bool CanRun => Selection.HasSelection;
 
-        private ICommand? _applyCommandLocal;
-        public override ICommand ApplyCommand => _applyCommandLocal ??= new CommunityToolkit.Mvvm.Input.RelayCommand(OnApply, () => CanRun);
+        private RelayCommand? _applyCommandLocal;
+        public override ICommand ApplyCommand => _applyCommandLocal ??= new RelayCommand(OnApply, () => CanRun);
 
         private ICommand? _cancelCommandLocal;
         public override ICommand CancelCommand => _cancelCommandLocal ??= new CommunityToolkit.Mvvm.Input.RelayCommand(OnCancel);
@@ -35,6 +36,7 @@ namespace LECG.ViewModels
                 if (e.PropertyName == nameof(SelectionViewModel.HasSelection))
                 {
                     OnPropertyChanged(nameof(CanRun));
+                    _applyCommandLocal?.NotifyCanExecuteChanged();
                 }
             };
         }

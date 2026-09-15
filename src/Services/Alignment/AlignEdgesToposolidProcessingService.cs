@@ -59,32 +59,25 @@ namespace LECG.Services
             // Compute 2D overlap region between source and reference footprints
             PathsD? overlapRegion = ClipperUtils.ComputeOverlapRegion(doc, elem, referenceIds);
 
-            // Vertex-first: resolve existing boundary control before deciding whether
-            // the curve still needs extra interior points.
-            var (initialMovedCount, initialSkippedCount, initialMissCount) = _vertexAlignmentService.AlignVertices(editor, intersector, overlapRegion);
-            if (initialMovedCount > 0)
+            bool alignAllInteriorVertices = referenceIds == null;
+            int boundaryHitCount = 0;
+            int insertedPointCount = 0;
+            if (!alignAllInteriorVertices)
             {
-                doc.Regenerate();
+                List<XYZ> newPoints = _boundaryCollectionService.Collect(doc, elem, intersector,
+                    MinBoundarySpacing, MaxBoundarySpacing);
+                boundaryHitCount = newPoints.Count;
+                insertedPointCount = _pointInsertionService.AddPoints(elem, editor, newPoints);
             }
 
-            List<XYZ> newPoints = _boundaryCollectionService.Collect(doc, elem, intersector, MinBoundarySpacing, MaxBoundarySpacing);
-            int boundaryHitCount = newPoints.Count;
-            int insertedPointCount = _pointInsertionService.AddPoints(elem, editor, newPoints);
+            // Automatic discovery aligns every existing boundary and interior control.
+            // Manual-reference mode also inserts adaptive boundary support points.
+            var (movedCount, skippedCount, missCount) =
+                _vertexAlignmentService.AlignVertices(elem, editor, intersector, overlapRegion,
+                    alignAllInteriorVertices);
 
-            int totalMovedCount = initialMovedCount;
-            int totalSkippedCount = initialSkippedCount;
-            int finalMissCount = initialMissCount;
-
-            if (insertedPointCount > 0)
-            {
-                doc.Regenerate();
-                var (settleMovedCount, settleSkippedCount, settleMissCount) = _vertexAlignmentService.AlignVertices(editor, intersector, overlapRegion);
-                totalMovedCount += settleMovedCount;
-                totalSkippedCount = Math.Max(totalSkippedCount, settleSkippedCount);
-                finalMissCount = settleMissCount;
-            }
-
-            return AlignEdgesSourceResult.FromCounts(elem.Id, sourceName, boundaryHitCount, insertedPointCount, totalMovedCount, totalSkippedCount, finalMissCount);
+            return AlignEdgesSourceResult.FromCounts(elem.Id, sourceName, boundaryHitCount,
+                insertedPointCount, movedCount, skippedCount, missCount);
         }
     }
 }

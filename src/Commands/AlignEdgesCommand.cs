@@ -38,7 +38,7 @@ namespace LECG.Commands
                     ? service.AlignEdgesFindMyEdge(doc, vm.TargetRefs)
                     : service.AlignEdges(doc, vm.TargetRefs, vm.ReferenceRefs);
 
-                LecgDialog.Show("Align Edges", BuildCompletionMessage(sourceResults));
+                LecgDialog.Show("Align Surfaces", BuildCompletionMessage(sourceResults));
             }
         }
 

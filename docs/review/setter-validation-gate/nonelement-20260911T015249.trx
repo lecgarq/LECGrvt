@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="050abe50-4883-4332-8af2-f03cfcd15b39" name="luis.cortes@ROG_STRIX_ECORT 2026-09-10 20:02:56" runUser="ROG_STRIX_ECORT\luis.cortes" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-10T20:02:56.7630746-06:00" queuing="2026-09-10T20:02:56.7630752-06:00" start="2026-09-10T19:52:50.1900380-06:00" finish="2026-09-10T20:10:46.4162671-06:00" />
+  <TestSettings name="default" id="355ff8c5-473f-4196-808c-d1abe99d575d">
+    <Deployment runDeploymentRoot="luis.cortes_ROG_STRIX_ECORT_2026-09-10_20_02_56" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="dd821c05-598d-4112-9bf5-7954a349f6ef" testId="4d3851eb-33b5-52ce-1d61-e6d6516893da" testName="RunNonElement(&quot;ColorFillLegend.Origin&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:16.0201100" startTime="2026-09-10T20:05:52.3834254-06:00" endTime="2026-09-10T20:05:52.3834259-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="dd821c05-598d-4112-9bf5-7954a349f6ef">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="030b576b-9779-47f3-ae38-9de376989e1b" testId="04301fd3-0151-f3a1-697b-4930b367be34" testName="RunNonElement(&quot;Analysis.HVACLoadBuildingType.ClosingTime&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:23.1658800" startTime="2026-09-10T20:02:55.6904808-06:00" endTime="2026-09-10T20:02:55.6905019-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="030b576b-9779-47f3-ae38-9de376989e1b">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="f7ad876c-41d2-4c7e-bb43-4009d907482e" testId="0a7f1fb5-c2fa-8738-981b-dff2f4d982bc" testName="RunNonElement(&quot;Family.StructuralCodeName&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:17.2359400" startTime="2026-09-10T20:06:40.9915973-06:00" endTime="2026-09-10T20:06:40.9915976-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f7ad876c-41d2-4c7e-bb43-4009d907482e">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0f8f1a8a-2874-4f6d-b6c0-dafda688845d" testId="b9c83f80-8a90-1eb1-37a1-427dc06c6e49" testName="RunNonElement(&quot;Analysis.MassLevelData.ConceptualConstructionIsByEnergyData&quot;)" computerName="ROG_STRIX_ECORT" duration="00:01:51.5907200" startTime="2026-09-10T20:05:04.7304770-06:00" endTime="2026-09-10T20:05:04.7304776-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0f8f1a8a-2874-4f6d-b6c0-dafda688845d">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d4803ac6-4679-4a74-b695-082a11c1d4fb" testId="8fb3fa41-9d54-9ea7-a8b8-c13ff727ba2e" testName="RunNonElement(&quot;Analysis.PathOfTravel.PathStart&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:15.5908400" startTime="2026-09-10T20:05:36.3611611-06:00" endTime="2026-09-10T20:05:36.3611615-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d4803ac6-4679-4a74-b695-082a11c1d4fb">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="31d99acc-6094-4033-ad34-2e183db98e6e" testId="635ee1aa-8b9d-4ebf-a08c-531c5e41f2fa" testName="RunNonElement(&quot;Analysis.PathOfTravel.PathEnd&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:16.0377700" startTime="2026-09-10T20:05:20.7685214-06:00" endTime="2026-09-10T20:05:20.7685219-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="31d99acc-6094-4033-ad34-2e183db98e6e">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0d0094fc-f220-4c19-a0ac-bc4280b8a232" testId="64b85136-da05-8a11-fa92-800289fd3703" testName="RunNonElement(&quot;SiteLocation.PlaceName&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:15.8180100" startTime="2026-09-10T20:10:25.9594957-06:00" endTime="2026-09-10T20:10:25.9594962-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0d0094fc-f220-4c19-a0ac-bc4280b8a232">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="d16481aa-7c9b-414d-822a-4a0ebac44e70" testId="9547772d-d770-76d9-0978-0043c26d203c" testName="RunNonElement(&quot;Electrical.CableTray.CurveNormal&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:31.3651600" startTime="2026-09-10T20:06:23.7540339-06:00" endTime="2026-09-10T20:06:23.7540343-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d16481aa-7c9b-414d-822a-4a0ebac44e70">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a5c07303-4f5c-45b4-b28c-ecc28b73034f" testId="1e663851-64c8-c799-f7ae-1b1bc9318047" testName="RunNonElement(&quot;ReferencePlane.FreeEnd&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:15.9881400" startTime="2026-09-10T20:10:10.1385253-06:00" endTime="2026-09-10T20:10:10.1385257-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a5c07303-4f5c-45b4-b28c-ecc28b73034f">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6a6d30a9-023d-43bd-993a-6b6178814641" testId="78a070d6-ddb4-fd63-14de-568e622eaffa" testName="RunNonElement(&quot;Analysis.HVACLoadBuildingType.OpeningTime&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:17.4535200" startTime="2026-09-10T20:03:13.1375715-06:00" endTime="2026-09-10T20:03:13.1375720-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6a6d30a9-023d-43bd-993a-6b6178814641">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="79030828-003c-4b19-b02c-f8ff95e1b415" testId="ba4effe6-de9b-2505-2581-4d8745519f26" testName="RunNonElement(&quot;Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:16.1770100" startTime="2026-09-10T20:10:42.1438810-06:00" endTime="2026-09-10T20:10:42.1438814-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="79030828-003c-4b19-b02c-f8ff95e1b415">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="45608a29-3176-46a1-a058-8744199e8887" testId="c578a2de-8659-8efe-1c7e-3c28edb86ceb" testName="RunNonElement(&quot;Family.StructuralFamilyNameKey&quot;)" computerName="ROG_STRIX_ECORT" duration="00:00:17.2176800" startTime="2026-09-10T20:06:58.2125312-06:00" endTime="2026-09-10T20:06:58.2125317-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="45608a29-3176-46a1-a058-8744199e8887">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="98affa43-d51c-4b3c-be4b-3cec06d92213" testId="b21a460c-9583-361e-7bba-2193cdac38a8" testName="RunNonElement(&quot;FamilyInstance.IsWorkPlaneFlipped&quot;)" computerName="ROG_STRIX_ECORT" duration="00:01:13.1353100" startTime="2026-09-10T20:08:11.3526439-06:00" endTime="2026-09-10T20:08:11.3526457-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="98affa43-d51c-4b3c-be4b-3cec06d92213">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="b608050a-02f9-483c-84e0-ac46f899d617" testId="b74c476c-29d8-13d7-b16b-a23cb2ab5f33" testName="RunNonElement(&quot;ImageInstance.EnableSnaps&quot;)" computerName="ROG_STRIX_ECORT" duration="00:01:42.7919299" startTime="2026-09-10T20:09:54.1478594-06:00" endTime="2026-09-10T20:09:54.1478599-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b608050a-02f9-483c-84e0-ac46f899d617">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunNonElement(&quot;SiteLocation.PlaceName&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="64b85136-da05-8a11-fa92-800289fd3703">
+      <Execution id="0d0094fc-f220-4c19-a0ac-bc4280b8a232" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Analysis.PathOfTravel.PathStart&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="8fb3fa41-9d54-9ea7-a8b8-c13ff727ba2e">
+      <Execution id="d4803ac6-4679-4a74-b695-082a11c1d4fb" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;FamilyInstance.IsWorkPlaneFlipped&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b21a460c-9583-361e-7bba-2193cdac38a8">
+      <Execution id="98affa43-d51c-4b3c-be4b-3cec06d92213" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="ba4effe6-de9b-2505-2581-4d8745519f26">
+      <Execution id="79030828-003c-4b19-b02c-f8ff95e1b415" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Analysis.HVACLoadBuildingType.ClosingTime&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="04301fd3-0151-f3a1-697b-4930b367be34">
+      <Execution id="030b576b-9779-47f3-ae38-9de376989e1b" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Analysis.HVACLoadBuildingType.OpeningTime&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="78a070d6-ddb4-fd63-14de-568e622eaffa">
+      <Execution id="6a6d30a9-023d-43bd-993a-6b6178814641" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Family.StructuralFamilyNameKey&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="c578a2de-8659-8efe-1c7e-3c28edb86ceb">
+      <Execution id="45608a29-3176-46a1-a058-8744199e8887" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Electrical.CableTray.CurveNormal&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="9547772d-d770-76d9-0978-0043c26d203c">
+      <Execution id="d16481aa-7c9b-414d-822a-4a0ebac44e70" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Family.StructuralCodeName&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="0a7f1fb5-c2fa-8738-981b-dff2f4d982bc">
+      <Execution id="f7ad876c-41d2-4c7e-bb43-4009d907482e" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;ReferencePlane.FreeEnd&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="1e663851-64c8-c799-f7ae-1b1bc9318047">
+      <Execution id="a5c07303-4f5c-45b4-b28c-ecc28b73034f" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Analysis.PathOfTravel.PathEnd&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="635ee1aa-8b9d-4ebf-a08c-531c5e41f2fa">
+      <Execution id="31d99acc-6094-4033-ad34-2e183db98e6e" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;ImageInstance.EnableSnaps&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b74c476c-29d8-13d7-b16b-a23cb2ab5f33">
+      <Execution id="b608050a-02f9-483c-84e0-ac46f899d617" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;Analysis.MassLevelData.ConceptualConstructionIsByEnergyData&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b9c83f80-8a90-1eb1-37a1-427dc06c6e49">
+      <Execution id="0f8f1a8a-2874-4f6d-b6c0-dafda688845d" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+    <UnitTest name="RunNonElement(&quot;ColorFillLegend.Origin&quot;)" storage="c:\lecg\addin\lecgrvt-integrated\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4d3851eb-33b5-52ce-1d61-e6d6516893da">
+      <Execution id="dd821c05-598d-4112-9bf5-7954a349f6ef" />
+      <TestMethod codeBase="C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.NonElementBatch" name="RunNonElement" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="4d3851eb-33b5-52ce-1d61-e6d6516893da" executionId="dd821c05-598d-4112-9bf5-7954a349f6ef" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="04301fd3-0151-f3a1-697b-4930b367be34" executionId="030b576b-9779-47f3-ae38-9de376989e1b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="0a7f1fb5-c2fa-8738-981b-dff2f4d982bc" executionId="f7ad876c-41d2-4c7e-bb43-4009d907482e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b9c83f80-8a90-1eb1-37a1-427dc06c6e49" executionId="0f8f1a8a-2874-4f6d-b6c0-dafda688845d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="8fb3fa41-9d54-9ea7-a8b8-c13ff727ba2e" executionId="d4803ac6-4679-4a74-b695-082a11c1d4fb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="635ee1aa-8b9d-4ebf-a08c-531c5e41f2fa" executionId="31d99acc-6094-4033-ad34-2e183db98e6e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="64b85136-da05-8a11-fa92-800289fd3703" executionId="0d0094fc-f220-4c19-a0ac-bc4280b8a232" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9547772d-d770-76d9-0978-0043c26d203c" executionId="d16481aa-7c9b-414d-822a-4a0ebac44e70" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="1e663851-64c8-c799-f7ae-1b1bc9318047" executionId="a5c07303-4f5c-45b4-b28c-ecc28b73034f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="78a070d6-ddb4-fd63-14de-568e622eaffa" executionId="6a6d30a9-023d-43bd-993a-6b6178814641" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="ba4effe6-de9b-2505-2581-4d8745519f26" executionId="79030828-003c-4b19-b02c-f8ff95e1b415" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c578a2de-8659-8efe-1c7e-3c28edb86ceb" executionId="45608a29-3176-46a1-a058-8744199e8887" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b21a460c-9583-361e-7bba-2193cdac38a8" executionId="98affa43-d51c-4b3c-be4b-3cec06d92213" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b74c476c-29d8-13d7-b16b-a23cb2ab5f33" executionId="b608050a-02f9-483c-84e0-ac46f899d617" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="14" executed="14" passed="14" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 14]&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.HVACLoadBuildingType.ClosingTime")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.HVACLoadBuildingType.OpeningTime")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.PathOfTravel.PathEnd")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.PathOfTravel.PathStart")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("ColorFillLegend.Origin")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Electrical.CableTray.CurveNormal")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Family.StructuralCodeName")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Family.StructuralFamilyNameKey")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("FamilyInstance.IsWorkPlaneFlipped")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("ImageInstance.EnableSnaps")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("ReferencePlane.FreeEnd")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("SiteLocation.PlaceName")&#xD;
+Test: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.HVACLoadBuildingType.ClosingTime")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.HVACLoadBuildingType.OpeningTime")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.PathOfTravel.PathEnd")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Analysis.PathOfTravel.PathStart")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("ColorFillLegend.Origin")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Electrical.CableTray.CurveNormal")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Family.StructuralCodeName")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Family.StructuralFamilyNameKey")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("FamilyInstance.IsWorkPlaneFlipped")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("ImageInstance.EnableSnaps")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("ReferencePlane.FreeEnd")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("SiteLocation.PlaceName")&#xD;
+	TestFilter: LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement("Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix")&#xD;
+RunRevitTest: C:\LECG\Addin\LECGrvt-integrated\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 14]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 8.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 9 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Analysis.HVACLoadBuildingType.ClosingTime\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Analysis.HVACLoadBuildingType.OpeningTime\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Analysis.MassLevelData.ConceptualConstructionIsByEnergyData\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Analysis.PathOfTravel.PathEnd\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Analysis.PathOfTravel.PathStart\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022ColorFillLegend.Origin\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Electrical.CableTray.CurveNormal\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Family.StructuralCodeName\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Family.StructuralFamilyNameKey\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022FamilyInstance.IsWorkPlaneFlipped\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022ImageInstance.EnableSnaps\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022ReferencePlane.FreeEnd\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022SiteLocation.PlaceName\u0022)","LECG.SetterValidationProbe.NonElementBatch.RunNonElement.RunNonElement(\u0022Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix\u0022)"]&#xD;
+OutputConsole:  Revit 2026: 23165.88 	 RunNonElement("Analysis.HVACLoadBuildingType.ClosingTime")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Analysis.HVACLoadBuildingType.ClosingTime")] 	04301fd3-0151-f3a1-697b-4930b367be34&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 17453.52 	 RunNonElement("Analysis.HVACLoadBuildingType.OpeningTime")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Analysis.HVACLoadBuildingType.OpeningTime")] 	78a070d6-ddb4-fd63-14de-568e622eaffa&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 111590.72 	 RunNonElement("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")] 	b9c83f80-8a90-1eb1-37a1-427dc06c6e49&#xD;
+OutputConsole:  Revit 2026: 16037.77 	 RunNonElement("Analysis.PathOfTravel.PathEnd")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Analysis.PathOfTravel.PathEnd")] 	635ee1aa-8b9d-4ebf-a08c-531c5e41f2fa&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 15590.84 	 RunNonElement("Analysis.PathOfTravel.PathStart")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Analysis.PathOfTravel.PathStart")] 	8fb3fa41-9d54-9ea7-a8b8-c13ff727ba2e&#xD;
+OutputConsole:  Revit 2026: 16020.11 	 RunNonElement("ColorFillLegend.Origin")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("ColorFillLegend.Origin")] 	4d3851eb-33b5-52ce-1d61-e6d6516893da&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 31365.16 	 RunNonElement("Electrical.CableTray.CurveNormal")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Electrical.CableTray.CurveNormal")] 	9547772d-d770-76d9-0978-0043c26d203c&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 17235.94 	 RunNonElement("Family.StructuralCodeName")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Family.StructuralCodeName")] 	0a7f1fb5-c2fa-8738-981b-dff2f4d982bc&#xD;
+OutputConsole:  Revit 2026: 17217.68 	 RunNonElement("Family.StructuralFamilyNameKey")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Family.StructuralFamilyNameKey")] 	c578a2de-8659-8efe-1c7e-3c28edb86ceb&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 73135.31 	 RunNonElement("FamilyInstance.IsWorkPlaneFlipped")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("FamilyInstance.IsWorkPlaneFlipped")] 	b21a460c-9583-361e-7bba-2193cdac38a8&#xD;
+OutputConsole:  Revit 2026: Execution time is 6 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 6.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 7 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 102791.93 	 RunNonElement("ImageInstance.EnableSnaps")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("ImageInstance.EnableSnaps")] 	b74c476c-29d8-13d7-b16b-a23cb2ab5f33&#xD;
+OutputConsole:  Revit 2026: Execution time is 7.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 15988.14 	 RunNonElement("ReferencePlane.FreeEnd")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("ReferencePlane.FreeEnd")] 	1e663851-64c8-c799-f7ae-1b1bc9318047&#xD;
+OutputConsole:  Revit 2026: 15818.01 	 RunNonElement("SiteLocation.PlaceName")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("SiteLocation.PlaceName")] 	64b85136-da05-8a11-fa92-800289fd3703&#xD;
+OutputConsole:  Revit 2026: Execution time is 8 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 16177.01 	 RunNonElement("Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix")[RunNonElement]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.NonElementBatch.RunNonElement [RunNonElement("Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix")] 	ba4effe6-de9b-2505-2581-4d8745519f26&#xD;
+OutputConsole:  Revit 2026: 490297.66 	 SetterValidationProbe 14 True 100% 490297.66ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

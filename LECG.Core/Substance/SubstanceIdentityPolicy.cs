@@ -2,8 +2,9 @@ namespace LECG.Core.Substance;
 
 public static class SubstanceIdentityPolicy
 {
-    public const string Manufacturer = "LECG Arquitectura";
-    public const string Model = "Arq. Luis Eduardo Cortés";
+    public const string Manufacturer = "Grupo Hermosillo";
+    public const string Model = "Core Innovation";
+    public const string Url = "https://hermosillo.com";
 
     public static string Description(SubstanceMaterialEntry entry)
     {

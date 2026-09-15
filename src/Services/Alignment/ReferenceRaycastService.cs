@@ -7,6 +7,9 @@ namespace LECG.Services
     public class ReferenceRaycastService
     {
         private const double RayStartCeiling = 10000.0;
+        // ponytail: Automatic surface discovery is local; expose a user setting only
+        // when a verified project needs valid alignments beyond two vertical feet.
+        private const double MaxVerticalDistance = 2.0;
 
         private const double SearchStep = 0.2;
 
@@ -40,8 +43,12 @@ namespace LECG.Services
 
             XYZ rayStart = new XYZ(pt.X, pt.Y, RayStartCeiling);
             XYZ rayDir = XYZ.BasisZ.Negate();
-            ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);
-            return hit != null ? CreateHitInfo(hit, rayStart, rayDir) : null;
+            return intersector.Find(rayStart, rayDir)
+                .Select(hit => CreateHitInfo(hit, rayStart, rayDir))
+                .Where(hit => Math.Abs(hit.Point.Z - pt.Z) <= MaxVerticalDistance)
+                .OrderBy(hit => Math.Abs(hit.Point.Z - pt.Z))
+                .Cast<AlignEdgesHitInfo?>()
+                .FirstOrDefault();
         }
 
         public AlignEdgesHitInfo? GetNearestHitInfo(ReferenceIntersector intersector, XYZ pt, double maxRadius)

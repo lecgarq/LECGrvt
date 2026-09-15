@@ -1,0 +1,902 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "status": "rejected-with-reason",
+  "stage": "commit",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\IsWorkPlaneFlipped-CA23B09115\\BIM_Projekt_Golden_Nu-CC172C5B28\\disposable.rvt",
+  "rollback_verified": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "60889D5FAD373BF54D067109D29A197588FEC13ECCC651F7E1234BEAA74855F6",
+  "target_count": 3102,
+  "generator_errors": [
+    {
+      "target": "5dc96424-8883-40b3-8448-f8da9f413245-000e31f0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "bf1a257a-10e5-4ca5-88cc-04841c01098d-000eb221",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "8a8d30e2-3819-446f-8697-1c57f4ae0b47-00105b55",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "b08ac03f-685b-4d59-8b74-f1fca2b8b48f-00106683",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "b08ac03f-685b-4d59-8b74-f1fca2b8b48f-001066e0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "b08ac03f-685b-4d59-8b74-f1fca2b8b48f-001077f2",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "b08ac03f-685b-4d59-8b74-f1fca2b8b48f-00107b36",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010a74d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010a94d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010a94f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010a951",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010aa1e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010aead",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010af83",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010afda",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010b313",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010b324",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010b727",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010b734",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010b736",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "175387e9-f543-42fa-af12-f9afdfd27a87-0010b737",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "e0f97e32-98f8-4310-a99d-bf1fbc135fa2-0010c278",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010c4ed",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010cce1",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d54b",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d55e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d57f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d5b0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d5f8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d608",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d62c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010d63c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010f1a7",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "1ce1d4b1-163c-4f9a-b172-7d9334c4f3e2-0010f21c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "ed9d84b3-9576-4b44-be8e-baa34ef355c7-0011378c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "ed9d84b3-9576-4b44-be8e-baa34ef355c7-001137c6",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "ed9d84b3-9576-4b44-be8e-baa34ef355c7-001146d9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "ed9d84b3-9576-4b44-be8e-baa34ef355c7-00114d27",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "ed9d84b3-9576-4b44-be8e-baa34ef355c7-001154ba",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "ed9d84b3-9576-4b44-be8e-baa34ef355c7-001159fe",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "6c7a9d79-2680-4c87-80c5-2090abd334eb-001198d8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "6c7a9d79-2680-4c87-80c5-2090abd334eb-001198da",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "6c7a9d79-2680-4c87-80c5-2090abd334eb-001199d1",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "6c7a9d79-2680-4c87-80c5-2090abd334eb-0011a1d8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011c734",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011c940",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011c9b4",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011ca6d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011ca79",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cab4",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cab6",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cada",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011ccc5",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cd08",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cd2f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cd91",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "f99ef1ce-86a9-4194-b367-5c32bb243ed6-0011cd93",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "073a46a0-2083-4c39-b44c-90aecad3ee52-0012374d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "073a46a0-2083-4c39-b44c-90aecad3ee52-00125387",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "073a46a0-2083-4c39-b44c-90aecad3ee52-001253ee",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "073a46a0-2083-4c39-b44c-90aecad3ee52-00125401",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "073a46a0-2083-4c39-b44c-90aecad3ee52-00127099",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "70fcd6ed-6190-47a5-8ae7-7334ce5881e5-00127508",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "3317796b-e9c6-49af-9bfe-9164d02d8f0d-00127a94",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "3317796b-e9c6-49af-9bfe-9164d02d8f0d-00128333",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "3317796b-e9c6-49af-9bfe-9164d02d8f0d-00129a2b",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "b9d2de8f-f522-4853-ad44-c6c735b7f313-00129f05",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "b9d2de8f-f522-4853-ad44-c6c735b7f313-0012a060",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcdc",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcdf",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fce1",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fce3",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fce5",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fce7",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fce9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fceb",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fced",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcef",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcf1",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcf3",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcf5",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcf7",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcf9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcfb",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcfd",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fcff",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd01",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd0d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd0f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd10",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd11",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd12",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd13",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd14",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd15",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd16",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd17",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd18",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd19",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd1a",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd1b",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd1c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd1d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd1e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd1f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd20",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd21",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd27",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd28",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd29",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd2a",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd2b",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd2c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd2d",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd2e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd2f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd30",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd31",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd32",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd33",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd34",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd35",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd36",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd37",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd38",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fd39",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fdd2",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fdd8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fdd9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fe0f",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fe15",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-0012fe16",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d79",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d7c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d7e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d80",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d82",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d84",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d86",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d88",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d8a",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d8c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d8e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d90",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d92",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d94",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d96",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d98",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d9a",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d9c",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131d9e",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131da0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131da2",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131da4",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131da6",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131da8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131daa",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dac",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc2",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc4",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc5",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc6",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc7",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dc9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dca",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dcb",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dcc",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dcd",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dce",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dcf",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd1",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd2",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd3",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd4",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd5",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd6",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd7",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dd9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dda",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131ddb",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131ddc",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131ddd",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131de8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131de9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dea",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131deb",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dec",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131ded",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dee",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131def",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df0",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df1",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df2",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df3",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df4",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df5",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df6",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df7",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df8",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131df9",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dfa",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dfb",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dfc",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dfd",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dfe",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131dff",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131e00",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    },
+    {
+      "target": "135b46ea-5a1b-43be-9be5-d04693c47b4e-00131e01",
+      "reason": "InapplicableDataException: Work plane cannot be flipped for this instance."
+    }
+  ],
+  "target": "986d7b5e-59c3-4d4a-990f-9f4c22e7a423-00132d60",
+  "before": false,
+  "desired": true,
+  "after_regenerate": true,
+  "commit_status": "RolledBack",
+  "failures": [
+    "Error: Can\u0027t cut instance(s) of 1000 x 700 out of its host."
+  ],
+  "reason": "inner_transaction_not_committed",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 29881,
+    "after_elements": 29881,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 296881,
+    "excluded_readonly_values_after": 296881,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 16655.6001
+}

@@ -172,10 +172,10 @@
                             <TextBlock Style="{StaticResource ToolNameStyle}" Text="Simplify Points"/>
                         </DockPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignEdges" Click="Tool_Click" ToolTip="Align points of one Toposolid to the surface of another.">
+                    <Button Style="{StaticResource ToolCardStyle}" Tag="AlignEdges" Click="Tool_Click" ToolTip="Align boundary and interior slab-shape points to reference surfaces.">
                         <DockPanel>
                             <Image Style="{StaticResource ToolIconStyle}" Source="pack://application:,,,/LECG;component/src/Resources/Images/LecgAlignEdges_32.png"/>
-                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Edges"/>
+                            <TextBlock Style="{StaticResource ToolNameStyle}" Text="Align Surfaces"/>
                         </DockPanel>
                     </Button>
                     <Button Style="{StaticResource ToolCardStyle}" Tag="UpdateContours" Click="Tool_Click" ToolTip="Apply or remove contour display on Toposolids.">

@@ -1,0 +1,137 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+  "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+  "model_sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2",
+  "status": "validated",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\Electrical.CableTray.CurveNormal\\BIM_Projekt_Golden_Nu-242729BD16\\disposable.rvt",
+  "rollback_verified": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "C2F2E5EEF0FEF26ABE2185F82CD5A6082DC0A8696EAD1C93799A2BA75AA0C46F",
+  "target_count": 12,
+  "generator_errors": [],
+  "target": "9ef96ed7-810a-4c84-bf8d-0f8f28aadfdf-0024fff1",
+  "before": [
+    0,
+    0,
+    1
+  ],
+  "desired": [
+    -0,
+    -0,
+    -1
+  ],
+  "after_regenerate": [
+    -0,
+    -0,
+    -1
+  ],
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": [
+    -0,
+    -0,
+    -1
+  ],
+  "reason": null,
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 25027,
+    "after_elements": 25027,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "0d758654-1b80-4489-b866-372919e7fdda-00179f91:parameter-slot:6",
+      "0d758654-1b80-4489-b866-372919e7fdda-00179f91:parameter-slot:7",
+      "0d758654-1b80-4489-b866-372919e7fdda-00179f91:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "0d758654-1b80-4489-b866-372919e7fdda-00179f91:parameter-slot:6",
+      "0d758654-1b80-4489-b866-372919e7fdda-00179f91:parameter-slot:7",
+      "0d758654-1b80-4489-b866-372919e7fdda-00179f91:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 469497,
+    "excluded_readonly_values_after": 469497,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionCommitted",
+      "added": [],
+      "modified": [
+        2424817
+      ],
+      "deleted": []
+    },
+    {
+      "operation": "TransactionGroupRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region",
+    "Warning: Space is not in a properly enclosed region"
+  ],
+  "elapsed_ms": 20314.4189
+}

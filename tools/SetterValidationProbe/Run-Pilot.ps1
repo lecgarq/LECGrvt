@@ -1,4 +1,4 @@
-param([ValidateSet('Pilot','Dedicated','ClassCollectors','Automatic','Restoration','Control','ReadOnly')][string]$Batch = 'Pilot')
+param([ValidateSet('Pilot','Dedicated','ClassCollectors','NonElement','Automatic','Restoration','Control','ReadOnly')][string]$Batch = 'Pilot')
 $ErrorActionPreference = 'Stop'
 $previousDotnetRootX64 = $env:DOTNET_ROOT_X64
 Push-Location $PSScriptRoot
@@ -21,9 +21,10 @@ try {
         & $dotnet build $project --no-restore -p:SkipRevitDeploy=true
         if ($LASTEXITCODE -ne 0) { throw 'Build failed; refusing to run an older binary.' }
         $out = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../docs/review/setter-validation-gate'))
-        $name = $Batch.ToLowerInvariant() + '-' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmss') + '-' + [guid]::NewGuid().ToString('N') + '.trx'
-        $filter = switch($Batch) { 'Pilot' {'FullyQualifiedName~ChangedValuePilot'} 'Dedicated' {'FullyQualifiedName~DedicatedCollectionBatch.RunDedicated'} 'ClassCollectors' {'FullyQualifiedName~ClassCollectorBatch.RunClassCollector'} 'Automatic' {'FullyQualifiedName~AutomaticPersistenceProbe.ProbePersistence'} 'Restoration' {'FullyQualifiedName~RestorationDiagnostic.InspectFailedRestoration'} 'Control' {'FullyQualifiedName~RestorationDiagnostic.InspectNoWriteRestoration'} }
-        $expected = switch($Batch) { 'Pilot' {8} 'Dedicated' {14} 'ClassCollectors' {18} 'Automatic' {1} 'Restoration' {1} 'Control' {1} }
+        $name = $Batch.ToLowerInvariant() + '-' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmss') + '.trx'
+        if (Test-Path -LiteralPath (Join-Path $out $name)) { throw "TRX already exists; refusing to merge runs: $name" }
+        $filter = switch($Batch) { 'Pilot' {'FullyQualifiedName~ChangedValuePilot'} 'Dedicated' {'FullyQualifiedName~DedicatedCollectionBatch.RunDedicated'} 'ClassCollectors' {'FullyQualifiedName~ClassCollectorBatch.RunClassCollector'} 'NonElement' {'FullyQualifiedName~NonElementBatch.RunNonElement'} 'Automatic' {'FullyQualifiedName~AutomaticPersistenceProbe.ProbePersistence'} 'Restoration' {'FullyQualifiedName~RestorationDiagnostic.InspectFailedRestoration'} 'Control' {'FullyQualifiedName~RestorationDiagnostic.InspectNoWriteRestoration'} }
+        $expected = switch($Batch) { 'Pilot' {8} 'Dedicated' {14} 'ClassCollectors' {18} 'NonElement' {14} 'Automatic' {1} 'Restoration' {1} 'Control' {1} }
         if ($Batch -eq 'ReadOnly') { $filter = 'FullyQualifiedName~RestorationDiagnostic.InspectParameterReadOnly'; $expected = 1 }
         if ($Batch -eq 'Control') { $filter += '|FullyQualifiedName~CompatibilityProbe.SnapshotIncludesAllTargetValuesAndOnlyWritableNonTargetValues'; $expected = 2 }
         & $dotnet test $project --no-build --no-restore --filter $filter --logger "trx;LogFileName=$name" --logger 'console;verbosity=normal' --results-directory $out

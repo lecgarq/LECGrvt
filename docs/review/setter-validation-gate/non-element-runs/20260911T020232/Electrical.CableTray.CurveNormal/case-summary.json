@@ -1,0 +1,17 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_existing_target_in_unmodified_sample"
+    },
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "models_planned": 12,
+  "models_attempted": 2
+}

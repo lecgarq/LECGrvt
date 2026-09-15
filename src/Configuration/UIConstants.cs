@@ -61,10 +61,10 @@ namespace LECG.Configuration
         public const string ButtonSimplifyPoints_Text = "Simplify\nPoints";
         public const string ButtonSimplifyPoints_Tooltip = "Remove redundant sub-element points from Toposolids while preserving shape.";
 
-        // Toposolids (Align Edges)
+        // Toposolids (Align Surfaces)
         public const string ButtonAlignEdges_Name = "btnAlignEdges";
-        public const string ButtonAlignEdges_Text = "Align\nEdges";
-        public const string ButtonAlignEdges_Tooltip = "Align points of one Toposolid to the surface of another.";
+        public const string ButtonAlignEdges_Text = "Align\nSurfaces";
+        public const string ButtonAlignEdges_Tooltip = "Align boundary and interior slab-shape points to reference surfaces.";
 
         // Update Contours
         public const string ButtonUpdateContours_Name = "btnUpdateContours";

@@ -75,7 +75,7 @@ namespace LECG.Services
                 {
                     AlignEdgesSourceResult result = _transactionService.Run(
                         doc,
-                        $"Align Edges - {sourceName}",
+                        $"Align Surfaces - {sourceName}",
                         currentDoc => _toposolidProcessingService.Process(currentDoc, r, intersector, referenceIds));
 
                     results.Add(result);

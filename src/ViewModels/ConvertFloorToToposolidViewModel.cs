@@ -21,17 +21,17 @@ namespace LECG.ViewModels
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CanRun))]
-        private ElementType? _selectedType;
+        private ConversionTargetTypeOption? _selectedType;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CanRun))]
-        private Level? _selectedLevel;
+        private ConversionTargetLevelOption? _selectedLevel;
 
         [ObservableProperty]
         private bool _deleteSource = true;
 
-        public ObservableCollection<ElementType> TargetTypes { get; } = new ObservableCollection<ElementType>();
-        public ObservableCollection<Level> Levels { get; } = new ObservableCollection<Level>();
+        public ObservableCollection<ConversionTargetTypeOption> TargetTypes { get; } = new ObservableCollection<ConversionTargetTypeOption>();
+        public ObservableCollection<ConversionTargetLevelOption> Levels { get; } = new ObservableCollection<ConversionTargetLevelOption>();
         public ObservableCollection<ElementRowViewModel> RowItems { get; } = new ObservableCollection<ElementRowViewModel>();
 
         public bool CanRun => _doc != null && SelectedType != null && SelectedLevel != null && Selection.HasSelection;
@@ -62,28 +62,30 @@ namespace LECG.ViewModels
         {
             if (_doc == null) return;
             TargetTypes.Clear();
+            TargetTypes.Add(ConversionTargetTypeOption.CreateType());
             var types = _service.GetToposolidTypes(_doc);
             foreach (var type in types)
             {
-                TargetTypes.Add(type);
+                TargetTypes.Add(ConversionTargetTypeOption.Existing(type));
             }
 
-            if (TargetTypes.Count > 0)
-                SelectedType = TargetTypes[0];
+            SelectedType = TargetTypes.FirstOrDefault(option => !option.CreateFromSource)
+                ?? TargetTypes[0];
         }
 
         private void LoadLevels()
         {
             if (_doc == null) return;
             Levels.Clear();
+            Levels.Add(ConversionTargetLevelOption.PreserveLevel());
             var levels = _service.GetLevels(_doc);
             foreach (var level in levels)
             {
-                Levels.Add(level);
+                Levels.Add(ConversionTargetLevelOption.Existing(level));
             }
 
-            if (Levels.Count > 0)
-                SelectedLevel = Levels[0];
+            SelectedLevel = Levels.FirstOrDefault(option => option.Level != null)
+                ?? Levels[0];
         }
 
         public void SetSelectedElements(IEnumerable<Element> elements)
@@ -115,16 +117,19 @@ namespace LECG.ViewModels
 
                 if (!string.IsNullOrEmpty(sourceTypeName))
                 {
-                    var match = _service.FindMatchingType(sourceTypeName, TargetTypes.ToList<ElementType>());
+                    var match = _service.FindMatchingType(sourceTypeName, TargetTypes
+                        .Where(option => option.ElementType != null)
+                        .Select(option => option.ElementType!)
+                        .ToList());
                     if (match != null)
-                        SelectedType = match;
+                        SelectedType = TargetTypes.First(option => option.ElementType?.Id == match.Id);
                 }
 
                 // Auto-select the level of the first element
                 var sourceLevel = GetElementLevel(selectedElements[0]);
                 if (sourceLevel != null)
                 {
-                    var matchingLevel = Levels.FirstOrDefault(l => l.Id == sourceLevel.Id);
+                    var matchingLevel = Levels.FirstOrDefault(option => option.Level?.Id == sourceLevel.Id);
                     if (matchingLevel != null)
                         SelectedLevel = matchingLevel;
                 }

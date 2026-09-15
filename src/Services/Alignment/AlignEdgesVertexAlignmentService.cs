@@ -16,7 +16,6 @@ namespace LECG.Services
 
         // Radial search constants
         private const double SearchStep = 0.15;
-        private const double RayCeiling = 10000.0;
         private const int MinHitsForPlaneFit = 3;
 
         private const double D45 = 0.70710678118;
@@ -49,13 +48,17 @@ namespace LECG.Services
             _raycastService = raycastService;
         }
 
-        public (int movedCount, int skippedCount, int missCount) AlignVertices(SlabShapeEditor editor, ReferenceIntersector intersector, PathsD? overlapRegion = null)
+        public (int movedCount, int skippedCount, int missCount) AlignVertices(Element slab,
+            SlabShapeEditor editor, ReferenceIntersector intersector,
+            PathsD? overlapRegion = null, bool alignAllInteriorVertices = false)
         {
+            ArgumentNullException.ThrowIfNull(slab);
             ArgumentNullException.ThrowIfNull(editor);
             ArgumentNullException.ThrowIfNull(intersector);
 
             PathsD? activeOverlapRegion = overlapRegion;
             bool hasOverlap = activeOverlapRegion != null && activeOverlapRegion.Count > 0;
+            double referenceElevation = GetReferenceElevation(slab);
 
             int movedCount = 0;
             int skippedCount = 0;
@@ -77,8 +80,9 @@ namespace LECG.Services
                 bool insideOverlap = hasOverlap && activeOverlapRegion != null
                     && ClipperUtils.IsPointInsideRegion(origin.X, origin.Y, activeOverlapRegion);
 
-                // Interior vertices are only aligned when inside the overlap region
-                if (isInterior && !insideOverlap)
+                // Find My Edge has no fixed reference footprint, so its broad intersector
+                // must evaluate every existing interior control point directly.
+                if (isInterior && !insideOverlap && !alignAllInteriorVertices)
                 {
                     continue;
                 }
@@ -90,7 +94,9 @@ namespace LECG.Services
                     continue;
                 }
 
-                var (hitZ, hitElementId) = TryDirectRay(intersector, origin);
+                AlignEdgesHitInfo? directHit = _raycastService.GetHitInfo(intersector, origin);
+                double? hitZ = directHit?.Point.Z;
+                ElementId? hitElementId = directHit?.ElementId;
 
                 if (hitZ.HasValue)
                 {
@@ -104,7 +110,7 @@ namespace LECG.Services
 
                     if (Math.Abs(delta) > MinDeltaThreshold)
                     {
-                        if (TryModifyVertex(editor, v, delta)) movedCount++;
+                        if (TryModifyVertex(editor, v, hitZ.Value - referenceElevation)) movedCount++;
                     }
                     else
                     {
@@ -132,7 +138,7 @@ namespace LECG.Services
 
                     if (Math.Abs(delta) > MinDeltaThreshold)
                     {
-                        if (TryModifyVertex(editor, vertex, delta)) movedCount++;
+                        if (TryModifyVertex(editor, vertex, z.Value - referenceElevation)) movedCount++;
                     }
                     else
                     {
@@ -164,7 +170,8 @@ namespace LECG.Services
                     double delta = interpolatedZ.Value - pos.Z;
                     if (Math.Abs(delta) > MinDeltaThreshold)
                     {
-                        if (TryModifyVertex(editor, vertex, delta)) movedCount++;
+                        if (TryModifyVertex(editor, vertex,
+                            interpolatedZ.Value - referenceElevation)) movedCount++;
                     }
                     else
                     {
@@ -181,33 +188,13 @@ namespace LECG.Services
         }
 
         /// <summary>
-        /// Direct vertical ray downward from a high ceiling.
-        /// Returns the hit Z and the element ID for reference tracking.
-        /// </summary>
-        private static (double? z, ElementId? elementId) TryDirectRay(ReferenceIntersector intersector, XYZ origin)
-        {
-            XYZ rayStart = new XYZ(origin.X, origin.Y, RayCeiling);
-            XYZ rayDir = XYZ.BasisZ.Negate();
-            ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);
-
-            if (hit != null)
-            {
-                XYZ hitPoint = rayStart.Add(rayDir.Multiply(hit.Proximity));
-                ElementId elemId = hit.GetReference()?.ElementId ?? ElementId.InvalidElementId;
-                return (hitPoint.Z, elemId);
-            }
-
-            return (null, null);
-        }
-
-        /// <summary>
         /// Radial search with least-squares plane fitting.
         /// Fires rays in 16 directions at expanding radii, collects hits,
         /// fits a plane Z = a*dx + b*dy + c (where dx/dy are offsets from vertex),
         /// and evaluates at the vertex center (dx=0, dy=0).
         /// This gives the exact surface Z even when hits are asymmetrically distributed (edges/corners).
         /// </summary>
-        private static double? RadialSearchPlaneFit(
+        private double? RadialSearchPlaneFit(
             ReferenceIntersector intersector, XYZ pt, double maxRadius,
             HashSet<ElementId> allowedIds)
         {
@@ -227,19 +214,17 @@ namespace LECG.Services
                     double dx = dir.X * r;
                     double dy = dir.Y * r;
 
-                    XYZ rayStart = new XYZ(pt.X + dx, pt.Y + dy, RayCeiling);
-                    XYZ rayDir = XYZ.BasisZ.Negate();
-                    ReferenceWithContext hit = intersector.FindNearest(rayStart, rayDir);
-
-                    if (hit == null) continue;
+                    XYZ sample = new XYZ(pt.X + dx, pt.Y + dy, pt.Z);
+                    AlignEdgesHitInfo? hit = _raycastService.GetHitInfo(intersector, sample);
+                    if (!hit.HasValue) continue;
 
                     if (filterByElement)
                     {
-                        ElementId hitId = hit.GetReference()?.ElementId ?? ElementId.InvalidElementId;
+                        ElementId hitId = hit.Value.ElementId;
                         if (!allowedIds.Contains(hitId)) continue;
                     }
 
-                    double z = RayCeiling - hit.Proximity;
+                    double z = hit.Value.Point.Z;
 
                     sumDx += dx;
                     sumDy += dy;
@@ -358,17 +343,28 @@ namespace LECG.Services
             return weightSum > 0 ? zWeighted / weightSum : null;
         }
 
-        private static bool TryModifyVertex(SlabShapeEditor editor, SlabShapeVertex vertex, double delta)
+        private static bool TryModifyVertex(SlabShapeEditor editor, SlabShapeVertex vertex,
+            double targetOffset)
         {
             try
             {
-                editor.ModifySubElement(vertex, delta);
+                editor.ModifySubElement(vertex, targetOffset);
                 return true;
             }
             catch (Exception ex) when (IsExpectedAlignEdgesException(ex))
             {
                 return false;
             }
+        }
+
+        private static double GetReferenceElevation(Element slab)
+        {
+            Level? level = slab.Document.GetElement(slab.LevelId) as Level;
+            double levelElevation = level?.Elevation ?? 0.0;
+            Parameter? height = slab is Floor
+                ? slab.get_Parameter(BuiltInParameter.FLOOR_HEIGHTABOVELEVEL_PARAM)
+                : slab.get_Parameter(BuiltInParameter.TOPOSOLID_HEIGHTABOVELEVEL_PARAM);
+            return levelElevation + (height?.AsDouble() ?? 0.0);
         }
 
         private static bool IsExpectedAlignEdgesException(Exception ex)

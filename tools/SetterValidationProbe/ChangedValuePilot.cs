@@ -62,7 +62,8 @@ public abstract class SetterHarness
         Require(Hash(Path.Combine(Evidence, "elementid-classification.csv")) == m.GetProperty("classification_sha256").GetString(), "Classification changed.");
         var model = m.GetProperty("models").EnumerateArray().Single(x => x.GetProperty("name").GetString() == m.GetProperty("pilot_model").GetString());
         UseModel(model.GetProperty("name").GetString()!);
-        RunDirectory = Path.Combine(Evidence, RunKind, DateTime.UtcNow.ToString("yyyyMMddTHHmmss") + "-" + Guid.NewGuid().ToString("N"));
+        RunDirectory = Path.Combine(Evidence, RunKind, DateTime.UtcNow.ToString("yyyyMMddTHHmmss"));
+        Require(!Directory.Exists(RunDirectory), "Evidence run directory already exists; refusing to merge runs.");
         Directory.CreateDirectory(RunDirectory);
         var binaries = new[] { typeof(Element).Assembly.Location, typeof(UIApplication).Assembly.Location,
             Assembly.GetExecutingAssembly().Location, typeof(Assert).Assembly.Location, Process.GetCurrentProcess().MainModule!.FileName };

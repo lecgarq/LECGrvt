@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Visual;
+using LECG.Core.Substance;
 using LECG.Models;
 using LECG.Services.Interfaces;
 using RevitExceptions = Autodesk.Revit.Exceptions;
@@ -107,8 +108,9 @@ namespace LECG.Services
                 TrySetDescription(material, "LECG Arquitectura");
                 logCallback?.Invoke($"    -> Material description set");
 
-                TrySetParameter(material, BuiltInParameter.ALL_MODEL_MODEL, "Arq. Luis Eduardo Cort\u00e9s");
-                TrySetParameter(material, BuiltInParameter.ALL_MODEL_MANUFACTURER, "LECG Arquitectura");
+                TrySetParameter(material, BuiltInParameter.ALL_MODEL_MODEL, SubstanceIdentityPolicy.Model);
+                TrySetParameter(material, BuiltInParameter.ALL_MODEL_MANUFACTURER, SubstanceIdentityPolicy.Manufacturer);
+                TrySetParameter(material, BuiltInParameter.ALL_MODEL_URL, SubstanceIdentityPolicy.Url);
 
                 return newId;
             });

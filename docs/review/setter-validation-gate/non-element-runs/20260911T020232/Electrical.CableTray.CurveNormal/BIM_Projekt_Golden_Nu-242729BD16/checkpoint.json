@@ -1,0 +1,16 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+  "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+  "model_sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\Electrical.CableTray.CurveNormal\\BIM_Projekt_Golden_Nu-242729BD16\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "C2F2E5EEF0FEF26ABE2185F82CD5A6082DC0A8696EAD1C93799A2BA75AA0C46F",
+  "target_count": 12,
+  "generator_errors": []
+}

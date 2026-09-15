@@ -20,7 +20,7 @@ namespace LECG.ViewModels
 
         public AlignEdgesViewModel()
         {
-            Title = "ALIGN EDGES";
+            Title = "ALIGN SURFACES";
 
             TargetsSelection.ElementName = "Source slabs";
             ReferenceSelection.ElementName = "Reference slabs";

@@ -65,10 +65,12 @@ namespace LECG.Commands
             service.ConvertToposolidToFloor(
                 doc,
                 elements,
-                vm.SelectedType!.Id,
-                vm.SelectedLevel!.Id,
+                vm.SelectedType!.ElementType?.Id ?? ElementId.InvalidElementId,
+                vm.SelectedLevel!.Level?.Id ?? ElementId.InvalidElementId,
                 vm.DeleteSource,
-                reporter);
+                reporter,
+                vm.SelectedType.CreateFromSource,
+                vm.SelectedLevel.PreserveSourceLevel);
 
             UpdateProgress(100, "Complete");
         }

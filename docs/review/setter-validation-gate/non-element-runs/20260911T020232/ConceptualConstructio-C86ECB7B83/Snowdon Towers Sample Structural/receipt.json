@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+  "model": "Snowdon Towers Sample Structural.rvt",
+  "model_sha256": "457DC470A13B65B655C7C2AE308A8EFF6E8403C779200AC49AC3C79B83306D4F",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\ConceptualConstructio-C86ECB7B83\\Snowdon Towers Sample Structural\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "70AFA4FA9CB988B19833939820AD5D3B117A6587650E65DAD7F63C2BEBFC0D7A",
+  "target_count": 0,
+  "generator_errors": [],
+  "reason": "no_existing_target_in_unmodified_sample",
+  "opening_warnings": [],
+  "elapsed_ms": 5985.8426
+}

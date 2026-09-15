@@ -123,9 +123,50 @@ internal static class PilotValues
                     circuit.BaseEquipment.get_Parameter(BuiltInParameter.RBS_ELEC_PANEL_FEED_THRU_LUGS_PARAM)?.AsInteger() == 1)
                     return CircuitConnectionType.FeedThruLugs;
                 return null;
+            case "Analysis.HVACLoadBuildingType.ClosingTime":
+                return (string)before == "16:30" ? "04:30" : "16:30";
+            case "Analysis.HVACLoadBuildingType.OpeningTime":
+                return (string)before == "04:30" ? "16:30" : "04:30";
+            case "Analysis.MassLevelData.ConceptualConstructionIsByEnergyData":
+                return !(bool)before;
+            case "Analysis.PathOfTravel.PathEnd":
+                return PathPoint((PathOfTravel)target, (XYZ)before, ((PathOfTravel)target).PathStart);
+            case "Analysis.PathOfTravel.PathStart":
+                return PathPoint((PathOfTravel)target, (XYZ)before, ((PathOfTravel)target).PathEnd);
+            case "ColorFillLegend.Origin":
+                var view = doc.GetElement(target.OwnerViewId) as View;
+                return view is null ? null : CheckedPoint((XYZ)before + view.RightDirection, (XYZ)before);
+            case "Electrical.CableTray.CurveNormal":
+                var normal = (XYZ)before;
+                return normal.IsZeroLength() ? null : normal.Negate();
+            case "Family.StructuralCodeName":
+            case "Family.StructuralFamilyNameKey":
+            case "SiteLocation.PlaceName":
+                return (string)before + " LECG";
+            case "FamilyInstance.IsWorkPlaneFlipped":
+                return ((FamilyInstance)target).CanFlipWorkPlane ? !(bool)before : null;
+            case "ImageInstance.EnableSnaps":
+                return ((ImageInstance)target).CanHaveSnaps ? !(bool)before : null;
+            case "ReferencePlane.FreeEnd":
+                var referencePlane = (ReferencePlane)target;
+                return CheckedPoint((XYZ)before + ((XYZ)before - referencePlane.BubbleEnd), (XYZ)before);
+            case "Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix":
+                return (string)before == "A" ? "B" : "A";
             default: throw new InvalidOperationException("Property is outside the preregistered cases.");
         }
     }
+
+    private static XYZ? PathPoint(PathOfTravel path, XYZ before, XYZ opposite)
+    {
+        if (path.GroupId != ElementId.InvalidElementId) return null;
+        var point = new XYZ(before.X + before.X - opposite.X,
+            before.Y + before.Y - opposite.Y, before.Z);
+        return CheckedPoint(point, before);
+    }
+
+    private static XYZ? CheckedPoint(XYZ point, XYZ before) =>
+        double.IsFinite(point.X) && double.IsFinite(point.Y) && double.IsFinite(point.Z)
+        && XYZ.IsWithinLengthLimits(point) && !point.IsAlmostEqualTo(before) ? point : null;
 
     private static ElementId? Alternative(IEnumerable<ElementId> eligible, object before) => eligible
         .Where(id => id.Value != ((ElementId)before).Value).OrderBy(id => id.Value).FirstOrDefault();

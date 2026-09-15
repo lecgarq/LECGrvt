@@ -1,0 +1,19 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "model_sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\Addin\\LECGrvt-integrated\\docs\\review\\setter-validation-gate\\non-element-runs\\20260911T020232\\ConceptualConstructio-C86ECB7B83\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320\\disposable.rvt",
+  "rollback_verified": false,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "4E543B061333FF5050399962479F998A391EDB9F44AE6379385D31D50ADFCAAB",
+  "target_count": 0,
+  "generator_errors": [],
+  "reason": "no_existing_target_in_unmodified_sample",
+  "opening_warnings": [],
+  "elapsed_ms": 8019.2294
+}

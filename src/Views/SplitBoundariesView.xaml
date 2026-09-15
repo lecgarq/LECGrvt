@@ -3,8 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:base="clr-namespace:LECG.Views.Base"
     xmlns:comp="clr-namespace:LECG.Views.Components"
-    xmlns:controls="clr-namespace:LECG.Controls"
-    xmlns:icons="clr-namespace:LECG.Utilities" Title="SPLIT BOUNDARIES" Width="420" Height="520" MinWidth="360" MinHeight="460" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Layers}">
+    xmlns:icons="clr-namespace:LECG.Utilities" Title="SPLIT BOUNDARIES" Width="520" Height="570" MinWidth="420" MinHeight="500" UseLayoutRounding="True" SnapsToDevicePixels="True" WindowIcon="{x:Static icons:Icons.Layers}">
 
     <base:LecgWindow.Resources>
         <ResourceDictionary>
@@ -31,14 +30,23 @@
         <!-- Selection -->
         <Border Grid.Row="1" Padding="16" Margin="{DynamicResource HeaderMarginSmall}">
             <StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
-                    <Border Style="{DynamicResource AccentBarStyle}"/>
-                    <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
-                </StackPanel>
+                <Grid Margin="0,0,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Style="{DynamicResource AccentBarStyle}"/>
+                        <TextBlock Text="SELECTION" Style="{DynamicResource SectionHeaderStyle}" Margin="0"/>
+                    </StackPanel>
+                    <Button Grid.Column="1" Content="Inspect Model" Click="Inspect_Click"
+                            MinWidth="112" Height="32" Style="{DynamicResource SecondaryButtonStyle}"
+                            ToolTip="Find all Floors and Toposolids with independent boundary islands"/>
+                </Grid>
+                <TextBlock Text="{Binding InspectionStatus}" TextWrapping="Wrap"
+                           FontSize="{DynamicResource FontSizeExtraSmall}"
+                           Foreground="{DynamicResource LecgTextMuted}" Margin="0,0,0,6"/>
                 <comp:SelectionControl DataContext="{Binding Selection}" Margin="0,0,0,12"/>
-                <Border Background="{DynamicResource LecgSurfaceBackground}" BorderBrush="{DynamicResource LecgBorderLight}" BorderThickness="1" CornerRadius="{DynamicResource ContentCornerRadius}" Padding="8">
-                    <controls:ElementGridControl RowItems="{Binding RowItems}" Height="160"/>
-                </Border>
             </StackPanel>
         </Border>
 

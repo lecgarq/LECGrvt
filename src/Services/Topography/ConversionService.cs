@@ -11,19 +11,20 @@ namespace LECG.Services
     {
         private readonly ITransactionService _transactionService;
         private readonly GeometryBoundaryService _boundaryService;
-        private readonly SlabService _slabService;
+        private readonly SplitBoundariesService _surfaceTransferService;
 
         public ConversionService(
             ITransactionService transactionService,
             GeometryBoundaryService boundaryService,
-            SlabService slabService)
+            SplitBoundariesService surfaceTransferService)
         {
             _transactionService = transactionService;
             _boundaryService = boundaryService;
-            _slabService = slabService;
+            _surfaceTransferService = surfaceTransferService;
         }
 
-        public void ConvertFloorToToposolid(Document doc, IList<Element> floors, ElementId toposolidTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter)
+        public void ConvertFloorToToposolid(Document doc, IList<Element> floors, ElementId toposolidTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter,
+            bool createTypeFromSource = false, bool preserveSourceLevel = false)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(floors);
@@ -33,7 +34,8 @@ namespace LECG.Services
 
             int successCount = 0;
             int failCount = 0;
-            string targetTypeName = GetElementName(doc, toposolidTypeId);
+            string targetTypeName = createTypeFromSource ? "Create Type" : GetElementName(doc, toposolidTypeId);
+            var createdTypeIds = new Dictionary<long, ElementId>();
 
             for (int i = 0; i < floors.Count; i++)
             {
@@ -47,7 +49,9 @@ namespace LECG.Services
 
                 try
                 {
-                    ConvertSingleFloorToToposolid(doc, floor, toposolidTypeId, levelId, deleteSource, reporter);
+                    ConvertSingleFloorToToposolid(doc, floor, toposolidTypeId, levelId,
+                        deleteSource, reporter, createTypeFromSource, preserveSourceLevel,
+                        createdTypeIds);
                     successCount++;
                 }
                 catch (Exception ex) when (IsExpectedConversionException(ex))
@@ -60,7 +64,8 @@ namespace LECG.Services
             reporter.Log($"Conversion complete: {successCount} succeeded, {failCount} failed.");
         }
 
-        public void ConvertToposolidToFloor(Document doc, IList<Element> toposolids, ElementId floorTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter)
+        public void ConvertToposolidToFloor(Document doc, IList<Element> toposolids, ElementId floorTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter,
+            bool createTypeFromSource = false, bool preserveSourceLevel = false)
         {
             ArgumentNullException.ThrowIfNull(doc);
             ArgumentNullException.ThrowIfNull(toposolids);
@@ -70,7 +75,8 @@ namespace LECG.Services
 
             int successCount = 0;
             int failCount = 0;
-            string targetTypeName = GetElementName(doc, floorTypeId);
+            string targetTypeName = createTypeFromSource ? "Create Type" : GetElementName(doc, floorTypeId);
+            var createdTypeIds = new Dictionary<long, ElementId>();
 
             for (int i = 0; i < toposolids.Count; i++)
             {
@@ -84,7 +90,9 @@ namespace LECG.Services
 
                 try
                 {
-                    ConvertSingleToposolidToFloor(doc, toposolid, floorTypeId, levelId, deleteSource, reporter);
+                    ConvertSingleToposolidToFloor(doc, toposolid, floorTypeId, levelId,
+                        deleteSource, reporter, createTypeFromSource, preserveSourceLevel,
+                        createdTypeIds);
                     successCount++;
                 }
                 catch (Exception ex) when (IsExpectedConversionException(ex))
@@ -149,11 +157,29 @@ namespace LECG.Services
         // Floor -> Toposolid
         // ============================================
 
-        private void ConvertSingleFloorToToposolid(Document doc, Element floor, ElementId toposolidTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter)
+        private void ConvertSingleFloorToToposolid(Document doc, Element floor,
+            ElementId toposolidTypeId, ElementId levelId, bool deleteSource,
+            IProgressReporter reporter, bool createTypeFromSource,
+            bool preserveSourceLevel, IDictionary<long, ElementId> createdTypeIds)
         {
             ElementId originalId = floor.Id;
-            Level targetLevel = doc.GetElement(levelId) as Level ?? throw new InvalidOperationException("Target level not found.");
-            string targetTypeName = GetElementName(doc, toposolidTypeId);
+            ElementId sourceTypeId = floor.GetTypeId();
+            ElementId targetLevelId = preserveSourceLevel
+                ? GetElementLevel(floor)?.Id
+                    ?? throw new InvalidOperationException($"Source level not found for element ID {floor.Id}.")
+                : levelId;
+            Level targetLevel = doc.GetElement(targetLevelId) as Level
+                ?? throw new InvalidOperationException("Target level not found.");
+            ElementId resolvedTypeId = createTypeFromSource
+                ? ElementId.InvalidElementId
+                : toposolidTypeId;
+            if (createTypeFromSource
+                && createdTypeIds.TryGetValue(sourceTypeId.Value, out ElementId? cachedTypeId)
+                && cachedTypeId != null)
+                resolvedTypeId = cachedTypeId;
+            string targetTypeName = createTypeFromSource
+                ? $"type created from '{GetElementName(doc, sourceTypeId)}'"
+                : GetElementName(doc, resolvedTypeId);
 
             // 1. Extract geometry data before any transactions
             IList<CurveLoop> loops = _boundaryService.AlignLoopsToCommonPlane(_boundaryService.ExtractLoops(floor));
@@ -163,40 +189,73 @@ namespace LECG.Services
                 return;
             }
 
-            List<XYZ> interiorPoints = _slabService.GetInteriorVertexPositions(floor);
-
+            var source = (Floor)floor;
+            SplitBoundariesService.SurfaceTransferSnapshot surface =
+                _surfaceTransferService.CaptureSurfaceTransfer(source);
+            List<CurveLoop> transferProfile = _surfaceTransferService.PrepareSurfaceTransferProfile(
+                loops, surface, doc.Application.ShortCurveTolerance);
             double targetHeightOffset = GetTargetHeightOffset(doc, floor, targetLevel);
+            bool sourceWasPinned = floor.Pinned;
+            ElementId createdTypeId = ElementId.InvalidElementId;
 
-            // 2. Build absolute-Z points for Toposolid.Create
-            //    Toposolid.Create expects interior points with absolute Z coordinates
-            IList<XYZ> topoPoints = BuildAbsolutePoints(interiorPoints, targetLevel.Elevation, targetHeightOffset);
-
-            // 3. Create Toposolid in a single transaction
             _transactionService.Run(doc, "Convert Floor to Toposolid", currentDoc =>
             {
-                Toposolid newToposolid = Toposolid.Create(currentDoc, loops, topoPoints, toposolidTypeId, levelId);
+                if (createTypeFromSource && resolvedTypeId == ElementId.InvalidElementId)
+                {
+                    createdTypeId = CreateTypeFromSource(
+                        currentDoc, floor, typeof(ToposolidType), reporter);
+                    resolvedTypeId = createdTypeId;
+                    targetTypeName = GetElementName(currentDoc, resolvedTypeId);
+                }
 
-                // Set height offset on the new Toposolid
+                Toposolid newToposolid = Toposolid.Create(
+                    currentDoc, transferProfile, resolvedTypeId, targetLevelId);
                 SetHeightOffset(newToposolid, targetHeightOffset);
+                currentDoc.Regenerate();
+                _surfaceTransferService.RestoreTransferredSurface(
+                    currentDoc, newToposolid, transferProfile, surface, reporter);
+                newToposolid.Pinned = sourceWasPinned;
 
-                reporter.Log($"Floor ID {originalId} -> Toposolid ID {newToposolid.Id} | type '{targetTypeName}' | level '{targetLevel.Name}' | vertex count {interiorPoints.Count}");
+                reporter.Log($"Floor ID {originalId} -> Toposolid ID {newToposolid.Id} | type '{targetTypeName}' | level '{targetLevel.Name}' | preserved shape points {surface.Vertices.Count}");
 
                 if (deleteSource)
                 {
+                    if (floor.Pinned) floor.Pinned = false;
                     currentDoc.Delete(originalId);
                     reporter.Log($"  Deleted source floor ID {originalId}");
                 }
             });
+
+            if (createdTypeId != ElementId.InvalidElementId)
+                createdTypeIds[sourceTypeId.Value] = createdTypeId;
         }
 
         // ============================================
         // Toposolid -> Floor
         // ============================================
 
-        private void ConvertSingleToposolidToFloor(Document doc, Element toposolid, ElementId floorTypeId, ElementId levelId, bool deleteSource, IProgressReporter reporter)
+        private void ConvertSingleToposolidToFloor(Document doc, Element toposolid,
+            ElementId floorTypeId, ElementId levelId, bool deleteSource,
+            IProgressReporter reporter, bool createTypeFromSource,
+            bool preserveSourceLevel, IDictionary<long, ElementId> createdTypeIds)
         {
-            Level targetLevel = doc.GetElement(levelId) as Level ?? throw new InvalidOperationException("Target level not found.");
-            string targetTypeName = GetElementName(doc, floorTypeId);
+            ElementId sourceTypeId = toposolid.GetTypeId();
+            ElementId targetLevelId = preserveSourceLevel
+                ? GetElementLevel(toposolid)?.Id
+                    ?? throw new InvalidOperationException($"Source level not found for element ID {toposolid.Id}.")
+                : levelId;
+            Level targetLevel = doc.GetElement(targetLevelId) as Level
+                ?? throw new InvalidOperationException("Target level not found.");
+            ElementId resolvedTypeId = createTypeFromSource
+                ? ElementId.InvalidElementId
+                : floorTypeId;
+            if (createTypeFromSource
+                && createdTypeIds.TryGetValue(sourceTypeId.Value, out ElementId? cachedTypeId)
+                && cachedTypeId != null)
+                resolvedTypeId = cachedTypeId;
+            string targetTypeName = createTypeFromSource
+                ? $"type created from '{GetElementName(doc, sourceTypeId)}'"
+                : GetElementName(doc, resolvedTypeId);
 
             // 1. Extract geometry data before any transactions
             IList<CurveLoop> loops = _boundaryService.AlignLoopsToCommonPlane(_boundaryService.ExtractLoops(toposolid));
@@ -206,16 +265,29 @@ namespace LECG.Services
                 return;
             }
 
-            List<XYZ> interiorPoints = _slabService.GetInteriorVertexPositions(toposolid);
-
+            var source = (Toposolid)toposolid;
+            SplitBoundariesService.SurfaceTransferSnapshot surface =
+                _surfaceTransferService.CaptureSurfaceTransfer(source);
+            List<CurveLoop> transferProfile = _surfaceTransferService.PrepareSurfaceTransferProfile(
+                loops, surface, doc.Application.ShortCurveTolerance);
             double targetHeightOffset = GetTargetHeightOffset(doc, toposolid, targetLevel);
+            bool sourceWasPinned = toposolid.Pinned;
+            ElementId createdTypeId = ElementId.InvalidElementId;
 
             _transactionService.Run(doc, "Convert Toposolid to Floor", currentDoc =>
             {
                 try
                 {
-                    reporter.Log($"  Step 1: Creating floor with {loops.Count} loops...");
-                    Floor newFloor = Floor.Create(currentDoc, loops, floorTypeId, levelId);
+                    if (createTypeFromSource && resolvedTypeId == ElementId.InvalidElementId)
+                    {
+                        createdTypeId = CreateTypeFromSource(
+                            currentDoc, toposolid, typeof(FloorType), reporter);
+                        resolvedTypeId = createdTypeId;
+                        targetTypeName = GetElementName(currentDoc, resolvedTypeId);
+                    }
+
+                    reporter.Log($"  Step 1: Creating floor with {transferProfile.Count} loops...");
+                    Floor newFloor = Floor.Create(currentDoc, transferProfile, resolvedTypeId, targetLevelId);
                     if (newFloor == null) throw new InvalidOperationException("Revit returned null when creating the floor.");
 
                     // CRITICAL: Regenerate document to ensure the new floor's geometry and SlabShapeEditor are initialized
@@ -227,26 +299,17 @@ namespace LECG.Services
                     reporter.Log("  Step 3: Setting height offset...");
                     SetHeightOffset(newFloor, targetHeightOffset);
 
-                    if (interiorPoints.Count > 0)
-                    {
-                        reporter.Log($"  Step 4: Applying {interiorPoints.Count} shape points...");
-                        SlabShapeEditor? editor = _slabService.GetEditor(newFloor);
-                        if (editor != null)
-                        {
-                            if (!editor.IsEnabled) editor.Enable();
-                            foreach (XYZ vertex in interiorPoints)
-                            {
-                                double relativeZ = vertex.Z - (targetLevel.Elevation + targetHeightOffset);
-                                editor.AddPoint(new XYZ(vertex.X, vertex.Y, relativeZ));
-                            }
-                        }
-                    }
+                    reporter.Log($"  Step 4: Restoring {surface.Vertices.Count} shape points...");
+                    _surfaceTransferService.RestoreTransferredSurface(
+                        currentDoc, newFloor, transferProfile, surface, reporter);
+                    newFloor.Pinned = sourceWasPinned;
 
                     reporter.Log($"  Step 5: Completion check for Toposolid ID {toposolid.Id} -> Floor ID {newFloorId}");
 
                     if (deleteSource)
                     {
                         reporter.Log($"  Step 6: Deleting source element {toposolid.Id}...");
+                        if (toposolid.Pinned) toposolid.Pinned = false;
                         currentDoc.Delete(toposolid.Id);
                     }
                 }
@@ -256,11 +319,162 @@ namespace LECG.Services
                     throw; // Rethrow to be caught by the outer loop
                 }
             });
+
+            if (createdTypeId != ElementId.InvalidElementId)
+                createdTypeIds[sourceTypeId.Value] = createdTypeId;
         }
 
         // ============================================
         // Helpers
         // ============================================
+
+        private static ElementId CreateTypeFromSource(Document doc, Element sourceElement,
+            Type targetTypeClass, IProgressReporter reporter)
+        {
+            var sourceType = doc.GetElement(sourceElement.GetTypeId()) as HostObjAttributes
+                ?? throw new InvalidOperationException(
+                    $"Source type not found for element ID {sourceElement.Id}.");
+            CompoundStructure sourceStructure = sourceType.GetCompoundStructure()
+                ?? throw new InvalidOperationException(
+                    $"Source type '{sourceType.Name}' has no compound structure to copy.");
+
+            HostObjAttributes? seedType = new FilteredElementCollector(doc)
+                .OfClass(targetTypeClass)
+                .Cast<HostObjAttributes>()
+                .Where(type => type is not FloorType floorType || !floorType.IsFoundationSlab)
+                .OrderBy(type => type.Name)
+                .FirstOrDefault();
+            if (seedType == null)
+            {
+                string targetLabel = targetTypeClass == typeof(FloorType) ? "Floor" : "Toposolid";
+                throw new InvalidOperationException(
+                    $"No {targetLabel} type is available to use as the base for Create Type.");
+            }
+
+            string newTypeName = GetUniqueTypeName(doc, targetTypeClass, sourceType.Name);
+            var createdType = seedType.Duplicate(newTypeName) as HostObjAttributes
+                ?? throw new InvalidOperationException(
+                    $"Revit could not create target type '{newTypeName}'.");
+            CompoundStructure targetStructure = BuildTargetCompoundStructure(
+                sourceStructure, seedType);
+            if (!targetStructure.IsValid(doc,
+                    out IDictionary<int, CompoundStructureError>? structureErrors,
+                    out IDictionary<int, int>? twoLayerErrors))
+            {
+                string details = structureErrors == null || structureErrors.Count == 0
+                    ? "unknown compound-structure error"
+                    : string.Join(", ", structureErrors
+                        .OrderBy(entry => entry.Key)
+                        .Select(entry => $"layer {entry.Key}: {entry.Value}"));
+                if (twoLayerErrors != null && twoLayerErrors.Count > 0)
+                {
+                    details += "; region ordering " + string.Join(", ",
+                        twoLayerErrors.Select(entry => $"{entry.Key}->{entry.Value}"));
+                }
+                throw new InvalidOperationException(
+                    $"The source layers cannot form a valid target type: {details}.");
+            }
+            createdType.SetCompoundStructure(targetStructure);
+            VerifyCompoundStructure(sourceType, createdType);
+
+            IList<CompoundStructureLayer> layers = sourceStructure.GetLayers();
+            reporter.Log($"  Created type '{newTypeName}' with {layers.Count} source layers "
+                + $"and total thickness {sourceStructure.GetWidth():F6}.");
+            return createdType.Id;
+        }
+
+        private static CompoundStructure BuildTargetCompoundStructure(
+            CompoundStructure sourceStructure, HostObjAttributes seedType)
+        {
+            CompoundStructure targetStructure = seedType.GetCompoundStructure()
+                ?? throw new InvalidOperationException(
+                    $"Base target type '{seedType.Name}' has no compound structure.");
+
+            // Revit stores category-specific end-cap data in a compound structure. Starting with
+            // the target category's valid structure and resetting its layers preserves those
+            // target-only settings while transferring the complete ordered physical layer list.
+            List<CompoundStructureLayer> layers = sourceStructure.GetLayers()
+                .Select(layer => new CompoundStructureLayer(layer))
+                .ToList();
+            targetStructure.SetLayers(layers);
+            targetStructure.SetNumberOfShellLayers(
+                ShellLayerType.Exterior,
+                sourceStructure.GetNumberOfShellLayers(ShellLayerType.Exterior));
+            targetStructure.SetNumberOfShellLayers(
+                ShellLayerType.Interior,
+                sourceStructure.GetNumberOfShellLayers(ShellLayerType.Interior));
+            if (sourceStructure.VariableLayerIndex >= 0)
+                targetStructure.VariableLayerIndex = sourceStructure.VariableLayerIndex;
+            if (sourceStructure.StructuralMaterialIndex >= 0)
+                targetStructure.StructuralMaterialIndex = sourceStructure.StructuralMaterialIndex;
+            return targetStructure;
+        }
+
+        private static string GetUniqueTypeName(Document doc, Type targetTypeClass,
+            string sourceTypeName)
+        {
+            var existingNames = new FilteredElementCollector(doc)
+                .OfClass(targetTypeClass)
+                .Cast<ElementType>()
+                .Select(type => type.Name)
+                .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+            if (!existingNames.Contains(sourceTypeName))
+                return sourceTypeName;
+
+            string convertedName = $"{sourceTypeName} (Converted)";
+            if (!existingNames.Contains(convertedName))
+                return convertedName;
+
+            int suffix = 2;
+            while (existingNames.Contains($"{sourceTypeName} (Converted {suffix})"))
+                suffix++;
+            return $"{sourceTypeName} (Converted {suffix})";
+        }
+
+        private static void VerifyCompoundStructure(HostObjAttributes sourceType,
+            HostObjAttributes targetType)
+        {
+            CompoundStructure sourceStructure = sourceType.GetCompoundStructure()
+                ?? throw new InvalidOperationException("Source compound structure is unavailable.");
+            CompoundStructure targetStructure = targetType.GetCompoundStructure()
+                ?? throw new InvalidOperationException(
+                    $"Created type '{targetType.Name}' has no compound structure.");
+            IList<CompoundStructureLayer> sourceLayers = sourceStructure.GetLayers();
+            IList<CompoundStructureLayer> targetLayers = targetStructure.GetLayers();
+
+            if (sourceLayers.Count != targetLayers.Count)
+            {
+                throw new InvalidOperationException(
+                    $"Created type '{targetType.Name}' has {targetLayers.Count} layers; "
+                    + $"the source has {sourceLayers.Count}.");
+            }
+
+            if (sourceStructure.GetNumberOfShellLayers(ShellLayerType.Exterior)
+                    != targetStructure.GetNumberOfShellLayers(ShellLayerType.Exterior)
+                || sourceStructure.GetNumberOfShellLayers(ShellLayerType.Interior)
+                    != targetStructure.GetNumberOfShellLayers(ShellLayerType.Interior)
+                || sourceStructure.VariableLayerIndex != targetStructure.VariableLayerIndex
+                || sourceStructure.StructuralMaterialIndex != targetStructure.StructuralMaterialIndex)
+            {
+                throw new InvalidOperationException(
+                    $"Created type '{targetType.Name}' did not preserve the source layer configuration.");
+            }
+
+            for (int index = 0; index < sourceLayers.Count; index++)
+            {
+                CompoundStructureLayer sourceLayer = sourceLayers[index];
+                CompoundStructureLayer targetLayer = targetLayers[index];
+                if (Math.Abs(sourceLayer.Width - targetLayer.Width) > 1e-9
+                    || sourceLayer.MaterialId != targetLayer.MaterialId
+                    || sourceLayer.Function != targetLayer.Function)
+                {
+                    throw new InvalidOperationException(
+                        $"Created type '{targetType.Name}' did not preserve source layer "
+                        + $"{index + 1}'s thickness, material, and function.");
+                }
+            }
+        }
 
         private static double GetHeightOffset(Element element)
         {
@@ -289,22 +503,6 @@ namespace LECG.Services
             {
                 param.Set(offset);
             }
-        }
-
-        private static IList<XYZ> BuildAbsolutePoints(List<XYZ> vertexPositions, double levelElevation, double heightOffset)
-        {
-            var absolutePoints = new List<XYZ>(vertexPositions.Count);
-
-            foreach (XYZ vertex in vertexPositions)
-            {
-                // vertexPositions are already absolute (from SlabShapeVertex.Position).
-                // Toposolid.Create expects absolute points. 
-                // We just pass them through.
-                double absoluteZ = vertex.Z;
-                absolutePoints.Add(new XYZ(vertex.X, vertex.Y, absoluteZ));
-            }
-
-            return absolutePoints;
         }
 
         private static Level? GetElementLevel(Element element)

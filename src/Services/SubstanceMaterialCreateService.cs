@@ -215,6 +215,7 @@ namespace LECG.Services
             SetParam(mat, BuiltInParameter.ALL_MODEL_DESCRIPTION, SubstanceIdentityPolicy.Description(entry));
             SetParam(mat, BuiltInParameter.ALL_MODEL_MANUFACTURER, SubstanceIdentityPolicy.Manufacturer);
             SetParam(mat, BuiltInParameter.ALL_MODEL_MODEL, SubstanceIdentityPolicy.Model);
+            SetParam(mat, BuiltInParameter.ALL_MODEL_URL, SubstanceIdentityPolicy.Url);
 
             Parameter? keywords = mat.LookupParameter("Keywords");
             if (keywords != null && !keywords.IsReadOnly && keywords.StorageType == StorageType.String)

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using System.Windows;
+using System.Windows.Input;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI.Selection;
 using LECG.Core;
@@ -50,6 +51,20 @@ namespace LECG.Views
                     vm.SetSelectedElements(elements);
                 }
             };
+        }
+
+        private void Inspect_Click(object sender, RoutedEventArgs e)
+        {
+            if (UiDocument == null || DataContext is not SplitBoundariesViewModel vm) return;
+            Mouse.OverrideCursor = Cursors.Wait;
+            try
+            {
+                vm.InspectDocument(UiDocument.Document);
+            }
+            finally
+            {
+                Mouse.OverrideCursor = null;
+            }
         }
     }
 }
