@@ -1,0 +1,25 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ModelCurve.TrussCurveType",
+  "status": "out-of-contract",
+  "reason": "Autodesk metadata limits the setter to truss family documents; family-document writes are excluded.",
+  "revision": "47357d1faf906b8369df907c1c5d3f7501e1db7c",
+  "models_opened": 0,
+  "family_documents_opened": 0,
+  "production_contract_changed": false,
+  "revit_api": {
+    "path": "C:/Program Files/Autodesk/Revit 2026/RevitAPI.dll",
+    "sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285"
+  },
+  "setter_surface": {
+    "path": "docs/review/setter-validation-gate/setter-surface.json",
+    "sha256": "ADC43558315BC331B48D6E7309BE1AF9CC296DF5D5A6C7AA486584B8383B2080"
+  },
+  "contract_guard": {
+    "path": "tools/SetterValidationProbe/ChangedValuePilot.cs",
+    "sha256": "AC40DAF4BA71885E9FA94C2BA6F19810BFF74840620192AAA5823426B869CB89"
+  },
+  "original_ledger": {
+    "path": "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
+    "sha256": "8472B3709DD2201B297AF740268AC8C0446E1C0F5665218B10621D2DA71DB8B9"
+  }
+}
