@@ -63,10 +63,15 @@ const mcpTools = ["RevitCopilot/McpServer/AgentTools.cs", "RevitCopilot/McpServe
 unique(mcpTools, "name", "MCP tools");
 const referencesPath = "RevitCopilot/Agent/Knowledge/revit2026-reference.json";
 const validationPath = "RevitCopilot/Agent/Knowledge/revit2026-validation.json";
+const validationContextsPath = "RevitCopilot/Agent/Knowledge/revit2026-validation-contexts.json";
 const references = JSON.parse(read(referencesPath));
 const validation = JSON.parse(read(validationPath));
+const validationContexts = JSON.parse(read(validationContextsPath));
 unique(references.entries, "id", "research references");
 unique(validation.entries, "operation", "API validation entries");
+unique(validationContexts.entries, "operation", "API project-context entries");
+if (validationContexts.campaign !== validation.campaign)
+  throw new Error("API validation and project-context campaigns differ");
 function tally(entries, field) {
   return entries.reduce((result, entry) => {
     const value = String(entry[field] ?? "unmapped");
@@ -100,7 +105,9 @@ const inventory = {
     native_reads: operations.filter(operation => operation.kind === "read").length,
     native_changes: operations.filter(operation => operation.kind === "change").length,
     curated_recipes: recipes.length, shared_references: references.entries.length,
-    api_validation_entries: validation.entries.length
+    api_validation_entries: validation.entries.length,
+    project_validation_operations: validationContexts.entries.length,
+    project_validation_contexts: validationContexts.receipt_count
   },
   commands, services, mcp_tools: mcpTools, native_operations: operations, curated_recipes: recipes,
   research: {
@@ -112,6 +119,11 @@ const inventory = {
   api_evidence: {
     source: validationPath, campaign: validation.campaign, scope: validation.scope,
     entries_by_state: tally(validation.entries, "state"),
+    project_context_source: validationContextsPath,
+    project_context_scope: validationContexts.scope,
+    project_context_operations: validationContexts.entries.length,
+    project_context_receipts: validationContexts.receipt_count,
+    project_contexts_by_discipline: tally(validationContexts.entries.flatMap(entry => entry.contexts), "discipline"),
     note: "Recorded campaign evidence, not tests rerun by this documentation refresh."
   },
   documentation, planning_documents: planningDocuments,
