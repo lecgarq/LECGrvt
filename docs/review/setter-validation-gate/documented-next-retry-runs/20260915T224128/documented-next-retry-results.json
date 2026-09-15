@@ -1,0 +1,191 @@
+{
+  "report": "documented-next-retry-5",
+  "new_validations": 1,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-BC9B70FD0C/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+            "sha256": "7F409A7651C39FF39123950D6738EDB0306B6BD068FFF847D4C8158EAA23DE0F"
+          }
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-BC9B70FD0C/Snowdon Towers Sample-CED51264A8/receipt.json",
+            "sha256": "AFC9753FD622B562007797F6312655A30AE4D78FBA809C7907FB2399A182458A"
+          }
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-BC9B70FD0C/サンプル意匠/receipt.json",
+            "sha256": "4AF9123BFEFC977AC64726CB1EE58F1BDCBC660976648A59943EAE29FA6F12B5"
+          }
+        }
+      ],
+      "summary": {
+        "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-BC9B70FD0C/case-summary.json",
+        "sha256": "9C2B599BFCF58995929DFC43D721FA775EFB828F5976A8760572C25D6362B733"
+      }
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-C8EEBC2AE6/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+            "sha256": "021B9A9803F2359370B7CA5AB9BAB6D1AB893B4C65835DA861BB88E32D29B3D7"
+          }
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-C8EEBC2AE6/Snowdon Towers Sample-CED51264A8/receipt.json",
+            "sha256": "E3DFC2B21BC9F579DA6B5C6AF1D56C2EC6F63F4683E77E10B4FBBFC4E68B11ED"
+          }
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-C8EEBC2AE6/サンプル意匠/receipt.json",
+            "sha256": "FE9856A03D51BDB4C67AABA6B64DD853FA9C1E60BF5EEC7E0E788B9B674B2245"
+          }
+        }
+      ],
+      "summary": {
+        "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/BaseElevation-C8EEBC2AE6/case-summary.json",
+        "sha256": "2550AAD9C81F866B4844078FC5B6D2C677AF5E8C4BCCA2998425A51644B4C925"
+      }
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/TopElevation-A6ACD2506E/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+            "sha256": "41A9C3020073E8E197FEC647D76C682EA74B24FEFF857B171C87D07E92C22F8F"
+          }
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/TopElevation-A6ACD2506E/Snowdon Towers Sample-CED51264A8/receipt.json",
+            "sha256": "A30CFA04E699727047FDD01886FEB94939B6603103E4319EB4562A1A758707C7"
+          }
+        },
+        {
+          "model": "サンプル意匠.rvt",
+          "status": "rejected-with-reason",
+          "reason": "inner_transaction_not_committed",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/TopElevation-A6ACD2506E/サンプル意匠/receipt.json",
+            "sha256": "F3BA20B78628CD2B81AA0E2DA7656E1AB042DFC2B03463D69E0BC4DE11753329"
+          }
+        }
+      ],
+      "summary": {
+        "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/TopElevation-A6ACD2506E/case-summary.json",
+        "sha256": "33D50BF5D9E848F2B09106A65EEE4563787E2EDDB776354AF10838BF20272AA9"
+      }
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ScheduleSheetInstance.SegmentIndex",
+      "status": "validated",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/SegmentIndex-084CEBCE33/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+            "sha256": "B9345ED12F7F08CCF3FADAB601271AEFD9945330DE962A9CE6A7014F18D0B2FE"
+          }
+        },
+        {
+          "model": "Snowdon Towers Sample Architectural.rvt",
+          "status": "validated",
+          "reason": null,
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/SegmentIndex-084CEBCE33/Snowdon Towers Sample-CED51264A8/receipt.json",
+            "sha256": "1662ECFC607D3D1E89EB367FFAE26B77161F297C6C94D143BB436D45C0A0E11A"
+          }
+        }
+      ],
+      "summary": {
+        "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/SegmentIndex-084CEBCE33/case-summary.json",
+        "sha256": "C82B1DDE38BC6F933697799C611ADB2806E2A19E57EC420A778C4C0244038013"
+      }
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+      "status": "rejected-with-reason",
+      "attempts": [
+        {
+          "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/Electrical.WireType.MaxSize/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+            "sha256": "1D2181B6292AA55C47B5D7B7005A8658FAAA22AF6ED9332130E5B0C0460930EC"
+          }
+        },
+        {
+          "model": "Snowdon Towers Sample Electrical.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/Electrical.WireType.MaxSize/Snowdon Towers Sample Electrical/receipt.json",
+            "sha256": "6BA2EFFE695F9C6B237A98EAE747AFA4397F097F539BB1FCE0D43D5D37F90A88"
+          }
+        },
+        {
+          "model": "サンプル設備.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/Electrical.WireType.MaxSize/サンプル設備/receipt.json",
+            "sha256": "30185DC4B23F0261D9558F9537FEE9E4550EB9E9775DB1220BF5801113BEFEC3"
+          }
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/Electrical.WireType.MaxSize/LECG_RVT_MEP/receipt.json",
+            "sha256": "657D64522795604F2E9377C3E469F2E16D6D38EA728824BF1DCADBD777B8DB95"
+          }
+        }
+      ],
+      "summary": {
+        "path": "docs/review/setter-validation-gate/documented-next-retry-runs/20260915T224128/Electrical.WireType.MaxSize/case-summary.json",
+        "sha256": "E50B6B17BC08E3AEF579BE5818375E5B45BFFDD4403E02667FE786A2D5A49465"
+      }
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+  "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "model_sha256": "A1FDD9A27A0D3B62977E99DF2FB872125920150D37A89DBECE4845B827AFE222",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+  "status": "rejected-with-reason",
+  "stage": "commit",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-next-retry-runs\\20260915T224128\\BaseElevation-BC9B70FD0C\\BIM_Projekt_Golden_Nu-CC172C5B28\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "7968604BB4DCFD2CA5B3C24DE726D9F5A6EE902053678B008C2C73916DAB36A4",
+  "target_count": 7,
+  "generator_errors": [],
+  "target": "b08ac03f-685b-4d59-8b74-f1fca2b8b48f-001083e0",
+  "before": 3.383366094545751,
+  "desired": 3.9472604436367096,
+  "after_regenerate": 3.9472604436367096,
+  "commit_status": "RolledBack",
+  "failures": [
+    "Error: One or more Spot Dimension references are no longer valid.  Spot Dimensions can generally reference only those references which have valid coordinates in the view.",
+    "Error: One or more dimension references are or have become invalid."
+  ],
+  "reason": "inner_transaction_not_committed",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 29881,
+    "after_elements": 29881,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:6",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:7",
+      "2a190d17-cafa-4dd4-9993-61c97f5e28d8-001a2f73:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 296883,
+    "excluded_readonly_values_after": 296883,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 19446.1899
+}

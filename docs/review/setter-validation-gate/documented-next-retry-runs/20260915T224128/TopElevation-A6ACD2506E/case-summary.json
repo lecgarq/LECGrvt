@@ -1,0 +1,22 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+  "attempts": [
+    {
+      "model": "BIM_Projekt_Golden_Nugget-Architektur_und_Ingenieurbau.rvt",
+      "status": "rejected-with-reason",
+      "reason": "inner_transaction_not_committed"
+    },
+    {
+      "model": "Snowdon Towers Sample Architectural.rvt",
+      "status": "rejected-with-reason",
+      "reason": "inner_transaction_not_committed"
+    },
+    {
+      "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+      "status": "rejected-with-reason",
+      "reason": "inner_transaction_not_committed"
+    }
+  ],
+  "models_planned": 3,
+  "models_attempted": 3
+}

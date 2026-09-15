@@ -1,0 +1,15 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+  "model": "BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+  "model_sha256": "7E6619A986FD982C6035D785B8C8DB478D7B78BFA735976F640B837570568BC2",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\BIM_Projekt_Golden_Nugget-Gebaeudetechnik.rvt",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-next-retry-runs\\20260915T224128\\Electrical.WireType.MaxSize\\BIM_Projekt_Golden_Nu-242729BD16\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false
+}

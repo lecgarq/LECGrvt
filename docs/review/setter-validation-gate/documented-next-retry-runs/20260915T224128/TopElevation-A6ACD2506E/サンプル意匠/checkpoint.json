@@ -1,0 +1,18 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "model_sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-next-retry-runs\\20260915T224128\\TopElevation-A6ACD2506E\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "01B10511CC230749A7F2835FA9D90D89B3FF21B09EF43FF5CEC18A90756B275A",
+  "target_count": 14,
+  "generator_errors": []
+}

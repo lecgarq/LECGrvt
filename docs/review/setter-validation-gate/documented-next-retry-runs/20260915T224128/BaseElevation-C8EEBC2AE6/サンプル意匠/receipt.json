@@ -1,0 +1,59 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "model_sha256": "1706FD8DBDCF151D9E9EA581C688A0E74BCB5D825E860FEC26194EA2D9E1538A",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320.rvt",
+  "status": "rejected-with-reason",
+  "stage": "commit",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-next-retry-runs\\20260915T224128\\BaseElevation-C8EEBC2AE6\\\u30B5\u30F3\u30D7\u30EB\u610F\u5320\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "AF221876C3AC15C65695BA385AADBA731F8CAA776D928FAA87FC74D690839501",
+  "target_count": 14,
+  "generator_errors": [],
+  "target": "50e57369-ea9e-4a95-bb6f-f1478f6fe889-03314ec1",
+  "before": 0,
+  "desired": 0.6561679790026247,
+  "after_regenerate": 0.6561679790026247,
+  "commit_status": "RolledBack",
+  "failures": [
+    "Warning: Stair bottom end exceeds or cannot reach the base elevation of the stair. Add/remove risers at the bottom end by control or change the stair run\u0027s \u0022Relative Base Height\u0022 parameter in the properties palette."
+  ],
+  "reason": "inner_transaction_not_committed",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 33506,
+    "after_elements": 33506,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "3fbf2766-0b08-4a60-a0b0-aa02631ff182-035a34e3:parameter-slot:6",
+      "3fbf2766-0b08-4a60-a0b0-aa02631ff182-035a34e3:parameter-slot:7",
+      "3fbf2766-0b08-4a60-a0b0-aa02631ff182-035a34e3:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "3fbf2766-0b08-4a60-a0b0-aa02631ff182-035a34e3:parameter-slot:6",
+      "3fbf2766-0b08-4a60-a0b0-aa02631ff182-035a34e3:parameter-slot:7",
+      "3fbf2766-0b08-4a60-a0b0-aa02631ff182-035a34e3:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 332943,
+    "excluded_readonly_values_after": 332943,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 11787.4153
+}

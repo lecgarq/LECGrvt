@@ -35,6 +35,32 @@ internal static class PilotValues
                 var loadCase = (LoadCase)target;
                 return Alternative(doc.Settings.Categories.get_Item(BuiltInCategory.OST_LoadCases).SubCategories
                     .Cast<Category>().Select(category => category.Id).Where(loadCase.IsLoadCaseSubcategoryId), before);
+            case "Architecture.StairsLanding.BaseElevation":
+                var landing = (StairsLanding)target;
+                return StairElevation((double)before, landing.GetStairs().ActualRiserHeight, 30000.0);
+            case "Architecture.StairsRun.BaseElevation":
+                var baseRun = (StairsRun)target;
+                double baseRiser = baseRun.GetStairs().ActualRiserHeight;
+                double raisedBase = (double)before + baseRiser;
+                if (ValidStep(baseRiser) && raisedBase <= 30000.0
+                    && baseRun.TopElevation - raisedBase >= baseRiser) return raisedBase;
+                double loweredBase = (double)before - baseRiser;
+                return ValidStep(baseRiser) && loweredBase >= 0.0 ? loweredBase : null;
+            case "Architecture.StairsRun.TopElevation":
+                var topRun = (StairsRun)target;
+                if (topRun.StairsRunStyle == StairsRunStyle.Sketched) return null;
+                return StairElevation((double)before, topRun.GetStairs().ActualRiserHeight, 30000.0);
+            case "ScheduleSheetInstance.SegmentIndex":
+                var instance = (ScheduleSheetInstance)target;
+                if (doc.GetElement(instance.ScheduleId) is not ViewSchedule schedule || !schedule.IsSplit()) return null;
+                return Enumerable.Range(0, schedule.GetSegmentCount()).Cast<int?>()
+                    .FirstOrDefault(index => index != (int)before);
+            case "Electrical.WireType.MaxSize":
+                var wire = (WireType)target;
+                return doc.GetElement(wire.TemperatureRating) is TemperatureRatingType rating
+                    ? rating.WireSizes.Cast<WireSize>().Where(size => size.InUse)
+                        .Select(size => size.Size).FirstOrDefault(size => size != (string)before)
+                    : null;
             case "Electrical.CableType.ConductorMaterial":
             case "Electrical.WireType.WireMaterial":
                 return ConductorMaterial.GetConductorMaterialIds(doc).OrderBy(id => id.Value)
@@ -171,6 +197,14 @@ internal static class PilotValues
             default: throw new InvalidOperationException("Property is outside the preregistered cases.");
         }
     }
+
+    private static double? StairElevation(double before, double riser, double limit)
+    {
+        double candidate = before + riser;
+        return ValidStep(riser) && Math.Abs(candidate) <= limit ? candidate : null;
+    }
+
+    private static bool ValidStep(double riser) => double.IsFinite(riser) && riser > 0.0;
 
     private static XYZ? PathPoint(PathOfTravel path, XYZ before, XYZ opposite)
     {

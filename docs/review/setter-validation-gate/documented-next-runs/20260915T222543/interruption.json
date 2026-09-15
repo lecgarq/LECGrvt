@@ -1,0 +1,10 @@
+{
+  "interrupted_at": "2026-09-15T22:48:03.4474948Z",
+  "qualified": false,
+  "reason": "CASA EUCALIPTO architecture disposable copy repeated the known slow-open pattern; the run was stopped before the 45-minute ceiling.",
+  "active_copy_removed": true,
+  "remaining_rvt_files": 0,
+  "revit_processes_after_cleanup": 0,
+  "source": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+  "source_sha256_after_cleanup": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A"
+}

@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="54051fe7-4434-44db-b9e9-01713a6797ee" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 16:42:15" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T16:42:15.0849063-06:00" queuing="2026-09-15T16:42:15.0849067-06:00" start="2026-09-15T16:40:49.2901024-06:00" finish="2026-09-15T16:44:39.4211128-06:00" />
+  <TestSettings name="default" id="86ce4173-e98d-49eb-948f-62c7e5e22e21">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_16_42_15" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="7b3e054f-2d06-4500-8556-530fd1fd46a7" testId="e8855783-bf80-ca79-e12b-1794643ebc46" testName="RunDocumentedNextRetry(&quot;Electrical.WireType.MaxSize&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:37.1740300" startTime="2026-09-15T16:44:13.7526608-06:00" endTime="2026-09-15T16:44:13.7526612-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7b3e054f-2d06-4500-8556-530fd1fd46a7">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="decc8d9b-0cd8-407f-9e2c-1e86c0b87bc3" testId="176c9ab9-5385-abce-f836-f15add9eb1f4" testName="RunDocumentedNextRetry(&quot;Architecture.StairsRun.BaseElevation&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:41.1262500" startTime="2026-09-15T16:42:55.4290179-06:00" endTime="2026-09-15T16:42:55.4290192-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="decc8d9b-0cd8-407f-9e2c-1e86c0b87bc3">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="ee2ca21c-a905-42b6-80bb-a809087931bb" testId="98672e39-b0a5-fe7a-f6f5-bb61991133f4" testName="RunDocumentedNextRetry(&quot;Architecture.StairsLanding.BaseElevation&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:46.1212900" startTime="2026-09-15T16:42:14.3107117-06:00" endTime="2026-09-15T16:42:14.3107414-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ee2ca21c-a905-42b6-80bb-a809087931bb">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4f1a554b-bc42-4832-b460-d92aba0a47d2" testId="a4e32c0a-cd7a-98ee-ec57-261796b283ab" testName="RunDocumentedNextRetry(&quot;Architecture.StairsRun.TopElevation&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:41.1481600" startTime="2026-09-15T16:43:36.5777905-06:00" endTime="2026-09-15T16:43:36.5777908-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4f1a554b-bc42-4832-b460-d92aba0a47d2">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a53678c2-3631-4c39-85ff-feefa7b79ac8" testId="b8fbf3ff-ee02-40e4-8b65-fedb4b72138e" testName="RunDocumentedNextRetry(&quot;ScheduleSheetInstance.SegmentIndex&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:23.3693400" startTime="2026-09-15T16:44:37.1240095-06:00" endTime="2026-09-15T16:44:37.1240099-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a53678c2-3631-4c39-85ff-feefa7b79ac8">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunDocumentedNextRetry(&quot;Electrical.WireType.MaxSize&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="e8855783-bf80-ca79-e12b-1794643ebc46">
+      <Execution id="7b3e054f-2d06-4500-8556-530fd1fd46a7" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedNextRetryBatch" name="RunDocumentedNextRetry" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedNextRetry(&quot;Architecture.StairsRun.TopElevation&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="a4e32c0a-cd7a-98ee-ec57-261796b283ab">
+      <Execution id="4f1a554b-bc42-4832-b460-d92aba0a47d2" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedNextRetryBatch" name="RunDocumentedNextRetry" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedNextRetry(&quot;ScheduleSheetInstance.SegmentIndex&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b8fbf3ff-ee02-40e4-8b65-fedb4b72138e">
+      <Execution id="a53678c2-3631-4c39-85ff-feefa7b79ac8" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedNextRetryBatch" name="RunDocumentedNextRetry" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedNextRetry(&quot;Architecture.StairsLanding.BaseElevation&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="98672e39-b0a5-fe7a-f6f5-bb61991133f4">
+      <Execution id="ee2ca21c-a905-42b6-80bb-a809087931bb" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedNextRetryBatch" name="RunDocumentedNextRetry" />
+    </UnitTest>
+    <UnitTest name="RunDocumentedNextRetry(&quot;Architecture.StairsRun.BaseElevation&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="176c9ab9-5385-abce-f836-f15add9eb1f4">
+      <Execution id="decc8d9b-0cd8-407f-9e2c-1e86c0b87bc3" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.DocumentedNextRetryBatch" name="RunDocumentedNextRetry" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="e8855783-bf80-ca79-e12b-1794643ebc46" executionId="7b3e054f-2d06-4500-8556-530fd1fd46a7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="176c9ab9-5385-abce-f836-f15add9eb1f4" executionId="decc8d9b-0cd8-407f-9e2c-1e86c0b87bc3" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="98672e39-b0a5-fe7a-f6f5-bb61991133f4" executionId="ee2ca21c-a905-42b6-80bb-a809087931bb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a4e32c0a-cd7a-98ee-ec57-261796b283ab" executionId="4f1a554b-bc42-4832-b460-d92aba0a47d2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b8fbf3ff-ee02-40e4-8b65-fedb4b72138e" executionId="a53678c2-3631-4c39-85ff-feefa7b79ac8" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="5" executed="5" passed="5" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 5]&#xD;
+Test: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Architecture.StairsLanding.BaseElevation")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Architecture.StairsRun.BaseElevation")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Architecture.StairsRun.TopElevation")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Electrical.WireType.MaxSize")&#xD;
+Test: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("ScheduleSheetInstance.SegmentIndex")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Architecture.StairsLanding.BaseElevation")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Architecture.StairsRun.BaseElevation")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Architecture.StairsRun.TopElevation")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("Electrical.WireType.MaxSize")&#xD;
+	TestFilter: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry("ScheduleSheetInstance.SegmentIndex")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 5]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry(\u0022Architecture.StairsLanding.BaseElevation\u0022)","LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry(\u0022Architecture.StairsRun.BaseElevation\u0022)","LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry(\u0022Architecture.StairsRun.TopElevation\u0022)","LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry(\u0022Electrical.WireType.MaxSize\u0022)","LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry.RunDocumentedNextRetry(\u0022ScheduleSheetInstance.SegmentIndex\u0022)"]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 46121.29 	 RunDocumentedNextRetry("Architecture.StairsLanding.BaseElevation")[RunDocumentedNextRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry [RunDocumentedNextRetry("Architecture.StairsLanding.BaseElevation")] 	98672e39-b0a5-fe7a-f6f5-bb61991133f4&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 41126.25 	 RunDocumentedNextRetry("Architecture.StairsRun.BaseElevation")[RunDocumentedNextRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry [RunDocumentedNextRetry("Architecture.StairsRun.BaseElevation")] 	176c9ab9-5385-abce-f836-f15add9eb1f4&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 41148.16 	 RunDocumentedNextRetry("Architecture.StairsRun.TopElevation")[RunDocumentedNextRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry [RunDocumentedNextRetry("Architecture.StairsRun.TopElevation")] 	a4e32c0a-cd7a-98ee-ec57-261796b283ab&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 37174.03 	 RunDocumentedNextRetry("Electrical.WireType.MaxSize")[RunDocumentedNextRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry [RunDocumentedNextRetry("Electrical.WireType.MaxSize")] 	e8855783-bf80-ca79-e12b-1794643ebc46&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 23369.34 	 RunDocumentedNextRetry("ScheduleSheetInstance.SegmentIndex")[RunDocumentedNextRetry]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.DocumentedNextRetryBatch.RunDocumentedNextRetry [RunDocumentedNextRetry("ScheduleSheetInstance.SegmentIndex")] 	b8fbf3ff-ee02-40e4-8b65-fedb4b72138e&#xD;
+OutputConsole:  Revit 2026: 189218.31 	 SetterValidationProbe 5 True 100% 189218.31ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

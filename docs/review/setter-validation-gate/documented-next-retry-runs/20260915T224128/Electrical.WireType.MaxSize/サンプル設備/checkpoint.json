@@ -1,0 +1,15 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+  "model": "\u30B5\u30F3\u30D7\u30EB\u8A2D\u5099.rvt",
+  "model_sha256": "205A4B00D7FB6656F9E327F459E6DB76EB672E232EF25DBB1696C2EE78CDF5C8",
+  "source_path": "C:\\Program Files\\Autodesk\\Revit 2026\\Samples\\\u30B5\u30F3\u30D7\u30EB\u8A2D\u5099.rvt",
+  "status": "rejected-with-reason",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\documented-next-retry-runs\\20260915T224128\\Electrical.WireType.MaxSize\\\u30B5\u30F3\u30D7\u30EB\u8A2D\u5099\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false
+}
