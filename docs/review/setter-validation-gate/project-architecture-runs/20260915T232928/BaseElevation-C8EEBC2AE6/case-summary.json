@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+  "attempts": [
+    {
+      "model": "LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+      "status": "rejected-with-reason",
+      "reason": "ArgumentOutOfRangeException: The baseElevation impacts the top elevation which is less than extension below base.\r\nParameter name: baseElevation"
+    }
+  ],
+  "models_planned": 1,
+  "models_attempted": 1
+}

@@ -14,7 +14,7 @@ const require = (ok, reason) => { if (!ok) throw new Error(reason); };
 const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 const portable = path => relative(root, path).replaceAll('\\', '/');
 const reference = path => ({ path: portable(path), sha256: hash(path) });
-const total = entry => entry.passed_models + entry.context_failures
+export const total = entry => entry.passed_models + entry.context_failures
   + entry.unsupported_models + entry.same_value_models;
 
 export function promoteWithinCorpus(original, receipt) {
@@ -47,7 +47,7 @@ export function appendProjectAttempt(original, receipt) {
   return updated;
 }
 
-function filesWithExtension(path, extension) {
+export function filesWithExtension(path, extension) {
   const result = [];
   for (const item of readdirSync(path, { withFileTypes: true })) {
     const child = join(path, item.name);
@@ -57,7 +57,7 @@ function filesWithExtension(path, extension) {
   return result;
 }
 
-function completedTrx(path, count, fixture) {
+export function completedTrx(path, count, fixture) {
   const trx = readFileSync(path, 'utf8');
   const counters = trx.match(/<Counters\s+([^>]+)\/>/)?.[1] ?? '';
   require(new RegExp(`\\btotal="${count}"`).test(counters)
@@ -66,7 +66,7 @@ function completedTrx(path, count, fixture) {
   `TRX does not establish ${count} completed ${fixture} cases.`);
 }
 
-function evidenceForPlan(run, manifest, expectedCount) {
+export function evidenceForPlan(run, manifest, expectedCount) {
   const models = new Map(manifest.models.map(model => [model.name, model]));
   const caseDirectories = readdirSync(run, { withFileTypes: true }).filter(item => item.isDirectory())
     .map(item => join(run, item.name));

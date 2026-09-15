@@ -1,0 +1,189 @@
+{
+  "run": "20260915T232928",
+  "original_ledger_sha256": "681FCED28572B27050D1DDE009783322FDD67C63411C9DC3B851D41428CE9B67",
+  "previous_reconciliation": {
+    "path": "docs/review/setter-validation-gate/out-of-contract-runs/20260915T232229/ledger-reconciliation.json",
+    "sha256": "417400745682B5C116FEB6BA88970943631A51C1AA6CA19A95586E3917EAF568"
+  },
+  "manifest": {
+    "path": "docs/review/setter-validation-gate/project-architecture-manifest.json",
+    "sha256": "46C5F5ECF17797550D931021EFD3AD80F4D64EE519A401D79F5B3161329E77F6"
+  },
+  "provenance": {
+    "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/provenance.json",
+    "sha256": "B8EE7E0A3501E9A9DB6B1E570170A3651156AF795734C0ABA27B4A6C8A042768"
+  },
+  "trx": {
+    "path": "docs/review/setter-validation-gate/projectarchitecture-20260915T232851.trx",
+    "sha256": "D0D0292BED40DCD72547B9E9D10E928C74445C7A38764E435168A4B2C1A9C7AF"
+  },
+  "source_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+  "remaining_rvt_files": 0,
+  "original_numerator": 667,
+  "proposed_numerator": 667,
+  "new_validations": 0,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 667,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "out_of_contract": 1,
+    "same_value_only": 20
+  },
+  "updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 12,
+        "same_value_models": 1
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/NamingCategoryId-CD929C79F8/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "24436C86EF6EC5FFE12EB0BA48EE94E1EDAC039EF2CA73283D2642B3C1CF3B9B"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 3
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/BaseElevation-BC9B70FD0C/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "991F93FF1027FCBA13B99D1055485BCCFF727276390CB005ED46DAB0F402BE51"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/BaseElevation-C8EEBC2AE6/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "B1A6FED254397DBC97F6414FC5023EA1749D04B69EF6F6F34C38B30D3B3BB005"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 3
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/TopElevation-A6ACD2506E/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "72D88FB2482203E91350FF307C0DC420DCC5CC1AC687A14FC7676BC47BA68C5F"
+        }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/NamingCategoryId-CD929C79F8/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "24436C86EF6EC5FFE12EB0BA48EE94E1EDAC039EF2CA73283D2642B3C1CF3B9B"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/BaseElevation-BC9B70FD0C/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "991F93FF1027FCBA13B99D1055485BCCFF727276390CB005ED46DAB0F402BE51"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentOutOfRangeException: The baseElevation impacts the top elevation which is less than extension below base.\r\nParameter name: baseElevation",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/BaseElevation-C8EEBC2AE6/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "B1A6FED254397DBC97F6414FC5023EA1749D04B69EF6F6F34C38B30D3B3BB005"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/TopElevation-A6ACD2506E/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "72D88FB2482203E91350FF307C0DC420DCC5CC1AC687A14FC7676BC47BA68C5F"
+          }
+        }
+      ]
+    }
+  ]
+}

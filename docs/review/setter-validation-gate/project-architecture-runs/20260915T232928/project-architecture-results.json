@@ -1,0 +1,62 @@
+{
+  "report": "project-architecture-4",
+  "new_validations": 0,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/NamingCategoryId-CD929C79F8/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "24436C86EF6EC5FFE12EB0BA48EE94E1EDAC039EF2CA73283D2642B3C1CF3B9B"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/BaseElevation-BC9B70FD0C/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "991F93FF1027FCBA13B99D1055485BCCFF727276390CB005ED46DAB0F402BE51"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentOutOfRangeException: The baseElevation impacts the top elevation which is less than extension below base.\r\nParameter name: baseElevation",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/BaseElevation-C8EEBC2AE6/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "B1A6FED254397DBC97F6414FC5023EA1749D04B69EF6F6F34C38B30D3B3BB005"
+          }
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/TopElevation-A6ACD2506E/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+            "sha256": "72D88FB2482203E91350FF307C0DC420DCC5CC1AC687A14FC7676BC47BA68C5F"
+          }
+        }
+      ]
+    }
+  ]
+}

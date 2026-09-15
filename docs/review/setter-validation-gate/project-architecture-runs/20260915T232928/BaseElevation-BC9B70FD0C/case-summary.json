@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+  "attempts": [
+    {
+      "model": "LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+      "status": "rejected-with-reason",
+      "reason": "no_existing_target_in_unmodified_sample"
+    }
+  ],
+  "models_planned": 1,
+  "models_attempted": 1
+}
