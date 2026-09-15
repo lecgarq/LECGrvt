@@ -31,6 +31,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Agent\Knowledge\revit2026-reference.json" LogicalName="LECG.Revit2026.Knowledge" />
     <EmbeddedResource Include="Agent\Knowledge\revit2026-validation.json" LogicalName="LECG.Revit2026.Validation" />
+    <EmbeddedResource Include="Agent\Knowledge\revit2026-validation-contexts.json" LogicalName="LECG.Revit2026.ValidationContexts" />
     <Compile Include="..\LECG.Core\Rename\RenameRuleEngine.cs" Link="Shared\RenameRuleEngine.cs" />
     <Compile Include="..\src\Services\RenderAppearance\RenderMaterialGraphicsApplyService.cs" Link="Shared\RenderMaterialGraphicsApplyService.cs" />
     <Compile Include="..\src\Services\RenderAppearance\IRenderMaterialGraphicsApplyService.cs" Link="Shared\IRenderMaterialGraphicsApplyService.cs" />

@@ -25,6 +25,7 @@ internal sealed partial class CodexAppServerClient : IAgentClient
         It exposes thousands of executable API accessor bindings, not thousands of prevalidated project workflows.
         API search includes per-operation validation evidence. Prefer tested adapters where suitable.
         changed_value_tested means a sample edit passed preview/commit/postcondition/rollback tests, not universal correctness.
+        project_contexts identify exact disposable architecture, topography, structure or MEP fixture outcomes and rejection reasons.
         same_value_only does not establish successful editing; context_rejected and missing_fixture identify unresolved applicability.
         Do not claim an untested operation is verified. Inspect its current-project context and use a fresh preview for any proposed edit.
         Use elements_find through agent_read to obtain fresh UniqueIds and exact runtime types. Never guess an API operation name.

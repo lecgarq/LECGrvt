@@ -1,0 +1,552 @@
+{
+  "schema_version": 1,
+  "revit_version": 2026,
+  "campaign": "changed-value-project-gaps-20260915T234215",
+  "validation_ledger_sha256": "EB4084292FBCB0F040554EAF663C43C5E73405A3EE65AF1A493AEA0102B7249A",
+  "source_receipts_sha256": "C045879455EDAC5E8288BF7A7D4F9653D066AB92D7B81327097369BAC9F9A576",
+  "scope": "Named CASA EUCALIPTO discipline fixtures; disposable-copy outcomes are context evidence, not universal guarantees.",
+  "receipt_count": 63,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: ConceptualConstructionIsByEnergyData cannot be set to conceptualConstructionIsByEnergyData.\r\nParameter name: conceptualConstructionIsByEnergyData"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentOutOfRangeException: The baseElevation impacts the top elevation which is less than extension below base.\r\nParameter name: baseElevation"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: The connection type is invalid for this circuit. You can't assign Feed Through Lugs if the panel's Feed Through Lugs option is unchecked. If the circuit's base panel is not a data panel or transformer panel, the circuit connection type can't be set to NotApplicable. If the circuit's base panel is a data panel or transformer pane, it must be set to NotApplicable. If the circuit doesn't have a base panel, it must be set to NotApplicable."
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+      "contexts": [
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "validated",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralUsage",
+      "contexts": [
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "validated",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: Cannot set the AnalysisDisplayStyleId for the specified view."
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: Cannot set the AnalysisDisplayStyleId for the specified view."
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: "
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+      "contexts": [
+        {
+          "discipline": "architecture",
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged"
+        },
+        {
+          "discipline": "topography",
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "structure",
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        },
+        {
+          "discipline": "mep",
+          "model": "LECG_RVT_MEP.rvt",
+          "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative"
+        }
+      ]
+    }
+  ]
+}

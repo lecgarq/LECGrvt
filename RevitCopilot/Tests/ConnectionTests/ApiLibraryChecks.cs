@@ -10,12 +10,20 @@ internal static class ApiLibraryChecks
         var cold = Stopwatch.StartNew();
         var all = RevitApiCatalog.All;
         Require(ApiValidationEvidence.Count == all.Count, "Each API binding must have explicit runtime validation evidence.");
+        Require(ApiValidationEvidence.ContextOperationCount >= 10, "Expected project-context evidence for tested API operations.");
         foreach (var binding in all.Values)
         {
             var evidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(binding.Operation));
             Require(evidence.GetProperty("state").GetString() != "not_tested", "A completed campaign must account for every accessor.");
             Require(!string.IsNullOrWhiteSpace(evidence.GetProperty("campaign").GetString()), "Validation requires campaign provenance.");
+            Require(evidence.TryGetProperty("project_contexts", out _), "Validation must expose bounded project-context evidence.");
         }
+        var wireEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(
+            "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize"));
+        Require(wireEvidence.GetProperty("project_contexts").EnumerateArray().Any(context =>
+            context.GetProperty("discipline").GetString() == "mep"
+            && context.GetProperty("status").GetString() == "validated"),
+            "Known MEP changed-value evidence must reach API search consumers.");
         double coldMs = cold.Elapsed.TotalMilliseconds;
         Require(all.Count >= 2000, "Expected at least 2,000 real bound accessor functions, not aliases.");
         foreach (var binding in all.Values)
