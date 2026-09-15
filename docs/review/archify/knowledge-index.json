@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
-  "repository_revision": "028a060d5c207acf5d3a577cea330d1f9b44cd14",
+  "repository_revision": "49be9e795c9d998d1a3805ee7deb5c5729d7d3b1",
   "source_inputs_match_revision": true,
   "counts": {
     "command_classes": 38,
@@ -1057,14 +1057,14 @@
   },
   "api_evidence": {
     "source": "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
-    "campaign": "changed-value-project-corpus-20260915T205421",
-    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract. ",
+    "campaign": "changed-value-documented-retry-20260915T221200",
+    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract.  3 further direct-API setter validations from the completed documented-constraint retry; the timed-out parent run is retained but did not qualify. ",
     "entries_by_state": {
       "unsupported_context": 194,
       "read_invoked": 1217,
       "missing_fixture": 82,
-      "changed_value_tested": 659,
-      "same_value_only": 29,
+      "changed_value_tested": 662,
+      "same_value_only": 26,
       "context_rejected": 35
     },
     "note": "Recorded campaign evidence, not tests rerun by this documentation refresh."
@@ -1117,6 +1117,8 @@
     "docs/review/setter-validation-gate/class-collector-results.md",
     "docs/review/setter-validation-gate/dedicated-batch-review.md",
     "docs/review/setter-validation-gate/dedicated-preregistration.md",
+    "docs/review/setter-validation-gate/documented-constraint-preregistration.md",
+    "docs/review/setter-validation-gate/documented-retry-preregistration.md",
     "docs/review/setter-validation-gate/generator-design.md",
     "docs/review/setter-validation-gate/non-element-preregistration.md",
     "docs/review/setter-validation-gate/pilot-attempt-01.md",
@@ -1173,7 +1175,7 @@
     "RevitCopilot/Agent/AgentBatch.cs": "1fd4db7d90f1582f1b6b28331ad722483706e3afae0eaf9224a3bca60a747574",
     "RevitCopilot/Agent/CapabilityCatalog.cs": "a6a98f6203a093dd5aa164a743c64f0b2765d26465425d1fe43e5913aae75ce3",
     "RevitCopilot/Agent/Knowledge/revit2026-reference.json": "9726924ad3b74f781f94ff3b9babfd612debd41f6d09bb3b941a030ad2454052",
-    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "00701aa33fb4be691d2d86e7379cee9e15a17a3f70931481977b741d63fd6f3d",
+    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "58fbda2832176680a02d5c0cab15df27d1dae9168215cbc048683ae1c56e25c3",
     "RevitCopilot/Agent/WorkflowLibrary.cs": "3bdc5092fae7c409342b335f5c1cebbe4bbe2c89468dcf9800f2fd5b21683d4a",
     "RevitCopilot/McpServer/AgentTools.cs": "0e647ab04960932aa0a097aee4b2cd955e386a2e5758574d6c149869ab4bb3e9",
     "RevitCopilot/McpServer/RevitTools.cs": "3f2941e93a7f966cc13a66a45e9ac20d8fb8e0d0a254c14fee7f118846253a95",
