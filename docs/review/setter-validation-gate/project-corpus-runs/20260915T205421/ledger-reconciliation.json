@@ -1,0 +1,905 @@
+{
+  "non_element_run": "20260911T020232",
+  "project_corpus_run": "20260915T205421",
+  "original_ledger_sha256": "A4922E823715F0C584E20255AACB875E3CB67E9107CB7A25358FBB3443B13AB0",
+  "previous_reconciliation": {
+    "path": "docs/review/setter-validation-gate/class-collector-runs/20260910T185125/ledger-reconciliation.json",
+    "sha256": "E99FB22955C7CB692E5DF8E4A5C70EF24EBE24F00509DC7C331B8243FDA121A2"
+  },
+  "non_element_manifest": {
+    "path": "docs/review/setter-validation-gate/non-element-manifest.json",
+    "sha256": "C0B3575FF005E19DC851D230797AADD2DE999F5CF66225F1C914663598D2B224"
+  },
+  "project_corpus_manifest": {
+    "path": "docs/review/setter-validation-gate/project-corpus-manifest.json",
+    "sha256": "91E151241BA69895EE8A2E76B2CC73D1ECC825AE2A012BE5498B9F94A9CF6CF1"
+  },
+  "non_element_provenance": {
+    "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/provenance.json",
+    "sha256": "B12C324C078F06B72479154CB834C06ACD669D8D3CD8EF2647B948BD0231F2E3"
+  },
+  "project_corpus_provenance": {
+    "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/provenance.json",
+    "sha256": "860C9C6C0812D64C28E81B5F535FC3E51026B4432CCAA888047B6F7D5B9B2D83"
+  },
+  "non_element_trx": {
+    "path": "docs/review/setter-validation-gate/nonelement-20260911T015249.trx",
+    "sha256": "7BFEF90E66075B143F72665AD5D975D86A506508B930BB066F7B7E38F6E06E49"
+  },
+  "project_corpus_trx": {
+    "path": "docs/review/setter-validation-gate/projectcorpus-20260915T205247.trx",
+    "sha256": "088F3DCC1B8FFDD193B56096842EAA2282B66BD9E32574DD1EB18DF41860F57D"
+  },
+  "project_copy_cleanup": {
+    "expected_receipts": 44,
+    "remaining_rvt_files": 0
+  },
+  "original_numerator": 647,
+  "proposed_numerator": 659,
+  "new_validations": 12,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 659,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "same_value_only": 29
+  },
+  "non_element_updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.ClosingTime",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.ClosingTime",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ClosingTime-D5E40075AE/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "93380C0087A919D42EFB62BD7ECAD0A12EBA528A4C6736B0D0D7609A2C4D12CD"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.OpeningTime",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.OpeningTime",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/OpeningTime-F458A1D700/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "C720B06696FE393A0B990267CCA7EC7228D3AB639B22119F5886ADF624771204"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "replacement_basis": "unchanged",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "933F691FC2F4632F713E8ECFAD261AF9B0F95EC30163FB5DF9F5E53228810D77"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "C368874BE9009A1FE965BE3129B460BA862CE3DC86D48D15A8CF3AFBFB61C6B9"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "C0516D18BE7E56FF5AC96D8911975FBFA2F151D193E134A633359F42359B2F70"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "2DEA17D91124AAF14FAE5B006B6E20EF472498DCC8104A31D9FE549AADD0C797"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "C60BC3DF8B95E6C0415AF96D1305D39F7030EAA0BDA4ED233FBB7A35940010B7"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "772378CA4722C9A51F87B1684E3D850F0FCF19930213E2E6C6EB0D7ABEE201AB"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "2818E715977E7A3EF94B50EC4597EBCB5A8097217EA950457913305E80249682"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "0BC402575D6FF2DC0CC9B7507863DAE41FC870620A49FF1476747A791622B4D4"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "1C444FC9770159124A3AE52962A597A32EE72F1D644EAE851CDE09692BF13450"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/サンプル意匠/receipt.json",
+          "sha256": "D86EB1823662AA580EC49BAC41F405BDA50A0AD7B0D88F8B0872AE177F6C3C84"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/サンプル構造/receipt.json",
+          "sha256": "24CA4A5EEFD4F4D17B1A3C1617B8E5D54A408FE0DA9611547C8731D726B574A7"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ConceptualConstructio-C86ECB7B83/サンプル設備/receipt.json",
+          "sha256": "CA60834A9D2949D15BAB048C1C01479863E8EBACDAEA0A4228875B6108EB2398"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathEnd",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 2
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathEnd",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 1
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/Analysis.PathOfTravel.PathEnd/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "D97DBD4C89159B22B35EAD22C8CDE160927BC448F384F13CE8D3185ACD0377FC"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathStart",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 2
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathStart",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 1
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/Analysis.PathOfTravel.PathStart/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "652873DEF123CACE5FA5DB55B8682BF08C15430D81DE5D4FC733774782591491"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ColorFillLegend.Origin",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 8,
+        "same_value_models": 4
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ColorFillLegend.Origin",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 8,
+        "same_value_models": 3
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ColorFillLegend.Origin/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "6F40C8D7B22A905C42599E35CD9AE6CAA167BA361C2A6AB593CBF5C799EDAE1A"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 2
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 10,
+        "same_value_models": 1
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/Electrical.CableTray.CurveNormal/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "5336035F35238355C50621762D1E60B92D849BFC059B8FEE0B15BAEA882680CB"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/Electrical.CableTray.CurveNormal/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "C405C5568080E216DD0D3EF6FFC3BB7B2A9427D334967B21AC07972A72005EB0"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Family.StructuralCodeName",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Family.StructuralCodeName",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/Family.StructuralCodeName/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "7DF2DB09D901C26BF2B9CB3CE4A26F395C44E5A9ADE4631EA4AACC37B15F7454"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Family.StructuralFamilyNameKey",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Family.StructuralFamilyNameKey",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/Family.StructuralFamilyNameKey/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "31A4A62CFB22A33FB6DDCF7C79128DC3F107EE8280D0159C973783C9C2257FA4"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 11,
+        "unsupported_models": 0,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 11,
+        "unsupported_models": 0,
+        "same_value_models": 0
+      },
+      "replacement_basis": "validated same corpus; replaced the sole/strongest prior same-value outcome despite aggregate-only model history",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/IsWorkPlaneFlipped-CA23B09115/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "3E90D26D69440D09724A2682B2ED6C9E4AE10AB06F30477077D91D4068B01F5C"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/IsWorkPlaneFlipped-CA23B09115/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "AECAA3B222C2C9061DE19C85229CF7D1B1A53B60608BB07D30393D4C72823044"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/IsWorkPlaneFlipped-CA23B09115/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "3123251DC127DE19B6E84183F08888C838F0AE7BA4DBCB0A35317836FAA2BC34"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/IsWorkPlaneFlipped-CA23B09115/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "583821DA1CA7196AD6E470AADDF4EC45254DF863250494572245916590150350"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/IsWorkPlaneFlipped-CA23B09115/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "7B144F9042542128295A493875E5F4F1F562BA080BECF0D2701F9DF2232C2669"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 3,
+        "same_value_models": 9
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 3,
+        "same_value_models": 9
+      },
+      "replacement_basis": "unchanged",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "574890BE7B9F24BD46230838F6AED3E31B10FC8FA712902F79014CC1EBD629D9"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/BIM_Projekt_Golden_Nu-242729BD16/receipt.json",
+          "sha256": "86D39518AC522BD9DA637A13124B6380C5C68FD64D751507A9636A5E2C21260C"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample-CED51264A8/receipt.json",
+          "sha256": "E94DD96089E880941DFABAE7645218E87F0A6DA8D9279A8B32AEC267183A2AEF"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample Electrical/receipt.json",
+          "sha256": "9376F69CF43408B9D1E470E69147AB044971EB38144DC6C57FB86DCBD74614CD"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample Facades/receipt.json",
+          "sha256": "7C07D4DCF9F502502699115FD55B06936FA92E90626C70FC6C40C9BC5311AFCC"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample HVAC/receipt.json",
+          "sha256": "BB60DDCC59E3357413510ACFA4EC489243CF37E90BAB998ABA6C2F35FC5BC96F"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample Plumbing/receipt.json",
+          "sha256": "F789845256323E72BCE970FEEAB055AFF5035944BF5975D8C8DCBC6E39EE41C9"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample Site/receipt.json",
+          "sha256": "05A37AD3AA6B94730405262499D2EEA2F475E674F1F02DD7A40958BB1CC3C8CA"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/Snowdon Towers Sample Structural/receipt.json",
+          "sha256": "6FDB62FF08BA08D308390E4D0413EC24D8BF4B6F472CD3BEF5D585A629D5A70D"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/サンプル意匠/receipt.json",
+          "sha256": "3917CC587871BDA4EBB3A316D4A4E8AE014A9CA91B7098FD0FCB28033C6C620E"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/サンプル構造/receipt.json",
+          "sha256": "69759D5CA8630A5B20115B4589C7DEF1857F28AFB0ECF50CB978506D2B1B1B4B"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ImageInstance.EnableSnaps/サンプル設備/receipt.json",
+          "sha256": "91C6C8DD5D5F7F6B96A9362D75BB36E224134018ED4ACBF703F3F66A9BF93F69"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.FreeEnd",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.FreeEnd",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/ReferencePlane.FreeEnd/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "2A85DA8C5BE63DEEFB84C063F1B3ECDD23D6FBD5470D87D5EB2D3C25FF90FCEA"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.SiteLocation.PlaceName",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.SiteLocation.PlaceName",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/SiteLocation.PlaceName/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "8426E908A8A4EB68CCF23CE5582170658C9EA664D9C0AF1FE412C9DD3B365D72"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 11
+      },
+      "replacement_basis": "validated same corpus; replaced one prior same-value outcome",
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/non-element-runs/20260911T020232/RebarVaryingLengthNum-040B328680/BIM_Projekt_Golden_Nu-CC172C5B28/receipt.json",
+          "sha256": "5CB42525A8A66630F02B1F57E7E5A167ED5E55B4830ADE39F94426B291DDDC7D"
+        }
+      ]
+    }
+  ],
+  "project_corpus_updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 14,
+        "same_value_models": 1
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "4CE0076396B30033B587C57B1FA27ED057C3A866448214060B4899845779D41E"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "6998AC76E5F6EB0E6E59CF1BFA7F75A8E52964BC4967D001EA9D9587578371D3"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "18B10E670A1C55A8CA0A73535C50DA8EBFFE084C10FF3A2A869E102B8A9C202C"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_MEP/receipt.json",
+          "sha256": "5C3A9BD1EE35102E4E955F3B971B26A39707B33E72DC84D123C2FCEE11C3A23A"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 3,
+        "same_value_models": 9
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 7,
+        "same_value_models": 9
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "7B707E702C0362154F735799C62A0C15E3EC54ED0F57469AED5DFE7BB3F0F556"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "25202EF8CF879C308F4FBEF57791D5F0658A93DF947501927A9E7C33D3A955BD"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "60790FBBECCBC01ACDEE97F650EA382681BA676279BA62A70627AF21E2BD25E5"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_MEP/receipt.json",
+          "sha256": "37424A456CD83A16B25C74E4E53FF6BF38E60922524D668F7652BCAF4CE4DD38"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 4,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_MEP/receipt.json",
+          "sha256": "ED288950AB5B04625EE8CA9E9BCBEF7ED7684C893D8E2CCED671ECE61642277F"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "78A323DFA3DB70FB0BA5F55D795A6CA9F9E172808AEEDCBF21117E1B9F4C3F8B"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "96AB1B43246B09FE2A028FA52521CDE685E4150BCCDC45C4A5734EBC30301388"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "5B7916775926A5FDEBE801CE848EFCDFE21C2D72F12B59B7A11DA863D105DAEB"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 9,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 12,
+        "same_value_models": 3
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_MEP/receipt.json",
+          "sha256": "56F5D448264347ED110E373C7557B58BCB44F1D07A69A51984AED3670BF05AC0"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "8C362AAEB6B27F068F6CF39F09AE9A48E3C5089ADF56A51E84D7AA4328A56C1B"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "64C0749A3919F57920DD917D77E469EF6746A0765731DCCE22CBB577193066B0"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "F6468E14D2C517C48A6A12C2929870868EC8E315711678C988C814C0B2792B32"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 8,
+        "same_value_models": 3
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 1,
+        "unsupported_models": 12,
+        "same_value_models": 3
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "EBEC7D9059B7CD7C8C6BB8FA6F495B8F792AF0FB1C28DF27BAF186EC69F1AF57"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "60D98321C80A366CA6141A0F85FAB4C34105E7367DE048523D1CEE33E927DBE6"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "420D821CF9E89C09CC3502C742EDC902F7776C8D5839205F5AE3A456544FB4C9"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_MEP/receipt.json",
+          "sha256": "9FB1B975F78044CDC393F80991C359F94A7BC9A0B5D5BF186FF5C101FB4ACCD7"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 11,
+        "same_value_models": 1
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 15,
+        "same_value_models": 1
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "EDAE72085F1FD26AE2C120462D928B6A1C342306D3DD7761D72EEB5BC9D640E8"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "A23617FE1959DEEAE295B1CAD048F698F4D9E8285AD398B4E2E9CB66C16DD839"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_MEP/receipt.json",
+          "sha256": "E24E55680259316343FD2D386AFD237D1078DF5F301FFFE62097045EB192868E"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "1BDA2928C266CDEAAD2CF65D56CA6D03598A463A3144E10B926D5119AEFC1826"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 2,
+        "unsupported_models": 2,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "CCB90CA9A77D95367878D9CF022CCD63E87645B5D90EEF1528ED508E346887DC"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "5EF58C5EF57415D22CAEBB9E81F780FBD18A430E654675681A0570CBFC256429"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "C233973B946D817D5FD3EE79B028670FD997C6D1AEAA901A9FF3EB39524925E2"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_MEP/receipt.json",
+          "sha256": "3F9526D9349F035BAB83785570238752EA46601A3A58B45963E6A05F178B1100"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 4,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "9E600BC0632566DB258C24C61ACA36E1E2F1FF0AA7BA72E3E7CF0F4911EB36B8"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "DFD6DC248409C1BE8C1F0021ED671D3256ECA359F1D88BC6A04ADCF6B58CDA8F"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_MEP/receipt.json",
+          "sha256": "77D4AA27CCB7C5F2A7EA81E43362E590080B9469A59EB47DFF17256870D2AF0C"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "6A8A53F43EDAB4DCB62B20FB39A594AA73C741DF58C5FC3E8548243F89143276"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 16
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "0F5133E90508578E09521EFF1CB6F8007BE133393D0C3B2B0BE004349B6C211D"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "E276E2DAC41485535C808375C4B8414ACB2A346B37CEF338F2E0F2353CAFDA93"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_MEP/receipt.json",
+          "sha256": "CD7844484F9B19148B4EEBB7F6AA6BC3E67CED5A07D32957ACC75AB3C01030A3"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "A1BA5CB38F942DC544168E835FCE36A29EFE136E59E5E63D20480A3A37F6944F"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 3,
+        "same_value_models": 13
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "4BCB342E84DE9DE118DACC4CEE0A0042441ADD5091E9B85F6C893951942E3472"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "24F148E4D4E60708F0DECFB2DE0BF89FC1D9E2769BFD420E19BBFF057A1BC7B1"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_MEP/receipt.json",
+          "sha256": "99C4A4CED162A9BEAC0B3EA0619579ACC83C35522B677DE2347505A2B2ACA151"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "3AC3882E568DF13D69E180E3C021DC95ECD41DDB1D1A8672227EE4AFA1B29960"
+        }
+      ]
+    },
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 3,
+        "same_value_models": 13
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "15A6DFEE377A5C89A5DB6074193AF8D2D208E8350686958D856ACA5EB2C2182E"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "DC25D5ED8B9401F42A6247F354EFFF5E142F94CA91C6916D18757F333499C397"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_MEP/receipt.json",
+          "sha256": "0631A38E979CEAD6CC4F517C3514B9AA36A6E89F30F00ED3C5E27F9658E0661A"
+        },
+        {
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "97534CB4C211DC0383777397B3AA792376500E5798CB51300C16B9E123ABC193"
+        }
+      ]
+    }
+  ]
+}

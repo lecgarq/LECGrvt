@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "campaign": "changed-value-class-collectors-20260910T185125-461e924a092c422db154debab769aba5",
-  "source_sha256": "E99FB22955C7CB692E5DF8E4A5C70EF24EBE24F00509DC7C331B8243FDA121A2",
-  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving.",
+  "campaign": "changed-value-project-corpus-20260915T205421",
+  "source_sha256": "39F9DDD9EF62B8EC4F055E6668667827ED50E62110E2BA434D089AE2CD112EC1",
+  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract. ",
   "entries": [
     {
       "operation": "api.get:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
@@ -11639,19 +11639,19 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.ClosingTime",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.OpeningTime",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.UnoccupiedCoolingSetPoint",
@@ -11793,8 +11793,8 @@
       "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
       "state": "same_value_only",
       "passed_models": 0,
-      "context_failures": 0,
-      "unsupported_models": 11,
+      "context_failures": 1,
+      "unsupported_models": 14,
       "same_value_models": 1
     },
     {
@@ -11831,19 +11831,19 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathEnd",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 10,
-      "same_value_models": 2
+      "same_value_models": 1
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathStart",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 10,
-      "same_value_models": 2
+      "same_value_models": 1
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Analysis.RouteAnalysisSettings.AnalysisZoneBottomOffset",
@@ -12791,11 +12791,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ColorFillLegend.Origin",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 8,
-      "same_value_models": 4
+      "same_value_models": 3
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ColorFillScheme.IsByRange",
@@ -13279,11 +13279,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 10,
-      "same_value_models": 2
+      "same_value_models": 1
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.RungSpace",
@@ -13386,7 +13386,7 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 0,
+      "unsupported_models": 4,
       "same_value_models": 12
     },
     {
@@ -13649,8 +13649,8 @@
       "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
       "state": "same_value_only",
       "passed_models": 0,
-      "context_failures": 0,
-      "unsupported_models": 9,
+      "context_failures": 1,
+      "unsupported_models": 12,
       "same_value_models": 3
     },
     {
@@ -13967,19 +13967,19 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Family.StructuralCodeName",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Family.StructuralFamilyNameKey",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Family.StructuralSectionShape",
@@ -13991,11 +13991,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 11,
       "unsupported_models": 0,
-      "same_value_models": 1
+      "same_value_models": 0
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralMaterialId",
@@ -14218,7 +14218,7 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 3,
+      "unsupported_models": 7,
       "same_value_models": 9
     },
     {
@@ -15298,7 +15298,7 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 1,
-      "unsupported_models": 8,
+      "unsupported_models": 12,
       "same_value_models": 3
     },
     {
@@ -15639,11 +15639,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.FreeEnd",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.Name",
@@ -15887,11 +15887,11 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.SiteLocation.PlaceName",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.SiteLocation.TimeZone",
@@ -16991,18 +16991,18 @@
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix",
-      "state": "same_value_only",
-      "passed_models": 0,
+      "state": "changed_value_tested",
+      "passed_models": 1,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 11
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 11,
+      "unsupported_models": 15,
       "same_value_models": 1
     },
     {
@@ -17361,8 +17361,8 @@
       "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
       "state": "same_value_only",
       "passed_models": 0,
-      "context_failures": 0,
-      "unsupported_models": 0,
+      "context_failures": 2,
+      "unsupported_models": 2,
       "same_value_models": 12
     },
     {
@@ -17626,7 +17626,7 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 0,
+      "unsupported_models": 4,
       "same_value_models": 12
     },
     {
@@ -17651,7 +17651,7 @@
       "passed_models": 0,
       "context_failures": 0,
       "unsupported_models": 0,
-      "same_value_models": 12
+      "same_value_models": 16
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.Name",
@@ -17666,16 +17666,16 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 0,
-      "same_value_models": 12
+      "unsupported_models": 3,
+      "same_value_models": 13
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 0,
-      "same_value_models": 12
+      "unsupported_models": 3,
+      "same_value_models": 13
     },
     {
       "operation": "api.set:Autodesk.Revit.DB.Viewport.LabelLineLength",

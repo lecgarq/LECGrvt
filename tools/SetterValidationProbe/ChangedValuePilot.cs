@@ -85,10 +85,23 @@ public abstract class SetterHarness
     protected void UseModel(string name)
     {
         var model = Manifest.RootElement.GetProperty("models").EnumerateArray().Single(m => m.GetProperty("name").GetString() == name);
-        _source = model.GetProperty("path").GetString()!;
+        if (model.TryGetProperty("relative_path", out var relativeProperty))
+        {
+            string? configuredRoot = Environment.GetEnvironmentVariable("LECG_PROJECT_FIXTURE_ROOT");
+            Require(!string.IsNullOrWhiteSpace(configuredRoot), "LECG_PROJECT_FIXTURE_ROOT is required for project fixtures.");
+            string fixtureRoot = Path.GetFullPath(configuredRoot!);
+            string relative = relativeProperty.GetString()!;
+            Require(!Path.IsPathRooted(relative), "Project fixture path must be relative.");
+            _source = Path.GetFullPath(Path.Combine(fixtureRoot, relative));
+            string resolvedRelative = Path.GetRelativePath(fixtureRoot, _source);
+            Require(resolvedRelative != ".." && !resolvedRelative.StartsWith(".." + Path.DirectorySeparatorChar)
+                && !Path.IsPathRooted(resolvedRelative), "Project fixture escaped its approved root.");
+        }
+        else _source = model.GetProperty("path").GetString()!;
         _modelHash = model.GetProperty("sha256").GetString()!;
-        Require(Path.GetDirectoryName(Path.GetFullPath(_source)) == @"C:\Program Files\Autodesk\Revit 2026\Samples"
-            && Path.GetExtension(_source) == ".rvt", "Unapproved source path.");
+        bool installedSample = Path.GetDirectoryName(Path.GetFullPath(_source)) == @"C:\Program Files\Autodesk\Revit 2026\Samples";
+        Require((installedSample || model.TryGetProperty("relative_path", out _))
+            && string.Equals(Path.GetExtension(_source), ".rvt", StringComparison.OrdinalIgnoreCase), "Unapproved source path.");
         Require(Hash(_source) == _modelHash, "Sample hash changed.");
     }
 
@@ -118,8 +131,10 @@ public abstract class SetterHarness
         string copy = Path.Combine(directory, "disposable.rvt");
         var result = new Dictionary<string, object?> {
             ["operation"] = operation, ["model"] = Path.GetFileName(_source), ["model_sha256"] = _modelHash,
+            ["source_path"] = _source,
             ["status"] = "rejected-with-reason", ["stage"] = "opening", ["setter_attempted"] = false,
-            ["copy"] = copy, ["rollback_verified"] = false, ["cleanup_verified"] = false };
+            ["copy"] = copy, ["rollback_verified"] = false, ["copy_removed"] = false,
+            ["cleanup_verified"] = false };
         LastReceipt = result;
         result["classification_only"] = PersistenceProbe || NoWriteControl || InspectReadOnly;
         result["no_write_control"] = NoWriteControl;
@@ -226,6 +241,9 @@ public abstract class SetterHarness
                 Require(Hash(_source) == _modelHash, "Source sample changed.");
                 if (result.TryGetValue("copy_open_sha256", out object? expected))
                     Require(Hash(copy) == (string)expected!, "Opened copy was unexpectedly saved.");
+                File.Delete(copy);
+                Require(!File.Exists(copy), "Disposable model copy was not removed.");
+                result["copy_removed"] = true;
                 result["cleanup_verified"] = true;
             }
             catch (Exception ex) { result["cleanup_error"] = Error(ex); _abort = true; }

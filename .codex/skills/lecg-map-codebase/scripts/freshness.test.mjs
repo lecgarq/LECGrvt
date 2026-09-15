@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dashboardState } from './freshness.mjs';
-import { inventoryFreshness, root } from './query-index.mjs';
+import { inventoryFreshness, revisionAdmissible, root } from './query-index.mjs';
 
 test('dashboard cannot establish compiler health, and another workspace is rejected', () => {
   assert.equal(dashboardState({ active_project: { path: 'C:/unrelated' } }), null);
@@ -19,6 +19,16 @@ test('missing input hashes and forged revision flags cannot establish freshness'
   assert.equal(missing.inventory_admissible, false);
   assert.equal(missing.inputs_match_working_tree, false);
   assert.equal(missing.input_set_matches, false);
+});
+
+test('a committed generated index remains admissible only across an index-only advance', () => {
+  const revision = 'a'.repeat(40);
+  const head = 'b'.repeat(40);
+  assert.equal(revisionAdmissible(revision, revision), true);
+  assert.equal(revisionAdmissible(revision, head, ['docs/review/archify/knowledge-index.json'], true), true);
+  assert.equal(revisionAdmissible(revision, head, ['src/Commands/NewCommand.cs'], true), false);
+  assert.equal(revisionAdmissible(revision, head, ['docs/review/archify/knowledge-index.json'], false), false);
+  assert.equal(revisionAdmissible('forged', head, ['docs/review/archify/knowledge-index.json'], true), false);
 });
 
 test('normal freshness exits zero, strict mode fails for inadmissible inventory', () => {

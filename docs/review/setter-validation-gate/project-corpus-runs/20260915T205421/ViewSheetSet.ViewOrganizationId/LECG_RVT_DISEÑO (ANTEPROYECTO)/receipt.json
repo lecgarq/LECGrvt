@@ -1,0 +1,50 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+  "model": "LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+  "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\01-WIP\\01-ARQ\\LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+  "status": "still-same-value",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-corpus-runs\\20260915T205421\\ViewSheetSet.ViewOrganizationId\\LECG_RVT_DISE\u00D1O (ANTEPROYECTO)\\disposable.rvt",
+  "rollback_verified": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "D1406CB3271107ED1DEEE2F6C514A7A48E3047B355D63D573C97C6AB64F779A1",
+  "target_count": 3,
+  "generator_errors": [],
+  "target": "0ede2440-d92f-48d6-bdc1-94afe8f8b35c-000e90f1",
+  "before": -1,
+  "desired": 1701,
+  "after_regenerate": 1701,
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": -1,
+  "reason": "committed_but_unchanged",
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 11201,
+    "after_elements": 11201,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:6",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:7",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:6",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:7",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 89384,
+    "excluded_readonly_values_after": 89384,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [],
+  "opening_warnings": [],
+  "elapsed_ms": 12103.4728
+}

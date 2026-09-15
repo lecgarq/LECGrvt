@@ -1,10 +1,14 @@
-param([ValidateSet('Pilot','Dedicated','ClassCollectors','NonElement','Automatic','Restoration','Control','ReadOnly')][string]$Batch = 'Pilot')
+param([ValidateSet('Pilot','Dedicated','ClassCollectors','NonElement','ProjectCorpus','Automatic','Restoration','Control','ReadOnly')][string]$Batch = 'Pilot')
 $ErrorActionPreference = 'Stop'
 $previousDotnetRootX64 = $env:DOTNET_ROOT_X64
+$previousProjectFixtureRoot = $env:LECG_PROJECT_FIXTURE_ROOT
 Push-Location $PSScriptRoot
 try {
     if (Get-Process Revit -ErrorAction SilentlyContinue) { throw 'Close all Revit instances before this isolated pilot.' }
     $env:LECG_SETTER_REPO_ROOT = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../..'))
+    if ($Batch -eq 'ProjectCorpus' -and !$env:LECG_PROJECT_FIXTURE_ROOT) {
+        $env:LECG_PROJECT_FIXTURE_ROOT = 'C:\Users\LECG Arquitectura\DC\ACCDocs\Arq. Luis Eduardo Cortés\CASA EUCALIPTO\Project Files'
+    }
     $dotnet = if ($env:LECG_SETTER_DOTNET) { $env:LECG_SETTER_DOTNET } else { 'dotnet' }
     $sdkWorkDirectory = if ($env:LECG_SETTER_SDK_WORKDIR) { $env:LECG_SETTER_SDK_WORKDIR } else { $PSScriptRoot }
     if (-not (Test-Path -LiteralPath $sdkWorkDirectory -PathType Container)) {
@@ -23,8 +27,8 @@ try {
         $out = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../docs/review/setter-validation-gate'))
         $name = $Batch.ToLowerInvariant() + '-' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmss') + '.trx'
         if (Test-Path -LiteralPath (Join-Path $out $name)) { throw "TRX already exists; refusing to merge runs: $name" }
-        $filter = switch($Batch) { 'Pilot' {'FullyQualifiedName~ChangedValuePilot'} 'Dedicated' {'FullyQualifiedName~DedicatedCollectionBatch.RunDedicated'} 'ClassCollectors' {'FullyQualifiedName~ClassCollectorBatch.RunClassCollector'} 'NonElement' {'FullyQualifiedName~NonElementBatch.RunNonElement'} 'Automatic' {'FullyQualifiedName~AutomaticPersistenceProbe.ProbePersistence'} 'Restoration' {'FullyQualifiedName~RestorationDiagnostic.InspectFailedRestoration'} 'Control' {'FullyQualifiedName~RestorationDiagnostic.InspectNoWriteRestoration'} }
-        $expected = switch($Batch) { 'Pilot' {8} 'Dedicated' {14} 'ClassCollectors' {18} 'NonElement' {14} 'Automatic' {1} 'Restoration' {1} 'Control' {1} }
+        $filter = switch($Batch) { 'Pilot' {'FullyQualifiedName~ChangedValuePilot'} 'Dedicated' {'FullyQualifiedName~DedicatedCollectionBatch.RunDedicated'} 'ClassCollectors' {'FullyQualifiedName~ClassCollectorBatch.RunClassCollector'} 'NonElement' {'FullyQualifiedName~NonElementBatch.RunNonElement'} 'ProjectCorpus' {'FullyQualifiedName~ProjectCorpusBatch.RunProjectCorpus'} 'Automatic' {'FullyQualifiedName~AutomaticPersistenceProbe.ProbePersistence'} 'Restoration' {'FullyQualifiedName~RestorationDiagnostic.InspectFailedRestoration'} 'Control' {'FullyQualifiedName~RestorationDiagnostic.InspectNoWriteRestoration'} }
+        $expected = switch($Batch) { 'Pilot' {8} 'Dedicated' {14} 'ClassCollectors' {18} 'NonElement' {14} 'ProjectCorpus' {11} 'Automatic' {1} 'Restoration' {1} 'Control' {1} }
         if ($Batch -eq 'ReadOnly') { $filter = 'FullyQualifiedName~RestorationDiagnostic.InspectParameterReadOnly'; $expected = 1 }
         if ($Batch -eq 'Control') { $filter += '|FullyQualifiedName~CompatibilityProbe.SnapshotIncludesAllTargetValuesAndOnlyWritableNonTargetValues'; $expected = 2 }
         & $dotnet test $project --no-build --no-restore --filter $filter --logger "trx;LogFileName=$name" --logger 'console;verbosity=normal' --results-directory $out
@@ -38,6 +42,8 @@ try {
     Write-Output "$expected harness cases completed. Inspect the receipts for actual setter yield: $name"
 } finally {
     Remove-Item Env:LECG_SETTER_REPO_ROOT -ErrorAction SilentlyContinue
+    if ($null -eq $previousProjectFixtureRoot) { Remove-Item Env:LECG_PROJECT_FIXTURE_ROOT -ErrorAction SilentlyContinue }
+    else { $env:LECG_PROJECT_FIXTURE_ROOT = $previousProjectFixtureRoot }
     if ($null -eq $previousDotnetRootX64) { Remove-Item Env:DOTNET_ROOT_X64 -ErrorAction SilentlyContinue }
     else { $env:DOTNET_ROOT_X64 = $previousDotnetRootX64 }
     Pop-Location

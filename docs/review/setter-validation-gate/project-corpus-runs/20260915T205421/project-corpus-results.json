@@ -1,0 +1,396 @@
+{
+  "report": "project-corpus-11",
+  "models": [
+    {
+      "discipline": "architecture",
+      "name": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A"
+    },
+    {
+      "discipline": "topography",
+      "name": "LECG_RVT_CONTEXTO.rvt",
+      "sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0"
+    },
+    {
+      "discipline": "structure",
+      "name": "LECG_RVT_ESTRUCTURAL.rvt",
+      "sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02"
+    },
+    {
+      "discipline": "mep",
+      "name": "LECG_RVT_MEP.rvt",
+      "sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201"
+    }
+  ],
+  "total_cases": 11,
+  "receipt_attempts": 44,
+  "counts_by_outcome": {
+    "validated": 0,
+    "no-validation": 11
+  },
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "ArgumentException: ConceptualConstructionIsByEnergyData cannot be set to conceptualConstructionIsByEnergyData.\r\nParameter name: conceptualConstructionIsByEnergyData",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "4CE0076396B30033B587C57B1FA27ED057C3A866448214060B4899845779D41E"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "6998AC76E5F6EB0E6E59CF1BFA7F75A8E52964BC4967D001EA9D9587578371D3"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "18B10E670A1C55A8CA0A73535C50DA8EBFFE084C10FF3A2A869E102B8A9C202C"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ConceptualConstructio-C86ECB7B83/LECG_RVT_MEP/receipt.json",
+          "sha256": "5C3A9BD1EE35102E4E955F3B971B26A39707B33E72DC84D123C2FCEE11C3A23A"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "7B707E702C0362154F735799C62A0C15E3EC54ED0F57469AED5DFE7BB3F0F556"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "25202EF8CF879C308F4FBEF57791D5F0658A93DF947501927A9E7C33D3A955BD"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "60790FBBECCBC01ACDEE97F650EA382681BA676279BA62A70627AF21E2BD25E5"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ImageInstance.EnableSnaps/LECG_RVT_MEP/receipt.json",
+          "sha256": "37424A456CD83A16B25C74E4E53FF6BF38E60922524D668F7652BCAF4CE4DD38"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_MEP/receipt.json",
+          "sha256": "ED288950AB5B04625EE8CA9E9BCBEF7ED7684C893D8E2CCED671ECE61642277F"
+        },
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "78A323DFA3DB70FB0BA5F55D795A6CA9F9E172808AEEDCBF21117E1B9F4C3F8B"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "96AB1B43246B09FE2A028FA52521CDE685E4150BCCDC45C4A5734EBC30301388"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitNamingSchemeId-DF9DFCC963/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "5B7916775926A5FDEBE801CE848EFCDFE21C2D72F12B59B7A11DA863D105DAEB"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "attempts": [
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: The connection type is invalid for this circuit. You can't assign Feed Through Lugs if the panel's Feed Through Lugs option is unchecked. If the circuit's base panel is not a data panel or transformer panel, the circuit connection type can't be set to NotApplicable. If the circuit's base panel is a data panel or transformer pane, it must be set to NotApplicable. If the circuit doesn't have a base panel, it must be set to NotApplicable.",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_MEP/receipt.json",
+          "sha256": "56F5D448264347ED110E373C7557B58BCB44F1D07A69A51984AED3670BF05AC0"
+        },
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "8C362AAEB6B27F068F6CF39F09AE9A48E3C5089ADF56A51E84D7AA4328A56C1B"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "64C0749A3919F57920DD917D77E469EF6746A0765731DCCE22CBB577193066B0"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/CircuitConnectionType-2BFE507CE9/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "F6468E14D2C517C48A6A12C2929870868EC8E315711678C988C814C0B2792B32"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "EBEC7D9059B7CD7C8C6BB8FA6F495B8F792AF0FB1C28DF27BAF186EC69F1AF57"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "60D98321C80A366CA6141A0F85FAB4C34105E7367DE048523D1CEE33E927DBE6"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "420D821CF9E89C09CC3502C742EDC902F7776C8D5839205F5AE3A456544FB4C9"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/Part.OriginalCategoryId/LECG_RVT_MEP/receipt.json",
+          "sha256": "9FB1B975F78044CDC393F80991C359F94A7BC9A0B5D5BF186FF5C101FB4ACCD7"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "EDAE72085F1FD26AE2C120462D928B6A1C342306D3DD7761D72EEB5BC9D640E8"
+        },
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "A23617FE1959DEEAE295B1CAD048F698F4D9E8285AD398B4E2E9CB66C16DD839"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_MEP/receipt.json",
+          "sha256": "E24E55680259316343FD2D386AFD237D1078DF5F301FFFE62097045EB192868E"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ApprovalTypeId-351688677F/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "1BDA2928C266CDEAAD2CF65D56CA6D03598A463A3144E10B926D5119AEFC1826"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "CCB90CA9A77D95367878D9CF022CCD63E87645B5D90EEF1528ED508E346887DC"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "5EF58C5EF57415D22CAEBB9E81F780FBD18A430E654675681A0570CBFC256429"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: Cannot set the AnalysisDisplayStyleId for the specified view.",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "C233973B946D817D5FD3EE79B028670FD997C6D1AEAA901A9FF3EB39524925E2"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: Cannot set the AnalysisDisplayStyleId for the specified view.",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/View.AnalysisDisplayStyleId/LECG_RVT_MEP/receipt.json",
+          "sha256": "3F9526D9349F035BAB83785570238752EA46601A3A58B45963E6A05F178B1100"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "9E600BC0632566DB258C24C61ACA36E1E2F1FF0AA7BA72E3E7CF0F4911EB36B8"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "DFD6DC248409C1BE8C1F0021ED671D3256ECA359F1D88BC6A04ADCF6B58CDA8F"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_MEP/receipt.json",
+          "sha256": "77D4AA27CCB7C5F2A7EA81E43362E590080B9469A59EB47DFF17256870D2AF0C"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_existing_target_in_unmodified_sample",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheet.SheetCollectionId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "6A8A53F43EDAB4DCB62B20FB39A594AA73C741DF58C5FC3E8548243F89143276"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "0F5133E90508578E09521EFF1CB6F8007BE133393D0C3B2B0BE004349B6C211D"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "E276E2DAC41485535C808375C4B8414ACB2A346B37CEF338F2E0F2353CAFDA93"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_MEP/receipt.json",
+          "sha256": "CD7844484F9B19148B4EEBB7F6AA6BC3E67CED5A07D32957ACC75AB3C01030A3"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.IsAutomatic/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "A1BA5CB38F942DC544168E835FCE36A29EFE136E59E5E63D20480A3A37F6944F"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "4BCB342E84DE9DE118DACC4CEE0A0042441ADD5091E9B85F6C893951942E3472"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "24F148E4D4E60708F0DECFB2DE0BF89FC1D9E2769BFD420E19BBFF057A1BC7B1"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_MEP/receipt.json",
+          "sha256": "99C4A4CED162A9BEAC0B3EA0619579ACC83C35522B677DE2347505A2B2ACA151"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.SheetOrganizationId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "3AC3882E568DF13D69E180E3C021DC95ECD41DDB1D1A8672227EE4AFA1B29960"
+        }
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+      "attempts": [
+        {
+          "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+          "status": "still-same-value",
+          "reason": "committed_but_unchanged",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_DISEÑO (ANTEPROYECTO)/receipt.json",
+          "sha256": "15A6DFEE377A5C89A5DB6074193AF8D2D208E8350686958D856ACA5EB2C2182E"
+        },
+        {
+          "model": "LECG_RVT_ESTRUCTURAL.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_ESTRUCTURAL/receipt.json",
+          "sha256": "DC25D5ED8B9401F42A6247F354EFFF5E142F94CA91C6916D18757F333499C397"
+        },
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_MEP/receipt.json",
+          "sha256": "0631A38E979CEAD6CC4F517C3514B9AA36A6E89F30F00ED3C5E27F9658E0661A"
+        },
+        {
+          "model": "LECG_RVT_CONTEXTO.rvt",
+          "status": "rejected-with-reason",
+          "reason": "no_proven_valid_alternative",
+          "path": "docs/review/setter-validation-gate/project-corpus-runs/20260915T205421/ViewSheetSet.ViewOrganizationId/LECG_RVT_CONTEXTO/receipt.json",
+          "sha256": "97534CB4C211DC0383777397B3AA792376500E5798CB51300C16B9E123ABC193"
+        }
+      ]
+    }
+  ]
+}

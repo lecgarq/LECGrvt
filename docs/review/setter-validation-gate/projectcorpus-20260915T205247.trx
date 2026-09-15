@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="d83133b8-f2b6-40d4-8d34-9d0b1aea1d47" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 14:54:59" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T14:54:59.3822602-06:00" queuing="2026-09-15T14:54:59.3822605-06:00" start="2026-09-15T14:52:48.3785410-06:00" finish="2026-09-15T15:00:30.9951660-06:00" />
+  <TestSettings name="default" id="c88d7cd2-d41e-48ed-9c7e-1a9528b9ba62">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_14_54_59" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="789f3fcb-edc7-4d97-95f1-1cf997d14bb7" testId="eb8e23a4-2c47-0730-e5a9-abb0170302eb" testName="RunProjectCorpus(&quot;Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:30.0018000" startTime="2026-09-15T14:55:28.6107250-06:00" endTime="2026-09-15T14:55:28.6107258-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="789f3fcb-edc7-4d97-95f1-1cf997d14bb7">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="6d04e866-41dc-4871-ac0a-0c88d64947bf" testId="7e74b595-9d46-d686-ef5f-196e65b0306c" testName="RunProjectCorpus(&quot;Part.OriginalCategoryId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:30.4638500" startTime="2026-09-15T14:56:59.9824621-06:00" endTime="2026-09-15T14:56:59.9824625-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="6d04e866-41dc-4871-ac0a-0c88d64947bf">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a46a28be-ccca-439c-bebc-036b2178f9db" testId="06b12cc4-2219-8018-685e-60e60884d8fe" testName="RunProjectCorpus(&quot;View.AnalysisDisplayStyleId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:42.3218399" startTime="2026-09-15T14:58:12.2434247-06:00" endTime="2026-09-15T14:58:12.2434271-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a46a28be-ccca-439c-bebc-036b2178f9db">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="51b2fbab-19aa-4350-94a5-3335c9054dbb" testId="4def9306-2e43-f2ee-2b05-07cbf1ca9f6c" testName="RunProjectCorpus(&quot;Structure.StructuralConnectionHandler.ApprovalTypeId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:29.9325800" startTime="2026-09-15T14:57:29.9180191-06:00" endTime="2026-09-15T14:57:29.9180195-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="51b2fbab-19aa-4350-94a5-3335c9054dbb">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a51f21db-ca07-402a-9a11-3dcf08323a00" testId="b5bc1165-20a9-6ef7-5e85-0dd96d0a9976" testName="RunProjectCorpus(&quot;ViewSheetSet.ViewOrganizationId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:32.0171000" startTime="2026-09-15T15:00:29.4330563-06:00" endTime="2026-09-15T15:00:29.4330566-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a51f21db-ca07-402a-9a11-3dcf08323a00">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="038db3de-fc8c-49f9-ad31-a9bcf3c495fc" testId="dac48b05-517a-8119-34d8-857e162a4d00" testName="RunProjectCorpus(&quot;ImageInstance.EnableSnaps&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:29.3414200" startTime="2026-09-15T14:56:29.5167991-06:00" endTime="2026-09-15T14:56:29.5167996-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="038db3de-fc8c-49f9-ad31-a9bcf3c495fc">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="a9103c6f-e91c-4273-971e-daaaa2ccce4d" testId="90f92703-81b3-421e-e143-11d051f2b6eb" testName="RunProjectCorpus(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:31.5618900" startTime="2026-09-15T14:56:00.1737493-06:00" endTime="2026-09-15T14:56:00.1737497-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a9103c6f-e91c-4273-971e-daaaa2ccce4d">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="af34e71d-7ae4-4de5-96b6-b1e74ba6e013" testId="cbcfe09f-c960-f588-4363-ea1b7b2d3532" testName="RunProjectCorpus(&quot;ViewSheet.SheetCollectionId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:30.6919500" startTime="2026-09-15T14:58:42.9389656-06:00" endTime="2026-09-15T14:58:42.9389658-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="af34e71d-7ae4-4de5-96b6-b1e74ba6e013">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="92576260-7be1-4450-8927-f79f166c38de" testId="233827fa-0658-9a4b-7ddb-75f2e41eb5a8" testName="RunProjectCorpus(&quot;Analysis.MassLevelData.ConceptualConstructionIsByEnergyData&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:37.1415899" startTime="2026-09-15T14:54:58.6150229-06:00" endTime="2026-09-15T14:54:58.6150466-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="92576260-7be1-4450-8927-f79f166c38de">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="0b242678-3b15-43c8-8002-27644c4c8b0f" testId="64856e30-bfdc-7d97-cff4-f27ecb2b413b" testName="RunProjectCorpus(&quot;ViewSheetSet.SheetOrganizationId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:30.9761400" startTime="2026-09-15T14:59:57.4106573-06:00" endTime="2026-09-15T14:59:57.4106578-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0b242678-3b15-43c8-8002-27644c4c8b0f">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="11bace04-5b41-41dd-8984-0edea3213cab" testId="a53fe263-f8f0-eb82-bb37-00a42387b93b" testName="RunProjectCorpus(&quot;ViewSheetSet.IsAutomatic&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:43.4886400" startTime="2026-09-15T14:59:26.4304870-06:00" endTime="2026-09-15T14:59:26.4304874-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="11bace04-5b41-41dd-8984-0edea3213cab">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunProjectCorpus(&quot;Analysis.MassLevelData.ConceptualConstructionIsByEnergyData&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="233827fa-0658-9a4b-7ddb-75f2e41eb5a8">
+      <Execution id="92576260-7be1-4450-8927-f79f166c38de" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;ViewSheetSet.ViewOrganizationId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="b5bc1165-20a9-6ef7-5e85-0dd96d0a9976">
+      <Execution id="a51f21db-ca07-402a-9a11-3dcf08323a00" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="eb8e23a4-2c47-0730-e5a9-abb0170302eb">
+      <Execution id="789f3fcb-edc7-4d97-95f1-1cf997d14bb7" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;ViewSheetSet.SheetOrganizationId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="64856e30-bfdc-7d97-cff4-f27ecb2b413b">
+      <Execution id="0b242678-3b15-43c8-8002-27644c4c8b0f" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;ViewSheet.SheetCollectionId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="cbcfe09f-c960-f588-4363-ea1b7b2d3532">
+      <Execution id="af34e71d-7ae4-4de5-96b6-b1e74ba6e013" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;ImageInstance.EnableSnaps&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="dac48b05-517a-8119-34d8-857e162a4d00">
+      <Execution id="038db3de-fc8c-49f9-ad31-a9bcf3c495fc" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;Part.OriginalCategoryId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="7e74b595-9d46-d686-ef5f-196e65b0306c">
+      <Execution id="6d04e866-41dc-4871-ac0a-0c88d64947bf" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;Electrical.ElectricalSystem.CircuitConnectionType&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="90f92703-81b3-421e-e143-11d051f2b6eb">
+      <Execution id="a9103c6f-e91c-4273-971e-daaaa2ccce4d" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;View.AnalysisDisplayStyleId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="06b12cc4-2219-8018-685e-60e60884d8fe">
+      <Execution id="a46a28be-ccca-439c-bebc-036b2178f9db" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;Structure.StructuralConnectionHandler.ApprovalTypeId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4def9306-2e43-f2ee-2b05-07cbf1ca9f6c">
+      <Execution id="51b2fbab-19aa-4350-94a5-3335c9054dbb" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+    <UnitTest name="RunProjectCorpus(&quot;ViewSheetSet.IsAutomatic&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="a53fe263-f8f0-eb82-bb37-00a42387b93b">
+      <Execution id="11bace04-5b41-41dd-8984-0edea3213cab" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectCorpusBatch" name="RunProjectCorpus" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="eb8e23a4-2c47-0730-e5a9-abb0170302eb" executionId="789f3fcb-edc7-4d97-95f1-1cf997d14bb7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="7e74b595-9d46-d686-ef5f-196e65b0306c" executionId="6d04e866-41dc-4871-ac0a-0c88d64947bf" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="06b12cc4-2219-8018-685e-60e60884d8fe" executionId="a46a28be-ccca-439c-bebc-036b2178f9db" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4def9306-2e43-f2ee-2b05-07cbf1ca9f6c" executionId="51b2fbab-19aa-4350-94a5-3335c9054dbb" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="b5bc1165-20a9-6ef7-5e85-0dd96d0a9976" executionId="a51f21db-ca07-402a-9a11-3dcf08323a00" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dac48b05-517a-8119-34d8-857e162a4d00" executionId="038db3de-fc8c-49f9-ad31-a9bcf3c495fc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="90f92703-81b3-421e-e143-11d051f2b6eb" executionId="a9103c6f-e91c-4273-971e-daaaa2ccce4d" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="cbcfe09f-c960-f588-4363-ea1b7b2d3532" executionId="af34e71d-7ae4-4de5-96b6-b1e74ba6e013" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="233827fa-0658-9a4b-7ddb-75f2e41eb5a8" executionId="92576260-7be1-4450-8927-f79f166c38de" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="64856e30-bfdc-7d97-cff4-f27ecb2b413b" executionId="0b242678-3b15-43c8-8002-27644c4c8b0f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="a53fe263-f8f0-eb82-bb37-00a42387b93b" executionId="11bace04-5b41-41dd-8984-0edea3213cab" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="11" executed="11" passed="11" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 11]&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ImageInstance.EnableSnaps")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Part.OriginalCategoryId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Structure.StructuralConnectionHandler.ApprovalTypeId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("View.AnalysisDisplayStyleId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheet.SheetCollectionId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheetSet.IsAutomatic")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheetSet.SheetOrganizationId")&#xD;
+Test: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheetSet.ViewOrganizationId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Electrical.ElectricalSystem.CircuitConnectionType")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ImageInstance.EnableSnaps")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Part.OriginalCategoryId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("Structure.StructuralConnectionHandler.ApprovalTypeId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("View.AnalysisDisplayStyleId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheet.SheetCollectionId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheetSet.IsAutomatic")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheetSet.SheetOrganizationId")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus("ViewSheetSet.ViewOrganizationId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 11]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022Analysis.MassLevelData.ConceptualConstructionIsByEnergyData\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022Electrical.ElectricalSystem.CircuitConnectionType\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022ImageInstance.EnableSnaps\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022Part.OriginalCategoryId\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022Structure.StructuralConnectionHandler.ApprovalTypeId\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022View.AnalysisDisplayStyleId\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022ViewSheet.SheetCollectionId\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022ViewSheetSet.IsAutomatic\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022ViewSheetSet.SheetOrganizationId\u0022)","LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus.RunProjectCorpus(\u0022ViewSheetSet.ViewOrganizationId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 37141.59 	 RunProjectCorpus("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("Analysis.MassLevelData.ConceptualConstructionIsByEnergyData")] 	233827fa-0658-9a4b-7ddb-75f2e41eb5a8&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 30001.8 	 RunProjectCorpus("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId")] 	eb8e23a4-2c47-0730-e5a9-abb0170302eb&#xD;
+OutputConsole:  Revit 2026: Execution time is 1.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 31561.89 	 RunProjectCorpus("Electrical.ElectricalSystem.CircuitConnectionType")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("Electrical.ElectricalSystem.CircuitConnectionType")] 	90f92703-81b3-421e-e143-11d051f2b6eb&#xD;
+OutputConsole:  Revit 2026: Execution time is 2 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 29341.42 	 RunProjectCorpus("ImageInstance.EnableSnaps")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("ImageInstance.EnableSnaps")] 	dac48b05-517a-8119-34d8-857e162a4d00&#xD;
+OutputConsole:  Revit 2026: Execution time is 2.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 30463.85 	 RunProjectCorpus("Part.OriginalCategoryId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("Part.OriginalCategoryId")] 	7e74b595-9d46-d686-ef5f-196e65b0306c&#xD;
+OutputConsole:  Revit 2026: Execution time is 3 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 29932.58 	 RunProjectCorpus("Structure.StructuralConnectionHandler.ApprovalTypeId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("Structure.StructuralConnectionHandler.ApprovalTypeId")] 	4def9306-2e43-f2ee-2b05-07cbf1ca9f6c&#xD;
+OutputConsole:  Revit 2026: Execution time is 3.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 42321.84 	 RunProjectCorpus("View.AnalysisDisplayStyleId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("View.AnalysisDisplayStyleId")] 	06b12cc4-2219-8018-685e-60e60884d8fe&#xD;
+OutputConsole:  Revit 2026: Execution time is 4 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 30691.95 	 RunProjectCorpus("ViewSheet.SheetCollectionId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("ViewSheet.SheetCollectionId")] 	cbcfe09f-c960-f588-4363-ea1b7b2d3532&#xD;
+OutputConsole:  Revit 2026: Execution time is 4.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: Execution time is 5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 43488.64 	 RunProjectCorpus("ViewSheetSet.IsAutomatic")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("ViewSheetSet.IsAutomatic")] 	a53fe263-f8f0-eb82-bb37-00a42387b93b&#xD;
+OutputConsole:  Revit 2026: Execution time is 5.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 30976.14 	 RunProjectCorpus("ViewSheetSet.SheetOrganizationId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("ViewSheetSet.SheetOrganizationId")] 	64856e30-bfdc-7d97-cff4-f27ecb2b413b&#xD;
+OutputConsole:  Revit 2026: Execution time is 6 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 32017.1 	 RunProjectCorpus("ViewSheetSet.ViewOrganizationId")[RunProjectCorpus]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectCorpusBatch.RunProjectCorpus [RunProjectCorpus("ViewSheetSet.ViewOrganizationId")] 	b5bc1165-20a9-6ef7-5e85-0dd96d0a9976&#xD;
+OutputConsole:  Revit 2026: 368448.07 	 SetterValidationProbe 11 True 100% 368448.07ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

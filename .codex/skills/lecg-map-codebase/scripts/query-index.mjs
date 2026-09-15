@@ -24,6 +24,11 @@ export function parseArgs(args) {
   return { command, term: terms[0]?.trim().toLowerCase() };
 }
 
+export function revisionAdmissible(revision, head, changedPaths = [], ancestor = false) {
+  if (!/^[0-9a-f]{40}$/i.test(revision ?? '') || !/^[0-9a-f]{40}$/i.test(head ?? '')) return false;
+  return head === revision || (ancestor && changedPaths.length === 1 && changedPaths[0] === indexPath);
+}
+
 export function inventoryFreshness(index) {
   let head = null;
   try {
@@ -31,6 +36,18 @@ export function inventoryFreshness(index) {
       cwd: root, encoding: 'utf8', windowsHide: true, timeout: 5000, stdio: ['ignore', 'pipe', 'pipe']
     }).trim();
   } catch { /* No HEAD means inventory is inadmissible. */ }
+  let revisionCompatible = head === index.repository_revision;
+  if (!revisionCompatible && head && /^[0-9a-f]{40}$/i.test(index.repository_revision ?? '')) {
+    try {
+      execFileSync('git', ['merge-base', '--is-ancestor', index.repository_revision, 'HEAD'], {
+        cwd: root, windowsHide: true, timeout: 5000, stdio: ['ignore', 'pipe', 'pipe']
+      });
+      const changedPaths = execFileSync('git', ['diff', '--name-only', `${index.repository_revision}..HEAD`, '--'], {
+        cwd: root, encoding: 'utf8', windowsHide: true, timeout: 5000, stdio: ['ignore', 'pipe', 'pipe']
+      }).split(/\r?\n/).filter(Boolean).map(path => path.replaceAll('\\', '/'));
+      revisionCompatible = revisionAdmissible(index.repository_revision, head, changedPaths, true);
+    } catch { /* Divergent history or an invalid revision is stale. */ }
+  }
   const hashes = Object.entries(index.input_sha256 ?? {});
   const inputsMatchWorkingTree = hashes.length > 0 && hashes.every(([path, expected]) => {
     const absolute = resolve(root, path);
@@ -46,9 +63,10 @@ export function inventoryFreshness(index) {
     }).split('\0').filter(path => path.endsWith('.cs') && !/(?:^|\/)(?:bin|obj|TestHelpers)\//.test(path));
     inputSetMatch = paths.every(path => Object.hasOwn(index.input_sha256 ?? {}, path));
   } catch { /* Unknown input coverage also makes inventory inadmissible. */ }
-  const admissible = Boolean(head && head === index.repository_revision
+  const admissible = Boolean(revisionCompatible
     && index.source_inputs_match_revision === true && inputsMatchWorkingTree && inputSetMatch);
   return { repository_revision: index.repository_revision ?? null, head,
+    revision_compatible: revisionCompatible,
     source_inputs_match_revision: index.source_inputs_match_revision === true,
     inputs_match_working_tree: inputsMatchWorkingTree,
     input_set_matches: inputSetMatch,
