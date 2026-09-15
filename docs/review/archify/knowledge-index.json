@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
-  "repository_revision": "392533b1b890ad0e5d21b813eadfad49d8ce128e",
+  "repository_revision": "028a060d5c207acf5d3a577cea330d1f9b44cd14",
   "source_inputs_match_revision": true,
   "counts": {
-    "command_classes": 37,
-    "service_source_files": 155,
+    "command_classes": 38,
+    "service_source_files": 165,
     "mcp_top_level_tools": 16,
     "native_operations": 52,
     "native_reads": 35,
@@ -58,7 +58,7 @@
     {
       "name": "AlignEdgesCommand",
       "path": "src/Commands/AlignEdgesCommand.cs",
-      "line": 14
+      "line": 13
     },
     {
       "name": "AssignMaterialCommand",
@@ -186,6 +186,11 @@
       "line": 18
     },
     {
+      "name": "SubstanceBatchCommand",
+      "path": "src/Commands/SubstanceBatchCommand.cs",
+      "line": 16
+    },
+    {
       "name": "TypeToLinkedModelsCommand",
       "path": "src/Commands/TypeToLinkedModelsCommand.cs",
       "line": 21
@@ -202,6 +207,14 @@
     }
   ],
   "services": {
+    "Shared": [
+      "src/Services/AdvancedAppearanceAssetService.cs",
+      "src/Services/AppearanceAssetDumpService.cs",
+      "src/Services/ElementLabelService.cs",
+      "src/Services/MetallicProbeService.cs",
+      "src/Services/PbrTextureBakeService.cs",
+      "src/Services/SubstanceMaterialCreateService.cs"
+    ],
     "Alignment": [
       "src/Services/Alignment/AlignEdgesBoundaryCollectionService.cs",
       "src/Services/Alignment/AlignEdgesBoundaryPointService.cs",
@@ -255,9 +268,6 @@
       "src/Services/CadConversion/CadTempDwgExtractionService.cs",
       "src/Services/CadConversion/CadTempFileCleanupService.cs"
     ],
-    "Shared": [
-      "src/Services/ElementLabelService.cs"
-    ],
     "FamilyConversion": [
       "src/Services/FamilyConversion/FamilyConversionExecutionService.cs",
       "src/Services/FamilyConversion/FamilyConversionFinalizeService.cs",
@@ -285,6 +295,9 @@
     "Health": [
       "src/Services/Health/WarningsService.cs"
     ],
+    "Imaging": [
+      "src/Services/Imaging/PngIo.cs"
+    ],
     "Infrastructure": [
       "src/Services/Infrastructure/FilterCopyService.cs",
       "src/Services/Infrastructure/IFilterCopyService.cs",
@@ -302,7 +315,11 @@
       "src/Services/Infrastructure/TransactionService.cs"
     ],
     "Interfaces": [
-      "src/Services/Interfaces/ISharedToFamilyParameterService.cs"
+      "src/Services/Interfaces/IAdvancedAppearanceAssetService.cs",
+      "src/Services/Interfaces/IMetallicProbeService.cs",
+      "src/Services/Interfaces/IPbrTextureBakeService.cs",
+      "src/Services/Interfaces/ISharedToFamilyParameterService.cs",
+      "src/Services/Interfaces/ISubstanceMaterialCreateService.cs"
     ],
     "Materials": [
       "src/Services/Materials/IImageColorExtractionService.cs",
@@ -1040,14 +1057,14 @@
   },
   "api_evidence": {
     "source": "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
-    "campaign": "changed-value-dedicated-20260909T060711-36d76f76abe047ff9ae49d413631fec1",
-    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification.",
+    "campaign": "changed-value-project-corpus-20260915T205421",
+    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract. ",
     "entries_by_state": {
       "unsupported_context": 194,
       "read_invoked": 1217,
       "missing_fixture": 82,
-      "changed_value_tested": 635,
-      "same_value_only": 53,
+      "changed_value_tested": 659,
+      "same_value_only": 29,
       "context_rejected": 35
     },
     "note": "Recorded campaign evidence, not tests rerun by this documentation refresh."
@@ -1074,6 +1091,7 @@
     "docs/review/13-compacting-styles.md",
     "docs/review/14-current-debt-audit.md",
     "docs/review/15-revit-api-export.md",
+    "docs/review/16-substance-batch-validation.md",
     "docs/review/crg-qualification.md",
     "docs/review/diagrams/command-execution-flow.md",
     "docs/review/diagrams/component-dependency.md",
@@ -1094,13 +1112,18 @@
     "docs/review/RevitCopilot-Shared-Knowledge.md",
     "docs/review/RevitCopilot-Temporary-Knowledge-Lab.md",
     "docs/review/RevitCopilot-Validation-Release.md",
+    "docs/review/setter-validation-gate/archive-path-relocation.md",
+    "docs/review/setter-validation-gate/class-collector-preregistration.md",
+    "docs/review/setter-validation-gate/class-collector-results.md",
     "docs/review/setter-validation-gate/dedicated-batch-review.md",
     "docs/review/setter-validation-gate/dedicated-preregistration.md",
     "docs/review/setter-validation-gate/generator-design.md",
+    "docs/review/setter-validation-gate/non-element-preregistration.md",
     "docs/review/setter-validation-gate/pilot-attempt-01.md",
     "docs/review/setter-validation-gate/pilot-preregistration.md",
     "docs/review/setter-validation-gate/pilot-protocol-amendment.md",
     "docs/review/setter-validation-gate/pilot-results.md",
+    "docs/review/setter-validation-gate/project-corpus-preregistration.md",
     "docs/review/setter-validation-gate/restoration-diagnostic-plan.md",
     "docs/review/setter-validation-gate/writable-snapshot-amendment.md",
     "docs/review/setter-validation-gate/writable-snapshot-results.md",
@@ -1150,7 +1173,7 @@
     "RevitCopilot/Agent/AgentBatch.cs": "1fd4db7d90f1582f1b6b28331ad722483706e3afae0eaf9224a3bca60a747574",
     "RevitCopilot/Agent/CapabilityCatalog.cs": "a6a98f6203a093dd5aa164a743c64f0b2765d26465425d1fe43e5913aae75ce3",
     "RevitCopilot/Agent/Knowledge/revit2026-reference.json": "9726924ad3b74f781f94ff3b9babfd612debd41f6d09bb3b941a030ad2454052",
-    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "5f37bd9d7b0524dcc6ca8324df6c867e6fe0f4660276a5147b85dcf7d11071fb",
+    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "00701aa33fb4be691d2d86e7379cee9e15a17a3f70931481977b741d63fd6f3d",
     "RevitCopilot/Agent/WorkflowLibrary.cs": "3bdc5092fae7c409342b335f5c1cebbe4bbe2c89468dcf9800f2fd5b21683d4a",
     "RevitCopilot/McpServer/AgentTools.cs": "0e647ab04960932aa0a097aee4b2cd955e386a2e5758574d6c149869ab4bb3e9",
     "RevitCopilot/McpServer/RevitTools.cs": "3f2941e93a7f966cc13a66a45e9ac20d8fb8e0d0a254c14fee7f118846253a95",
@@ -1159,7 +1182,7 @@
     "RevitCopilot/Services/ProjectConversationStore.cs": "aff47bbe164e37987686a47c97c93aa595664cd3b5dbcfd3f66138a9ae7510a3",
     "src/App.cs": "2f2e9f7cfd495586d6b541b3f97f43fd5cf1ff3648e7aafb05cf0f70f16406ff",
     "src/Commands/AlignCommands.cs": "5d9848c6f14a41933f28e185c5744404f3f508644b57d6e9731a6c037a5655ef",
-    "src/Commands/AlignEdgesCommand.cs": "8a7ee2cad710b83aabe1ec6bf152d25ff92f965036206fb2ddf6b7e04fb59ef8",
+    "src/Commands/AlignEdgesCommand.cs": "b91d0d63a52533e0cab83c2551c136d19ffa9c5d6a64e4153f350845422e871e",
     "src/Commands/AssignMaterialCommand.cs": "7ba5d0d06dde862716fef73b1ac2dd8827e25bf88334a592611dfbe0c94087f9",
     "src/Commands/CategoryChangerCommand.cs": "6de625dd106c47825536f6003ca313eee22fd4ac894b383962cd3e4154c85513",
     "src/Commands/ChangeLevelCommand.cs": "a76c5c011c951a8ab99ea88e50d9f594d8ee6822d08ea051e1f4e5d532605a48",
@@ -1167,14 +1190,14 @@
     "src/Commands/CompactingStylesCommand.cs": "7d99a24791fc667d299413f8a1d70c417216db01cc4c4bb82e1faeed40654d73",
     "src/Commands/ConvertCadCommand.cs": "f5a6f66c307bfc9b4ea27118f974ea3853b4ce5a011407b966bf56f37db39ef2",
     "src/Commands/ConvertFamilyCommand.cs": "ad099192decf586195323d47eb0c85f440dd98f51c5032c64397874c08d0dab8",
-    "src/Commands/ConvertFloorToToposolidCommand.cs": "ce2b20d965b9ea9e7b7fbe7b0994ca5f543929440d1157b083cd4aa753c58da9",
+    "src/Commands/ConvertFloorToToposolidCommand.cs": "c86f9130ea1d0996d45853401b6f079485be0197528101070117aa8699469c2a",
     "src/Commands/ConvertSharedCommand.cs": "e675c1e9efcc30a47f7ea91f571b1f4b0c4a9b5bd012ab4dbee0cf37ea217b70",
-    "src/Commands/ConvertToposolidToFloorCommand.cs": "b4a31238351997b8fa26f1caddd8031e860cf9a5d7c59cd0c085995d7328e5b0",
+    "src/Commands/ConvertToposolidToFloorCommand.cs": "5e3bb9f36a66d3f14c56421b04576b4005cac1ed0c1b7461e260b6a86ce0a461",
     "src/Commands/DivideToposolidCommand.cs": "95d65d9dd6b3bb36025c6332ddf60493d95bddcaa979a02495e60a138e9a469d",
     "src/Commands/FilterCopyCommand.cs": "737d82d3a76a309697b887f0481966100f9e6a5d283a9c78ad2d1404a7e859d7",
     "src/Commands/FixPointsCommand.cs": "6cd4650e643d86c03b059958b1484dfc6cf8abf1abaadb53af2a6d5267677e45",
     "src/Commands/FormulaAutoGroupingCommand.cs": "1ee84ca396457bd5b377a1bc0117ad750a6cd264dd6e56df16e5884e1cbb0472",
-    "src/Commands/HomeCommand.cs": "041a8c8e27b305897015de77f16a29ba6c09c7ace4ebf8a4717b547204c6776c",
+    "src/Commands/HomeCommand.cs": "9c6cecfcd47bfd243c18a166506139e4482afb1d738a4dd1eb0ef833816a8c9c",
     "src/Commands/OffsetElevationsCommand.cs": "37d905ac5ef3ded435a5f1cee92f38791229a6d1176004f7b056785fd90a0a1c",
     "src/Commands/PbrMaterialCreatorCommand.cs": "7e72ea9b934a3ecce1d6a2ace2e6831ae07c8226d5f326cc6e593a30e4b871ca",
     "src/Commands/PurgeCommand.cs": "1282876bf5be32816c2bcfab060bcde29d3af2c9170be1a8c51da473179de55f",
@@ -1185,11 +1208,13 @@
     "src/Commands/SharedToFamilyParameterCommand.cs": "2078f0eb42e9e6ed2da27393490722af523438da95db3ba2c01ef6edffb7eae3",
     "src/Commands/SimplifyPointsCommand.cs": "b95f657c7d1008192d17a4275739f13beabfaf51689d678fbd1d6e267039752f",
     "src/Commands/SplitBoundariesCommand.cs": "d0d2e48a3d9f29d6a0d537f94cad5fe90392e96b2593660ed173861534d957e0",
+    "src/Commands/SubstanceBatchCommand.cs": "ada09521d60dea3ba8a50651a47dd1105c63f05b3e06fdb885a08536ecd905df",
     "src/Commands/TypeToLinkedModelsCommand.cs": "f8f15fa9ab1846521bd4733bed264242fb54d3e2a9ddf7d745e9e2a5df049d11",
     "src/Commands/UpdateContoursCommand.cs": "27bbdbabf23d58ceac10e17c72000e69bb59adc4760247a84216f889c7b28a10",
     "src/Commands/WarningsCommand.cs": "b1f6389a8879d5163c34c7fc9968883bafb890be2519517592d8b58ad85a1489",
-    "src/Core/Bootstrapper.cs": "03dd7b461c61d9448bd6e20542d0f81a822a960d9a70ce86fb6fc517bf561e3f",
-    "src/Core/Ribbon/RibbonService.cs": "d4320a0b490fffaea5e67b05bae5fed5a3c63e2f86317deec207096117f14ee0",
+    "src/Core/Bootstrapper.cs": "872361dc7bf3dada73e97fa3648e7432065a0230588b6cb04b1d2415668197ba",
+    "src/Core/Ribbon/RibbonService.cs": "e81946e6b4e465e01ee1f35b2da93107debb735deaddc3b0dfd3908c210f71ee",
+    "src/Services/AdvancedAppearanceAssetService.cs": "bd6defc5d815c54b6e1ae9549026386217bed8ae68ab3c5df9592c0cd04a6deb",
     "src/Services/Alignment/AlignEdgesBoundaryCollectionService.cs": "be0fa5cdc22eeac1961c76e03979a2f65f0ef809d92537168759cb1a852f09f5",
     "src/Services/Alignment/AlignEdgesBoundaryPointService.cs": "8f3dc95982b11644f9b96ea53735bbd5db1e0d65fa1c343bb1c16bb39518f3da",
     "src/Services/Alignment/AlignEdgesCurveDivisionService.cs": "883297059e421055ce324cce74ef27c2ddd0dae648dbe1374ab868e717dd94e3",
@@ -1197,12 +1222,13 @@
     "src/Services/Alignment/AlignEdgesHitPointProjectionService.cs": "ab22431960f6bd461738fbb294991737903191fb3a1ff29621870dfdc0272584",
     "src/Services/Alignment/AlignEdgesIntersectorService.cs": "08090f70b37e176585d12c2239f6a216ba793d179768822ed24bd10847ccc139",
     "src/Services/Alignment/AlignEdgesPointInsertionService.cs": "c989884db9ce063f0719a0e9bc2e531c8854a4cb783a8c7bec9c5a92d8a6470a",
-    "src/Services/Alignment/AlignEdgesService.cs": "78ea467108bc0c12a55312e9da6d3d5a1c18f21706ab85d463c793b3263732b1",
+    "src/Services/Alignment/AlignEdgesService.cs": "50a41f7afca979cf1f58348b109d4ce4d5c7bdf84c18ace88a38e8f08e17304a",
     "src/Services/Alignment/AlignEdgesSourceResult.cs": "85b8bcddcdc0624e874222b92d0207f40fe3b7732742bd9b5c0e13ca0f41f1a7",
-    "src/Services/Alignment/AlignEdgesToposolidProcessingService.cs": "a2e64a5b13aafc3cd23b6a6e4d3a6b16dbed849d71877e93c6109f55ea9649c9",
-    "src/Services/Alignment/AlignEdgesVertexAlignmentService.cs": "5047a1f20364f5905336fbe53ca3fc14253bc5fe44ef8a04c134619c3512a269",
+    "src/Services/Alignment/AlignEdgesToposolidProcessingService.cs": "2c6402a8d28c32ae7ed13232abe0d4a2737c9578d94a7c3f3642d7723f0f1214",
+    "src/Services/Alignment/AlignEdgesVertexAlignmentService.cs": "b7a9142cf820c59e47a7c4ff5c311cdbdfa48402900c2467c7746d3f7e9d6d2d",
     "src/Services/Alignment/AlignElementsService.cs": "0d2afc6c8b26889bb530567167630a90a03a13d246f88b131f62735093c97b7d",
-    "src/Services/Alignment/ReferenceRaycastService.cs": "1a35f0fb50dbe0575fdd84ef74ace1f179c2efa69e3d2a2374c5da9d343c8747",
+    "src/Services/Alignment/ReferenceRaycastService.cs": "3ca95e842ce81284202357e0671813d4ebef5a1878757c564ffac2814f83ee71",
+    "src/Services/AppearanceAssetDumpService.cs": "bde19a5a05c8b0a505e31621e6394b6c7a20c2c1bd1a509f10c27372bfc7d22f",
     "src/Services/CadConversion/CadConversionService.cs": "6e815eb8a61e0ba30e6df651a5151d37419ee98e5f085fd3a2dd2861a415e0d8",
     "src/Services/CadConversion/CadCurveFlattenService.cs": "7fdd33069321d73e7490c0757d886d3daf9bf8bae74d3cc7e55e3838c5463ab9",
     "src/Services/CadConversion/CadCurveRenderService.cs": "c9d62749b1669a5738a6909007a6fe11bfcc99ddbf1ac0487706488cd45e25ad",
@@ -1261,6 +1287,7 @@
     "src/Services/Graphics/RevitViewGraphicsFacade.cs": "cdf8891a575093df93c777746df7acbfec16ca0ad7901b14c551bec6a51ac3f8",
     "src/Services/Graphics/SexyRevitService.cs": "9a3675b6dc5b27b874b08eea868112464a03eeae1acc9369437993c3bb3e2857",
     "src/Services/Health/WarningsService.cs": "8e7448a01a5f9f5d2602fcdce3cc1f4310b59800bbf2fe05eca5a40ee9183118",
+    "src/Services/Imaging/PngIo.cs": "6a7613e8c232689538cf509933566f8b9e0f082994339305a3be636d72c7e5d1",
     "src/Services/Infrastructure/FilterCopyService.cs": "b844b71c117c924265f8923da3e8cfcd4964a9c33ccdb86c77ccd50eb7839b0f",
     "src/Services/Infrastructure/IFilterCopyService.cs": "c8e7f60329a1c336b27833d963beb77a4fa13bfd89096992ca4c1c4c101ed419",
     "src/Services/Infrastructure/ILinkedModelExportService.cs": "e9ff1c54b431b1588611d583793e58edf233e8dc67fa7850552c8b60048baea2",
@@ -1275,7 +1302,11 @@
     "src/Services/Infrastructure/RevitCommandProgressReporter.cs": "2f9868985c65277d92de79aa68c3cdf2bef4e2e7a06687bb6baf126581a616ad",
     "src/Services/Infrastructure/SettingsManager.cs": "8f6f56f2f74031f36c882fd9816311d8ca6fd8c3abef6a352f57135852c8925e",
     "src/Services/Infrastructure/TransactionService.cs": "98fd35ffeb617898b14df11ecb32bf29a84d748fa7f172a453eaa37e6b86c393",
+    "src/Services/Interfaces/IAdvancedAppearanceAssetService.cs": "f9e10292d425bc0551b855a79acd1b2072c52284dfec49ee054c9fcdcd710e88",
+    "src/Services/Interfaces/IMetallicProbeService.cs": "8387406a3d5ea8cd788ec55855a2e07076485688d16c81ce347431c339114730",
+    "src/Services/Interfaces/IPbrTextureBakeService.cs": "529eee6672891afb533ea9f210a6dee04b378b22be986694166e3970eb633c3b",
     "src/Services/Interfaces/ISharedToFamilyParameterService.cs": "d2b551249500a0a44297af46b036632c10f4524d4fd24461579c88492601f95a",
+    "src/Services/Interfaces/ISubstanceMaterialCreateService.cs": "aeca4521633418d768da80a129794a42e600b8328f8e4ca6abd90b883ba8f0a9",
     "src/Services/Materials/IImageColorExtractionService.cs": "827f712ea131041e2173531688a2437b137b5a468855607dee0020d44d3e9f33",
     "src/Services/Materials/ImageColorExtractionService.cs": "f4a591b0fa090669be94e4b7c4ec9519bc95810f5aa486766203246e8b4c3bf1",
     "src/Services/Materials/IMaterialAppearanceAssetService.cs": "bf3b0629a682dddddd4db90c5e1f5d02ac5d0c1a9e2a44ad61924fdad3b498c6",
@@ -1285,16 +1316,18 @@
     "src/Services/Materials/IMaterialTextureLookupService.cs": "611da92dcf99a15fd76233b00c98894444410d36cf48b45d321bf9f28417ef1f",
     "src/Services/Materials/MaterialAppearanceAssetService.cs": "29006fba93de043e8c2af9d2840d1fb444640db54d60c9ebd9a0e8e0c214909f",
     "src/Services/Materials/MaterialAssignmentExecutionService.cs": "92f37f900931c1ac80ae6275106eaff24bda64d88d52eae0d7fb3b84260ca222",
-    "src/Services/Materials/MaterialBitmapPropertyService.cs": "b7c6cccb179bad2d8143d43439b88faf176563eccc84772e2615c35898290cd4",
+    "src/Services/Materials/MaterialBitmapPropertyService.cs": "3cc19b4411192d5f18894d295e028b2378a6e9a0d36e3d9da9a0b72936c21520",
     "src/Services/Materials/MaterialBumpMapNormalizer.cs": "e749d5e832ec060b3744c8b254ab4e309849b283c5fb3da88ed4dd382d684939",
     "src/Services/Materials/MaterialColorSequenceService.cs": "c6b6f6556d38e00413c03249c096c0ce099250a15ddd233130714bd625511824",
     "src/Services/Materials/MaterialCreationService.cs": "171b32a4efbcceab684f05194897bb17ae220c222963a9efed29fdd0db91b72c",
     "src/Services/Materials/MaterialElementGroupingService.cs": "fed898e91b6b5778c38596b5ca4f1c86b54b661c9655565c2e815d2412f76765",
-    "src/Services/Materials/MaterialPbrService.cs": "04b33cd121d6f764bc731c6be1df203d0bf2416fdea6b33bee9a97fae44b749e",
+    "src/Services/Materials/MaterialPbrService.cs": "e1f83395ce762a3acf4da21a8da922b4b68b6475964f9b578357b8f2f676290e",
     "src/Services/Materials/MaterialTextureLookupService.cs": "c8603e078443a477305f0d799f38658b2e2788d704c17bc4ac569580bf6555e0",
     "src/Services/Materials/MaterialTypeAssignmentProcessService.cs": "08938d307733d094c6c3a908dfe3f654b9954c389948a585cbc8e470c95f9863",
     "src/Services/Materials/MaterialTypeAssignmentService.cs": "7dc4fbbecbbd8a1f57f45eb26b0ef3babc426b61c232dc5ba0bdc3a765f34da5",
     "src/Services/Materials/MaterialTypeEligibilityService.cs": "6decf7bfabcdd3ae5eba711aeb8e0bbe114cbb5529d9249a0bea2dd8e3711743",
+    "src/Services/MetallicProbeService.cs": "631db459339e5804c469efb74bdd452aa81d76a3715da2e71baa85c8352b52be",
+    "src/Services/PbrTextureBakeService.cs": "a8ed2002d76e233d1ab171fea799aa5de6ec862a3f3a0a815677cae204942f83",
     "src/Services/PurgeAndCompaction/CompactingStylesContext.cs": "cb6141c8093f27e5b46725df18f1cd742617543e96831368a2d00376ccc83d72",
     "src/Services/PurgeAndCompaction/CompactionSharedHelper.cs": "a165e602efaf0e120070b3c7ae26a7752a203e516bfd0f35dbd5c315634d5ae3",
     "src/Services/PurgeAndCompaction/DeepPurgeService.cs": "781b57301a147d9fc1713687cf536870e3b1ac69ba5de3a580184e3a987810c3",
@@ -1335,15 +1368,16 @@
     "src/Services/RenderAppearance/RenderMaterialSyncExecutionService.cs": "104cc66bb3c2baae655b51330ad5856193c0107163c4f84465e80d0eb03a8ac4",
     "src/Services/RenderAppearance/RenderSolidFillPatternService.cs": "d35bbc497595102b38e4121bd58fd2eda9d9f22dbe65d593d54eedb83623c3c8",
     "src/Services/Schemas/SchemaCleanerService.cs": "c49af2f7fb1d8cbbd4da3ae46dfe81a43ccf6b47c4c8bd72e496ea6374004718",
+    "src/Services/SubstanceMaterialCreateService.cs": "6bd905076e87bb6b19e5d226a029f9fde588de00a6b9f3fa8513d9db2cf97f8e",
     "src/Services/Topography/ChangeLevelService.cs": "e4cda857ed40dd31c3bd56938329fe86420a8eacebd2e7d98d49bdce6758aaf0",
-    "src/Services/Topography/ConversionService.cs": "9daa58bfd9f149f0f01f0af0a8921894599e4b02c3a116269e4c4d68cd64339b",
+    "src/Services/Topography/ConversionService.cs": "cdeb93c26b6734e99a8f7e9589ee87b4365b562f8d8cc6891f268e2ca1492f02",
     "src/Services/Topography/DivideToposolidService.cs": "4e96c924871b32534bc235679d5e755dbfedd44bd2e0e1cec6725ac327827de3",
     "src/Services/Topography/FixPointsService.cs": "c2a782ef77369952a19875d9783f19423e5404b4388f02e3b69736892b99fc07",
     "src/Services/Topography/GeometryBoundaryService.cs": "2d4f548987e61987b3f3a277c4e935f4d30dde2a44465ffc510bdacdc7645ff8",
     "src/Services/Topography/OffsetService.cs": "88f901337008445d0860d8650e3e4c1f42d8a79e95353ce95c4ac0b7e0e21242",
     "src/Services/Topography/SimplifyPointsService.cs": "7e1953916984db05af14aceb487d2b0292affed012c7ee711c16b523ae1d48be",
     "src/Services/Topography/SlabService.cs": "1a6060a7afa567fbf99899a756b19399b947a9d59ab8705165adf5a158297341",
-    "src/Services/Topography/SplitBoundariesService.cs": "dac812101ea253701b3f775e675791ef475d2c1af229979b7efad70917daf910",
+    "src/Services/Topography/SplitBoundariesService.cs": "fe75e1c163c8d38b95b831f5807161537e874f4509e7d5dd7e3827973b740c52",
     "src/Services/Topography/ToposolidService.cs": "2c84bf67acfab57cb831f4b4dcc7ed1c49d7cfc30c184a39ffe63e233ca0d821"
   }
 }
