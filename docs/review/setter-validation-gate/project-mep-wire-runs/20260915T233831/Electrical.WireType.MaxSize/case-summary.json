@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+  "attempts": [
+    {
+      "model": "LECG_RVT_MEP.rvt",
+      "status": "validated",
+      "reason": null
+    }
+  ],
+  "models_planned": 1,
+  "models_attempted": 1
+}

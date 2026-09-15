@@ -1,0 +1,72 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+  "model": "LECG_RVT_MEP.rvt",
+  "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+  "status": "validated",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-mep-wire-runs\\20260915T233831\\Electrical.WireType.MaxSize\\LECG_RVT_MEP\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "71D55A4EE2EA34CB3916DB8F743652358DB1CF0301FA969FDBFC92DECCA14517",
+  "target_count": 8,
+  "generator_errors": [],
+  "target": "8974fcd1-2e28-4ac7-a042-c6cec31e52a9-0000042f",
+  "before": "",
+  "desired": "2",
+  "after_regenerate": "2",
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": "2",
+  "reason": null,
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 18925,
+    "after_elements": 18925,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "bd310375-4625-47e6-9c15-1ab4ed8e5fbe-00178513:parameter-slot:6",
+      "bd310375-4625-47e6-9c15-1ab4ed8e5fbe-00178513:parameter-slot:7",
+      "bd310375-4625-47e6-9c15-1ab4ed8e5fbe-00178513:parameter-slot:8",
+      "3006d588-9d9c-45bd-8c7c-9c1935f9cf37-002c95f5:parameter-slot:6",
+      "3006d588-9d9c-45bd-8c7c-9c1935f9cf37-002c95f5:parameter-slot:7",
+      "3006d588-9d9c-45bd-8c7c-9c1935f9cf37-002c95f5:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "bd310375-4625-47e6-9c15-1ab4ed8e5fbe-00178513:parameter-slot:6",
+      "bd310375-4625-47e6-9c15-1ab4ed8e5fbe-00178513:parameter-slot:7",
+      "bd310375-4625-47e6-9c15-1ab4ed8e5fbe-00178513:parameter-slot:8",
+      "3006d588-9d9c-45bd-8c7c-9c1935f9cf37-002c95f5:parameter-slot:6",
+      "3006d588-9d9c-45bd-8c7c-9c1935f9cf37-002c95f5:parameter-slot:7",
+      "3006d588-9d9c-45bd-8c7c-9c1935f9cf37-002c95f5:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 161920,
+    "excluded_readonly_values_after": 161920,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionCommitted",
+      "added": [],
+      "modified": [
+        1071
+      ],
+      "deleted": []
+    },
+    {
+      "operation": "TransactionGroupRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 13109.1213
+}

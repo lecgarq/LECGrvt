@@ -83,11 +83,7 @@ internal static class PilotValues
                 return Enumerable.Range(0, schedule.GetSegmentCount()).Cast<int?>()
                     .FirstOrDefault(index => index != (int)before);
             case "Electrical.WireType.MaxSize":
-                var wire = (WireType)target;
-                return doc.GetElement(wire.TemperatureRating) is TemperatureRatingType rating
-                    ? rating.WireSizes.Cast<WireSize>().Where(size => size.InUse)
-                        .Select(size => size.Size).FirstOrDefault(size => size != (string)before)
-                    : null;
+                return AlternativeConductorSizeName(doc, (string)before);
             case "Electrical.CableType.ConductorMaterial":
             case "Electrical.WireType.WireMaterial":
                 return ConductorMaterial.GetConductorMaterialIds(doc).OrderBy(id => id.Value)
@@ -237,6 +233,16 @@ internal static class PilotValues
     }
 
     private static bool ValidStep(double riser) => double.IsFinite(riser) && riser > 0.0;
+
+    private static string? AlternativeConductorSizeName(Document doc, string before)
+    {
+        foreach (var id in ConductorSize.GetConductorSizeIds(doc))
+        {
+            using var size = ConductorSize.GetConductorSize(doc, id);
+            if (size.Name != before) return size.Name;
+        }
+        return null;
+    }
 
     private static XYZ? PathPoint(PathOfTravel path, XYZ before, XYZ opposite)
     {

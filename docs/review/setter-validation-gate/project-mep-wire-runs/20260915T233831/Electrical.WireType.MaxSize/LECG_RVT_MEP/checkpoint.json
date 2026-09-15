@@ -1,0 +1,18 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+  "model": "LECG_RVT_MEP.rvt",
+  "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+  "status": "rejected-with-reason",
+  "stage": "pre_write_snapshot",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-mep-wire-runs\\20260915T233831\\Electrical.WireType.MaxSize\\LECG_RVT_MEP\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": false,
+  "cleanup_verified": false,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "71D55A4EE2EA34CB3916DB8F743652358DB1CF0301FA969FDBFC92DECCA14517",
+  "target_count": 8,
+  "generator_errors": []
+}

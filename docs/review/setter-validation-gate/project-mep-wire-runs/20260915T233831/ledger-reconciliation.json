@@ -1,0 +1,80 @@
+{
+  "run": "20260915T233831",
+  "original_ledger_sha256": "5369A12DBCA9E310923EC763672EF8253F87DE047B61BB2D7823986C31275DCB",
+  "previous_reconciliation": {
+    "path": "docs/review/setter-validation-gate/project-architecture-runs/20260915T232928/ledger-reconciliation.json",
+    "sha256": "EA47DABBEDCD29478D859227A20685E8447D2CED687070D34403896078EB1725"
+  },
+  "manifest": {
+    "path": "docs/review/setter-validation-gate/project-mep-wire-manifest.json",
+    "sha256": "BCCA441BC4C509C388CD17823A297D87BE5433B3F39E52A6C7A318E84445D22C"
+  },
+  "provenance": {
+    "path": "docs/review/setter-validation-gate/project-mep-wire-runs/20260915T233831/provenance.json",
+    "sha256": "11650A6C77B6C0212F11C41E21A1FA6BE28BA63E3F060ACED917197770856835"
+  },
+  "trx": {
+    "path": "docs/review/setter-validation-gate/projectmepwire-20260915T233757.trx",
+    "sha256": "37F0F0274905096258EDE16147D458BD4A3907F7DF65CEE512DB3E029D4CEBD2"
+  },
+  "sources": [
+    {
+      "name": "LECG_RVT_MEP.rvt",
+      "sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201"
+    }
+  ],
+  "remaining_rvt_files": 0,
+  "original_numerator": 667,
+  "proposed_numerator": 668,
+  "new_validations": 1,
+  "denominator": 805,
+  "counts_by_state": {
+    "changed_value_tested": 668,
+    "context_rejected": 35,
+    "missing_fixture": 82,
+    "out_of_contract": 1,
+    "same_value_only": 19
+  },
+  "updates": [
+    {
+      "before": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+        "state": "same_value_only",
+        "passed_models": 0,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "after": {
+        "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+        "state": "changed_value_tested",
+        "passed_models": 1,
+        "context_failures": 0,
+        "unsupported_models": 0,
+        "same_value_models": 12
+      },
+      "receipts": [
+        {
+          "path": "docs/review/setter-validation-gate/project-mep-wire-runs/20260915T233831/Electrical.WireType.MaxSize/LECG_RVT_MEP/receipt.json",
+          "sha256": "86789F6BDF2C2B1CDE345DC1628B3FA1E06EA225CC2BA3695A0772F4E62B17C5"
+        }
+      ]
+    }
+  ],
+  "outcomes": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+      "attempts": [
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "validated",
+          "reason": null,
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-mep-wire-runs/20260915T233831/Electrical.WireType.MaxSize/LECG_RVT_MEP/receipt.json",
+            "sha256": "86789F6BDF2C2B1CDE345DC1628B3FA1E06EA225CC2BA3695A0772F4E62B17C5"
+          }
+        }
+      ]
+    }
+  ]
+}

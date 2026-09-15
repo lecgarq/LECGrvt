@@ -1,0 +1,20 @@
+{
+  "report": "project-mep-wire-1",
+  "new_validations": 1,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+      "attempts": [
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "validated",
+          "reason": null,
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-mep-wire-runs/20260915T233831/Electrical.WireType.MaxSize/LECG_RVT_MEP/receipt.json",
+            "sha256": "86789F6BDF2C2B1CDE345DC1628B3FA1E06EA225CC2BA3695A0772F4E62B17C5"
+          }
+        }
+      ]
+    }
+  ]
+}
