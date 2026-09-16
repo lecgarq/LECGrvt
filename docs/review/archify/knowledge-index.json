@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
-  "repository_revision": "dd9e4b56e345c10f0c8b5c4a8a12fe7db192bb34",
+  "repository_revision": "abde9c77c5b00294ae19d70df733360d647205c1",
   "source_inputs_match_revision": true,
   "counts": {
     "command_classes": 38,
     "service_source_files": 165,
     "mcp_top_level_tools": 16,
-    "native_operations": 54,
-    "native_reads": 37,
+    "native_operations": 56,
+    "native_reads": 39,
     "native_changes": 17,
     "curated_recipes": 29,
     "shared_references": 3000,
@@ -19,8 +19,8 @@
     "project_presence_operations": 2216,
     "project_read_operations": 1411,
     "project_read_contexts": 5644,
-    "project_native_read_operations": 37,
-    "project_native_read_contexts": 148,
+    "project_native_read_operations": 39,
+    "project_native_read_contexts": 156,
     "project_native_preview_operations": 17,
     "project_native_preview_contexts": 68
   },
@@ -572,6 +572,20 @@
       "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
     },
     {
+      "name": "spatial_contains_point",
+      "kind": "read",
+      "description": "Test whether one millimeter-coordinate point lies inside a room or MEP space",
+      "arguments": "{unique_id:string,x_mm:number,y_mm:number,z_mm:number}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
+      "name": "mep_connectors",
+      "kind": "read",
+      "description": "List bounded connector identities for an MEP curve or family instance, or look up one exact connector ID",
+      "arguments": "{unique_id:string,connector_id?:int,limit?:int,offset?:int}",
+      "source": "RevitCopilot/Agent/CapabilityCatalog.cs"
+    },
+    {
       "name": "type_compound_layers",
       "kind": "read",
       "description": "Inspect ordered wall/floor/roof type layers, material identities and widths in millimeters; flags vertically compound structures",
@@ -1106,8 +1120,8 @@
     "project_read_contexts": 5644,
     "project_native_read_source": "RevitCopilot/Agent/Knowledge/revit2026-native-project-reads.json",
     "project_native_read_scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
-    "project_native_read_operations": 37,
-    "project_native_read_contexts": 148,
+    "project_native_read_operations": 39,
+    "project_native_read_contexts": 156,
     "project_native_preview_source": "RevitCopilot/Agent/Knowledge/revit2026-native-project-previews.json",
     "project_native_preview_scope": "Production MCP change preview path executed in four named CASA EUCALIPTO disposable copies; committed inner transactions were rolled back by a transaction group, apply was never called, no returned model values were retained, and synthetic delete fixtures are explicitly flagged.",
     "project_native_preview_operations": 17,
@@ -1191,6 +1205,8 @@
     "docs/review/setter-validation-gate/project-native-preview-preregistration.md",
     "docs/review/setter-validation-gate/project-native-read-expansion-preregistration.md",
     "docs/review/setter-validation-gate/project-native-read-preregistration.md",
+    "docs/review/setter-validation-gate/project-native-read-relations-preregistration.md",
+    "docs/review/setter-validation-gate/project-native-read-relations-results.md",
     "docs/review/setter-validation-gate/project-type-presence-preregistration.md",
     "docs/review/setter-validation-gate/project-view-sheet-set-preregistration.md",
     "docs/review/setter-validation-gate/restoration-diagnostic-plan.md",
@@ -1240,9 +1256,9 @@
   "input_sha256": {
     "LECG.csproj": "9bf0d047a7e487e354ca290cb6dcd8b4508813330c629732823b9ab1a23aaea5",
     "RevitCopilot/Agent/AgentBatch.cs": "1fd4db7d90f1582f1b6b28331ad722483706e3afae0eaf9224a3bca60a747574",
-    "RevitCopilot/Agent/CapabilityCatalog.cs": "92cef0adee849fdb2629dab7373b4420405febbac03208acac946df157aaad28",
+    "RevitCopilot/Agent/CapabilityCatalog.cs": "da51917b67e43ec65ba2bb3625cc245a753189d2ad1e68ec02c5c7bb23b9ed83",
     "RevitCopilot/Agent/Knowledge/revit2026-native-project-previews.json": "ad4a82c227517519f6d12fc44a3574c5ae73c055096028a4c218122105efd59e",
-    "RevitCopilot/Agent/Knowledge/revit2026-native-project-reads.json": "6760ad1c9712d332fabe51bd8845529aacdabf21786033f777ed81fcf7582a51",
+    "RevitCopilot/Agent/Knowledge/revit2026-native-project-reads.json": "ae4d9279e14f51be994c6ccf906adae2aea936be4d5539d86f646aa721fd9250",
     "RevitCopilot/Agent/Knowledge/revit2026-project-presence.json": "dc040ffbe022fa39b5ce083443be7fbaee0e1e6de71eeb68c2fed8b255600658",
     "RevitCopilot/Agent/Knowledge/revit2026-project-reads.json": "014f6f71fbecf4179f603064f940290ff9c9a2cae10248a4b3df26d91c96f907",
     "RevitCopilot/Agent/Knowledge/revit2026-reference.json": "9726924ad3b74f781f94ff3b9babfd612debd41f6d09bb3b941a030ad2454052",
