@@ -70,7 +70,7 @@ test('CLI uses the repository beside the script, not caller cwd, and labels stal
     assert.equal(result.command, args[0]);
     assert.ok(Buffer.byteLength(output) <= 4096);
     assert.ok(result.returned <= 25);
-    if (result.repository_revision !== result.head || !result.source_inputs_match_revision
+    if (!result.revision_compatible || !result.source_inputs_match_revision
         || !result.inputs_match_working_tree) {
       assert.equal(result.status, 'STALE');
       assert.equal(result.inventory_admissible, false);
