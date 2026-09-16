@@ -107,7 +107,8 @@ const inventory = {
     curated_recipes: recipes.length, shared_references: references.entries.length,
     api_validation_entries: validation.entries.length,
     project_validation_operations: validationContexts.entries.length,
-    project_validation_contexts: validationContexts.receipt_count
+    project_validation_contexts: validationContexts.receipt_count,
+    project_validation_workflows: validationContexts.workflow_receipt_count
   },
   commands, services, mcp_tools: mcpTools, native_operations: operations, curated_recipes: recipes,
   research: {
@@ -123,6 +124,7 @@ const inventory = {
     project_context_scope: validationContexts.scope,
     project_context_operations: validationContexts.entries.length,
     project_context_receipts: validationContexts.receipt_count,
+    project_workflow_receipts: validationContexts.workflow_receipt_count,
     project_contexts_by_discipline: tally(validationContexts.entries.flatMap(entry => entry.contexts), "discipline"),
     note: "Recorded campaign evidence, not tests rerun by this documentation refresh."
   },

@@ -6,10 +6,12 @@ namespace LECG.RevitCopilot.Agent;
 
 internal sealed record ApiValidationEntry(string Operation, string State, int PassedModels, int ContextFailures, int UnsupportedModels, int SameValueModels);
 internal sealed record ApiValidationPack(int SchemaVersion, int RevitVersion, string Campaign, string SourceSha256, string Scope, ApiValidationEntry[] Entries);
-internal sealed record ApiProjectContext(string Discipline, string Model, string ModelSha256, string Status, string? Reason);
+internal sealed record ApiProjectContext(string Discipline, string Model, string ModelSha256, string Status, string? Reason,
+    bool CompoundWorkflowValidated, string? RequiredWorkflow);
 internal sealed record ApiValidationContextEntry(string Operation, ApiProjectContext[] Contexts);
 internal sealed record ApiValidationContextPack(int SchemaVersion, int RevitVersion, string Campaign,
-    string ValidationLedgerSha256, string SourceReceiptsSha256, string Scope, int ReceiptCount, ApiValidationContextEntry[] Entries);
+    string ValidationLedgerSha256, string SourceReceiptsSha256, string Scope, int ReceiptCount, int WorkflowReceiptCount,
+    ApiValidationContextEntry[] Entries);
 
 internal static class ApiValidationEvidence
 {
@@ -33,9 +35,11 @@ internal static class ApiValidationEvidence
         string ledgerHash = Convert.ToHexString(SHA256.HashData(PackBytes.Value));
         if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.Campaign != Pack.Value.Campaign
             || pack.ValidationLedgerSha256 != ledgerHash || pack.ReceiptCount != pack.Entries.Sum(e => e.Contexts.Length)
+            || pack.WorkflowReceiptCount != pack.Entries.Sum(e => e.Contexts.Count(c => c.CompoundWorkflowValidated))
             || pack.Entries.DistinctBy(e => e.Operation).Count() != pack.Entries.Length
             || pack.Entries.Any(e => !Index.Value.ContainsKey(e.Operation) || e.Contexts.Length is < 1 or > 4
-                || e.Contexts.DistinctBy(c => c.ModelSha256).Count() != e.Contexts.Length))
+                || e.Contexts.DistinctBy(c => c.ModelSha256).Count() != e.Contexts.Length
+                || e.Contexts.Any(c => c.CompoundWorkflowValidated != !string.IsNullOrWhiteSpace(c.RequiredWorkflow))))
             throw new InvalidDataException("Invalid API project-context evidence.");
         return pack.Entries.ToDictionary(e => e.Operation, StringComparer.Ordinal);
     });
@@ -56,7 +60,9 @@ internal static class ApiValidationEvidence
             model = context.Model,
             model_sha256 = context.ModelSha256,
             status = context.Status,
-            reason = context.Reason
+            reason = context.Reason,
+            compound_workflow_validated = context.CompoundWorkflowValidated,
+            required_workflow = context.RequiredWorkflow
         }).ToArray();
     internal static object For(string operation) => Index.Value.TryGetValue(operation, out var entry)
         ? new { state = entry.State, passed_models = entry.PassedModels, context_failures = entry.ContextFailures,

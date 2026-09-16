@@ -282,17 +282,22 @@ public abstract class SetterHarness
             var failures = new RejectFailures();
             transaction.SetFailureHandlingOptions(transaction.GetFailureHandlingOptions().SetFailuresPreprocessor(failures).SetClearAfterRollback(true));
             result["setter_attempted"] = !NoWriteControl;
-            if (!NoWriteControl) property.SetValue(target, desired);
             if (PersistenceProbe)
             {
-                result["same_wrapper_after_set"] = property.GetValue(target);
-                result["fresh_wrapper_before_save"] = property.GetValue(doc.GetElement(uid));
                 var manager = doc.PrintManager;
                 manager.PrintRange = PrintRange.Select; // Local setting only: never Apply or SubmitPrint.
                 var setting = manager.ViewSheetSetting;
                 setting.CurrentViewSheetSet = (ViewSheetSet)target;
+                var current = setting.CurrentViewSheetSet;
+                result["saved_set_target"] = new { target.Id.Value, target.UniqueId, target.Name };
+                result["current_wrapper_type"] = current.GetType().FullName;
+                result["current_before_set"] = PilotValues.Snapshot(property.GetValue(current));
+                property.SetValue(current, desired);
+                result["same_wrapper_after_set"] = PilotValues.Snapshot(property.GetValue(current));
+                result["stored_wrapper_before_save"] = PilotValues.Snapshot(property.GetValue(doc.GetElement(uid)));
                 result["view_sheet_setting_save"] = setting.Save();
             }
+            else if (!NoWriteControl) property.SetValue(target, desired);
             doc.Regenerate();
             result["after_regenerate"] = PilotValues.Snapshot(property.GetValue(target));
             result["stage"] = "commit";

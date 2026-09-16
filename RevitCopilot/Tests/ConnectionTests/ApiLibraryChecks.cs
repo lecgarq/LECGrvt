@@ -24,6 +24,16 @@ internal static class ApiLibraryChecks
             context.GetProperty("discipline").GetString() == "mep"
             && context.GetProperty("status").GetString() == "validated"),
             "Known MEP changed-value evidence must reach API search consumers.");
+        foreach (string property in new[] { "IsAutomatic", "SheetOrganizationId", "ViewOrganizationId" })
+        {
+            var evidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(
+                "api.set:Autodesk.Revit.DB.ViewSheetSet." + property));
+            Require(evidence.GetProperty("project_contexts").EnumerateArray().Any(context =>
+                context.GetProperty("discipline").GetString() == "architecture"
+                && context.GetProperty("compound_workflow_validated").GetBoolean()
+                && !string.IsNullOrWhiteSpace(context.GetProperty("required_workflow").GetString())),
+                "ViewSheetSet persistence requirements must reach API search consumers.");
+        }
         double coldMs = cold.Elapsed.TotalMilliseconds;
         Require(all.Count >= 2000, "Expected at least 2,000 real bound accessor functions, not aliases.");
         foreach (var binding in all.Values)

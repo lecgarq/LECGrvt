@@ -1,0 +1,77 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+  "model": "LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+  "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\01-WIP\\01-ARQ\\LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+  "status": "rejected-with-reason",
+  "stage": "comparison",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-view-sheet-set-runs\\20260916T000612\\ViewSheetSet.IsAutomatic\\LECG_RVT_DISE\u00D1O (ANTEPROYECTO)\\disposable.rvt",
+  "rollback_verified": true,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": true,
+  "no_write_control": false,
+  "copy_open_sha256": "2C1FE9187E4178562D892593E5BA4287B79DC1881DAAD34D81542DFD61375739",
+  "target_count": 3,
+  "generator_errors": [],
+  "target": "0ede2440-d92f-48d6-bdc1-94afe8f8b35c-000e90f1",
+  "before": true,
+  "desired": false,
+  "saved_set_target": {
+    "Value": 954609,
+    "UniqueId": "0ede2440-d92f-48d6-bdc1-94afe8f8b35c-000e90f1",
+    "Name": "VIEW SET - MODEL COORDINATION"
+  },
+  "current_wrapper_type": "Autodesk.Revit.DB.ViewSheetSet",
+  "current_before_set": true,
+  "same_wrapper_after_set": false,
+  "stored_wrapper_before_save": true,
+  "view_sheet_setting_save": true,
+  "after_regenerate": true,
+  "commit_status": "Committed",
+  "failures": [],
+  "after_commit": false,
+  "reason": "classification_probe_only_no_standalone_setter_credit",
+  "persistence_probe_changed": true,
+  "rollback_status": "RolledBack",
+  "restoration": {
+    "before_elements": 11201,
+    "after_elements": 11201,
+    "different_elements": [],
+    "warning_set_restored": true,
+    "unobservable_parameter_slots_before": [
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:6",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:7",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:8"
+    ],
+    "unobservable_parameter_slots_after": [
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:6",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:7",
+      "8c689c7f-2de9-4756-a37a-c80668280d4e-000e9137:parameter-slot:8"
+    ],
+    "excluded_readonly_values_before": 89384,
+    "excluded_readonly_values_after": 89384,
+    "complete_scoped_parameter_snapshot": false,
+    "target_restored": true,
+    "scope": "All element and parameter identities/writability; writable parameter values on non-targets; ALL readable target-element parameter values; exact target property; warnings. Read-only non-target values, unavailable slots and internal/geometry state are NOT verified. Fresh-copy isolation required."
+  },
+  "document_changes": [
+    {
+      "operation": "TransactionCommitted",
+      "added": [],
+      "modified": [
+        954609
+      ],
+      "deleted": []
+    },
+    {
+      "operation": "TransactionGroupRolledBack",
+      "added": [],
+      "modified": [],
+      "deleted": []
+    }
+  ],
+  "opening_warnings": [],
+  "elapsed_ms": 12524.0036
+}

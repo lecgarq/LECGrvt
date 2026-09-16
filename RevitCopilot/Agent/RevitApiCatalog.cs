@@ -48,7 +48,7 @@ internal static class RevitApiCatalog
                 validation = ApiValidationEvidence.For(m.Binding.Operation),
                 enum_values = m.Binding.Property.PropertyType.IsEnum ? Enum.GetNames(m.Binding.Property.PropertyType) : null
             }),
-            instructions = "Reads: agent_read or agent_read_batch. Changes: agent_preview or agent_preview_batch then agent_apply. Validation describes disposable sample tests, not universal correctness; project_contexts are named fixture outcomes, and same_value_only is not a validated edit. Supply current-document UniqueIds. Revit enforces project-specific constraints. Numeric values use native Revit API units; never guess their physical meaning." };
+            instructions = "Reads: agent_read or agent_read_batch. Changes: agent_preview or agent_preview_batch then agent_apply. Validation describes disposable sample tests, not universal correctness; project_contexts are named fixture outcomes, and same_value_only is not a validated edit. A required_workflow names a proven compound API sequence that generic api.set does not perform. Supply current-document UniqueIds. Revit enforces project-specific constraints. Numeric values use native Revit API units; never guess their physical meaning." };
     }
 
     private static bool AppliesTo(Type declaring, string name)

@@ -19,6 +19,7 @@ const models = new Map([
 ]);
 const ranks = { 'rejected-with-reason': 1, 'still-same-value': 2, validated: 3 };
 const disciplineOrder = new Map(['architecture', 'topography', 'structure', 'mep'].map((value, index) => [value, index]));
+const viewSheetSetWorkflow = 'ViewSheetSetting.CurrentViewSheetSet -> set property -> ViewSheetSetting.Save()';
 
 function receipts(path) {
   const found = [];
@@ -34,12 +35,15 @@ const ledgerBytes = readFileSync(ledgerPath);
 const ledger = JSON.parse(ledgerBytes.toString('utf8').replace(/^\uFEFF/, ''));
 const operations = new Set(ledger.entries.map(entry => entry.operation));
 const selected = new Map();
+const workflows = new Map();
 for (const path of receipts(evidence).sort()) {
   const value = read(path);
   const model = models.get(value.model);
   if (!model || !operations.has(value.operation) || !value.cleanup_verified || !Object.hasOwn(ranks, value.status)) continue;
   require(value.model_sha256 === model[1], `Project model hash differs: ${path}`);
   const key = `${value.operation}\u0000${value.model_sha256}`;
+  if (value.classification_only === true && value.persistence_probe_changed === true
+      && value.view_sheet_setting_save === true) workflows.set(key, { path, value });
   const prior = selected.get(key);
   if (!prior || ranks[value.status] >= ranks[prior.value.status]) selected.set(key, { path, value, discipline: model[0] });
 }
@@ -51,7 +55,9 @@ for (const item of selected.values()) {
     model: item.value.model,
     model_sha256: item.value.model_sha256,
     status: item.value.status,
-    reason: item.value.reason ? String(item.value.reason).slice(0, 600) : null
+    reason: item.value.reason ? String(item.value.reason).slice(0, 600) : null,
+    compound_workflow_validated: workflows.has(`${item.value.operation}\u0000${item.value.model_sha256}`),
+    required_workflow: workflows.has(`${item.value.operation}\u0000${item.value.model_sha256}`) ? viewSheetSetWorkflow : null
   };
   if (!byOperation.has(item.value.operation)) byOperation.set(item.value.operation, []);
   byOperation.get(item.value.operation).push(context);
@@ -60,7 +66,8 @@ const entries = [...byOperation].sort(([a], [b]) => a.localeCompare(b)).map(([op
   operation,
   contexts: contexts.sort((a, b) => disciplineOrder.get(a.discipline) - disciplineOrder.get(b.discipline))
 }));
-const receiptDigest = [...selected.values()].sort((a, b) => a.path.localeCompare(b.path))
+const receiptSources = new Map([...selected.values(), ...workflows.values()].map(item => [item.path, item]));
+const receiptDigest = [...receiptSources.values()].sort((a, b) => a.path.localeCompare(b.path))
   .map(item => `${relative(root, item.path).replaceAll('\\', '/')}:${hash(item.path)}`).join('\n');
 const pack = {
   schema_version: 1,
@@ -70,8 +77,9 @@ const pack = {
   source_receipts_sha256: hashBytes(receiptDigest),
   scope: 'Named CASA EUCALIPTO discipline fixtures; disposable-copy outcomes are context evidence, not universal guarantees.',
   receipt_count: selected.size,
+  workflow_receipt_count: workflows.size,
   entries
 };
 writeFileSync(output, JSON.stringify(pack, null, 2) + '\n');
 console.log(JSON.stringify({ output: relative(root, output).replaceAll('\\', '/'),
-  operations: entries.length, contexts: selected.size, ledger_campaign: ledger.campaign }));
+  operations: entries.length, contexts: selected.size, workflows: workflows.size, ledger_campaign: ledger.campaign }));

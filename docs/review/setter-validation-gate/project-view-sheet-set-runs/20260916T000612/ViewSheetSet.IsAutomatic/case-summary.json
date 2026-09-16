@@ -1,0 +1,12 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+  "attempts": [
+    {
+      "model": "LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+      "status": "rejected-with-reason",
+      "reason": "classification_probe_only_no_standalone_setter_credit"
+    }
+  ],
+  "models_planned": 1,
+  "models_attempted": 1
+}
