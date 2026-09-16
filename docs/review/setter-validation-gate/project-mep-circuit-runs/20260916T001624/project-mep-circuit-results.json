@@ -1,0 +1,20 @@
+{
+  "report": "project-mep-circuit-1",
+  "new_validations": 0,
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "attempts": [
+        {
+          "model": "LECG_RVT_MEP.rvt",
+          "status": "rejected-with-reason",
+          "reason": "InvalidOperationException: The connection type is invalid for this circuit. You can't assign Feed Through Lugs if the panel's Feed Through Lugs option is unchecked. If the circuit's base panel is not a data panel or transformer panel, the circuit connection type can't be set to NotApplicable. If the circuit's base panel is a data panel or transformer pane, it must be set to NotApplicable. If the circuit doesn't have a base panel, it must be set to NotApplicable.",
+          "receipt": {
+            "path": "docs/review/setter-validation-gate/project-mep-circuit-runs/20260916T001624/CircuitConnectionType-2BFE507CE9/LECG_RVT_MEP/receipt.json",
+            "sha256": "455F0B5ACD63602E2C99A4C316B2CD917873F77E06BAE577ED1BE9E18A135CE9"
+          }
+        }
+      ]
+    }
+  ]
+}

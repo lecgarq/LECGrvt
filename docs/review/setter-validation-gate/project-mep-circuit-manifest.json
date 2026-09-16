@@ -1,0 +1,53 @@
+{
+  "prepared_at": "2026-09-16T00:15:23.6748946Z",
+  "revision": "53e5453988ec361624a7093389bf6a9afd6c9218",
+  "ledger_sha256": "EB4084292FBCB0F040554EAF663C43C5E73405A3EE65AF1A493AEA0102B7249A",
+  "api_sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285",
+  "classification_sha256": "088DB62397D66E6FAAC21F52DBBD1C9391DD19D3859E3AB73EC17A6E233620BD",
+  "preregistration_sha256": "846B6D4B7A43EEB30922EA9FBFE10B58D766B2CD5DC8124B7CD6303604DBB848",
+  "snapshot_amendment_sha256": "7499A4F42CB93E1CAC96DDB003F08C20AD637B54F37A7C7956DC9F9D8EC445D7",
+  "previous_reconciliation": {
+    "path": "project-gaps-runs/20260915T234215/ledger-reconciliation.json",
+    "sha256": "E3D15B36FFEF45100B678B14485C0BB0AB71066B1FBE099BD1AA0DD8D755B60E"
+  },
+  "expected_yield_min": 0,
+  "expected_yield_max": 1,
+  "test_class": "ProjectMepCircuitBatch",
+  "campaign_prefix": "changed-value-project-mep-circuit",
+  "source_manifests": [
+    {
+      "path": "documented-fourth-manifest.json",
+      "sha256": "F846C3DDCF2434177A2DE06FD4383ED3A752C70417A49FC065F535D7FA9B62AC"
+    }
+  ],
+  "pilot_model": "LECG_RVT_MEP.rvt",
+  "models": [
+    {
+      "discipline": "mep",
+      "name": "LECG_RVT_MEP.rvt",
+      "relative_path": "02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+      "sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+      "bytes": 137134080,
+      "modified_utc": "2026-08-27T20:01:46Z"
+    }
+  ],
+  "cases": [
+    {
+      "property": "Electrical.ElectricalSystem.CircuitConnectionType",
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "models": [
+        "LECG_RVT_MEP.rvt"
+      ]
+    }
+  ],
+  "baseline_entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "state": "same_value_only",
+      "passed_models": 0,
+      "context_failures": 1,
+      "unsupported_models": 12,
+      "same_value_models": 3
+    }
+  ]
+}

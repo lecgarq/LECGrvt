@@ -189,9 +189,6 @@ internal static class PilotValues
                     return (CircuitConnectionType)before == CircuitConnectionType.NotApplicable
                         ? null : CircuitConnectionType.NotApplicable;
                 if ((CircuitConnectionType)before == CircuitConnectionType.FeedThruLugs) return CircuitConnectionType.Breaker;
-                if ((CircuitConnectionType)before == CircuitConnectionType.Breaker &&
-                    circuit.BaseEquipment.get_Parameter(BuiltInParameter.RBS_ELEC_PANEL_FEED_THRU_LUGS_PARAM)?.AsInteger() == 1)
-                    return CircuitConnectionType.FeedThruLugs;
                 return null;
             case "Analysis.HVACLoadBuildingType.ClosingTime":
                 return (string)before == "16:30" ? "04:30" : "16:30";

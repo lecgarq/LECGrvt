@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "campaign": "changed-value-project-gaps-20260915T234215",
-  "validation_ledger_sha256": "EB4084292FBCB0F040554EAF663C43C5E73405A3EE65AF1A493AEA0102B7249A",
-  "source_receipts_sha256": "576CCAD07BEB22CD3B9DF999F5F001085D90FA286E58C8230F81C6666D0B68E3",
+  "campaign": "changed-value-project-mep-circuit-20260916T001624",
+  "validation_ledger_sha256": "E2C1B6994CB12469F557FC248BE941185A31BC3310CE78AEF7DB4E3D2D8CB25F",
+  "source_receipts_sha256": "8B4C4C82F42EF4B920FD7F0BCDED6F1EFB05BF2F5162BF17676CD689135BE853",
   "scope": "Named CASA EUCALIPTO discipline fixtures; disposable-copy outcomes are context evidence, not universal guarantees.",
   "receipt_count": 63,
   "workflow_receipt_count": 3,
