@@ -25,7 +25,9 @@ internal static class KnowledgeLibraryChecks
             ("ExternalFileUtils.GetAllExternalFileReferences", "external_files_list"),
             ("Panel.FindHostPanel", "panel_host"),
             ("Stairs.GetAssociatedRailings", "stairs_associated_railings"),
-            ("Group.GetAvailableAttachedDetailGroupTypeIds", "group_attached_detail_types")
+            ("Group.GetAvailableAttachedDetailGroupTypeIds", "group_attached_detail_types"),
+            ("BasePoint.GetProjectBasePoint", "base_points"),
+            ("FaceSplitter.GetBoundaries", "face_split_boundaries")
         })
             Check(Search(query).GetProperty("items")[0].GetProperty("operation").GetString() == operation,
                 $"{query} must map to its reviewed adapter.");

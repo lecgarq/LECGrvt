@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "copilot_assembly_sha256": "8DC33094D66E494E2F6F448674A014325BC270AFE5BD50CAAE22039013415028",
-  "source_receipts_sha256": "E85E15F4EC9151C109D43721B0893AB76AEB300EED4AC3F5C041A9D162EA1FD7",
+  "copilot_assembly_sha256": "2F4F26C3AB46B16D8640146F49F0955B492BE6E21AE9A5CB04B7A84C2D47F5D8",
+  "source_receipts_sha256": "9B0F21F3C45D401B699AEE603D675FED05DA6ABB829DF7CFDF16F443DCFEDE26",
   "scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
-  "operation_count": 43,
-  "context_count": 172,
+  "operation_count": 45,
+  "context_count": 180,
   "models": [
     {
       "discipline": "architecture",
@@ -58,6 +58,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "base_points",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
           "reason": null
         }
       ]
@@ -435,6 +464,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "face_split_boundaries",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FaceSplitter",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
           "reason": null
         }
       ]

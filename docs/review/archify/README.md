@@ -35,7 +35,7 @@ For detailed lookup, use [knowledge-index.json](knowledge-index.json). It invent
 - **Test evidence:** a dated result for particular binaries, samples and contexts. Compilation and successful serialization do not certify all engineering semantics.
 - **Project conversation:** account/project-specific history. It must not supply another project's element identifiers or preview tokens.
 
-The current validation release reports 60 native operations, 29 curated templates, 3,000 references and 2,216 property bindings. The refreshable index independently inventories the current source declarations and records the embedded validation states. The ledger's 668 changed-value setter successes leave 137 setters without a validated changed-value edit; family-document writes remain outside the production MCP contract. These figures describe recorded evidence, not a new live test campaign.
+The current validation release reports 62 native operations, 29 curated templates, 3,000 references and 2,216 property bindings. The refreshable index independently inventories the current source declarations and records the embedded validation states. The ledger's 668 changed-value setter successes leave 137 setters without a validated changed-value edit; family-document writes remain outside the production MCP contract. These figures describe recorded evidence, not a new live test campaign.
 
 ## How to use this with an agent
 

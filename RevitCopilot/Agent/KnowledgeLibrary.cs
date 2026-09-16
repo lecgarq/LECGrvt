@@ -46,6 +46,8 @@ internal static class KnowledgeLibrary
             "M:Autodesk.Revit.DB.Panel.FindHostPanel" => "panel_host",
             "M:Autodesk.Revit.DB.Architecture.Stairs.GetAssociatedRailings" => "stairs_associated_railings",
             "M:Autodesk.Revit.DB.Group.GetAvailableAttachedDetailGroupTypeIds" => "group_attached_detail_types",
+            "M:Autodesk.Revit.DB.BasePoint.GetProjectBasePoint" => "base_points",
+            "M:Autodesk.Revit.DB.FaceSplitter.GetBoundaries" => "face_split_boundaries",
             "M:Autodesk.Revit.DB.HostObjAttributes.GetCompoundStructure" => "type_compound_layers",
             "M:Autodesk.Revit.DB.Instance.GetTotalTransform" => "instance_transform",
             _ => null

@@ -152,6 +152,31 @@ internal sealed partial class ToolExecutor
         }) };
     }
 
+    // campaign-v5 candidate 4d2491374a2d57c261855471; pair it with Revit's corresponding survey-point accessor.
+    private static object BasePoints(Document doc)
+    {
+        object Point(XYZ point) => new { x_mm = Mm(point.X), y_mm = Mm(point.Y), z_mm = Mm(point.Z) };
+        object Brief(string kind, BasePoint point) => new { kind, id = point.Id.Value, unique_id = point.UniqueId,
+            position_mm = Point(point.Position), shared_position_mm = Point(point.SharedPosition),
+            point.Clipped, point.IsShared };
+        return new { points = new[] { Brief("project", BasePoint.GetProjectBasePoint(doc)),
+            Brief("survey", BasePoint.GetSurveyPoint(doc)) } };
+    }
+
+    // campaign-v5 candidate 3c567e7f95e186ae02c6c02a; expose bounded loop summaries instead of unbounded curve geometry.
+    private static object FaceSplitBoundaries(Document doc, JsonElement args)
+    {
+        var splitter = RequireElement(doc, RequireString(args, "unique_id")) as FaceSplitter
+            ?? throw new ArgumentException("Select a face splitter in the active document.");
+        Element? splitElement = doc.GetElement(splitter.SplitElementId);
+        var loops = splitter.GetBoundaries().Select((loop, index) => (Loop: loop, Index: index));
+        return new { splitter_unique_id = splitter.UniqueId,
+            split_element = splitElement is null ? null : new { id = splitElement.Id.Value, unique_id = splitElement.UniqueId,
+                name = SafeElementName(splitElement), category = splitElement.Category?.Name },
+            boundaries = Page(loops, args, item => new { index = item.Index, segment_count = item.Loop.Count(),
+                approximate_length_mm = item.Loop.Sum(curve => Mm(curve.ApproximateLength)) }) };
+    }
+
     // campaign-v5 candidate da314384a8346ca50371fffc. Modifiable does not imply that any proposed phase is valid.
     private static object ElementPhaseStatus(Document doc, JsonElement args) => new
     {

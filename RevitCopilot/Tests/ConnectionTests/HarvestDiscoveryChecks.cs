@@ -12,7 +12,8 @@ internal static class HarvestDiscoveryChecks
             ("circuitos asignados panel", "assigned_electrical_systems"), ("habitacion contiene punto", "spatial_contains_point"),
             ("conectores mep topologia", "mep_connectors"), ("archivos externos cad imagen", "external_files_list"),
             ("panel muro cortina anfitrion", "panel_host"), ("escaleras barandales asociados", "stairs_associated_railings"),
-            ("grupo modelo detalles adjuntos", "group_attached_detail_types")];
+            ("grupo modelo detalles adjuntos", "group_attached_detail_types"), ("puntos base proyecto topografia", "base_points"),
+            ("limites divisiones cara", "face_split_boundaries")];
         foreach (var test in native)
         {
             var result = JsonSerializer.SerializeToElement(CapabilityCatalog.Search(test.Query, 1));

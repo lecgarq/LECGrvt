@@ -29,6 +29,8 @@ internal static class ReviewedDiscovery
         ["panel_host"] = ["curtain panel host replacement wall", "panel muro cortina anfitrion reemplazo muro"],
         ["stairs_associated_railings"] = ["stairs associated railings boundaries", "escaleras barandales asociados limites"],
         ["group_attached_detail_types"] = ["model group attached detail types", "grupo modelo tipos detalle adjuntos"],
+        ["base_points"] = ["project survey base points coordinates", "puntos base proyecto topografia coordenadas"],
+        ["face_split_boundaries"] = ["face splitter boundaries loops", "limites divisiones cara bucles"],
         ["type_compound_layers"] = ["compound type layers material thickness", "capas compuesto materiales espesor tipo"],
         ["instance_transform"] = ["instance transform origin coordinates", "instancia transformacion origen coordenadas"],
         ["host_inserts"] = ["host inserts rectangular openings embedded walls", "huecos aberturas vanos inserciones insertos muro anfitrion"],
