@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
-  "repository_revision": "3b4c887923e2bae6b175c1f1114c3a7ab248385c",
+  "repository_revision": "d5ce203c62961c4d62a347a4a7e12deb2546f6c8",
   "source_inputs_match_revision": true,
   "counts": {
     "command_classes": 38,
@@ -1060,8 +1060,8 @@
   },
   "api_evidence": {
     "source": "RevitCopilot/Agent/Knowledge/revit2026-validation.json",
-    "campaign": "changed-value-project-gaps-20260915T234215",
-    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract.  3 further direct-API setter validations from the completed documented-constraint retry; the timed-out parent run is retained but did not qualify.  1 direct-API validation for ScheduleSheetInstance.SegmentIndex; three stairs setters were rejected by transaction context and WireType.MaxSize had no proven different eligible value.  3 direct-API validations: both continuous-rail termination setters in the Autodesk corpus and FamilyInstance.StructuralUsage in the CASA EUCALIPTO structural project copy.  Direct-API validations from documented batch four were run only on disposable copies; rejected and unchanged attempts remain unpromoted.  ModelCurve.TrussCurveType is out of the project-document write contract because Autodesk restricts it to truss family documents.  4 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies.  8 supplemental architecture-project outcomes from detached disposable copies. ",
+    "campaign": "changed-value-project-mep-circuit-20260916T001624",
+    "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract.  3 further direct-API setter validations from the completed documented-constraint retry; the timed-out parent run is retained but did not qualify.  1 direct-API validation for ScheduleSheetInstance.SegmentIndex; three stairs setters were rejected by transaction context and WireType.MaxSize had no proven different eligible value.  3 direct-API validations: both continuous-rail termination setters in the Autodesk corpus and FamilyInstance.StructuralUsage in the CASA EUCALIPTO structural project copy.  Direct-API validations from documented batch four were run only on disposable copies; rejected and unchanged attempts remain unpromoted.  ModelCurve.TrussCurveType is out of the project-document write contract because Autodesk restricts it to truss family documents.  4 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies.  8 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies. ",
     "entries_by_state": {
       "unsupported_context": 194,
       "read_invoked": 1217,
@@ -1147,6 +1147,7 @@
     "docs/review/setter-validation-gate/project-architecture-preregistration.md",
     "docs/review/setter-validation-gate/project-corpus-preregistration.md",
     "docs/review/setter-validation-gate/project-gaps-preregistration.md",
+    "docs/review/setter-validation-gate/project-mep-circuit-preregistration.md",
     "docs/review/setter-validation-gate/project-mep-wire-preregistration.md",
     "docs/review/setter-validation-gate/project-view-sheet-set-preregistration.md",
     "docs/review/setter-validation-gate/restoration-diagnostic-plan.md",
@@ -1198,8 +1199,8 @@
     "RevitCopilot/Agent/AgentBatch.cs": "1fd4db7d90f1582f1b6b28331ad722483706e3afae0eaf9224a3bca60a747574",
     "RevitCopilot/Agent/CapabilityCatalog.cs": "a6a98f6203a093dd5aa164a743c64f0b2765d26465425d1fe43e5913aae75ce3",
     "RevitCopilot/Agent/Knowledge/revit2026-reference.json": "9726924ad3b74f781f94ff3b9babfd612debd41f6d09bb3b941a030ad2454052",
-    "RevitCopilot/Agent/Knowledge/revit2026-validation-contexts.json": "be256ffd0f316a657c1835bd5494cedfe1f4c98d6d97c4992b58af2e3f7b4171",
-    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "eb4084292fbcb0f040554eaf663c43c5e73405a3ee65af1a493aea0102b7249a",
+    "RevitCopilot/Agent/Knowledge/revit2026-validation-contexts.json": "a43a26b710943f0f6faea422b6f561aee3baeec44dcc5f89b1e3a07fa4ac8d35",
+    "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "e2c1b6994cb12469f557fc248be941185a31bc3310ce78aef7db4e3d2d8cb25f",
     "RevitCopilot/Agent/WorkflowLibrary.cs": "3bdc5092fae7c409342b335f5c1cebbe4bbe2c89468dcf9800f2fd5b21683d4a",
     "RevitCopilot/McpServer/AgentTools.cs": "0e647ab04960932aa0a097aee4b2cd955e386a2e5758574d6c149869ab4bb3e9",
     "RevitCopilot/McpServer/RevitTools.cs": "3f2941e93a7f966cc13a66a45e9ac20d8fb8e0d0a254c14fee7f118846253a95",
