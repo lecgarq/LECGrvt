@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
-  "repository_revision": "d08424832ea05995476329fa1a6e75711c37a579",
+  "repository_revision": "fad12b80cdd4e8c94ee067539c424ebefc0ce3ca",
   "source_inputs_match_revision": true,
   "counts": {
     "command_classes": 38,
@@ -15,7 +15,8 @@
     "api_validation_entries": 2216,
     "project_validation_operations": 22,
     "project_validation_contexts": 71,
-    "project_validation_workflows": 3
+    "project_validation_workflows": 3,
+    "project_presence_operations": 805
   },
   "commands": [
     {
@@ -1076,6 +1077,9 @@
     "project_context_operations": 22,
     "project_context_receipts": 71,
     "project_workflow_receipts": 3,
+    "project_presence_source": "RevitCopilot/Agent/Knowledge/revit2026-project-presence.json",
+    "project_presence_scope": "Read-only declaring-type presence in four named CASA EUCALIPTO disposable copies; target counts do not establish edit validity or universal applicability.",
+    "project_presence_operations": 805,
     "project_contexts_by_discipline": {
       "architecture": 20,
       "topography": 16,
@@ -1150,6 +1154,7 @@
     "docs/review/setter-validation-gate/project-gaps-preregistration.md",
     "docs/review/setter-validation-gate/project-mep-circuit-preregistration.md",
     "docs/review/setter-validation-gate/project-mep-wire-preregistration.md",
+    "docs/review/setter-validation-gate/project-type-presence-preregistration.md",
     "docs/review/setter-validation-gate/project-view-sheet-set-preregistration.md",
     "docs/review/setter-validation-gate/restoration-diagnostic-plan.md",
     "docs/review/setter-validation-gate/writable-snapshot-amendment.md",
@@ -1199,6 +1204,7 @@
     "LECG.csproj": "9bf0d047a7e487e354ca290cb6dcd8b4508813330c629732823b9ab1a23aaea5",
     "RevitCopilot/Agent/AgentBatch.cs": "1fd4db7d90f1582f1b6b28331ad722483706e3afae0eaf9224a3bca60a747574",
     "RevitCopilot/Agent/CapabilityCatalog.cs": "a6a98f6203a093dd5aa164a743c64f0b2765d26465425d1fe43e5913aae75ce3",
+    "RevitCopilot/Agent/Knowledge/revit2026-project-presence.json": "f2792ae76ffc66705e2a2dda0206a549171baa0c257a801f2fa2a29fe1d576eb",
     "RevitCopilot/Agent/Knowledge/revit2026-reference.json": "9726924ad3b74f781f94ff3b9babfd612debd41f6d09bb3b941a030ad2454052",
     "RevitCopilot/Agent/Knowledge/revit2026-validation-contexts.json": "015e6597c99fdc1c94bc86763a6278207cdcd981d639b251f36c00b8b7c26fe8",
     "RevitCopilot/Agent/Knowledge/revit2026-validation.json": "7200dc66db59889ba13741feed125a0bea4331edcc0ae49418c4a2316fc6aae8",
@@ -1206,7 +1212,7 @@
     "RevitCopilot/McpServer/AgentTools.cs": "0e647ab04960932aa0a097aee4b2cd955e386a2e5758574d6c149869ab4bb3e9",
     "RevitCopilot/McpServer/RevitTools.cs": "3f2941e93a7f966cc13a66a45e9ac20d8fb8e0d0a254c14fee7f118846253a95",
     "RevitCopilot/Revit/ToolExecutor.Changes.cs": "2eecc6668cf5e75aa17539705d3efdfeea145f56eb3948f2bcaa3d47d7900603",
-    "RevitCopilot/RevitCopilot.csproj": "7ea3843a19ac563ed9a0b58504c943996a0f4dbeab49dac5222a7c33e743a2e0",
+    "RevitCopilot/RevitCopilot.csproj": "92f7bc8ade37ef429f352640348fb26a113d4ea2b4d7ae94d61ecf8e619fd933",
     "RevitCopilot/Services/ProjectConversationStore.cs": "aff47bbe164e37987686a47c97c93aa595664cd3b5dbcfd3f66138a9ae7510a3",
     "src/App.cs": "2f2e9f7cfd495586d6b541b3f97f43fd5cf1ff3648e7aafb05cf0f70f16406ff",
     "src/Commands/AlignCommands.cs": "5d9848c6f14a41933f28e185c5744404f3f508644b57d6e9731a6c037a5655ef",
