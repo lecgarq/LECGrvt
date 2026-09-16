@@ -5,8 +5,8 @@ internal static class AgentLibraryChecks
 {
     internal static void Run()
     {
-        Require(CapabilityCatalog.All.Length == 62 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 62, "Expected 62 distinct operations.");
-        Require(ApiValidationEvidence.NativeReadOperationCount == 45, "Every native read needs four-discipline project evidence.");
+        Require(CapabilityCatalog.All.Length == 66 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 66, "Expected 66 distinct operations.");
+        Require(ApiValidationEvidence.NativeReadOperationCount == 49, "Every native read needs four-discipline project evidence.");
         Require(ApiValidationEvidence.NativePreviewOperationCount == 17, "Every native change needs four-discipline preview evidence.");
         foreach (var capability in CapabilityCatalog.All)
         {
@@ -58,7 +58,8 @@ internal static class AgentLibraryChecks
                 context.GetProperty("status").GetString() == "read_succeeded"),
                 $"{operation} needs at least one successful named-model context.");
         }
-        foreach (string operation in new[] { "base_points", "face_split_boundaries" })
+        foreach (string operation in new[] { "base_points", "face_split_boundaries", "group_members",
+            "family_subcomponents", "assembly_members", "mep_system_members" })
         {
             var contexts = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor(operation))
                 .GetProperty("project_read_contexts");
@@ -117,7 +118,7 @@ internal static class AgentLibraryChecks
             catch (ArgumentException) { rejected = true; }
             Require(rejected, "Unknown executable capabilities must be rejected.");
             Require(JsonSerializer.Serialize(library.Search("comments")).Contains(saved.Id), "Saved recipe should be discoverable.");
-            Console.WriteLine("PASS: 62 operations, bounded discovery, recipe provenance, fresh inputs, cross-session reuse, deduplication, backup and concurrent-save protection.");
+            Console.WriteLine("PASS: 66 operations, bounded discovery, recipe provenance, fresh inputs, cross-session reuse, deduplication, backup and concurrent-save protection.");
         }
         finally { Directory.Delete(directory, true); }
     }

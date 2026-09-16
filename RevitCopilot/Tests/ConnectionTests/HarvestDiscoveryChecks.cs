@@ -13,7 +13,9 @@ internal static class HarvestDiscoveryChecks
             ("conectores mep topologia", "mep_connectors"), ("archivos externos cad imagen", "external_files_list"),
             ("panel muro cortina anfitrion", "panel_host"), ("escaleras barandales asociados", "stairs_associated_railings"),
             ("grupo modelo detalles adjuntos", "group_attached_detail_types"), ("puntos base proyecto topografia", "base_points"),
-            ("limites divisiones cara", "face_split_boundaries")];
+            ("limites divisiones cara", "face_split_boundaries"), ("miembros grupo contenidos", "group_members"),
+            ("familia subcomponentes anidados", "family_subcomponents"), ("miembros ensamblaje", "assembly_members"),
+            ("miembros sistema mep", "mep_system_members")];
         foreach (var test in native)
         {
             var result = JsonSerializer.SerializeToElement(CapabilityCatalog.Search(test.Query, 1));

@@ -10,8 +10,8 @@ namespace LECG.SetterValidationProbe;
 
 public sealed class ProjectNativeReadBatch : SetterHarness
 {
-    protected override string ManifestName => "project-native-read-geometry-manifest.json";
-    protected override string PreregistrationName => "project-native-read-geometry-preregistration.md";
+    protected override string ManifestName => "project-native-read-membership-manifest.json";
+    protected override string PreregistrationName => "project-native-read-membership-preregistration.md";
     protected override string RunKind => "project-native-read-runs";
     protected override bool IsReadOnlyProbe => true;
 
@@ -30,7 +30,7 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                 (string)capability.GetType().GetProperty("Kind")!.GetValue(capability)! == "read")
             .Select(capability => (string)capability.GetType().GetProperty("Name")!.GetValue(capability)!)
             .Order(StringComparer.Ordinal).ToArray();
-        if (operations.Length != 45) throw new InvalidOperationException("Native read denominator changed.");
+        if (operations.Length != 49) throw new InvalidOperationException("Native read denominator changed.");
         MethodInfo probe = copilot.GetType("LECG.RevitCopilot.Revit.ToolExecutor", throwOnError: true)!
             .GetMethod("ProbeNativeRead", BindingFlags.Static | BindingFlags.NonPublic)!;
         Element[] elements = PilotValues.Elements(doc);
@@ -143,6 +143,10 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                 yield break;
             case "base_points": yield return (Empty(), "project"); yield break;
             case "face_split_boundaries": foreach (var item in Targets<FaceSplitter>(e => new { unique_id = e.UniqueId, limit = 2 })) yield return item; yield break;
+            case "group_members": foreach (var item in Targets<Group>(e => new { unique_id = e.UniqueId, limit = 2 })) yield return item; yield break;
+            case "family_subcomponents": foreach (var item in Targets<FamilyInstance>(e => new { unique_id = e.UniqueId, limit = 2 })) yield return item; yield break;
+            case "assembly_members": foreach (var item in Targets<AssemblyInstance>(e => new { unique_id = e.UniqueId, limit = 2 })) yield return item; yield break;
+            case "mep_system_members": foreach (var item in Targets<MEPSystem>(e => new { unique_id = e.UniqueId, limit = 2 })) yield return item; yield break;
             case "type_compound_layers": foreach (var item in Targets<HostObjAttributes>(e => new { unique_id = e.UniqueId, limit = 3 })) yield return item; yield break;
             case "instance_transform": foreach (var item in Targets<Instance>(e => new { unique_id = e.UniqueId })) yield return item; yield break;
             case "types_list": yield return (new { category = "OST_Walls", limit = 2 }, "BuiltInCategory.OST_Walls"); yield break;

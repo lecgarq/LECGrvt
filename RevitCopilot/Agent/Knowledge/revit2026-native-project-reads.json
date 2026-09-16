@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "copilot_assembly_sha256": "2F4F26C3AB46B16D8640146F49F0955B492BE6E21AE9A5CB04B7A84C2D47F5D8",
-  "source_receipts_sha256": "9B0F21F3C45D401B699AEE603D675FED05DA6ABB829DF7CFDF16F443DCFEDE26",
+  "copilot_assembly_sha256": "99D4B16E925E2E2C15ED449AB11B2F1B2D4C1A78EA2DDEBFAAA4BC6973857ED2",
+  "source_receipts_sha256": "83A3E5B0ED30A4D44BA3E76DB9B08A4F0D81F198993F8D2814FEBB49879031D8",
   "scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
-  "operation_count": 45,
-  "context_count": 180,
+  "operation_count": 49,
+  "context_count": 196,
   "models": [
     {
       "discipline": "architecture",
@@ -33,6 +33,35 @@
     }
   ],
   "entries": [
+    {
+      "operation": "assembly_members",
+      "contexts": [
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.AssemblyInstance",
+          "reason": null
+        }
+      ]
+    },
     {
       "operation": "assigned_electrical_systems",
       "contexts": [
@@ -527,6 +556,35 @@
       ]
     },
     {
+      "operation": "family_subcomponents",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        }
+      ]
+    },
+    {
       "operation": "grids_list",
       "contexts": [
         {
@@ -580,6 +638,35 @@
           "status": "missing_fixture",
           "attempts": 0,
           "target_kind": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "group_members",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Group",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Group",
           "reason": null
         }
       ]
@@ -841,6 +928,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "Autodesk.Revit.DB.Plumbing.Pipe",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "mep_system_members",
+      "contexts": [
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Plumbing.PipingSystem",
           "reason": null
         }
       ]

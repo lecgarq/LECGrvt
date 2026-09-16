@@ -177,6 +177,45 @@ internal sealed partial class ToolExecutor
                 approximate_length_mm = item.Loop.Sum(curve => Mm(curve.ApproximateLength)) }) };
     }
 
+    private static object RelatedElements(IEnumerable<Element> elements, JsonElement args) =>
+        Page(elements.OrderBy(element => element.Id.Value), args, element => new
+        {
+            id = element.Id.Value, unique_id = element.UniqueId,
+            name = SafeElementName(element), category = element.Category?.Name
+        });
+
+    private static object GroupMembers(Document doc, JsonElement args)
+    {
+        var group = RequireElement(doc, RequireString(args, "unique_id")) as Group
+            ?? throw new ArgumentException("Select a group in the active document.");
+        return new { group_unique_id = group.UniqueId,
+            members = RelatedElements(group.GetMemberIds().Select(doc.GetElement).OfType<Element>(), args) };
+    }
+
+    private static object FamilySubcomponents(Document doc, JsonElement args)
+    {
+        var instance = RequireElement(doc, RequireString(args, "unique_id")) as FamilyInstance
+            ?? throw new ArgumentException("Select a family instance in the active document.");
+        return new { family_instance_unique_id = instance.UniqueId,
+            subcomponents = RelatedElements(instance.GetSubComponentIds().Select(doc.GetElement).OfType<Element>(), args) };
+    }
+
+    private static object AssemblyMembers(Document doc, JsonElement args)
+    {
+        var assembly = RequireElement(doc, RequireString(args, "unique_id")) as AssemblyInstance
+            ?? throw new ArgumentException("Select an assembly instance in the active document.");
+        return new { assembly_unique_id = assembly.UniqueId,
+            members = RelatedElements(assembly.GetMemberIds().Select(doc.GetElement).OfType<Element>(), args) };
+    }
+
+    private static object MepSystemMembers(Document doc, JsonElement args)
+    {
+        var system = RequireElement(doc, RequireString(args, "unique_id")) as MEPSystem
+            ?? throw new ArgumentException("Select an MEP system in the active document.");
+        return new { mep_system_unique_id = system.UniqueId,
+            members = RelatedElements(system.Elements.Cast<Element>(), args) };
+    }
+
     // campaign-v5 candidate da314384a8346ca50371fffc. Modifiable does not imply that any proposed phase is valid.
     private static object ElementPhaseStatus(Document doc, JsonElement args) => new
     {

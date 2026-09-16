@@ -4,9 +4,9 @@ September 5, 2026. This report supersedes the coverage figures in `RevitCopilot-
 
 ## Delivery scope
 
-The Revit 2026 Copilot contains 62 native operations (45 reads and 17 changes), 29 curated reusable recipe templates, 2,216 API property bindings (1,411 getters and 805 setters), and 3,000 shared searchable research references. These are different inventories, not 3,000 independently executable commands. The latest read pack adds project/survey base points and face-split boundary summaries. Base-point reads succeeded in all four CASA EUCALIPTO disposable-copy contexts; face-split boundaries succeeded in architecture and retained explicit missing fixtures elsewhere.
+The Revit 2026 Copilot contains 66 native operations (49 reads and 17 changes), 29 curated reusable recipe templates, 2,216 API property bindings (1,411 getters and 805 setters), and 3,000 shared searchable research references. These are different inventories, not 3,000 independently executable commands. The latest read pack adds group members, nested family subcomponents, assembly members and MEP-system members. All four passed through the production dispatcher in at least one CASA EUCALIPTO disposable-copy context; the complete pack records 49 reads across four disciplines, or 196 contexts, with zero `read_failed` outcomes.
 
-Four new handwritten, read-only operations are available through the existing MCP `agent_read`/batch route:
+Selected handwritten, read-only operations are available through the existing MCP `agent_read`/batch route:
 
 | Operation | Result |
 | --- | --- |
@@ -14,6 +14,10 @@ Four new handwritten, read-only operations are available through the existing MC
 | `elements_joined` | Whether two current-document elements are geometrically joined |
 | `type_compound_layers` | Ordered wall/floor/roof/ceiling type layers, widths in millimeters, functions and material identities |
 | `instance_transform` | Instance-to-document origin and basis, reflection and conformality; does not open linked documents |
+| `group_members` | Bounded members of a selected Revit group |
+| `family_subcomponents` | Bounded nested subcomponents of a selected family instance |
+| `assembly_members` | Bounded members of a selected assembly instance |
+| `mep_system_members` | Bounded elements assigned to a selected MEP system |
 
 New recipes cover element feasibility, compound layers, geometry joins, and instance coordinates. The MCP still exposes 16 top-level tools; bounded discovery avoids transmitting every capability on each request.
 

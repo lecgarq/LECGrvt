@@ -10,7 +10,7 @@ Search returns at most five short matches (three by default). Fetch returns a bo
 
 ## Available tools and recipes
 
-There are 62 registered operations: 45 reads and 17 changes, plus the existing 2,216 API property bindings (1,411 getters and 805 setters). The MCP protocol retains its 16 top-level tools; operations are discovered on demand.
+There are 66 registered operations: 49 reads and 17 changes, plus the existing 2,216 API property bindings (1,411 getters and 805 setters). The MCP protocol retains its 16 top-level tools; operations are discovered on demand. The latest four reads expose group members, nested family subcomponents, assembly members and MEP-system members without expanding the 3,000-reference denominator.
 
 The nine additions are:
 
