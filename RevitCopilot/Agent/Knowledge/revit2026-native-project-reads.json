@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "copilot_assembly_sha256": "195B90355A6F4581DDE2B55DD9D92733B4562B629D66DE7A80E94DACD7060ECA",
-  "source_receipts_sha256": "14D95F4287AA1CAB482EC04F13E28552AA2C93C17CDD157302084851E258490C",
+  "copilot_assembly_sha256": "8DC33094D66E494E2F6F448674A014325BC270AFE5BD50CAAE22039013415028",
+  "source_receipts_sha256": "E85E15F4EC9151C109D43721B0893AB76AEB300EED4AC3F5C041A9D162EA1FD7",
   "scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
-  "operation_count": 41,
-  "context_count": 164,
+  "operation_count": 43,
+  "context_count": 172,
   "models": [
     {
       "discipline": "architecture",
@@ -493,6 +493,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "group_attached_detail_types",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Group",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
           "reason": null
         }
       ]
@@ -1026,6 +1055,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "Autodesk.Revit.DB.Architecture.Room",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "stairs_associated_railings",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Architecture.Stairs",
           "reason": null
         },
         {

@@ -23,7 +23,9 @@ internal static class KnowledgeLibraryChecks
             ("Space.IsPointInSpace", "spatial_contains_point"),
             ("ConnectorManager.Lookup", "mep_connectors"),
             ("ExternalFileUtils.GetAllExternalFileReferences", "external_files_list"),
-            ("Panel.FindHostPanel", "panel_host")
+            ("Panel.FindHostPanel", "panel_host"),
+            ("Stairs.GetAssociatedRailings", "stairs_associated_railings"),
+            ("Group.GetAvailableAttachedDetailGroupTypeIds", "group_attached_detail_types")
         })
             Check(Search(query).GetProperty("items")[0].GetProperty("operation").GetString() == operation,
                 $"{query} must map to its reviewed adapter.");

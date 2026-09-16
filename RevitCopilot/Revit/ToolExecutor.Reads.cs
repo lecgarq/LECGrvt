@@ -41,6 +41,8 @@ internal sealed partial class ToolExecutor
             "mep_connectors" => MepConnectors(doc, args),
             "external_files_list" => ExternalFiles(doc, args),
             "panel_host" => PanelHost(doc, args),
+            "stairs_associated_railings" => StairsAssociatedRailings(doc, args),
+            "group_attached_detail_types" => GroupAttachedDetailTypes(doc, args),
             "type_compound_layers" => TypeCompoundLayers(doc, args),
             "instance_transform" => InstanceTransform(doc, args),
             "elements_find" => FindApiElements(doc, args),

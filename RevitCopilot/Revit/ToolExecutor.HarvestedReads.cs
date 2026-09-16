@@ -122,6 +122,36 @@ internal sealed partial class ToolExecutor
         return new { panel_unique_id = panel.UniqueId, host = hostBrief };
     }
 
+    // campaign-v5 candidate 29802d8c0186b950dec8c775; association is defined by the stair boundary, not dependency traversal.
+    private static object StairsAssociatedRailings(Document doc, JsonElement args)
+    {
+        var stairs = RequireElement(doc, RequireString(args, "unique_id")) as Autodesk.Revit.DB.Architecture.Stairs
+            ?? throw new ArgumentException("Select a stair in the active document.");
+        IEnumerable<Element> railings = stairs.GetAssociatedRailings().Select(doc.GetElement).OfType<Element>()
+            .OrderBy(element => element.Id.Value);
+        return new { stairs_unique_id = stairs.UniqueId, railings = Page(railings, args, element => new
+        {
+            id = element.Id.Value, unique_id = element.UniqueId,
+            name = SafeElementName(element), category = element.Category?.Name
+        }) };
+    }
+
+    // campaign-v5 candidate ffdc7e1ebf434480ba699ae0; Revit rejects detail groups, so require the model-group category explicitly.
+    private static object GroupAttachedDetailTypes(Document doc, JsonElement args)
+    {
+        var group = RequireElement(doc, RequireString(args, "unique_id")) as Group
+            ?? throw new ArgumentException("Select a model group in the active document.");
+        if (group.Category?.Id.Value != (long)BuiltInCategory.OST_IOSModelGroups)
+            throw new ArgumentException("Select a model group; detail groups cannot own attached detail groups.");
+        IEnumerable<Element> types = group.GetAvailableAttachedDetailGroupTypeIds().Select(doc.GetElement)
+            .OfType<Element>().OrderBy(element => element.Id.Value);
+        return new { group_unique_id = group.UniqueId, detail_group_types = Page(types, args, element => new
+        {
+            id = element.Id.Value, unique_id = element.UniqueId,
+            name = SafeElementName(element), category = element.Category?.Name
+        }) };
+    }
+
     // campaign-v5 candidate da314384a8346ca50371fffc. Modifiable does not imply that any proposed phase is valid.
     private static object ElementPhaseStatus(Document doc, JsonElement args) => new
     {

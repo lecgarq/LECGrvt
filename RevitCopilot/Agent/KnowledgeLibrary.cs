@@ -44,6 +44,8 @@ internal static class KnowledgeLibrary
             "M:Autodesk.Revit.DB.ConnectorManager.Lookup" => "mep_connectors",
             "M:Autodesk.Revit.DB.ExternalFileUtils.GetAllExternalFileReferences" => "external_files_list",
             "M:Autodesk.Revit.DB.Panel.FindHostPanel" => "panel_host",
+            "M:Autodesk.Revit.DB.Architecture.Stairs.GetAssociatedRailings" => "stairs_associated_railings",
+            "M:Autodesk.Revit.DB.Group.GetAvailableAttachedDetailGroupTypeIds" => "group_attached_detail_types",
             "M:Autodesk.Revit.DB.HostObjAttributes.GetCompoundStructure" => "type_compound_layers",
             "M:Autodesk.Revit.DB.Instance.GetTotalTransform" => "instance_transform",
             _ => null
@@ -59,7 +61,8 @@ internal static class KnowledgeLibrary
         {
             string? operation = ExecutableOperation(entry);
             string executionKind = operation is null ? "reference" : CapabilityCatalog.Require(operation).Kind;
-            int score = terms.Sum(term => (entry.Member.Contains(term, StringComparison.OrdinalIgnoreCase) ? 6 : 0)
+            int score = (entry.Member.Contains(query, StringComparison.OrdinalIgnoreCase) ? 1000 : 0)
+                + terms.Sum(term => (entry.Member.Contains(term, StringComparison.OrdinalIgnoreCase) ? 6 : 0)
                 + (entry.Source.Contains(term, StringComparison.OrdinalIgnoreCase) ? 1 : 0));
             return new { entry, operation, executionKind, score };
         }).Where(hit => (kind == "all" || kind == hit.executionKind) && (terms.Length == 0 || hit.score > 0))

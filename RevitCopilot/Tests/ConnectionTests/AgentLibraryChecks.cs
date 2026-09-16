@@ -5,8 +5,8 @@ internal static class AgentLibraryChecks
 {
     internal static void Run()
     {
-        Require(CapabilityCatalog.All.Length == 58 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 58, "Expected 58 distinct operations.");
-        Require(ApiValidationEvidence.NativeReadOperationCount == 41, "Every native read needs four-discipline project evidence.");
+        Require(CapabilityCatalog.All.Length == 60 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 60, "Expected 60 distinct operations.");
+        Require(ApiValidationEvidence.NativeReadOperationCount == 43, "Every native read needs four-discipline project evidence.");
         Require(ApiValidationEvidence.NativePreviewOperationCount == 17, "Every native change needs four-discipline preview evidence.");
         foreach (var capability in CapabilityCatalog.All)
         {
@@ -43,6 +43,14 @@ internal static class AgentLibraryChecks
                 $"{operation} needs at least one successful named-model context.");
         }
         foreach (string operation in new[] { "external_files_list", "panel_host" })
+        {
+            var contexts = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor(operation))
+                .GetProperty("project_read_contexts");
+            Require(contexts.GetArrayLength() == 4 && contexts.EnumerateArray().Any(context =>
+                context.GetProperty("status").GetString() == "read_succeeded"),
+                $"{operation} needs at least one successful named-model context.");
+        }
+        foreach (string operation in new[] { "stairs_associated_railings", "group_attached_detail_types" })
         {
             var contexts = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor(operation))
                 .GetProperty("project_read_contexts");
@@ -101,7 +109,7 @@ internal static class AgentLibraryChecks
             catch (ArgumentException) { rejected = true; }
             Require(rejected, "Unknown executable capabilities must be rejected.");
             Require(JsonSerializer.Serialize(library.Search("comments")).Contains(saved.Id), "Saved recipe should be discoverable.");
-            Console.WriteLine("PASS: 58 operations, bounded discovery, recipe provenance, fresh inputs, cross-session reuse, deduplication, backup and concurrent-save protection.");
+            Console.WriteLine("PASS: 60 operations, bounded discovery, recipe provenance, fresh inputs, cross-session reuse, deduplication, backup and concurrent-save protection.");
         }
         finally { Directory.Delete(directory, true); }
     }

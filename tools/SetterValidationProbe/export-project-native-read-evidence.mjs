@@ -19,7 +19,7 @@ const disciplines = new Map([
   ['LECG_RVT_MEP.rvt', 'mep']
 ]);
 const order = ['architecture', 'topography', 'structure', 'mep'];
-const manifest = read(join(evidence, 'project-native-read-coordination-manifest.json'));
+const manifest = read(join(evidence, 'project-native-read-associations-manifest.json'));
 const paths = readdirSync(run, { withFileTypes: true }).filter(item => item.isDirectory())
   .map(item => join(run, item.name, 'receipt.json'));
 require(paths.length === 4, 'Require exactly four native-read receipts.');
@@ -28,8 +28,8 @@ const receipts = paths.map(path => ({ path, value: read(path) }))
 for (const { value } of receipts) {
   require(disciplines.has(value.model) && value.status === 'read-only-native-validation'
     && value.setter_attempted === false && value.copy_removed === true && value.cleanup_verified === true
-    && value.read_operation_count === 41 && value.reads.length === 41
-    && new Set(value.reads.map(row => row.operation)).size === 41
+    && value.read_operation_count === 43 && value.reads.length === 43
+    && new Set(value.reads.map(row => row.operation)).size === 43
     && value.reads.every(row => ['read_succeeded', 'missing_fixture'].includes(row.status)
       && (row.status === 'missing_fixture' ? row.attempts === 0 : row.attempts > 0)),
   `Invalid native-read receipt: ${value.model}`);
@@ -38,10 +38,10 @@ for (const { value } of receipts) {
 }
 const maps = receipts.map(({ value }) => new Map(value.reads.map(row => [row.operation, row])));
 const operations = [...maps[0].keys()].sort();
-require(operations.length === 41 && maps.every(map => operations.every(operation => map.has(operation))),
+require(operations.length === 43 && maps.every(map => operations.every(operation => map.has(operation))),
   'Native-read operation sets differ across models.');
 for (const operation of ['curve_join_neighbors', 'assigned_electrical_systems', 'spatial_contains_point', 'mep_connectors',
-  'external_files_list', 'panel_host'])
+  'external_files_list', 'panel_host', 'stairs_associated_railings', 'group_attached_detail_types'])
   require(maps.some(map => map.get(operation)?.status === 'read_succeeded'),
     `${operation} needs at least one successful named-model context.`);
 const entries = operations.map(operation => ({ operation, contexts: maps.map(map => {

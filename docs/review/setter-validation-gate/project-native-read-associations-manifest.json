@@ -1,0 +1,53 @@
+{
+  "prepared_at": "2026-09-16T03:50:46.5487862Z",
+  "revision": "91e92f76cc9b0b5869a85ac431ef0be178967a22",
+  "api_sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285",
+  "classification_sha256": "088DB62397D66E6FAAC21F52DBBD1C9391DD19D3859E3AB73EC17A6E233620BD",
+  "preregistration_sha256": "828A1212BCED0FA9951DA6EE77D36F8E9ECAFDEBB791A0C138BB90B72B0F2BCC",
+  "snapshot_amendment_sha256": "7499A4F42CB93E1CAC96DDB003F08C20AD637B54F37A7C7956DC9F9D8EC445D7",
+  "copilot_assembly_sha256": "8DC33094D66E494E2F6F448674A014325BC270AFE5BD50CAAE22039013415028",
+  "read_operation_count": 43,
+  "test_class": "ProjectNativeReadBatch",
+  "campaign_prefix": "project-native-read-associations",
+  "source_manifests": [
+    {
+      "path": "project-native-read-coordination-manifest.json",
+      "sha256": "F43BF62AA5444CE94479B6FE5159C2EC54FC738AB894D693DAAA41B82956FB84"
+    }
+  ],
+  "pilot_model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+  "models": [
+    {
+      "discipline": "architecture",
+      "name": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "relative_path": "01-WIP\\01-ARQ\\LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+      "bytes": 274264064,
+      "modified_utc": "2026-07-28T06:26:46Z"
+    },
+    {
+      "discipline": "topography",
+      "name": "LECG_RVT_CONTEXTO.rvt",
+      "relative_path": "01-WIP\\00-CIV\\LECG_RVT_CONTEXTO.rvt",
+      "sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+      "bytes": 85458944,
+      "modified_utc": "2026-05-10T18:50:02Z"
+    },
+    {
+      "discipline": "structure",
+      "name": "LECG_RVT_ESTRUCTURAL.rvt",
+      "relative_path": "02-SHARED\\02-EST\\LECG_RVT_ESTRUCTURAL.rvt",
+      "sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+      "bytes": 97087488,
+      "modified_utc": "2026-06-15T19:54:07Z"
+    },
+    {
+      "discipline": "mep",
+      "name": "LECG_RVT_MEP.rvt",
+      "relative_path": "02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+      "sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+      "bytes": 137134080,
+      "modified_utc": "2026-08-27T20:01:46Z"
+    }
+  ]
+}

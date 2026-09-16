@@ -23,6 +23,8 @@ internal static class CapabilityCatalog
         new("mep_connectors", "read", "List bounded connector identities for an MEP curve or family instance, or look up one exact connector ID", "{unique_id:string,connector_id?:int,limit?:int,offset?:int}"),
         new("external_files_list", "read", "List bounded Revit, CAD, image and other external file references with path and load status", "{search?:string,limit?:int,offset?:int}"),
         new("panel_host", "read", "Resolve the host panel displayed instead of one curtain panel, when present", "{unique_id:string}"),
+        new("stairs_associated_railings", "read", "List railings associated with the boundaries of one stair", "{unique_id:string,limit?:int,offset?:int}"),
+        new("group_attached_detail_types", "read", "List attached detail-group types available for one model group", "{unique_id:string,limit?:int,offset?:int}"),
         new("type_compound_layers", "read", "Inspect ordered wall/floor/roof type layers, material identities and widths in millimeters; flags vertically compound structures", "{unique_id:string,limit?:int,offset?:int}"),
         new("instance_transform", "read", "Read an instance total transform including true-north effects where applicable; origin in feet and millimeters, dimensionless basis vectors", "{unique_id:string}"),
         new("elements_find", "read", "Find model instances or types with current UniqueIds and exact runtime API class; bounded page without a full sort or exact count", "{category?:string,element_type?:string,kind?:instances|types|all,search?:string,limit?:int,offset?:int}"),
