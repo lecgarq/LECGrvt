@@ -53,6 +53,9 @@ internal sealed partial class ToolExecutor
             return "This schedule is not a key schedule.";
         if (operation == "api.get:Autodesk.Revit.DB.Electrical.ElectricalSystem.Length" && target is ElectricalSystem system && system.BaseEquipment is null)
             return "Circuit length cannot be calculated until the system is connected to a panel.";
+        if (operation == "api.get:Autodesk.Revit.DB.Architecture.StairsRun.LocationLineJustification"
+            && target is StairsRun { StairsRunStyle: StairsRunStyle.Sketched })
+            return "Location-line justification is not applicable to a sketched stairs run.";
         if (target is View3D { IsTemplate: true } && operation is "api.get:Autodesk.Revit.DB.View3D.IsLocked" or "api.get:Autodesk.Revit.DB.View3D.IsPerspective"
             or "api.get:Autodesk.Revit.DB.View3D.IsSectionBoxActive" or "api.get:Autodesk.Revit.DB.View3D.ProjectGridsOnSectionBox")
             return "This property requires a 3D view instance rather than a view template.";

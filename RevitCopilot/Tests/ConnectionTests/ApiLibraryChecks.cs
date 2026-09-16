@@ -12,6 +12,7 @@ internal static class ApiLibraryChecks
         Require(ApiValidationEvidence.Count == all.Count, "Each API binding must have explicit runtime validation evidence.");
         Require(ApiValidationEvidence.ContextOperationCount >= 10, "Expected project-context evidence for tested API operations.");
         Require(ApiValidationEvidence.PresenceOperationCount == 2216, "Every accessor must expose project target-presence evidence.");
+        Require(ApiValidationEvidence.ReadOperationCount == 1411, "Every getter must expose project read-context evidence.");
         foreach (var binding in all.Values)
         {
             var evidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(binding.Operation));
@@ -20,6 +21,8 @@ internal static class ApiLibraryChecks
             Require(evidence.TryGetProperty("project_contexts", out _), "Validation must expose bounded project-context evidence.");
             Require(evidence.GetProperty("project_target_presence").GetArrayLength() == 4,
                 "Every accessor must expose four-discipline project target-presence evidence.");
+            Require(evidence.GetProperty("project_read_contexts").GetArrayLength() == (binding.Kind == "read" ? 4 : 0),
+                "Only getters must expose four-discipline project read-context evidence.");
         }
         var wireEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(
             "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize"));
@@ -47,6 +50,13 @@ internal static class ApiLibraryChecks
             .EnumerateArray().Select(context => context.GetProperty("target_count").GetInt32()).ToArray();
         Require(tableReadPresence.SequenceEqual(tablePresence),
             "Getter and setter presence for one declaring type must use the same measured targets.");
+        var stairRead = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(
+            "api.get:Autodesk.Revit.DB.Architecture.StairsRun.LocationLineJustification"))
+            .GetProperty("project_read_contexts").EnumerateArray().Single(context =>
+                context.GetProperty("discipline").GetString() == "architecture");
+        Require(stairRead.GetProperty("status").GetString() == "context_unsupported"
+            && stairRead.GetProperty("reason").GetString()!.Contains("sketched", StringComparison.OrdinalIgnoreCase),
+            "The documented sketched-stairs getter restriction must reach API search consumers.");
         double coldMs = cold.Elapsed.TotalMilliseconds;
         Require(all.Count >= 2000, "Expected at least 2,000 real bound accessor functions, not aliases.");
         foreach (var binding in all.Values)

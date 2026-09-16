@@ -65,16 +65,21 @@ const referencesPath = "RevitCopilot/Agent/Knowledge/revit2026-reference.json";
 const validationPath = "RevitCopilot/Agent/Knowledge/revit2026-validation.json";
 const validationContextsPath = "RevitCopilot/Agent/Knowledge/revit2026-validation-contexts.json";
 const projectPresencePath = "RevitCopilot/Agent/Knowledge/revit2026-project-presence.json";
+const projectReadsPath = "RevitCopilot/Agent/Knowledge/revit2026-project-reads.json";
 const references = JSON.parse(read(referencesPath));
 const validation = JSON.parse(read(validationPath));
 const validationContexts = JSON.parse(read(validationContextsPath));
 const projectPresence = JSON.parse(read(projectPresencePath));
+const projectReads = JSON.parse(read(projectReadsPath));
 unique(references.entries, "id", "research references");
 unique(validation.entries, "operation", "API validation entries");
 unique(validationContexts.entries, "operation", "API project-context entries");
 unique(projectPresence.entries, "operation", "API project-presence entries");
+unique(projectReads.entries, "operation", "API project-read entries");
 if (projectPresence.operation_count !== 2216 || projectPresence.models.length !== 4)
   throw new Error("API project-presence dimensions differ from the accessor contract");
+if (projectReads.operation_count !== 1411 || projectReads.context_count !== 5644 || projectReads.models.length !== 4)
+  throw new Error("API project-read dimensions differ from the getter contract");
 if (validationContexts.campaign !== validation.campaign)
   throw new Error("API validation and project-context campaigns differ");
 function tally(entries, field) {
@@ -114,7 +119,9 @@ const inventory = {
     project_validation_operations: validationContexts.entries.length,
     project_validation_contexts: validationContexts.receipt_count,
     project_validation_workflows: validationContexts.workflow_receipt_count,
-    project_presence_operations: projectPresence.operation_count
+    project_presence_operations: projectPresence.operation_count,
+    project_read_operations: projectReads.operation_count,
+    project_read_contexts: projectReads.context_count
   },
   commands, services, mcp_tools: mcpTools, native_operations: operations, curated_recipes: recipes,
   research: {
@@ -134,6 +141,10 @@ const inventory = {
     project_presence_source: projectPresencePath,
     project_presence_scope: projectPresence.scope,
     project_presence_operations: projectPresence.operation_count,
+    project_read_source: projectReadsPath,
+    project_read_scope: projectReads.scope,
+    project_read_operations: projectReads.operation_count,
+    project_read_contexts: projectReads.context_count,
     project_contexts_by_discipline: tally(validationContexts.entries.flatMap(entry => entry.contexts), "discipline"),
     note: "Recorded campaign evidence, not tests rerun by this documentation refresh."
   },

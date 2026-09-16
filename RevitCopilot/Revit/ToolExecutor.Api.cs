@@ -8,6 +8,13 @@ namespace LECG.RevitCopilot.Revit;
 
 internal sealed partial class ToolExecutor
 {
+    internal static JsonElement ProbeApiRead(Document doc, string operation, string uniqueId)
+    {
+        CapabilityCatalog.Require(operation, "read");
+        using JsonDocument arguments = JsonDocument.Parse(JsonSerializer.Serialize(new { unique_ids = new[] { uniqueId } }));
+        return JsonSerializer.SerializeToElement(ExecuteApiProperty(doc, operation, arguments.RootElement, change: false), JsonOptions);
+    }
+
     private static object ExecuteApiProperty(Document doc, string operation, JsonElement args, bool change)
     {
         ApiPropertyBinding binding = RevitApiCatalog.Require(operation, change ? "change" : "read");

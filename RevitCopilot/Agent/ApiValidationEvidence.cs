@@ -17,6 +17,11 @@ internal sealed record ApiProjectPresenceEntry(string Operation, int[] Counts);
 internal sealed record ApiProjectPresencePack(int SchemaVersion, int RevitVersion, string InventorySha256,
     string SourceReceiptsSha256, string Scope, int OperationCount, ApiProjectPresenceModel[] Models,
     ApiProjectPresenceEntry[] Entries);
+internal sealed record ApiProjectReadContext(string Status, int TargetCount, int Attempts, string? Reason);
+internal sealed record ApiProjectReadEntry(string Operation, ApiProjectReadContext[] Contexts);
+internal sealed record ApiProjectReadPack(int SchemaVersion, int RevitVersion, string CopilotAssemblySha256,
+    string SourceReceiptsSha256, string Scope, int OperationCount, int ContextCount,
+    ApiProjectPresenceModel[] Models, ApiProjectReadEntry[] Entries);
 
 internal static class ApiValidationEvidence
 {
@@ -66,6 +71,30 @@ internal static class ApiValidationEvidence
     });
     private static readonly Lazy<IReadOnlyDictionary<string, ApiProjectPresenceEntry>> Presence = new(() =>
         PresencePack.Value.Entries.ToDictionary(e => e.Operation, StringComparer.Ordinal));
+    private static readonly Lazy<ApiProjectReadPack> ReadPack = new(() =>
+    {
+        var pack = JsonSerializer.Deserialize<ApiProjectReadPack>(ReadResource("LECG.Revit2026.ProjectReads",
+            "The installed API project-read evidence is missing. Reinstall the tested Copilot bundle."),
+            new JsonSerializerOptions(JsonSerializerDefaults.Web)
+            { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, PropertyNameCaseInsensitive = true })!;
+        string[] allowed = ["read_succeeded", "context_unsupported", "missing_fixture"];
+        if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.OperationCount != 1411
+            || pack.ContextCount != pack.OperationCount * 4 || pack.Models.Length != 4
+            || pack.Entries.Length != pack.OperationCount
+            || !pack.Models.Select(model => model.Discipline).SequenceEqual(new[] { "architecture", "topography", "structure", "mep" })
+            || pack.Models.DistinctBy(model => model.ModelSha256).Count() != pack.Models.Length
+            || pack.Entries.DistinctBy(e => e.Operation).Count() != pack.Entries.Length
+            || pack.Entries.Any(e => !Index.Value.ContainsKey(e.Operation) || !e.Operation.StartsWith("api.get:", StringComparison.Ordinal)
+                || e.Contexts.Length != pack.Models.Length || e.Contexts.Any(context => !allowed.Contains(context.Status)
+                    || context.TargetCount < 0 || context.Attempts < 0
+                    || context.Status == "missing_fixture" && (context.TargetCount != 0 || context.Attempts != 0)
+                    || context.Status != "missing_fixture" && (context.TargetCount == 0 || context.Attempts == 0)
+                    || context.Status == "context_unsupported" && string.IsNullOrWhiteSpace(context.Reason))))
+            throw new InvalidDataException("Invalid API project-read evidence.");
+        return pack;
+    });
+    private static readonly Lazy<IReadOnlyDictionary<string, ApiProjectReadEntry>> Reads = new(() =>
+        ReadPack.Value.Entries.ToDictionary(e => e.Operation, StringComparer.Ordinal));
     private static byte[] ReadResource(string name, string error)
     {
         using Stream source = typeof(ApiValidationEvidence).Assembly.GetManifestResourceStream(name)
@@ -77,6 +106,7 @@ internal static class ApiValidationEvidence
     internal static int Count => Index.Value.Count;
     internal static int ContextOperationCount => Contexts.Value.Count;
     internal static int PresenceOperationCount => Presence.Value.Count;
+    internal static int ReadOperationCount => Reads.Value.Count;
     private static object[] ProjectContexts(string operation) =>
         (Contexts.Value.GetValueOrDefault(operation)?.Contexts ?? []).Select(context => (object)new
         {
@@ -100,12 +130,28 @@ internal static class ApiValidationEvidence
             target_count = entry.Counts[index]
         }).ToArray();
     }
+    private static object[] ProjectReadContexts(string operation)
+    {
+        if (!Reads.Value.TryGetValue(operation, out var entry)) return [];
+        return ReadPack.Value.Models.Select((model, index) => (object)new
+        {
+            discipline = model.Discipline,
+            model = model.Model,
+            model_sha256 = model.ModelSha256,
+            status = entry.Contexts[index].Status,
+            target_count = entry.Contexts[index].TargetCount,
+            attempts = entry.Contexts[index].Attempts,
+            reason = entry.Contexts[index].Reason
+        }).ToArray();
+    }
     internal static object For(string operation) => Index.Value.TryGetValue(operation, out var entry)
         ? new { state = entry.State, passed_models = entry.PassedModels, context_failures = entry.ContextFailures,
             unsupported_models = entry.UnsupportedModels, same_value_models = entry.SameValueModels,
             project_contexts = ProjectContexts(operation), project_target_presence = ProjectTargetPresence(operation),
+            project_read_contexts = ProjectReadContexts(operation),
             campaign = Pack.Value.Campaign }
         : new { state = "not_tested", passed_models = 0, context_failures = 0, unsupported_models = 0,
             same_value_models = 0, project_contexts = Array.Empty<object>(), project_target_presence = Array.Empty<object>(),
+            project_read_contexts = Array.Empty<object>(),
             campaign = Pack.Value.Campaign };
 }

@@ -26,6 +26,8 @@ public abstract class SetterHarness
     protected virtual string RunKind => "pilot-runs";
     protected virtual bool PersistenceProbe => false;
     protected virtual bool TypePresenceProbe => false;
+    protected virtual bool IsReadOnlyProbe => false;
+    protected virtual bool RunReadOnlyProbe(Document doc, Dictionary<string, object?> result) => false;
     protected virtual long? RestorationWatchId => null;
     protected bool NoWriteControl;
     protected bool InspectReadOnly;
@@ -137,7 +139,7 @@ public abstract class SetterHarness
             ["copy"] = copy, ["rollback_verified"] = false, ["copy_removed"] = false,
             ["cleanup_verified"] = false };
         LastReceipt = result;
-        result["classification_only"] = PersistenceProbe || TypePresenceProbe || NoWriteControl || InspectReadOnly;
+        result["classification_only"] = PersistenceProbe || TypePresenceProbe || IsReadOnlyProbe || NoWriteControl || InspectReadOnly;
         result["no_write_control"] = NoWriteControl;
         void Checkpoint() => File.WriteAllText(Path.Combine(directory, "checkpoint.json"), JsonSerializer.Serialize(result, JsonOptions));
         Checkpoint();
@@ -186,6 +188,7 @@ public abstract class SetterHarness
             Require(!doc.IsFamilyDocument && !doc.IsLinked && !doc.IsReadOnly && !doc.IsWorkshared, "Unsafe document context.");
             Require(!new FilteredElementCollector(doc).OfClass(typeof(RevitLinkType)).Cast<RevitLinkType>()
                 .Any(t => RevitLinkType.IsLoaded(doc, t.Id)), "Unexpected loaded Revit link.");
+            if (RunReadOnlyProbe(doc, result)) return;
             if (TypePresenceProbe)
             {
                 var manifest = Manifest.RootElement;
