@@ -1,0 +1,995 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ProjectAccessorPresence",
+  "model": "LECG_RVT_CONTEXTO.rvt",
+  "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\01-WIP\\00-CIV\\LECG_RVT_CONTEXTO.rvt",
+  "status": "read-only-profile",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-accessor-presence-runs\\20260916T004340\\ProjectAccessorPresence\\LECG_RVT_CONTEXTO\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": true,
+  "no_write_control": false,
+  "copy_open_sha256": "99999AC171C8D6FB427D32EC0A85A6F26C2123DD06123BAB78CEC1AFCF95463D",
+  "element_count": 7760,
+  "declaring_type_count": 243,
+  "types": [
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.BuildingOperatingDaySchedule",
+      "target_count": 25
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.BuildingOperatingYearSchedule",
+      "target_count": 25
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.ConceptualConstructionType",
+      "target_count": 36
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.ConceptualSurfaceType",
+      "target_count": 10
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisConstruction",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisMaterial",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisOpening",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisSpace",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisSurface",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisWindowType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyAnalysisZone",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.EnergyDataSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.GenericZone",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.HVACLoadBuildingType",
+      "target_count": 33
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.HVACLoadSpaceType",
+      "target_count": 125
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.HVACLoadType",
+      "target_count": 158
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.MassLevelData",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.PathOfTravel",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.RouteAnalysisSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.SpatialFieldManager",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Analysis.ViewSystemsAnalysisReport",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.BuildingPad",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.ContinuousRail",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.ContinuousRailType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.CutMarkType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.HandRailType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.MultistoryStairs",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.Railing",
+      "target_count": 35
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.RailingType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.Room",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.RoomTag",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.Stairs",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsLanding",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsLandingType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsPath",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsPathType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsRun",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsRunType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.StairsType",
+      "target_count": 3
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Architecture.TopographySurface",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Area",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.AreaScheme",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.AreaVolumeSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.AssemblyInstance",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.BaseArray",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.BasePoint",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.BeamSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Blend",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.BrowserOrganization",
+      "target_count": 5
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Ceiling",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ColorFillLegend",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ColorFillScheme",
+      "target_count": 8
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ComponentRepeater",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ComponentRepeaterSlot",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ConnectorElement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Control",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.CurtainGridLine",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.CurveByPoints",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.CurveElement",
+      "target_count": 1736
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DefaultDivideSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DesignOption",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Dimension",
+      "target_count": 770
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DimensionType",
+      "target_count": 12
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DirectShape",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DirectShapeType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DisplacementElement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DisplacementPath",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DividedPath",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.DividedSurface",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.AreaBasedLoadType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CableTray",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CableTrayConduitBase",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CableTrayConduitRunBase",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CableTraySettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CableTrayType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CableType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ConduitSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ConduitType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.DistributionSysType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ElectricalAnalyticalLoadSet",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ElectricalAnalyticalNode",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ElectricalDemandFactorDefinition",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ElectricalLoadClassification",
+      "target_count": 13
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ElectricalSetting",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.ElectricalSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.PanelScheduleSheetInstance",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.PanelScheduleTemplate",
+      "target_count": 5
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.VoltageType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.Wire",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Electrical.WireType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Element",
+      "target_count": 7760
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ElementType",
+      "target_count": 445
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ElevationMarker",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Extrusion",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FabricationPart",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FaceSplitter",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Family",
+      "target_count": 130
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FamilyInstance",
+      "target_count": 226
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FamilySymbol",
+      "target_count": 125
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FilledRegion",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FilledRegionType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Floor",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.FloorType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Form",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.GenericForm",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.GlobalParameter",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.GraphicsStyle",
+      "target_count": 1495
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Grid",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Group",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.HostedSweep",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.IFCCategoryTemplate",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.IFCParameterTemplate",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ImageInstance",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ImageType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ImageView",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ImportInstance",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.IndependentTag",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.InsulationLiningBase",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.InternalOrigin",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Level",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.LinearArray",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Material",
+      "target_count": 19
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.Duct",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.DuctLiningType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.DuctSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.FlexDuct",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.MechanicalEquipmentSet",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.MechanicalSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.MechanicalSystemType",
+      "target_count": 3
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.MEPAnalyticalSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.Space",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.SystemZoneElementType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mechanical.Zone",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MEPAnalyticalConnectionType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MEPCurve",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MEPCurveType",
+      "target_count": 11
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MEPSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MEPSystemType",
+      "target_count": 13
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ModelCurve",
+      "target_count": 1709
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ModelText",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Mullion",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MultipleValuesIndicationSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MultiReferenceAnnotation",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MultiReferenceAnnotationType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.MultiSegmentGrid",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.NestedFamilyTypeReference",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.NumberingSchema",
+      "target_count": 3
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.NumberSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Opening",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Panel",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Part",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Path3d",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.PhaseFilter",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Plumbing.FlexPipe",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Plumbing.Pipe",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Plumbing.PipeSegment",
+      "target_count": 12
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Plumbing.PipeSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Plumbing.PipingSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Plumbing.PipingSystemType",
+      "target_count": 10
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.PointCloudInstance",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.PointCloudType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.PrintSetting",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ProjectInfo",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.RadialArray",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ReferencePlane",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ReferencePoint",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Revision",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.RevisionCloud",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.RevisionNumberingSequence",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.RevisionSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.RevitLinkType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Revolution",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.RoofBase",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ScheduleSheetInstance",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Segment",
+      "target_count": 12
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SiteLocation",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Sketch",
+      "target_count": 265
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SketchPlane",
+      "target_count": 326
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SpatialElement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SpatialElementCalculationLocation",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SpatialElementCalculationPoint",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SpatialElementFromToCalculationPoints",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SpatialElementTag",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SpotDimension",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.StartingViewSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalElement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalLink",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalLinkType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalMember",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalOpening",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalPanel",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AnalyticalSurfaceBase",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AreaLoad",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.AreaReinforcement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.BoundaryConditions",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.EndTreatmentType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.FabricArea",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.FabricSheet",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.FabricSheetType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.FabricWireType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.LineLoad",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.LoadBase",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.LoadCase",
+      "target_count": 8
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.LoadCombination",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.PathReinforcement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.PointLoad",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.Rebar",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarBarType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarBendingDetailType",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarContainer",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarCoupler",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarCoverType",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarHookType",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarInSystem",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.RebarShape",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.ReinforcementSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.StructuralConnectionHandler",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.StructuralConnectionSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.StructuralConnectionType",
+      "target_count": 5
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Structure.StructuralSettings",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SunAndShadowSettings",
+      "target_count": 4
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Sweep",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.SymbolicCurve",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.TableView",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.TextElement",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.TextNote",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.TilePattern",
+      "target_count": 17
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Toposolid",
+      "target_count": 230
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.View",
+      "target_count": 4
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.View3D",
+      "target_count": 1
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ViewFamilyType",
+      "target_count": 19
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Viewport",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ViewPosition",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ViewSchedule",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ViewSheet",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.ViewSheetSet",
+      "target_count": 2
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.Wall",
+      "target_count": 577
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.WallFoundation",
+      "target_count": 0
+    },
+    {
+      "declaring_type": "Autodesk.Revit.DB.WallType",
+      "target_count": 6
+    }
+  ],
+  "reason": "declaring_type_presence_only_no_setter_attempt",
+  "opening_warnings": [],
+  "elapsed_ms": 5058.1991
+}

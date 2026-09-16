@@ -9,6 +9,11 @@ if (args.Contains("--setter-inventory"))
     SetterInventory.Write(args[Array.IndexOf(args, "--setter-inventory") + 1]);
     return;
 }
+if (args.Contains("--accessor-inventory"))
+{
+    SetterInventory.WriteAll(args[Array.IndexOf(args, "--accessor-inventory") + 1]);
+    return;
+}
 
 if (args.Contains("--fake-project-server"))
 {

@@ -14,7 +14,7 @@ internal sealed record ApiValidationContextPack(int SchemaVersion, int RevitVers
     ApiValidationContextEntry[] Entries);
 internal sealed record ApiProjectPresenceModel(string Discipline, string Model, string ModelSha256, int ElementCount);
 internal sealed record ApiProjectPresenceEntry(string Operation, int[] Counts);
-internal sealed record ApiProjectPresencePack(int SchemaVersion, int RevitVersion, string SetterInventorySha256,
+internal sealed record ApiProjectPresencePack(int SchemaVersion, int RevitVersion, string InventorySha256,
     string SourceReceiptsSha256, string Scope, int OperationCount, ApiProjectPresenceModel[] Models,
     ApiProjectPresenceEntry[] Entries);
 
@@ -54,12 +54,12 @@ internal static class ApiValidationEvidence
             "The installed API project-presence evidence is missing. Reinstall the tested Copilot bundle."),
             new JsonSerializerOptions(JsonSerializerDefaults.Web)
             { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, PropertyNameCaseInsensitive = true })!;
-        if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.OperationCount != 805
+        if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.OperationCount != 2216
             || pack.Models.Length != 4 || pack.Entries.Length != pack.OperationCount
             || !pack.Models.Select(model => model.Discipline).SequenceEqual(new[] { "architecture", "topography", "structure", "mep" })
             || pack.Models.DistinctBy(model => model.ModelSha256).Count() != pack.Models.Length
             || pack.Entries.DistinctBy(e => e.Operation).Count() != pack.Entries.Length
-            || pack.Entries.Any(e => !Index.Value.ContainsKey(e.Operation) || !e.Operation.StartsWith("api.set:", StringComparison.Ordinal)
+            || pack.Entries.Any(e => !Index.Value.ContainsKey(e.Operation)
                 || e.Counts.Length != pack.Models.Length || e.Counts.Any(count => count < 0)))
             throw new InvalidDataException("Invalid API project-presence evidence.");
         return pack;

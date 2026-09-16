@@ -73,8 +73,8 @@ unique(references.entries, "id", "research references");
 unique(validation.entries, "operation", "API validation entries");
 unique(validationContexts.entries, "operation", "API project-context entries");
 unique(projectPresence.entries, "operation", "API project-presence entries");
-if (projectPresence.operation_count !== 805 || projectPresence.models.length !== 4)
-  throw new Error("API project-presence dimensions differ from the setter contract");
+if (projectPresence.operation_count !== 2216 || projectPresence.models.length !== 4)
+  throw new Error("API project-presence dimensions differ from the accessor contract");
 if (validationContexts.campaign !== validation.campaign)
   throw new Error("API validation and project-context campaigns differ");
 function tally(entries, field) {

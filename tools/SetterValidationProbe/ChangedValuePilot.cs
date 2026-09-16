@@ -188,8 +188,17 @@ public abstract class SetterHarness
                 .Any(t => RevitLinkType.IsLoaded(doc, t.Id)), "Unexpected loaded Revit link.");
             if (TypePresenceProbe)
             {
-                using var inventory = JsonDocument.Parse(File.ReadAllText(Path.Combine(Root,
-                    "outputs", "validation-expansion", "setter-inventory.json")));
+                var manifest = Manifest.RootElement;
+                string inventoryRelative = manifest.TryGetProperty("inventory_path", out var configuredInventory)
+                    ? configuredInventory.GetString()! : "outputs/validation-expansion/setter-inventory.json";
+                Require(!Path.IsPathRooted(inventoryRelative), "Inventory path must be repository-relative.");
+                string inventoryPath = Path.GetFullPath(Path.Combine(Root,
+                    inventoryRelative.Replace('/', Path.DirectorySeparatorChar)));
+                Require(inventoryPath.StartsWith(Root + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase),
+                    "Inventory path escapes repository root.");
+                Require(!manifest.TryGetProperty("inventory_sha256", out var inventoryHash)
+                    || Hash(inventoryPath) == inventoryHash.GetString(), "Inventory changed.");
+                using var inventory = JsonDocument.Parse(File.ReadAllText(inventoryPath));
                 string[] names = inventory.RootElement.EnumerateArray()
                     .Select(item => item.GetProperty("declaring_type").GetString()!).Distinct().Order().ToArray();
                 Element[] elements = PilotValues.Elements(doc);
