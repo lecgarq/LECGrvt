@@ -6,6 +6,23 @@ internal static class AgentLibraryChecks
     internal static void Run()
     {
         Require(CapabilityCatalog.All.Length == 52 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 52, "Expected 52 distinct operations.");
+        Require(ApiValidationEvidence.NativeReadOperationCount == 35, "Every native read needs four-discipline project evidence.");
+        foreach (var capability in CapabilityCatalog.All)
+        {
+            var evidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor(capability.Name));
+            Require(evidence.GetProperty("project_read_contexts").GetArrayLength() == (capability.Kind == "read" ? 4 : 0),
+                "Only native reads must expose four-discipline project evidence.");
+        }
+        var measuredLevels = JsonSerializer.SerializeToElement(CapabilityCatalog.Search("levels_list", 1))
+            .GetProperty("items")[0].GetProperty("validation").GetProperty("project_read_contexts");
+        Require(measuredLevels.GetArrayLength() == 4 && measuredLevels.EnumerateArray().All(context =>
+            context.GetProperty("status").GetString() == "read_succeeded"),
+            "Native capability search must expose successful named-fixture evidence.");
+        var scheduleEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor("schedule_fields"))
+            .GetProperty("project_read_contexts").EnumerateArray().Single(context =>
+                context.GetProperty("discipline").GetString() == "topography");
+        Require(scheduleEvidence.GetProperty("status").GetString() == "missing_fixture",
+            "Native capability evidence must preserve explicit missing fixtures.");
         KnowledgeLibraryChecks.Run();
         HarvestDiscoveryChecks.Run();
         var discovery = JsonSerializer.SerializeToElement(CapabilityCatalog.Search("material", 2));

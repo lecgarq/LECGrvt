@@ -8,6 +8,13 @@ namespace LECG.RevitCopilot.Revit;
 
 internal sealed partial class ToolExecutor
 {
+    internal static JsonElement ProbeNativeRead(Document doc, string operation, string argumentsJson)
+    {
+        CapabilityCatalog.Require(operation, "read");
+        using JsonDocument arguments = ParseArguments(argumentsJson);
+        return JsonSerializer.SerializeToElement(AgentRead(new UIDocument(doc), doc, operation, arguments.RootElement), JsonOptions);
+    }
+
     private static object AgentRead(UIDocument ui, Document doc, string operation, JsonElement args)
     {
         CapabilityCatalog.Require(operation, "read");

@@ -1,0 +1,165 @@
+{
+  "started_at": "2026-09-16T01:32:05.8198463Z",
+  "revision": "75f4334f43a821f82e11ceb7199bc166ba8b9333",
+  "runtime": "10.0.11",
+  "revit_build": "26.5.0.55",
+  "manifest_sha256": "56F0C916F455F1A440C1D360B6BCEFCB7C19A2EAC6526BE7C8D7C5A0FEDC28E4",
+  "snapshot_amendment_sha256": "7499A4F42CB93E1CAC96DDB003F08C20AD637B54F37A7C7956DC9F9D8EC445D7",
+  "project_sha256": "BFB327D546CD2D19B7F75A80AAD50C6A88C0BA2AEC2ADBCD25ADEFF4FE00CB1F",
+  "protocol_amendment_sha256": "2182B6DC444827A72FEAABCA345C09F5BEC7D8F7A7BCEC477F3E60352DA57578",
+  "models": [
+    {
+      "discipline": "architecture",
+      "name": "LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+      "relative_path": "01-WIP\\01-ARQ\\LECG_RVT_DISE\u00D1O (ANTEPROYECTO).rvt",
+      "sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+      "bytes": 274264064,
+      "modified_utc": "2026-07-28T06:26:46Z"
+    },
+    {
+      "discipline": "topography",
+      "name": "LECG_RVT_CONTEXTO.rvt",
+      "relative_path": "01-WIP\\00-CIV\\LECG_RVT_CONTEXTO.rvt",
+      "sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+      "bytes": 85458944,
+      "modified_utc": "2026-05-10T18:50:02Z"
+    },
+    {
+      "discipline": "structure",
+      "name": "LECG_RVT_ESTRUCTURAL.rvt",
+      "relative_path": "02-SHARED\\02-EST\\LECG_RVT_ESTRUCTURAL.rvt",
+      "sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+      "bytes": 97087488,
+      "modified_utc": "2026-06-15T19:54:07Z"
+    },
+    {
+      "discipline": "mep",
+      "name": "LECG_RVT_MEP.rvt",
+      "relative_path": "02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+      "sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+      "bytes": 137134080,
+      "modified_utc": "2026-08-27T20:01:46Z"
+    }
+  ],
+  "binaries": [
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\RevitAPI.dll",
+      "sha256": "B5562D65186F0AADB5B5B578EB6F8A06D62869E6CFCDE688B1248442B1939285"
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\RevitAPIUI.dll",
+      "sha256": "8D769989B3C1B6875EB397518A4B71AE205B38D36C6F5DFFDB1D4F641DE54B6B"
+    },
+    {
+      "path": "C:\\Users\\LECG Arquitectura\\AppData\\Local\\Temp\\beff70fa-9421-4cdb-a771-ececaa98c0a1\\RevitTest\\SetterValidationProbe\\SetterValidationProbe.dll",
+      "sha256": "8800188D49DE9120B73C66F6926E060610DD46E596C895B1590796F4313A6213"
+    },
+    {
+      "path": "C:\\Users\\LECG Arquitectura\\AppData\\Local\\Temp\\beff70fa-9421-4cdb-a771-ececaa98c0a1\\Costura\\21DD5762ADC8302FBDC115F22DE7B0D9\\nunit.framework.dll",
+      "sha256": "8209DDE828B2FD6BB89AFFF760916208FB8C0C3D91732676C3213E46C94AADE0"
+    },
+    {
+      "path": "C:\\Program Files\\Autodesk\\Revit 2026\\Revit.exe",
+      "sha256": "55C7CC183FC5555A5E1E40FB5405AD99104D7D1BCE9CE585E092461EF1E6F47D"
+    }
+  ],
+  "sources": [
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ChangedValuePilot.cs",
+      "sha256": "7899E26F902E55E525D6D6F920D093032789469B667ED90186306D4D814378BD"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ClassCollectorBatch.cs",
+      "sha256": "EB7A651AE721C63D5E784BAC3529A6EF980AEC1677B3C98A8A89FB5C540047AB"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\CompatibilityProbe.cs",
+      "sha256": "95AEB51DF024498E7ADF3B02113EC546917A904E1460223FE71BEEC6E778C609"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DedicatedCollectionBatch.cs",
+      "sha256": "7D167E4F561B48A9B8A261207AE7B29F046C8AE28955433516E26AD84E791AA9"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DocumentedConstraintBatch.cs",
+      "sha256": "DA16513DABCEC8465C0DE16D4160FC54CEF11E95005B3F9B746162BDB57D8FC2"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DocumentedFourthBatch.cs",
+      "sha256": "B34220ED58EE5C18BB8440AC37C9323AE7AE98C6A016463F43D5CC511EAF4517"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DocumentedNextBatch.cs",
+      "sha256": "36246A4EDC35F4AA36CBDC0314C9F75706BF55ADAAEA56522918ECD3031A764E"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DocumentedNextRetryBatch.cs",
+      "sha256": "64EAD5C6658EB031401BCDF587F0F7E825FCAFEA0D57DC2AAB99AD45B95F41EF"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DocumentedRetryBatch.cs",
+      "sha256": "3EA99C2CE55382C5DC2243C1A325FDD5DF468374C38CE0EB3641567FC4B86D9F"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\DocumentedThirdBatch.cs",
+      "sha256": "20BCF450381572D0E56465F609C87C32FD97263FB834D88CB20B183639B9988F"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\NonElementBatch.cs",
+      "sha256": "D7C249B2138A3B6B01994EBD8EB04BB353202D6CE775A117F8D1CB11A3B82174"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\PilotValues.cs",
+      "sha256": "EAAACE663C52E310D90EF27BF1D06B390704CB438B04B2F3C4715995C756A13D"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\PlannedSetterBatch.cs",
+      "sha256": "99DB78DBBB948CBE7119FAF4E95C762D9DF2936D5E2B58E261046D7F9A4E42CA"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectAccessorPresenceBatch.cs",
+      "sha256": "7FB10391881481D978B4400D8026EFC56CE7A2A153FC7F1C0AA13FF98E161311"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectAccessorReadBatch.cs",
+      "sha256": "1701836985A2CF9343B31248EBED5DA8CFCDEBDAE03BF8F1C6CF8CE43AFFEF67"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectArchitectureBatch.cs",
+      "sha256": "DAFB257EFE826A569DC44EDAE987D19E13A3F4336346FB5FC40F4D3185CC23EE"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectContextGapBatch.cs",
+      "sha256": "107AFC65A2181821F69DBAE3D5DD76481AC88C80F924827CDCC91AD9295409AC"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectCorpusBatch.cs",
+      "sha256": "712D4A0F0F02665C74B572990D3EB1A86CD0B1BC37DFD6F3E24807727ECC6BFE"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectGapBatch.cs",
+      "sha256": "C22565D34622E61C02E212A9C52EDAFAAEE78C0CD8BEB9AD093B2C0832A726BE"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectMepCircuitBatch.cs",
+      "sha256": "5A9969CF242CE1E70657A649178BC3096805864A0B7529AE5B42EB09C9F12AE3"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectMepWireBatch.cs",
+      "sha256": "5DD34F77D7865632F1A0968115349BAB47158B62DBD714FABF950C461A141F20"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectNativeReadBatch.cs",
+      "sha256": "284EC9A52871FA240C928E354B0D96BA57DD19C8819E7B00BE47BDB7F11374D6"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectTypePresenceBatch.cs",
+      "sha256": "D0987D93D6AF96C6B025594E233458A49A2D9ECFB2B32BC03BC95C4C8808DBFC"
+    },
+    {
+      "path": "C:\\LECG\\RevitAddins\\LECG\\tools/SetterValidationProbe\\ProjectViewSheetSetBatch.cs",
+      "sha256": "20A54CF50D850BF21F2D7394E313DDF9B5B64D92558AADA669D6D4DF7301C4CB"
+    }
+  ],
+  "isolation": "Fresh detached disposable copy per operation; never saved; observable rollback checks are not a proof of all internal state."
+}

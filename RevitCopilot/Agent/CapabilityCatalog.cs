@@ -69,7 +69,15 @@ internal static class CapabilityCatalog
         var reviewedTerms = ReviewedDiscovery.Terms(query);
         var matches = All.Select(c => new { capability = c, score = terms.Count(t => (c.Name + " " + c.Description).Contains(t, StringComparison.OrdinalIgnoreCase)) + ReviewedDiscovery.Score(reviewedTerms, c.Name) })
             .Where(c => terms.Length == 0 || c.score > 0).OrderByDescending(c => c.score).ThenBy(c => c.capability.Name).ToArray();
-        return new { total_capabilities = All.Length, matched = matches.Length, items = matches.Take(Math.Clamp(limit, 1, 40)).Select(c => c.capability),
-            instructions = "read: agent_read. change: agent_preview then agent_apply; Revit asks local confirmation. List operations default to 10 rows and support offset. Preview IDs are temporary; do not reuse element IDs from other documents." };
+        return new { total_capabilities = All.Length, matched = matches.Length,
+            items = matches.Take(Math.Clamp(limit, 1, 40)).Select(c => new
+            {
+                c.capability.Name,
+                c.capability.Kind,
+                c.capability.Description,
+                c.capability.Arguments,
+                validation = ApiValidationEvidence.NativeFor(c.capability.Name)
+            }),
+            instructions = "read: agent_read. change: agent_preview then agent_apply; Revit asks local confirmation. Named project read contexts are measured fixture evidence, not universal applicability. List operations default to 10 rows and support offset. Preview IDs are temporary; do not reuse element IDs from other documents." };
     }
 }

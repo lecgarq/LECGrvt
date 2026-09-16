@@ -1,0 +1,1052 @@
+{
+  "schema_version": 1,
+  "revit_version": 2026,
+  "copilot_assembly_sha256": "5FF7C319A0DB7BA2EEADEF2DD8F81DABE889377B2F7831720F5785284040E990",
+  "source_receipts_sha256": "4DFF9663747A9B721F6B9C840F25C1A774DA894D24A05E08ED1BE1D297B46129",
+  "scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
+  "operation_count": 35,
+  "context_count": 140,
+  "models": [
+    {
+      "discipline": "architecture",
+      "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+      "element_count": 11201
+    },
+    {
+      "discipline": "topography",
+      "model": "LECG_RVT_CONTEXTO.rvt",
+      "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+      "element_count": 7760
+    },
+    {
+      "discipline": "structure",
+      "model": "LECG_RVT_ESTRUCTURAL.rvt",
+      "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+      "element_count": 24220
+    },
+    {
+      "discipline": "mep",
+      "model": "LECG_RVT_MEP.rvt",
+      "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+      "element_count": 18925
+    }
+  ],
+  "entries": [
+    {
+      "operation": "categories_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "design_options_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "element_action_checks",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "element_bounds",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "element_dependents",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "element_materials",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "element_phase_status",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "element_valid_types",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "elements_count",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "elements_find",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "elements_joined",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element+Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element+Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element+Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element+Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "families_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "grids_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "host_bottom_faces",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Toposolid",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Toposolid",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Floor",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "host_inserts",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Wall",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Toposolid",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Wall",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Plumbing.Pipe",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "instance_transform",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ProjectLocation",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "knowledge_get",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "knowledge_search",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "bundled_knowledge",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "levels_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "links_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "materials_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "parameters_get",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "phases_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "rooms_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "schedule_fields",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "schedules_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "selection_get",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "sheet_views",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSheet",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSheet",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSheet",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "sheets_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "type_compound_layers",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.WallType",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.WallType",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.FloorType",
+          "reason": "This type has no compound structure."
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.FloorType",
+          "reason": "This type has no compound structure."
+        }
+      ]
+    },
+    {
+      "operation": "types_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "BuiltInCategory.OST_Walls",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "view_filters",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": "This view does not support graphics overrides or filters."
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": "This view does not support graphics overrides or filters."
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": "This view does not support graphics overrides or filters."
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "reason": "This view does not support graphics overrides or filters."
+        }
+      ]
+    },
+    {
+      "operation": "views_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "warnings_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "worksets_list",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "reason": null
+        }
+      ]
+    }
+  ]
+}
