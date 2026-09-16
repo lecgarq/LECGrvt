@@ -25,6 +25,7 @@ public abstract class SetterHarness
     protected virtual string PreregistrationName => "pilot-preregistration.md";
     protected virtual string RunKind => "pilot-runs";
     protected virtual bool PersistenceProbe => false;
+    protected virtual bool TypePresenceProbe => false;
     protected virtual long? RestorationWatchId => null;
     protected bool NoWriteControl;
     protected bool InspectReadOnly;
@@ -136,7 +137,7 @@ public abstract class SetterHarness
             ["copy"] = copy, ["rollback_verified"] = false, ["copy_removed"] = false,
             ["cleanup_verified"] = false };
         LastReceipt = result;
-        result["classification_only"] = PersistenceProbe || NoWriteControl || InspectReadOnly;
+        result["classification_only"] = PersistenceProbe || TypePresenceProbe || NoWriteControl || InspectReadOnly;
         result["no_write_control"] = NoWriteControl;
         void Checkpoint() => File.WriteAllText(Path.Combine(directory, "checkpoint.json"), JsonSerializer.Serialize(result, JsonOptions));
         Checkpoint();
@@ -185,6 +186,21 @@ public abstract class SetterHarness
             Require(!doc.IsFamilyDocument && !doc.IsLinked && !doc.IsReadOnly && !doc.IsWorkshared, "Unsafe document context.");
             Require(!new FilteredElementCollector(doc).OfClass(typeof(RevitLinkType)).Cast<RevitLinkType>()
                 .Any(t => RevitLinkType.IsLoaded(doc, t.Id)), "Unexpected loaded Revit link.");
+            if (TypePresenceProbe)
+            {
+                using var inventory = JsonDocument.Parse(File.ReadAllText(Path.Combine(Root,
+                    "outputs", "validation-expansion", "setter-inventory.json")));
+                string[] names = inventory.RootElement.EnumerateArray()
+                    .Select(item => item.GetProperty("declaring_type").GetString()!).Distinct().Order().ToArray();
+                Element[] elements = PilotValues.Elements(doc);
+                result["element_count"] = elements.Length;
+                result["declaring_type_count"] = names.Length;
+                result["types"] = names.Select(name => new { declaring_type = name,
+                    target_count = elements.Count(typeof(Element).Assembly.GetType(name, true)!.IsInstanceOfType) }).ToArray();
+                result["status"] = "read-only-profile";
+                result["reason"] = "declaring_type_presence_only_no_setter_attempt";
+                return;
+            }
             if (InspectReadOnly)
             {
                 var element = doc.GetElement(new ElementId(1462965));

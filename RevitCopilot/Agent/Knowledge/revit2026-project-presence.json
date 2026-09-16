@@ -1,0 +1,7281 @@
+{
+  "schema_version": 1,
+  "revit_version": 2026,
+  "setter_inventory_sha256": "E7C9495B0ACBEB941587C61571CBB855960C6AF0ACB6B98367126D3977DEE5DC",
+  "source_receipts_sha256": "BB36F86D19F6C1AE12CD36A2B25ABAE759ACAEE8F13A154113DAE386A04565BB",
+  "scope": "Read-only declaring-type presence in four named CASA EUCALIPTO disposable copies; target counts do not establish edit validity or universal applicability.",
+  "operation_count": 805,
+  "models": [
+    {
+      "discipline": "architecture",
+      "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+      "element_count": 11201
+    },
+    {
+      "discipline": "topography",
+      "model": "LECG_RVT_CONTEXTO.rvt",
+      "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+      "element_count": 7760
+    },
+    {
+      "discipline": "structure",
+      "model": "LECG_RVT_ESTRUCTURAL.rvt",
+      "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+      "element_count": 24220
+    },
+    {
+      "discipline": "mep",
+      "model": "LECG_RVT_MEP.rvt",
+      "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+      "element_count": 18925
+    }
+  ],
+  "entries": [
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.BuildingOperatingDaySchedule.ScheduleName",
+      "counts": [
+        25,
+        25,
+        44,
+        44
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.BuildingOperatingYearSchedule.ScheduleName",
+      "counts": [
+        25,
+        25,
+        44,
+        44
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.ConceptualConstructionType.MaterialId",
+      "counts": [
+        36,
+        36,
+        36,
+        36
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.ConceptualSurfaceType.DefaultConstructionTypeId",
+      "counts": [
+        10,
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.BuildingTypeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyAnalysisDetailModel.ExportCategory",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.AnalysisType",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.AnalyticalGridCellSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.BuildingConstructionClass",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.BuildingEnvelopeDeterminationMethod",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.BuildingHVACSystem",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.BuildingOperatingSchedule",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.BuildingType",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.BuildingTypeId",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.CoreOffset",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.DividePerimeter",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.EnergyModel",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportCategory",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportComplexity",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ExportDefaults",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.GroundPlane",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.IncludeThermalProperties",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.IsGlazingShaded",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.OutsideAirChangesRatePerHour",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.OutsideAirPerArea",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.OutsideAirPerPerson",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.PercentageGlazing",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.PercentageSkylights",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ProjectPhase",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ProjectReportType",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ServiceType",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.ShadeDepth",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.SillHeight",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.SkylightWidth",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.SliverSpaceTolerance",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.UseAirChangesPerHour",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.UseCurrentViewOnly",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.UseHeatingCredits",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.UseOutsideAirPerArea",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.EnergyDataSettings.UseOutsideAirPerPerson",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.GenericZone.LevelOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.BuildingTypeName",
+      "counts": [
+        33,
+        33,
+        33,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.ClosingTime",
+      "counts": [
+        33,
+        33,
+        33,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.OpeningTime",
+      "counts": [
+        33,
+        33,
+        33,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadBuildingType.UnoccupiedCoolingSetPoint",
+      "counts": [
+        33,
+        33,
+        33,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadSpaceType.SpaceTypeName",
+      "counts": [
+        125,
+        125,
+        125,
+        125
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.AirChangesPerHour",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.AreaPerPerson",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.CoolingSetPoint",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.DehumidificationSetPoint",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.HeatingSetPoint",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.HumidificationSetPoint",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.LatentHeatGainPerPerson",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.LightingLoadDensity",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.OutdoorAirFlowStandard",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.OutdoorAirPerArea",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.OutdoorAirPerPerson",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.PlenumLighting",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.PowerLoadDensity",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.HVACLoadType.SensibleHeatGainPerPerson",
+      "counts": [
+        158,
+        158,
+        158,
+        158
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionId",
+      "counts": [
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.ConceptualConstructionIsByEnergyData",
+      "counts": [
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialId",
+      "counts": [
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.MaterialType",
+      "counts": [
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.MassLevelData.StrUsage",
+      "counts": [
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.LineStyle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathEnd",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.PathOfTravel.PathStart",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.RouteAnalysisSettings.AnalysisZoneBottomOffset",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.RouteAnalysisSettings.AnalysisZoneTopOffset",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.RouteAnalysisSettings.EnableIgnoredCategoryIds",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.RouteAnalysisSettings.IgnoreImports",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.AllowInteractiveSettings",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.CurrentMeasurement",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendPosition",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendShowConfigurationName",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendShowDescription",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.LegendTextTypeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.ResultsVisibleInView",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.SpatialFieldManager.UseRangeForAllMeasurements",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Analysis.ViewSystemsAnalysisReport.ReportStyle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.DefaultJoinOption",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.EndOrTopExtensionLength",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.EndOrTopExtensionStyle",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.EndOrTopTermination",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.FilletRadius",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.HandClearance",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.ProfileId",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.StartOrBottomExtensionLength",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.StartOrBottomExtensionStyle",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.StartOrBottomTermination",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.ContinuousRailType.Transition",
+      "counts": [
+        3,
+        0,
+        12,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.CutMarkType.CutLineAngle",
+      "counts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.CutMarkType.CutLineDistance",
+      "counts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.CutMarkType.CutLineExtension",
+      "counts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.CutMarkType.CutLineType",
+      "counts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.CutMarkType.CutMarkSymbol",
+      "counts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.CutMarkType.CutMarkSymbolSize",
+      "counts": [
+        1,
+        1,
+        2,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.Height",
+      "counts": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.SupportJustification",
+      "counts": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.SupportLayout",
+      "counts": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.SupportNumber",
+      "counts": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.SupportSpacing",
+      "counts": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.HandRailType.SupportTypeId",
+      "counts": [
+        2,
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.MultistoryStairs.ActualTreadDepth",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Railing.HostId",
+      "counts": [
+        3,
+        35,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.RailingType.PrimaryHandRailPosition",
+      "counts": [
+        3,
+        1,
+        13,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.RailingType.PrimaryHandrailType",
+      "counts": [
+        3,
+        1,
+        13,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.RailingType.SecondaryHandRailPosition",
+      "counts": [
+        3,
+        1,
+        13,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.RailingType.SecondaryHandrailType",
+      "counts": [
+        3,
+        1,
+        13,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.RailingType.TopRailHeight",
+      "counts": [
+        3,
+        1,
+        13,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.RailingType.TopRailType",
+      "counts": [
+        3,
+        1,
+        13,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Room.BaseOffset",
+      "counts": [
+        27,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Room.LimitOffset",
+      "counts": [
+        27,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Stairs.ActualTreadDepth",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Stairs.DesiredRisersNumber",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.Stairs.Height",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLanding.BaseElevation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsLandingType.Thickness",
+      "counts": [
+        2,
+        2,
+        4,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.DownText",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.DownTextOffset",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.ShowDownText",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.ShowUpText",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.StairsPathOffset",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.TextOrientation",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.UpText",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPath.UpTextOffset",
+      "counts": [
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.ArrowheadTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.DistanceToCutMark",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.DrawForEachRun",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.EndAtRiser",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.FullStepArrow",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.LineShapeAtCorner",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.ShowArrowheadToCutMark",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.StartExtension",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.StartFromRiser",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsPathType.StartSymbolTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.ActualRunWidth",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BaseElevation",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.BeginsWithRiser",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.EndsWithRiser",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.ExtensionBelowRiserBase",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.ExtensionBelowTreadBase",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.LocationLineJustification",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRun.TopElevation",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.HasRisers",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.HasTreads",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.IsSlanted",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.MaterialId",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingLength",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.NosingProfile",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserProfile",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserThickness",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.RiserToTreadConnect",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.StructuralDepth",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadNosingPosition",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadProfile",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.TreadThickness",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsRunType.UndersideSurfaceStyle",
+      "counts": [
+        2,
+        2,
+        11,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.EndConnectionType",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.HasMiddleSupports",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.LandingType",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.LeftLateralOffset",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.LeftSideSupportType",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MaxRiserHeight",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MiddleSupportsNumber",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MiddleSupportType",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MinRunWidth",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.MinTreadDepth",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.NotchExtension",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.NotchHorizontalGap",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.NotchThickness",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.NotchVerticalGap",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.RightLateralOffset",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.RightSideSupportType",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.StairsType.RunType",
+      "counts": [
+        3,
+        3,
+        15,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Architecture.TopographySurface.MaterialId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AreaVolumeSettings.ComputeVolumes",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.AssemblyTypeName",
+      "counts": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.AssemblyInstance.NamingCategoryId",
+      "counts": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.BaseArray.NumMembers",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.BasePoint.Clipped",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.BeamSystem.Elevation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Blend.BottomOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Blend.TopOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillLegend.Height",
+      "counts": [
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillLegend.Origin",
+      "counts": [
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillScheme.IsByRange",
+      "counts": [
+        8,
+        8,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillScheme.IsLinkedFilesIncluded",
+      "counts": [
+        8,
+        8,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillScheme.ParameterDefinition",
+      "counts": [
+        8,
+        8,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ColorFillScheme.Title",
+      "counts": [
+        8,
+        8,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ComponentRepeater.DefaultFamilyType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ComponentRepeaterSlot.FamilyType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ConnectorElement.SystemClassification",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurtainGridLine.Lock",
+      "counts": [
+        25,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurveByPoints.IsReferenceLine",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurveByPoints.ReferenceType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.CurveByPoints.Visible",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DefaultDivideSettings.PathDistance",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DefaultDivideSettings.PathLayout",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DefaultDivideSettings.PathMeasurementType",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DefaultDivideSettings.PathNumber",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.Above",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.AreSegmentsEqual",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.Below",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.HasLeader",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.IsLocked",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.LeaderEndPosition",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.Name",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.Prefix",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.Suffix",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.TextPosition",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Dimension.ValueOverride",
+      "counts": [
+        553,
+        770,
+        3179,
+        1326
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DimensionType.AlternateUnits",
+      "counts": [
+        14,
+        12,
+        50,
+        17
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DimensionType.AlternateUnitsPrefix",
+      "counts": [
+        14,
+        12,
+        50,
+        17
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DimensionType.AlternateUnitsSuffix",
+      "counts": [
+        14,
+        12,
+        50,
+        17
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DimensionType.Prefix",
+      "counts": [
+        14,
+        12,
+        50,
+        17
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DimensionType.Suffix",
+      "counts": [
+        14,
+        12,
+        50,
+        17
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DirectShape.ApplicationDataId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DirectShape.ApplicationId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DirectShapeType.UserAssignability",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DisplacementPath.AncestorIdx",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DisplacementPath.PathStyle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.BeginningIndent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.DisplayNodeNumbers",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.DisplayNodes",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.DisplayReferenceCurves",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.Distance",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.EndIndent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.FixedNumberOfPoints",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.MaximumDistance",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.MeasurementType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.MinimumDistance",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.SpacingRuleJustification",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedPath.SpacingRuleLayout",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.AllGridRotation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.BorderTile",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.ComponentRotation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.IsComponentFlipped",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.IsComponentMirrored",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.UPatternIndent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.DividedSurface.VPatternIndent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.AreaBasedLoadType.ApparentPowerDensity",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.AreaBasedLoadType.LoadClassification",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.AreaBasedLoadType.LoadDensity",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.AreaBasedLoadType.PowerFactor",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.AreaBasedLoadType.PowerFactorState",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.CurveNormal",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTray.RungSpace",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTraySettings.ConnectorSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTraySettings.FittingAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTraySettings.RiseDropAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTraySettings.SizeSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTraySettings.SizeSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTraySettings.UseAnnotationScaleForSingleLineFittings",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableTrayType.BendMultiplier",
+      "counts": [
+        2,
+        2,
+        4,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.ConductorMaterial",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.CoreType",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.InsulationMaterial",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CableType.TemperatureRating",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.CircuitNamingSchemeSettings.CircuitNamingSchemeId",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ConduitSettings.ConnectorSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ConduitSettings.FittingAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ConduitSettings.RiseDropAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ConduitSettings.SizePrefix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ConduitSettings.SizeSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ConduitSettings.UseAnnotationScaleForSingleLineFittings",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.DistributionSysType.ElectricalPhase",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.DistributionSysType.ElectricalPhaseConfiguration",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.DistributionSysType.HighLegPhase",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.DistributionSysType.NumWires",
+      "counts": [
+        1,
+        1,
+        3,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalAnalyticalLoadSet.QuantityOnStandBy",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalDemandFactorDefinition.AdditionalLoad",
+      "counts": [
+        12,
+        2,
+        22,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalDemandFactorDefinition.IncludeAdditionalLoad",
+      "counts": [
+        12,
+        2,
+        22,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalDemandFactorDefinition.RuleType",
+      "counts": [
+        12,
+        2,
+        22,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.Abbreviation",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.ActualElectricalLoadLabel",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.DemandFactorId",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.LoadSummaryDemandFactorLabel",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.PanelConnectedCurrentLabel",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.PanelConnectedLabel",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.PanelEstimatedCurrentLabel",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.PanelEstimatedLabel",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalLoadClassification.SpaceLoadClass",
+      "counts": [
+        26,
+        13,
+        37,
+        33
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitLoadCalculationMethod",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitNamePhaseA",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitNamePhaseB",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitNamePhaseC",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitPathOffset",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitRating",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSetting.CircuitSequence",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableSize",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CableType",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitConnectionType",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.CircuitPathMode",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.Frame",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.LoadName",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.PathOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.Rating",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.ElectricalSystem.TrueLoad",
+      "counts": [
+        0,
+        0,
+        0,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.PanelScheduleSheetInstance.Origin",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.PanelScheduleSheetInstance.ScheduleId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.Wire.GroundConductorNum",
+      "counts": [
+        0,
+        0,
+        0,
+        211
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.Wire.HotConductorNum",
+      "counts": [
+        0,
+        0,
+        0,
+        211
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.Wire.NeutralConductorNum",
+      "counts": [
+        0,
+        0,
+        0,
+        211
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.Wire.WiringType",
+      "counts": [
+        0,
+        0,
+        0,
+        211
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.Insulation",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.NeutralMultiplier",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.NeutralRequired",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.NeutralSize",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.TemperatureRating",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Electrical.WireType.WireMaterial",
+      "counts": [
+        1,
+        1,
+        3,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Element.CreatedPhaseId",
+      "counts": [
+        11201,
+        7760,
+        24220,
+        18925
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Element.DemolishedPhaseId",
+      "counts": [
+        11201,
+        7760,
+        24220,
+        18925
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Element.Name",
+      "counts": [
+        11201,
+        7760,
+        24220,
+        18925
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Element.Pinned",
+      "counts": [
+        11201,
+        7760,
+        24220,
+        18925
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Extrusion.EndOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Extrusion.StartOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.HangerRodKit",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.InsulationSpecification",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.ItemNumber",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.Material",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.Notes",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.PartStatus",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.ProductListEntry",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.ServiceId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.Specification",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FabricationPart.SpoolName",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.CurtainPanelHorizontalSpacing",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.CurtainPanelVerticalSpacing",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.FamilyCategoryId",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.ShowSpatialElementCalculationPoint",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.StructuralCodeName",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.StructuralFamilyNameKey",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Family.StructuralSectionShape",
+      "counts": [
+        307,
+        130,
+        245,
+        128
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.IsWorkPlaneFlipped",
+      "counts": [
+        1318,
+        226,
+        442,
+        675
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralMaterialId",
+      "counts": [
+        1318,
+        226,
+        442,
+        675
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FamilyInstance.StructuralUsage",
+      "counts": [
+        1318,
+        226,
+        442,
+        675
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternColor",
+      "counts": [
+        1,
+        1,
+        90,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.BackgroundPatternId",
+      "counts": [
+        1,
+        1,
+        90,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.ForegroundPatternColor",
+      "counts": [
+        1,
+        1,
+        90,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.ForegroundPatternId",
+      "counts": [
+        1,
+        1,
+        90,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.IsMasking",
+      "counts": [
+        1,
+        1,
+        90,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FilledRegionType.LineWeight",
+      "counts": [
+        1,
+        1,
+        90,
+        13
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Floor.SpanDirectionAngle",
+      "counts": [
+        9,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.FloorType.StructuralMaterialId",
+      "counts": [
+        7,
+        2,
+        8,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.AreProfilesConstrained",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.BaseOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.IsInXRayMode",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Form.TopOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.GlobalParameter.IsReporting",
+      "counts": [
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.HostedSweep.Angle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.HostedSweep.HorizontalOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.HostedSweep.VerticalOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCCategoryTemplate.IsValidCategoryMappingFile",
+      "counts": [
+        1,
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.ExportIFCBaseQuantities",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.ExportIFCCommonPropertySets",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.ExportRevitElementParameters",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.ExportRevitMaterialParameters",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.ExportRevitSchedules",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.ExportUserDefinedPropertySets",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IFCParameterTemplate.IsValidParameterMappingFile",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.DrawLayer",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.EnableSnaps",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.Height",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.HeightScale",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.LockProportions",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.Width",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ImageInstance.WidthScale",
+      "counts": [
+        0,
+        0,
+        0,
+        5
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.HasLeader",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.LeaderEndCondition",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.LeadersPresentationMode",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.MergeElbows",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.RotationAngle",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.TagHeadPosition",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.IndependentTag.TagOrientation",
+      "counts": [
+        21,
+        0,
+        1364,
+        631
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.InsulationLiningBase.Thickness",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Level.Elevation",
+      "counts": [
+        4,
+        1,
+        4,
+        4
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.LinearArray.NumMembers",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.AppearanceAssetId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.Color",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternColor",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutBackgroundPatternId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutForegroundPatternColor",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.CutForegroundPatternId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.MaterialCategory",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.MaterialClass",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.Shininess",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.Smoothness",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.StructuralAssetId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternColor",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceBackgroundPatternId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceForegroundPatternColor",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.SurfaceForegroundPatternId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.ThermalAssetId",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.Transparency",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Material.UseRenderAppearanceForShading",
+      "counts": [
+        248,
+        19,
+        1013,
+        177
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctLiningType.Roughness",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.AirDensity",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.AirDynamicViscosity",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.Centerline",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.ConnectorSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.FittingAngleUsage",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.FittingAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.FlatOnBottom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.FlatOnTop",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.NetworkBasedCalculations",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.OvalDuctSizeSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.OvalDuctSizeSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.RectangularDuctSizeSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.RectangularDuctSizeSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.RiseDropAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.RoundDuctSizePrefix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.RoundDuctSizeSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.SetDown",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.SetDownFromBottom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.SetUp",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.SetUpFromBottom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.DuctSettings.UseAnnotationScaleForSingleLineFittings",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.FlexDuct.EndTangent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.FlexDuct.StartTangent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MechanicalEquipmentSet.OnDuty",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MechanicalEquipmentSet.OnStandby",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MechanicalSystemType.RiseDropSettings",
+      "counts": [
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.DrawHiddenLine",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.InsideGap",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.LineStyle",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.OutsideGap",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.MEPHiddenLineSettings.SingleLineGap",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.AreaperPerson",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.BaseHeatLoadOn",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.BaseOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.CeilingReflectance",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.ConditionType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignCoolingLoad",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignExhaustAirflow",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignHeatingLoad",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignHVACLoadperArea",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignLightingLoad",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignOtherLoadperArea",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignPowerLoad",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignReturnAirflow",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.DesignSupplyAirflow",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.FloorReflectance",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.LatentHeatGainperPerson",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.LightingCalculationWorkplane",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.LightingLoadUnit",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.LimitOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.NumberofPeople",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.OccupancyUnit",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.PowerLoadUnit",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.ReturnAirflow",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.SensibleHeatGainperPerson",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.SpaceType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.SpaceTypeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.Space.WallReflectance",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.AirChangesPerHour",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.CoolingSetPoint",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.DehumidificationSetPoint",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.HeatingSetPoint",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.HumidificationSetPoint",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.OutdoorAirPerArea",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.OutdoorAirPerPerson",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.UseDehumidificationSetPoint",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mechanical.SystemZoneElementType.UseHumidificationSetPoint",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPAnalyticalConnectionType.PressureLoss",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPCurve.LevelOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        526
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPCurveType.PreferredJunctionType",
+      "counts": [
+        11,
+        11,
+        15,
+        16
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPCurveType.Roughness",
+      "counts": [
+        11,
+        11,
+        15,
+        16
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.Abbreviation",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.CalculationLevel",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillColor",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillPatternId",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.FillVisible",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LineColor",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LinePatternId",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.LineWeight",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MEPSystemType.MaterialId",
+      "counts": [
+        13,
+        13,
+        14,
+        14
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ModelCurve.TrussCurveType",
+      "counts": [
+        441,
+        1709,
+        199,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ModelText.Depth",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ModelText.HorizontalAlignment",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ModelText.Text",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Mullion.Lock",
+      "counts": [
+        128,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultipleValuesIndicationSettings.Custom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultipleValuesIndicationSettings.CustomValue",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.DimensionStyleId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.GroupTagHeads",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.ShowDimensionText",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiReferenceAnnotationType.TagTypeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.MultiSegmentGrid.Text",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.JustifyOffset",
+      "counts": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.JustifyOption",
+      "counts": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.NumberDisplayRule",
+      "counts": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.NumberOrientation",
+      "counts": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.NumberSystem.ReferenceOffset",
+      "counts": [
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Opening.IsTransparentIn3D",
+      "counts": [
+        21,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Opening.IsTransparentInElevation",
+      "counts": [
+        21,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.Excluded",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Part.OriginalCategoryId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.FlexPipe.EndTangent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.FlexPipe.StartTangent",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.AnalysisForClosedLoopHydronicPipingNetworks",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.Centerline",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.ConnectorSeparator",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.ConnectorTolerance",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.FittingAngleUsage",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.FittingAnnotationSize",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.FlatOnBottom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.FlatOnTop",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.SetDown",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.SetDownFromBottom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.SetUp",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.SetUpFromBottom",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.SizePrefix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.SizeSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipeSettings.UseAnnotationScaleForSingleLineFittings",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FlowConversionMethod",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidTemperature",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.FluidType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.SingleLineBendDropType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.SingleLineBendRiseType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.SingleLineJunctionDropType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.SingleLineJunctionRiseType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.TwoLineDropType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Plumbing.PipingSystemType.TwoLineRiseType",
+      "counts": [
+        10,
+        10,
+        11,
+        11
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.PointCloudInstance.FilterAction",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.PointCloudType.Scale",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.PrintSetting.Name",
+      "counts": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.Address",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.Author",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.BuildingName",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.ClientName",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.IssueDate",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.Name",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.Number",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.OrganizationDescription",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.OrganizationName",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ProjectInfo.Status",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RadialArray.NumMembers",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.BubbleEnd",
+      "counts": [
+        27,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.Direction",
+      "counts": [
+        27,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.FreeEnd",
+      "counts": [
+        27,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePlane.Name",
+      "counts": [
+        27,
+        0,
+        16,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePoint.CoordinatePlaneVisibility",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePoint.Name",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePoint.Position",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePoint.ShowNormalReferencePlaneOnly",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ReferencePoint.Visible",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.Description",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.Issued",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.IssuedBy",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.IssuedTo",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.RevisionDate",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.RevisionNumberingSequenceId",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revision.Visibility",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RevisionCloud.RevisionId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RevisionNumberingSequence.SequenceName",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RevisionSettings.RevisionCloudSpacing",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RevisionSettings.RevisionNumbering",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RevitLinkType.AttachmentType",
+      "counts": [
+        1,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RevitLinkType.PathType",
+      "counts": [
+        1,
+        0,
+        0,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revolution.EndAngle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Revolution.StartAngle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RoofBase.EaveCuts",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.RoofBase.FasciaDepth",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ScheduleSheetInstance.Point",
+      "counts": [
+        21,
+        0,
+        13,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ScheduleSheetInstance.Rotation",
+      "counts": [
+        21,
+        0,
+        13,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ScheduleSheetInstance.SegmentIndex",
+      "counts": [
+        21,
+        0,
+        13,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Segment.Description",
+      "counts": [
+        12,
+        12,
+        17,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Segment.Roughness",
+      "counts": [
+        12,
+        12,
+        17,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SiteLocation.Latitude",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SiteLocation.Longitude",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SiteLocation.PlaceName",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SiteLocation.TimeZone",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElement.Number",
+      "counts": [
+        27,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementCalculationPoint.Position",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementFromToCalculationPoints.FromPosition",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementFromToCalculationPoints.ToPosition",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.HasLeader",
+      "counts": [
+        141,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.LeaderElbow",
+      "counts": [
+        141,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.LeaderEnd",
+      "counts": [
+        141,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.RotationAngle",
+      "counts": [
+        141,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.TagHeadPosition",
+      "counts": [
+        141,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpatialElementTag.TagOrientation",
+      "counts": [
+        141,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpotDimension.LeaderHasShoulder",
+      "counts": [
+        0,
+        0,
+        0,
+        46
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SpotDimension.LeaderShoulderPosition",
+      "counts": [
+        0,
+        0,
+        0,
+        46
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.StartingViewSettings.ViewId",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalElement.AnalyzeAs",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalElement.MaterialId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalElement.StructuralRole",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalLinkType.RotationX",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalLinkType.RotationY",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalLinkType.RotationZ",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalLinkType.TranslationX",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalLinkType.TranslationY",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalLinkType.TranslationZ",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalMember.CrossSectionRotation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalMember.SectionTypeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AnalyticalPanel.Thickness",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaLoad.ForceVector1",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaLoad.ForceVector2",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaLoad.ForceVector3",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaLoad.IsProjected",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaReinforcement.AdditionalBottomCoverOffset",
+      "counts": [
+        0,
+        0,
+        28,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.AreaReinforcement.AdditionalTopCoverOffset",
+      "counts": [
+        0,
+        0,
+        28,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.BoundaryConditions.AssociatedLoadId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.EndTreatmentType.EndTreatment",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.CoverOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.DistributionOfWiresAtCover",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.FabricLocation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.FabricSheetTypeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.LapSplicePosition",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.MajorLapSpliceLength",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.MajorSheetAlignment",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.MinorLapSpliceLength",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.MinorSheetAlignment",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricArea.TagViewId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.BentFabricBendDirection",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.BentFabricLongitudinalCutLength",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.BentFabricStraightWiresLocation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.CoverOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.DistributionOfWiresAtCover",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.FabricHostReference",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheet.FabricLocation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.MajorDirectionWireType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.MajorLapSpliceLength",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.Material",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.MinorDirectionWireType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.MinorLapSpliceLength",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricSheetType.SheetMass",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricWireType.BendDiameter",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.FabricWireType.WireDiameter",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LineLoad.ForceVector1",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LineLoad.ForceVector2",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LineLoad.IsProjected",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LineLoad.MomentVector1",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LineLoad.MomentVector2",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadBase.IsReaction",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadBase.LoadCaseId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadBase.OrientTo",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.NatureId",
+      "counts": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.Number",
+      "counts": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCase.SubcategoryId",
+      "counts": [
+        8,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCombination.State",
+      "counts": [
+        0,
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.LoadCombination.Type",
+      "counts": [
+        0,
+        0,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.AdditionalOffset",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.AlternatingBarOrientation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.AlternatingBarShapeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.PrimaryBarOrientation",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PathReinforcement.PrimaryBarShapeId",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PointLoad.ForceVector",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PointLoad.MomentVector",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.PointLoad.Point",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.Rebar.IncludeFirstBar",
+      "counts": [
+        0,
+        0,
+        197,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.Rebar.IncludeLastBar",
+      "counts": [
+        0,
+        0,
+        197,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.Rebar.MaxSpacing",
+      "counts": [
+        0,
+        0,
+        197,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.Rebar.NumberOfBarPositions",
+      "counts": [
+        0,
+        0,
+        197,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.Rebar.ReadOnlyParameters",
+      "counts": [
+        0,
+        0,
+        197,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.Rebar.ScheduleMark",
+      "counts": [
+        0,
+        0,
+        197,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.BarModelDiameter",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.BarNominalDiameter",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.DeformationType",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.MaximumBendRadius",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.StandardBendDiameter",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.StandardHookBendDiameter",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBarType.StirrupTieBendDiameter",
+      "counts": [
+        0,
+        0,
+        8,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsDisplayOption",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsForCranksEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsForHooksEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsMeasurementOptions",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionsOffset",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTextPosition",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.AngularDimensionTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.BendDiameterDimensionsEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.BendDiameterDimensionsForHooksEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.BendDiameterDimensionsForSegmentsEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.BendDiameterDimensionType",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DetailLevel",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.DiameterDimensionTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.MultipleValuesIndicatorOption",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.OrthogonalAndOverallDimesionsEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RadialDimensionTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.RepresentaionOf3DShapes",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SchematicHeight",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SchematicWidth",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionsEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionsForHooksEnabled",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionsOffset",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTextPosition",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthDimensionTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthsDisplayOption",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentLengthsForArcsDisplayOption",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.SegmentsRepresentation",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarBendingDetailType.TagTypeId",
+      "counts": [
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarContainer.PresentItemsAsSubelements",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarContainer.ScheduleMark",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarCoupler.CouplerMark",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarCoupler.RotationAngle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarCoverType.CoverDistance",
+      "counts": [
+        1,
+        1,
+        8,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarHookType.HookAngle",
+      "counts": [
+        0,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarHookType.StraightLineMultiplier",
+      "counts": [
+        0,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarHookType.Style",
+      "counts": [
+        0,
+        0,
+        7,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.RebarInSystem.ScheduleMark",
+      "counts": [
+        0,
+        0,
+        282,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.HostStructuralRebar",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.NumberingMethod",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarPresentationInSection",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarPresentationInView",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarShapeDefinesEndTreatments",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarShapeDefinesHooks",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.ReinforcementSettings.RebarVaryingLengthNumberSuffix",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.ApprovalTypeId",
+      "counts": [
+        0,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.CodeCheckingStatus",
+      "counts": [
+        0,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.OverrideTypeParams",
+      "counts": [
+        0,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionHandler.SingleElementEndIndex",
+      "counts": [
+        0,
+        0,
+        2,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralConnectionSettings.IncludeWarningControls",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BoundaryConditionAreaAndLineSymbolSpacing",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BoundaryConditionFamilySymbolFixed",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BoundaryConditionFamilySymbolPinned",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BoundaryConditionFamilySymbolRoller",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BoundaryConditionFamilySymbolUserDefined",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BoundarySetbackDisabledForSteelElements",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BraceAboveSymbol",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BraceBelowSymbol",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.BraceParallelLineOffset",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.KickerBraceSymbol",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.ShowBraceAbove",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.ShowBraceBelow",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.SymbolicCutbackForBeamAndTruss",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.SymbolicCutbackForBrace",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.SymbolicCutbackForColumn",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Structure.StructuralSettings.UseLoadsDisplayScaling",
+      "counts": [
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.ActiveFrame",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.Altitude",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.Azimuth",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.GroundPlaneLevelId",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.RelativeToView",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.SharesSettings",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.SunAndShadowType",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.SunriseToSunset",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.TimeInterval",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.UsesGroundPlane",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SunAndShadowSettings.Visible",
+      "counts": [
+        38,
+        4,
+        120,
+        50
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Sweep.IsTrajectorySegmentationEnabled",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Sweep.MaxSegmentAngle",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SymbolicCurve.IsDrawnInForeground",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.SymbolicCurve.ReferenceType",
+      "counts": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TableView.TargetId",
+      "counts": [
+        6,
+        0,
+        8,
+        22
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.Coord",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.HorizontalAlignment",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.KeepRotatedTextReadable",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.Text",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.VerticalAlignment",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextElement.Width",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextNote.LeaderLeftAttachment",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.TextNote.LeaderRightAttachment",
+      "counts": [
+        46,
+        0,
+        1068,
+        443
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AnalysisDisplayStyleId",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AreAnalyticalModelCategoriesHidden",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AreAnnotationCategoriesHidden",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AreCoordinationModelHandlesHidden",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AreImportCategoriesHidden",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.AreModelCategoriesHidden",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ArePointCloudsHidden",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.CropBoxActive",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.CropBoxVisible",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.DetailLevel",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.Discipline",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.DisplayStyle",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.PartsVisibility",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.RevealConstraintsMode",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.Scale",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ShadowIntensity",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.SunlightIntensity",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ViewPositionId",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View.ViewTemplateId",
+      "counts": [
+        56,
+        4,
+        133,
+        79
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View3D.IsSectionBoxActive",
+      "counts": [
+        9,
+        1,
+        17,
+        10
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.View3D.ProjectGridsOnSectionBox",
+      "counts": [
+        9,
+        1,
+        17,
+        10
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewFamilyType.DefaultTemplateId",
+      "counts": [
+        22,
+        19,
+        22,
+        24
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewFamilyType.PlanViewDirection",
+      "counts": [
+        22,
+        19,
+        22,
+        24
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Viewport.LabelLineLength",
+      "counts": [
+        22,
+        0,
+        67,
+        37
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Viewport.LabelOffset",
+      "counts": [
+        22,
+        0,
+        67,
+        37
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Viewport.Rotation",
+      "counts": [
+        22,
+        0,
+        67,
+        37
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Viewport.ViewId",
+      "counts": [
+        22,
+        0,
+        67,
+        37
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewPosition.Position",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewPosition.ViewAnchor",
+      "counts": [
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.BodyTextTypeId",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.HasStripedRows",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.HeaderTextTypeId",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.KeyScheduleParameterName",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.RowHeight",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.RowHeightOverride",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.TitleTextTypeId",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSchedule.UseStripedRowsOnSheets",
+      "counts": [
+        6,
+        0,
+        8,
+        21
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetCollectionId",
+      "counts": [
+        15,
+        0,
+        12,
+        9
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetNumber",
+      "counts": [
+        15,
+        0,
+        12,
+        9
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheet.SheetTitleBlockId",
+      "counts": [
+        15,
+        0,
+        12,
+        9
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.IsAutomatic",
+      "counts": [
+        3,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.Name",
+      "counts": [
+        3,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.SheetOrganizationId",
+      "counts": [
+        3,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.ViewSheetSet.ViewOrganizationId",
+      "counts": [
+        3,
+        2,
+        1,
+        2
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Wall.CrossSection",
+      "counts": [
+        138,
+        577,
+        69,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.Wall.StructuralUsage",
+      "counts": [
+        138,
+        577,
+        69,
+        0
+      ]
+    },
+    {
+      "operation": "api.set:Autodesk.Revit.DB.WallType.Function",
+      "counts": [
+        7,
+        6,
+        22,
+        3
+      ]
+    }
+  ]
+}

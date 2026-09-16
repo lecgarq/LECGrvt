@@ -11,12 +11,14 @@ internal static class ApiLibraryChecks
         var all = RevitApiCatalog.All;
         Require(ApiValidationEvidence.Count == all.Count, "Each API binding must have explicit runtime validation evidence.");
         Require(ApiValidationEvidence.ContextOperationCount >= 10, "Expected project-context evidence for tested API operations.");
+        Require(ApiValidationEvidence.PresenceOperationCount == 805, "Every setter must expose project target-presence evidence.");
         foreach (var binding in all.Values)
         {
             var evidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(binding.Operation));
             Require(evidence.GetProperty("state").GetString() != "not_tested", "A completed campaign must account for every accessor.");
             Require(!string.IsNullOrWhiteSpace(evidence.GetProperty("campaign").GetString()), "Validation requires campaign provenance.");
             Require(evidence.TryGetProperty("project_contexts", out _), "Validation must expose bounded project-context evidence.");
+            Require(evidence.TryGetProperty("project_target_presence", out _), "Validation must expose project target-presence evidence.");
         }
         var wireEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(
             "api.set:Autodesk.Revit.DB.Electrical.WireType.MaxSize"));
@@ -34,6 +36,11 @@ internal static class ApiLibraryChecks
                 && !string.IsNullOrWhiteSpace(context.GetProperty("required_workflow").GetString())),
                 "ViewSheetSet persistence requirements must reach API search consumers.");
         }
+        var tablePresence = JsonSerializer.SerializeToElement(ApiValidationEvidence.For(
+            "api.set:Autodesk.Revit.DB.TableView.TargetId")).GetProperty("project_target_presence")
+            .EnumerateArray().Select(context => context.GetProperty("target_count").GetInt32()).ToArray();
+        Require(tablePresence.SequenceEqual(new[] { 6, 0, 8, 22 }),
+            "Known architecture/topography/structure/MEP target counts must reach API search consumers.");
         double coldMs = cold.Elapsed.TotalMilliseconds;
         Require(all.Count >= 2000, "Expected at least 2,000 real bound accessor functions, not aliases.");
         foreach (var binding in all.Values)
