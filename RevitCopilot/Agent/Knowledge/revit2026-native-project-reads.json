@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "copilot_assembly_sha256": "5FF7C319A0DB7BA2EEADEF2DD8F81DABE889377B2F7831720F5785284040E990",
-  "source_receipts_sha256": "4DFF9663747A9B721F6B9C840F25C1A774DA894D24A05E08ED1BE1D297B46129",
+  "copilot_assembly_sha256": "193A8D41265107128FF3D617BE1DD13916C9381C89F39BAA9A598BE26F87D6C9",
+  "source_receipts_sha256": "1D2D6A9AE2EC140CB4CFD21C1A3E948FD58976992641EFD8A1CAED7134D2DD38",
   "scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
-  "operation_count": 35,
-  "context_count": 140,
+  "operation_count": 37,
+  "context_count": 148,
   "models": [
     {
       "discipline": "architecture",
@@ -34,6 +34,35 @@
   ],
   "entries": [
     {
+      "operation": "assigned_electrical_systems",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        }
+      ]
+    },
+    {
       "operation": "categories_list",
       "contexts": [
         {
@@ -58,6 +87,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "curve_join_neighbors",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Wall",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ModelLine",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
           "reason": null
         }
       ]

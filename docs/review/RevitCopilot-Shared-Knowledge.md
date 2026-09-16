@@ -10,7 +10,7 @@ Search returns at most five short matches (three by default). Fetch returns a bo
 
 ## Available tools and recipes
 
-There are 48 registered operations: 31 reads and 17 changes, plus the existing 2,216 API property bindings (1,411 getters and 805 setters). The MCP protocol retains its 16 top-level tools; operations are discovered on demand.
+There are 54 registered operations: 37 reads and 17 changes, plus the existing 2,216 API property bindings (1,411 getters and 805 setters). The MCP protocol retains its 16 top-level tools; operations are discovered on demand.
 
 The nine additions are:
 
@@ -40,7 +40,7 @@ Offline checks passed for all 2,216 binding registrations, 3,000 embedded refere
 
 Scratch Revit tests passed at `C:\LECG\RevitAddins\LECG\RevitCopilot\Tests\bin\x64\Release\net10.0-windows\results\20260905_193602\smoke-results.json`. They verified ribbon opening of the sidebar, native read postconditions against the Revit API, schedule/filter identities, phase order, pagination, invalid targets, unsupported-result receipt rejection, transactions/rollback, and MCP transport. Live LLM testing was disabled.
 
-The follow-up campaign on all 12 installed Autodesk sample copies completed in `C:\LECG\RevitAddins\LECG\RevitCopilot\Tests\bin\x64\Release\net10.0-windows\benchmarks\20260905_193652`. All 48 registered operations passed the coverage checks; all 12 reviewed fixture suites and transports passed, including the repaired Japanese floor fixture. Actual MCP reference search, reference fetch and phase reads passed in each sample. All original sample SHA-256 hashes matched after testing. Links remained unloaded in the copies, and write fixtures were rolled back.
+The earlier follow-up campaign on all 12 installed Autodesk sample copies completed in `C:\LECG\RevitAddins\LECG\RevitCopilot\Tests\bin\x64\Release\net10.0-windows\benchmarks\20260905_193652`. All 48 operations registered at that revision passed the coverage checks; all 12 reviewed fixture suites and transports passed, including the repaired Japanese floor fixture. Actual MCP reference search, reference fetch and phase reads passed in each sample. All original sample SHA-256 hashes matched after testing. Links remained unloaded in the copies, and write fixtures were rolled back.
 
 The API coverage contains 1,189 getters invoked successfully on at least one suitable fixture, 222 getters unsupported or missing a suitable fixture, seven reviewed setters passed, and 798 setters awaiting reviewed runtime tests. There are still 141 failing getter/model combinations where an operation passed elsewhere. These remain visible in `operation-coverage.csv` and `benchmark-results.json`; neither unsupported contexts nor a successful tool envelope count as a successful getter invocation. This campaign does not validate arbitrary setters or execute generated candidate code.
 

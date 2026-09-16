@@ -10,8 +10,8 @@ namespace LECG.SetterValidationProbe;
 
 public sealed class ProjectNativeReadBatch : SetterHarness
 {
-    protected override string ManifestName => "project-native-read-manifest.json";
-    protected override string PreregistrationName => "project-native-read-preregistration.md";
+    protected override string ManifestName => "project-native-read-expansion-manifest.json";
+    protected override string PreregistrationName => "project-native-read-expansion-preregistration.md";
     protected override string RunKind => "project-native-read-runs";
     protected override bool IsReadOnlyProbe => true;
 
@@ -30,7 +30,7 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                 (string)capability.GetType().GetProperty("Kind")!.GetValue(capability)! == "read")
             .Select(capability => (string)capability.GetType().GetProperty("Name")!.GetValue(capability)!)
             .Order(StringComparer.Ordinal).ToArray();
-        if (operations.Length != 35) throw new InvalidOperationException("Native read denominator changed.");
+        if (operations.Length != 37) throw new InvalidOperationException("Native read denominator changed.");
         MethodInfo probe = copilot.GetType("LECG.RevitCopilot.Revit.ToolExecutor", throwOnError: true)!
             .GetMethod("ProbeNativeRead", BindingFlags.Static | BindingFlags.NonPublic)!;
         Element[] elements = PilotValues.Elements(doc);
@@ -100,6 +100,14 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                 foreach (Element first in elements.Where(e => e.Location is not null).Take(6))
                 foreach (Element second in elements.Where(e => e.Location is not null && e.Id != first.Id).Take(2))
                     yield return (new { first_unique_id = first.UniqueId, second_unique_id = second.UniqueId }, first.GetType().FullName! + "+" + second.GetType().FullName!);
+                yield break;
+            case "curve_join_neighbors":
+                foreach (Element element in elements.Where(element => element.Location is LocationCurve))
+                    yield return (new { unique_id = element.UniqueId, limit = 2 }, element.GetType().FullName!);
+                yield break;
+            case "assigned_electrical_systems":
+                foreach (FamilyInstance instance in elements.OfType<FamilyInstance>().Where(instance => instance.MEPModel is not null))
+                    yield return (new { unique_id = instance.UniqueId, limit = 2 }, instance.GetType().FullName!);
                 yield break;
             case "type_compound_layers": foreach (var item in Targets<HostObjAttributes>(e => new { unique_id = e.UniqueId, limit = 3 })) yield return item; yield break;
             case "instance_transform": foreach (var item in Targets<Instance>(e => new { unique_id = e.UniqueId })) yield return item; yield break;

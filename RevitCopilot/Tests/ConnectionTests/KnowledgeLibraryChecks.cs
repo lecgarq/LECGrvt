@@ -15,6 +15,13 @@ internal static class KnowledgeLibraryChecks
             .All(item => item.GetProperty("kind").GetString() == "change" && item.GetProperty("operation").GetString() != "api.set:Autodesk.Revit.DB.WallType.Width"), "Read-only width must not invent a setter.");
         var native = Search("HostObject.FindInserts").GetProperty("items")[0];
         Check(native.GetProperty("operation").GetString() == "host_inserts", "Reviewed method must map to its existing adapter.");
+        foreach (var (query, operation) in new[]
+        {
+            ("LocationCurve.get_ElementsAtJoin", "curve_join_neighbors"),
+            ("MEPModel.GetAssignedElectricalSystems", "assigned_electrical_systems")
+        })
+            Check(Search(query).GetProperty("items")[0].GetProperty("operation").GetString() == operation,
+                $"{query} must map to its reviewed adapter.");
         var reference = Search("AdaptiveComponentInstanceUtils.CreateAdaptiveComponentInstance", "reference").GetProperty("items")[0];
         Check(!reference.GetProperty("executable").GetBoolean(), "Documentation must not grant execution.");
         string id = reference.GetProperty("id").GetString()!;

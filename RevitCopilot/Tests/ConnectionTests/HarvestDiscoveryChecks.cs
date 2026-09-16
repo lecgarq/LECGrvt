@@ -7,7 +7,9 @@ internal static class HarvestDiscoveryChecks
 {
     internal static void Run()
     {
-        (string Query, string Name)[] native = [("huecos muro", "host_inserts"), ("fases modificables", "element_phase_status"), ("caras inferiores losa", "host_bottom_faces")];
+        (string Query, string Name)[] native = [("huecos muro", "host_inserts"), ("fases modificables", "element_phase_status"),
+            ("caras inferiores losa", "host_bottom_faces"), ("vecinos unidos extremos curva", "curve_join_neighbors"),
+            ("circuitos asignados panel", "assigned_electrical_systems")];
         foreach (var test in native)
         {
             var result = JsonSerializer.SerializeToElement(CapabilityCatalog.Search(test.Query, 1));

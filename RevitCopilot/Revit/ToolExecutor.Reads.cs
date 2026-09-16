@@ -35,6 +35,8 @@ internal sealed partial class ToolExecutor
             "view_filters" => ViewFilters(doc, args),
             "element_action_checks" => ElementActionChecks(doc, args),
             "elements_joined" => ElementsJoined(doc, args),
+            "curve_join_neighbors" => CurveJoinNeighbors(doc, args),
+            "assigned_electrical_systems" => AssignedElectricalSystems(doc, args),
             "type_compound_layers" => TypeCompoundLayers(doc, args),
             "instance_transform" => InstanceTransform(doc, args),
             "elements_find" => FindApiElements(doc, args),

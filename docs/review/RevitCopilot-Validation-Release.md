@@ -4,7 +4,7 @@ September 5, 2026. This report supersedes the coverage figures in `RevitCopilot-
 
 ## Delivery scope
 
-The Revit 2026 Copilot contains 52 native operations (35 reads and 17 changes), 29 curated reusable recipe templates, 2,216 API property bindings (1,411 getters and 805 setters), and 3,000 shared searchable research references. These are different inventories, not 3,000 independently executable commands.
+The Revit 2026 Copilot contains 54 native operations (37 reads and 17 changes), 29 curated reusable recipe templates, 2,216 API property bindings (1,411 getters and 805 setters), and 3,000 shared searchable research references. These are different inventories, not 3,000 independently executable commands. The latest read pack adds curve-end join neighbors and assigned electrical systems; both production adapters succeeded in all four named CASA EUCALIPTO disposable-copy contexts.
 
 Four new handwritten, read-only operations are available through the existing MCP `agent_read`/batch route:
 

@@ -5,8 +5,8 @@ internal static class AgentLibraryChecks
 {
     internal static void Run()
     {
-        Require(CapabilityCatalog.All.Length == 52 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 52, "Expected 52 distinct operations.");
-        Require(ApiValidationEvidence.NativeReadOperationCount == 35, "Every native read needs four-discipline project evidence.");
+        Require(CapabilityCatalog.All.Length == 54 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 54, "Expected 54 distinct operations.");
+        Require(ApiValidationEvidence.NativeReadOperationCount == 37, "Every native read needs four-discipline project evidence.");
         Require(ApiValidationEvidence.NativePreviewOperationCount == 17, "Every native change needs four-discipline preview evidence.");
         foreach (var capability in CapabilityCatalog.All)
         {
@@ -26,6 +26,14 @@ internal static class AgentLibraryChecks
                 context.GetProperty("discipline").GetString() == "topography");
         Require(scheduleEvidence.GetProperty("status").GetString() == "missing_fixture",
             "Native capability evidence must preserve explicit missing fixtures.");
+        foreach (string operation in new[] { "curve_join_neighbors", "assigned_electrical_systems" })
+        {
+            var contexts = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor(operation))
+                .GetProperty("project_read_contexts");
+            Require(contexts.GetArrayLength() == 4 && contexts.EnumerateArray().All(context =>
+                context.GetProperty("status").GetString() == "read_succeeded"),
+                $"{operation} must retain four successful named-model contexts.");
+        }
         var createLevelEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor("create_level"))
             .GetProperty("project_preview_contexts");
         Require(createLevelEvidence.EnumerateArray().All(context => context.GetProperty("status").GetString() == "preview_succeeded"),
@@ -77,7 +85,7 @@ internal static class AgentLibraryChecks
             catch (ArgumentException) { rejected = true; }
             Require(rejected, "Unknown executable capabilities must be rejected.");
             Require(JsonSerializer.Serialize(library.Search("comments")).Contains(saved.Id), "Saved recipe should be discoverable.");
-            Console.WriteLine("PASS: 52 operations, bounded discovery, recipe provenance, fresh inputs, cross-session reuse, deduplication, backup and concurrent-save protection.");
+            Console.WriteLine("PASS: 54 operations, bounded discovery, recipe provenance, fresh inputs, cross-session reuse, deduplication, backup and concurrent-save protection.");
         }
         finally { Directory.Delete(directory, true); }
     }

@@ -17,6 +17,8 @@ internal static class CapabilityCatalog
         new("view_filters", "read", "Filters applied to a view, with visibility and enabled flags", "{unique_id:string,search?:string,limit?:int,offset?:int}"),
         new("element_action_checks", "read", "Read API feasibility checks for deletion, mirroring, parts creation and phase edits; checks do not grant approval or replace previews", "{unique_ids:string[1..20]}"),
         new("elements_joined", "read", "Check whether two explicit current-document elements have a Revit geometry join", "{first_unique_id:string,second_unique_id:string}"),
+        new("curve_join_neighbors", "read", "List elements joined at either end of one curve-based element; this is location-curve connectivity, not a geometry-join test", "{unique_id:string,limit?:int,offset?:int}"),
+        new("assigned_electrical_systems", "read", "List electrical systems currently assigned to one family instance's MEP model", "{unique_id:string,limit?:int,offset?:int}"),
         new("type_compound_layers", "read", "Inspect ordered wall/floor/roof type layers, material identities and widths in millimeters; flags vertically compound structures", "{unique_id:string,limit?:int,offset?:int}"),
         new("instance_transform", "read", "Read an instance total transform including true-north effects where applicable; origin in feet and millimeters, dimensionless basis vectors", "{unique_id:string}"),
         new("elements_find", "read", "Find model instances or types with current UniqueIds and exact runtime API class; bounded page without a full sort or exact count", "{category?:string,element_type?:string,kind?:instances|types|all,search?:string,limit?:int,offset?:int}"),

@@ -1,0 +1,319 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ProjectNativeRead",
+  "model": "LECG_RVT_CONTEXTO.rvt",
+  "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\01-WIP\\00-CIV\\LECG_RVT_CONTEXTO.rvt",
+  "status": "read-only-native-validation",
+  "stage": "opening",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-native-read-runs\\20260916T030552\\ProjectNativeRead\\LECG_RVT_CONTEXTO\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": true,
+  "no_write_control": false,
+  "copy_open_sha256": "1296F70FD7977E62781387AEB776FE2F9D86718B02A06641C09A1CA56A88FF51",
+  "element_count": 7760,
+  "read_operation_count": 37,
+  "reads": [
+    {
+      "operation": "assigned_electrical_systems",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+      "elapsed_ms": 0.6216,
+      "reasons": []
+    },
+    {
+      "operation": "categories_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.5457,
+      "reasons": []
+    },
+    {
+      "operation": "curve_join_neighbors",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.ModelLine",
+      "elapsed_ms": 0.1987,
+      "reasons": []
+    },
+    {
+      "operation": "design_options_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.6612,
+      "reasons": []
+    },
+    {
+      "operation": "element_action_checks",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "elapsed_ms": 0.1151,
+      "reasons": []
+    },
+    {
+      "operation": "element_bounds",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.View",
+      "elapsed_ms": 0.159,
+      "reasons": []
+    },
+    {
+      "operation": "element_dependents",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "elapsed_ms": 0.221,
+      "reasons": []
+    },
+    {
+      "operation": "element_materials",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "elapsed_ms": 0.0298,
+      "reasons": []
+    },
+    {
+      "operation": "element_phase_status",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "elapsed_ms": 0.0496,
+      "reasons": []
+    },
+    {
+      "operation": "element_valid_types",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "elapsed_ms": 0.0162,
+      "reasons": []
+    },
+    {
+      "operation": "elements_count",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "BuiltInCategory.OST_Walls",
+      "elapsed_ms": 2.2776,
+      "reasons": []
+    },
+    {
+      "operation": "elements_find",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 0.235,
+      "reasons": []
+    },
+    {
+      "operation": "elements_joined",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element\u002BAutodesk.Revit.DB.ProjectLocation",
+      "elapsed_ms": 0.0446,
+      "reasons": []
+    },
+    {
+      "operation": "families_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.8811,
+      "reasons": []
+    },
+    {
+      "operation": "grids_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.3337,
+      "reasons": []
+    },
+    {
+      "operation": "host_bottom_faces",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Toposolid",
+      "elapsed_ms": 0.1225,
+      "reasons": []
+    },
+    {
+      "operation": "host_inserts",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Toposolid",
+      "elapsed_ms": 0.0335,
+      "reasons": []
+    },
+    {
+      "operation": "instance_transform",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.ProjectLocation",
+      "elapsed_ms": 0.0567,
+      "reasons": []
+    },
+    {
+      "operation": "knowledge_get",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "bundled_knowledge",
+      "elapsed_ms": 0.0294,
+      "reasons": []
+    },
+    {
+      "operation": "knowledge_search",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "bundled_knowledge",
+      "elapsed_ms": 2.8207,
+      "reasons": []
+    },
+    {
+      "operation": "levels_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.7355,
+      "reasons": []
+    },
+    {
+      "operation": "links_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.4015,
+      "reasons": []
+    },
+    {
+      "operation": "materials_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.3818,
+      "reasons": []
+    },
+    {
+      "operation": "parameters_get",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "elapsed_ms": 0.1514,
+      "reasons": []
+    },
+    {
+      "operation": "phases_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 0.0922,
+      "reasons": []
+    },
+    {
+      "operation": "rooms_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.4943,
+      "reasons": []
+    },
+    {
+      "operation": "schedule_fields",
+      "status": "missing_fixture",
+      "attempts": 0,
+      "target_kind": null,
+      "reasons": []
+    },
+    {
+      "operation": "schedules_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.1889,
+      "reasons": []
+    },
+    {
+      "operation": "selection_get",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 0.0306,
+      "reasons": []
+    },
+    {
+      "operation": "sheet_views",
+      "status": "missing_fixture",
+      "attempts": 0,
+      "target_kind": null,
+      "reasons": []
+    },
+    {
+      "operation": "sheets_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.1113,
+      "reasons": []
+    },
+    {
+      "operation": "type_compound_layers",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.WallType",
+      "elapsed_ms": 0.152,
+      "reasons": []
+    },
+    {
+      "operation": "types_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "BuiltInCategory.OST_Walls",
+      "elapsed_ms": 0.725,
+      "reasons": []
+    },
+    {
+      "operation": "view_filters",
+      "status": "read_succeeded",
+      "attempts": 2,
+      "target_kind": "Autodesk.Revit.DB.View",
+      "elapsed_ms": 0.2132,
+      "reasons": [
+        "This view does not support graphics overrides or filters."
+      ]
+    },
+    {
+      "operation": "views_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 1.2549,
+      "reasons": []
+    },
+    {
+      "operation": "warnings_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 0.8451,
+      "reasons": []
+    },
+    {
+      "operation": "worksets_list",
+      "status": "read_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "elapsed_ms": 0.0159,
+      "reasons": []
+    }
+  ],
+  "reason": "production_native_read_path_no_values_recorded",
+  "opening_warnings": [],
+  "elapsed_ms": 5115.9493
+}
