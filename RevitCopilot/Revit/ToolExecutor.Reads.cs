@@ -37,6 +37,8 @@ internal sealed partial class ToolExecutor
             "elements_joined" => ElementsJoined(doc, args),
             "curve_join_neighbors" => CurveJoinNeighbors(doc, args),
             "assigned_electrical_systems" => AssignedElectricalSystems(doc, args),
+            "spatial_contains_point" => SpatialContainsPoint(doc, args),
+            "mep_connectors" => MepConnectors(doc, args),
             "type_compound_layers" => TypeCompoundLayers(doc, args),
             "instance_transform" => InstanceTransform(doc, args),
             "elements_find" => FindApiElements(doc, args),

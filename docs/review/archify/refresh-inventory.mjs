@@ -88,7 +88,7 @@ if (projectReads.operation_count !== 1411 || projectReads.context_count !== 5644
   throw new Error("API project-read dimensions differ from the getter contract");
 const nativeReadNames = new Set(operations.filter(operation => operation.kind === "read").map(operation => operation.name));
 const nativeChangeNames = new Set(operations.filter(operation => operation.kind === "change").map(operation => operation.name));
-if (nativeProjectReads.operation_count !== 37 || nativeProjectReads.context_count !== 148
+if (nativeProjectReads.operation_count !== 39 || nativeProjectReads.context_count !== 156
   || nativeProjectReads.models.length !== 4 || nativeProjectReads.entries.some(entry => !nativeReadNames.has(entry.operation)))
   throw new Error("Native project-read dimensions differ from the capability contract");
 if (nativeProjectPreviews.operation_count !== 17 || nativeProjectPreviews.context_count !== 68

@@ -39,6 +39,9 @@ internal static class KnowledgeLibrary
             "M:Autodesk.Revit.DB.JoinGeometryUtils.AreElementsJoined" => "elements_joined",
             "M:Autodesk.Revit.DB.LocationCurve.get_ElementsAtJoin" => "curve_join_neighbors",
             "M:Autodesk.Revit.DB.MEPModel.GetAssignedElectricalSystems" => "assigned_electrical_systems",
+            "M:Autodesk.Revit.DB.Architecture.Room.IsPointInRoom" => "spatial_contains_point",
+            "M:Autodesk.Revit.DB.Mechanical.Space.IsPointInSpace" => "spatial_contains_point",
+            "M:Autodesk.Revit.DB.ConnectorManager.Lookup" => "mep_connectors",
             "M:Autodesk.Revit.DB.HostObjAttributes.GetCompoundStructure" => "type_compound_layers",
             "M:Autodesk.Revit.DB.Instance.GetTotalTransform" => "instance_transform",
             _ => null

@@ -19,6 +19,8 @@ internal static class CapabilityCatalog
         new("elements_joined", "read", "Check whether two explicit current-document elements have a Revit geometry join", "{first_unique_id:string,second_unique_id:string}"),
         new("curve_join_neighbors", "read", "List elements joined at either end of one curve-based element; this is location-curve connectivity, not a geometry-join test", "{unique_id:string,limit?:int,offset?:int}"),
         new("assigned_electrical_systems", "read", "List electrical systems currently assigned to one family instance's MEP model", "{unique_id:string,limit?:int,offset?:int}"),
+        new("spatial_contains_point", "read", "Test whether one millimeter-coordinate point lies inside a room or MEP space", "{unique_id:string,x_mm:number,y_mm:number,z_mm:number}"),
+        new("mep_connectors", "read", "List bounded connector identities for an MEP curve or family instance, or look up one exact connector ID", "{unique_id:string,connector_id?:int,limit?:int,offset?:int}"),
         new("type_compound_layers", "read", "Inspect ordered wall/floor/roof type layers, material identities and widths in millimeters; flags vertically compound structures", "{unique_id:string,limit?:int,offset?:int}"),
         new("instance_transform", "read", "Read an instance total transform including true-north effects where applicable; origin in feet and millimeters, dimensionless basis vectors", "{unique_id:string}"),
         new("elements_find", "read", "Find model instances or types with current UniqueIds and exact runtime API class; bounded page without a full sort or exact count", "{category?:string,element_type?:string,kind?:instances|types|all,search?:string,limit?:int,offset?:int}"),

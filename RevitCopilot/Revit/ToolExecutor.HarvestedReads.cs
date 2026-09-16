@@ -59,6 +59,42 @@ internal sealed partial class ToolExecutor
             }) };
     }
 
+    // campaign-v5 candidates c0f89183090ce961dfd436a2 and d4094fcbdb6666f262bea8aa; coordinates are explicit millimeters.
+    private static object SpatialContainsPoint(Document doc, JsonElement args)
+    {
+        Element element = RequireElement(doc, RequireString(args, "unique_id"));
+        var point = new XYZ(Feet(Number(args, "x_mm")), Feet(Number(args, "y_mm")), Feet(Number(args, "z_mm")));
+        return element switch
+        {
+            Autodesk.Revit.DB.Architecture.Room room => new { element_unique_id = room.UniqueId,
+                spatial_kind = "room", contains_point = room.IsPointInRoom(point) },
+            Autodesk.Revit.DB.Mechanical.Space space => new { element_unique_id = space.UniqueId,
+                spatial_kind = "space", contains_point = space.IsPointInSpace(point) },
+            _ => throw new ArgumentException("Select a room or MEP space in the active document.")
+        };
+    }
+
+    // campaign-v5 candidate 4ac2566755135916ee349a4b; exact lookup uses Revit's stable connector index.
+    private static object MepConnectors(Document doc, JsonElement args)
+    {
+        Element element = RequireElement(doc, RequireString(args, "unique_id"));
+        ConnectorManager? manager = element switch
+        {
+            MEPCurve curve => curve.ConnectorManager,
+            FamilyInstance instance when instance.MEPModel is not null => instance.MEPModel.ConnectorManager,
+            _ => null
+        };
+        if (manager is null) throw new ArgumentException("Select an MEP curve or family instance with connectors in the active document.");
+        IEnumerable<Connector> connectors = manager.Connectors.Cast<Connector>();
+        if (args.TryGetProperty("connector_id", out _))
+        {
+            int id = OptionalInt(args, "connector_id") ?? throw new ArgumentException("'connector_id' must be a 32-bit integer.");
+            connectors = [manager.Lookup(id) ?? throw new ArgumentException($"Connector '{id}' is not available on the selected element.")];
+        }
+        return new { element_unique_id = element.UniqueId, connectors = Page(connectors.OrderBy(connector => connector.Id), args,
+            connector => new { id = connector.Id, domain = connector.Domain.ToString(), connector_type = connector.ConnectorType.ToString() }) };
+    }
+
     // campaign-v5 candidate da314384a8346ca50371fffc. Modifiable does not imply that any proposed phase is valid.
     private static object ElementPhaseStatus(Document doc, JsonElement args) => new
     {

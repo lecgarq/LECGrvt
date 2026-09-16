@@ -117,7 +117,7 @@ internal static class ApiValidationEvidence
         string[] allowed = ["read_succeeded", "missing_fixture"];
         var registered = CapabilityCatalog.All.Where(capability => capability.Kind == "read")
             .Select(capability => capability.Name).ToHashSet(StringComparer.Ordinal);
-        if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.OperationCount != 37
+        if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.OperationCount != 39
             || pack.ContextCount != pack.OperationCount * 4 || pack.Models.Length != 4
             || pack.Entries.Length != pack.OperationCount || registered.Count != pack.OperationCount
             || !pack.Models.Select(model => model.Discipline).SequenceEqual(new[] { "architecture", "topography", "structure", "mep" })

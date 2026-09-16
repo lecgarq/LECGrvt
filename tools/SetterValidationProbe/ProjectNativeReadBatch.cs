@@ -10,8 +10,8 @@ namespace LECG.SetterValidationProbe;
 
 public sealed class ProjectNativeReadBatch : SetterHarness
 {
-    protected override string ManifestName => "project-native-read-expansion-manifest.json";
-    protected override string PreregistrationName => "project-native-read-expansion-preregistration.md";
+    protected override string ManifestName => "project-native-read-relations-manifest.json";
+    protected override string PreregistrationName => "project-native-read-relations-preregistration.md";
     protected override string RunKind => "project-native-read-runs";
     protected override bool IsReadOnlyProbe => true;
 
@@ -30,7 +30,7 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                 (string)capability.GetType().GetProperty("Kind")!.GetValue(capability)! == "read")
             .Select(capability => (string)capability.GetType().GetProperty("Name")!.GetValue(capability)!)
             .Order(StringComparer.Ordinal).ToArray();
-        if (operations.Length != 37) throw new InvalidOperationException("Native read denominator changed.");
+        if (operations.Length != 39) throw new InvalidOperationException("Native read denominator changed.");
         MethodInfo probe = copilot.GetType("LECG.RevitCopilot.Revit.ToolExecutor", throwOnError: true)!
             .GetMethod("ProbeNativeRead", BindingFlags.Static | BindingFlags.NonPublic)!;
         Element[] elements = PilotValues.Elements(doc);
@@ -108,6 +108,31 @@ public sealed class ProjectNativeReadBatch : SetterHarness
             case "assigned_electrical_systems":
                 foreach (FamilyInstance instance in elements.OfType<FamilyInstance>().Where(instance => instance.MEPModel is not null))
                     yield return (new { unique_id = instance.UniqueId, limit = 2 }, instance.GetType().FullName!);
+                yield break;
+            case "spatial_contains_point":
+                foreach (Element spatial in elements.Where(element => element is Room or Autodesk.Revit.DB.Mechanical.Space))
+                    if (spatial.Location is LocationPoint location)
+                        yield return (new { unique_id = spatial.UniqueId,
+                            x_mm = UnitUtils.ConvertFromInternalUnits(location.Point.X, UnitTypeId.Millimeters),
+                            y_mm = UnitUtils.ConvertFromInternalUnits(location.Point.Y, UnitTypeId.Millimeters),
+                            z_mm = UnitUtils.ConvertFromInternalUnits(location.Point.Z, UnitTypeId.Millimeters) }, spatial.GetType().FullName!);
+                yield break;
+            case "mep_connectors":
+                foreach (Element element in elements)
+                {
+                    ConnectorManager? manager = element switch
+                    {
+                        MEPCurve curve => curve.ConnectorManager,
+                        FamilyInstance instance when instance.MEPModel is not null => instance.MEPModel.ConnectorManager,
+                        _ => null
+                    };
+                    if (manager is null) continue;
+                    Connector? connector;
+                    try { connector = manager.Connectors.Cast<Connector>().FirstOrDefault(); }
+                    catch { continue; }
+                    if (connector is not null)
+                        yield return (new { unique_id = element.UniqueId, connector_id = connector.Id, limit = 2 }, element.GetType().FullName!);
+                }
                 yield break;
             case "type_compound_layers": foreach (var item in Targets<HostObjAttributes>(e => new { unique_id = e.UniqueId, limit = 3 })) yield return item; yield break;
             case "instance_transform": foreach (var item in Targets<Instance>(e => new { unique_id = e.UniqueId })) yield return item; yield break;

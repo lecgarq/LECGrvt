@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "copilot_assembly_sha256": "193A8D41265107128FF3D617BE1DD13916C9381C89F39BAA9A598BE26F87D6C9",
-  "source_receipts_sha256": "1D2D6A9AE2EC140CB4CFD21C1A3E948FD58976992641EFD8A1CAED7134D2DD38",
+  "copilot_assembly_sha256": "3F8EE52DB7DD7D01068C89E3503F2320A42EABB1B4BD138EE33B883030D69A44",
+  "source_receipts_sha256": "7F269270B6586D71EF7D998881C16E6928A647433067D1767063B45B3931FCBE",
   "scope": "Production MCP native-read path executed in four named CASA EUCALIPTO disposable copies; no returned model values were retained and outcomes are context evidence, not universal applicability.",
-  "operation_count": 37,
-  "context_count": 148,
+  "operation_count": 39,
+  "context_count": 156,
   "models": [
     {
       "discipline": "architecture",
@@ -701,6 +701,35 @@
       ]
     },
     {
+      "operation": "mep_connectors",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Plumbing.Pipe",
+          "reason": null
+        }
+      ]
+    },
+    {
       "operation": "parameters_get",
       "contexts": [
         {
@@ -928,6 +957,35 @@
           "status": "read_succeeded",
           "attempts": 1,
           "target_kind": "project",
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "spatial_contains_point",
+      "contexts": [
+        {
+          "status": "read_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Architecture.Room",
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
           "reason": null
         }
       ]

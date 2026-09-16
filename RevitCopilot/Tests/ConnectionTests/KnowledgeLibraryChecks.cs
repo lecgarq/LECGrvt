@@ -18,7 +18,10 @@ internal static class KnowledgeLibraryChecks
         foreach (var (query, operation) in new[]
         {
             ("LocationCurve.get_ElementsAtJoin", "curve_join_neighbors"),
-            ("MEPModel.GetAssignedElectricalSystems", "assigned_electrical_systems")
+            ("MEPModel.GetAssignedElectricalSystems", "assigned_electrical_systems"),
+            ("Room.IsPointInRoom", "spatial_contains_point"),
+            ("Space.IsPointInSpace", "spatial_contains_point"),
+            ("ConnectorManager.Lookup", "mep_connectors")
         })
             Check(Search(query).GetProperty("items")[0].GetProperty("operation").GetString() == operation,
                 $"{query} must map to its reviewed adapter.");
