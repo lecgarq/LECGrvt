@@ -35,6 +35,7 @@
     <EmbeddedResource Include="Agent\Knowledge\revit2026-project-presence.json" LogicalName="LECG.Revit2026.ProjectPresence" />
     <EmbeddedResource Include="Agent\Knowledge\revit2026-project-reads.json" LogicalName="LECG.Revit2026.ProjectReads" />
     <EmbeddedResource Include="Agent\Knowledge\revit2026-native-project-reads.json" LogicalName="LECG.Revit2026.NativeProjectReads" />
+    <EmbeddedResource Include="Agent\Knowledge\revit2026-native-project-previews.json" LogicalName="LECG.Revit2026.NativeProjectPreviews" />
     <Compile Include="..\LECG.Core\Rename\RenameRuleEngine.cs" Link="Shared\RenameRuleEngine.cs" />
     <Compile Include="..\src\Services\RenderAppearance\RenderMaterialGraphicsApplyService.cs" Link="Shared\RenderMaterialGraphicsApplyService.cs" />
     <Compile Include="..\src\Services\RenderAppearance\IRenderMaterialGraphicsApplyService.cs" Link="Shared\IRenderMaterialGraphicsApplyService.cs" />

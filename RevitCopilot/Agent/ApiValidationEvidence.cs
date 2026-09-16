@@ -27,6 +27,14 @@ internal sealed record NativeProjectReadEntry(string Operation, NativeProjectRea
 internal sealed record NativeProjectReadPack(int SchemaVersion, int RevitVersion, string CopilotAssemblySha256,
     string SourceReceiptsSha256, string Scope, int OperationCount, int ContextCount,
     ApiProjectPresenceModel[] Models, NativeProjectReadEntry[] Entries);
+internal sealed record NativeProjectPreviewModel(string Discipline, string Model, string ModelSha256, int ElementCount,
+    bool SyntheticDeleteFixtureAvailable);
+internal sealed record NativeProjectPreviewContext(string Status, int Attempts, string? TargetKind,
+    bool SyntheticFixtureUsed, string? Reason);
+internal sealed record NativeProjectPreviewEntry(string Operation, NativeProjectPreviewContext[] Contexts);
+internal sealed record NativeProjectPreviewPack(int SchemaVersion, int RevitVersion, string CopilotAssemblySha256,
+    string SourceReceiptsSha256, string Scope, int OperationCount, int ContextCount,
+    NativeProjectPreviewModel[] Models, NativeProjectPreviewEntry[] Entries);
 
 internal static class ApiValidationEvidence
 {
@@ -124,6 +132,34 @@ internal static class ApiValidationEvidence
     });
     private static readonly Lazy<IReadOnlyDictionary<string, NativeProjectReadEntry>> NativeReads = new(() =>
         NativeReadPack.Value.Entries.ToDictionary(entry => entry.Operation, StringComparer.Ordinal));
+    private static readonly Lazy<NativeProjectPreviewPack> NativePreviewPack = new(() =>
+    {
+        var pack = JsonSerializer.Deserialize<NativeProjectPreviewPack>(ReadResource("LECG.Revit2026.NativeProjectPreviews",
+            "The installed native project-preview evidence is missing. Reinstall the tested Copilot bundle."),
+            new JsonSerializerOptions(JsonSerializerDefaults.Web)
+            { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, PropertyNameCaseInsensitive = true })!;
+        string[] allowed = ["preview_succeeded", "missing_fixture"];
+        var registered = CapabilityCatalog.All.Where(capability => capability.Kind == "change")
+            .Select(capability => capability.Name).ToHashSet(StringComparer.Ordinal);
+        const string fixture = "Autodesk.Revit.DB.DirectShape(test_fixture)";
+        if (pack.SchemaVersion != 1 || pack.RevitVersion != 2026 || pack.OperationCount != 17
+            || pack.ContextCount != pack.OperationCount * 4 || pack.Models.Length != 4
+            || pack.Entries.Length != pack.OperationCount || registered.Count != pack.OperationCount
+            || !pack.Models.Select(model => model.Discipline).SequenceEqual(new[] { "architecture", "topography", "structure", "mep" })
+            || pack.Models.Any(model => !model.SyntheticDeleteFixtureAvailable)
+            || pack.Models.DistinctBy(model => model.ModelSha256).Count() != pack.Models.Length
+            || pack.Entries.DistinctBy(entry => entry.Operation).Count() != pack.Entries.Length
+            || pack.Entries.Any(entry => !registered.Contains(entry.Operation) || entry.Contexts.Length != pack.Models.Length
+                || entry.Contexts.Any(context => !allowed.Contains(context.Status) || context.Attempts < 0
+                    || context.Status == "missing_fixture" && context.Attempts != 0
+                    || context.Status == "preview_succeeded" && (context.Attempts == 0 || string.IsNullOrWhiteSpace(context.TargetKind))
+                    || context.SyntheticFixtureUsed != (context.TargetKind == fixture)
+                    || context.SyntheticFixtureUsed && entry.Operation != "delete_elements")))
+            throw new InvalidDataException("Invalid native project-preview evidence.");
+        return pack;
+    });
+    private static readonly Lazy<IReadOnlyDictionary<string, NativeProjectPreviewEntry>> NativePreviews = new(() =>
+        NativePreviewPack.Value.Entries.ToDictionary(entry => entry.Operation, StringComparer.Ordinal));
     private static byte[] ReadResource(string name, string error)
     {
         using Stream source = typeof(ApiValidationEvidence).Assembly.GetManifestResourceStream(name)
@@ -137,6 +173,7 @@ internal static class ApiValidationEvidence
     internal static int PresenceOperationCount => Presence.Value.Count;
     internal static int ReadOperationCount => Reads.Value.Count;
     internal static int NativeReadOperationCount => NativeReads.Value.Count;
+    internal static int NativePreviewOperationCount => NativePreviews.Value.Count;
     private static object[] ProjectContexts(string operation) =>
         (Contexts.Value.GetValueOrDefault(operation)?.Contexts ?? []).Select(context => (object)new
         {
@@ -188,10 +225,27 @@ internal static class ApiValidationEvidence
             reason = entry.Contexts[index].Reason
         }).ToArray();
     }
+    private static object[] NativeProjectPreviewContexts(string operation)
+    {
+        if (!NativePreviews.Value.TryGetValue(operation, out var entry)) return [];
+        return NativePreviewPack.Value.Models.Select((model, index) => (object)new
+        {
+            discipline = model.Discipline,
+            model = model.Model,
+            model_sha256 = model.ModelSha256,
+            status = entry.Contexts[index].Status,
+            attempts = entry.Contexts[index].Attempts,
+            target_kind = entry.Contexts[index].TargetKind,
+            synthetic_fixture_used = entry.Contexts[index].SyntheticFixtureUsed,
+            reason = entry.Contexts[index].Reason
+        }).ToArray();
+    }
     internal static object NativeFor(string operation) => new
     {
         project_read_contexts = NativeProjectReadContexts(operation),
-        scope = NativeReadPack.Value.Scope
+        project_preview_contexts = NativeProjectPreviewContexts(operation),
+        read_scope = NativeReadPack.Value.Scope,
+        preview_scope = NativePreviewPack.Value.Scope
     };
     internal static object For(string operation) => Index.Value.TryGetValue(operation, out var entry)
         ? new { state = entry.State, passed_models = entry.PassedModels, context_failures = entry.ContextFailures,

@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using NUnit.Framework;
 
@@ -22,6 +23,11 @@ public sealed class CompatibilityProbe
         Assert.That(SetterHarness.IncludeParameterValue(true, false), Is.True);
         Assert.That(SetterHarness.IncludeParameterValue(false, false), Is.True);
         Assert.That(SetterHarness.IncludeParameterValue(false, true), Is.False);
+        double recomputedFarClip = 1 + 1e-14;
+        Assert.That(SetterHarness.NormalizeParameterDouble((long)BuiltInParameter.VIEWER_BOUND_OFFSET_FAR, recomputedFarClip),
+            Is.EqualTo(Math.Round(recomputedFarClip, 12, MidpointRounding.ToEven)));
+        Assert.That(SetterHarness.NormalizeParameterDouble((long)BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS, recomputedFarClip),
+            Is.EqualTo(recomputedFarClip));
     }
     private UIApplication? _application;
 

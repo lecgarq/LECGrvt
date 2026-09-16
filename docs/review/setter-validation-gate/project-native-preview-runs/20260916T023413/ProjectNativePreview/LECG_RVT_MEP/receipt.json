@@ -1,0 +1,149 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.ProjectNativePreview",
+  "model": "LECG_RVT_MEP.rvt",
+  "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+  "status": "preview-only-native-validation",
+  "stage": "opening",
+  "setter_attempted": true,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-native-preview-runs\\20260916T023413\\ProjectNativePreview\\LECG_RVT_MEP\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "403588B3ABFED9642621C3A80EFD38BA1AC134DA414AD17807007E09BEA875B3",
+  "element_count": 18926,
+  "preview_operation_count": 17,
+  "writable_state_entries": 18926,
+  "excluded_read_only_parameters": 161931,
+  "unobserved_parameter_slots": 6,
+  "rollback_control_verified": true,
+  "synthetic_delete_fixture": true,
+  "previews": [
+    {
+      "operation": "assign_material",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.ViewFamilyType",
+      "reasons": []
+    },
+    {
+      "operation": "create_level",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "reasons": []
+    },
+    {
+      "operation": "delete_elements",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+      "reasons": []
+    },
+    {
+      "operation": "duplicate_type",
+      "status": "preview_succeeded",
+      "attempts": 2,
+      "target_kind": "Autodesk.Revit.DB.FamilySymbol",
+      "reasons": [
+        "Object reference not set to an instance of an object."
+      ]
+    },
+    {
+      "operation": "duplicate_view",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+      "reasons": []
+    },
+    {
+      "operation": "material_color",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Material",
+      "reasons": []
+    },
+    {
+      "operation": "material_graphics_solid",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Material",
+      "reasons": []
+    },
+    {
+      "operation": "move_elements",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "reasons": []
+    },
+    {
+      "operation": "rename_elements",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Material",
+      "reasons": []
+    },
+    {
+      "operation": "rotate_elements",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Element",
+      "reasons": []
+    },
+    {
+      "operation": "set_parameters",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Material",
+      "reasons": []
+    },
+    {
+      "operation": "set_pinned",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.Phase",
+      "reasons": []
+    },
+    {
+      "operation": "set_type",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+      "reasons": []
+    },
+    {
+      "operation": "slab_offset",
+      "status": "missing_fixture",
+      "attempts": 0,
+      "target_kind": null,
+      "reasons": []
+    },
+    {
+      "operation": "slab_reset",
+      "status": "missing_fixture",
+      "attempts": 0,
+      "target_kind": null,
+      "reasons": []
+    },
+    {
+      "operation": "view_scale",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "Autodesk.Revit.DB.View",
+      "reasons": []
+    },
+    {
+      "operation": "workflow_change_batch",
+      "status": "preview_succeeded",
+      "attempts": 1,
+      "target_kind": "project",
+      "reasons": []
+    }
+  ],
+  "reason": "production_native_preview_path_no_apply_no_values_recorded",
+  "opening_warnings": [],
+  "elapsed_ms": 27799.0132
+}

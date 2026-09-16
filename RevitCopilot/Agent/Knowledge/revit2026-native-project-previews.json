@@ -1,0 +1,602 @@
+{
+  "schema_version": 1,
+  "revit_version": 2026,
+  "copilot_assembly_sha256": "0F5AD0C40495DF1383E9A80D6F14493E42920064EBB0F4BC4402553123E5F2DA",
+  "source_receipts_sha256": "7FD9F221E432C3249BE1714BD27D919CB67DDF3B37F913AC24DA8639A205DE53",
+  "scope": "Production MCP change preview path executed in four named CASA EUCALIPTO disposable copies; committed inner transactions were rolled back by a transaction group, apply was never called, no returned model values were retained, and synthetic delete fixtures are explicitly flagged.",
+  "operation_count": 17,
+  "context_count": 68,
+  "models": [
+    {
+      "discipline": "architecture",
+      "model": "LECG_RVT_DISEÑO (ANTEPROYECTO).rvt",
+      "model_sha256": "1ABDE76F3C94BB2401FB1FA537FA88759A717963D271560211FDEB6D4234B39A",
+      "element_count": 11202,
+      "synthetic_delete_fixture_available": true
+    },
+    {
+      "discipline": "topography",
+      "model": "LECG_RVT_CONTEXTO.rvt",
+      "model_sha256": "DA4F85A71366B37BF338276146AE99611163EB49D070EC7615E327295CE129E0",
+      "element_count": 7761,
+      "synthetic_delete_fixture_available": true
+    },
+    {
+      "discipline": "structure",
+      "model": "LECG_RVT_ESTRUCTURAL.rvt",
+      "model_sha256": "BCFF2E2CA20174C8D89734150E0A4D7110B9DED50E7CC523265D159A90F35B02",
+      "element_count": 24221,
+      "synthetic_delete_fixture_available": true
+    },
+    {
+      "discipline": "mep",
+      "model": "LECG_RVT_MEP.rvt",
+      "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+      "element_count": 18926,
+      "synthetic_delete_fixture_available": true
+    }
+  ],
+  "entries": [
+    {
+      "operation": "assign_material",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Analysis.ConceptualConstructionType",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Analysis.ConceptualConstructionType",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewFamilyType",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewFamilyType",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "create_level",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "delete_elements",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 12,
+          "target_kind": "Autodesk.Revit.DB.DirectShape(test_fixture)",
+          "synthetic_fixture_used": true,
+          "reason": "Revit transaction ended with RolledBack."
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 12,
+          "target_kind": "Autodesk.Revit.DB.DirectShape(test_fixture)",
+          "synthetic_fixture_used": true,
+          "reason": "Revit transaction ended with RolledBack."
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.FamilyInstance",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "duplicate_type",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.FamilySymbol",
+          "synthetic_fixture_used": false,
+          "reason": "Object reference not set to an instance of an object."
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.FamilySymbol",
+          "synthetic_fixture_used": false,
+          "reason": "Object reference not set to an instance of an object."
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.MullionType",
+          "synthetic_fixture_used": false,
+          "reason": "Object reference not set to an instance of an object."
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.FamilySymbol",
+          "synthetic_fixture_used": false,
+          "reason": "Object reference not set to an instance of an object."
+        }
+      ]
+    },
+    {
+      "operation": "duplicate_view",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View3D",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View3D",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "material_color",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "material_graphics_solid",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "move_elements",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "rename_elements",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Analysis.ConceptualConstructionType",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Analysis.ConceptualConstructionType",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "rotate_elements",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "set_parameters",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Material",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "set_pinned",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Phase",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "set_type",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Element",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Toposolid",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.ViewSchedule",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "slab_offset",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 7,
+          "target_kind": "Autodesk.Revit.DB.Floor",
+          "synthetic_fixture_used": false,
+          "reason": "Revit transaction ended with RolledBack."
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Floor",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "slab_reset",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 2,
+          "target_kind": "Autodesk.Revit.DB.Toposolid",
+          "synthetic_fixture_used": false,
+          "reason": "Revit transaction ended with RolledBack."
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Toposolid",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.Floor",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "missing_fixture",
+          "attempts": 0,
+          "target_kind": null,
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "view_scale",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "Autodesk.Revit.DB.View",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    },
+    {
+      "operation": "workflow_change_batch",
+      "contexts": [
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        },
+        {
+          "status": "preview_succeeded",
+          "attempts": 1,
+          "target_kind": "project",
+          "synthetic_fixture_used": false,
+          "reason": null
+        }
+      ]
+    }
+  ]
+}

@@ -379,8 +379,12 @@ public abstract class SetterHarness
     }
 
     internal static bool IncludeParameterValue(bool isTarget, bool isReadOnly) => isTarget || !isReadOnly;
+    internal static double NormalizeParameterDouble(long parameterId, double value) =>
+        parameterId == (long)BuiltInParameter.VIEWER_BOUND_OFFSET_FAR
+            // ponytail: Revit recomputes this derived view extent at ~1e-14 ft; every other double stays bit-exact.
+            ? Math.Round(value, 12, MidpointRounding.ToEven) : value;
 
-    private static Dictionary<long, string> State(Document doc, long targetId, out List<string> unobserved, out int excludedReadOnly, Action<long, string>? observe = null)
+    internal static Dictionary<long, string> State(Document doc, long targetId, out List<string> unobserved, out int excludedReadOnly, Action<long, string>? observe = null)
     {
         var gaps = new List<string>();
         unobserved = gaps;
@@ -411,7 +415,7 @@ public abstract class SetterHarness
             StorageType storage = p.StorageType;
             string? value = storage switch {
                 StorageType.String => p.AsString(), StorageType.Integer => p.AsInteger().ToString(CultureInfo.InvariantCulture),
-                StorageType.Double => p.AsDouble().ToString("R", CultureInfo.InvariantCulture),
+                StorageType.Double => NormalizeParameterDouble(p.Id.Value, p.AsDouble()).ToString("R", CultureInfo.InvariantCulture),
                 StorageType.ElementId => p.AsElementId().Value.ToString(CultureInfo.InvariantCulture), _ => null };
             parameters.Add(JsonSerializer.Serialize(new { id = p.Id.Value, read_only = readOnly, storage = storage.ToString(), has_value = p.HasValue, value }));
         }
@@ -425,7 +429,7 @@ public abstract class SetterHarness
         return states;
     }
 
-    private static string Warnings(Document doc) => JsonSerializer.Serialize(doc.GetWarnings().Select(w => new {
+    internal static string Warnings(Document doc) => JsonSerializer.Serialize(doc.GetWarnings().Select(w => new {
         definition = w.GetFailureDefinitionId().Guid, elements = w.GetFailingElements().Select(i => i.Value).Order().ToArray(),
         description = w.GetDescriptionText() }).OrderBy(w => JsonSerializer.Serialize(w), StringComparer.Ordinal));
     private static string Error(Exception ex) => ex is TargetInvocationException { InnerException: { } inner } ? Error(inner) : ex.GetType().Name + ": " + ex.Message;

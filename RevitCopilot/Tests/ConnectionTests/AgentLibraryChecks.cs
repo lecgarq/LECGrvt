@@ -7,11 +7,14 @@ internal static class AgentLibraryChecks
     {
         Require(CapabilityCatalog.All.Length == 52 && CapabilityCatalog.All.DistinctBy(c => c.Name).Count() == 52, "Expected 52 distinct operations.");
         Require(ApiValidationEvidence.NativeReadOperationCount == 35, "Every native read needs four-discipline project evidence.");
+        Require(ApiValidationEvidence.NativePreviewOperationCount == 17, "Every native change needs four-discipline preview evidence.");
         foreach (var capability in CapabilityCatalog.All)
         {
             var evidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor(capability.Name));
             Require(evidence.GetProperty("project_read_contexts").GetArrayLength() == (capability.Kind == "read" ? 4 : 0),
                 "Only native reads must expose four-discipline project evidence.");
+            Require(evidence.GetProperty("project_preview_contexts").GetArrayLength() == (capability.Kind == "change" ? 4 : 0),
+                "Only native changes must expose four-discipline preview evidence.");
         }
         var measuredLevels = JsonSerializer.SerializeToElement(CapabilityCatalog.Search("levels_list", 1))
             .GetProperty("items")[0].GetProperty("validation").GetProperty("project_read_contexts");
@@ -23,6 +26,22 @@ internal static class AgentLibraryChecks
                 context.GetProperty("discipline").GetString() == "topography");
         Require(scheduleEvidence.GetProperty("status").GetString() == "missing_fixture",
             "Native capability evidence must preserve explicit missing fixtures.");
+        var createLevelEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor("create_level"))
+            .GetProperty("project_preview_contexts");
+        Require(createLevelEvidence.EnumerateArray().All(context => context.GetProperty("status").GetString() == "preview_succeeded"),
+            "Create-level preview evidence must preserve four successful rollback contexts.");
+        var slabOffsetEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor("slab_offset"))
+            .GetProperty("project_preview_contexts").EnumerateArray().Single(context =>
+                context.GetProperty("discipline").GetString() == "topography");
+        Require(slabOffsetEvidence.GetProperty("status").GetString() == "missing_fixture",
+            "Native preview evidence must preserve explicit missing fixtures.");
+        var deleteEvidence = JsonSerializer.SerializeToElement(ApiValidationEvidence.NativeFor("delete_elements"))
+            .GetProperty("project_preview_contexts");
+        Require(deleteEvidence.EnumerateArray().Where(context =>
+                context.GetProperty("synthetic_fixture_used").GetBoolean())
+            .Select(context => context.GetProperty("discipline").GetString())
+            .SequenceEqual(new[] { "architecture", "topography" }),
+            "Delete preview evidence must identify only the two synthetic-fixture contexts.");
         KnowledgeLibraryChecks.Run();
         HarvestDiscoveryChecks.Run();
         var discovery = JsonSerializer.SerializeToElement(CapabilityCatalog.Search("material", 2));

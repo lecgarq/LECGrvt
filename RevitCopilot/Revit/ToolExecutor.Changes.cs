@@ -21,11 +21,18 @@ internal sealed partial class ToolExecutor
     internal static void NotifyDocumentChanged() => Interlocked.Increment(ref _documentRevision);
     private static string DocumentKey(Document doc) => doc.ProjectInformation.UniqueId;
 
+    internal static JsonElement ProbeNativePreview(Document doc, string operation, string argumentsJson)
+    {
+        using JsonDocument arguments = ParseArguments(argumentsJson);
+        var executor = new ToolExecutor((_, _) => false);
+        return JsonSerializer.SerializeToElement(executor.PreviewChange(doc, operation, arguments.RootElement), JsonOptions);
+    }
+
     private object PreviewChange(Document doc, string operation, JsonElement args)
     {
         CapabilityCatalog.Require(operation, "change");
         ValidateChangeDocument(doc);
-        // Exercise the real operation in a transaction and roll it back, including dependent deletions.
+        // Exercise the real operation in a committed inner transaction, then roll back its transaction group.
         object result = ChangeTransaction(doc, operation, args, commit: false);
         foreach (string expired in _plans.Where(p => p.Value.Expires < DateTimeOffset.UtcNow).Select(p => p.Key).ToArray()) _plans.Remove(expired);
         if (_plans.Count >= 20) _plans.Remove(_plans.Keys.First());
@@ -55,6 +62,9 @@ internal sealed partial class ToolExecutor
 
     private static object ChangeTransaction(Document doc, string operation, JsonElement args, bool commit)
     {
+        using TransactionGroup? group = commit ? null : new TransactionGroup(doc, $"Copilot preview: {operation}");
+        if (group is not null && group.Start() != TransactionStatus.Started)
+            throw new InvalidOperationException("Cannot start the Revit preview transaction group.");
         using Transaction transaction = new(doc, $"Copilot: {operation}");
         if (transaction.Start() != TransactionStatus.Started) throw new InvalidOperationException("Cannot start the Revit transaction.");
         transaction.SetFailureHandlingOptions(transaction.GetFailureHandlingOptions().SetClearAfterRollback(true).SetFailuresPreprocessor(new RejectFailures()));
@@ -62,13 +72,16 @@ internal sealed partial class ToolExecutor
         {
             object result = PerformChange(doc, operation, args);
             doc.Regenerate();
-            TransactionStatus status = commit ? transaction.Commit() : transaction.RollBack();
-            if (status != (commit ? TransactionStatus.Committed : TransactionStatus.RolledBack)) throw new InvalidOperationException($"Revit transaction ended with {status}.");
+            TransactionStatus status = transaction.Commit();
+            if (status != TransactionStatus.Committed) throw new InvalidOperationException($"Revit transaction ended with {status}.");
+            if (group is not null && group.RollBack() != TransactionStatus.RolledBack)
+                throw new InvalidOperationException("Revit preview transaction group did not roll back.");
             return result;
         }
         catch
         {
             if (transaction.GetStatus() == TransactionStatus.Started) transaction.RollBack();
+            if (group?.GetStatus() == TransactionStatus.Started) group.RollBack();
             throw;
         }
     }
