@@ -21,7 +21,9 @@ internal static class KnowledgeLibraryChecks
             ("MEPModel.GetAssignedElectricalSystems", "assigned_electrical_systems"),
             ("Room.IsPointInRoom", "spatial_contains_point"),
             ("Space.IsPointInSpace", "spatial_contains_point"),
-            ("ConnectorManager.Lookup", "mep_connectors")
+            ("ConnectorManager.Lookup", "mep_connectors"),
+            ("ExternalFileUtils.GetAllExternalFileReferences", "external_files_list"),
+            ("Panel.FindHostPanel", "panel_host")
         })
             Check(Search(query).GetProperty("items")[0].GetProperty("operation").GetString() == operation,
                 $"{query} must map to its reviewed adapter.");

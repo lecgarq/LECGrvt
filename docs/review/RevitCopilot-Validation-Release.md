@@ -4,7 +4,7 @@ September 5, 2026. This report supersedes the coverage figures in `RevitCopilot-
 
 ## Delivery scope
 
-The Revit 2026 Copilot contains 56 native operations (39 reads and 17 changes), 29 curated reusable recipe templates, 2,216 API property bindings (1,411 getters and 805 setters), and 3,000 shared searchable research references. These are different inventories, not 3,000 independently executable commands. The latest read pack adds spatial point containment and MEP connector list/lookup. Spatial containment succeeded against an architectural Room; connector lookup succeeded against an architectural family instance and an MEP pipe. Explicit missing fixtures were retained for the other named CASA EUCALIPTO disposable-copy contexts.
+The Revit 2026 Copilot contains 58 native operations (41 reads and 17 changes), 29 curated reusable recipe templates, 2,216 API property bindings (1,411 getters and 805 setters), and 3,000 shared searchable research references. These are different inventories, not 3,000 independently executable commands. The latest read pack adds all-document external file references and curtain-panel host resolution. External-file enumeration succeeded in all four CASA EUCALIPTO disposable-copy contexts; panel-host resolution succeeded in architecture and retained explicit missing fixtures elsewhere.
 
 Four new handwritten, read-only operations are available through the existing MCP `agent_read`/batch route:
 

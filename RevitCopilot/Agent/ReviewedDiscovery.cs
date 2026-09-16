@@ -25,6 +25,8 @@ internal static class ReviewedDiscovery
         ["assigned_electrical_systems"] = ["assigned electrical systems circuits panel", "sistemas electricos circuitos asignados tablero panel"],
         ["spatial_contains_point"] = ["room space contains point spatial containment", "habitacion espacio contiene punto contencion espacial"],
         ["mep_connectors"] = ["mep connectors ports lookup topology", "conectores mep puertos buscar topologia"],
+        ["external_files_list"] = ["external files revit cad image links references", "archivos externos referencias vinculos revit cad imagen"],
+        ["panel_host"] = ["curtain panel host replacement wall", "panel muro cortina anfitrion reemplazo muro"],
         ["type_compound_layers"] = ["compound type layers material thickness", "capas compuesto materiales espesor tipo"],
         ["instance_transform"] = ["instance transform origin coordinates", "instancia transformacion origen coordenadas"],
         ["host_inserts"] = ["host inserts rectangular openings embedded walls", "huecos aberturas vanos inserciones insertos muro anfitrion"],

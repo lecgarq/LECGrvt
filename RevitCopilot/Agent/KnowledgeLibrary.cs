@@ -42,6 +42,8 @@ internal static class KnowledgeLibrary
             "M:Autodesk.Revit.DB.Architecture.Room.IsPointInRoom" => "spatial_contains_point",
             "M:Autodesk.Revit.DB.Mechanical.Space.IsPointInSpace" => "spatial_contains_point",
             "M:Autodesk.Revit.DB.ConnectorManager.Lookup" => "mep_connectors",
+            "M:Autodesk.Revit.DB.ExternalFileUtils.GetAllExternalFileReferences" => "external_files_list",
+            "M:Autodesk.Revit.DB.Panel.FindHostPanel" => "panel_host",
             "M:Autodesk.Revit.DB.HostObjAttributes.GetCompoundStructure" => "type_compound_layers",
             "M:Autodesk.Revit.DB.Instance.GetTotalTransform" => "instance_transform",
             _ => null

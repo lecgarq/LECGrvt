@@ -95,6 +95,33 @@ internal sealed partial class ToolExecutor
             connector => new { id = connector.Id, domain = connector.Domain.ToString(), connector_type = connector.ConnectorType.ToString() }) };
     }
 
+    // campaign-v5 candidate 7082414fa9bd90b3cfb3c9ad; covers every external-file reference class known to the document.
+    private static object ExternalFiles(Document doc, JsonElement args)
+    {
+        IEnumerable<Element> elements = ExternalFileUtils.GetAllExternalFileReferences(doc).Select(doc.GetElement)
+            .OfType<Element>().Where(element => Matches(SafeElementName(element), args))
+            .OrderBy(element => SafeElementName(element)).ThenBy(element => element.Id.Value);
+        return new { files = Page(elements, args, element =>
+        {
+            ExternalFileReference reference = ExternalFileUtils.GetExternalFileReference(doc, element.Id);
+            return new { id = element.Id.Value, unique_id = element.UniqueId, name = SafeElementName(element),
+                category = element.Category?.Name, reference_type = reference.ExternalFileReferenceType.ToString(),
+                path_type = reference.PathType.ToString(), status = reference.GetLinkedFileStatus().ToString(),
+                path = ModelPathUtils.ConvertModelPathToUserVisiblePath(reference.GetPath()) };
+        }) };
+    }
+
+    // campaign-v5 candidate 49ff3f43469219d7121ba283; InvalidElementId means the curtain panel has no displayed host replacement.
+    private static object PanelHost(Document doc, JsonElement args)
+    {
+        var panel = RequireElement(doc, RequireString(args, "unique_id")) as Panel
+            ?? throw new ArgumentException("Select a curtain panel in the active document.");
+        Element? host = doc.GetElement(panel.FindHostPanel());
+        object? hostBrief = host is null ? null : new { id = host.Id.Value, unique_id = host.UniqueId,
+            name = SafeElementName(host), category = host.Category?.Name };
+        return new { panel_unique_id = panel.UniqueId, host = hostBrief };
+    }
+
     // campaign-v5 candidate da314384a8346ca50371fffc. Modifiable does not imply that any proposed phase is valid.
     private static object ElementPhaseStatus(Document doc, JsonElement args) => new
     {

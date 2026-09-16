@@ -39,6 +39,8 @@ internal sealed partial class ToolExecutor
             "assigned_electrical_systems" => AssignedElectricalSystems(doc, args),
             "spatial_contains_point" => SpatialContainsPoint(doc, args),
             "mep_connectors" => MepConnectors(doc, args),
+            "external_files_list" => ExternalFiles(doc, args),
+            "panel_host" => PanelHost(doc, args),
             "type_compound_layers" => TypeCompoundLayers(doc, args),
             "instance_transform" => InstanceTransform(doc, args),
             "elements_find" => FindApiElements(doc, args),

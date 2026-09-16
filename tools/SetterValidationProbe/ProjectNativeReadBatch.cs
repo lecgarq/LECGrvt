@@ -10,8 +10,8 @@ namespace LECG.SetterValidationProbe;
 
 public sealed class ProjectNativeReadBatch : SetterHarness
 {
-    protected override string ManifestName => "project-native-read-relations-manifest.json";
-    protected override string PreregistrationName => "project-native-read-relations-preregistration.md";
+    protected override string ManifestName => "project-native-read-coordination-manifest.json";
+    protected override string PreregistrationName => "project-native-read-coordination-preregistration.md";
     protected override string RunKind => "project-native-read-runs";
     protected override bool IsReadOnlyProbe => true;
 
@@ -30,7 +30,7 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                 (string)capability.GetType().GetProperty("Kind")!.GetValue(capability)! == "read")
             .Select(capability => (string)capability.GetType().GetProperty("Name")!.GetValue(capability)!)
             .Order(StringComparer.Ordinal).ToArray();
-        if (operations.Length != 39) throw new InvalidOperationException("Native read denominator changed.");
+        if (operations.Length != 41) throw new InvalidOperationException("Native read denominator changed.");
         MethodInfo probe = copilot.GetType("LECG.RevitCopilot.Revit.ToolExecutor", throwOnError: true)!
             .GetMethod("ProbeNativeRead", BindingFlags.Static | BindingFlags.NonPublic)!;
         Element[] elements = PilotValues.Elements(doc);
@@ -134,6 +134,8 @@ public sealed class ProjectNativeReadBatch : SetterHarness
                         yield return (new { unique_id = element.UniqueId, connector_id = connector.Id, limit = 2 }, element.GetType().FullName!);
                 }
                 yield break;
+            case "external_files_list": yield return (Empty(), "project"); yield break;
+            case "panel_host": foreach (var item in Targets<Panel>(e => new { unique_id = e.UniqueId })) yield return item; yield break;
             case "type_compound_layers": foreach (var item in Targets<HostObjAttributes>(e => new { unique_id = e.UniqueId, limit = 3 })) yield return item; yield break;
             case "instance_transform": foreach (var item in Targets<Instance>(e => new { unique_id = e.UniqueId })) yield return item; yield break;
             case "types_list": yield return (new { category = "OST_Walls", limit = 2 }, "BuiltInCategory.OST_Walls"); yield break;
