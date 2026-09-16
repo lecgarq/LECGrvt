@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "revit_version": 2026,
-  "campaign": "changed-value-project-mep-circuit-20260916T001624",
-  "source_sha256": "5E7B0AB8F35F6D84478060C2EDA539DC87BE253A57D19177FC80E44E02DD95A4",
-  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract.  3 further direct-API setter validations from the completed documented-constraint retry; the timed-out parent run is retained but did not qualify.  1 direct-API validation for ScheduleSheetInstance.SegmentIndex; three stairs setters were rejected by transaction context and WireType.MaxSize had no proven different eligible value.  3 direct-API validations: both continuous-rail termination setters in the Autodesk corpus and FamilyInstance.StructuralUsage in the CASA EUCALIPTO structural project copy.  Direct-API validations from documented batch four were run only on disposable copies; rejected and unchanged attempts remain unpromoted.  ModelCurve.TrussCurveType is out of the project-document write contract because Autodesk restricts it to truss family documents.  4 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies.  8 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies. ",
+  "campaign": "classify-project-context-gaps-20260916T002426",
+  "source_sha256": "06924FC64AFCF5225F8B69A3842F01E97826AC05FD7E934F7E0C0C40666AC2AE",
+  "scope": "Disposable Autodesk project samples; links unloaded. Evidence describes tested contexts, not universal correctness or permission to modify. 6 new direct-API setter validations from the named pilot only; source_sha256 identifies ledger-reconciliation.json, which links the historical campaign and new receipts. Observable rollback is not complete internal-state certification; every pilot copy was discarded without saving. 11 further direct-API setter validations from the dedicated-collection batch only; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; classification probes excluded. Each unsaved detached copy discarded after observable rollback verification. 12 further direct-API setter validations from the class-collector batch; source_sha256 identifies its ledger-reconciliation.json. One strongest outcome per model hash; every attempted write rolled back and every disposable copy was closed without saving. 12 further direct-API setter validations from the non-element batch; 44 supplemental outcomes from four user-authorized detached project fixtures. Project evidence is context-specific; family-document writes remain outside the contract.  3 further direct-API setter validations from the completed documented-constraint retry; the timed-out parent run is retained but did not qualify.  1 direct-API validation for ScheduleSheetInstance.SegmentIndex; three stairs setters were rejected by transaction context and WireType.MaxSize had no proven different eligible value.  3 direct-API validations: both continuous-rail termination setters in the Autodesk corpus and FamilyInstance.StructuralUsage in the CASA EUCALIPTO structural project copy.  Direct-API validations from documented batch four were run only on disposable copies; rejected and unchanged attempts remain unpromoted.  ModelCurve.TrussCurveType is out of the project-document write contract because Autodesk restricts it to truss family documents.  4 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies.  8 supplemental architecture-project outcomes from detached disposable copies.  1 supplemental architecture-project outcomes from detached disposable copies.  8 supplemental architecture-project outcomes from detached disposable copies. ",
   "entries": [
     {
       "operation": "api.get:Autodesk.Revit.DB.Analysis.AnalysisDisplayLegend.Height",
@@ -13074,7 +13074,7 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 11,
+      "unsupported_models": 15,
       "same_value_models": 1
     },
     {
@@ -17290,7 +17290,7 @@
       "state": "same_value_only",
       "passed_models": 0,
       "context_failures": 0,
-      "unsupported_models": 0,
+      "unsupported_models": 4,
       "same_value_models": 12
     },
     {

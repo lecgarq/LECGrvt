@@ -1,0 +1,21 @@
+{
+  "operation": "api.set:Autodesk.Revit.DB.DisplacementPath.AncestorIdx",
+  "model": "LECG_RVT_MEP.rvt",
+  "model_sha256": "55C7A010C8C19630B7EC9816BBFF78FFABF46237EB88BF2AF387CEA8B5539201",
+  "source_path": "C:\\Users\\LECG Arquitectura\\DC\\ACCDocs\\Arq. Luis Eduardo Cort\u00E9s\\CASA EUCALIPTO\\Project Files\\02-SHARED\\03-MEP\\LECG_RVT_MEP.rvt",
+  "status": "rejected-with-reason",
+  "stage": "generator",
+  "setter_attempted": false,
+  "copy": "C:\\LECG\\RevitAddins\\LECG\\docs\\review\\setter-validation-gate\\project-context-gaps-runs\\20260916T002426\\DisplacementPath.AncestorIdx\\LECG_RVT_MEP\\disposable.rvt",
+  "rollback_verified": false,
+  "copy_removed": true,
+  "cleanup_verified": true,
+  "classification_only": false,
+  "no_write_control": false,
+  "copy_open_sha256": "99834E36C5F3999F2884D9CB947DEEBCC6B27EBDBCCA8D2E384C920F8BE71A88",
+  "target_count": 0,
+  "generator_errors": [],
+  "reason": "no_existing_target_in_unmodified_sample",
+  "opening_warnings": [],
+  "elapsed_ms": 6431.1345
+}

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="526af798-5d9f-4fbf-a35c-dc0481a62259" name="LECG Arquitectura@DESKTOP-1FAV1F2 2026-09-15 18:24:57" runUser="DESKTOP-1FAV1F2\LECG Arquitectura" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-09-15T18:24:57.4847455-06:00" queuing="2026-09-15T18:24:57.4847456-06:00" start="2026-09-15T18:23:54.2109439-06:00" finish="2026-09-15T18:25:26.8865270-06:00" />
+  <TestSettings name="default" id="5cf8fc99-af87-479e-96cc-026fe4241d6b">
+    <Deployment runDeploymentRoot="LECG_Arquitectura_DESKTOP-1FAV1F2_2026-09-15_18_24_57" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="d2155fb8-eab4-4b55-97fd-450b33af5271" testId="4282d742-8145-5c46-fc0a-6e28e41329c5" testName="RunProjectContextGaps(&quot;DisplacementPath.AncestorIdx&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:30.6605600" startTime="2026-09-15T18:24:57.0142893-06:00" endTime="2026-09-15T18:24:57.0143106-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d2155fb8-eab4-4b55-97fd-450b33af5271">
+      <Output></Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="324fa495-b489-4a0d-b302-692a627db560" testId="f879ef28-b133-8e8f-db86-79e1e2eeed0f" testName="RunProjectContextGaps(&quot;TableView.TargetId&quot;)" computerName="DESKTOP-1FAV1F2" duration="00:00:28.0674400" startTime="2026-09-15T18:25:25.0728913-06:00" endTime="2026-09-15T18:25:25.0728917-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="324fa495-b489-4a0d-b302-692a627db560">
+      <Output></Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="RunProjectContextGaps(&quot;TableView.TargetId&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="f879ef28-b133-8e8f-db86-79e1e2eeed0f">
+      <Execution id="324fa495-b489-4a0d-b302-692a627db560" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectContextGapBatch" name="RunProjectContextGaps" />
+    </UnitTest>
+    <UnitTest name="RunProjectContextGaps(&quot;DisplacementPath.AncestorIdx&quot;)" storage="c:\lecg\revitaddins\lecg\tools\settervalidationprobe\bin\x64\debug\net10.0-windows\settervalidationprobe.dll" id="4282d742-8145-5c46-fc0a-6e28e41329c5">
+      <Execution id="d2155fb8-eab4-4b55-97fd-450b33af5271" />
+      <TestMethod codeBase="C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll" adapterTypeName="executor://ricaun.revittest.testexecutor/v1" className="LECG.SetterValidationProbe.ProjectContextGapBatch" name="RunProjectContextGaps" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="4282d742-8145-5c46-fc0a-6e28e41329c5" executionId="d2155fb8-eab4-4b55-97fd-450b33af5271" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f879ef28-b133-8e8f-db86-79e1e2eeed0f" executionId="324fa495-b489-4a0d-b302-692a627db560" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="2" executed="2" passed="2" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>TestAdapter: ricaun.RevitTest.TestAdapter 	1.11.1 	[Net Core]&#xD;
+RunTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [TestCase: 2]&#xD;
+Test: LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps.RunProjectContextGaps("DisplacementPath.AncestorIdx")&#xD;
+Test: LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps.RunProjectContextGaps("TableView.TargetId")&#xD;
+Metadata: NUnit.Version 	 2026&#xD;
+Metadata: NUnit.Open 	 true&#xD;
+Metadata: NUnit.Close 	 true&#xD;
+Metadata: NUnit.Timeout 	 45&#xD;
+Metadata: NUnit.Verbosity 	 2&#xD;
+AdapterSettings: {"NUnit":{"Version":"2026","Language":null,"Open":true,"Close":true,"Timeout":45.0,"Verbosity":2,"Application":null,"Metadata":true}}&#xD;
+---------&#xD;
+RevitTestConsole: &#xD;
+---------&#xD;
+Application: ricaun.RevitTest.Console.zip&#xD;
+Application Download: ricaun.RevitTest.Console.zip&#xD;
+Application Process: ricaun.RevitTest.Console.exe 1.11.1&#xD;
+Application: ricaun.RevitTest.Console.exe&#xD;
+Application: File Signed by ricaun Ltda [Verokey]&#xD;
+Application: ricaun.RevitTest.Console.exe is trusted.&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps.RunProjectContextGaps("DisplacementPath.AncestorIdx")&#xD;
+	TestFilter: LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps.RunProjectContextGaps("TableView.TargetId")&#xD;
+RunRevitTest: C:\LECG\RevitAddins\LECG\tools\SetterValidationProbe\bin\x64\Debug\net10.0-windows\SetterValidationProbe.dll [Version: 2026] [TestFilter: 2]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  ricaun.RevitTest.Command 1.11.1 [Net Core] [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  -------------------------------&#xD;
+OutputConsole:  Revit 2026&#xD;
+OutputConsole:  Revit 2026: Start /language ENU &#xD;
+OutputConsole:  Revit 2026: ricaun.RevitTest.Application 1.11.1 [ricaun.NUnit 1.5.0 3.13.3]&#xD;
+OutputConsole:  Revit 2026: TestFile: SetterValidationProbe.dll TestFilters:["LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps.RunProjectContextGaps(\u0022DisplacementPath.AncestorIdx\u0022)","LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps.RunProjectContextGaps(\u0022TableView.TargetId\u0022)"]&#xD;
+OutputConsole:  Revit 2026: Execution time is 0.5 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 30660.56 	 RunProjectContextGaps("DisplacementPath.AncestorIdx")[RunProjectContextGaps]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps [RunProjectContextGaps("DisplacementPath.AncestorIdx")] 	4282d742-8145-5c46-fc0a-6e28e41329c5&#xD;
+OutputConsole:  Revit 2026: Execution time is 1 minutes, maximum 45 minutes.&#xD;
+OutputConsole:  Revit 2026: 28067.44 	 RunProjectContextGaps("TableView.TargetId")[RunProjectContextGaps]	 Passed	 &#xD;
+	TestCase: LECG.SetterValidationProbe.ProjectContextGapBatch.RunProjectContextGaps [RunProjectContextGaps("TableView.TargetId")] 	f879ef28-b133-8e8f-db86-79e1e2eeed0f&#xD;
+OutputConsole:  Revit 2026: 59047.87 	 SetterValidationProbe 2 True 100% 59047.87ms&#xD;
+OutputConsole:  Revit 2026: Tests Finished&#xD;
+OutputConsole:  Revit 2026: Exited&#xD;
+OutputConsole:  Revit 2026: Finish&#xD;
+Dispose: ricaun.RevitTest.Console.exe&#xD;
+---------&#xD;
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

@@ -20,6 +20,9 @@ internal static class PilotValues
         Document doc = target.Document;
         switch (property)
         {
+            case "DisplacementPath.AncestorIdx":
+            case "TableView.TargetId":
+                return null; // ponytail: no public eligible-set API; add a generator only when Autodesk exposes one.
             case "Analysis.EnergyAnalysisDetailModel.ExportCategory":
             case "Analysis.EnergyDataSettings.ExportCategory":
                 return Alternative(new[] {
