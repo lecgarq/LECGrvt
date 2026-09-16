@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "purpose": "Repository navigation and bounded agent context; not an execution registry or proof of runtime correctness.",
-  "repository_revision": "18732b7c2d6fca8617e235839a8ef246f5657e3c",
+  "repository_revision": "18649e1101fd6dd52763e0760de689201137d164",
   "source_inputs_match_revision": true,
   "counts": {
     "command_classes": 38,
