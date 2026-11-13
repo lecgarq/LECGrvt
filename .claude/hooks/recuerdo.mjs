@@ -39,7 +39,9 @@ async function prompt() {
   for await (const chunk of process.stdin) input += chunk;
   const { prompt: text = "", session_id: session = "" } = JSON.parse(input || "{}");
   const query = text.replace(/\s+/g, " ").trim();
-  if (query.length < 12 || query.startsWith("/")) return;
+  // Sin tema que buscar: comandos «/», avisos automáticos de la app («<ci-monitor-event>», «<task-notification>»…)
+  // y confirmaciones de una o dos palabras («Sí, actívalo»), que solo recuperaban otras confirmaciones.
+  if (query.length < 12 || query.startsWith("/") || query.startsWith("<") || query.split(" ").length <= 2) return;
   const q = encodeURIComponent(cut(query, 280).replace(" […]", ""));
   // En pedidos de diseño, además, el criterio del arquitecto: las rondas más caras salieron de proponer sin él.
   const design = DESIGN.test(query.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase());

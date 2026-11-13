@@ -200,6 +200,7 @@ public sealed class Retrieval(string root, string? home = null, Semantic? semant
     // no tiene tema y no debe recuperar nada; medido el 12/11: la rareza y la similitud no lo distinguen de un pedido concreto.
     // ponytail: lista a mano; ampliarla cuando el hook inyecte ruido para un mensaje sin tema.
     static readonly HashSet<string> Stop = new(("a al algo and are as at be can como con cual cuales cuando cuanto cuantos de del do donde el en es esta estan este for from ha hay i in is la las le lo los me mi my of on or para por que se sin so su sus the to un una unos us we what where with y ya you " +
+        "activa activalo adelante aplica aplicala aplicalo procede publica publicalo solo " +
         "ahora ahi aqui asi ayuda ayudame ayudar ayudara bien bueno cosa cosas continua continuar continuemos dale dia dime eso esto entonces estabas estamos favor funcione funciona gracias hacer hacerlo haciendo haz hazlo mas mejor mismo muy necesito no nos ok okay osea pero perfecto podemos podria porfavor puede pueden puedes quiero quisiera retoma retomemos sea seguir si sigue siguiente suceda sucede tambien tiene tienen todo todos va vamos ve ven").Split(' '));
     static readonly string[][] Aliases =
     [
