@@ -4,7 +4,8 @@
 // Nunca bloquea: ante cualquier fallo (servidor apagado, tiempo agotado) sale en silencio con código 0.
 import { spawn } from "node:child_process";
 import http from "node:http";
-import { existsSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
+import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -28,7 +29,17 @@ const get = (path, ms) => new Promise(done => {
   req.on("timeout", () => { req.destroy(); done(null); }).on("error", () => done(null));
 });
 
+// Respaldo privado diario: el índice del repositorio de respaldo cambia en cada intento, así marca el último.
+// Solo existe donde se configuró el respaldo (el script crea el repositorio la primera vez que se corre a mano).
+function backupIfStale() {
+  const index = join(homedir(), ".lecg", "respaldo-segundo-cerebro.git", "index");
+  const script = join(root, ".claude", "skills", "eucalipto-segundo-cerebro", "scripts", "respaldo.mjs");
+  if (!existsSync(index) || !existsSync(script) || Date.now() - statSync(index).mtimeMs < 20 * 3600e3) return;
+  spawn(process.execPath, [script], { cwd: root, detached: true, stdio: "ignore", windowsHide: true }).unref();
+}
+
 async function start() {
+  backupIfStale();
   if (await get("/api/status", 1500).catch(() => null)) return;
   if (!existsSync(exe)) return; // sin compilar: dotnet build tools/KnowledgeExplorer -p:SkipRevitDeploy=true
   spawn(exe, ["serve"], { cwd: root, detached: true, stdio: "ignore", windowsHide: true }).unref();
