@@ -85,3 +85,6 @@ __pycache__/
 
 # Disposable pilot copies are local test inputs, never repository artifacts.
 docs/review/setter-validation-gate/pilot-runs/**/*.rvt
+
+# Segundo cerebro: conocimiento de proyectos de clientes; vive solo en el equipo (repositorio público).
+docs/review/second-brain/
