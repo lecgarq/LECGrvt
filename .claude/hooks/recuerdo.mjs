@@ -66,8 +66,10 @@ function fromTranscript(path, reg) {
   try {
     const size = fstatSync(fd).size, len = Math.min(size, 1 << 20), buf = Buffer.alloc(len);
     readSync(fd, buf, 0, len, size - len);
-    const all = [...buf.toString("utf8").matchAll(/-Proyecto\s+\\?["']?([a-z]+)/gi)].map(m => m[1].toLowerCase()).filter(k => reg[k]);
-    return all.at(-1) ?? null;
+    const all = [...buf.toString("utf8").matchAll(/-Proyecto\s+\\?["']?([a-z0-9]+)/gi)].map(m => m[1].toLowerCase()).filter(k => reg[k]);
+    // Solo si las últimas llamadas al puente son todas del mismo proyecto: una sesión que recorre varios no tiene uno activo.
+    const recent = all.slice(-12);
+    return recent.length && recent.every(k => k === recent[0]) ? recent[0] : null;
   } finally { closeSync(fd); }
 }
 // Orden: comando «/proyecto…» o «/eucalipto-…»; un solo proyecto nombrado en el mensaje; el de esta sesión; el del puente.
@@ -84,7 +86,8 @@ export function activeProject(text, session, transcript, reg, state) {
   else if (n.length > 1) return { project: null, why: "el mensaje compara proyectos" };
   else if (state[session]?.project && reg[state[session].project]) [project, why] = [state[session].project, "es el de esta sesión"];
   else if ((project = fromTranscript(transcript, reg))) why = "esta sesión usó el puente con ese proyecto";
-  if (persist && project && session && state[session]?.project !== project) {
+  // Solo se recuerda lo que el usuario dijo (comando o nombre); lo inferido del puente se recalcula cada vez.
+  if (persist && (bySlash || n.length === 1) && project && session && state[session]?.project !== project) {
     state[session] = { project, at: new Date().toISOString() };
     const keep = Object.entries(state).sort((a, b) => b[1].at.localeCompare(a[1].at)).slice(0, 200);
     try { mkdirSync(dirname(STATE), { recursive: true }); writeFileSync(STATE, JSON.stringify(Object.fromEntries(keep), null, 1)); } catch { /* sin estado, sigue */ }
