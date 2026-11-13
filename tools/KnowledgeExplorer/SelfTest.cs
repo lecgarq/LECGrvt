@@ -71,8 +71,25 @@ static class SelfTest
         var g = new GraphData("m", "p", "", "", [], [muro, room], [new("bim:a", "bim:b", "delimita", "observado")]);
         var rel = Graph.Related(g, g.Nodes.ToDictionary(n => n.Id), "Se corrigió el muro 1745596 junto a la cocina.");
         Check(rel.Length == 1 && rel[0].Contains("u-a") && rel[0].Contains("delimita 2001 · Cocina"), "expansión por ElementId con vecinos y UniqueId");
+        if (live.ProjectKeys.Count >= 2)
+        {
+            // Ningún proyecto recibe decisiones de otro, y alguno tiene las suyas (proyectos.json local).
+            var own = 0;
+            foreach (var key in live.ProjectKeys)
+            {
+                var r = live.Search("altura de plafón y entrepiso", "criterio", key);
+                Check(r.Hits.All(h => h.Passage.Project is null || h.Passage.Project == key), $"proyecto {key}: solo lo suyo y el criterio general");
+                if (r.Hits.Any(h => h.Passage.Project == key)) own++;
+            }
+            Check(own >= 2, "al menos dos proyectos con decisiones propias");
+            var all = live.Search("criterio lo que siempre busca alturas y niveles", "criterio").Hits.Where(h => h.Passage.Path.EndsWith("criterio-del-arquitecto.md")).ToArray();
+            Check(all.Where(h => h.Passage.Heading.StartsWith("2.1")).All(h => h.Passage.Project is not null)
+                && all.Where(h => h.Passage.Heading.StartsWith("1. Lo que siempre")).All(h => h.Passage.Project is null), "marcadores: §1 general y §2.1 de un proyecto");
+            try { live.Search("muros", "all", "inventado"); throw new Exception("FAIL proyecto inventado"); } catch (ArgumentException) { checks++; }
+        }
+        else Console.WriteLine("SKIP proyectos: falta proyectos.json con al menos dos proyectos");
         var crit = live.Search("cancelería a paño perfil fino", "criterio");
-        Check(crit.Hits.Length > 0 && crit.Hits.All(h => h.Passage.Path.Contains("criterio")), "ámbito criterio: solo preferencias y decisiones del usuario");
+        Check(crit.Hits.Length > 0 && crit.Hits.All(h => h.Passage.Path.Contains("criterio") || h.Passage.Path.EndsWith("decisiones.md")), "ámbito criterio: solo preferencias y decisiones del usuario");
         var meaning = live.Search("cocina tarja alacena", "project");
         if (meaning.Mode?.StartsWith("Palabras + significado") == true)
             Check(meaning.Hits.Any(h => h.Similarity is not null), "fusión con búsqueda por significado");

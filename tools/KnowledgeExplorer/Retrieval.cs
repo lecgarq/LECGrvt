@@ -8,7 +8,7 @@ namespace KnowledgeExplorer;
 public record SourceSpec(string Id, string Path, string Scope, string State, string? FullPath = null);
 public record Source(SourceSpec Spec, string Hash, DateTime ModifiedUtc, string[] Lines);
 public record Passage(string Id, string SourceId, string Path, string Scope, string State,
-    string Heading, int Start, int End, string Text, string Hash, DateTime ModifiedUtc, DateTime? Date = null, string? Status = null);
+    string Heading, int Start, int End, string Text, string Hash, DateTime ModifiedUtc, DateTime? Date = null, string? Status = null, string? Project = null);
 public record Hit(Passage Passage, double Score, string[] Matched, string? Validity = null, double? Similarity = null, string[]? Related = null);
 public record SearchResult(string Query, string Scope, DateTime RetrievedUtc, int SourceCount,
     string[] MissingSources, Hit[] Hits, string Context, string? Mode = null, IReadOnlyDictionary<string, double>? TermShare = null);
@@ -297,28 +297,140 @@ public sealed class Retrieval(string root, string? home = null, Semantic? semant
         text.Length <= max ? text : text[..(char.IsHighSurrogate(text[max - 1]) ? max - 1 : max)];
     static string Plain(string text) => new string(text.Normalize(NormalizationForm.FormD)
         .Where(c => CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark).ToArray()).ToLowerInvariant();
-    // Ámbito «criterio»: solo lo que el usuario decidió o prefiere, para consultarlo antes de proponer un diseño.
-    static bool InScope(SourceSpec s, string scope) => scope switch
+    // Ámbito «criterio»: el criterio general del arquitecto y las decisiones de cada proyecto, para consultarlos antes de proponer.
+    bool InScope(SourceSpec s, string scope) => scope switch
     {
         "all" => true,
-        "criterio" => s.Path.Contains("criterio-del-arquitecto", StringComparison.Ordinal) || s.Path.Contains("eucalipto-criterio/", StringComparison.Ordinal),
+        "criterio" => s.Path.Contains("criterio-del-arquitecto", StringComparison.Ordinal) || s.Path.Contains("eucalipto-criterio/", StringComparison.Ordinal)
+            || projects.Any(p => p.Decisions == s.Path),
         "sessions" => s.Scope == "sessions",
         _ => s.Scope == scope || s.Scope == "both"
     };
-    public SearchResult Search(string query, string scope = "all") => Run(query, scope, false);
+
+    // Proyectos de LECG según proyectos.json del puente (alias, rutas y archivo de decisiones). Sin registro no se etiqueta nada.
+    readonly Project[] projects = LoadProjects(root);
+    public IReadOnlyList<string> ProjectKeys => [.. projects.Select(p => p.Key)];
+    sealed record Project(string Key, string[] Paths, Regex Mention, string? Decisions);
+    static Project[] LoadProjects(string root)
+    {
+        var file = Path.Combine(root, ".claude", "skills", "lecg-proyecto", "proyectos.json");
+        if (!File.Exists(file)) return [];
+        string[] Strings(System.Text.Json.Nodes.JsonNode? n) => n is System.Text.Json.Nodes.JsonArray a ? [.. a.Select(x => x!.GetValue<string>())] : [];
+        return [.. System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(file))!.AsObject().Select(kv =>
+        {
+            var alias = Strings(kv.Value?["alias"]) is { Length: > 0 } a ? a : [kv.Key];
+            return new Project(kv.Key, Strings(kv.Value?["rutas"]),
+                new Regex(@"\b(" + string.Join("|", alias.Select(x => Regex.Escape(Plain(x)))) + @")\b", RegexOptions.Compiled),
+                kv.Value?["decisiones"]?.GetValue<string>());
+        })];
+    }
+    static readonly Regex Marker = new(@"<!--\s*proyecto:\s*([a-z]+)\s*-->", RegexOptions.Compiled);
+    // A qué proyecto pertenece cada fragmento, en este orden:
+    // 1) marcador <!-- proyecto: x --> en el archivo («general» = de todos), hasta el siguiente marcador;
+    // 2) ruta del archivo (rutas del registro): los documentos de un proyecto citan a otros como referencia, pero son suyos;
+    // 3) el fragmento nombra un solo proyecto; si nombra varios, es comparativo y queda general;
+    // 4) el proyecto del archivo: el que domina sus menciones (≥ 70 %, al menos 2); si no, el dueño de ≥ 3 IDs de su captura BIM;
+    //    si no, lo mismo sobre los otros .md de su carpeta (docs/review/<tema>/ es de un solo proyecto). Si nada, general (null).
+    // ponytail: por nombres e IDs; un informe que no nombre la casa ni cite IDs ni tenga hermanos identificados queda general.
+    Passage[] Tag(Source source, Passage[] chunks)
+    {
+        if (projects.Length == 0) return chunks;
+        string where = source.Spec.Path + "|" + source.Spec.FullPath;
+        var byPath = projects.FirstOrDefault(p => p.Paths.Any(r => where.Contains(r, StringComparison.OrdinalIgnoreCase)))?.Key;
+        var all = string.Join('\n', source.Lines);
+        string? dominant = byPath is null ? FileProject(all) ?? FolderProject(source) : null;
+        var marker = new string?[source.Lines.Length + 1]; bool marked = false; string? current = null;
+        for (int i = 0; i < source.Lines.Length; i++)
+        {
+            if (Marker.Match(source.Lines[i]) is { Success: true } m) { marked = true; current = m.Groups[1].Value == "general" ? null : m.Groups[1].Value; }
+            marker[i + 1] = current;
+        }
+        var capture = CaptureIds();
+        bool session = source.Spec.FullPath is not null;
+        string? last = null, lastHeading = null; // continuidad: una conversación o una sección avanzan por tema
+        return [.. chunks.Select(c =>
+        {
+            if (marked) return c with { Project = marker[c.Start] };
+            if (byPath is not null) return c with { Project = byPath };
+            if (!session && c.Heading != lastHeading) last = null;
+            lastHeading = c.Heading;
+            // El encabezado manda: «Casa X · …» es de X aunque el texto cite otro proyecto como referencia.
+            var titled = projects.Where(p => p.Mention.IsMatch(Plain(c.Heading))).Select(p => p.Key).ToArray();
+            if (titled.Length == 1) return c with { Project = last = titled[0] };
+            var named = projects.Where(p => p.Mention.IsMatch(Plain(c.Heading + "\n" + c.Text))).Select(p => p.Key).ToArray();
+            if (named.Length > 1) { last = null; return c with { Project = null }; } // comparativo
+            if (named.Length == 1) return c with { Project = last = named[0] };
+            if (capture is { } cap && Regex.Matches(c.Text, @"\b\d{6,9}\b").Select(m => m.Value).Where(cap.Ids.Contains).Distinct().Count() >= 2)
+                return c with { Project = last = cap.Key };
+            return c with { Project = last ?? dominant };
+        })];
+    }
+    string? FileProject(string text)
+    {
+        var plain = Plain(text);
+        var counts = projects.Select(p => (p.Key, N: p.Mention.Matches(plain).Count)).ToArray();
+        var top = counts.MaxBy(c => c.N);
+        if (top.N >= 2 && top.N >= 0.7 * counts.Sum(c => c.N)) return top.Key;
+        var capture = CaptureIds();
+        if (capture is null) return null;
+        var cited = Regex.Matches(text, @"\b\d{6,9}\b").Select(m => m.Value).Where(capture.Value.Ids.Contains).Distinct().Count();
+        return cited >= 3 ? capture.Value.Key : null;
+    }
+    string? FolderProject(Source source)
+    {
+        if (source.Spec.FullPath is not null || !source.Spec.Path.StartsWith("docs/review/", StringComparison.Ordinal) || source.Spec.Path.Count(c => c == '/') < 3) return null;
+        var self = Path.GetFullPath(Path.Combine(root, source.Spec.Path));
+        var siblings = Directory.EnumerateFiles(Path.GetDirectoryName(self)!, "*.md")
+            .Where(f => !f.Equals(self, StringComparison.OrdinalIgnoreCase) && new FileInfo(f).Length <= MaxBytes).Take(20).Select(File.ReadAllText);
+        return FileProject(string.Join('\n', siblings));
+    }
+    // IDs de la captura BIM del grafo y el proyecto al que pertenece (por el UID del documento en proyectos.json).
+    (string Key, HashSet<string> Ids)? captureIds; bool captureRead;
+    (string Key, HashSet<string> Ids)? CaptureIds()
+    {
+        if (captureRead) return captureIds;
+        captureRead = true;
+        var file = Path.Combine(root, "docs", "review", "second-brain", "spatial-graph.snapshot.json");
+        var registry = Path.Combine(root, ".claude", "skills", "lecg-proyecto", "proyectos.json");
+        if (!File.Exists(file) || !File.Exists(registry)) return null;
+        var bim = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(file))!;
+        var uid = bim["document"]?["unique_id"]?.GetValue<string>();
+        var key = System.Text.Json.Nodes.JsonNode.Parse(File.ReadAllText(registry))!.AsObject()
+            .FirstOrDefault(kv => kv.Value?["uid"]?.GetValue<string>() == uid).Key;
+        if (key is null) return null;
+        return captureIds = (key, bim["elements"]!.AsArray().Select(e => e!["id"]!.ToString()).ToHashSet());
+    }
+    // Fragmentos, términos y proyecto por fuente, recalculados solo cuando cambia su huella: el hook hace varias consultas por mensaje.
+    readonly Dictionary<string, (string Hash, Passage[] Chunks, string[][] Tokens)> prepared = [];
+    (Passage[] Chunks, string[][] Tokens) Prepare(Source s)
+    {
+        lock (prepared)
+            if (prepared.TryGetValue(s.Spec.Id, out var p) && p.Hash == s.Hash) return (p.Chunks, p.Tokens);
+        var chunks = Tag(s, [.. Chunks(s)]);
+        var tokens = chunks.Select(c => Terms(c.Text + " " + c.Heading)).ToArray();
+        lock (prepared) prepared[s.Spec.Id] = (s.Hash, chunks, tokens);
+        return (chunks, tokens);
+    }
+
+    public SearchResult Search(string query, string scope = "all", string? project = null) => Run(query, scope, false, project);
     // Línea de tiempo: los 40 fragmentos más pertinentes, ordenados por la fecha del hecho.
-    public SearchResult Timeline(string query, string scope = "all") => Run(query, scope, true);
-    SearchResult Run(string query, string scope, bool timeline)
+    public SearchResult Timeline(string query, string scope = "all", string? project = null) => Run(query, scope, true, project);
+    // project: solo ese proyecto y lo general; los fragmentos de otros proyectos quedan fuera.
+    SearchResult Run(string query, string scope, bool timeline, string? project = null)
     {
         ArgumentNullException.ThrowIfNull(query);
         query = query.Trim();
         if (query.Length is < 2 or > 300) throw new ArgumentException("Escribe entre 2 y 300 caracteres.");
         if (scope is not ("all" or "repo" or "project" or "sessions" or "criterio")) throw new ArgumentException("Ámbito no válido.");
+        if (project is not null && !projects.Any(p => p.Key == project)) throw new ArgumentException("Proyecto no registrado.");
         var specs = Specs();
         var sources = specs.Select(ReadFile).OfType<Source>().ToArray();
-        var chunks = sources.Where(s => InScope(s.Spec, scope)).SelectMany(Chunks).ToArray();
+        var pairs = sources.Where(s => InScope(s.Spec, scope)).Select(Prepare)
+            .SelectMany(p => p.Chunks.Zip(p.Tokens))
+            .Where(p => project is null || p.First.Project is null || p.First.Project == project).ToArray();
+        var chunks = pairs.Select(p => p.First).ToArray();
         var terms = Terms(query).Distinct().ToArray();
-        var tokens = chunks.Select(c => Terms(c.Text + " " + c.Heading)).ToArray();
+        var tokens = pairs.Select(p => p.Second).ToArray();
         var lengths = tokens.Select(t => Math.Max(t.Length, 1)).ToArray();
         var average = lengths.Length > 0 ? lengths.Average() : 1;
         var frequencies = terms.ToDictionary(t => t, t => tokens.Count(doc => doc.Contains(t)));
@@ -390,7 +502,7 @@ public sealed class Retrieval(string root, string? home = null, Semantic? semant
         for (int i = 0; i < r.Hits.Length; i++)
         {
             var (p, v, sim) = (r.Hits[i].Passage, r.Hits[i].Validity, r.Hits[i].Similarity);
-            text.AppendLine($"\n## [{i + 1}] {p.Path}:{p.Start}-{p.End}\n{p.State}\nFecha del hecho: {(p.Date is { } d ? d.ToString("yyyy-MM-dd") : "sin fecha")} · Estado detectado: {p.Status ?? "—"}{(v is null ? "" : " · Vigencia: " + v)}{(sim is null ? "" : $" · Similitud: {sim:0.000}")}\nSHA256: {p.Hash}\nModificación UTC: {p.ModifiedUtc:O}\n");
+            text.AppendLine($"\n## [{i + 1}] {p.Path}:{p.Start}-{p.End}\n{p.State}\nProyecto: {p.Project ?? "general"} · Fecha del hecho: {(p.Date is { } d ? d.ToString("yyyy-MM-dd") : "sin fecha")} · Estado detectado: {p.Status ?? "—"}{(v is null ? "" : " · Vigencia: " + v)}{(sim is null ? "" : $" · Similitud: {sim:0.000}")}\nSHA256: {p.Hash}\nModificación UTC: {p.ModifiedUtc:O}\n");
             foreach (var line in p.Text.Split('\n')) text.AppendLine("> " + line);
             foreach (var rel in r.Hits[i].Related ?? []) text.AppendLine("Relacionado en el grafo (captura de solo lectura): " + rel);
         }

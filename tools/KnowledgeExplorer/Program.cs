@@ -41,7 +41,8 @@ if (args.FirstOrDefault() is "query" or "timeline")
 {
     if (args.Length < 2) throw new ArgumentException($"{args[0]} necesita una pregunta entre comillas y ámbito opcional all/repo/project/sessions.");
     var scope = args.ElementAtOrDefault(2) ?? "all";
-    Console.WriteLine(JsonSerializer.Serialize(args[0] == "query" ? retrieval.Search(args[1], scope) : retrieval.Timeline(args[1], scope), json));
+    var project = args.ElementAtOrDefault(3); // opcional: una clave de proyectos.json
+    Console.WriteLine(JsonSerializer.Serialize(args[0] == "query" ? retrieval.Search(args[1], scope, project) : retrieval.Timeline(args[1], scope, project), json));
     return;
 }
 if (args.Length != 0 && args[0] != "serve") throw new ArgumentException("Usa serve, query, timeline, index o self-test.");
@@ -92,8 +93,8 @@ app.MapGet("/api/status", () => new
     vectors = semantic.Count, semanticError = semantic.Error,
     generation = "Codex en este chat; sin API de generación"
 });
-app.MapGet("/api/search", (string q, string? scope) => retrieval.Search(q, scope ?? "all"));
-app.MapGet("/api/timeline", (string q, string? scope) => retrieval.Timeline(q, scope ?? "all"));
+app.MapGet("/api/search", (string q, string? scope, string? project) => retrieval.Search(q, scope ?? "all", project));
+app.MapGet("/api/timeline", (string q, string? scope, string? project) => retrieval.Timeline(q, scope ?? "all", project));
 app.MapGet("/api/source", (string id, string? hash) =>
 {
     var source = retrieval.Read(id);

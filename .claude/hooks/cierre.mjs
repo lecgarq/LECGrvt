@@ -7,6 +7,7 @@ import { isAbsolute, join } from "node:path";
 
 const ROOT = "C:/LECG/RevitAddins/LECG";
 const BRAIN = /registro-maestro\.md|second-brain[\\/]|segundo-cerebro[\\/]/i;
+const registry = () => { try { return JSON.parse(readFileSync(join(ROOT, ".claude/skills/lecg-proyecto/proyectos.json"), "utf8")); } catch { return {}; } };
 
 // Entradas desde el último mensaje real del usuario (no resultados de herramientas).
 export function turno(entries) {
@@ -20,7 +21,7 @@ export function turno(entries) {
 export function evaluar(entries, read = p => (existsSync(p) ? readFileSync(p, "utf8") : null)) {
   const uses = turno(entries).filter(e => e.type === "assistant" && !e.isSidechain)
     .flatMap(e => (e.message?.content ?? []).filter(b => b.type === "tool_use"));
-  let revit = 0, blender = 0, registered = false;
+  let revit = 0, blender = 0, registered = false, project = null;
   // Los .csx se suelen escribir con Write en el mismo turno y enviarse con rutas de variables ("$t\x.csx"):
   // se reconocen por el nombre del archivo.
   const base = p => p.split(/[\\/]/).pop().toLowerCase();
@@ -37,14 +38,17 @@ export function evaluar(entries, read = p => (existsSync(p) ? readFileSync(p, "u
       const code = written.get(base(file)) ?? (/\$/.test(file) ? null : read(isAbsolute(file) ? file : join(ROOT, file)));
       // ponytail: «Commit(» en el .csx = cambio confirmado. Si no se encuentra el código, no se cuenta (mejor perder un aviso que
       // pedir registro en cada lectura); ampliar si se ven cambios sin registrar. Un ensayo solo con RollBack no cuenta.
-      if (code !== null && /\.Commit\s*\(/.test(code)) revit++;
+      if (code !== null && /\.Commit\s*\(/.test(code)) { revit++; project = cmd.match(/-Proyecto\s+["']?([a-z]+)/i)?.[1]?.toLowerCase() ?? project; }
     }
   }
   // ponytail: Blender cuenta como estudio desde 3 pasos en el turno (1–2 suelen ser solo inspeccionar la escena); medido en 525 turnos reales.
   if (blender < 3) blender = 0;
   if (registered || (revit === 0 && blender === 0)) return null;
   const what = [revit && `${revit} envío(s) al puente con cambios confirmados en Revit`, blender && `${blender} paso(s) de trabajo en Blender`].filter(Boolean).join(" y ");
-  return `En este turno hubo ${what}, y esta sesión no escribió en el segundo cerebro. Antes de terminar, añade la entrada al final de docs/review/second-brain/registro-maestro.md con el formato de la skill eucalipto-segundo-cerebro (fecha y hora, tema, estado: propuesta | aplicado | verificado…, IDs, evidencia, lo conservado y lo pendiente; «Sin guardar/sincronizar» si aplica). Si fue un ensayo revertido o una prueba sin resultado que registrar, dilo en una línea y termina.`;
+  // Cada proyecto registra en su propio expediente (campo «registro» de proyectos.json); sin proyecto, el registro maestro.
+  const reg = registry(), where = (project && reg[project]?.registro) || "docs/review/second-brain/registro-maestro.md";
+  const label = project && reg[project]?.nombre ? ` de ${reg[project].nombre}` : "";
+  return `En este turno hubo ${what}${label}, y esta sesión no escribió en el segundo cerebro. Antes de terminar, añade la entrada al final de ${where} con el formato de la skill eucalipto-segundo-cerebro (fecha y hora, tema, estado: propuesta | aplicado | verificado…, IDs, evidencia, lo conservado y lo pendiente; «Sin guardar/sincronizar» si aplica). Si fue un ensayo revertido o una prueba sin resultado que registrar, dilo en una línea y termina.`;
 }
 
 if (process.argv[2] === "--test") {
