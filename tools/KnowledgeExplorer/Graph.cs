@@ -25,6 +25,8 @@ public record GraphData(string Model, string ModelPath, string ModelCapturedUtc,
 
 public sealed class Graph(string root, Retrieval retrieval)
 {
+    // Captura BIM vigente; se renueva con .claude/skills/eucalipto-segundo-cerebro/scripts/captura-grafo.csx.
+    public JsonNode Snapshot() => Load("spatial-graph.snapshot.json");
     static readonly Dictionary<string, string> CategoryLabels = new()
     {
         ["OST_Walls"]="Muros", ["OST_Floors"]="Pisos y losas", ["OST_Ceilings"]="Plafones", ["OST_ShaftOpening"]="Huecos verticales",

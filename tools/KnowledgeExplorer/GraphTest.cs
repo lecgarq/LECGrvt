@@ -9,11 +9,16 @@ static class GraphTest
         var data = graph.Build(); var ids = data.Nodes.Select(n => n.Id).ToHashSet();
         Check(ids.Count == data.Nodes.Length, "identidades únicas del grafo");
         Check(data.Edges.All(e => ids.Contains(e.From) && ids.Contains(e.To)), "sin relaciones colgantes");
-        Check(data.Nodes.Count(n => n.Bounds is not null) == 1339, "1339 envolventes de la captura del 17");
-        Check(data.Nodes.Count(n => n.Category == "OST_Walls") == 140, "140 muros completos");
-        Check(data.Nodes.Count(n => n.Category == "OST_Rooms") == 26, "26 habitaciones completas");
-        Check(data.Edges.Count(e => e.Relation == "unión Revit") == 372, "372 uniones comprobadas por API");
-        Check(data.Edges.Count(e => e.Relation == "contiene inserto") == 231, "231 relaciones de inserción");
+        // Conteos contra lo que declara la propia captura (sobreviven a cada renovación), más mínimos que detectan una captura vacía.
+        var bim = graph.Snapshot();
+        int Declared(string category) => bim["categories"]!.AsArray().Where(c => c!["category"]!.GetValue<string>() == category).Sum(c => c!["count"]!.GetValue<int>());
+        var withBounds = bim["elements"]!.AsArray().Where(e => e!["bounds"] is not null).Select(e => e!["unique_id"]!.GetValue<string>()).Distinct().Count();
+        Check(bim["readOnly"]!.GetValue<bool>() && bim["unchanged"]!.GetValue<bool>() && bim["categories"]!.AsArray().All(c => c!["complete"]!.GetValue<bool>()), "captura de solo lectura, completa e identidad estable");
+        Check(data.Nodes.Count(n => n.Bounds is not null) == withBounds && withBounds > 1000, $"{withBounds} envolventes de la captura {bim["capturedUtc"]}");
+        Check(data.Nodes.Count(n => n.Category == "OST_Walls") == Declared("OST_Walls") && Declared("OST_Walls") >= 100, $"{Declared("OST_Walls")} muros completos");
+        Check(data.Nodes.Count(n => n.Category == "OST_Rooms") == Declared("OST_Rooms") && Declared("OST_Rooms") >= 20, $"{Declared("OST_Rooms")} habitaciones completas");
+        Check(data.Edges.Count(e => e.Relation == "unión Revit") == bim["joins"]!.AsArray().Count && bim["joins"]!.AsArray().Count > 300, $"{bim["joins"]!.AsArray().Count} uniones comprobadas por API");
+        Check(data.Edges.Count(e => e.Relation == "contiene inserto") == bim["hostEdges"]!.AsArray().Count && bim["hostEdges"]!.AsArray().Count > 200, $"{bim["hostEdges"]!.AsArray().Count} relaciones de inserción");
         Check(new[] {12106770,12106772,12106774,12106779,12106781,12106784,12106786,12106790,12106794,12101171,12101175,12101179,12101183}.All(id => data.Nodes.Any(n => n.ElementId == id && n.UniqueId is not null)), "baño 02 y domo presentes con identidades actuales");
         Check(data.Edges.Any(e => e.Relation == "menciona ID"), "puentes entre informes y elementos por ID");
         Check(data.Edges.Where(e => e.Relation == "posible llamada").All(e => e.State == "candidato"), "llamadas inferidas no se presentan como verificadas");
