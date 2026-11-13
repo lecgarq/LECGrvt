@@ -2,9 +2,9 @@
 //   node recuerdo.mjs start   → SessionStart: arranca el servidor en 127.0.0.1:5187 si no responde.
 //   node recuerdo.mjs prompt  → UserPromptSubmit: busca el mensaje y añade los fragmentos más pertinentes como contexto.
 // Nunca bloquea: ante cualquier fallo (servidor apagado, tiempo agotado) sale en silencio con código 0.
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import http from "node:http";
-import { closeSync, existsSync, fstatSync, mkdirSync, openSync, readFileSync, readSync, statSync, writeFileSync } from "node:fs";
+import { closeSync, existsSync, fstatSync, mkdirSync, openSync, readFileSync, readSync, rmSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -38,8 +38,26 @@ function backupIfStale() {
   spawn(process.execPath, [script], { cwd: root, detached: true, stdio: "ignore", windowsHide: true }).unref();
 }
 
+// Arranque del día automático (13/11/2026, «¿puede ser automático al empezar cualquier sesión?»): la primera sesión del día con
+// Revit abierto corre preparar-dia.ps1 en segundo plano (solo lectura). «corriendo» impide que dos sesiones lo dupliquen;
+// «<fecha>.listo» lo escribe el script solo si leyó algún proyecto, así un día con Revit cerrado lo reintenta la sesión siguiente.
+const DIA = join(homedir(), ".lecg", "preparar-dia");
+const revitAbierto = () => /Revit\.exe/i.test(spawnSync("tasklist", ["/FI", "IMAGENAME eq Revit.exe", "/NH"], { encoding: "utf8", windowsHide: true }).stdout ?? "");
+export function prepararDia(dir = DIA, revit = revitAbierto) {
+  const hoy = new Date().toLocaleDateString("sv-SE").replaceAll("-", "");
+  if (existsSync(join(dir, hoy + ".listo")) || !revit()) return "no";
+  mkdirSync(dir, { recursive: true });
+  const run = join(dir, "corriendo");
+  // ponytail: 30 min sin terminar se toma como un arranque muerto; si con candados ocupados tarda más, se duplica (solo lecturas).
+  try { if (Date.now() - statSync(run).mtimeMs < 30 * 60e3) return "corriendo"; unlinkSync(run); } catch { }
+  try { closeSync(openSync(run, "wx")); } catch { return "corriendo"; }
+  return "lanzar";
+}
+
 async function start() {
   backupIfStale();
+  // PowerShell lanzado «detached» sale sin correr nada (sin consola); un node «detached» sí vive, y él corre PowerShell oculto (modo «dia»).
+  if (existsSync(join(root, ".claude", "skills", "lecg-modelado", "scripts", "preparar-dia.ps1")) && prepararDia() === "lanzar") spawn(process.execPath, [fileURLToPath(import.meta.url), "dia"], { cwd: root, detached: true, stdio: "ignore", windowsHide: true }).unref();
   if (await get("/api/status", 1500).catch(() => null)) return;
   if (!existsSync(exe)) return; // sin compilar: dotnet build tools/KnowledgeExplorer -p:SkipRevitDeploy=true
   spawn(exe, ["serve"], { cwd: root, detached: true, stdio: "ignore", windowsHide: true }).unref();
@@ -164,7 +182,19 @@ if (process.argv[2] === "--test") {
   a(t("sigue con las puertas", { s1: { project: "sur", at: "x" } }) === "sur", "recuerda el de la sesión");
   a(t("sigue con las puertas") === null, "sin pistas: sin proyecto");
   a(named("toma de referencia Poniente", reg).join() === "oeste", "alias con otro nombre");
+  const d = join(homedir(), ".lecg", "preparar-dia-prueba"), hoy = new Date().toLocaleDateString("sv-SE").replaceAll("-", "");
+  rmSync(d, { recursive: true, force: true });
+  a(prepararDia(d, () => false) === "no" && !existsSync(d), "Revit cerrado: no arranca ni deja marcas");
+  a(prepararDia(d, () => true) === "lanzar" && prepararDia(d, () => true) === "corriendo", "una sola sesión lo corre");
+  unlinkSync(join(d, "corriendo")); writeFileSync(join(d, hoy + ".listo"), "x");
+  a(prepararDia(d, () => true) === "no", "ya listo hoy: no se repite");
+  rmSync(d, { recursive: true, force: true });
   console.log("ok");
+} else if (process.argv[2] === "dia") {
+  const log = openSync(join(process.argv[3] ?? DIA, new Date().toLocaleDateString("sv-SE").replaceAll("-", "") + ".log"), "a");
+  spawnSync("powershell", ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", join(root, ".claude", "skills", "lecg-modelado", "scripts", "preparar-dia.ps1"), "-Marcas", process.argv[3] ?? DIA],
+    { cwd: root, stdio: ["ignore", log, log], windowsHide: true });
+  closeSync(log);
 } else {
   try { await (process.argv[2] === "start" ? start() : prompt()); } catch { /* nunca bloquear el mensaje */ }
   process.exitCode = 0; // sin process.exit(): el proceso termina solo al cerrar sus conexiones
