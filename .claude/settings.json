@@ -1,0 +1,49 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__mcp-server-for-revit__.*|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/LECG/RevitAddins/LECG/.claude/skills/lecg-proyecto/scripts/guardia-revit.mjs\""
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/LECG/RevitAddins/LECG/.claude/hooks/recuerdo.mjs\" start",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/LECG/RevitAddins/LECG/.claude/hooks/recuerdo.mjs\" prompt",
+            "timeout": 8,
+            "statusMessage": "Consultando el segundo cerebro…"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/LECG/RevitAddins/LECG/.claude/hooks/cierre.mjs\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LECG · Consulta del segundo cerebro</title><link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/" aria-label="Inicio">LECG <span>KNOWLEDGE / 01</span></a>
+  <p class="eyebrow">SEGUNDO CEREBRO</p><h1>De la pregunta<br>a la evidencia.</h1>
+  <p class="muted">Repositorio, proyectos, memoria<br>y conversaciones. Fuentes locales.</p>
+  <p><a href="/graph">Explorar conocimiento + edificio ↗</a></p>
+  <div class="stat"><strong id="sourceCount">—</strong><span>fuentes leídas<br><small>Se releen en cada consulta</small></span></div>
+  <details><summary>Explorar las fuentes</summary><nav id="sources" aria-label="Fuentes del corpus"></nav></details>
+  <p class="footnote">Los informes BIM son registros históricos. Consultarlos no verifica ni modifica el modelo de Revit.</p>
+</aside>
+<main>
+  <header><span class="pill">● Recuperación local</span><span class="muted">Sin API de generación</span></header>
+  <section aria-labelledby="askTitle" class="ask">
+    <p class="eyebrow">CONSULTA TRAZABLE</p><h2 id="askTitle">¿Qué necesitas encontrar?</h2>
+    <form id="searchForm"><label for="query">Pregunta o palabras clave</label><div class="searchline"><input id="query" name="query" minlength="2" maxlength="300" required placeholder="¿Qué espesor tienen los muros y qué queda pendiente?" autocomplete="off"><button type="submit" id="searchButton">Buscar <span aria-hidden="true">↗</span></button><button type="button" id="timelineButton">Línea de tiempo</button></div>
+      <fieldset><legend>Buscar en</legend><label><input type="radio" name="scope" value="all" checked> Todo</label><label><input type="radio" name="scope" value="project"> Casa Eucalipto</label><label><input type="radio" name="scope" value="repo"> Repositorio</label><label><input type="radio" name="scope" value="sessions"> Conversaciones</label><label><input type="radio" name="scope" value="criterio"> Criterio del arquitecto</label></fieldset>
+    </form>
+    <div class="examples"><button type="button" id="openMaster">Todo lo realizado</button><button type="button" id="openLessons">Aprendizajes y fallos</button><button type="button" data-query="espesor muros 18 cm">Muros y acabados</button><button type="button" data-query="pendientes linderos ejes">Linderos y pendientes</button><button type="button" data-query="Serena índice">Serena e índice</button><button type="button" data-query="recetas validación">Flujos y validación</button></div>
+  </section>
+  <ol class="flow" aria-label="Flujo de consulta"><li><b>01</b><span>Pregunta<small>Tu intención</small></span></li><li><b>02</b><span>Recuperación<small>Palabras + significado (bge-m3 local)</small></span></li><li><b>03</b><span>Evidencia<small>Archivo · líneas · huella</small></span></li><li><b>04</b><span>Codex<small>Respuesta en este chat</small></span></li></ol>
+  <details class="jev"><summary>Jev · orientación opcional <span id="jevState">Comprobando configuración</span></summary><p>Al pulsar este botón, solo tu pregunta se envía a TypeSafe para sugerir un ámbito. Los documentos no se envían. Puede consumir crédito de tu cuenta. La sugerencia no cambia los filtros ni los resultados.</p><button id="jevButton" type="button">Orientar esta pregunta con Jev</button><p id="jevMessage" role="status">Configura una clave nueva en TYPESAFE_API_KEY; no la pegues en el chat ni en archivos del repositorio.</p></details>
+  <section aria-labelledby="resultsTitle"><div class="resultsHead"><h2 id="resultsTitle">Evidencia recuperada</h2><span id="count" class="muted">Lista para consultar</span></div><p id="status" role="status" aria-live="polite">Escribe una pregunta o elige un ejemplo.</p>
+    <div class="toolbar"><button id="copy" disabled>Copiar contexto para Codex</button><button id="downloadMd" disabled>Descargar contexto .md</button><button id="downloadJson" disabled>Descargar evidencia .json</button></div>
+    <div class="workspace"><div id="results"></div><section class="reader" id="reader" aria-labelledby="readerTitle" hidden><div class="readerHead"><h3 id="readerTitle">Fuente</h3><button id="closeSource" aria-label="Cerrar fuente">Cerrar</button></div><p id="readerMeta" class="muted"></p><pre id="sourceText" tabindex="0"></pre></section></div>
+  </section>
+  <footer>Los puntajes indican coincidencia de palabras o de significado, no probabilidad de verdad. La selección de fuentes es acotada; una búsqueda vacía no demuestra que el dato no exista en el proyecto.</footer>
+</main><script src="/app.js" defer></script>
+</body></html>
